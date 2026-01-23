@@ -1,0 +1,35 @@
+name: Merge IPTV M3U
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Merge m3u playlists
+        run: |
+          echo "#EXTM3U" > all.m3u
+          echo "" >> all.m3u
+
+          echo "# ===== 国内订阅 =====" >> all.m3u
+          curl -L --connect-timeout 15 "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all.m3u
+          echo "" >> all.m3u
+
+          echo "# ===== 港台订阅 =====" >> all.m3u
+          curl -L --connect-timeout 15 "http://bxtv.3a.ink/live.m3u" >> all.m3u
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add all.m3u
+          git commit -m "auto merge iptv m3u" || echo "no changes"
+          git push
+
