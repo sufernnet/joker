@@ -28,7 +28,7 @@ jobs:
           curl -L \
             -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" \
             --connect-timeout 15 \
-            "http://bxtv.3a.ink/live.m3u" >> all.m3u
+            "https://bc.188766.xyz/?ip=" >> all.m3u
 
       - name: Commit and push
         run: |
