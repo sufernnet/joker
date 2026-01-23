@@ -32,11 +32,10 @@ jobs:
             "http://bxtv.3a.ink/live.m3u" >> all-1.m3u
           echo "" >> all-1.m3u
 
-          # 台湾 4GTV 订阅（只提取包含 4GTV 的行）
+          # 台湾 4GTV 订阅（抓取整个订阅，避免丢频道）
           echo "# ===== 台湾 4GTV =====" >> all-1.m3u
           curl -L --connect-timeout 15 \
-            "https://smart.946985.filegear-sg.me/sub.php?user=tg_Thinkoo_bot" \
-            | grep -i "4gtv" >> all-1.m3u
+            "https://smart.946985.filegear-sg.me/sub.php?user=tg_Thinkoo_bot" >> all-1.m3u
           echo "" >> all-1.m3u
 
       - name: Commit and push
@@ -44,5 +43,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add all-1.m3u
-          git commit -m "auto merge iptv all-1 including 4GTV" || echo "no changes"
+          git commit -m "auto merge iptv all-1 including 4GTV" || echo "no changes to commit"
           git push
