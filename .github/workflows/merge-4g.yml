@@ -18,8 +18,8 @@ jobs:
         with:
           python-version: "3.x"
 
-      # 3️⃣ Install dependencies
-      - run: pip install requests
+      # 3️⃣ Install cloudscraper & requests
+      - run: pip install cloudscraper requests
 
       # 4️⃣ Run merge script
       - name: Run merge script
