@@ -350,3 +350,44 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 
 
+# ===== SMT =====
+#EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="JULI",翡翠台_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=jade_twn
+#EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="JULI",翡翠台_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=jade_xue
+#EXTINF:-1 tvg-name="无线新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/无线新闻.png" group-title="JULI",无线新闻台_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=inews_twn
+#EXTINF:-1 tvg-name="明珠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/明珠.png" group-title="JULI",明珠台_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=pearl_twn
+#EXTINF:-1 tvg-name="TVB PLUS" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVBPLUS.png" group-title="JULI",TVB PLUS_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=j2_twn
+#EXTINF:-1 tvg-name="VIUTV" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/VIUTV.png" group-title="JULI",ViuTV_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=viu1_twn
+#EXTINF:-1 tvg-name="VIUTVSIX" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/VIUTVSIX.png" group-title="JULI",ViuTVSix_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=viusix_twn
+#EXTINF:-1 group-title="JULI",HOY资讯台_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=hoycaijing_twn
+#EXTINF:-1 tvg-name="TVB星河" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVB星河.png" group-title="JULI",TVB星河_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=Xinhe
+#EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="JULI",华丽翡翠台_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=Tvbjade
+#EXTINF:-1 tvg-name="千禧经典台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/千禧经典.png" group-title="JULI",千禧经典台_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=Tvbclassic
+#EXTINF:-1 tvg-name="娱乐新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/娱乐新闻.png" group-title="JULI",TVB娱乐新闻台_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=Tvbentertainment
+#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/天映.png" group-title="JULI",天映频道_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=Celestial
+#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/天映经典.png" group-title="JULI",天映经典_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=Celestial2
+#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/爱奇艺.png" group-title="JULI",爱奇艺_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=Qiyi
+#EXTINF:-1 group-title="JULI",八度空间_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=TV8
+#EXTINF:-1 group-title="JULI",Astro欢喜台_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=Huahee
+#EXTINF:-1 tvg-name="AOD" group-title="JULI",Astro AOD_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=Aodhd
+#EXTINF:-1 tvg-name="AEC" group-title="JULI",Astro AEC_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=AEC
+#EXTINF:-1 tvg-name="QJ" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/qjs.png" group-title="JULI",Astro QJ_SMT
+http://smt.1678520.xyz/smt3.2.3.php?id=Quanjia
