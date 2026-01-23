@@ -1,9 +1,9 @@
-name: merge-ipv
+name: merge-iptv
 
 on:
   schedule:
-    - cron: "0 */6 * * *"  # 每 6 小时更新一次
-  workflow_dispatch:        # 可以手动触发
+    - cron: "0 */6 * * *"  # 每6小时更新一次
+  workflow_dispatch:        # 手动触发
 
 jobs:
   main:
@@ -24,7 +24,7 @@ jobs:
       - name: Install cloudscraper
         run: pip install cloudscraper
 
-      # 4️⃣ 抓取第二个订阅（只提取“整合推流”）
+      # 4️⃣ 抓取第二个订阅，只提取“整合推流”
       - name: Fetch only "整合推流" channels
         run: |
           python3 <<'EOF'
@@ -46,28 +46,28 @@ with open('sub_integrated.m3u', 'w', encoding='utf-8') as f:
 print(f'Found {len(lines)-1} 整合推流频道')
 EOF
 
-      # 5️⃣ 创建合并 M3U 文件
-      - name: Create all.m3u
+      # 5️⃣ 创建合并 M3U 文件 all-1.m3u
+      - name: Create all-1.m3u
         run: |
-          echo "#EXTM3U" > all.m3u
+          echo "#EXTM3U" > all-1.m3u
 
           # 国内源
-          echo "" >> all.m3u
-          echo "# ===== 国内 =====" >> all.m3u
-          curl -s --connect-timeout 15 --max-time 60 "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all.m3u || true
+          echo "" >> all-1.m3u
+          echo "# ===== 国内 =====" >> all-1.m3u
+          curl -s --connect-timeout 15 --max-time 60 "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all-1.m3u || true
 
           # 整合推流
           if [ -f sub_integrated.m3u ]; then
-            echo "" >> all.m3u
-            echo "# ===== 整合推流 =====" >> all.m3u
-            tail -n +2 sub_integrated.m3u >> all.m3u
+            echo "" >> all-1.m3u
+            echo "# ===== 整合推流 =====" >> all-1.m3u
+            tail -n +2 sub_integrated.m3u >> all-1.m3u
           fi
 
-      # 6️⃣ 提交并推送
+      # 6️⃣ 提交并推送更新
       - name: Commit and push
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add all.m3u sub_integrated.m3u
+          git add all-1.m3u sub_integrated.m3u
           git commit -m "Update merged playlists" || echo "No changes to commit"
           git push
