@@ -8,20 +8,24 @@ on:
 jobs:
   fetch:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
       
-      - uses: actions/setup-python@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
           
-      - run: pip install cloudscraper
+      - name: Install cloudscraper
+        run: pip install cloudscraper
       
       - name: Get Cantonese channels
         run: |
-          # 创建Python脚本
-          SCRIPT=$(cat << 'PYTHON'
+          python3 <<EOF
 import cloudscraper
+
 url = "https://bc.188766.xyz/?ip="
 scraper = cloudscraper.create_scraper()
 r = scraper.get(url, timeout=30)
@@ -34,25 +38,27 @@ for line in r.text.splitlines():
 
 with open("hk_cantonese.m3u", "w", encoding="utf-8") as f:
     f.write("\n".join(result))
+
 print(f"Got {len(result)-1} lines")
-PYTHON
-          )
-          python3 -c "$SCRIPT"
-      
+EOF
+
       - name: Combine playlists
         run: |
-          cat > all-1.m3u << 'M3U'
-#EXTM3U
+          # 创建 all-1.m3u 并写国内标题
+          echo "#EXTM3U" > all-1.m3u
+          echo "" >> all-1.m3u
+          echo "# ===== 国内 =====" >> all-1.m3u
+          curl -s --connect-timeout 15 --max-time 60 "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all-1.m3u || true
 
-# ===== 国内 =====
-M3U
-          curl -s "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all-1.m3u || true
-          echo -e "\n# ===== 香港粤语 =====\n" >> all-1.m3u
+          # 香港粤语
+          echo "" >> all-1.m3u
+          echo "# ===== 香港粤语 =====" >> all-1.m3u
           [ -f hk_cantonese.m3u ] && tail -n +2 hk_cantonese.m3u >> all-1.m3u
-      
-      - run: |
+
+      - name: Commit and push
+        run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add .
-          git commit -m "Update" -a || exit 0
+          git add all-1.m3u hk_cantonese.m3u
+          git commit -m "Update playlists" || echo "No changes to commit"
           git push
