@@ -1,8 +1,8 @@
-name: merge
+name: Merge IPTV M3U
 
 on:
   schedule:
-    - cron: "0 */6 * * *"  # 每6小时自动更新
+    - cron: "0 */6 * * *"   # 每 6 小时自动更新
   workflow_dispatch:
 
 jobs:
@@ -10,81 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
-
-      - name: Install cloudscraper
+      - name: Merge m3u playlists
         run: |
-          pip install cloudscraper
-
-      - name: Fetch 4GTV Taiwan M3U
-        run: |
-          python3 <<EOF
-import cloudscraper
-
-url = "https://smart.946985.filegear-sg.me/sub.php?user=tg_Thinkoo_bot"
-scraper = cloudscraper.create_scraper()
-m3u_content = scraper.get(url).text
-
-# 只提取包含 4GTV 的行
-lines = [line for line in m3u_content.splitlines() if "4GTV" in line]
-
-with open("4gtv.m3u", "w", encoding="utf-8") as f:
-    f.write("#EXTM3U\n")
-    f.write("\n".join(lines))
-
-print(f"抓取到 {len(lines)} 条台湾 4GTV 频道")
-EOF
-
-      - name: Fetch Hong Kong BC M3U (粤语频道)
-        run: |
-          python3 <<EOF
-import cloudscraper
-
-url = "https://bc.188766.xyz/?ip="
-scraper = cloudscraper.create_scraper()
-m3u_content = scraper.get(url).text
-
-# 只提取包含 "粤语" 的行
-lines = [line for line in m3u_content.splitlines() if "粤语" in line]
-
-with open("hk_cantonese.m3u", "w", encoding="utf-8") as f:
-    f.write("#EXTM3U\n")
-    f.write("\n".join(lines))
-
-print(f"抓取到 {len(lines)} 条香港粤语频道")
-EOF
-
-      - name: Merge all M3U playlists
-        run: |
-          echo "#EXTM3U" > all-1.m3u
-          echo "" >> all-1.m3u
-
-          # 国内订阅
-          echo "# ===== 国内 =====" >> all.m3u
-          curl -L --connect-timeout 15 \
-            "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all.m3u
+          echo "#EXTM3U" > all.m3u
           echo "" >> all.m3u
 
-          # 香港粤语订阅
-          echo "# ===== 香港 粤语 =====" >> all.m3u
-          cat hk_cantonese.m3u >> all.m3u
+          echo "# ===== 国内订阅 =====" >> all.m3u
+          curl -L --connect-timeout 15 "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all.m3u
           echo "" >> all.m3u
 
-          # 台湾 4GTV
-          echo "# ===== 台湾 4GTV =====" >> all.m3u
-          cat 4gtv.m3u >> all.m3u
-          echo "" >> all.m3u
+          echo "# ===== 港台订阅 =====" >> all.m3u
+          curl -L --connect-timeout 15 "http://bxtv.3a.ink/live.m3u" >> all.m3u
 
       - name: Commit and push
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add all-1.m3u
-          git commit -m "auto merge all-1 with HK Cantonese and 4GTV" || echo "no changes to commit"
+          git add all.m3u
+          git commit -m "auto merge iptv m3u" || echo "no changes"
           git push
