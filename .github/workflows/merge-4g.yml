@@ -2,7 +2,7 @@ name: merge-juli
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */6 * * *"  # 每6小时更新
   workflow_dispatch:
 
 jobs:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout
+      # 1️⃣ Checkout 仓库
       - uses: actions/checkout@v4
 
       # 2️⃣ Setup Python
@@ -18,18 +18,18 @@ jobs:
         with:
           python-version: "3.x"
 
-      # 3️⃣ Install cloudscraper & requests
+      # 3️⃣ 安装 cloudscraper & requests
       - run: pip install cloudscraper requests
 
-      # 4️⃣ Run merge script
+      # 4️⃣ 执行脚本生成 all-1.m3u
       - name: Run merge script
         run: python3 .github/scripts/fetch_merge_juli.py
 
-      # 5️⃣ Commit & push
+      # 5️⃣ 提交并覆盖仓库根目录的 all-1.m3u
       - name: Commit and push
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add all-1.m3u
-          git commit -m "Update merged playlists" || echo "No changes to commit"
+          git commit -m "Update merged all-1.m3u" || echo "No changes to commit"
           git push
