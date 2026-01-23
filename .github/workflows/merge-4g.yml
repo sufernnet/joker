@@ -2,7 +2,7 @@ name: merge-4g
 
 on:
   schedule:
-    - cron: "0 */6 * * *"  # 每6小时自动更新
+    - cron: "0 */6 * * *"
   workflow_dispatch:
 
 jobs:
@@ -19,12 +19,11 @@ jobs:
           python-version: "3.x"
 
       - name: Install cloudscraper
-        run: |
-          pip install cloudscraper
+        run: pip install cloudscraper
 
       - name: Fetch 4GTV Taiwan M3U
         run: |
-          python - <<EOF
+          python3 <<EOF
 import cloudscraper
 
 url = "https://smart.946985.filegear-sg.me/sub.php?user=tg_Thinkoo_bot"
