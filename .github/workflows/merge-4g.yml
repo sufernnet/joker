@@ -12,18 +12,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-          
+
       - name: Install cloudscraper
         run: pip install cloudscraper
-      
-      - name: Get Cantonese channels
+
+      - name: Fetch Cantonese channels
         run: |
-          python3 <<EOF
+          python3 <<'PYTHON_EOF'
 import cloudscraper
 
 url = "https://bc.188766.xyz/?ip="
@@ -31,16 +31,17 @@ scraper = cloudscraper.create_scraper()
 r = scraper.get(url, timeout=30)
 r.raise_for_status()
 
-result = ["#EXTM3U"]
+# 提取粤语频道
+lines = ["#EXTM3U"]
 for line in r.text.splitlines():
     if "粤语" in line or "Cantonese" in line or "粵語" in line:
-        result.append(line)
+        lines.append(line)
 
 with open("hk_cantonese.m3u", "w", encoding="utf-8") as f:
-    f.write("\n".join(result))
+    f.write("\n".join(lines))
 
-print(f"Got {len(result)-1} lines")
-EOF
+print(f"抓取到 {len(lines)-1} 条粤语频道")
+PYTHON_EOF
 
       - name: Combine playlists
         run: |
@@ -50,7 +51,7 @@ EOF
           echo "# ===== 国内 =====" >> all-1.m3u
           curl -s --connect-timeout 15 --max-time 60 "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all-1.m3u || true
 
-          # 香港粤语
+          # 添加香港粤语
           echo "" >> all-1.m3u
           echo "# ===== 香港粤语 =====" >> all-1.m3u
           [ -f hk_cantonese.m3u ] && tail -n +2 hk_cantonese.m3u >> all-1.m3u
