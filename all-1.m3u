@@ -1161,20 +1161,14 @@ https://smt.goiptv.de5.net/smt.php?id=Rockentertain
 https://smt.goiptv.de5.net/smt.php?id=Suntv
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Star Vijay" tvg-name="Star Vijay" tvg-logo="",Star Vijay
 https://smt.goiptv.de5.net/smt.php?id=Starvijay
-#EXTINF:-1 group-title="斯玛特源" tvg-id="Colors Tamil" tvg-name="Colors Tamil" tvg-logo="",Colors Tamil
-https://smt.goiptv.de5.net/smt.php?id=Colorstam
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Sun Music" tvg-name="Sun Music" tvg-logo="",Sun Music
 https://smt.goiptv.de5.net/smt.php?id=Sunmusic
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Astro Sunlife" tvg-name="Astro Sunlife" tvg-logo="",Astro Sunlife
 https://smt.goiptv.de5.net/smt.php?id=Sunlife
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Astro Vaanavil" tvg-name="Astro Vaanavil" tvg-logo="",Astro Vaanavil
 https://smt.goiptv.de5.net/smt.php?id=Vaanavil
-#EXTINF:-1 group-title="斯玛特源" tvg-id="Zee Tamil" tvg-name="Zee Tamil" tvg-logo="",Zee Tamil
-https://smt.goiptv.de5.net/smt.php?id=Zeetamil
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Zee Business" tvg-name="Zee Business" tvg-logo="",Zee Business
 https://smt.goiptv.de5.net/smt.php?id=Zeebusiness
-#EXTINF:-1 group-title="斯玛特源" tvg-id="News 18 Tamil" tvg-name="News 18 Tamil" tvg-logo="",News 18 Tamil
-https://smt.goiptv.de5.net/smt.php?id=news18tamil_raj
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Adithya" tvg-name="Adithya" tvg-logo="",Adithya
 https://smt.goiptv.de5.net/smt.php?id=Adithya
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Makkal TV" tvg-name="Makkal TV" tvg-logo="",Makkal TV
@@ -1199,24 +1193,8 @@ https://smt.goiptv.de5.net/smt.php?id=Zeenews
 https://smt.goiptv.de5.net/smt.php?id=asianet_raj
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Asianet News" tvg-name="Asianet News" tvg-logo="",Asianet News
 https://smt.goiptv.de5.net/smt.php?id=asianetnews_raj
-#EXTINF:-1 group-title="斯玛特源" tvg-id="Discovery World Tamil" tvg-name="Discovery World Tamil" tvg-logo="",Discovery World Tamil
-https://smt.goiptv.de5.net/smt.php?id=discoveryworldtam_raj
-#EXTINF:-1 group-title="斯玛特源" tvg-id="History Tamil" tvg-name="History Tamil" tvg-logo="",History Tamil
-https://smt.goiptv.de5.net/smt.php?id=historytam_raj
-#EXTINF:-1 group-title="斯玛特源" tvg-id="NatGeo Tamil" tvg-name="NatGeo Tamil" tvg-logo="",NatGeo Tamil
-https://smt.goiptv.de5.net/smt.php?id=natgeotamil_raj
-#EXTINF:-1 group-title="斯玛特源" tvg-id="Natgeo Wild Tamil" tvg-name="Natgeo Wild Tamil" tvg-logo="",Natgeo Wild Tamil
-https://smt.goiptv.de5.net/smt.php?id=natgeowildtamil_raj
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Astro Sonypix" tvg-name="Astro Sonypix" tvg-logo="",Astro Sonypix
 https://smt.goiptv.de5.net/smt.php?id=Asonypix
-#EXTINF:-1 group-title="斯玛特源" tvg-id="Discovery Kids Tamil" tvg-name="Discovery Kids Tamil" tvg-logo="",Discovery Kids Tamil
-https://smt.goiptv.de5.net/smt.php?id=discoverykidtamil_raj
-#EXTINF:-1 group-title="斯玛特源" tvg-id="Discovery Tamil" tvg-name="Discovery Tamil" tvg-logo="",Discovery Tamil
-https://smt.goiptv.de5.net/smt.php?id=discoverytamil_raj
-#EXTINF:-1 group-title="斯玛特源" tvg-id="Sony Yay Tamil" tvg-name="Sony Yay Tamil" tvg-logo="",Sony Yay Tamil
-https://smt.goiptv.de5.net/smt.php?id=sonyyaytam_raj
-#EXTINF:-1 group-title="斯玛特源" tvg-id="Sun TV India" tvg-name="Sun TV India" tvg-logo="",Sun TV India
-https://smt.goiptv.de5.net/smt.php?id=suntv_raj
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Starmaa HD" tvg-name="Starmaa HD" tvg-logo="",Starmaa HD
 https://smt.goiptv.de5.net/smt.php?id=starmaa_raj
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Starmaa Movies HD" tvg-name="Starmaa Movies HD" tvg-logo="",Starmaa Movies HD
@@ -1353,5 +1331,3 @@ https://smt.goiptv.de5.net/smt.php?id=tiankongmain
 https://smt.goiptv.de5.net/smt.php?id=tiankongnews
 #EXTINF:-1 group-title="斯玛特源" tvg-id="Al-Jazeera" tvg-name="Al-Jazeera" tvg-logo="",Al-Jazeera
 https://smt.goiptv.de5.net/smt.php?id=aljazeera_twn
-#EXTINF:-1 group-title="印度频道" tvg-id="120" tvg-chno="31" tvg-name="jan-tv" tvg-logo="https://d229kpbsb5jevy.cloudfront.net/yuppfast/content/common/channel/logos/yjsmtt.png", Jan TV
-#KODIPROP:inputstream=inputstream.adaptive
