@@ -1,4 +1,4 @@
-name: fetch-cantonese-only
+name: fetch-cantonese-simple
 
 on:
   schedule:
@@ -6,43 +6,53 @@ on:
   workflow_dispatch:
 
 jobs:
-  fetch-cantonese:
+  fetch:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v4
         with:
-          python-version: "3.x"
-
-      - name: Install dependencies
+          python-version: '3.x'
+          
+      - run: pip install cloudscraper
+      
+      - name: Get Cantonese channels
         run: |
-          python -m pip install --upgrade pip
-          pip install cloudscraper requests
+          # 创建Python脚本
+          SCRIPT=$(cat << 'PYTHON'
+import cloudscraper
+url = "https://bc.188766.xyz/?ip="
+scraper = cloudscraper.create_scraper()
+r = scraper.get(url, timeout=30)
+r.raise_for_status()
 
-      - name: Fetch Hong Kong BC M3U (粤语频道)
-        run: python3 fetch_cantonese.py
+result = ["#EXTM3U"]
+for line in r.text.splitlines():
+    if "粤语" in line or "Cantonese" in line or "粵語" in line:
+        result.append(line)
 
-      - name: Merge with other playlists
+with open("hk_cantonese.m3u", "w", encoding="utf-8") as f:
+    f.write("\n".join(result))
+print(f"Got {len(result)-1} lines")
+PYTHON
+          )
+          python3 -c "$SCRIPT"
+      
+      - name: Combine playlists
         run: |
-          echo "#EXTM3U" > all-1.m3u
-          echo "" >> all-1.m3u
-          echo "# ===== 国内 =====" >> all-1.m3u
-          curl -L --connect-timeout 15 "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all-1.m3u 2>/dev/null || true
-          echo "" >> all-1.m3u
-          echo "# ===== 香港 粤语 =====" >> all-1.m3u
-          if [ -s "hk_cantonese.m3u" ]; then
-            tail -n +2 "hk_cantonese.m3u" >> all-1.m3u
-          fi
-          echo "" >> all-1.m3u
+          cat > all-1.m3u << 'M3U'
+#EXTM3U
 
-      - name: Commit and push changes
-        run: |
+# ===== 国内 =====
+M3U
+          curl -s "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all-1.m3u || true
+          echo -e "\n# ===== 香港粤语 =====\n" >> all-1.m3u
+          [ -f hk_cantonese.m3u ] && tail -n +2 hk_cantonese.m3u >> all-1.m3u
+      
+      - run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add .
-          git commit -m "Update Cantonese channels" || echo "No changes"
+          git commit -m "Update" -a || exit 0
           git push
