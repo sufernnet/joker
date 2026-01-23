@@ -1,41 +1,73 @@
-name: fetch-cantonese
+name: merge-ipv
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
-  workflow_dispatch:
+    - cron: "0 */6 * * *"  # 每 6 小时更新一次
+  workflow_dispatch:        # 可以手动触发
 
 jobs:
   main:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # 1️⃣ 拉取仓库
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      # 2️⃣ 设置 Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      - run: pip install cloudscraper
+      # 3️⃣ 安装 cloudscraper
+      - name: Install cloudscraper
+        run: pip install cloudscraper
 
-      - name: Fetch Cantonese channels
-        run: python3 .github/scripts/fetch_cantonese.py
-
-      - name: Create all-1.m3u
+      # 4️⃣ 抓取第二个订阅（只提取“整合推流”）
+      - name: Fetch only "整合推流" channels
         run: |
-          echo "#EXTM3U" > all-1.m3u
-          echo "" >> all-1.m3u
-          echo "# ===== 国内 =====" >> all-1.m3u
-          curl -s --connect-timeout 15 --max-time 60 "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all-1.m3u || true
+          python3 <<'EOF'
+import cloudscraper
 
-          echo "" >> all-1.m3u
-          echo "# ===== 香港粤语 =====" >> all-1.m3u
-          [ -f hk_cantonese.m3u ] && tail -n +2 hk_cantonese.m3u >> all-1.m3u
+url = "https://www.go-iptv.ggff.net/sub.php?user=PpFQ2ws-1nOoHZWF2d0Jo68g"
+scraper = cloudscraper.create_scraper()
+r = scraper.get(url, timeout=30)
+r.raise_for_status()
 
-      - name: Push changes
+lines = ['#EXTM3U']
+for line in r.text.splitlines():
+    if '整合推流' in line:
+        lines.append(line)
+
+with open('sub_integrated.m3u', 'w', encoding='utf-8') as f:
+    f.write('\n'.join(lines))
+
+print(f'Found {len(lines)-1} 整合推流频道')
+EOF
+
+      # 5️⃣ 创建合并 M3U 文件
+      - name: Create all.m3u
+        run: |
+          echo "#EXTM3U" > all.m3u
+
+          # 国内源
+          echo "" >> all.m3u
+          echo "# ===== 国内 =====" >> all.m3u
+          curl -s --connect-timeout 15 --max-time 60 "https://raw.githubusercontent.com/xiasufern/AA/main/BB.m3u" >> all.m3u || true
+
+          # 整合推流
+          if [ -f sub_integrated.m3u ]; then
+            echo "" >> all.m3u
+            echo "# ===== 整合推流 =====" >> all.m3u
+            tail -n +2 sub_integrated.m3u >> all.m3u
+          fi
+
+      # 6️⃣ 提交并推送
+      - name: Commit and push
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add all-1.m3u hk_cantonese.m3u
-          git commit -m "Update playlists" || echo "No changes to commit"
+          git add all.m3u sub_integrated.m3u
+          git commit -m "Update merged playlists" || echo "No changes to commit"
           git push
