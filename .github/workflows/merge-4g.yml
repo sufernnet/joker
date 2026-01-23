@@ -2,7 +2,7 @@ name: merge-4g
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */6 * * *"  # 每6小时自动更新
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,8 @@ jobs:
           python-version: "3.x"
 
       - name: Install cloudscraper
-        run: pip install cloudscraper
+        run: |
+          pip install cloudscraper
 
       - name: Fetch 4GTV Taiwan M3U
         run: |
