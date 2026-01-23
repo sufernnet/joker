@@ -13,15 +13,19 @@ try:
 except Exception as e:
     print("国内源失败:", e)
 
-# ---------- 斯玛特源（更稳的匹配方式） ----------
-smart_url = "https://php.946985.filegear-sg.me/jackTV.m3u"
+# ---------- go-iptv：斯玛特 ----------
+iptv_url = "https://www.go-iptv.ggff.net/sub.php?user=PpFQ2ws-1nOoHZWF2d0Jo68g"
 smt = []
 
-KEYWORDS = ["smart", "smt", "斯玛特"]
+KEYWORDS = [
+    "smart",
+    "smt",
+    "斯玛特",
+]
 
 try:
-    s = cloudscraper.create_scraper()
-    r = s.get(smart_url, timeout=30)
+    scraper = cloudscraper.create_scraper()
+    r = scraper.get(iptv_url, timeout=30)
     r.raise_for_status()
 
     lines = r.text.splitlines()
@@ -54,4 +58,4 @@ with open("all-1.m3u", "w", encoding="utf-8") as f:
         f.write("# ===== SMT =====\n")
         f.write("\n".join(smt) + "\n")
 
-print("完成：斯玛特源已正确提取并归类到 SMT")
+print("完成：go-iptv 的斯玛特源已归类到 SMT")
