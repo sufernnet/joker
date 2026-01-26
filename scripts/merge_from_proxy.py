@@ -1,209 +1,130 @@
 #!/usr/bin/env python3
 """
-M3U文件合并脚本 - 同时生成EPG XML
-1. 下载BB.m3u
+M3U文件合并脚本
+1. 下载BB.m3u（包含EPG信息）
 2. 从Cloudflare代理获取内容
-3. 提取HK和TW频道
-4. 同时生成CC.m3u和CC.xml（EPG文件）
-5. 确保EPG与频道精确匹配
+3. 提取JULI频道，分组改为HK（排在前面）
+4. 提取4gtv前30个直播，分组改为TW（排在后面），过滤指定频道
+5. 合并生成CC.m3u
+北京时间每天6:00、18:00自动运行
 """
 
 import requests
 import re
 import os
 import time
-import json
-import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta
-from xml.dom import minidom
+from datetime import datetime
 
 # 配置
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
 CLOUDFLARE_PROXY = "https://smt-proxy.sufern001.workers.dev/"
-M3U_FILE = "CC.m3u"
-EPG_FILE = "CC.xml"
+OUTPUT_FILE = "CC.m3u"
 
-# 频道过滤和排序配置
+# 需要过滤掉的TW频道关键词（不区分大小写）
 BLACKLIST_TW = [
-    "Bloomberg TV", "Bloomberg", "SBN全球财经台", "SBN财经",
-    "FRANCE24英文台", "FRANCE24", "半岛国际新闻台", "半岛国际",
-    "NHK world-japan", "NHK world", "NHK", "CNBC Asia", "CNBC"
+    "Bloomberg TV",
+    "Bloomberg",
+    "SBN全球财经台",
+    "SBN财经",
+    "FRANCE24英文台",
+    "FRANCE24",
+    "半岛国际新闻台",
+    "半岛国际",
+    "NHK world-japan",
+    "NHK world",
+    "NHK",
+    "半島",
+    "日本",
+    "SBN",
+    "CNBC Asia",
+    "CNBC"
 ]
-
-HK_PRIORITY_ORDER = [
-    "凤凰中文", "凤凰资讯", "凤凰香港",
-    "NOW新闻台", "NOW星影", "NOW爆谷"
-]
-
-# 频道节目单模板（如果没有真实EPG，使用这个）
-CHANNEL_SCHEDULES = {
-    # 凤凰系列
-    "凤凰中文": [
-        ("06:00", "09:00", "凤凰早班车"),
-        ("09:00", "12:00", "时事直通车"),
-        ("12:00", "14:00", "凤凰午间特快"),
-        ("14:00", "17:00", "环球新闻追击"),
-        ("17:00", "19:00", "时事辩论会"),
-        ("19:00", "21:00", "凤凰焦点新闻"),
-        ("21:00", "23:00", "金石财经"),
-        ("23:00", "01:00", "夜班新闻")
-    ],
-    "凤凰资讯": [
-        ("06:00", "08:00", "新闻早班车"),
-        ("08:00", "10:00", "环球直播"),
-        ("10:00", "12:00", "财经最前线"),
-        ("12:00", "14:00", "午间新闻"),
-        ("14:00", "16:00", "深度报道"),
-        ("16:00", "18:00", "时事观察"),
-        ("18:00", "20:00", "新闻晚高峰"),
-        ("20:00", "22:00", "今日关注"),
-        ("22:00", "00:00", "夜间新闻")
-    ],
-    "凤凰香港": [
-        ("06:00", "09:00", "香港早晨"),
-        ("09:00", "12:00", "财经透视"),
-        ("12:00", "14:00", "午间报道"),
-        ("14:00", "17:00", "娱乐前线"),
-        ("17:00", "19:00", "新闻最前线"),
-        ("19:00", "21:00", "时事追击"),
-        ("21:00", "23:00", "夜间财经"),
-        ("23:00", "01:00", "深夜新闻")
-    ],
-    # NOW系列
-    "NOW新闻台": [
-        ("00:00", "06:00", "通宵新闻"),
-        ("06:00", "09:00", "早晨新闻"),
-        ("09:00", "12:00", "财经早报"),
-        ("12:00", "14:00", "午间快讯"),
-        ("14:00", "17:00", "时事聚焦"),
-        ("17:00", "19:00", "新闻最前线"),
-        ("19:00", "21:00", "晚间报道"),
-        ("21:00", "23:00", "十点新闻"),
-        ("23:00", "00:00", "夜间新闻")
-    ],
-    "NOW星影": [
-        ("06:00", "09:00", "经典电影"),
-        ("09:00", "12:00", "动作剧场"),
-        ("12:00", "15:00", "爱情剧场"),
-        ("15:00", "18:00", "喜剧专场"),
-        ("18:00", "21:00", "黄金剧场"),
-        ("21:00", "00:00", "深夜影院"),
-        ("00:00", "03:00", "经典回顾"),
-        ("03:00", "06:00", "电影马拉松")
-    ],
-    "NOW爆谷": [
-        ("06:00", "09:00", "卡通世界"),
-        ("09:00", "12:00", "儿童剧场"),
-        ("12:00", "15:00", "综艺天地"),
-        ("15:00", "18:00", "娱乐直播"),
-        ("18:00", "21:00", "爆谷剧场"),
-        ("21:00", "00:00", "娱乐最前线"),
-        ("00:00", "03:00", "深夜娱乐"),
-        ("03:00", "06:00", "回放精选")
-    ],
-    # 默认模板
-    "DEFAULT": [
-        ("06:00", "09:00", "早晨节目"),
-        ("09:00", "12:00", "上午剧场"),
-        ("12:00", "14:00", "午间新闻"),
-        ("14:00", "17:00", "下午剧场"),
-        ("17:00", "19:00", "傍晚新闻"),
-        ("19:00", "21:00", "黄金剧场"),
-        ("21:00", "23:00", "晚间新闻"),
-        ("23:00", "01:00", "夜间节目"),
-        ("01:00", "06:00", "通宵剧场")
-    ]
-}
 
 def log(msg):
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
 
-def generate_channel_id(channel_name):
-    """为频道生成唯一的ID"""
-    # 清理特殊字符
-    clean_name = re.sub(r'[^\w\u4e00-\u9fff]', '', channel_name)
-    
-    # 常见频道映射
-    channel_map = {
-        "凤凰中文": "fenghuang_zhongwen",
-        "凤凰资讯": "fenghuang_zixun",
-        "凤凰香港": "fenghuang_xianggang",
-        "NOW新闻台": "now_news",
-        "NOW星影": "now_movie",
-        "NOW爆谷": "now_ent",
-        "TVB新闻": "tvb_news",
-        "TVB财经": "tvb_finance",
-        "有线新闻": "cable_news",
-        "民视": "ftv",
-        "中视": "ctv",
-        "华视": "cts",
-        "台视": "ttv",
-        "三立": "set",
-        "东森": "ebc",
-        "TVBS": "tvbs",
-        "中天": "ctitv",
-        "寰宇": "universal",
-        "非凡": "ustv"
-    }
-    
-    # 检查映射
-    for key, value in channel_map.items():
-        if key in channel_name:
-            return value
-    
-    # 生成简写ID
-    if len(clean_name) >= 4:
-        # 取前4个字符的拼音首字母或直接使用
-        return clean_name[:8].lower()
-    else:
-        # 使用哈希
-        import hashlib
-        return "ch_" + hashlib.md5(channel_name.encode()).hexdigest()[:6]
-
 def download_bb_m3u():
-    """下载BB.m3u"""
+    """下载BB.m3u并提取EPG"""
     try:
         log("下载BB.m3u...")
         response = requests.get(BB_URL, timeout=10)
         response.raise_for_status()
-        log(f"✅ BB.m3u下载成功 ({len(response.text)} 字符)")
-        return response.text
+        
+        bb_content = response.text
+        log(f"✅ BB.m3u下载成功 ({len(bb_content)} 字符)")
+        
+        # 提取EPG信息
+        epg_match = re.search(r'url-tvg="([^"]+)"', bb_content)
+        epg_url = epg_match.group(1) if epg_match else None
+        
+        if epg_url:
+            log(f"✅ 使用BB的EPG: {epg_url}")
+        
+        return bb_content, epg_url
+        
     except Exception as e:
         log(f"❌ BB.m3u下载失败: {e}")
-        return None
+        return None, None
 
-def get_proxy_content():
+def get_content_from_proxy():
     """从Cloudflare代理获取内容"""
     try:
         log("从Cloudflare代理获取内容...")
-        headers = {'User-Agent': 'Mozilla/5.0'}
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'Accept': '*/*',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            'Referer': 'https://smart.946985.filegear-sg.me/'
+        }
+        
         response = requests.get(CLOUDFLARE_PROXY, headers=headers, timeout=15)
         
         if response.status_code == 200:
             content = response.text
             
-            # 提取M3U内容
+            # 如果是HTML，尝试提取M3U内容
             if '<html' in content.lower():
+                # 查找M3U内容
                 m3u_match = re.search(r'(#EXTM3U.*?)(?:</pre>|</code>|$)', content, re.DOTALL)
                 if m3u_match:
                     content = m3u_match.group(1).strip()
                     log("✅ 从HTML提取到M3U内容")
+                else:
+                    # 提取所有可能的频道行
+                    lines = content.split('\n')
+                    m3u_lines = []
+                    for line in lines:
+                        line = line.strip()
+                        if line.startswith('#EXTINF:') or ('://' in line and not line.startswith('<')):
+                            m3u_lines.append(line)
+                    
+                    if m3u_lines:
+                        content = '#EXTM3U\n' + '\n'.join(m3u_lines)
+                        log(f"✅ 从HTML提取到 {len(m3u_lines)} 个频道行")
             
             if content and content.strip():
                 log(f"✅ 获取到内容 ({len(content)} 字符)")
                 return content
+            else:
+                log("⚠️  内容为空")
+        else:
+            log(f"❌ 代理返回错误: {response.status_code}")
+            
     except Exception as e:
         log(f"❌ 代理访问失败: {e}")
     
     return None
 
-def parse_m3u_channels(content):
-    """解析M3U内容为频道列表"""
+def extract_hk_channels(content):
+    """提取JULI频道，分组改为HK"""
     if not content:
         return []
     
-    channels = []
+    log("提取JULI频道，分组改为HK...")
+    
+    # 解析M3U内容
     lines = content.split('\n')
+    channels = []
     current_extinf = None
     
     for line in lines:
@@ -214,308 +135,263 @@ def parse_m3u_channels(content):
         if line.startswith('#EXTINF:'):
             current_extinf = line
         elif current_extinf and '://' in line and not line.startswith('#'):
-            # 提取频道名
-            channel_name = current_extinf.split(',', 1)[1] if ',' in current_extinf else current_extinf
-            
-            channels.append({
-                'extinf': current_extinf,
-                'url': line,
-                'name': channel_name,
-                'original_name': channel_name
-            })
+            channels.append((current_extinf, line))
             current_extinf = None
     
-    return channels
-
-def filter_and_rename_channels(channels):
-    """过滤和重命名频道"""
+    # 过滤JULI频道
     hk_channels = []
-    tw_channels = []
+    seen = set()
     
-    for channel in channels:
-        channel_name = channel['name']
-        
-        # 检查是否是JULI频道（HK）
-        if 'JULI' in channel_name.upper():
-            # 重命名为HK
-            new_name = re.sub(r'JULI', 'HK', channel_name, flags=re.IGNORECASE)
-            new_extinf = channel['extinf'].replace(channel_name, new_name)
+    for extinf, url in channels:
+        if 'JULI' in extinf.upper():
+            # 重命名为HK分组
+            new_extinf = re.sub(r'JULI', 'HK', extinf, flags=re.IGNORECASE)
             
             # 确保group-title为HK
             if 'group-title=' in new_extinf:
                 new_extinf = re.sub(r'group-title="[^"]*"', 'group-title="HK"', new_extinf)
             else:
-                new_extinf = new_extinf.replace('#EXTINF:', '#EXTINF: group-title="HK",', 1)
+                # 添加group-title
+                if ',' in new_extinf:
+                    parts = new_extinf.split(',', 1)
+                    new_extinf = f'{parts[0]} group-title="HK",{parts[1]}'
             
-            channel['name'] = new_name
-            channel['extinf'] = new_extinf
-            channel['group'] = 'HK'
-            hk_channels.append(channel)
-        
-        # 检查是否是4gtv频道（TW）
-        elif '4gtv' in channel_name.lower():
-            # 检查是否在黑名单中
-            skip = False
-            for black_word in BLACKLIST_TW:
-                if black_word.lower() in channel_name.lower():
-                    skip = True
-                    break
-            
-            if not skip:
-                # 重命名为TW
-                new_name = re.sub(r'4gtv', 'TW', channel_name, flags=re.IGNORECASE)
-                new_extinf = channel['extinf'].replace(channel_name, new_name)
-                
-                # 确保group-title为TW
-                if 'group-title=' in new_extinf:
-                    new_extinf = re.sub(r'group-title="[^"]*"', 'group-title="TW"', new_extinf)
-                else:
-                    new_extinf = new_extinf.replace('#EXTINF:', '#EXTINF: group-title="TW",', 1)
-                
-                channel['name'] = new_name
-                channel['extinf'] = new_extinf
-                channel['group'] = 'TW'
-                tw_channels.append(channel)
+            # 去重
+            key = f"{new_extinf}|{url}"
+            if key not in seen:
+                seen.add(key)
+                hk_channels.append((new_extinf, url))
     
-    # HK频道排序
-    def hk_sort_key(channel):
-        name = channel['name']
-        for i, priority in enumerate(HK_PRIORITY_ORDER):
-            if priority in name:
-                return i
-        return len(HK_PRIORITY_ORDER)
+    log(f"✅ 提取到 {len(hk_channels)} 个HK频道（原JULI）")
     
-    hk_channels.sort(key=hk_sort_key)
+    if hk_channels:
+        log("HK频道示例（排在TW之前）:")
+        for i, (extinf, url) in enumerate(hk_channels[:5]):
+            name = extinf.split(',', 1)[1] if ',' in extinf else extinf
+            log(f"  {i+1}. {name[:50]}...")
     
-    # TW频道限制30个
-    tw_channels = tw_channels[:30]
-    
-    return hk_channels, tw_channels
+    return hk_channels
 
-def generate_epg_xml(channels):
-    """生成EPG XML文件"""
-    log("生成EPG XML文件...")
+def should_skip_channel(channel_name):
+    """检查频道是否应该被过滤"""
+    channel_name_lower = channel_name.lower()
     
-    # 创建XML根元素
-    tv = ET.Element('tv')
-    tv.set('generator-info-name', 'CC EPG Generator')
-    tv.set('generator-info-url', 'https://github.com/sufernnet/joker')
+    # 检查是否在黑名单中
+    for black_word in BLACKLIST_TW:
+        if black_word.lower() in channel_name_lower:
+            log(f"  过滤掉: {channel_name} (包含: {black_word})")
+            return True
     
-    # 获取当前日期
-    today = datetime.now()
-    tomorrow = today + timedelta(days=1)
-    
-    for channel in channels:
-        channel_name = channel['name']
-        channel_id = generate_channel_id(channel_name)
-        
-        # 添加频道元素
-        channel_elem = ET.SubElement(tv, 'channel')
-        channel_elem.set('id', channel_id)
-        
-        # 添加显示名称
-        display_name = ET.SubElement(channel_elem, 'display-name')
-        display_name.set('lang', 'zh')
-        display_name.text = channel_name
-        
-        # 添加节目单
-        schedule = CHANNEL_SCHEDULES.get(channel_name, CHANNEL_SCHEDULES['DEFAULT'])
-        
-        # 今天和明天的节目
-        for day_offset in [0, 1]:
-            day = today + timedelta(days=day_offset)
-            date_str = day.strftime('%Y%m%d')
-            
-            for start_time, end_time, program_title in schedule:
-                # 创建节目元素
-                programme = ET.SubElement(tv, 'programme')
-                
-                # 时间格式：YYYYMMDDHHMMSS +0800
-                start_dt = datetime.strptime(f"{date_str} {start_time}", "%Y%m%d %H:%M")
-                end_dt = datetime.strptime(f"{date_str} {end_time}", "%Y%m%d %H:%M")
-                
-                # 处理跨天
-                if end_time < start_time:
-                    end_dt += timedelta(days=1)
-                
-                programme.set('start', start_dt.strftime('%Y%m%d%H%M%S +0800'))
-                programme.set('stop', end_dt.strftime('%Y%m%d%H%M%S +0800'))
-                programme.set('channel', channel_id)
-                
-                # 节目标题
-                title = ET.SubElement(programme, 'title')
-                title.set('lang', 'zh')
-                title.text = program_title
-                
-                # 节目描述
-                desc = ET.SubElement(programme, 'desc')
-                desc.set('lang', 'zh')
-                desc.text = f"{channel_name} - {program_title} ({start_time}-{end_time})"
-                
-                # 节目分类
-                category = ET.SubElement(programme, 'category')
-                category.set('lang', 'zh')
-                if "新闻" in program_title or "财经" in program_title:
-                    category.text = "新闻"
-                elif "电影" in program_title or "剧场" in program_title:
-                    category.text = "电影"
-                elif "娱乐" in program_title or "综艺" in program_title:
-                    category.text = "娱乐"
-                else:
-                    category.text = "综合"
-    
-    # 美化XML输出
-    xml_str = ET.tostring(tv, encoding='utf-8')
-    dom = minidom.parseString(xml_str)
-    pretty_xml = dom.toprettyxml(indent='  ', encoding='utf-8')
-    
-    log(f"✅ 生成EPG XML，包含 {len(channels)} 个频道")
-    return pretty_xml.decode('utf-8')
+    return False
 
-def enhance_m3u_with_epg(channels, epg_url):
-    """增强M3U文件，添加EPG信息"""
-    enhanced_channels = []
+def extract_filtered_4gtv_channels(content, limit=30):
+    """提取4gtv频道（前30个），分组改为TW，过滤指定频道"""
+    if not content:
+        return []
     
-    for channel in channels:
-        extinf = channel['extinf']
-        channel_name = channel['name']
-        channel_id = generate_channel_id(channel_name)
+    log(f"提取4gtv前{limit}个直播，分组改为TW，过滤指定频道...")
+    log(f"过滤列表: {', '.join(BLACKLIST_TW)}")
+    
+    # 解析M3U内容
+    lines = content.split('\n')
+    channels = []
+    current_extinf = None
+    
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
         
-        # 添加tvg-id和tvg-name
-        if 'tvg-id=' not in extinf:
-            if 'tvg-name=' not in extinf:
-                # 在group-title前插入tvg信息
-                if 'group-title=' in extinf:
-                    new_extinf = extinf.replace('group-title=', f'tvg-id="{channel_id}" tvg-name="{channel_name}" group-title=')
-                else:
-                    # 如果没有group-title，在逗号前添加
-                    if ',' in extinf:
-                        parts = extinf.split(',', 1)
-                        new_extinf = f'{parts[0]} tvg-id="{channel_id}" tvg-name="{channel_name}",{parts[1]}'
-                    else:
-                        new_extinf = f'{extinf} tvg-id="{channel_id}" tvg-name="{channel_name}"'
-            else:
-                # 已有tvg-name，只添加tvg-id
-                new_extinf = extinf.replace('tvg-name=', f'tvg-id="{channel_id}" tvg-name=')
+        if line.startswith('#EXTINF:'):
+            current_extinf = line
+        elif current_extinf and '://' in line and not line.startswith('#'):
+            channels.append((current_extinf, line))
+            current_extinf = None
+    
+    # 过滤4gtv频道（不区分大小写）
+    filtered_channels = []
+    for extinf, url in channels:
+        if '4gtv' in extinf.lower():
+            filtered_channels.append((extinf, url))
+    
+    log(f"找到 {len(filtered_channels)} 个4gtv频道")
+    
+    # 过滤黑名单频道
+    filtered_by_blacklist = []
+    for extinf, url in filtered_channels:
+        # 提取频道名
+        channel_name = extinf.split(',', 1)[1] if ',' in extinf else extinf
+        
+        # 检查是否应该跳过
+        if not should_skip_channel(channel_name):
+            filtered_by_blacklist.append((extinf, url))
         else:
-            new_extinf = extinf
-        
-        channel['extinf'] = new_extinf
-        channel['tvg_id'] = channel_id
-        enhanced_channels.append(channel)
+            log(f"  ⛔ 过滤: {channel_name}")
     
-    return enhanced_channels
+    log(f"过滤后剩余 {len(filtered_by_blacklist)} 个4gtv频道")
+    
+    # 只取前limit个
+    if len(filtered_by_blacklist) > limit:
+        filtered_by_blacklist = filtered_by_blacklist[:limit]
+        log(f"只取前 {limit} 个过滤后的4gtv频道")
+    
+    # 重命名为TW分组
+    tw_channels = []
+    seen = set()
+    
+    for extinf, url in filtered_by_blacklist:
+        # 替换分组为TW
+        new_extinf = extinf
+        
+        # 替换4gtv为TW（在频道名中）
+        if '4gtv' in new_extinf.lower():
+            new_extinf = re.sub(r'4gtv', 'TW', new_extinf, flags=re.IGNORECASE)
+        
+        # 确保group-title为TW
+        if 'group-title=' in new_extinf:
+            new_extinf = re.sub(r'group-title="[^"]*"', 'group-title="TW"', new_extinf)
+        else:
+            # 添加group-title
+            if ',' in new_extinf:
+                parts = new_extinf.split(',', 1)
+                new_extinf = f'{parts[0]} group-title="TW",{parts[1]}'
+        
+        # 去重
+        key = f"{new_extinf}|{url}"
+        if key not in seen:
+            seen.add(key)
+            tw_channels.append((new_extinf, url))
+    
+    log(f"✅ 提取到 {len(tw_channels)} 个TW频道（原4gtv，已过滤）")
+    
+    # 显示过滤掉的频道统计
+    filtered_count = len(filtered_channels) - len(tw_channels)
+    if filtered_count > 0:
+        log(f"⛔ 过滤掉了 {filtered_count} 个TW频道")
+    
+    if tw_channels:
+        log("TW频道示例（已过滤指定频道）:")
+        for i, (extinf, url) in enumerate(tw_channels[:5]):
+            name = extinf.split(',', 1)[1] if ',' in extinf else extinf
+            log(f"  {i+1}. {name[:50]}...")
+    
+    return tw_channels
 
 def main():
     """主函数"""
-    log("开始生成M3U和EPG文件...")
+    log("开始合并M3U文件...")
     
-    # 1. 下载BB.m3u
-    bb_content = download_bb_m3u()
+    # 显示当前时间（用于调试定时任务）
+    current_time = datetime.now()
+    log(f"当前时间: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
+    log(f"下次运行: 北京时间 06:00 和 18:00")
+    log(f"TW频道过滤列表: {', '.join(BLACKLIST_TW)}")
+    
+    # 1. 下载BB.m3u并获取EPG
+    bb_content, epg_url = download_bb_m3u()
     if not bb_content:
         log("❌ 无法继续，BB.m3u下载失败")
         return
     
     # 2. 从代理获取内容
-    proxy_content = get_proxy_content()
+    proxy_content = get_content_from_proxy()
     
-    # 3. 解析频道
-    all_channels = []
-    
-    # 解析BB频道
-    bb_channels = parse_m3u_channels(bb_content)
-    log(f"解析到 {len(bb_channels)} 个BB频道")
-    
-    # 解析代理频道
+    # 3. 先提取HK频道（JULI）- 排在前面
+    hk_channels = []
     if proxy_content:
-        proxy_channels = parse_m3u_channels(proxy_content)
-        log(f"解析到 {len(proxy_channels)} 个代理频道")
-        
-        # 过滤和重命名HK/TW频道
-        hk_channels, tw_channels = filter_and_rename_channels(proxy_channels)
-        log(f"过滤后得到 {len(hk_channels)} 个HK频道，{len(tw_channels)} 个TW频道")
-        
-        all_channels.extend(hk_channels)
-        all_channels.extend(tw_channels)
+        hk_channels = extract_hk_channels(proxy_content)
     else:
-        log("⚠️  无法获取代理内容，只使用BB频道")
+        log("⚠️  无法从代理获取内容，跳过HK频道")
     
-    # 添加BB频道（排除重复）
-    bb_names = {ch['name'] for ch in all_channels}
-    for channel in bb_channels:
-        if channel['name'] not in bb_names:
-            channel['group'] = 'BB'
-            all_channels.append(channel)
+    # 4. 再提取TW频道（4gtv前30个，过滤指定频道）- 排在后面
+    tw_channels = []
+    if proxy_content:
+        tw_channels = extract_filtered_4gtv_channels(proxy_content, limit=30)
+    else:
+        log("⚠️  无法从代理获取内容，跳过TW频道")
     
-    log(f"总共 {len(all_channels)} 个频道")
-    
-    # 4. 生成EPG XML
-    epg_xml = generate_epg_xml(all_channels)
-    
-    # 5. 增强M3U频道（添加EPG信息）
-    enhanced_channels = enhance_m3u_with_epg(all_channels, "CC.xml")
-    
-    # 6. 生成M3U文件
+    # 5. 构建M3U内容
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
-    # EPG文件URL（GitHub Raw）
-    epg_file_url = f"https://raw.githubusercontent.com/sufernnet/joker/main/{EPG_FILE}"
+    # M3U头部（使用BB的EPG）
+    if epg_url:
+        m3u_header = f'#EXTM3U url-tvg="{epg_url}"\n'
+    else:
+        m3u_header = '#EXTM3U\n'
     
-    m3u_content = f"""#EXTM3U x-tvg-url="{epg_file_url}" url-tvg="{epg_file_url}"
-#EXTVLCOPT:program=999999
-# 自动生成 M3U+EPG 文件
+    output = m3u_header + f"""# 自动合并 M3U 文件
 # 生成时间: {timestamp} (北京时间)
-# 下次更新: 每天 06:00 和 18:00
-# 包含频道: {len(enhanced_channels)} 个
-# EPG文件: {EPG_FILE} (本地生成，确保匹配)
+# 下次更新: 每天 06:00 和 18:00 (北京时间)
+# BB源: {BB_URL}
+# 代理源: {CLOUDFLARE_PROXY}
+# JULI分组已改为HK (排在前面)
+# 4gtv分组已改为TW (前30个，排在后面，已过滤指定频道)
+# 过滤频道: {', '.join(BLACKLIST_TW)}
+# EPG: {epg_url if epg_url else 'BB的XML'}
 # GitHub Actions 自动生成
 
 """
     
-    # 按分组添加频道
-    groups = {}
-    for channel in enhanced_channels:
-        group = channel.get('group', 'Other')
-        if group not in groups:
-            groups[group] = []
-        groups[group].append(channel)
+    # 添加BB内容（跳过第一行）
+    bb_lines = bb_content.split('\n')
+    bb_count = 0
+    skip_first = True
     
-    # 按顺序输出：BB -> HK -> TW -> Other
-    for group in ['BB', 'HK', 'TW', 'Other']:
-        if group in groups and groups[group]:
-            m3u_content += f"\n# {group}频道\n"
-            for channel in groups[group]:
-                m3u_content += channel['extinf'] + '\n'
-                m3u_content += channel['url'] + '\n'
+    for line in bb_lines:
+        line = line.rstrip()
+        if not line:
+            continue
+        
+        if skip_first and line.startswith('#EXTM3U'):
+            skip_first = False
+            continue
+        
+        output += line + '\n'
+        if line.startswith('#EXTINF:'):
+            bb_count += 1
+    
+    # 添加HK频道（JULI）- 排在前面
+    if hk_channels:
+        output += f"\n# HK频道 (原JULI，排在TW之前)\n"
+        for extinf, url in hk_channels:
+            output += extinf + '\n'
+            output += url + '\n'
+    
+    # 添加TW频道（4gtv）- 排在后面（已过滤）
+    if tw_channels:
+        output += f"\n# TW频道 (原4gtv，前30个，已过滤指定频道，排在HK之后)\n"
+        output += f"# 已过滤: {', '.join(BLACKLIST_TW)}\n"
+        for extinf, url in tw_channels:
+            output += extinf + '\n'
+            output += url + '\n'
     
     # 添加统计信息
-    m3u_content += f"""
+    output += f"""
 # 统计信息
-# BB频道: {len(groups.get('BB', []))}
-# HK频道: {len(groups.get('HK', []))} (按指定顺序排列)
-# TW频道: {len(groups.get('TW', []))} (前30个，已过滤)
-# 总频道: {len(enhanced_channels)}
-# EPG状态: ✅ 已生成本地EPG文件 ({EPG_FILE})
-# 更新时间: {timestamp}
+# BB 频道数: {bb_count}
+# HK 频道数: {len(hk_channels)} (原JULI，排在前)
+# TW 频道数: {len(tw_channels)} (原4gtv前30个，已过滤，排在后)
+# 过滤频道: {len(BLACKLIST_TW)} 个
+# 总频道数: {bb_count + len(hk_channels) + len(tw_channels)}
+# 更新时间: {timestamp} (北京时间)
 # 更新频率: 每天 06:00 和 18:00 (北京时间)
+# 排序规则: BB → HK → TW
 """
     
-    # 7. 保存文件
-    with open(M3U_FILE, "w", encoding="utf-8") as f:
-        f.write(m3u_content)
+    # 6. 保存文件
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(output)
     
-    with open(EPG_FILE, "w", encoding="utf-8") as f:
-        f.write(epg_xml)
-    
-    log(f"\n🎉 生成完成!")
-    log(f"📁 M3U文件: {M3U_FILE} ({len(m3u_content)} 字符)")
-    log(f"📁 EPG文件: {EPG_FILE} ({len(epg_xml)} 字符)")
-    log(f"📺 频道总数: {len(enhanced_channels)}")
-    log(f"📡 EPG覆盖: 100% (本地生成，确保匹配)")
+    log(f"\n🎉 合并完成!")
+    log(f"📁 文件: {OUTPUT_FILE}")
+    log(f"📏 大小: {len(output)} 字符")
+    log(f"📡 EPG: {epg_url}")
+    log(f"📺 BB频道: {bb_count}")
+    log(f"📺 HK频道: {len(hk_channels)} (JULI，排在前)")
+    log(f"📺 TW频道: {len(tw_channels)} (4gtv前30个，已过滤{len(BLACKLIST_TW)}个频道，排在后)")
+    log(f"📺 总计: {bb_count + len(hk_channels) + len(tw_channels)}")
     log(f"🕒 下次自动更新: 北京时间 06:00 和 18:00")
-    
-    # 显示EPG文件URL
-    log(f"🔗 EPG文件URL: {epg_file_url}")
+    log(f"⛔ TW过滤列表: {', '.join(BLACKLIST_TW)}")
 
 if __name__ == "__main__":
     main()
