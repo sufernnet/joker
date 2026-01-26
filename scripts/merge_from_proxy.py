@@ -3,9 +3,10 @@
 M3U文件合并脚本
 1. 下载BB.m3u（包含EPG信息）
 2. 从Cloudflare代理获取内容
-3. 提取4gtv前30个直播，分组改为TW
-4. 提取JULI频道，分组改为HK
+3. 提取JULI频道，分组改为HK（排在前面）
+4. 提取4gtv前30个直播，分组改为TW（排在后面）
 5. 合并生成CC.m3u
+北京时间每天6:00、18:00自动运行
 """
 
 import requests
@@ -50,8 +51,10 @@ def get_content_from_proxy():
     try:
         log("从Cloudflare代理获取内容...")
         headers = {
-            'User-Agent': 'Mozilla/5.0',
-            'Accept': '*/*'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'Accept': '*/*',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            'Referer': 'https://smart.946985.filegear-sg.me/'
         }
         
         response = requests.get(CLOUDFLARE_PROXY, headers=headers, timeout=15)
@@ -91,6 +94,63 @@ def get_content_from_proxy():
         log(f"❌ 代理访问失败: {e}")
     
     return None
+
+def extract_hk_channels(content):
+    """提取JULI频道，分组改为HK"""
+    if not content:
+        return []
+    
+    log("提取JULI频道，分组改为HK...")
+    
+    # 解析M3U内容
+    lines = content.split('\n')
+    channels = []
+    current_extinf = None
+    
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        
+        if line.startswith('#EXTINF:'):
+            current_extinf = line
+        elif current_extinf and '://' in line and not line.startswith('#'):
+            channels.append((current_extinf, line))
+            current_extinf = None
+    
+    # 过滤JULI频道
+    hk_channels = []
+    seen = set()
+    
+    for extinf, url in channels:
+        if 'JULI' in extinf.upper():
+            # 重命名为HK分组
+            new_extinf = re.sub(r'JULI', 'HK', extinf, flags=re.IGNORECASE)
+            
+            # 确保group-title为HK
+            if 'group-title=' in new_extinf:
+                new_extinf = re.sub(r'group-title="[^"]*"', 'group-title="HK"', new_extinf)
+            else:
+                # 添加group-title
+                if ',' in new_extinf:
+                    parts = new_extinf.split(',', 1)
+                    new_extinf = f'{parts[0]} group-title="HK",{parts[1]}'
+            
+            # 去重
+            key = f"{new_extinf}|{url}"
+            if key not in seen:
+                seen.add(key)
+                hk_channels.append((new_extinf, url))
+    
+    log(f"✅ 提取到 {len(hk_channels)} 个HK频道（原JULI）")
+    
+    if hk_channels:
+        log("HK频道示例（排在TW之前）:")
+        for i, (extinf, url) in enumerate(hk_channels[:5]):
+            name = extinf.split(',', 1)[1] if ',' in extinf else extinf
+            log(f"  {i+1}. {name[:50]}...")
+    
+    return hk_channels
 
 def extract_4gtv_channels(content, limit=30):
     """提取4gtv频道（前30个），分组改为TW"""
@@ -158,73 +218,21 @@ def extract_4gtv_channels(content, limit=30):
     log(f"✅ 提取到 {len(tw_channels)} 个TW频道（原4gtv）")
     
     if tw_channels:
-        log("TW频道示例:")
+        log("TW频道示例（排在HK之后）:")
         for i, (extinf, url) in enumerate(tw_channels[:5]):
             name = extinf.split(',', 1)[1] if ',' in extinf else extinf
             log(f"  {i+1}. {name[:50]}...")
     
     return tw_channels
 
-def extract_hk_channels(content):
-    """提取JULI频道，分组改为HK"""
-    if not content:
-        return []
-    
-    log("提取JULI频道，分组改为HK...")
-    
-    # 解析M3U内容
-    lines = content.split('\n')
-    channels = []
-    current_extinf = None
-    
-    for line in lines:
-        line = line.strip()
-        if not line:
-            continue
-        
-        if line.startswith('#EXTINF:'):
-            current_extinf = line
-        elif current_extinf and '://' in line and not line.startswith('#'):
-            channels.append((current_extinf, line))
-            current_extinf = None
-    
-    # 过滤JULI频道
-    hk_channels = []
-    seen = set()
-    
-    for extinf, url in channels:
-        if 'JULI' in extinf.upper():
-            # 重命名为HK分组
-            new_extinf = re.sub(r'JULI', 'HK', extinf, flags=re.IGNORECASE)
-            
-            # 确保group-title为HK
-            if 'group-title=' in new_extinf:
-                new_extinf = re.sub(r'group-title="[^"]*"', 'group-title="HK"', new_extinf)
-            else:
-                # 添加group-title
-                if ',' in new_extinf:
-                    parts = new_extinf.split(',', 1)
-                    new_extinf = f'{parts[0]} group-title="HK",{parts[1]}'
-            
-            # 去重
-            key = f"{new_extinf}|{url}"
-            if key not in seen:
-                seen.add(key)
-                hk_channels.append((new_extinf, url))
-    
-    log(f"✅ 提取到 {len(hk_channels)} 个HK频道（原JULI）")
-    
-    if hk_channels:
-        log("HK频道示例:")
-        for i, (extinf, url) in enumerate(hk_channels[:5]):
-            name = extinf.split(',', 1)[1] if ',' in extinf else extinf
-            log(f"  {i+1}. {name[:50]}...")
-    
-    return hk_channels
-
 def main():
     """主函数"""
     log("开始合并M3U文件...")
+    
+    # 显示当前时间（用于调试定时任务）
+    current_time = datetime.now()
+    log(f"当前时间: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
+    log(f"下次运行: 北京时间 06:00 和 18:00")
     
     # 1. 下载BB.m3u并获取EPG
     bb_content, epg_url = download_bb_m3u()
@@ -235,19 +243,19 @@ def main():
     # 2. 从代理获取内容
     proxy_content = get_content_from_proxy()
     
-    # 3. 提取TW频道（4gtv前30个）
-    tw_channels = []
-    if proxy_content:
-        tw_channels = extract_4gtv_channels(proxy_content, limit=30)
-    else:
-        log("⚠️  无法从代理获取内容，跳过TW频道")
-    
-    # 4. 提取HK频道（JULI）
+    # 3. 先提取HK频道（JULI）- 排在前面
     hk_channels = []
     if proxy_content:
         hk_channels = extract_hk_channels(proxy_content)
     else:
         log("⚠️  无法从代理获取内容，跳过HK频道")
+    
+    # 4. 再提取TW频道（4gtv前30个）- 排在后面
+    tw_channels = []
+    if proxy_content:
+        tw_channels = extract_4gtv_channels(proxy_content, limit=30)
+    else:
+        log("⚠️  无法从代理获取内容，跳过TW频道")
     
     # 5. 构建M3U内容
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -259,11 +267,12 @@ def main():
         m3u_header = '#EXTM3U\n'
     
     output = m3u_header + f"""# 自动合并 M3U 文件
-# 生成时间: {timestamp}
+# 生成时间: {timestamp} (北京时间)
+# 下次更新: 每天 06:00 和 18:00 (北京时间)
 # BB源: {BB_URL}
 # 代理源: {CLOUDFLARE_PROXY}
-# 4gtv分组已改为TW（前30个）
-# JULI分组已改为HK
+# JULI分组已改为HK (排在前面)
+# 4gtv分组已改为TW (前30个，排在后面)
 # EPG: {epg_url if epg_url else 'BB的XML'}
 # GitHub Actions 自动生成
 
@@ -287,17 +296,17 @@ def main():
         if line.startswith('#EXTINF:'):
             bb_count += 1
     
-    # 添加TW频道（4gtv）
-    if tw_channels:
-        output += f"\n# TW频道 (原4gtv，前30个)\n"
-        for extinf, url in tw_channels:
+    # 添加HK频道（JULI）- 排在前面
+    if hk_channels:
+        output += f"\n# HK频道 (原JULI，排在TW之前)\n"
+        for extinf, url in hk_channels:
             output += extinf + '\n'
             output += url + '\n'
     
-    # 添加HK频道（JULI）
-    if hk_channels:
-        output += f"\n# HK频道 (原JULI)\n"
-        for extinf, url in hk_channels:
+    # 添加TW频道（4gtv）- 排在后面
+    if tw_channels:
+        output += f"\n# TW频道 (原4gtv，前30个，排在HK之后)\n"
+        for extinf, url in tw_channels:
             output += extinf + '\n'
             output += url + '\n'
     
@@ -305,11 +314,12 @@ def main():
     output += f"""
 # 统计信息
 # BB 频道数: {bb_count}
-# TW 频道数: {len(tw_channels)} (原4gtv前30个)
-# HK 频道数: {len(hk_channels)} (原JULI)
-# 总频道数: {bb_count + len(tw_channels) + len(hk_channels)}
-# 更新时间: {timestamp}
-# 更新频率: 每天 06:00 和 18:00
+# HK 频道数: {len(hk_channels)} (原JULI，排在前)
+# TW 频道数: {len(tw_channels)} (原4gtv前30个，排在后)
+# 总频道数: {bb_count + len(hk_channels) + len(tw_channels)}
+# 更新时间: {timestamp} (北京时间)
+# 更新频率: 每天 06:00 和 18:00 (北京时间)
+# 排序规则: BB → HK → TW
 """
     
     # 6. 保存文件
@@ -321,9 +331,10 @@ def main():
     log(f"📏 大小: {len(output)} 字符")
     log(f"📡 EPG: {epg_url}")
     log(f"📺 BB频道: {bb_count}")
-    log(f"📺 TW频道: {len(tw_channels)} (4gtv前30个)")
-    log(f"📺 HK频道: {len(hk_channels)} (JULI)")
-    log(f"📺 总计: {bb_count + len(tw_channels) + len(hk_channels)}")
+    log(f"📺 HK频道: {len(hk_channels)} (JULI，排在前)")
+    log(f"📺 TW频道: {len(tw_channels)} (4gtv前30个，排在后)")
+    log(f"📺 总计: {bb_count + len(hk_channels) + len(tw_channels)}")
+    log(f"🕒 下次自动更新: 北京时间 06:00 和 18:00")
 
 if __name__ == "__main__":
     main()
