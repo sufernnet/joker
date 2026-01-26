@@ -1,23 +1,17 @@
-name: 自动合并M3U（HK在前，TW在后）
+name: 自动生成M3U+EPG
 
 on:
-  # 手动触发
   workflow_dispatch:
-  
-  # 定时触发：北京时间 06:00 和 18:00
-  # UTC时间 = 北京时间 - 8小时
   schedule:
-    - cron: '0 22 * * *'  # UTC 22:00 = 北京时间 06:00（次日）
+    - cron: '0 22 * * *'  # UTC 22:00 = 北京时间 06:00
     - cron: '0 10 * * *'  # UTC 10:00 = 北京时间 18:00
-  
-  # 当脚本更新时也触发
   push:
     paths:
       - 'scripts/merge_from_proxy.py'
       - '.github/workflows/merge-m3u.yml'
 
 jobs:
-  merge-m3u:
+  generate:
     runs-on: ubuntu-latest
     
     steps:
@@ -32,80 +26,37 @@ jobs:
         python-version: '3.9'
     
     - name: 📦 安装依赖
-      run: |
-        pip install requests
+      run: pip install requests
     
-    - name: 🕒 显示时间信息
+    - name: 🚀 生成M3U和EPG
       run: |
-        echo "=== 时间信息 ==="
-        echo "当前UTC时间: $(date -u '+%Y-%m-%d %H:%M:%S')"
-        echo "当前北京时间: $(date -d '+8 hours' '+%Y-%m-%d %H:%M:%S')"
-        echo "工作流触发时间: ${{ github.event.schedule }}"
-        echo "下次计划运行:"
-        echo "  - UTC 22:00 (北京时间 06:00)"
-        echo "  - UTC 10:00 (北京时间 18:00)"
-    
-    - name: 🚀 运行合并脚本
-      run: |
-        echo "开始运行合并脚本..."
+        echo "开始生成M3U和EPG文件..."
         python scripts/merge_from_proxy.py
         
-        echo -e "\n=== 检查生成的文件 ==="
-        if [ -f "CC.m3u" ]; then
-          echo "✅ CC.m3u 已生成"
-          echo "文件大小: $(wc -c < CC.m3u) 字节"
-          echo "行数: $(wc -l < CC.m3u)"
-          echo -e "\n文件结构验证:"
-          echo "1. 是否有EPG信息:"
-          head -2 CC.m3u
-          echo -e "\n2. HK频道是否在TW之前:"
-          grep -n "# HK频道" CC.m3u
-          grep -n "# TW频道" CC.m3u
-          echo -e "\n3. HK频道排序检查:"
-          grep -A2 "凤凰中文" CC.m3u | head -3 || true
-          grep -A2 "凤凰资讯" CC.m3u | head -3 || true
-          grep -A2 "NOW新闻台" CC.m3u | head -3 || true
-        else
-          echo "❌ CC.m3u 未生成"
-          exit 1
-        fi
+        echo -e "\n=== 生成的文件 ==="
+        echo "CC.m3u: $(wc -l < CC.m3u) 行"
+        echo "CC.xml: $(wc -l < CC.xml) 行"
+        
+        echo -e "\n=== EPG示例 ==="
+        grep -A3 '<channel id=' CC.xml | head -12
     
     - name: 📤 提交文件
       run: |
-        # 配置Git
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
+        git config user.email "github-actions@users.noreply.github.com"
+        git config user.name "GitHub Actions"
         
-        # 检查CC.m3u是否存在
-        if [ -f "CC.m3u" ]; then
-          echo "准备提交CC.m3u..."
-          
-          # 添加文件
-          git add CC.m3u
-          
-          # 检查是否有变化
-          if git diff --cached --quiet; then
-            echo "📭 文件无变化，无需提交"
-          else
-            # 提交并推送
-            git commit -m "🤖 自动更新 CC.m3u [HK排序在前] [$(date +'%Y-%m-%d %H:%M')]"
-            git push
-            echo "✅ 提交完成"
-          fi
+        git add CC.m3u CC.xml
+        
+        if git diff --cached --quiet; then
+          echo "无变化，无需提交"
         else
-          echo "❌ CC.m3u不存在，无法提交"
-          exit 1
+          git commit -m "🤖 自动更新 M3U+EPG [$(date +'%Y-%m-%d %H:%M')]"
+          git push
         fi
     
     - name: 📊 输出结果
       run: |
-        echo "=== 运行完成 ==="
-        echo "🕒 当前UTC时间: $(date -u '+%Y-%m-%d %H:%M:%S')"
-        echo "🕒 当前北京时间: $(date -d '+8 hours' '+%Y-%m-%d %H:%M:%S')"
-        echo "📅 下次运行时间:"
-        echo "  - UTC 22:00 (北京时间 06:00)"
-        echo "  - UTC 10:00 (北京时间 18:00)"
-        echo "🔗 文件链接:"
-        echo "  - GitHub: https://github.com/${{ github.repository }}/blob/main/CC.m3u"
-        echo "  - Raw: https://raw.githubusercontent.com/${{ github.repository }}/main/CC.m3u"
-        echo "📊 排序规则: BB → HK(凤凰/NOW优先) → TW(已过滤)"
+        echo "=== 生成完成 ==="
+        echo "📁 M3U文件: https://raw.githubusercontent.com/${{ github.repository }}/main/CC.m3u"
+        echo "📁 EPG文件: https://raw.githubusercontent.com/${{ github.repository }}/main/CC.xml"
+        echo "🕒 下次更新: 北京时间 06:00 和 18:00"
