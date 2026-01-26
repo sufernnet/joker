@@ -4,7 +4,7 @@ M3U文件合并脚本
 1. 下载BB.m3u（包含EPG信息）
 2. 从Cloudflare代理获取内容
 3. 提取JULI频道，分组改为HK（排在前面）
-4. 提取4gtv前30个直播，分组改为TW（排在后面）
+4. 提取4gtv前30个直播，分组改为TW（排在后面），过滤指定频道
 5. 合并生成CC.m3u
 北京时间每天6:00、18:00自动运行
 """
@@ -19,6 +19,23 @@ from datetime import datetime
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
 CLOUDFLARE_PROXY = "https://smt-proxy.sufern001.workers.dev/"
 OUTPUT_FILE = "CC.m3u"
+
+# 需要过滤掉的TW频道关键词（不区分大小写）
+BLACKLIST_TW = [
+    "Bloomberg TV",
+    "Bloomberg",
+    "SBN全球财经台",
+    "SBN财经",
+    "FRANCE24英文台",
+    "FRANCE24",
+    "半岛国际新闻台",
+    "半岛国际",
+    "NHK world-japan",
+    "NHK world",
+    "NHK",
+    "CNBC Asia",
+    "CNBC"
+]
 
 def log(msg):
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
@@ -152,12 +169,25 @@ def extract_hk_channels(content):
     
     return hk_channels
 
-def extract_4gtv_channels(content, limit=30):
-    """提取4gtv频道（前30个），分组改为TW"""
+def should_skip_channel(channel_name):
+    """检查频道是否应该被过滤"""
+    channel_name_lower = channel_name.lower()
+    
+    # 检查是否在黑名单中
+    for black_word in BLACKLIST_TW:
+        if black_word.lower() in channel_name_lower:
+            log(f"  过滤掉: {channel_name} (包含: {black_word})")
+            return True
+    
+    return False
+
+def extract_filtered_4gtv_channels(content, limit=30):
+    """提取4gtv频道（前30个），分组改为TW，过滤指定频道"""
     if not content:
         return []
     
-    log(f"提取4gtv前{limit}个直播，分组改为TW...")
+    log(f"提取4gtv前{limit}个直播，分组改为TW，过滤指定频道...")
+    log(f"过滤列表: {', '.join(BLACKLIST_TW)}")
     
     # 解析M3U内容
     lines = content.split('\n')
@@ -183,16 +213,30 @@ def extract_4gtv_channels(content, limit=30):
     
     log(f"找到 {len(filtered_channels)} 个4gtv频道")
     
+    # 过滤黑名单频道
+    filtered_by_blacklist = []
+    for extinf, url in filtered_channels:
+        # 提取频道名
+        channel_name = extinf.split(',', 1)[1] if ',' in extinf else extinf
+        
+        # 检查是否应该跳过
+        if not should_skip_channel(channel_name):
+            filtered_by_blacklist.append((extinf, url))
+        else:
+            log(f"  ⛔ 过滤: {channel_name}")
+    
+    log(f"过滤后剩余 {len(filtered_by_blacklist)} 个4gtv频道")
+    
     # 只取前limit个
-    if len(filtered_channels) > limit:
-        filtered_channels = filtered_channels[:limit]
-        log(f"只取前 {limit} 个4gtv频道")
+    if len(filtered_by_blacklist) > limit:
+        filtered_by_blacklist = filtered_by_blacklist[:limit]
+        log(f"只取前 {limit} 个过滤后的4gtv频道")
     
     # 重命名为TW分组
     tw_channels = []
     seen = set()
     
-    for extinf, url in filtered_channels:
+    for extinf, url in filtered_by_blacklist:
         # 替换分组为TW
         new_extinf = extinf
         
@@ -215,10 +259,15 @@ def extract_4gtv_channels(content, limit=30):
             seen.add(key)
             tw_channels.append((new_extinf, url))
     
-    log(f"✅ 提取到 {len(tw_channels)} 个TW频道（原4gtv）")
+    log(f"✅ 提取到 {len(tw_channels)} 个TW频道（原4gtv，已过滤）")
+    
+    # 显示过滤掉的频道统计
+    filtered_count = len(filtered_channels) - len(tw_channels)
+    if filtered_count > 0:
+        log(f"⛔ 过滤掉了 {filtered_count} 个TW频道")
     
     if tw_channels:
-        log("TW频道示例（排在HK之后）:")
+        log("TW频道示例（已过滤指定频道）:")
         for i, (extinf, url) in enumerate(tw_channels[:5]):
             name = extinf.split(',', 1)[1] if ',' in extinf else extinf
             log(f"  {i+1}. {name[:50]}...")
@@ -233,6 +282,7 @@ def main():
     current_time = datetime.now()
     log(f"当前时间: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
     log(f"下次运行: 北京时间 06:00 和 18:00")
+    log(f"TW频道过滤列表: {', '.join(BLACKLIST_TW)}")
     
     # 1. 下载BB.m3u并获取EPG
     bb_content, epg_url = download_bb_m3u()
@@ -250,10 +300,10 @@ def main():
     else:
         log("⚠️  无法从代理获取内容，跳过HK频道")
     
-    # 4. 再提取TW频道（4gtv前30个）- 排在后面
+    # 4. 再提取TW频道（4gtv前30个，过滤指定频道）- 排在后面
     tw_channels = []
     if proxy_content:
-        tw_channels = extract_4gtv_channels(proxy_content, limit=30)
+        tw_channels = extract_filtered_4gtv_channels(proxy_content, limit=30)
     else:
         log("⚠️  无法从代理获取内容，跳过TW频道")
     
@@ -272,7 +322,8 @@ def main():
 # BB源: {BB_URL}
 # 代理源: {CLOUDFLARE_PROXY}
 # JULI分组已改为HK (排在前面)
-# 4gtv分组已改为TW (前30个，排在后面)
+# 4gtv分组已改为TW (前30个，排在后面，已过滤指定频道)
+# 过滤频道: {', '.join(BLACKLIST_TW)}
 # EPG: {epg_url if epg_url else 'BB的XML'}
 # GitHub Actions 自动生成
 
@@ -303,9 +354,10 @@ def main():
             output += extinf + '\n'
             output += url + '\n'
     
-    # 添加TW频道（4gtv）- 排在后面
+    # 添加TW频道（4gtv）- 排在后面（已过滤）
     if tw_channels:
-        output += f"\n# TW频道 (原4gtv，前30个，排在HK之后)\n"
+        output += f"\n# TW频道 (原4gtv，前30个，已过滤指定频道，排在HK之后)\n"
+        output += f"# 已过滤: {', '.join(BLACKLIST_TW)}\n"
         for extinf, url in tw_channels:
             output += extinf + '\n'
             output += url + '\n'
@@ -315,7 +367,8 @@ def main():
 # 统计信息
 # BB 频道数: {bb_count}
 # HK 频道数: {len(hk_channels)} (原JULI，排在前)
-# TW 频道数: {len(tw_channels)} (原4gtv前30个，排在后)
+# TW 频道数: {len(tw_channels)} (原4gtv前30个，已过滤，排在后)
+# 过滤频道: {len(BLACKLIST_TW)} 个
 # 总频道数: {bb_count + len(hk_channels) + len(tw_channels)}
 # 更新时间: {timestamp} (北京时间)
 # 更新频率: 每天 06:00 和 18:00 (北京时间)
@@ -332,9 +385,10 @@ def main():
     log(f"📡 EPG: {epg_url}")
     log(f"📺 BB频道: {bb_count}")
     log(f"📺 HK频道: {len(hk_channels)} (JULI，排在前)")
-    log(f"📺 TW频道: {len(tw_channels)} (4gtv前30个，排在后)")
+    log(f"📺 TW频道: {len(tw_channels)} (4gtv前30个，已过滤{len(BLACKLIST_TW)}个频道，排在后)")
     log(f"📺 总计: {bb_count + len(hk_channels) + len(tw_channels)}")
     log(f"🕒 下次自动更新: 北京时间 06:00 和 18:00")
+    log(f"⛔ TW过滤列表: {', '.join(BLACKLIST_TW)}")
 
 if __name__ == "__main__":
     main()
