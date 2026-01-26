@@ -1,0 +1,87 @@
+name: 自动合并 M3U 文件
+
+on:
+  # 手动触发
+  workflow_dispatch:
+    inputs:
+      description:
+        description: '运行描述'
+        required: false
+        default: '手动触发 M3U 合并'
+  
+  # 定时触发 - 修改这里！
+  # UTC 时间：6:00 = 北京时间 14:00，18:00 = 北京时间 02:00（次日）
+  # 如果要用北京时间，对应 UTC 时间需减8小时
+  schedule:
+    # 每天 UTC 时间 22:00（北京时间 06:00）
+    - cron: '0 22 * * *'
+    # 每天 UTC 时间 10:00（北京时间 18:00）
+    - cron: '0 10 * * *'
+  
+  # 当脚本文件更新时触发
+  push:
+    paths:
+      - 'scripts/merge_m3u.py'
+      - '.github/workflows/merge-m3u.yml'
+  
+  # 创建 release 时触发
+  release:
+    types: [created]
+
+jobs:
+  merge-m3u:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 检出代码
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+    
+    - name: 🐍 设置 Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: 📦 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+    
+    - name: 🚀 运行合并脚本
+      run: |
+        python scripts/merge_m3u.py
+        
+        # 显示生成的文件信息
+        echo "=== 生成的文件内容预览（前10行）==="
+        head -20 CC.m3u
+        echo "..."
+        echo "=== 文件信息 ==="
+        wc -l CC.m3u
+        ls -lh CC.m3u
+    
+    - name: 📁 提交生成的文件
+      run: |
+        # 配置 Git
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # 检查文件是否有变化
+        if git diff --quiet CC.m3u 2>/dev/null; then
+          echo "📭 文件无变化，无需提交"
+        else
+          echo "📤 提交新生成的 CC.m3u"
+          git add CC.m3u
+          git commit -m "🤖 自动更新 CC.m3u [$(date +'%Y-%m-%d %H:%M')]"
+          git push
+        fi
+    
+    - name: 📊 输出总结
+      run: |
+        echo "🎉 M3U 合并完成！"
+        echo "📅 运行时间: $(date)"
+        echo "⏰ 下次运行: UTC 22:00 和 10:00"
+        echo "🕐 对应北京时间: 06:00 和 18:00"
+        echo "🔗 文件链接: https://github.com/${{ github.repository }}/blob/main/CC.m3u"
+        echo "📏 文件行数: $(wc -l < CC.m3u || echo 'N/A')"
