@@ -3,8 +3,8 @@
 M3U文件合并脚本
 1. 下载BB.m3u（包含EPG信息）
 2. 从Cloudflare代理获取内容
-3. 提取JULI频道，分组改为HK（排在前面）
-4. 提取4gtv前30个直播，分组改为TW（排在后面），过滤指定频道
+3. 提取JULI频道，分组改为HK，按指定顺序排列
+4. 提取4gtv前30个直播，分组改为TW，过滤指定频道
 5. 合并生成CC.m3u
 北京时间每天6:00、18:00自动运行
 """
@@ -29,12 +29,23 @@ BLACKLIST_TW = [
     "FRANCE24英文台",
     "FRANCE24",
     "半岛国际新闻台",
-    "半岛国际",
+    "半島",
+    "日本",
     "NHK world-japan",
     "NHK world",
     "NHK",
     "CNBC Asia",
-    "CNBC"
+    "SBN"
+]
+
+# HK频道优先顺序（按这个顺序排列在最前面）
+HK_PRIORITY_ORDER = [
+    "凤凰中文",
+    "凤凰资讯", 
+    "凤凰香港",
+    "NOW新闻台",
+    "NOW星影",
+    "NOW爆谷"
 ]
 
 def log(msg):
@@ -112,12 +123,23 @@ def get_content_from_proxy():
     
     return None
 
-def extract_hk_channels(content):
-    """提取JULI频道，分组改为HK"""
+def get_channel_priority(channel_name):
+    """获取频道的优先级（越小越靠前）"""
+    channel_name_lower = channel_name.lower()
+    
+    for i, priority_channel in enumerate(HK_PRIORITY_ORDER):
+        if priority_channel.lower() in channel_name_lower:
+            return i  # 返回优先级索引，越小越靠前
+    
+    return len(HK_PRIORITY_ORDER)  # 非优先频道排在最后
+
+def extract_and_sort_hk_channels(content):
+    """提取JULI频道，分组改为HK，按指定顺序排列"""
     if not content:
         return []
     
-    log("提取JULI频道，分组改为HK...")
+    log("提取JULI频道，分组改为HK，按指定顺序排列...")
+    log(f"HK优先顺序: {', '.join(HK_PRIORITY_ORDER)}")
     
     # 解析M3U内容
     lines = content.split('\n')
@@ -135,12 +157,15 @@ def extract_hk_channels(content):
             channels.append((current_extinf, line))
             current_extinf = None
     
-    # 过滤JULI频道
-    hk_channels = []
+    # 过滤JULI频道并重命名
+    hk_channels_with_priority = []
     seen = set()
     
     for extinf, url in channels:
         if 'JULI' in extinf.upper():
+            # 提取原始频道名
+            channel_name = extinf.split(',', 1)[1] if ',' in extinf else extinf
+            
             # 重命名为HK分组
             new_extinf = re.sub(r'JULI', 'HK', extinf, flags=re.IGNORECASE)
             
@@ -157,13 +182,38 @@ def extract_hk_channels(content):
             key = f"{new_extinf}|{url}"
             if key not in seen:
                 seen.add(key)
-                hk_channels.append((new_extinf, url))
+                # 计算优先级
+                priority = get_channel_priority(channel_name)
+                hk_channels_with_priority.append((priority, new_extinf, url, channel_name))
+    
+    # 按优先级排序
+    hk_channels_with_priority.sort(key=lambda x: x[0])
+    
+    # 提取排序后的频道
+    hk_channels = [(extinf, url) for _, extinf, url, _ in hk_channels_with_priority]
     
     log(f"✅ 提取到 {len(hk_channels)} 个HK频道（原JULI）")
     
+    # 显示分类统计
+    priority_counts = {}
+    for priority, extinf, url, name in hk_channels_with_priority:
+        if priority < len(HK_PRIORITY_ORDER):
+            channel_type = HK_PRIORITY_ORDER[priority]
+            priority_counts[channel_type] = priority_counts.get(channel_type, 0) + 1
+    
+    log("HK频道分类统计:")
+    for channel_type in HK_PRIORITY_ORDER:
+        if channel_type in priority_counts:
+            log(f"  ✅ {channel_type}: {priority_counts[channel_type]}个")
+    
+    other_count = len([p for p, _, _, _ in hk_channels_with_priority if p >= len(HK_PRIORITY_ORDER)])
+    if other_count > 0:
+        log(f"  📺 其他HK频道: {other_count}个")
+    
+    # 显示排序后的前几个频道
     if hk_channels:
-        log("HK频道示例（排在TW之前）:")
-        for i, (extinf, url) in enumerate(hk_channels[:5]):
+        log("HK频道排序结果（前10个）:")
+        for i, (extinf, url) in enumerate(hk_channels[:10]):
             name = extinf.split(',', 1)[1] if ',' in extinf else extinf
             log(f"  {i+1}. {name[:50]}...")
     
@@ -282,6 +332,7 @@ def main():
     current_time = datetime.now()
     log(f"当前时间: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
     log(f"下次运行: 北京时间 06:00 和 18:00")
+    log(f"HK优先顺序: {', '.join(HK_PRIORITY_ORDER)}")
     log(f"TW频道过滤列表: {', '.join(BLACKLIST_TW)}")
     
     # 1. 下载BB.m3u并获取EPG
@@ -293,10 +344,10 @@ def main():
     # 2. 从代理获取内容
     proxy_content = get_content_from_proxy()
     
-    # 3. 先提取HK频道（JULI）- 排在前面
+    # 3. 先提取HK频道（JULI）- 按指定顺序排列在最前面
     hk_channels = []
     if proxy_content:
-        hk_channels = extract_hk_channels(proxy_content)
+        hk_channels = extract_and_sort_hk_channels(proxy_content)
     else:
         log("⚠️  无法从代理获取内容，跳过HK频道")
     
@@ -321,7 +372,8 @@ def main():
 # 下次更新: 每天 06:00 和 18:00 (北京时间)
 # BB源: {BB_URL}
 # 代理源: {CLOUDFLARE_PROXY}
-# JULI分组已改为HK (排在前面)
+# JULI分组已改为HK (按指定顺序排列在最前面)
+# HK优先顺序: {', '.join(HK_PRIORITY_ORDER)}
 # 4gtv分组已改为TW (前30个，排在后面，已过滤指定频道)
 # 过滤频道: {', '.join(BLACKLIST_TW)}
 # EPG: {epg_url if epg_url else 'BB的XML'}
@@ -347,12 +399,45 @@ def main():
         if line.startswith('#EXTINF:'):
             bb_count += 1
     
-    # 添加HK频道（JULI）- 排在前面
+    # 添加HK频道（JULI）- 按指定顺序排列在最前面
     if hk_channels:
-        output += f"\n# HK频道 (原JULI，排在TW之前)\n"
+        output += f"\n# HK频道 (原JULI，按指定顺序排列在最前面)\n"
+        output += f"# 优先顺序: {', '.join(HK_PRIORITY_ORDER)}\n"
+        
+        # 添加优先频道分组
+        priority_added = False
+        for i, channel_type in enumerate(HK_PRIORITY_ORDER):
+            # 查找该类型的频道
+            type_channels = []
+            for extinf, url in hk_channels:
+                if channel_type.lower() in extinf.lower():
+                    type_channels.append((extinf, url))
+            
+            if type_channels:
+                if not priority_added:
+                    output += f"# --- 优先频道 ---\n"
+                    priority_added = True
+                
+                for extinf, url in type_channels:
+                    output += extinf + '\n'
+                    output += url + '\n'
+        
+        # 添加其他HK频道
+        other_hk_channels = []
         for extinf, url in hk_channels:
-            output += extinf + '\n'
-            output += url + '\n'
+            is_priority = False
+            for channel_type in HK_PRIORITY_ORDER:
+                if channel_type.lower() in extinf.lower():
+                    is_priority = True
+                    break
+            if not is_priority:
+                other_hk_channels.append((extinf, url))
+        
+        if other_hk_channels:
+            output += f"# --- 其他HK频道 ---\n"
+            for extinf, url in other_hk_channels:
+                output += extinf + '\n'
+                output += url + '\n'
     
     # 添加TW频道（4gtv）- 排在后面（已过滤）
     if tw_channels:
@@ -366,13 +451,15 @@ def main():
     output += f"""
 # 统计信息
 # BB 频道数: {bb_count}
-# HK 频道数: {len(hk_channels)} (原JULI，排在前)
+# HK 频道数: {len(hk_channels)} (原JULI，按指定顺序排列)
+#   - 优先频道: {len(HK_PRIORITY_ORDER)} 个类型
+#   - 其他频道: {len(hk_channels) - sum(1 for extinf, _ in hk_channels if any(ct.lower() in extinf.lower() for ct in HK_PRIORITY_ORDER))} 个
 # TW 频道数: {len(tw_channels)} (原4gtv前30个，已过滤，排在后)
 # 过滤频道: {len(BLACKLIST_TW)} 个
 # 总频道数: {bb_count + len(hk_channels) + len(tw_channels)}
 # 更新时间: {timestamp} (北京时间)
 # 更新频率: 每天 06:00 和 18:00 (北京时间)
-# 排序规则: BB → HK → TW
+# 排序规则: BB → HK(按指定顺序) → TW(已过滤)
 """
     
     # 6. 保存文件
@@ -384,11 +471,10 @@ def main():
     log(f"📏 大小: {len(output)} 字符")
     log(f"📡 EPG: {epg_url}")
     log(f"📺 BB频道: {bb_count}")
-    log(f"📺 HK频道: {len(hk_channels)} (JULI，排在前)")
-    log(f"📺 TW频道: {len(tw_channels)} (4gtv前30个，已过滤{len(BLACKLIST_TW)}个频道，排在后)")
+    log(f"📺 HK频道: {len(hk_channels)} (按指定顺序: {', '.join(HK_PRIORITY_ORDER)})")
+    log(f"📺 TW频道: {len(tw_channels)} (4gtv前30个，已过滤{len(BLACKLIST_TW)}个频道)")
     log(f"📺 总计: {bb_count + len(hk_channels) + len(tw_channels)}")
     log(f"🕒 下次自动更新: 北京时间 06:00 和 18:00")
-    log(f"⛔ TW过滤列表: {', '.join(BLACKLIST_TW)}")
 
 if __name__ == "__main__":
     main()
