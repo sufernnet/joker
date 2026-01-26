@@ -1,12 +1,13 @@
-name: 自动合并M3U（使用Cloudflare代理）
+name: 自动合并M3U（HK在前，TW在后）
 
 on:
   # 手动触发
   workflow_dispatch:
   
   # 定时触发：北京时间 06:00 和 18:00
+  # UTC时间 = 北京时间 - 8小时
   schedule:
-    - cron: '0 22 * * *'  # UTC 22:00 = 北京时间 06:00
+    - cron: '0 22 * * *'  # UTC 22:00 = 北京时间 06:00（次日）
     - cron: '0 10 * * *'  # UTC 10:00 = 北京时间 18:00
   
   # 当脚本更新时也触发
@@ -32,7 +33,7 @@ jobs:
     
     - name: 📦 安装依赖
       run: |
-        pip install requests beautifulsoup4
+        pip install requests
     
     - name: 🚀 运行合并脚本
       run: |
@@ -44,9 +45,12 @@ jobs:
           echo "✅ CC.m3u 已生成"
           echo "文件大小: $(wc -c < CC.m3u) 字节"
           echo "行数: $(wc -l < CC.m3u)"
-          echo -e "\n前5行内容:"
-          head -5 CC.m3u
-          echo "..."
+          echo -e "\n文件结构验证:"
+          echo "1. 是否有EPG信息:"
+          head -2 CC.m3u
+          echo -e "\n2. HK频道是否在TW之前:"
+          grep -n "# HK频道" CC.m3u
+          grep -n "# TW频道" CC.m3u
         else
           echo "❌ CC.m3u 未生成"
           exit 1
@@ -70,7 +74,7 @@ jobs:
             echo "📭 文件无变化，无需提交"
           else
             # 提交并推送
-            git commit -m "🤖 自动更新 CC.m3u [$(date +'%Y-%m-%d %H:%M')]"
+            git commit -m "🤖 自动更新 CC.m3u [HK在前，TW在后] [$(date +'%Y-%m-%d %H:%M')]"
             git push
             echo "✅ 提交完成"
           fi
@@ -82,9 +86,12 @@ jobs:
     - name: 📊 输出结果
       run: |
         echo "=== 运行完成 ==="
-        echo "📅 时间: $(date)"
-        echo "🔗 代理地址: https://smt-proxy.sufern001.workers.dev/"
-        echo "📁 生成文件: CC.m3u"
-        echo "🌐 访问链接:"
+        echo "🕒 当前UTC时间: $(date -u)"
+        echo "🕒 当前北京时间: $(date -d '+8 hours')"
+        echo "📅 下次运行时间:"
+        echo "  - UTC 22:00 (北京时间 06:00)"
+        echo "  - UTC 10:00 (北京时间 18:00)"
+        echo "🔗 文件链接:"
         echo "  - GitHub: https://github.com/${{ github.repository }}/blob/main/CC.m3u"
         echo "  - Raw: https://raw.githubusercontent.com/${{ github.repository }}/main/CC.m3u"
+        echo "📊 排序规则: BB → HK → TW"
