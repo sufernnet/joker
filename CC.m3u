@@ -1,10 +1,11 @@
 #EXTM3U url-tvg="https://epg.112114.xyz/pp.xml"
 # 自动合并 M3U 文件
-# 生成时间: 2026-01-26 15:18:02
+# 生成时间: 2026-01-26 15:22:21 (北京时间)
+# 下次更新: 每天 06:00 和 18:00 (北京时间)
 # BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u
 # 代理源: https://smt-proxy.sufern001.workers.dev/
-# 4gtv分组已改为TW（前30个）
-# JULI分组已改为HK
+# JULI分组已改为HK (排在前面)
+# 4gtv分组已改为TW (前30个，排在后面)
 # EPG: https://epg.112114.xyz/pp.xml
 # GitHub Actions 自动生成
 
@@ -167,69 +168,7 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=01
 #EXTINF:-1 tvg-id="杭州导视" tvg-name="杭州导视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州导视.png" group-title="浙江",杭州导视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
 
-# TW频道 (原4gtv，前30个)
-#EXTINF:-1 tvg-name="中天新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中天新闻.png" group-title="TW",中天新聞台
-https://smart.946985.filegear-sg.me/iptv.php?id=7k2699&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="TVBS新闻" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVBS新闻.png" group-title="TW",TVBS新聞
-https://smart.946985.filegear-sg.me/iptv.php?id=6po79v&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="民视新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视新闻.png" group-title="TW",民視新聞台
-https://smart.946985.filegear-sg.me/iptv.php?id=o9zz5z&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="东森新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/东森新闻.png" group-title="TW",東森新聞台
-https://smart.946985.filegear-sg.me/iptv.php?id=qn77l4&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="华视新闻" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/华视新闻.png" group-title="TW",華視新聞
-https://smart.946985.filegear-sg.me/iptv.php?id=2q47rv&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="镜电视新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/镜电视新闻.png" group-title="TW",鏡電視新聞台
-https://smart.946985.filegear-sg.me/iptv.php?id=yox6sm&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="东森财经新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/东森财经新闻.png" group-title="TW",東森財經新聞台
-https://smart.946985.filegear-sg.me/iptv.php?id=tbqni5&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="中视新闻HD" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中视新闻.png" group-title="TW",中視新聞
-https://smart.946985.filegear-sg.me/iptv.php?id=kr93y7&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="寰宇新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/寰宇新闻台湾.png" group-title="TW",寰宇新聞台
-https://smart.946985.filegear-sg.me/iptv.php?id=i6xlr7&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="寰宇新闻台湾台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/寰宇新闻台湾.png" group-title="TW",寰宇新聞台灣台
-https://smart.946985.filegear-sg.me/iptv.php?id=wmmuqq&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="三立新闻INEWS" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/三立新闻.png" group-title="TW",三立新聞iNEWS
-https://smart.946985.filegear-sg.me/iptv.php?id=1k9se2&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="BLOOMBERG TV" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/BLOOMBERGTV.png" group-title="TW",Bloomberg TV
-https://smart.946985.filegear-sg.me/iptv.php?id=eszd4h&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="SBN全球财经台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/SBN全球财经.png" group-title="TW",SBN全球財經台
-https://smart.946985.filegear-sg.me/iptv.php?id=pfd7w0&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="FRANCE24 英文台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/FRANCE24.png" group-title="TW",FRANCE24 英文台
-https://smart.946985.filegear-sg.me/iptv.php?id=3shjjb&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="半岛国际新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/半岛国际新闻.png" group-title="TW",半島國際新聞台
-https://smart.946985.filegear-sg.me/iptv.php?id=2rtltb&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="NHK WORLD-JAPAN" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/NHK.png" group-title="TW",NHK WORLD-JAPAN
-https://smart.946985.filegear-sg.me/iptv.php?id=9wj7t6&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="CNBC ASIA 财经台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/CNBC.png" group-title="TW",CNBC Asia 財經台
-https://smart.946985.filegear-sg.me/iptv.php?id=97z3ma&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="民视第一台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视第一.png" group-title="TW",民視第一台
-https://smart.946985.filegear-sg.me/iptv.php?id=5iez11&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="民视台湾台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视台湾.png" group-title="TW",民視台灣台
-https://smart.946985.filegear-sg.me/iptv.php?id=t1e54e&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="民视" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视.png" group-title="TW",民視
-https://smart.946985.filegear-sg.me/iptv.php?id=aq2r0o&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="三立综合台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/三立综合.png" group-title="TW",三立綜合台
-https://smart.946985.filegear-sg.me/iptv.php?id=oslchw&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="华视" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/华视.png" group-title="TW",華視
-https://smart.946985.filegear-sg.me/iptv.php?id=uj6so6&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="中视" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中视.png" group-title="TW",中視
-https://smart.946985.filegear-sg.me/iptv.php?id=ft8a48&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="中视经典台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中视经典.png" group-title="TW",中視經典台
-https://smart.946985.filegear-sg.me/iptv.php?id=sjvfak&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="中视菁采台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中视菁采.png" group-title="TW",中視菁采台
-https://smart.946985.filegear-sg.me/iptv.php?id=bv6xwf&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="八大综艺台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/八大综艺.png" group-title="TW",八大綜藝台
-https://smart.946985.filegear-sg.me/iptv.php?id=m5h94u&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="TVBS精采台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVBS精采.png" group-title="TW",TVBS精采台
-https://smart.946985.filegear-sg.me/iptv.php?id=9dnhkp&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="民视综艺台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视综艺.png" group-title="TW",民視綜藝台
-https://smart.946985.filegear-sg.me/iptv.php?id=f21wwk&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="TVBS" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVBS.png" group-title="TW",TVBS
-https://smart.946985.filegear-sg.me/iptv.php?id=cikp4j&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="TVBS欢乐台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVBS欢乐.png" group-title="TW",TVBS歡樂台
-https://smart.946985.filegear-sg.me/iptv.php?id=yzz21x&token=tg_Thinkoo_bot
-
-# HK频道 (原JULI)
+# HK频道 (原JULI，排在TW之前)
 #EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="HK",翡翠台
 https://smart.946985.filegear-sg.me/iptv.php?id=35s6cg&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="HK",翡翠台广电
@@ -383,10 +322,73 @@ https://smart.946985.filegear-sg.me/iptv.php?id=q6xqh8&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="QJ" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/qjs.png" group-title="HK",Astro QJ_SMT
 https://smart.946985.filegear-sg.me/iptv.php?id=34eeq4&token=tg_Thinkoo_bot
 
+# TW频道 (原4gtv，前30个，排在HK之后)
+#EXTINF:-1 tvg-name="中天新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中天新闻.png" group-title="TW",中天新聞台
+https://smart.946985.filegear-sg.me/iptv.php?id=7k2699&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="TVBS新闻" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVBS新闻.png" group-title="TW",TVBS新聞
+https://smart.946985.filegear-sg.me/iptv.php?id=6po79v&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="民视新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视新闻.png" group-title="TW",民視新聞台
+https://smart.946985.filegear-sg.me/iptv.php?id=o9zz5z&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="东森新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/东森新闻.png" group-title="TW",東森新聞台
+https://smart.946985.filegear-sg.me/iptv.php?id=qn77l4&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="华视新闻" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/华视新闻.png" group-title="TW",華視新聞
+https://smart.946985.filegear-sg.me/iptv.php?id=2q47rv&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="镜电视新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/镜电视新闻.png" group-title="TW",鏡電視新聞台
+https://smart.946985.filegear-sg.me/iptv.php?id=yox6sm&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="东森财经新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/东森财经新闻.png" group-title="TW",東森財經新聞台
+https://smart.946985.filegear-sg.me/iptv.php?id=tbqni5&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="中视新闻HD" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中视新闻.png" group-title="TW",中視新聞
+https://smart.946985.filegear-sg.me/iptv.php?id=kr93y7&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="寰宇新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/寰宇新闻台湾.png" group-title="TW",寰宇新聞台
+https://smart.946985.filegear-sg.me/iptv.php?id=i6xlr7&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="寰宇新闻台湾台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/寰宇新闻台湾.png" group-title="TW",寰宇新聞台灣台
+https://smart.946985.filegear-sg.me/iptv.php?id=wmmuqq&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="三立新闻INEWS" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/三立新闻.png" group-title="TW",三立新聞iNEWS
+https://smart.946985.filegear-sg.me/iptv.php?id=1k9se2&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="BLOOMBERG TV" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/BLOOMBERGTV.png" group-title="TW",Bloomberg TV
+https://smart.946985.filegear-sg.me/iptv.php?id=eszd4h&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="SBN全球财经台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/SBN全球财经.png" group-title="TW",SBN全球財經台
+https://smart.946985.filegear-sg.me/iptv.php?id=pfd7w0&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="FRANCE24 英文台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/FRANCE24.png" group-title="TW",FRANCE24 英文台
+https://smart.946985.filegear-sg.me/iptv.php?id=3shjjb&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="半岛国际新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/半岛国际新闻.png" group-title="TW",半島國際新聞台
+https://smart.946985.filegear-sg.me/iptv.php?id=2rtltb&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="NHK WORLD-JAPAN" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/NHK.png" group-title="TW",NHK WORLD-JAPAN
+https://smart.946985.filegear-sg.me/iptv.php?id=9wj7t6&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="CNBC ASIA 财经台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/CNBC.png" group-title="TW",CNBC Asia 財經台
+https://smart.946985.filegear-sg.me/iptv.php?id=97z3ma&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="民视第一台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视第一.png" group-title="TW",民視第一台
+https://smart.946985.filegear-sg.me/iptv.php?id=5iez11&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="民视台湾台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视台湾.png" group-title="TW",民視台灣台
+https://smart.946985.filegear-sg.me/iptv.php?id=t1e54e&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="民视" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视.png" group-title="TW",民視
+https://smart.946985.filegear-sg.me/iptv.php?id=aq2r0o&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="三立综合台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/三立综合.png" group-title="TW",三立綜合台
+https://smart.946985.filegear-sg.me/iptv.php?id=oslchw&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="华视" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/华视.png" group-title="TW",華視
+https://smart.946985.filegear-sg.me/iptv.php?id=uj6so6&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="中视" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中视.png" group-title="TW",中視
+https://smart.946985.filegear-sg.me/iptv.php?id=ft8a48&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="中视经典台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中视经典.png" group-title="TW",中視經典台
+https://smart.946985.filegear-sg.me/iptv.php?id=sjvfak&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="中视菁采台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中视菁采.png" group-title="TW",中視菁采台
+https://smart.946985.filegear-sg.me/iptv.php?id=bv6xwf&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="八大综艺台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/八大综艺.png" group-title="TW",八大綜藝台
+https://smart.946985.filegear-sg.me/iptv.php?id=m5h94u&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="TVBS精采台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVBS精采.png" group-title="TW",TVBS精采台
+https://smart.946985.filegear-sg.me/iptv.php?id=9dnhkp&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="民视综艺台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视综艺.png" group-title="TW",民視綜藝台
+https://smart.946985.filegear-sg.me/iptv.php?id=f21wwk&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="TVBS" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVBS.png" group-title="TW",TVBS
+https://smart.946985.filegear-sg.me/iptv.php?id=cikp4j&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="TVBS欢乐台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVBS欢乐.png" group-title="TW",TVBS歡樂台
+https://smart.946985.filegear-sg.me/iptv.php?id=yzz21x&token=tg_Thinkoo_bot
+
 # 统计信息
 # BB 频道数: 79
-# TW 频道数: 30 (原4gtv前30个)
-# HK 频道数: 76 (原JULI)
+# HK 频道数: 76 (原JULI，排在前)
+# TW 频道数: 30 (原4gtv前30个，排在后)
 # 总频道数: 185
-# 更新时间: 2026-01-26 15:18:02
-# 更新频率: 每天 06:00 和 18:00
+# 更新时间: 2026-01-26 15:22:21 (北京时间)
+# 更新频率: 每天 06:00 和 18:00 (北京时间)
+# 排序规则: BB → HK → TW
