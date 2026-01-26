@@ -35,6 +35,16 @@ jobs:
       run: |
         pip install requests
     
+    - name: 🕒 显示时间信息
+      run: |
+        echo "=== 时间信息 ==="
+        echo "当前UTC时间: $(date -u '+%Y-%m-%d %H:%M:%S')"
+        echo "当前北京时间: $(date -d '+8 hours' '+%Y-%m-%d %H:%M:%S')"
+        echo "工作流触发时间: ${{ github.event.schedule }}"
+        echo "下次计划运行:"
+        echo "  - UTC 22:00 (北京时间 06:00)"
+        echo "  - UTC 10:00 (北京时间 18:00)"
+    
     - name: 🚀 运行合并脚本
       run: |
         echo "开始运行合并脚本..."
@@ -51,6 +61,10 @@ jobs:
           echo -e "\n2. HK频道是否在TW之前:"
           grep -n "# HK频道" CC.m3u
           grep -n "# TW频道" CC.m3u
+          echo -e "\n3. HK频道排序检查:"
+          grep -A2 "凤凰中文" CC.m3u | head -3 || true
+          grep -A2 "凤凰资讯" CC.m3u | head -3 || true
+          grep -A2 "NOW新闻台" CC.m3u | head -3 || true
         else
           echo "❌ CC.m3u 未生成"
           exit 1
@@ -74,7 +88,7 @@ jobs:
             echo "📭 文件无变化，无需提交"
           else
             # 提交并推送
-            git commit -m "🤖 自动更新 CC.m3u [HK在前，TW在后] [$(date +'%Y-%m-%d %H:%M')]"
+            git commit -m "🤖 自动更新 CC.m3u [HK排序在前] [$(date +'%Y-%m-%d %H:%M')]"
             git push
             echo "✅ 提交完成"
           fi
@@ -86,12 +100,12 @@ jobs:
     - name: 📊 输出结果
       run: |
         echo "=== 运行完成 ==="
-        echo "🕒 当前UTC时间: $(date -u)"
-        echo "🕒 当前北京时间: $(date -d '+8 hours')"
+        echo "🕒 当前UTC时间: $(date -u '+%Y-%m-%d %H:%M:%S')"
+        echo "🕒 当前北京时间: $(date -d '+8 hours' '+%Y-%m-%d %H:%M:%S')"
         echo "📅 下次运行时间:"
         echo "  - UTC 22:00 (北京时间 06:00)"
         echo "  - UTC 10:00 (北京时间 18:00)"
         echo "🔗 文件链接:"
         echo "  - GitHub: https://github.com/${{ github.repository }}/blob/main/CC.m3u"
         echo "  - Raw: https://raw.githubusercontent.com/${{ github.repository }}/main/CC.m3u"
-        echo "📊 排序规则: BB → HK → TW"
+        echo "📊 排序规则: BB → HK(凤凰/NOW优先) → TW(已过滤)"
