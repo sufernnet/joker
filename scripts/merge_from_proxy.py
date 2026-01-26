@@ -1,8 +1,8 @@
-# scripts/merge_from_proxy.py
 #!/usr/bin/env python3
 """
 从 Cloudflare 代理页面提取并合并 M3U
 代理地址: https://smt-proxy.sufern001.workers.dev/
+JULI分组已改为HK分组
 """
 
 import requests
@@ -44,14 +44,11 @@ def extract_m3u_from_proxy():
         html_content = response.text
         log(f"代理页面获取成功 ({len(html_content)} 字符)")
         
-        # 方法1：直接查找M3U链接（如果页面有直接链接）
+        # 方法1：直接查找M3U链接
         m3u_links = re.findall(r'https?://[^\s"\']+\.m3u(?:\?[^\s"\']*)?', html_content, re.IGNORECASE)
         
         if m3u_links:
             log(f"找到 {len(m3u_links)} 个M3U链接")
-            for link in m3u_links:
-                log(f"  - {link}")
-            
             # 尝试下载第一个M3U链接
             try:
                 m3u_response = requests.get(m3u_links[0], timeout=10)
@@ -61,10 +58,9 @@ def extract_m3u_from_proxy():
             except Exception as e:
                 log(f"下载M3U链接失败: {e}")
         
-        # 方法2：如果页面直接包含M3U内容（可能在<pre>标签或文本中）
+        # 方法2：查找可能包含M3U内容的区域
         log("尝试直接提取M3U内容...")
         
-        # 查找可能包含M3U内容的区域
         patterns = [
             r'(#EXTM3U.*?)(?:</pre>|</code>|</textarea>|$)',
             r'<pre[^>]*>(.*?#EXTM3U.*?)</pre>',
@@ -76,7 +72,7 @@ def extract_m3u_from_proxy():
             matches = re.findall(pattern, html_content, re.DOTALL | re.IGNORECASE)
             if matches:
                 log(f"找到模式匹配: {len(matches)} 处")
-                for i, match in enumerate(matches[:2]):
+                for match in matches:
                     content = match.strip()
                     if content.startswith('#EXTM3U'):
                         log(f"✅ 找到有效的M3U内容 ({len(content)} 字符)")
@@ -102,12 +98,9 @@ def extract_m3u_from_proxy():
             return '#EXTM3U\n' + '\n'.join(m3u_content)
         
         log("❌ 无法从页面提取M3U内容")
-        log("页面开头1000字符:")
-        print(html_content[:1000])
-        
         # 保存HTML供调试
         with open("proxy_debug.html", "w", encoding="utf-8") as f:
-            f.write(html_content)
+            f.write(html_content[:2000])
         
         return ""
         
@@ -115,61 +108,66 @@ def extract_m3u_from_proxy():
         log(f"❌ 从代理提取失败: {e}")
         return ""
 
-def extract_juli_channels(m3u_content):
-    """从M3U内容中提取JULI频道"""
+def extract_hk_channels(m3u_content):
+    """从M3U内容中提取JULI频道并改为HK分组"""
     if not m3u_content:
         return []
     
-    log("提取JULI频道...")
+    log("提取JULI频道并改为HK分组...")
     lines = m3u_content.split('\n')
     channels = []
-    current_extinf = None
+    seen_channels = set()
     
-    for i in range(len(lines)):
+    i = 0
+    while i < len(lines):
         line = lines[i].strip()
         
-        # 寻找JULI频道
+        # 寻找包含JULI的行（不区分大小写）
         if 'JULI' in line.upper():
-            # 如果是EXTINF行
-            if line.startswith('#EXTINF:'):
-                current_extinf = line
-                # 查找对应的URL
-                for j in range(i+1, min(i+3, len(lines))):
-                    next_line = lines[j].strip()
-                    if next_line and '://' in next_line and not next_line.startswith('#'):
-                        channels.append((current_extinf, next_line))
+            # 向前找EXTINF行
+            extinf_line = None
+            for j in range(max(0, i-3), i+1):
+                if lines[j].strip().startswith('#EXTINF:'):
+                    extinf_line = lines[j].strip()
+                    break
+            
+            # 向后找URL行
+            url_line = None
+            if extinf_line:
+                for k in range(i+1, min(len(lines), i+4)):
+                    test_line = lines[k].strip()
+                    if test_line and not test_line.startswith('#') and '://' in test_line:
+                        url_line = test_line
                         break
             
-            # 如果在其他行找到JULI，向前找EXTINF
-            elif i > 0:
-                for j in range(max(0, i-3), i):
-                    if lines[j].startswith('#EXTINF:'):
-                        current_extinf = lines[j]
-                        # 查找URL
-                        for k in range(i, min(i+3, len(lines))):
-                            url_line = lines[k].strip()
-                            if url_line and '://' in url_line and not url_line.startswith('#'):
-                                channels.append((current_extinf, url_line))
-                                break
-                        break
+            # 如果找到了EXTINF和URL
+            if extinf_line and url_line:
+                # 修改频道名称：把JULI改成HK
+                new_extinf = extinf_line
+                if 'JULI' in new_extinf.upper():
+                    # 使用正则替换所有JULI为HK
+                    new_extinf = re.sub(r'JULI', 'HK', new_extinf, flags=re.IGNORECASE)
+                
+                # 创建频道唯一标识（用于去重）
+                channel_id = f"{new_extinf}|{url_line}"
+                
+                if channel_id not in seen_channels:
+                    seen_channels.add(channel_id)
+                    channels.append((new_extinf, url_line))
+        
+        i += 1
     
-    # 去重
-    unique_channels = []
-    seen = set()
-    for extinf, url in channels:
-        key = f"{extinf}|{url}"
-        if key not in seen:
-            seen.add(key)
-            unique_channels.append((extinf, url))
+    log(f"✅ 提取到 {len(channels)} 个HK频道（原JULI频道）")
     
-    log(f"✅ 提取到 {len(unique_channels)} 个JULI频道")
+    # 显示前几个频道
+    if channels:
+        log("部分HK频道:")
+        for idx, (extinf, url) in enumerate(channels[:3]):
+            if ',' in extinf:
+                name = extinf.split(',', 1)[1]
+                log(f"  {idx+1}. {name[:60]}{'...' if len(name) > 60 else ''}")
     
-    # 显示部分频道
-    for i, (extinf, url) in enumerate(unique_channels[:5]):
-        channel_name = extinf.split(',', 1)[1] if ',' in extinf else extinf
-        log(f"  {i+1}. {channel_name[:50]}...")
-    
-    return unique_channels
+    return channels
 
 def main():
     """主函数"""
@@ -181,14 +179,14 @@ def main():
         log("❌ 无法继续，BB.m3u下载失败")
         return
     
-    # 2. 从代理获取JULI内容
+    # 2. 从代理获取内容
     proxy_content = extract_m3u_from_proxy()
     if not proxy_content:
         log("⚠️  无法从代理获取内容，只使用BB.m3u")
-        juli_channels = []
+        hk_channels = []
     else:
-        # 3. 提取JULI频道
-        juli_channels = extract_juli_channels(proxy_content)
+        # 3. 提取HK频道（原JULI频道）
+        hk_channels = extract_hk_channels(proxy_content)
     
     # 4. 合并内容
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -197,6 +195,7 @@ def main():
 # 自动合并 M3U 文件
 # 生成时间: {timestamp}
 # 代理源: {PROXY_URL}
+# JULI分组已改为HK分组
 # GitHub Actions 自动生成
 
 """
@@ -210,10 +209,10 @@ def main():
             if line.startswith('#EXTINF:'):
                 bb_count += 1
     
-    # 添加JULI频道
-    if juli_channels:
-        output += f"\n# JULI 频道 (从代理提取)\n"
-        for extinf, url in juli_channels:
+    # 添加HK频道（原JULI频道）
+    if hk_channels:
+        output += f"\n# HK 频道 (原JULI频道，从代理提取)\n"
+        for extinf, url in hk_channels:
             output += extinf + '\n'
             output += url + '\n'
     
@@ -221,21 +220,22 @@ def main():
     output += f"""
 # 统计信息
 # BB 频道数: {bb_count}
-# JULI 频道数: {len(juli_channels)}
-# 总频道数: {bb_count + len(juli_channels)}
+# HK 频道数: {len(hk_channels)} (原JULI频道)
+# 总频道数: {bb_count + len(hk_channels)}
 # 更新时间: {timestamp}
 """
     
     # 5. 保存文件
-    with open("CC.m3u", "w", encoding="utf-8") as f:
+    output_file = "CC.m3u"
+    with open(output_file, "w", encoding="utf-8") as f:
         f.write(output)
     
     log(f"\n🎉 合并完成!")
-    log(f"📁 文件: CC.m3u")
+    log(f"📁 文件: {output_file}")
     log(f"📏 大小: {len(output)} 字符")
     log(f"📺 BB频道: {bb_count}")
-    log(f"📺 JULI频道: {len(juli_channels)}")
-    log(f"📺 总计: {bb_count + len(juli_channels)}")
+    log(f"📺 HK频道: {len(hk_channels)} (原JULI)")
+    log(f"📺 总计: {bb_count + len(hk_channels)}")
 
 if __name__ == "__main__":
     main()
