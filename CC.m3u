@@ -1,14 +1,15 @@
-#EXTM3U url-tvg="https://epg.112114.xyz/pp.xml"
+#EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
 # 自动合并 M3U 文件
-# 生成时间: 2026-01-26 23:36:27 (北京时间)
+# 生成时间: 2026-01-26 23:43:02 (北京时间)
 # 下次更新: 每天 06:00 和 18:00 (北京时间)
 # BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u
 # 代理源: https://smt-proxy.sufern001.workers.dev/
 # JULI分组已改为HK (按指定顺序排列在最前面)
 # HK优先顺序: 凤凰中文, 凤凰资讯, 凤凰香港, NOW新闻台, NOW星影, NOW爆谷
 # 4gtv分组已改为TW (前30个，排在后面，已过滤指定频道)
-# 过滤频道: Bloomberg TV, Bloomberg, SBN全球财经台, SBN财经, FRANCE24英文台, FRANCE24, 半岛国际新闻台, 半島, 日本, NHK world-japan, NHK world, NHK, CNBC Asia, SBN
-# EPG: https://epg.112114.xyz/pp.xml
+# 过滤频道: Bloomberg TV, Bloomberg, SBN全球财经台, SBN财经, FRANCE24英文台, FRANCE24, 半岛国际新闻台, 半岛国际, NHK world-japan, NHK world, NHK, 半島日本CNBC Asia, CNBC
+# EPG源: http://epg.51zmt.top:8000/e.xml
+# 测试的EPG源: 3 个
 # GitHub Actions 自动生成
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -330,7 +331,7 @@ https://smart.946985.filegear-sg.me/iptv.php?id=q6xqh8&token=tg_Thinkoo_bot
 https://smart.946985.filegear-sg.me/iptv.php?id=34eeq4&token=tg_Thinkoo_bot
 
 # TW频道 (原4gtv，前30个，已过滤指定频道，排在HK之后)
-# 已过滤: Bloomberg TV, Bloomberg, SBN全球财经台, SBN财经, FRANCE24英文台, FRANCE24, 半岛国际新闻台, 半島, 日本, NHK world-japan, NHK world, NHK, CNBC Asia, SBN
+# 已过滤: Bloomberg TV, Bloomberg, SBN全球财经台, SBN财经, FRANCE24英文台, FRANCE24, 半岛国际新闻台, 半岛国际, NHK world-japan, NHK world, NHK, 半島日本CNBC Asia, CNBC
 #EXTINF:-1 tvg-name="中天新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中天新闻.png" group-title="TW",中天新聞台
 https://smart.946985.filegear-sg.me/iptv.php?id=7k2699&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="TVBS新闻" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVBS新闻.png" group-title="TW",TVBS新聞
@@ -353,6 +354,10 @@ https://smart.946985.filegear-sg.me/iptv.php?id=i6xlr7&token=tg_Thinkoo_bot
 https://smart.946985.filegear-sg.me/iptv.php?id=wmmuqq&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="三立新闻INEWS" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/三立新闻.png" group-title="TW",三立新聞iNEWS
 https://smart.946985.filegear-sg.me/iptv.php?id=1k9se2&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="SBN全球财经台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/SBN全球财经.png" group-title="TW",SBN全球財經台
+https://smart.946985.filegear-sg.me/iptv.php?id=pfd7w0&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="半岛国际新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/半岛国际新闻.png" group-title="TW",半島國際新聞台
+https://smart.946985.filegear-sg.me/iptv.php?id=2rtltb&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="民视第一台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视第一.png" group-title="TW",民視第一台
 https://smart.946985.filegear-sg.me/iptv.php?id=5iez11&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="民视台湾台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/民视台湾.png" group-title="TW",民視台灣台
@@ -385,21 +390,22 @@ https://smart.946985.filegear-sg.me/iptv.php?id=6h5r6s&token=tg_Thinkoo_bot
 https://smart.946985.filegear-sg.me/iptv.php?id=wa7z3q&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="靖天综合台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/靖天综合.png" group-title="TW",靖天綜合台
 https://smart.946985.filegear-sg.me/iptv.php?id=mayyty&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="KLT-靖天国际台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/靖天国际.png" group-title="TW",KLT-靖天國際台
-https://smart.946985.filegear-sg.me/iptv.php?id=occfnu&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="靖天资讯台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/靖天资讯.png" group-title="TW",靖天資訊台
-https://smart.946985.filegear-sg.me/iptv.php?id=sssqkq&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="NICE TV 靖天欢乐台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/靖天欢乐.png" group-title="TW",Nice TV 靖天歡樂台
-https://smart.946985.filegear-sg.me/iptv.php?id=xt3w8h&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="靖天日本台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/靖天日本.png" group-title="TW",靖天日本台
+https://smart.946985.filegear-sg.me/iptv.php?id=d272dw&token=tg_Thinkoo_bot
 
+# EPG信息
+# 使用EPG: http://epg.51zmt.top:8000/e.xml
+# 测试的EPG源 (3个):
+#      https://epg.112114.xyz/pp.xml
+#      https://epg.946985.filegear-sg.me/t.xml.gz
+#   ✅ http://epg.51zmt.top:8000/e.xml
 # 统计信息
 # BB 频道数: 79
 # HK 频道数: 76 (原JULI，按指定顺序排列)
-#   - 优先频道: 6 个类型
-#   - 其他频道: 70 个
 # TW 频道数: 30 (原4gtv前30个，已过滤，排在后)
-# 过滤频道: 14 个
+# 过滤频道: 13 个
 # 总频道数: 185
-# 更新时间: 2026-01-26 23:36:27 (北京时间)
+# EPG状态: ✅ 正常
+# 更新时间: 2026-01-26 23:43:02 (北京时间)
 # 更新频率: 每天 06:00 和 18:00 (北京时间)
-# 排序规则: BB → HK(按指定顺序) → TW(已过滤)
+# 排序规则: BB → HK(凤凰/NOW优先) → TW(已过滤)
