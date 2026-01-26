@@ -1,11 +1,10 @@
 #EXTM3U url-tvg="https://epg.112114.xyz/pp.xml"
 # 自动合并 M3U 文件
-# 生成时间: 2026-01-26 05:42:16
+# 生成时间: 2026-01-26 15:08:11
 # BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u
 # 代理源: https://smt-proxy.sufern001.workers.dev/
 # JULI分组已改为HK分组
-# EPG源: https://epg.112114.xyz/pp.xml
-# 更新时间: 2026-01-26 05:42:16
+# EPG: https://epg.112114.xyz/pp.xml
 # GitHub Actions 自动生成
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -167,7 +166,7 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=01
 #EXTINF:-1 tvg-id="杭州导视" tvg-name="杭州导视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州导视.png" group-title="浙江",杭州导视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
 
-# HK频道 (原JULI频道，通过Cloudflare代理更新)
+# HK频道 (原JULI频道)
 #EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="HK",翡翠台
 https://smart.946985.filegear-sg.me/iptv.php?id=35s6cg&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="HK",翡翠台广电
@@ -325,6 +324,5 @@ https://smart.946985.filegear-sg.me/iptv.php?id=34eeq4&token=tg_Thinkoo_bot
 # BB 频道数: 79
 # HK 频道数: 76
 # 总频道数: 155
-# 更新时间: 2026-01-26 05:42:16
-# 下次更新: 每天 06:00 和 18:00 (北京时间)
-# 代理状态: ✅ 正常
+# 更新时间: 2026-01-26 15:08:11
+# 更新频率: 每天 06:00 和 18:00
