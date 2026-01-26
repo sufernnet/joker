@@ -1,6 +1,6 @@
 #EXTM3U url-tvg="https://epg.112114.xyz/pp.xml"
 # 自动合并 M3U 文件
-# 生成时间: 2026-01-26 15:22:21 (北京时间)
+# 生成时间: 2026-01-26 15:23:07 (北京时间)
 # 下次更新: 每天 06:00 和 18:00 (北京时间)
 # BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u
 # 代理源: https://smt-proxy.sufern001.workers.dev/
@@ -389,6 +389,6 @@ https://smart.946985.filegear-sg.me/iptv.php?id=yzz21x&token=tg_Thinkoo_bot
 # HK 频道数: 76 (原JULI，排在前)
 # TW 频道数: 30 (原4gtv前30个，排在后)
 # 总频道数: 185
-# 更新时间: 2026-01-26 15:22:21 (北京时间)
+# 更新时间: 2026-01-26 15:23:07 (北京时间)
 # 更新频率: 每天 06:00 和 18:00 (北京时间)
 # 排序规则: BB → HK → TW
