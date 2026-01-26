@@ -3,6 +3,7 @@
 从 Cloudflare 代理页面提取并合并 M3U
 代理地址: https://smt-proxy.sufern001.workers.dev/
 JULI分组已改为HK分组
+保留原始EPG信息
 """
 
 import requests
@@ -18,16 +19,32 @@ def log(msg):
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
 
 def download_bb_m3u():
-    """下载BB.m3u"""
+    """下载BB.m3u并提取EPG信息"""
     try:
         log("下载 BB.m3u...")
         response = requests.get(BB_URL, timeout=10)
         response.raise_for_status()
-        log(f"✅ BB.m3u 下载成功 ({len(response.text)} 字符)")
-        return response.text
+        
+        bb_content = response.text
+        log(f"✅ BB.m3u 下载成功 ({len(bb_content)} 字符)")
+        
+        # 提取EPG信息
+        epg_url = None
+        lines = bb_content.split('\n')
+        for line in lines:
+            if '#EXTM3U' in line and 'url-tvg=' in line:
+                # 查找url-tvg参数
+                match = re.search(r'url-tvg="([^"]+)"', line)
+                if match:
+                    epg_url = match.group(1)
+                    log(f"✅ 提取到EPG信息: {epg_url}")
+                break
+        
+        return bb_content, epg_url
+        
     except Exception as e:
         log(f"❌ BB.m3u 下载失败: {e}")
-        return ""
+        return "", None
 
 def extract_m3u_from_proxy():
     """从代理页面提取M3U内容"""
@@ -173,8 +190,8 @@ def main():
     """主函数"""
     log("开始合并M3U文件...")
     
-    # 1. 下载BB.m3u
-    bb_content = download_bb_m3u()
+    # 1. 下载BB.m3u并提取EPG信息
+    bb_content, epg_url = download_bb_m3u()
     if not bb_content:
         log("❌ 无法继续，BB.m3u下载失败")
         return
@@ -191,8 +208,13 @@ def main():
     # 4. 合并内容
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
-    output = f"""#EXTM3U
-# 自动合并 M3U 文件
+    # 构建M3U头部，包含EPG信息
+    if epg_url:
+        output = f'#EXTM3U url-tvg="{epg_url}"\n'
+    else:
+        output = '#EXTM3U\n'
+    
+    output += f"""# 自动合并 M3U 文件
 # 生成时间: {timestamp}
 # 代理源: {PROXY_URL}
 # JULI分组已改为HK分组
@@ -200,14 +222,24 @@ def main():
 
 """
     
-    # 添加BB内容（跳过开头的#EXTM3U）
+    # 添加BB内容（跳过开头的#EXTM3U行）
     bb_lines = bb_content.split('\n')
     bb_count = 0
+    skip_first_extm3u = True
+    
     for line in bb_lines:
-        if line.strip() and not line.startswith('#EXTM3U'):
-            output += line + '\n'
-            if line.startswith('#EXTINF:'):
-                bb_count += 1
+        line = line.strip()
+        if not line:
+            continue
+            
+        # 跳过原始的第一行#EXTM3U
+        if skip_first_extm3u and line.startswith('#EXTM3U'):
+            skip_first_extm3u = False
+            continue
+            
+        output += line + '\n'
+        if line.startswith('#EXTINF:'):
+            bb_count += 1
     
     # 添加HK频道（原JULI频道）
     if hk_channels:
@@ -233,6 +265,8 @@ def main():
     log(f"\n🎉 合并完成!")
     log(f"📁 文件: {output_file}")
     log(f"📏 大小: {len(output)} 字符")
+    if epg_url:
+        log(f"📡 EPG地址: {epg_url}")
     log(f"📺 BB频道: {bb_count}")
     log(f"📺 HK频道: {len(hk_channels)} (原JULI)")
     log(f"📺 总计: {bb_count + len(hk_channels)}")
