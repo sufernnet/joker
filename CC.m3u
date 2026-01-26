@@ -1,6 +1,6 @@
 #EXTM3U url-tvg="https://epg.112114.xyz/pp.xml"
 # 自动合并 M3U 文件
-# 生成时间: 2026-01-26 15:40:09 (北京时间)
+# 生成时间: 2026-01-26 23:32:28 (北京时间)
 # 下次更新: 每天 06:00 和 18:00 (北京时间)
 # BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u
 # 代理源: https://smt-proxy.sufern001.workers.dev/
@@ -400,6 +400,6 @@ https://smart.946985.filegear-sg.me/iptv.php?id=xt3w8h&token=tg_Thinkoo_bot
 # TW 频道数: 30 (原4gtv前30个，已过滤，排在后)
 # 过滤频道: 14 个
 # 总频道数: 185
-# 更新时间: 2026-01-26 15:40:09 (北京时间)
+# 更新时间: 2026-01-26 23:32:28 (北京时间)
 # 更新频率: 每天 06:00 和 18:00 (北京时间)
 # 排序规则: BB → HK(按指定顺序) → TW(已过滤)
