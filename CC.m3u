@@ -1,7 +1,7 @@
 #EXTM3U x-tvg-url="https://raw.githubusercontent.com/sufernnet/joker/main/CC.xml" url-tvg="https://raw.githubusercontent.com/sufernnet/joker/main/CC.xml"
 #EXTVLCOPT:program=999999
 # 自动生成 M3U+EPG 文件
-# 生成时间: 2026-01-26 23:56:10 (北京时间)
+# 生成时间: 2026-01-26 23:56:43 (北京时间)
 # 下次更新: 每天 06:00 和 18:00
 # 包含频道: 79 个
 # EPG文件: CC.xml (本地生成，确保匹配)
@@ -174,5 +174,5 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 # TW频道: 0 (前30个，已过滤)
 # 总频道: 79
 # EPG状态: ✅ 已生成本地EPG文件 (CC.xml)
-# 更新时间: 2026-01-26 23:56:10
+# 更新时间: 2026-01-26 23:56:43
 # 更新频率: 每天 06:00 和 18:00 (北京时间)
