@@ -1,13 +1,12 @@
 #EXTM3U url-tvg="https://epg.112114.xyz/pp.xml"
 # 自动合并 M3U 文件
-# 生成时间: 2026-01-26 23:59:43 (北京时间)
+# 生成时间: 2026-01-27 00:03:25 (北京时间)
 # 下次更新: 每天 06:00 和 18:00 (北京时间)
 # BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u
 # 代理源: https://smt-proxy.sufern001.workers.dev/
-# JULI分组已改为HK (排在前面)
+# JULI分组已改为HK (按指定顺序排列在最前面)
 # 4gtv分组已改为TW (前30个，排在后面，已过滤指定频道)
-# 过滤频道: Bloomberg TV, Bloomberg, SBN全球财经台, SBN财经, FRANCE24英文台, FRANCE24, 半岛国际新闻台, 半岛国际, NHK world-japan, NHK world, NHK, 半島, 日本, SBN, CNBC Asia, CNBC
-# EPG: https://epg.112114.xyz/pp.xml
+# EPG源: https://epg.112114.xyz/pp.xml
 # GitHub Actions 自动生成
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -169,7 +168,24 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=01
 #EXTINF:-1 tvg-id="杭州导视" tvg-name="杭州导视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州导视.png" group-title="浙江",杭州导视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
 
-# HK频道 (原JULI，排在TW之前)
+# HK频道 (原JULI，按指定顺序排列在最前面)
+# 优先顺序: 凤凰中文, 凤凰资讯, 凤凰香港, NOW新闻台, NOW星影, NOW爆谷
+# --- 优先频道 ---
+#EXTINF:-1 tvg-name="凤凰中文" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/凤凰中文.png" group-title="HK",凤凰中文
+https://smart.946985.filegear-sg.me/iptv.php?id=97lf95&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="凤凰资讯" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/凤凰资讯.png" group-title="HK",凤凰资讯
+https://smart.946985.filegear-sg.me/iptv.php?id=wl0qan&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="凤凰香港" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/凤凰香港.png" group-title="HK",凤凰香港
+https://smart.946985.filegear-sg.me/iptv.php?id=i86gs8&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="NOW新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/NOW新闻.png" group-title="HK",NOW新闻台
+https://smart.946985.filegear-sg.me/iptv.php?id=8w8gh9&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="NOW爆谷星影台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/星影.png" group-title="HK",NOW星影
+https://smart.946985.filegear-sg.me/iptv.php?id=awlcvu&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="NOW爆谷星影台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/星影.png" group-title="HK",NOW星影
+https://smart.946985.filegear-sg.me/iptv.php?id=awlcvu&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="NOW 爆谷台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/NOW爆谷.png" group-title="HK",NOW爆谷
+https://smart.946985.filegear-sg.me/iptv.php?id=8pepyn&token=tg_Thinkoo_bot
+# --- 其他HK频道 ---
 #EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="HK",翡翠台
 https://smart.946985.filegear-sg.me/iptv.php?id=35s6cg&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="HK",翡翠台广电
@@ -196,12 +212,6 @@ https://smart.946985.filegear-sg.me/iptv.php?id=5zeh5b&token=tg_Thinkoo_bot
 https://smart.946985.filegear-sg.me/iptv.php?id=c5so3n&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="VIUTV" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/VIUTV.png" group-title="HK",ViuTV
 https://smart.946985.filegear-sg.me/iptv.php?id=8pkq72&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="NOW新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/NOW新闻.png" group-title="HK",NOW新闻台
-https://smart.946985.filegear-sg.me/iptv.php?id=8w8gh9&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="NOW爆谷星影台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/星影.png" group-title="HK",NOW星影
-https://smart.946985.filegear-sg.me/iptv.php?id=awlcvu&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="NOW 爆谷台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/NOW爆谷.png" group-title="HK",NOW爆谷
-https://smart.946985.filegear-sg.me/iptv.php?id=8pepyn&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="TV 31" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/RTHK31.png" group-title="HK",RTHK31
 https://smart.946985.filegear-sg.me/iptv.php?id=849xm7&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="TV 32" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/RTHK32.png" group-title="HK",RTHK32
@@ -230,12 +240,6 @@ https://smart.946985.filegear-sg.me/iptv.php?id=6dqqkp&token=tg_Thinkoo_bot
 https://smart.946985.filegear-sg.me/iptv.php?id=n0oo52&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="第一财经" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/第一财经.png" group-title="HK",第一财经
 https://smart.946985.filegear-sg.me/iptv.php?id=ihouu6&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="凤凰资讯" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/凤凰资讯.png" group-title="HK",凤凰资讯
-https://smart.946985.filegear-sg.me/iptv.php?id=wl0qan&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="凤凰中文" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/凤凰中文.png" group-title="HK",凤凰中文
-https://smart.946985.filegear-sg.me/iptv.php?id=97lf95&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="凤凰香港" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/凤凰香港.png" group-title="HK",凤凰香港
-https://smart.946985.filegear-sg.me/iptv.php?id=i86gs8&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="龙华电影" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/龙华电影.png" group-title="HK",龙华电影
 https://smart.946985.filegear-sg.me/iptv.php?id=ffr15u&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="龙华经典HD" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/龙华经典.png" group-title="HK",龙华经典
@@ -324,7 +328,7 @@ https://smart.946985.filegear-sg.me/iptv.php?id=q6xqh8&token=tg_Thinkoo_bot
 https://smart.946985.filegear-sg.me/iptv.php?id=34eeq4&token=tg_Thinkoo_bot
 
 # TW频道 (原4gtv，前30个，已过滤指定频道，排在HK之后)
-# 已过滤: Bloomberg TV, Bloomberg, SBN全球财经台, SBN财经, FRANCE24英文台, FRANCE24, 半岛国际新闻台, 半岛国际, NHK world-japan, NHK world, NHK, 半島, 日本, SBN, CNBC Asia, CNBC
+# 已过滤: Bloomberg TV, Bloomberg, SBN全球财经台, SBN财经, FRANCE24英文台, FRANCE24, 半岛国际新闻台, 半岛国际, NHK world-japan, NHK world, NHK, CNBC Asia, CNBC
 #EXTINF:-1 tvg-name="中天新闻台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/中天新闻.png" group-title="TW",中天新聞台
 https://smart.946985.filegear-sg.me/iptv.php?id=7k2699&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="TVBS新闻" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/TVBS新闻.png" group-title="TW",TVBS新聞
@@ -379,19 +383,28 @@ https://smart.946985.filegear-sg.me/iptv.php?id=6h5r6s&token=tg_Thinkoo_bot
 https://smart.946985.filegear-sg.me/iptv.php?id=wa7z3q&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="靖天综合台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/靖天综合.png" group-title="TW",靖天綜合台
 https://smart.946985.filegear-sg.me/iptv.php?id=mayyty&token=tg_Thinkoo_bot
+#EXTINF:-1 tvg-name="靖天日本台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/靖天日本.png" group-title="TW",靖天日本台
+https://smart.946985.filegear-sg.me/iptv.php?id=d272dw&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="KLT-靖天国际台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/靖天国际.png" group-title="TW",KLT-靖天國際台
 https://smart.946985.filegear-sg.me/iptv.php?id=occfnu&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="靖天资讯台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/靖天资讯.png" group-title="TW",靖天資訊台
 https://smart.946985.filegear-sg.me/iptv.php?id=sssqkq&token=tg_Thinkoo_bot
-#EXTINF:-1 tvg-name="NICE TV 靖天欢乐台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/靖天欢乐.png" group-title="TW",Nice TV 靖天歡樂台
-https://smart.946985.filegear-sg.me/iptv.php?id=xt3w8h&token=tg_Thinkoo_bot
+
+# EPG使用说明
+# 1. 此文件使用BB.m3u的EPG源: https://epg.112114.xyz/pp.xml
+# 2. 如果EPG不显示，可能是因为:
+#    - EPG源不包含HK/TW频道的节目信息
+#    - 播放器EPG缓存问题（尝试清除缓存）
+#    - 时区设置问题（建议使用UTC+8）
+# 3. 对于EPG问题，可以:
+#    - 使用其他EPG源手动添加到播放器
+#    - 在播放器中单独为HK/TW频道设置EPG
 
 # 统计信息
 # BB 频道数: 79
-# HK 频道数: 76 (原JULI，排在前)
-# TW 频道数: 30 (原4gtv前30个，已过滤，排在后)
-# 过滤频道: 16 个
+# HK 频道数: 76 (按指定顺序排列)
+# TW 频道数: 30 (前30个，已过滤)
 # 总频道数: 185
-# 更新时间: 2026-01-26 23:59:43 (北京时间)
+# EPG源: https://epg.112114.xyz/pp.xml
+# 更新时间: 2026-01-27 00:03:25
 # 更新频率: 每天 06:00 和 18:00 (北京时间)
-# 排序规则: BB → HK → TW
