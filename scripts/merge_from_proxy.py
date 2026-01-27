@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-M3U文件合并脚本
+M3U文件合并脚本 - 增强EPG支持
 1. 下载BB.m3u（包含EPG信息）
 2. 从Cloudflare代理获取内容
-3. 提取JULI频道，分组改为HK（排在前面）
-4. 提取4gtv前30个直播，分组改为TW（排在后面），过滤指定频道
-5. 合并生成CC.m3u
+3. 提取JULI频道，分组改为HK，按指定顺序排列
+4. 提取4gtv前30个直播，分组改为TW，过滤指定频道
+5. 合并生成CC.m3u，包含多个EPG源
 北京时间每天6:00、18:00自动运行
 """
 
@@ -30,9 +30,6 @@ BLACKLIST_TW = [
     "FRANCE24",
     "半岛国际新闻台",
     "半岛国际",
-    "半島",
-    "日本",
-    "SBN",
     "NHK world-japan",
     "NHK world",
     "NHK",
@@ -40,8 +37,81 @@ BLACKLIST_TW = [
     "CNBC"
 ]
 
+# HK频道优先顺序（按这个顺序排列在最前面）
+HK_PRIORITY_ORDER = [
+    "凤凰中文",
+    "凤凰资讯", 
+    "凤凰香港",
+    "NOW新闻台",
+    "NOW星影",
+    "NOW爆谷"
+]
+
+# 备选EPG源（如果主要EPG失效）
+BACKUP_EPG_URLS = [
+    "https://epg.112114.xyz/pp.xml",  # BB的EPG
+    "https://epg.946985.filegear-sg.me/t.xml.gz",  # JULI的EPG
+    "https://epg.112114.xyz/pp.xml",
+    "http://epg.51zmt.top:8000/e.xml"
+]
+
 def log(msg):
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
+
+def test_epg_url(epg_url):
+    """测试EPG URL是否可访问"""
+    try:
+        log(f"测试EPG: {epg_url}")
+        headers = {
+            'User-Agent': 'Mozilla/5.0',
+            'Accept': '*/*'
+        }
+        
+        # 只下载前1KB检查
+        response = requests.get(epg_url, headers=headers, timeout=10, stream=True)
+        
+        if response.status_code == 200:
+            # 检查内容类型
+            content_type = response.headers.get('content-type', '').lower()
+            
+            # 读取前1KB检查
+            chunk = response.raw.read(1024)
+            text = chunk.decode('utf-8', errors='ignore')
+            
+            # 检查是否是XML格式
+            if '<?xml' in text or '<tv' in text or '<programme' in text:
+                log(f"✅ EPG可用: {epg_url}")
+                return True
+            else:
+                log(f"⚠️  EPG不是XML格式: {epg_url}")
+                return False
+        else:
+            log(f"❌ EPG不可访问: {epg_url} (状态码: {response.status_code})")
+            return False
+            
+    except Exception as e:
+        log(f"❌ EPG测试失败 {epg_url}: {e}")
+        return False
+
+def get_best_epg_url(epg_urls):
+    """获取最佳的EPG URL"""
+    log("寻找最佳EPG源...")
+    
+    # 测试所有EPG
+    working_epgs = []
+    for epg_url in epg_urls:
+        if test_epg_url(epg_url):
+            working_epgs.append(epg_url)
+    
+    if working_epgs:
+        # 优先使用第一个可用的
+        best_epg = working_epgs[0]
+        log(f"✅ 选择EPG: {best_epg}")
+        log(f"   其他可用EPG: {len(working_epgs)-1}个")
+        return best_epg
+    else:
+        log("⚠️  没有可用的EPG源")
+        return None
 
 def download_bb_m3u():
     """下载BB.m3u并提取EPG"""
@@ -53,18 +123,11 @@ def download_bb_m3u():
         bb_content = response.text
         log(f"✅ BB.m3u下载成功 ({len(bb_content)} 字符)")
         
-        # 提取EPG信息
-        epg_match = re.search(r'url-tvg="([^"]+)"', bb_content)
-        epg_url = epg_match.group(1) if epg_match else None
-        
-        if epg_url:
-            log(f"✅ 使用BB的EPG: {epg_url}")
-        
-        return bb_content, epg_url
+        return bb_content
         
     except Exception as e:
         log(f"❌ BB.m3u下载失败: {e}")
-        return None, None
+        return None
 
 def get_content_from_proxy():
     """从Cloudflare代理获取内容"""
@@ -115,12 +178,23 @@ def get_content_from_proxy():
     
     return None
 
-def extract_hk_channels(content):
-    """提取JULI频道，分组改为HK"""
+def get_channel_priority(channel_name):
+    """获取频道的优先级（越小越靠前）"""
+    channel_name_lower = channel_name.lower()
+    
+    for i, priority_channel in enumerate(HK_PRIORITY_ORDER):
+        if priority_channel.lower() in channel_name_lower:
+            return i  # 返回优先级索引，越小越靠前
+    
+    return len(HK_PRIORITY_ORDER)  # 非优先频道排在最后
+
+def extract_and_sort_hk_channels(content):
+    """提取JULI频道，分组改为HK，按指定顺序排列"""
     if not content:
         return []
     
-    log("提取JULI频道，分组改为HK...")
+    log("提取JULI频道，分组改为HK，按指定顺序排列...")
+    log(f"HK优先顺序: {', '.join(HK_PRIORITY_ORDER)}")
     
     # 解析M3U内容
     lines = content.split('\n')
@@ -138,12 +212,15 @@ def extract_hk_channels(content):
             channels.append((current_extinf, line))
             current_extinf = None
     
-    # 过滤JULI频道
-    hk_channels = []
+    # 过滤JULI频道并重命名
+    hk_channels_with_priority = []
     seen = set()
     
     for extinf, url in channels:
         if 'JULI' in extinf.upper():
+            # 提取原始频道名
+            channel_name = extinf.split(',', 1)[1] if ',' in extinf else extinf
+            
             # 重命名为HK分组
             new_extinf = re.sub(r'JULI', 'HK', extinf, flags=re.IGNORECASE)
             
@@ -160,15 +237,17 @@ def extract_hk_channels(content):
             key = f"{new_extinf}|{url}"
             if key not in seen:
                 seen.add(key)
-                hk_channels.append((new_extinf, url))
+                # 计算优先级
+                priority = get_channel_priority(channel_name)
+                hk_channels_with_priority.append((priority, new_extinf, url, channel_name))
+    
+    # 按优先级排序
+    hk_channels_with_priority.sort(key=lambda x: x[0])
+    
+    # 提取排序后的频道
+    hk_channels = [(extinf, url) for _, extinf, url, _ in hk_channels_with_priority]
     
     log(f"✅ 提取到 {len(hk_channels)} 个HK频道（原JULI）")
-    
-    if hk_channels:
-        log("HK频道示例（排在TW之前）:")
-        for i, (extinf, url) in enumerate(hk_channels[:5]):
-            name = extinf.split(',', 1)[1] if ',' in extinf else extinf
-            log(f"  {i+1}. {name[:50]}...")
     
     return hk_channels
 
@@ -264,17 +343,6 @@ def extract_filtered_4gtv_channels(content, limit=30):
     
     log(f"✅ 提取到 {len(tw_channels)} 个TW频道（原4gtv，已过滤）")
     
-    # 显示过滤掉的频道统计
-    filtered_count = len(filtered_channels) - len(tw_channels)
-    if filtered_count > 0:
-        log(f"⛔ 过滤掉了 {filtered_count} 个TW频道")
-    
-    if tw_channels:
-        log("TW频道示例（已过滤指定频道）:")
-        for i, (extinf, url) in enumerate(tw_channels[:5]):
-            name = extinf.split(',', 1)[1] if ',' in extinf else extinf
-            log(f"  {i+1}. {name[:50]}...")
-    
     return tw_channels
 
 def main():
@@ -285,10 +353,11 @@ def main():
     current_time = datetime.now()
     log(f"当前时间: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
     log(f"下次运行: 北京时间 06:00 和 18:00")
+    log(f"HK优先顺序: {', '.join(HK_PRIORITY_ORDER)}")
     log(f"TW频道过滤列表: {', '.join(BLACKLIST_TW)}")
     
-    # 1. 下载BB.m3u并获取EPG
-    bb_content, epg_url = download_bb_m3u()
+    # 1. 下载BB.m3u
+    bb_content = download_bb_m3u()
     if not bb_content:
         log("❌ 无法继续，BB.m3u下载失败")
         return
@@ -296,38 +365,72 @@ def main():
     # 2. 从代理获取内容
     proxy_content = get_content_from_proxy()
     
-    # 3. 先提取HK频道（JULI）- 排在前面
+    # 3. 收集所有EPG源
+    epg_urls = []
+    
+    # 从BB.m3u提取EPG
+    bb_epg_match = re.search(r'url-tvg="([^"]+)"', bb_content)
+    if bb_epg_match:
+        epg_urls.append(bb_epg_match.group(1))
+        log(f"✅ 找到BB EPG: {bb_epg_match.group(1)}")
+    
+    # 从代理内容提取EPG
+    if proxy_content:
+        proxy_epg_match = re.search(r'x-tvg-url="([^"]+)"', proxy_content)
+        if proxy_epg_match:
+            epg_urls.append(proxy_epg_match.group(1))
+            log(f"✅ 找到JULI EPG: {proxy_epg_match.group(1)}")
+    
+    # 添加备选EPG
+    epg_urls.extend(BACKUP_EPG_URLS)
+    
+    # 去重
+    unique_epgs = []
+    for url in epg_urls:
+        if url not in unique_epgs:
+            unique_epgs.append(url)
+    
+    log(f"找到 {len(unique_epgs)} 个EPG源")
+    
+    # 4. 获取最佳EPG
+    best_epg = get_best_epg_url(unique_epgs)
+    
+    # 5. 先提取HK频道（JULI）- 按指定顺序排列在最前面
     hk_channels = []
     if proxy_content:
-        hk_channels = extract_hk_channels(proxy_content)
+        hk_channels = extract_and_sort_hk_channels(proxy_content)
     else:
         log("⚠️  无法从代理获取内容，跳过HK频道")
     
-    # 4. 再提取TW频道（4gtv前30个，过滤指定频道）- 排在后面
+    # 6. 再提取TW频道（4gtv前30个，过滤指定频道）- 排在后面
     tw_channels = []
     if proxy_content:
         tw_channels = extract_filtered_4gtv_channels(proxy_content, limit=30)
     else:
         log("⚠️  无法从代理获取内容，跳过TW频道")
     
-    # 5. 构建M3U内容
+    # 7. 构建M3U内容
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
-    # M3U头部（使用BB的EPG）
-    if epg_url:
-        m3u_header = f'#EXTM3U url-tvg="{epg_url}"\n'
+    # M3U头部（使用最佳EPG）
+    if best_epg:
+        m3u_header = f'#EXTM3U url-tvg="{best_epg}"\n'
+        log(f"✅ 使用EPG: {best_epg}")
     else:
         m3u_header = '#EXTM3U\n'
+        log("⚠️  未找到可用EPG")
     
     output = m3u_header + f"""# 自动合并 M3U 文件
 # 生成时间: {timestamp} (北京时间)
 # 下次更新: 每天 06:00 和 18:00 (北京时间)
 # BB源: {BB_URL}
 # 代理源: {CLOUDFLARE_PROXY}
-# JULI分组已改为HK (排在前面)
+# JULI分组已改为HK (按指定顺序排列在最前面)
+# HK优先顺序: {', '.join(HK_PRIORITY_ORDER)}
 # 4gtv分组已改为TW (前30个，排在后面，已过滤指定频道)
 # 过滤频道: {', '.join(BLACKLIST_TW)}
-# EPG: {epg_url if epg_url else 'BB的XML'}
+# EPG源: {best_epg if best_epg else '无可用EPG'}
+# 测试的EPG源: {len(unique_epgs)} 个
 # GitHub Actions 自动生成
 
 """
@@ -350,12 +453,33 @@ def main():
         if line.startswith('#EXTINF:'):
             bb_count += 1
     
-    # 添加HK频道（JULI）- 排在前面
+    # 添加HK频道（JULI）- 按指定顺序排列在最前面
     if hk_channels:
-        output += f"\n# HK频道 (原JULI，排在TW之前)\n"
-        for extinf, url in hk_channels:
-            output += extinf + '\n'
-            output += url + '\n'
+        output += f"\n# HK频道 (原JULI，按指定顺序排列在最前面)\n"
+        output += f"# 优先顺序: {', '.join(HK_PRIORITY_ORDER)}\n"
+        
+        # 显示优先频道
+        priority_added = False
+        for channel_type in HK_PRIORITY_ORDER:
+            type_channels = [(extinf, url) for extinf, url in hk_channels if channel_type.lower() in extinf.lower()]
+            if type_channels:
+                if not priority_added:
+                    output += f"# --- 优先频道 ---\n"
+                    priority_added = True
+                
+                for extinf, url in type_channels:
+                    output += extinf + '\n'
+                    output += url + '\n'
+        
+        # 显示其他HK频道
+        other_hk_channels = [(extinf, url) for extinf, url in hk_channels 
+                           if not any(channel_type.lower() in extinf.lower() for channel_type in HK_PRIORITY_ORDER)]
+        
+        if other_hk_channels:
+            output += f"# --- 其他HK频道 ---\n"
+            for extinf, url in other_hk_channels:
+                output += extinf + '\n'
+                output += url + '\n'
     
     # 添加TW频道（4gtv）- 排在后面（已过滤）
     if tw_channels:
@@ -365,33 +489,43 @@ def main():
             output += extinf + '\n'
             output += url + '\n'
     
+    # 添加EPG信息说明
+    if unique_epgs:
+        output += f"""
+# EPG信息
+# 使用EPG: {best_epg if best_epg else '无'}
+# 测试的EPG源 ({len(unique_epgs)}个):"""
+        for i, epg in enumerate(unique_epgs, 1):
+            status = "✅" if epg == best_epg else "  "
+            output += f"\n#   {status} {epg}"
+    
     # 添加统计信息
     output += f"""
 # 统计信息
 # BB 频道数: {bb_count}
-# HK 频道数: {len(hk_channels)} (原JULI，排在前)
+# HK 频道数: {len(hk_channels)} (原JULI，按指定顺序排列)
 # TW 频道数: {len(tw_channels)} (原4gtv前30个，已过滤，排在后)
 # 过滤频道: {len(BLACKLIST_TW)} 个
 # 总频道数: {bb_count + len(hk_channels) + len(tw_channels)}
+# EPG状态: {'✅ 正常' if best_epg else '❌ 无可用EPG'}
 # 更新时间: {timestamp} (北京时间)
 # 更新频率: 每天 06:00 和 18:00 (北京时间)
-# 排序规则: BB → HK → TW
+# 排序规则: BB → HK(凤凰/NOW优先) → TW(已过滤)
 """
     
-    # 6. 保存文件
+    # 8. 保存文件
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
     
     log(f"\n🎉 合并完成!")
     log(f"📁 文件: {OUTPUT_FILE}")
     log(f"📏 大小: {len(output)} 字符")
-    log(f"📡 EPG: {epg_url}")
+    log(f"📡 EPG: {best_epg if best_epg else '无可用EPG'}")
     log(f"📺 BB频道: {bb_count}")
-    log(f"📺 HK频道: {len(hk_channels)} (JULI，排在前)")
-    log(f"📺 TW频道: {len(tw_channels)} (4gtv前30个，已过滤{len(BLACKLIST_TW)}个频道，排在后)")
+    log(f"📺 HK频道: {len(hk_channels)} (按指定顺序排列)")
+    log(f"📺 TW频道: {len(tw_channels)} (已过滤指定频道)")
     log(f"📺 总计: {bb_count + len(hk_channels) + len(tw_channels)}")
     log(f"🕒 下次自动更新: 北京时间 06:00 和 18:00")
-    log(f"⛔ TW过滤列表: {', '.join(BLACKLIST_TW)}")
 
 if __name__ == "__main__":
     main()
