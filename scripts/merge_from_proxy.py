@@ -32,6 +32,8 @@ BLACKLIST_TW = [
     "半岛国际",
     "NHK world-japan",
     "NHK world",
+    "SBN",
+    "日本",
     "NHK",
     "CNBC Asia",
     "CNBC"
