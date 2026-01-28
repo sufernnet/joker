@@ -190,5 +190,12 @@ jobs:
           CC_SIZE=$(wc -c < CC.m3u)
           echo "    行数: $CC_LINES"
           echo "    大小: $CC_SIZE 字节"
-          
-          echo
+          echo ""
+          echo "  ✅ merged_epg.xml 生成成功"
+          EPG_LINES=$(wc -l < merged_epg.xml)
+          EPG_SIZE=$(wc -c < merged_epg.xml)
+          echo "    行数: $EPG_LINES"
+          echo "    大小: $EPG_SIZE 字节 ($((EPG_SIZE/1024)) KB)"
+        else
+          echo "  ❌ 文件生成失败"
+        fi
