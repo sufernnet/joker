@@ -1,6 +1,6 @@
-#EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
+#EXTM3U url-tvg="merged_epg.xml"
 # 自动合并 M3U 文件
-# 生成时间: 2026-01-28 07:00:09 (北京时间)
+# 生成时间: 2026-01-28 07:17:11 (北京时间)
 # 下次更新: 每天 06:00 和 17:00 (北京时间)
 # BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u
 # 代理源: https://smt-proxy.sufern001.workers.dev/
@@ -8,8 +8,11 @@
 # HK优先顺序: 凤凰中文, 凤凰资讯, 凤凰香港, NOW新闻台, NOW星影, NOW爆谷
 # 4gtv分组已改为TW (前30个，排在后面，已过滤指定频道)
 # 过滤频道: Bloomberg TV, Bloomberg, SBN全球财经台, SBN财经, FRANCE24英文台, FRANCE24, 半岛国际新闻台, 半島国际, NHK world-japan, NHK world, SBN, 日本, NHK, CNBC Asia, CNBC
-# EPG源: http://epg.51zmt.top:8000/e.xml
-# 测试的EPG源: 3 个
+# EPG源: merged_epg.xml
+# 合并的EPG源: 3 个
+#      https://epg.112114.xyz/pp.xml
+#      https://epg.946985.filegear-sg.me/t.xml.gz
+#      http://epg.51zmt.top:8000/e.xml
 # GitHub Actions 自动生成
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -394,18 +397,18 @@ https://smart.946985.filegear-sg.me/iptv.php?id=occfnu&token=tg_Thinkoo_bot
 https://smart.946985.filegear-sg.me/iptv.php?id=sssqkq&token=tg_Thinkoo_bot
 
 # EPG信息
-# 使用EPG: http://epg.51zmt.top:8000/e.xml
-# 测试的EPG源 (3个):
+# 使用合并后的EPG: merged_epg.xml
+# 合并的EPG源 (3个):
 #      https://epg.112114.xyz/pp.xml
 #      https://epg.946985.filegear-sg.me/t.xml.gz
-#   ✅ http://epg.51zmt.top:8000/e.xml
+#      http://epg.51zmt.top:8000/e.xml
 # 统计信息
 # BB 频道数: 79
 # HK 频道数: 76 (原JULI，按指定顺序排列)
 # TW 频道数: 30 (原4gtv前30个，已过滤，排在后)
 # 过滤频道: 15 个
 # 总频道数: 185
-# EPG状态: ✅ 正常
-# 更新时间: 2026-01-28 07:00:09 (北京时间)
+# EPG状态: ✅ 合并 3 个EPG源
+# 更新时间: 2026-01-28 07:17:11 (北京时间)
 # 更新频率: 每天 06:00 和 17:00 (北京时间)
 # 排序规则: BB → HK(凤凰/NOW优先) → TW(已过滤)
