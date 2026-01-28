@@ -6,7 +6,7 @@ M3U文件合并脚本 - 增强EPG支持
 3. 提取JULI频道，分组改为HK，按指定顺序排列
 4. 提取4gtv前30个直播，分组改为TW，过滤指定频道
 5. 合并生成CC.m3u，包含多个EPG源
-北京时间每天6:00、18:00自动运行
+北京时间每天6:00、17:00自动运行
 """
 
 import requests
@@ -354,7 +354,7 @@ def main():
     # 显示当前时间（用于调试定时任务）
     current_time = datetime.now()
     log(f"当前时间: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
-    log(f"下次运行: 北京时间 06:00 和 18:00")
+    log(f"下次运行: 北京时间 06:00 和 17:00")
     log(f"HK优先顺序: {', '.join(HK_PRIORITY_ORDER)}")
     log(f"TW频道过滤列表: {', '.join(BLACKLIST_TW)}")
     
@@ -424,7 +424,7 @@ def main():
     
     output = m3u_header + f"""# 自动合并 M3U 文件
 # 生成时间: {timestamp} (北京时间)
-# 下次更新: 每天 06:00 和 18:00 (北京时间)
+# 下次更新: 每天 06:00 和 17:00 (北京时间)
 # BB源: {BB_URL}
 # 代理源: {CLOUDFLARE_PROXY}
 # JULI分组已改为HK (按指定顺序排列在最前面)
@@ -511,7 +511,7 @@ def main():
 # 总频道数: {bb_count + len(hk_channels) + len(tw_channels)}
 # EPG状态: {'✅ 正常' if best_epg else '❌ 无可用EPG'}
 # 更新时间: {timestamp} (北京时间)
-# 更新频率: 每天 06:00 和 18:00 (北京时间)
+# 更新频率: 每天 06:00 和 17:00 (北京时间)
 # 排序规则: BB → HK(凤凰/NOW优先) → TW(已过滤)
 """
     
@@ -527,7 +527,7 @@ def main():
     log(f"📺 HK频道: {len(hk_channels)} (按指定顺序排列)")
     log(f"📺 TW频道: {len(tw_channels)} (已过滤指定频道)")
     log(f"📺 总计: {bb_count + len(hk_channels) + len(tw_channels)}")
-    log(f"🕒 下次自动更新: 北京时间 06:00 和 18:00")
+    log(f"🕒 下次自动更新: 北京时间 06:00 和 17:00")
 
 if __name__ == "__main__":
     main()
