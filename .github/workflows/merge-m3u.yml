@@ -4,10 +4,10 @@ on:
   # 手动触发
   workflow_dispatch:
   
-  # 定时触发：北京时间 06:00 和 18:00
+  # 定时触发：北京时间 06:00 和 17:00
   schedule:
-    - cron: '0 22 * * *'  # UTC 22:00 = 北京时间 06:00
-    - cron: '0 10 * * *'  # UTC 10:00 = 北京时间 18:00
+    - cron: '0 22 * * *'  # UTC 22:00 = 北京时间 06:00 (UTC+8)
+    - cron: '0 9 * * *'   # UTC 09:00 = 北京时间 17:00 (UTC+8)
   
   # 当脚本更新时也触发
   push:
@@ -123,7 +123,7 @@ jobs:
         echo ""
         echo "📅 下次计划运行:"
         echo "  • UTC 22:00 (北京时间 06:00)"
-        echo "  • UTC 10:00 (北京时间 18:00)"
+        echo "  • UTC 09:00 (北京时间 17:00)"
         echo ""
         echo "🔗 生成的文件:"
         echo "  • GitHub: https://github.com/${{ github.repository }}/blob/main/CC.m3u"
@@ -132,7 +132,7 @@ jobs:
         echo "⚙️  配置信息:"
         echo "  • 代理地址: https://smt-proxy.sufern001.workers.dev/"
         echo "  • 脚本文件: scripts/merge_from_proxy.py"
-        echo "  • 更新频率: 每天2次"
+        echo "  • 更新频率: 每天2次 (06:00, 17:00 北京时间)"
         echo ""
         echo "📊 运行状态:"
         if [ -f "CC.m3u" ]; then
