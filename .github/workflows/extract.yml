@@ -2,7 +2,6 @@ name: Extract TV Channels
 
 on:
   schedule:
-    # 每天UTC时间6:00和17:00运行
     - cron: '0 6 * * *'
     - cron: '0 17 * * *'
   workflow_dispatch:
@@ -14,7 +13,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+        with:
+          # 添加fetch-depth以获取完整历史
+          fetch-depth: 0
+      
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -35,19 +37,35 @@ jobs:
             echo "📊 文件信息:"
             ls -lh scripts/EE.m3u
             echo "📈 行数: $(wc -l < scripts/EE.m3u)"
-            echo "📝 前10行内容:"
-            head -10 scripts/EE.m3u
-            echo "🔄 频道数量:"
-            grep -c "#EXTINF" scripts/EE.m3u
+            echo "📝 前5行内容:"
+            head -5 scripts/EE.m3u
+            echo "🔄 频道数量: $(grep -c "#EXTINF" scripts/EE.m3u)"
           else
             echo "❌ 错误：文件未生成"
             exit 1
           fi
       
-      - name: Commit changes
+      - name: Configure Git
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+      
+      - name: Pull latest changes
+        run: |
+          # 尝试拉取远程更改，使用合并策略
+          git pull origin main --rebase --autostash || echo "拉取失败，继续执行"
+      
+      - name: Add and commit changes
+        run: |
           git add scripts/EE.m3u
-          git commit -m "自动更新EE.m3u $(date +'%Y-%m-%d %H:%M:%S')" || echo "没有更改需要提交"
-          git push
+          # 检查是否有实际更改
+          if git diff --staged --quiet; then
+            echo "没有更改需要提交"
+          else
+            git commit -m "自动更新EE.m3u $(date +'%Y-%m-%d %H:%M:%S')"
+          fi
+      
+      - name: Push changes
+        run: |
+          # 强制推送（因为我们只更新EE.m3u文件）
+          git push origin HEAD:main
