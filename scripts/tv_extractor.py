@@ -28,7 +28,7 @@ def fetch_m3u_content():
         logger.info(f"正在从 {SOURCE_URL} 下载M3U文件...")
         response = requests.get(SOURCE_URL, timeout=30)
         response.raise_for_status()
-        logger.info("下载成功")
+        logger.info(f"下载成功，大小: {len(response.text)} 字符")
         return response.text
     except requests.RequestException as e:
         logger.error(f"下载M3U文件失败: {e}")
@@ -41,52 +41,60 @@ def extract_channels(content):
     
     logger.info("开始提取指定分组频道...")
     
-    # 修正：使用正确的繁体字分组名
+    # 目标分组
     target_groups = ["港澳频道", "體育世界"]
     
     # 按行分割内容
     lines = content.split('\n')
     extracted_lines = []
     extract_mode = False
+    channel_count = 0
     
     # 添加文件头
     extracted_lines.append(f'#EXTM3U url-tvg="{EPG_URL}"')
     
-    # 用于调试：查看所有分组
-    all_groups = set()
+    # 用于调试
+    found_groups = set()
     
-    for line in lines:
-        line = line.strip()
+    i = 0
+    while i < len(lines):
+        line = lines[i].strip()
         
         # 跳过空行
         if not line:
+            i += 1
             continue
         
-        # 收集所有分组用于调试
-        if '#EXTINF' in line and 'group-title="' in line:
-            match = re.search(r'group-title="([^"]+)"', line)
-            if match:
-                all_groups.add(match.group(1))
-            
         # 检查是否是分组行
         if line.startswith("#EXTINF"):
-            # 检查是否包含目标分组
-            for group in target_groups:
-                if f'group-title="{group}"' in line:
+            # 提取分组信息
+            group_match = re.search(r'group-title="([^"]+)"', line)
+            if group_match:
+                group_name = group_match.group(1)
+                found_groups.add(group_name)
+                
+                # 检查是否为目标分组
+                if group_name in target_groups:
                     extract_mode = True
                     extracted_lines.append(line)
-                    logger.info(f"找到分组: {group}")
-                    break
+                    
+                    # 查找对应的URL行
+                    for j in range(i+1, min(i+5, len(lines))):
+                        next_line = lines[j].strip()
+                        if next_line and not next_line.startswith("#"):
+                            extracted_lines.append(next_line)
+                            channel_count += 1
+                            logger.info(f"找到频道: {line[:50]}...")
+                            i = j  # 跳过URL行
+                            break
                 else:
                     extract_mode = False
-        # 如果是URL行且在提取模式中
-        elif extract_mode and line and not line.startswith("#"):
-            extracted_lines.append(line)
-            extract_mode = False  # 重置提取模式
+        i += 1
     
-    # 输出所有找到的分组用于调试
-    logger.info(f"源文件中所有分组: {sorted(all_groups)}")
+    # 输出调试信息
+    logger.info(f"源文件中找到的分组: {sorted(found_groups)}")
     logger.info(f"目标分组: {target_groups}")
+    logger.info(f"提取到 {channel_count} 个频道")
     
     return '\n'.join(extracted_lines) if len(extracted_lines) > 1 else None
 
@@ -99,9 +107,11 @@ def save_m3u_file(content):
     try:
         # 获取当前工作目录
         current_dir = os.getcwd()
+        logger.info(f"当前目录: {current_dir}")
         
         # 完整的输出路径
         output_path = os.path.join(current_dir, OUTPUT_FILE)
+        logger.info(f"将保存到: {output_path}")
         
         # 添加生成信息
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -113,20 +123,38 @@ def save_m3u_file(content):
         
         full_content = info_comment + content
         
+        # 写入文件
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(full_content)
         
-        # 统计频道数量
-        extinf_count = content.count("#EXTINF")
-        logger.info(f"已保存到 {output_path}, 共提取 {extinf_count} 个频道")
-        
-        # 显示文件大小
-        file_size = os.path.getsize(output_path)
-        logger.info(f"文件大小: {file_size} 字节")
-        
-        return True
+        # 验证文件
+        if os.path.exists(output_path):
+            file_size = os.path.getsize(output_path)
+            extinf_count = content.count("#EXTINF")
+            
+            logger.info("✅ 文件保存成功")
+            logger.info(f"📁 文件路径: {output_path}")
+            logger.info(f"📊 文件大小: {file_size} 字节")
+            logger.info(f"📈 频道数量: {extinf_count}")
+            
+            # 读取并显示部分内容
+            with open(output_path, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+                logger.info(f"📝 文件行数: {len(lines)}")
+                if len(lines) > 0:
+                    logger.info("前5行内容:")
+                    for j in range(min(5, len(lines))):
+                        logger.info(f"  {lines[j].rstrip()}")
+            
+            return True
+        else:
+            logger.error("❌ 文件创建失败")
+            return False
+            
     except Exception as e:
         logger.error(f"保存文件失败: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
         return False
 
 def main():
@@ -148,6 +176,10 @@ def main():
     # 保存文件
     if save_m3u_file(extracted_content):
         logger.info("=== 处理完成 ===")
+        # 列出当前目录文件
+        logger.info("当前目录文件列表:")
+        for file in os.listdir('.'):
+            logger.info(f"  {file}")
     else:
         logger.error("=== 处理失败 ===")
         sys.exit(1)
