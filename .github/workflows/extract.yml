@@ -28,44 +28,43 @@ jobs:
         working-directory: ./scripts
         run: python tv_extractor.py
       
-      - name: Verify EE.m3u in root directory
+      - name: Check BB.m3u
         run: |
-          echo "=== 验证根目录文件 ==="
-          pwd
-          ls -la
-          
-          echo ""
-          echo "=== 检查EE.m3u ==="
-          if [ -f "EE.m3u" ]; then
-            echo "✅ EE.m3u文件存在于根目录"
-            echo "文件大小: $(wc -c < EE.m3u) bytes"
-            echo "文件行数: $(wc -l < EE.m3u)"
-            echo "频道数量: $(grep -c "#EXTINF" EE.m3u)"
-            echo ""
-            echo "=== 统计信息 ==="
-            echo "港澳频道数量: $(grep -c "港澳频道" EE.m3u)"
-            echo "體育世界数量: $(grep -c "體育世界" EE.m3u)"
-            echo ""
-            echo "=== 文件开头 ==="
-            head -10 EE.m3u
-            echo ""
-            echo "=== 文件结尾 ==="
-            tail -5 EE.m3u
+          echo "=== 检查BB.m3u文件 ==="
+          if [ -f "BB.m3u" ]; then
+            echo "✅ BB.m3u存在"
+            echo "大小: $(wc -c < BB.m3u) bytes"
+            echo "频道数: $(grep -c "#EXTINF" BB.m3u || echo 0)"
           else
-            echo "❌ EE.m3u文件不存在于根目录"
-            echo "当前目录内容:"
-            ls -la
-            exit 1
+            echo "⚠️  BB.m3u不存在，将只合并TV源"
           fi
       
-      - name: List BB.m3u if exists
+      - name: Verify EE.m3u
         run: |
-          if [ -f "BB.m3u" ]; then
-            echo "✅ BB.m3u文件存在"
-            echo "BB.m3u大小: $(wc -c < BB.m3u) bytes"
-            echo "BB.m3u频道数: $(grep -c "#EXTINF" BB.m3u)"
+          echo "=== 验证EE.m3u文件 ==="
+          if [ -f "EE.m3u" ]; then
+            echo "✅ EE.m3u生成成功"
+            echo ""
+            echo "=== 基本信息 ==="
+            echo "文件大小: $(wc -c < EE.m3u) bytes"
+            echo "总行数: $(wc -l < EE.m3u)"
+            echo "总频道数: $(grep -c "#EXTINF" EE.m3u || echo 0)"
+            echo ""
+            echo "=== 分组统计 ==="
+            echo "港澳頻道: $(grep -c "港澳頻道" EE.m3u || echo 0)"
+            echo "體育世界: $(grep -c "體育世界" EE.m3u || echo 0)"
+            echo ""
+            echo "=== 文件开头 ==="
+            head -15 EE.m3u
+            echo ""
+            echo "=== 文件结尾 ==="
+            tail -10 EE.m3u
           else
-            echo "⚠️  BB.m3u文件不存在，将只合并TV源"
+            echo "❌ EE.m3u未生成"
+            echo "当前目录:"
+            pwd
+            ls -la
+            exit 1
           fi
       
       - name: Configure Git
@@ -73,10 +72,10 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
       
-      - name: Pull latest changes
+      - name: Pull latest
         run: git pull origin main --rebase || true
       
-      - name: Add and commit
+      - name: Commit changes
         run: |
           git add EE.m3u
           if git diff --staged --quiet; then
@@ -85,5 +84,5 @@ jobs:
             git commit -m "更新EE.m3u $(date +'%Y-%m-%d %H:%M:%S')"
           fi
       
-      - name: Push changes
+      - name: Push to repository
         run: git push origin main
