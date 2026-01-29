@@ -1,10 +1,10 @@
 #EXTM3U url-tvg="https://epg.112114.xyz/pp.xml"
 # DD.m3u - 港澳台专版
-# 生成时间: 2026-01-29 00:55:36 (北京时间)
-# 下次更新: 每天 06:00 和 17:00 (北京时间)
+# 生成时间: 2026-01-29 00:59:42
+# 下次更新: 每天 06:00 和 17:00
 # BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u
 # 港澳台源: https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1
-# EPG源: https://epg.112114.xyz/pp.xml
+# EPG: https://epg.112114.xyz/pp.xml
 # GitHub Actions 自动生成
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -166,10 +166,15 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=01
 #EXTINF:-1 tvg-id="杭州导视" tvg-name="杭州导视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州导视.png" group-title="浙江",杭州导视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
 
+# 香港频道 (0个 - 未找到匹配的频道)
+
+# 台湾频道 (0个 - 未找到匹配的频道)
+
 # 统计信息
 # BB 频道数: 79
 # 香港频道数: 0
 # 台湾频道数: 0
+# 其他频道数: 0
 # 总频道数: 79
-# 更新时间: 2026-01-29 00:55:36
-# 更新频率: 每天 06:00 和 17:00 (北京时间)
+# 更新时间: 2026-01-29 00:59:42
+# 下次更新: 每天 06:00 和 17:00
