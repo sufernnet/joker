@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-从TV源中提取"港澳频道"和"體育世界"并与BB.m3u合并，保存为EE.m3u
+从TV源中提取"港澳頻道"和"體育世界"并与BB.m3u合并，保存为EE.m3u
 """
 
 import requests
@@ -30,6 +30,11 @@ def fetch_m3u_content():
         response = requests.get(SOURCE_URL, timeout=30)
         response.raise_for_status()
         logger.info(f"下载成功，大小: {len(response.text)} 字符")
+        
+        # 调试：查看文件内容的前1000字符
+        preview = response.text[:1000]
+        logger.info(f"文件预览（前1000字符）:\n{preview}")
+        
         return response.text
     except requests.RequestException as e:
         logger.error(f"下载M3U文件失败: {e}")
@@ -53,14 +58,14 @@ def read_bb_file():
         return None
 
 def extract_channels(content):
-    """提取港澳频道和體育世界"""
+    """提取港澳頻道和體育世界"""
     if not content:
         return None
     
     logger.info("开始提取指定分组频道...")
     
-    # 目标分组
-    target_groups = ["港澳频道", "體育世界"]
+    # 修正：使用正确的繁体字分组名
+    target_groups = ["港澳頻道", "體育世界"]
     
     # 按行分割内容
     lines = content.split('\n')
@@ -69,10 +74,21 @@ def extract_channels(content):
     # 添加文件头
     extracted_lines.append(f'#EXTM3U url-tvg="{EPG_URL}"')
     
-    # 用于调试
+    # 用于调试和统计
     found_groups = {}
     for group in target_groups:
         found_groups[group] = 0
+    
+    # 查找所有分组用于调试
+    all_groups = set()
+    for line in lines:
+        if '#EXTINF' in line and 'group-title="' in line:
+            match = re.search(r'group-title="([^"]+)"', line)
+            if match:
+                all_groups.add(match.group(1))
+    
+    logger.info(f"源文件中找到的所有分组: {sorted(all_groups)}")
+    logger.info(f"目标分组: {target_groups}")
     
     i = 0
     while i < len(lines):
@@ -91,12 +107,14 @@ def extract_channels(content):
                 
                 # 检查是否为目标分组
                 if group_name in target_groups:
+                    logger.info(f"找到目标分组 '{group_name}' 的频道")
                     # 添加EXTINF行
                     extracted_lines.append(line)
                     found_groups[group_name] += 1
                     
-                    # 查找对应的URL行（可能后面有多行，直到下一个EXTINF或空行）
+                    # 查找对应的URL行
                     j = i + 1
+                    url_added = False
                     while j < len(lines):
                         url_line = lines[j].strip()
                         if not url_line:
@@ -105,8 +123,14 @@ def extract_channels(content):
                         if url_line.startswith("#EXTINF"):
                             break
                         # 添加URL行
-                        extracted_lines.append(url_line)
+                        if url_line and not url_line.startswith("#"):
+                            extracted_lines.append(url_line)
+                            url_added = True
+                            logger.info(f"  添加URL: {url_line[:50]}...")
                         j += 1
+                    
+                    if not url_added:
+                        logger.warning(f"分组 '{group_name}' 的频道没有找到URL")
                     
                     i = j - 1  # 跳过已处理的URL行
         i += 1
@@ -118,6 +142,10 @@ def extract_channels(content):
     
     total_channels = sum(found_groups.values())
     logger.info(f"总计提取: {total_channels} 个频道")
+    
+    if total_channels == 0:
+        logger.error("没有提取到任何频道，请检查分组名称")
+        return None
     
     return '\n'.join(extracted_lines) if len(extracted_lines) > 1 else None
 
@@ -133,30 +161,44 @@ def merge_with_bb(tv_content, bb_content):
     merged_lines.append(f"# 生成时间: {timestamp}")
     merged_lines.append(f"# 源地址: {SOURCE_URL}")
     merged_lines.append(f"# EPG源: {EPG_URL}")
-    merged_lines.append("# 包含内容: BB.m3u + 港澳频道 + 體育世界")
+    merged_lines.append("# 包含内容: BB.m3u + 港澳頻道 + 體育世界")
     merged_lines.append("# 自动更新频道列表")
     merged_lines.append("")
     
     # 如果有BB内容，先添加BB的内容（跳过其文件头）
     if bb_content:
         bb_lines = bb_content.split('\n')
+        bb_count = 0
         for line in bb_lines:
             line = line.strip()
-            if line and not line.startswith("#EXTM3U"):
+            if line:
+                if line.startswith("#EXTM3U"):
+                    continue  # 跳过BB的文件头
+                if line.startswith("#EXTINF"):
+                    bb_count += 1
                 merged_lines.append(line)
-        merged_lines.append("")  # 添加空行分隔
+        
+        if bb_count > 0:
+            logger.info(f"合并了 {bb_count} 个BB频道")
+            merged_lines.append("")  # 添加空行分隔
     
     # 添加提取的TV内容（跳过文件头）
     if tv_content:
         tv_lines = tv_content.split('\n')
         first_extm3u_skipped = False
+        tv_count = 0
+        
         for line in tv_lines:
             line = line.strip()
             if line:
                 if line.startswith("#EXTM3U") and not first_extm3u_skipped:
                     first_extm3u_skipped = True
                     continue
+                if line.startswith("#EXTINF"):
+                    tv_count += 1
                 merged_lines.append(line)
+        
+        logger.info(f"合并了 {tv_count} 个TV频道")
     
     return '\n'.join(merged_lines)
 
@@ -188,12 +230,31 @@ def save_m3u_file(content):
             logger.info(f"📊 文件大小: {file_size} 字节")
             logger.info(f"📈 频道总数: {extinf_count}")
             
-            # 显示各部分统计
-            bb_count = content.count("# BB内容") if "# BB内容" in content else 0
-            hk_count = content.count("港澳频道")
+            # 统计各分组数量
+            hk_count = content.count("港澳頻道")
             sports_count = content.count("體育世界")
             
-            logger.info(f"🎯 包含: BB内容 + 港澳频道({hk_count}) + 體育世界({sports_count})")
+            logger.info("=== 详细统计 ===")
+            logger.info(f"港澳頻道: {hk_count} 个频道")
+            logger.info(f"體育世界: {sports_count} 个频道")
+            
+            # 显示文件开头和结尾
+            with open(output_path, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+                logger.info(f"📝 文件总行数: {len(lines)}")
+                
+                if len(lines) > 0:
+                    logger.info("=== 文件开头（前10行）===")
+                    for j in range(min(10, len(lines))):
+                        line = lines[j].rstrip()
+                        if line:  # 只显示非空行
+                            logger.info(f"  {line}")
+                    
+                    logger.info("=== 文件结尾（最后5行）===")
+                    for j in range(max(0, len(lines)-5), len(lines)):
+                        line = lines[j].rstrip()
+                        if line:  # 只显示非空行
+                            logger.info(f"  {line}")
             
             return True
         else:
