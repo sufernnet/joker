@@ -1,9 +1,9 @@
-name: Extract TV Channels
+name: Extract and Merge TV Channels
 
 on:
   schedule:
-    - cron: '0 6 * * *'
-    - cron: '0 17 * * *'
+    - cron: '0 6 * * *'   # UTC 6:00
+    - cron: '0 17 * * *'  # UTC 17:00
   workflow_dispatch:
 
 jobs:
@@ -24,33 +24,48 @@ jobs:
       - name: Install dependencies
         run: pip install requests
       
-      - name: Run extraction
+      - name: Run extraction script
         working-directory: ./scripts
         run: python tv_extractor.py
       
-      - name: List all files
+      - name: Verify EE.m3u in root directory
         run: |
-          echo "=== 当前目录结构 ==="
+          echo "=== 验证根目录文件 ==="
           pwd
           ls -la
+          
           echo ""
-          echo "=== scripts目录内容 ==="
-          ls -la scripts/
-      
-      - name: Verify EE.m3u exists
-        run: |
-          echo "=== 验证EE.m3u文件 ==="
-          if [ -f "scripts/EE.m3u" ]; then
-            echo "✅ EE.m3u文件存在"
-            echo "文件大小: $(wc -c < scripts/EE.m3u) bytes"
-            echo "文件行数: $(wc -l < scripts/EE.m3u)"
-            echo "前10行内容:"
-            head -10 scripts/EE.m3u
+          echo "=== 检查EE.m3u ==="
+          if [ -f "EE.m3u" ]; then
+            echo "✅ EE.m3u文件存在于根目录"
+            echo "文件大小: $(wc -c < EE.m3u) bytes"
+            echo "文件行数: $(wc -l < EE.m3u)"
+            echo "频道数量: $(grep -c "#EXTINF" EE.m3u)"
+            echo ""
+            echo "=== 统计信息 ==="
+            echo "港澳频道数量: $(grep -c "港澳频道" EE.m3u)"
+            echo "體育世界数量: $(grep -c "體育世界" EE.m3u)"
+            echo ""
+            echo "=== 文件开头 ==="
+            head -10 EE.m3u
+            echo ""
+            echo "=== 文件结尾 ==="
+            tail -5 EE.m3u
           else
-            echo "❌ EE.m3u文件不存在"
-            echo "scripts目录内容:"
-            ls -la scripts/
+            echo "❌ EE.m3u文件不存在于根目录"
+            echo "当前目录内容:"
+            ls -la
             exit 1
+          fi
+      
+      - name: List BB.m3u if exists
+        run: |
+          if [ -f "BB.m3u" ]; then
+            echo "✅ BB.m3u文件存在"
+            echo "BB.m3u大小: $(wc -c < BB.m3u) bytes"
+            echo "BB.m3u频道数: $(grep -c "#EXTINF" BB.m3u)"
+          else
+            echo "⚠️  BB.m3u文件不存在，将只合并TV源"
           fi
       
       - name: Configure Git
@@ -63,7 +78,7 @@ jobs:
       
       - name: Add and commit
         run: |
-          git add scripts/EE.m3u
+          git add EE.m3u
           if git diff --staged --quiet; then
             echo "没有更改需要提交"
           else
