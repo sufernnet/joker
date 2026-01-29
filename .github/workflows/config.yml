@@ -1,0 +1,954 @@
+# ============================================================================
+# 香港YouTube直播频道抓取器 - 配置文件 (完整版)
+# 版本: 3.0
+# 最后更新: 2024
+# ============================================================================
+
+# ==================== 基础项目配置 ====================
+project:
+  name: "香港YouTube直播抓取系统"
+  version: "3.0.0"
+  description: "自动抓取香港YouTube直播频道并生成M3U播放列表"
+  author: "System Admin"
+  contact: "admin@example.com"
+  website: ""
+  update_url: ""
+  auto_update: false
+
+# ==================== 系统运行配置 ====================
+system:
+  # 运行模式
+  mode: "normal"  # normal | debug | silent | fast
+  language: "zh-HK"  # 系统语言
+  timezone: "Asia/Hong_Kong"  # 时区设置
+  
+  # 性能设置
+  max_threads: 3  # 最大并发线程数
+  request_delay: 1.5  # 请求间隔(秒)
+  timeout_multiplier: 1.5  # 超时乘数
+  
+  # 文件路径
+  data_dir: "./data"
+  logs_dir: "./logs"
+  cache_dir: "./cache"
+  backup_dir: "./backup"
+  
+  # 清理设置
+  keep_logs_days: 7
+  keep_backup_days: 30
+  max_cache_size_mb: 100
+
+# ==================== 频道管理配置 ====================
+channels:
+  # 启用频道组
+  enabled_groups:
+    - "电视台"
+    - "新闻"
+    - "财经"
+    - "娱乐"
+    - "教育"
+    - "宗教"
+  
+  # 默认频道属性
+  defaults:
+    quality: "best"  # best | 1080p | 720p | 480p | 360p
+    language: "粤语"
+    enabled: true
+    check_interval: 30  # 检查间隔(分钟)
+    priority: 5  # 优先级 1-10
+  
+  # ========== 电视台频道 ==========
+  - group: "电视台"
+    name: "TVB翡翠台"
+    youtube_id: "UCkQEF3dW2Tx6e-9z1pD2lqg"
+    url: "https://www.youtube.com/channel/UCkQEF3dW2Tx6e-9z1pD2lqg"
+    category: "综合娱乐"
+    language: "粤语"
+    quality: "1080p"
+    tvg_id: "TVB.JADE"
+    tvg_name: "TVB Jade"
+    tvg_logo: "https://img.youtube.com/vi/UCkQEF3dW2Tx6e-9z1pD2lqg/maxresdefault.jpg"
+    tvg_epg_id: "Jade.hk"
+    group_title: "香港电视台"
+    audio_track: "粤语"
+    aspect_ratio: "16:9"
+    enabled: true
+    priority: 10
+    tags: ["娱乐", "电视剧", "综艺"]
+    description: "TVB翡翠台官方直播"
+    region: "HK"
+  
+  - group: "电视台"
+    name: "HOY TV"
+    youtube_id: "UClMrjH_g5QcO8Bdq7j81dGA"
+    url: "https://www.youtube.com/channel/UClMrjH_g5QcO8Bdq7j81dGA"
+    category: "综合资讯"
+    language: "粤语"
+    quality: "1080p"
+    tvg_id: "HOYTV"
+    tvg_logo: "https://img.youtube.com/vi/UClMrjH_g5QcO8Bdq7j81dGA/maxresdefault.jpg"
+    group_title: "香港电视台"
+    enabled: true
+    priority: 9
+  
+  - group: "电视台"
+    name: "RTHK 31"
+    youtube_id: "UC2O1I8yJRQWF5bYdHcGJ_tQ"
+    url: "https://www.youtube.com/channel/UC2O1I8yJRQWF5bYdHcGJ_tQ"
+    category: "公共广播"
+    language: "粤语"
+    quality: "1080p"
+    tvg_id: "RTHK31"
+    group_title: "香港电视台"
+    enabled: true
+    priority: 8
+  
+  - group: "电视台"
+    name: "RTHK 32"
+    youtube_id: "UCxLrQfFhLftNpbN7q1e7FrA"
+    url: "https://www.youtube.com/channel/UCxLrQfFhLftNpbN7q1e7FrA"
+    category: "公共广播"
+    language: "英语/普通话"
+    quality: "720p"
+    tvg_id: "RTHK32"
+    group_title: "香港电视台"
+    enabled: true
+    priority: 7
+  
+  # ========== 新闻频道 ==========
+  - group: "新闻"
+    name: "Now新聞直播"
+    youtube_id: "UCUMZ7gohGIzFhvN3XJSCqJg"
+    url: "https://www.youtube.com/channel/UCUMZ7gohGIzFhvN3XJSCqJg"
+    category: "24小时新闻"
+    language: "粤语"
+    quality: "1080p"
+    tvg_id: "NOW.NEWS"
+    tvg_name: "Now News"
+    tvg_logo: "https://img.youtube.com/vi/UCUMZ7gohGIzFhvN3XJSCqJg/maxresdefault.jpg"
+    tvg_epg_id: "NowNews.hk"
+    group_title: "香港新闻台"
+    enabled: true
+    priority: 10
+    tags: ["新闻", "直播", "即时"]
+    description: "Now新闻24小时直播"
+    region: "HK"
+    is_24h: true
+  
+  - group: "新闻"
+    name: "香港電台視像新聞 RTHK VNEWS"
+    youtube_id: "UCc-g8AYLQLvPZphnCgKRTqg"
+    url: "https://www.youtube.com/channel/UCc-g8AYLQLvPZphnCgKRTqg"
+    category: "新闻资讯"
+    language: "粤语/英语"
+    quality: "1080p"
+    tvg_id: "RTHK.VNEWS"
+    group_title: "香港新闻台"
+    enabled: true
+    priority: 9
+  
+  - group: "新闻"
+    name: "有線新聞 CABLE News"
+    youtube_id: "UCYzqspa4l2QYLNp4LM9hQkg"
+    url: "https://www.youtube.com/channel/UCYzqspa4l2QYLNp4LM9hQkg"
+    category: "新闻"
+    language: "粤语"
+    quality: "720p"
+    tvg_id: "CABLE.NEWS"
+    group_title: "香港新闻台"
+    enabled: true
+    priority: 8
+  
+  - group: "新闻"
+    name: "鳳凰衛視香港台"
+    youtube_id: "UCUfG_0Wa7IQS8J_Gu6HwMZw"
+    url: "https://www.youtube.com/channel/UCUfG_0Wa7IQS8J_Gu6HwMZw"
+    category: "新闻资讯"
+    language: "普通话"
+    quality: "1080p"
+    tvg_id: "IFENGHK"
+    group_title: "香港新闻台"
+    enabled: true
+    priority: 7
+  
+  # ========== 财经频道 ==========
+  - group: "财经"
+    name: "now財經台"
+    youtube_id: "UCgX3nW2hUqQYXGV5bL9eG2g"
+    url: "https://www.youtube.com/channel/UCgX3nW2hUqQYXGV5bL9eG2g"
+    category: "财经资讯"
+    language: "粤语"
+    quality: "720p"
+    tvg_id: "NOW.FINANCE"
+    group_title: "财经频道"
+    enabled: true
+    priority: 8
+  
+  # ========== 娱乐频道 ==========
+  - group: "娱乐"
+    name: "ViuTV"
+    youtube_id: "UCSXoBzcqZk3vB7QK7YQJt8g"
+    url: "https://www.youtube.com/channel/UCSXoBzcqZk3vB7QK7YQJt8g"
+    category: "娱乐综艺"
+    language: "粤语"
+    quality: "1080p"
+    tvg_id: "VIUTV"
+    group_title: "娱乐频道"
+    enabled: true
+    priority: 8
+  
+  # ========== 教育频道 ==========
+  - group: "教育"
+    name: "香港教育電視"
+    youtube_id: "UCYtAiOWkUQh2AWGqyMpJj4w"
+    url: "https://www.youtube.com/channel/UCYtAiOWkUQh2AWGqyMpJj4w"
+    category: "教育节目"
+    language: "粤语"
+    quality: "720p"
+    tvg_id: "HKETV"
+    group_title: "教育频道"
+    enabled: true
+    priority: 6
+  
+  # ========== 宗教频道 ==========
+  - group: "宗教"
+    name: "香港佛教文化"
+    youtube_id: "UCr4dFZHXp3x9V5g5cE6N2qA"
+    url: "https://www.youtube.com/channel/UCr4dFZHXp3x9V5g5cE6N2qA"
+    category: "宗教文化"
+    language: "粤语/普通话"
+    quality: "720p"
+    tvg_id: "BUDDHISM.HK"
+    group_title: "宗教文化"
+    enabled: true
+    priority: 5
+  
+  # ========== 备用/测试频道 ==========
+  - group: "测试"
+    name: "TVB USA Official"
+    youtube_id: "UCdNUTdwVsIDQp0k0qJd5i9A"
+    url: "https://www.youtube.com/channel/UCdNUTdwVsIDQp0k0qJd5i9A"
+    category: "国际台"
+    language: "粤语"
+    quality: "1080p"
+    tvg_id: "TVB.USA"
+    group_title: "国际频道"
+    enabled: true
+    priority: 5
+    test_only: true
+
+# ==================== 自动发现配置 ====================
+auto_discovery:
+  enabled: false  # 启用自动发现
+  schedule: "0 3 * * *"  # 每天凌晨3点运行 (cron格式)
+  
+  # 搜索关键词
+  search_keywords:
+    - "香港 直播"
+    - "Hong Kong live"
+    - "TVB 直播"
+    - "RTHK 直播"
+    - "港台 直播"
+    - "香港新聞 直播"
+    - "香港電視 直播"
+    - "HK live stream"
+    - "廣東話 直播"
+    - "Cantonese live"
+  
+  # 过滤条件
+  filters:
+    min_subscribers: 5000  # 最小订阅数
+    min_views: 10000  # 最小观看数
+    min_duration: 600  # 最小直播时长(秒)
+    max_duration: 43200  # 最大直播时长(秒)
+    
+    # 必须包含的关键词
+    require_keywords:
+      - "香港"
+      - "HK"
+      - "Hong Kong"
+    
+    # 排除的关键词
+    exclude_keywords:
+      - "音樂會"
+      - "演唱會"
+      - "音乐会"
+      - "演唱会"
+      - "MV"
+      - "精華"
+      - "片段"
+      - "剪輯"
+      - "highlight"
+      - "recap"
+      - "short"
+      - "shorts"
+      - "#shorts"
+      - "TikTok"
+      - "抖音"
+      - "成人"
+      - "賭博"
+      - "赌博"
+      - "18+"
+      - "敏感内容"
+    
+    # 频道类型过滤
+    channel_types:
+      - "news"
+      - "entertainment"
+      - "education"
+      - "music"
+      - "sports"
+  
+  # 自动添加到主列表
+  auto_add: false
+  auto_add_min_quality: 720p
+  auto_add_min_success_rate: 80  # 成功率百分比
+
+# ==================== 流媒体质量配置 ====================
+stream_quality:
+  # 分辨率偏好
+  preferred_resolution: "1080p"
+  fallback_order:  # 降级顺序
+    - "1080p"
+    - "720p"
+    - "480p"
+    - "360p"
+    - "240p"
+    - "144p"
+  
+  # 格式偏好
+  preferred_format: "hls"  # hls | dash | mp4
+  formats_priority:
+    - "hls"
+    - "dash"
+    - "mp4"
+    - "webm"
+  
+  # 编码参数
+  video_codec: "avc1.4d401f"  # H.264
+  audio_codec: "mp4a.40.2"  # AAC
+  max_bitrate: 8000  # kbps
+  min_bitrate: 1000  # kbps
+  
+  # 连接参数
+  timeout: 15  # 秒
+  connect_timeout: 5  # 秒
+  read_timeout: 10  # 秒
+  max_retries: 3
+  retry_delay: 2  # 秒
+  
+  # 缓冲设置
+  buffer_size: 8192  # bytes
+  chunk_size: 1048576  # 1MB
+  prebuffer_seconds: 5
+  
+  # 直播延迟容忍
+  max_live_delay: 30  # 秒
+  acceptable_latency: 10000  # 毫秒
+
+# ==================== 质量检测配置 ====================
+quality_check:
+  enabled: true
+  schedule: "*/30 * * * *"  # 每30分钟检查一次
+  
+  # 检查参数
+  check_timeout: 10  # 秒
+  sample_duration: 5  # 采样时长(秒)
+  sample_size: 102400  # 采样大小(bytes)
+  concurrent_checks: 2  # 并发检查数
+  
+  # 检测指标
+  metrics:
+    - "availability"
+    - "bitrate"
+    - "latency"
+    - "resolution"
+    - "framerate"
+    - "buffer_time"
+    - "error_rate"
+    - "uptime"
+  
+  # 阈值设置
+  thresholds:
+    min_availability: 95  # 可用性百分比
+    min_bitrate_1080p: 4000  # kbps
+    min_bitrate_720p: 2000
+    min_bitrate_480p: 1000
+    max_latency: 5000  # 毫秒
+    max_buffer_time: 10000  # 毫秒
+    max_error_rate: 5  # 错误率百分比
+    min_uptime: 3600  # 最小在线时间(秒)
+  
+  # 评分权重
+  scoring_weights:
+    availability: 0.3
+    bitrate: 0.25
+    latency: 0.2
+    resolution: 0.15
+    framerate: 0.1
+  
+  # 警报设置
+  alerts:
+    enabled: true
+    notify_on_failure: true
+    failure_threshold: 3  # 连续失败次数
+    recovery_notify: true
+
+# ==================== EPG电子节目指南配置 ====================
+epg:
+  enabled: true
+  sources:
+    - name: "51ZMT EPG"
+      url: "http://epg.51zmt.top:8000/e.xml"
+      type: "xmltv"
+      priority: 1
+      enabled: true
+      update_interval: 24  # 小时
+      timezone: "Asia/Hong_Kong"
+      language: "zh"
+      cache_hours: 24
+    
+    - name: "EPGShare"
+      url: "https://raw.githubusercontent.com/epgshare01/share01/master/epg.xml"
+      type: "xmltv"
+      priority: 2
+      enabled: true
+      update_interval: 12
+    
+    - name: "i.mjh EPG"
+      url: "https://i.mjh.nz/Universal/epg.xml"
+      type: "xmltv"
+      priority: 3
+      enabled: true
+    
+    - name: "本地EPG"
+      url: "file://./data/epg.xml"
+      type: "xmltv"
+      priority: 10
+      enabled: false
+  
+  # EPG映射
+  channel_mapping:
+    # 格式: "频道名": "EPG中的频道ID"
+    "TVB翡翠台": "Jade.hk"
+    "Now新聞直播": "NowNews.hk"
+    "HOY TV": "HOYTV.hk"
+    "RTHK 31": "RTHK31.hk"
+    "RTHK 32": "RTHK32.hk"
+    "有線新聞": "CableNews.hk"
+    "鳳凰衛視香港台": "PhoenixHK.hk"
+  
+  # EPG输出设置
+  output:
+    generate_xml: true
+    xml_filename: "epg.xml"
+    generate_json: false
+    json_filename: "epg.json"
+    include_channel_icons: true
+    include_program_icons: true
+    days_to_include: 7  # 包含多少天的节目表
+  
+  # 时区设置
+  timezone: "Asia/Hong_Kong"
+  time_format: "%H:%M"
+  date_format: "%Y-%m-%d"
+  
+  # 缓存设置
+  cache_enabled: true
+  cache_expiry: 3600  # 秒
+
+# ==================== 代理配置 ====================
+proxy:
+  enabled: false  # 启用代理
+  
+  # 代理服务器列表 (按优先级排序)
+  servers:
+    - name: "本地代理"
+      type: "http"  # http | https | socks4 | socks5
+      host: "127.0.0.1"
+      port: 1080
+      username: ""
+      password: ""
+      enabled: true
+      priority: 1
+      region: "HK"  # 代理地区
+    
+    - name: "香港代理1"
+      type: "http"
+      host: "proxy.hk.example.com"
+      port: 8080
+      username: "user"
+      password: "pass"
+      enabled: false
+      priority: 2
+      region: "HK"
+  
+  # 代理策略
+  strategy: "auto"  # auto | rotate | failover | random
+  auto_switch: true  # 自动切换失败代理
+  switch_threshold: 3  # 失败次数阈值
+  
+  # 请求设置
+  use_proxy_for:
+    - "youtube.com"
+    - "googlevideo.com"
+    - "manifest.googlevideo.com"
+  
+  bypass_proxy_for:
+    - "localhost"
+    - "127.0.0.1"
+    - "192.168.*"
+  
+  # 验证设置
+  test_url: "https://www.youtube.com"
+  test_timeout: 5
+  test_interval: 300  # 测试间隔(秒)
+
+# ==================== 网络请求配置 ====================
+network:
+  # User-Agent设置
+  user_agents:
+    default: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    mobile: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+    tv: "Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV) AppleWebKit/531.2+ (KHTML, like Gecko) WebBrowser/1.0 SmartTV Safari/531.2+"
+  
+  # 请求头
+  headers:
+    Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    Accept-Language: "zh-HK,zh;q=0.9,en-US;q=0.8,en;q=0.7"
+    Accept-Encoding: "gzip, deflate, br"
+    DNT: "1"
+    Upgrade-Insecure-Requests: "1"
+    Sec-Fetch-Dest: "document"
+    Sec-Fetch-Mode: "navigate"
+    Sec-Fetch-Site: "none"
+    Sec-Fetch-User: "?1"
+  
+  # 限流设置
+  rate_limit:
+    enabled: true
+    requests_per_minute: 60
+    requests_per_hour: 1000
+    delay_between_requests: 1.0  # 秒
+  
+  # DNS设置
+  dns_servers:
+    - "8.8.8.8"  # Google DNS
+    - "8.8.4.4"
+    - "1.1.1.1"  # Cloudflare
+    - "1.0.0.1"
+  
+  # 连接池
+  connection_pool:
+    maxsize: 10
+    max_retries: 3
+    pool_block: false
+
+# ==================== M3U输出配置 ====================
+m3u_output:
+  # 文件设置
+  filename: "EE.m3u"
+  output_dir: "./output"
+  backup_count: 5
+  backup_dir: "./backup/m3u"
+  
+  # 生成选项
+  generate_on_start: true
+  generate_on_change: true
+  generate_schedule: "0 */6 * * *"  # 每6小时生成一次
+  
+  # 模板配置
+  header_template: |
+    #EXTM3U x-tvg-url="{epg_url}" url-tvg="{epg_url}" tvg-shift="{tvg_shift}"
+    #PLAYLIST:香港YouTube直播频道合集
+    #GENERATED-BY: HK-YouTube-Live-Scraper v{version}
+    #UPDATED: {timestamp}
+    #TOTAL-CHANNELS: {total_channels}
+    #TOTAL-LIVE: {total_live}
+    #QUALITY: {quality_summary}
+    #REGION: HK
+    #LANGUAGE: zh-HK,zh-CN,zh-TW,en
+    
+  channel_template: |
+    #EXTINF:-1 tvg-id="{tvg_id}" tvg-name="{tvg_name}" tvg-logo="{tvg_logo}" 
+    group-title="{group_title}" tvg-language="{language}" tvg-chno="{channel_number}" 
+    audio-track="{audio_track}" aspect-ratio="{aspect_ratio}" 
+    catchup="{catchup_enabled}",{channel_name}
+    #EXTVLCOPT:http-user-agent="{user_agent}"
+    #EXTVLCOPT:http-referrer="https://www.youtube.com/"
+    #EXTVLCOPT:network-caching=1000
+    #EXTVLCOPT:http-continuous
+    {stream_url}
+  
+  # 频道排序
+  sort_by: "priority"  # priority | name | group | quality
+  sort_order: "desc"  # asc | desc
+  
+  # 分组设置
+  group_channels: true
+  group_order:
+    - "新闻"
+    - "电视台"
+    - "财经"
+    - "娱乐"
+    - "教育"
+    - "宗教"
+    - "其他"
+  
+  # 附加信息
+  include_metadata: true
+  include_quality_info: true
+  include_epg_info: true
+  include_stats: true
+  
+  # 兼容性设置
+  vlc_compatible: true
+  kodi_compatible: true
+  tivimate_compatible: true
+  iptv_smarters_compatible: true
+
+# ==================== 播放器优化配置 ====================
+player_optimization:
+  # VLC优化
+  vlc:
+    http_reconnect: true
+    http_continuous: true
+    network_caching: 1000
+    clock_synchro: 0
+    clock_jitter: 0
+    
+  # Kodi优化
+  kodi:
+    inputstream_adaptive: true
+    inputstream_adaptive_manifest_type: "hls"
+    inputstream_adaptive_license_key: ""
+    
+  # 通用优化
+  common:
+    user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    http_version: "1.1"
+    buffer_size: 8192
+    read_ahead_limit: 120
+
+# ==================== 数据存储配置 ====================
+storage:
+  # 数据库设置
+  database:
+    enabled: true
+    type: "sqlite"  # sqlite | mysql | postgresql
+    path: "./data/channels.db"
+    backup_interval: 86400  # 备份间隔(秒)
+    
+  # 缓存设置
+  cache:
+    enabled: true
+    type: "memory"  # memory | redis | file
+    ttl: 3600  # 生存时间(秒)
+    max_size: 100  # 最大缓存项目数
+    
+  # 历史记录
+  history:
+    keep_days: 30
+    max_entries: 1000
+    track_quality: true
+    track_availability: true
+    
+  # 导出设置
+  export:
+    formats: ["json", "csv", "xml"]
+    auto_export: false
+    export_dir: "./exports"
+
+# ==================== 日志配置 ====================
+logging:
+  # 日志级别
+  level: "INFO"  # DEBUG | INFO | WARNING | ERROR | CRITICAL
+  console_level: "INFO"
+  file_level: "DEBUG"
+  
+  # 文件设置
+  file:
+    enabled: true
+    path: "./logs/hk_youtube_live.log"
+    max_size: 10485760  # 10MB
+    backup_count: 10
+    encoding: "utf-8"
+    
+  # 格式设置
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"
+  
+  # 模块日志级别
+  module_levels:
+    "http": "WARNING"
+    "youtube": "INFO"
+    "quality": "DEBUG"
+    "epg": "INFO"
+    "database": "WARNING"
+    
+  # 性能日志
+  performance_logging: false
+  log_slow_requests: true
+  slow_request_threshold: 5.0  # 秒
+
+# ==================== 监控告警配置 ====================
+monitoring:
+  enabled: true
+  
+  # 健康检查
+  health_check:
+    interval: 300  # 秒
+    timeout: 10
+    check_urls:
+      - "https://www.youtube.com"
+      - "https://www.google.com"
+    
+  # 资源监控
+  resources:
+    monitor_cpu: true
+    cpu_threshold: 80  # 百分比
+    monitor_memory: true
+    memory_threshold: 85  # 百分比
+    monitor_disk: true
+    disk_threshold: 90  # 百分比
+    
+  # 告警通知
+  alerts:
+    enabled: true
+    channels:
+      - "log"
+      - "console"
+      # - "email"
+      # - "telegram"
+      # - "webhook"
+    
+    # 告警级别
+    levels:
+      critical: ["email", "telegram"]
+      warning: ["log", "console"]
+      info: ["log"]
+    
+    # 告警条件
+    conditions:
+      channel_failure_rate: 30  # 频道失败率百分比
+      quality_drop_rate: 20  # 质量下降百分比
+      system_error_count: 10  # 系统错误数
+      consecutive_failures: 5  # 连续失败次数
+
+# ==================== 定时任务配置 ====================
+scheduler:
+  enabled: true
+  
+  # 任务列表
+  jobs:
+    - name: "频道检查"
+      function: "check_channels"
+      schedule: "*/15 * * * *"  # 每15分钟
+      enabled: true
+      args: []
+      kwargs: {}
+      
+    - name: "质量检测"
+      function: "quality_check"
+      schedule: "*/30 * * * *"  # 每30分钟
+      enabled: true
+      
+    - name: "M3U生成"
+      function: "generate_m3u"
+      schedule: "0 */1 * * *"  # 每小时
+      enabled: true
+      
+    - name: "EPG更新"
+      function: "update_epg"
+      schedule: "0 2 * * *"  # 每天凌晨2点
+      enabled: true
+      
+    - name: "数据清理"
+      function: "cleanup_data"
+      schedule: "0 4 * * *"  # 每天凌晨4点
+      enabled: true
+      
+    - name: "备份数据"
+      function: "backup_data"
+      schedule: "0 5 * * *"  # 每天凌晨5点
+      enabled: true
+  
+  # 执行选项
+  options:
+    max_instances: 1
+    misfire_grace_time: 60  # 秒
+    coalesce: true
+    replace_existing: true
+
+# ==================== 高级功能配置 ====================
+advanced:
+  # 机器学习优化
+  ml_optimization:
+    enabled: false
+    predict_offline_times: false
+    optimize_stream_selection: false
+    learning_rate: 0.01
+    training_interval: 86400  # 秒
+    
+  # A/B测试
+  ab_testing:
+    enabled: false
+    test_stream_sources: false
+    test_quality_levels: false
+    sample_size: 100
+    
+  # 智能缓存
+  smart_cache:
+    enabled: true
+    cache_live_streams: true
+    cache_duration: 300  # 秒
+    adaptive_prefetch: false
+    
+  # 故障转移
+  failover:
+    enabled: true
+    backup_stream_sources: true
+    auto_switch_back: true
+    switch_delay: 10  # 秒
+    
+  # 地理定位
+  geolocation:
+    enabled: false
+    require_hk_location: false
+    fallback_to_global: true
+    ip_check_url: "https://ipapi.co/json/"
+
+# ==================== 安全配置 ====================
+security:
+  # 访问控制
+  access_control:
+    enabled: false
+    allowed_ips:
+      - "127.0.0.1"
+      - "192.168.*"
+      - "10.*"
+    blocked_ips: []
+    
+  # API安全
+  api_security:
+    enabled: false
+    require_auth: false
+    auth_token: ""
+    rate_limit_per_minute: 60
+    
+  # 数据加密
+  encryption:
+    enabled: false
+    encrypt_config: false
+    encrypt_database: false
+    
+  # 安全扫描
+  security_scan:
+    enabled: false
+    scan_interval: 86400
+    check_malware: false
+    check_vulnerabilities: false
+
+# ==================== 调试配置 ====================
+debug:
+  enabled: false
+  verbose: false
+  
+  # 调试选项
+  options:
+    log_raw_responses: false
+    log_parsed_data: false
+    log_network_traffic: false
+    log_performance_metrics: false
+    
+  # 测试模式
+  test_mode: false
+  test_channels: 2
+  test_duration: 60  # 秒
+  
+  # 模拟数据
+  mock_responses: false
+  mock_data_dir: "./test_data"
+
+# ==================== 自定义变量 ====================
+custom_variables:
+  # 频道编号起始值
+  channel_number_start: 100
+  
+  # 质量标签
+  quality_labels:
+    1080p: "高清"
+    720p: "标清"
+    480p: "流畅"
+    
+  # 语言映射
+  language_map:
+    "粤语": "yue"
+    "普通话": "cmn"
+    "英语": "eng"
+    "中文": "zh"
+    
+  # 地区代码
+  region_codes:
+    "香港": "HK"
+    "澳门": "MO"
+    "台湾": "TW"
+    "中国": "CN"
+    
+  # 自定义标签
+  custom_tags:
+    live: "直播"
+    24h: "24小时"
+    news: "新闻"
+    entertainment: "娱乐"
+    
+  # 播放器参数
+  player_params:
+    buffer: 1000
+    timeout: 30
+    retries: 3
+
+# ==================== 环境特定配置 ====================
+environments:
+  development:
+    logging.level: "DEBUG"
+    debug.enabled: true
+    quality_check.enabled: false
+    proxy.enabled: false
+    
+  production:
+    logging.level: "INFO"
+    debug.enabled: false
+    quality_check.enabled: true
+    monitoring.enabled: true
+    
+  testing:
+    logging.level: "DEBUG"
+    debug.enabled: true
+    test_mode: true
+    channels:
+      - group: "测试"
+        name: "测试频道1"
+        youtube_id: "TEST123"
+        enabled: true
+
+# ==================== 备注和注释 ====================
+notes: |
+  配置文件说明：
+  1. 所有时间单位均为秒，除非特别注明
+  2. 频道配置支持分组管理，便于分类
+  3. 质量检测可确保1080P流的稳定性
+  4. EPG配置支持多个源，自动选择最佳
+  5. 代理配置支持多个服务器和自动切换
+  6. 定时任务可自动化所有维护操作
+  
+  注意事项：
+  1. 修改配置后需重启服务生效
+  2. 敏感信息建议使用环境变量
+  3. 生产环境请关闭调试模式
+  4. 定期检查日志文件
+  5. 备份重要配置文件
+
+# ============================================================================
+# 配置结束
+# ============================================================================
