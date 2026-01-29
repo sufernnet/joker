@@ -290,7 +290,8 @@ def main():
     
     # 5.5 添加统计信息
     total_channels = bb_count + len(hk_channels) + len(tw_channels) + len(other_gat_channels)
-    output += f"""
+output += f"""
+
 # 统计信息
 # BB 频道数: {bb_count}
 # 香港频道数: {len(hk_channels)} (从『{TARGET_GROUP}』细分)
