@@ -14,7 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # 添加fetch-depth以获取完整历史
           fetch-depth: 0
       
       - name: Setup Python
@@ -29,19 +28,28 @@ jobs:
         working-directory: ./scripts
         run: python tv_extractor.py
       
-      - name: Show results
+      - name: List all files
         run: |
-          echo "=== 生成结果 ==="
+          echo "=== 当前目录结构 ==="
+          pwd
+          ls -la
+          echo ""
+          echo "=== scripts目录内容 ==="
+          ls -la scripts/
+      
+      - name: Verify EE.m3u exists
+        run: |
+          echo "=== 验证EE.m3u文件 ==="
           if [ -f "scripts/EE.m3u" ]; then
-            echo "✅ 文件生成成功"
-            echo "📊 文件信息:"
-            ls -lh scripts/EE.m3u
-            echo "📈 行数: $(wc -l < scripts/EE.m3u)"
-            echo "📝 前5行内容:"
-            head -5 scripts/EE.m3u
-            echo "🔄 频道数量: $(grep -c "#EXTINF" scripts/EE.m3u)"
+            echo "✅ EE.m3u文件存在"
+            echo "文件大小: $(wc -c < scripts/EE.m3u) bytes"
+            echo "文件行数: $(wc -l < scripts/EE.m3u)"
+            echo "前10行内容:"
+            head -10 scripts/EE.m3u
           else
-            echo "❌ 错误：文件未生成"
+            echo "❌ EE.m3u文件不存在"
+            echo "scripts目录内容:"
+            ls -la scripts/
             exit 1
           fi
       
@@ -51,21 +59,16 @@ jobs:
           git config --local user.name "github-actions[bot]"
       
       - name: Pull latest changes
-        run: |
-          # 尝试拉取远程更改，使用合并策略
-          git pull origin main --rebase --autostash || echo "拉取失败，继续执行"
+        run: git pull origin main --rebase || true
       
-      - name: Add and commit changes
+      - name: Add and commit
         run: |
           git add scripts/EE.m3u
-          # 检查是否有实际更改
           if git diff --staged --quiet; then
             echo "没有更改需要提交"
           else
-            git commit -m "自动更新EE.m3u $(date +'%Y-%m-%d %H:%M:%S')"
+            git commit -m "更新EE.m3u $(date +'%Y-%m-%d %H:%M:%S')"
           fi
       
       - name: Push changes
-        run: |
-          # 强制推送（因为我们只更新EE.m3u文件）
-          git push origin HEAD:main
+        run: git push origin main
