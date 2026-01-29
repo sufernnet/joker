@@ -1,56 +1,101 @@
-name: Update EE.m3u
+name: Extract and Sort TV Channels
 
 on:
   schedule:
-    - cron: '0 6 * * *'
-    - cron: '0 17 * * *'
+    - cron: '0 6 * * *'   # UTC 6:00
+    - cron: '0 17 * * *'  # UTC 17:00
   workflow_dispatch:
 
 jobs:
-  update:
+  extract:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
-      - uses: actions/setup-python@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
       
-      - run: pip install requests
+      - name: Install dependencies
+        run: pip install requests
       
-      - name: Run minimal script
+      - name: Run extraction with sorting
         working-directory: ./scripts
         run: python tv_extractor.py
       
-      - name: Verify
+      - name: Verify sorting in EE.m3u
         run: |
-          echo "验证结果:"
+          echo "=== 验证EE.m3u排序 ==="
           if [ -f "EE.m3u" ]; then
-            now_news=$(grep -c "NOW新闻台\|NOW新聞台" EE.m3u || echo 0)
-            if [ "$now_news" -eq 1 ]; then
-              echo "✅ NOW新闻台已去重 (1个)"
+            echo "✅ EE.m3u文件存在"
+            echo ""
+            
+            # 统计各类频道数量
+            echo "=== 频道分类统计 ==="
+            total=$(grep -c "#EXTINF" EE.m3u || echo 0)
+            phoenix=$(grep -i "凤凰\|鳳凰" EE.m3u | grep -c "#EXTINF" || echo 0)
+            now=$(grep -i "NOW" EE.m3u | grep -c "#EXTINF" || echo 0)
+            sports=$(grep -c "體育世界" EE.m3u || echo 0)
+            
+            echo "总频道数: $total"
+            echo "凤凰频道: $phoenix"
+            echo "NOW频道: $now"
+            echo "體育世界: $sports"
+            echo ""
+            
+            # 验证排序
+            echo "=== 排序验证 ==="
+            # 获取第一个凤凰频道和NOW频道的行号
+            first_phoenix=$(grep -n -i "凤凰\|鳳凰" EE.m3u | grep "#EXTINF" | head -1 | cut -d: -f1)
+            first_now=$(grep -n -i "NOW" EE.m3u | grep "#EXTINF" | head -1 | cut -d: -f1)
+            
+            if [ -n "$first_phoenix" ] && [ -n "$first_now" ]; then
+              echo "第一个凤凰频道在第 $first_phoenix 行"
+              echo "第一个NOW频道在第 $first_now 行"
+              
+              if [ "$first_phoenix" -lt "$first_now" ]; then
+                echo "✅ 排序正确: 凤凰频道在NOW频道之前"
+              else
+                echo "⚠️  排序可能有问题"
+              fi
             else
-              echo "❌ NOW新闻台: $now_news 个 (应=1)"
+              echo "ℹ️  无法找到凤凰或NOW频道进行排序验证"
             fi
             
-            # 检查體育世界NOW是否在前
-            sports_line=$(grep -n "# 體育世界" EE.m3u | cut -d: -f1)
-            if [ -n "$sports_line" ]; then
-              now_in_sports=$(tail -n +$sports_line EE.m3u | grep -n "NOW" | head -1 | cut -d: -f1)
-              if [ -n "$now_in_sports" ]; then
-                if [ "$now_in_sports" -lt 10 ]; then  # NOW在前10行内
-                  echo "✅ 體育世界NOW频道在前"
-                fi
-              fi
-            fi
+            echo ""
+            echo "=== 文件结构预览 ==="
+            echo "前20行内容:"
+            head -20 EE.m3u
+            echo "..."
+            echo "最后10行内容:"
+            tail -10 EE.m3u
+            
+          else
+            echo "❌ EE.m3u文件不存在"
+            exit 1
           fi
       
-      - name: Commit
+      - name: Configure Git
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      
+      - name: Pull latest changes
+        run: git pull origin main --rebase || true
+      
+      - name: Commit changes
+        run: |
           git add EE.m3u
-          git commit -m "Update EE.m3u" || exit 0
-          git pull --rebase origin main
-          git push origin main
+          if git diff --staged --quiet; then
+            echo "没有更改需要提交"
+          else
+            git commit -m "更新EE.m3u - 港澳頻道凤凰优先排序 $(date +'%Y-%m-%d %H:%M:%S')"
+          fi
+      
+      - name: Push to repository
+        run: git push origin main
