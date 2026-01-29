@@ -1,59 +1,53 @@
-name: Extract TV Channels (Fast)
+name: Update EE.m3u
 
 on:
   schedule:
-    - cron: '0 6 * * *'   # UTC 6:00
-    - cron: '0 17 * * *'  # UTC 17:00
+    - cron: '0 6 * * *'
+    - cron: '0 17 * * *'
   workflow_dispatch:
 
 jobs:
-  extract:
+  update:
     runs-on: ubuntu-latest
-    timeout-minutes: 5  # 设置超时时间
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
       
-      - name: Install dependencies
+      - name: Install requests
         run: pip install requests
       
-      - name: Run optimized script
+      - name: Run simple script
         working-directory: ./scripts
         run: python tv_extractor.py
       
-      - name: Quick verification
+      - name: Quick check
         run: |
-          echo "=== 快速验证 ==="
+          echo "检查结果:"
           if [ -f "EE.m3u" ]; then
-            echo "✅ EE.m3u生成成功"
-            size_kb=$(($(wc -c < EE.m3u) / 1024))
-            total=$(grep -c "#EXTINF" EE.m3u || echo 0)
-            now_news=$(grep -i "NOW新闻台\|NOW新聞台" EE.m3u | grep -c "#EXTINF" || echo 0)
+            echo "✅ EE.m3u已生成"
+            echo "大小: $(wc -c < EE.m3u) bytes"
+            echo "频道数: $(grep -c "#EXTINF" EE.m3u || echo 0)"
             
-            echo "文件大小: ${size_kb}KB"
-            echo "总频道数: $total"
-            echo "NOW新闻台: $now_news (应≤1)"
+            now_news=$(grep -c "NOW新闻台\|NOW新聞台" EE.m3u || echo 0)
+            echo "NOW新闻台数量: $now_news"
             
-            # 检查结构
-            echo ""
-            echo "=== 文件结构 ==="
-            grep "^#" EE.m3u | head -10
+            if [ "$now_news" -gt 1 ]; then
+              echo "⚠️  NOW新闻台可能重复"
+            fi
           else
-            echo "❌ EE.m3u未生成"
+            echo "❌ 文件未生成"
             exit 1
           fi
       
-      - name: Auto commit
+      - name: Commit
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add EE.m3u
-          git commit -m "Update EE.m3u" -m "自动更新 $(date)" || exit 0
+          git commit -m "Update EE.m3u" || exit 0
           git pull --rebase origin main
           git push origin main
