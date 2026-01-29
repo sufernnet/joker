@@ -1,137 +1,43 @@
-name: 自动生成DD.m3u（港澳台专版）
-
-on:
-  # 手动触发
-  workflow_dispatch:
-  
-  # 定时触发：北京时间 06:00 和 17:00
-  # UTC时间 = 北京时间 - 8小时
-  schedule:
-    - cron: '0 22 * * *'  # UTC 22:00 = 北京时间 06:00（次日）
-    - cron: '0 9 * * *'   # UTC 09:00 = 北京时间 17:00
-  
-  # 当脚本更新时也触发
-  push:
-    paths:
-      - 'scripts/merge_dd.py'
-      - '.github/workflows/merge-dd.yml'
-
-jobs:
-  generate-dd:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: 📥 检出代码
-      uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-    
-    - name: 🐍 设置Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-    
-    - name: 📦 安装依赖
-      run: pip install requests
-    
-    - name: 🕒 显示时间信息
+    - name: 📤 提交文件
       run: |
-        echo "=== 时间信息 ==="
-        echo "当前UTC时间: $(date -u '+%Y-%m-%d %H:%M:%S')"
-        echo "当前北京时间: $(date -d '+8 hours' '+%Y-%m-%d %H:%M:%S')"
-        echo "下次运行: 北京时间 06:00 和 17:00"
-        echo "港澳台源: https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1"
-    
-    - name: 🚀 运行DD生成脚本
-      run: |
-        echo "开始生成DD.m3u..."
-        python scripts/merge_dd.py
+        echo "=== 提交DD.m3u ==="
         
-        echo -e "\n=== 检查生成的文件 ==="
-        if [ -f "DD.m3u" ]; then
-          echo "✅ DD.m3u 已生成"
-          echo "文件大小: $(wc -c < DD.m3u) 字节"
-          echo "行数: $(wc -l < DD.m3u)"
-          echo "生成时间: $(date '+%Y-%m-%d %H:%M:%S')"
-          
-          echo -e "\n=== 文件内容预览 ==="
-          echo "前10行:"
-          head -10 DD.m3u
-          echo "..."
-          
-          echo -e "\n=== 频道统计 ==="
-          echo "香港频道: $(grep -c 'group-title=\"香港\"' DD.m3u || echo 0)"
-          echo "台湾频道: $(grep -c 'group-title=\"台湾\"' DD.m3u || echo 0)"
-          echo "EPG信息: $(grep -i 'url-tvg' DD.m3u | head -1 || echo '未找到')"
-        else
-          echo "❌ DD.m3u 未生成"
+        # 首先检查文件
+        if [ ! -f "DD.m3u" ]; then
+          echo "❌ 错误: DD.m3u 文件不存在!"
+          echo "当前目录内容:"
+          ls -la
           exit 1
         fi
-    
-    - name: 🔄 同步远程更改
-      run: |
-        echo "同步远程仓库..."
+        
+        echo "✅ DD.m3u 存在"
+        echo "文件大小: $(wc -c < DD.m3u) 字节"
+        echo "行数: $(wc -l < DD.m3u)"
+        
+        # 配置Git
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git config user.name "github-actions[bot]"
-        git pull origin main --rebase --autostash
-        echo "✅ 同步完成"
-    
-    - name: 📤 提交更新
-      run: |
-        echo "准备提交DD.m3u..."
         
-        if [ ! -f "DD.m3u" ]; then
-          echo "❌ DD.m3u不存在，无法提交"
-          exit 1
-        fi
+        # 显示当前状态
+        echo "Git状态:"
+        git status
         
-        # 检查文件是否有变化
-        if git diff --quiet DD.m3u; then
-          echo "📭 DD.m3u 无变化，无需提交"
-          exit 0
-        fi
-        
-        # 添加并提交
+        # 添加文件
         git add DD.m3u
-        git commit -m "🤖 自动更新 DD.m3u [$(date -u '+%Y-%m-%d %H:%M UTC')]"
         
-        echo "提交信息:"
-        git log -1 --oneline
-        
-        # 推送
-        git push origin main
-        echo "✅ 提交完成"
-    
-    - name: 📊 输出结果
-      if: always()
-      run: |
-        echo "=== DD.m3u生成完成 ==="
-        echo "🕒 运行完成时间: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-        echo "🕐 北京时间: $(date -d '+8 hours' '+%Y-%m-%d %H:%M:%S')"
-        echo ""
-        echo "📅 下次计划运行:"
-        echo "  • UTC 22:00 (北京时间 06:00)"
-        echo "  • UTC 09:00 (北京时间 17:00)"
-        echo ""
-        echo "🔗 生成的文件:"
-        echo "  • GitHub: https://github.com/${{ github.repository }}/blob/main/DD.m3u"
-        echo "  • Raw: https://raw.githubusercontent.com/${{ github.repository }}/main/DD.m3u"
-        echo ""
-        echo "⚙️  配置信息:"
-        echo "  • 港澳台源: https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1"
-        echo "  • BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
-        echo "  • 更新频率: 每天2次 (06:00, 17:00)"
-        echo "  • 自动分类: 香港、台湾频道"
-        echo ""
-        if [ -f "DD.m3u" ]; then
-          echo "📊 文件信息:"
-          echo "  ✅ DD.m3u 生成成功"
-          LINES=$(wc -l < DD.m3u)
-          SIZE=$(wc -c < DD.m3u)
-          HK_COUNT=$(grep -c 'group-title=\"香港\"' DD.m3u || echo 0)
-          TW_COUNT=$(grep -c 'group-title=\"台湾\"' DD.m3u || echo 0)
-          echo "    行数: $LINES"
-          echo "    大小: $SIZE 字节"
-          echo "    香港频道: $HK_COUNT"
-          echo "    台湾频道: $TW_COUNT"
+        # 检查是否有变化
+        if git diff --cached --quiet; then
+          echo "📭 文件无变化，无需提交"
+        else
+          # 提交
+          git commit -m "🤖 自动更新 DD.m3u [$(date +'%Y-%m-%d %H:%M')]"
+          
+          # 先拉取最新
+          echo "拉取远程更新..."
+          git pull origin main --rebase
+          
+          # 推送
+          echo "推送到远程..."
+          git push origin main
+          echo "✅ 提交完成"
         fi
