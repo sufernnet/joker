@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-DD.m3u 合并脚本（港澳台直提版）
+DD.m3u 合并脚本（港澳台直提 + 凤凰/NOW 优先）
 
 功能：
-1. 从指定URL提取“港澳台直播”分组
-2. 将分组名统一改为“港澳台”
-3. 与 BB.m3u 合并
-4. 输出 DD.m3u
-5. 使用固定 EPG 源
+1. 提取“港澳台直播”分组
+2. 重命名为“港澳台”
+3. 港澳台分组内排序：凤凰 → NOW → 其他
+4. 合并 BB.m3u
+5. 使用固定 EPG
 
 北京时间每天 06:00 / 17:00 自动运行
 """
@@ -21,18 +21,22 @@ BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
 GAT_URL = "https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1"
 OUTPUT_FILE = "DD.m3u"
 
-TARGET_GROUP = "港澳台直播"
-RENAME_GROUP = "港澳台"
+SOURCE_GROUP = "港澳台直播"
+TARGET_GROUP = "港澳台"
 
 EPG_URL = "http://epg.51zmt.top:8000/e.xml"
 
-# ================== 工具函数 ==================
+# 关键词
+PHOENIX_KEYWORDS = ["凤凰"]
+NOW_KEYWORDS = ["NOW"]
+
+# ================== 工具 ==================
 
 def log(msg):
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
 
 
-def download_content(url, desc):
+def download(url, desc):
     try:
         log(f"下载 {desc}...")
         r = requests.get(url, timeout=25, headers={"User-Agent": "Mozilla/5.0"})
@@ -45,15 +49,12 @@ def download_content(url, desc):
 
 
 def extract_gat_channels(content):
-    """
-    提取“港澳台直播”分组下的频道
-    """
     lines = content.splitlines()
     channels = []
     in_section = False
-    marker = f"{TARGET_GROUP},#genre#"
+    marker = f"{SOURCE_GROUP},#genre#"
 
-    log(f"开始提取分组：{TARGET_GROUP}")
+    log(f"开始提取分组：{SOURCE_GROUP}")
 
     for i, line in enumerate(lines):
         line = line.strip()
@@ -78,20 +79,38 @@ def extract_gat_channels(content):
     return channels
 
 
+def sort_gat_channels(channels):
+    """
+    排序规则：
+    0 - 凤凰
+    1 - NOW
+    2 - 其他
+    """
+    def weight(name):
+        for k in PHOENIX_KEYWORDS:
+            if k in name:
+                return (0, name)
+        for k in NOW_KEYWORDS:
+            if k in name:
+                return (1, name)
+        return (2, name)
+
+    return sorted(channels, key=lambda x: weight(x[0]))
+
+
 # ================== 主流程 ==================
 
 def main():
     log("开始生成 DD.m3u ...")
 
-    bb_content = download_content(BB_URL, "BB.m3u")
-    if not bb_content:
+    bb = download(BB_URL, "BB.m3u")
+    if not bb:
         return
 
-    gat_content = download_content(GAT_URL, "港澳台直播源")
-    if not gat_content:
-        gat_content = ""
+    gat = download(GAT_URL, "港澳台直播源") or ""
 
-    gat_channels = extract_gat_channels(gat_content) if gat_content else []
+    gat_channels = extract_gat_channels(gat) if gat else []
+    gat_channels = sort_gat_channels(gat_channels)
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -105,34 +124,32 @@ def main():
 
 """
 
-    # ===== 合并 BB =====
+    # ===== BB =====
     bb_count = 0
-    for line in bb_content.splitlines():
+    for line in bb.splitlines():
         if line.startswith("#EXTM3U"):
             continue
         output += line + "\n"
         if line.startswith("#EXTINF"):
             bb_count += 1
 
-    # ===== 添加 港澳台 =====
+    # ===== 港澳台 =====
     if gat_channels:
-        output += f"\n# {RENAME_GROUP}频道 ({len(gat_channels)})\n"
+        output += f"\n# {TARGET_GROUP}频道 ({len(gat_channels)})\n"
         for name, url in gat_channels:
-            output += f'#EXTINF:-1 group-title="{RENAME_GROUP}",{name}\n'
+            output += f'#EXTINF:-1 group-title="{TARGET_GROUP}",{name}\n'
             output += f"{url}\n"
 
     total = bb_count + len(gat_channels)
 
-    # ===== 统计 =====
     output += f"""
 # 统计信息
 # BB 频道数: {bb_count}
-# {RENAME_GROUP}频道数: {len(gat_channels)}
+# {TARGET_GROUP}频道数: {len(gat_channels)}
 # 总频道数: {total}
 # 更新时间: {timestamp}
 """
 
-    # ===== 保存 =====
     try:
         with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             f.write(output)
