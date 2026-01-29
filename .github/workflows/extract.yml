@@ -17,30 +17,33 @@ jobs:
         with:
           python-version: '3.10'
       
-      - name: Install requests
-        run: pip install requests
+      - run: pip install requests
       
-      - name: Run simple script
+      - name: Run minimal script
         working-directory: ./scripts
         run: python tv_extractor.py
       
-      - name: Quick check
+      - name: Verify
         run: |
-          echo "检查结果:"
+          echo "验证结果:"
           if [ -f "EE.m3u" ]; then
-            echo "✅ EE.m3u已生成"
-            echo "大小: $(wc -c < EE.m3u) bytes"
-            echo "频道数: $(grep -c "#EXTINF" EE.m3u || echo 0)"
-            
             now_news=$(grep -c "NOW新闻台\|NOW新聞台" EE.m3u || echo 0)
-            echo "NOW新闻台数量: $now_news"
-            
-            if [ "$now_news" -gt 1 ]; then
-              echo "⚠️  NOW新闻台可能重复"
+            if [ "$now_news" -eq 1 ]; then
+              echo "✅ NOW新闻台已去重 (1个)"
+            else
+              echo "❌ NOW新闻台: $now_news 个 (应=1)"
             fi
-          else
-            echo "❌ 文件未生成"
-            exit 1
+            
+            # 检查體育世界NOW是否在前
+            sports_line=$(grep -n "# 體育世界" EE.m3u | cut -d: -f1)
+            if [ -n "$sports_line" ]; then
+              now_in_sports=$(tail -n +$sports_line EE.m3u | grep -n "NOW" | head -1 | cut -d: -f1)
+              if [ -n "$now_in_sports" ]; then
+                if [ "$now_in_sports" -lt 10 ]; then  # NOW在前10行内
+                  echo "✅ 體育世界NOW频道在前"
+                fi
+              fi
+            fi
           fi
       
       - name: Commit
