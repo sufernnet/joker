@@ -1,26 +1,81 @@
-    - name: 📤 提交文件
+name: 自动生成DD.m3u（港澳台专版）
+
+on:
+  # 手动触发
+  workflow_dispatch:
+  
+  # 定时触发：北京时间 06:00 和 17:00
+  schedule:
+    - cron: '0 22 * * *'  # UTC 22:00 = 北京时间 06:00（次日）
+    - cron: '0 9 * * *'   # UTC 09:00 = 北京时间 17:00
+  
+  # 当脚本更新时也触发
+  push:
+    paths:
+      - 'scripts/merge_dd.py'
+      - '.github/workflows/merge-dd.yml'
+
+jobs:
+  generate-dd:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 检出代码
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+    
+    - name: 🐍 设置Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: 📦 安装依赖
+      run: pip install requests
+    
+    - name: 🚀 运行DD生成脚本
       run: |
-        echo "=== 提交DD.m3u ==="
+        echo "开始生成DD.m3u..."
+        python scripts/merge_dd.py
         
-        # 首先检查文件
-        if [ ! -f "DD.m3u" ]; then
-          echo "❌ 错误: DD.m3u 文件不存在!"
-          echo "当前目录内容:"
+        echo -e "\n=== 检查生成的文件 ==="
+        if [ -f "DD.m3u" ]; then
+          echo "✅ DD.m3u 已生成"
+          echo "文件大小: $(wc -c < DD.m3u) 字节"
+          echo "行数: $(wc -l < DD.m3u)"
+          
+          echo -e "\n=== 文件内容预览 ==="
+          echo "前5行:"
+          head -5 DD.m3u
+          echo "..."
+        else
+          echo "❌ DD.m3u 未生成"
+          echo "当前目录:"
+          pwd
           ls -la
           exit 1
         fi
-        
-        echo "✅ DD.m3u 存在"
-        echo "文件大小: $(wc -c < DD.m3u) 字节"
-        echo "行数: $(wc -l < DD.m3u)"
-        
-        # 配置Git
+    
+    - name: 🔄 同步远程更改
+      run: |
+        echo "同步远程仓库..."
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git config user.name "github-actions[bot]"
         
-        # 显示当前状态
-        echo "Git状态:"
-        git status
+        # 先拉取最新更改
+        git pull origin main --rebase --autostash || echo "拉取失败，继续"
+        echo "✅ 同步完成"
+    
+    - name: 📤 提交更新
+      run: |
+        echo "准备提交DD.m3u..."
+        
+        # 确保文件存在
+        if [ ! -f "DD.m3u" ]; then
+          echo "❌ DD.m3u不存在"
+          exit 1
+        fi
         
         # 添加文件
         git add DD.m3u
@@ -31,13 +86,29 @@
         else
           # 提交
           git commit -m "🤖 自动更新 DD.m3u [$(date +'%Y-%m-%d %H:%M')]"
+          echo "提交信息: $(git log -1 --oneline)"
           
-          # 先拉取最新
-          echo "拉取远程更新..."
-          git pull origin main --rebase
-          
-          # 推送
-          echo "推送到远程..."
-          git push origin main
-          echo "✅ 提交完成"
+          # 推送（带重试）
+          echo "推送更改..."
+          max_retries=3
+          for i in $(seq 1 $max_retries); do
+            echo "尝试推送 (第 $i 次)..."
+            if git push origin main; then
+              echo "✅ 推送成功"
+              break
+            else
+              echo "推送失败，等待重试..."
+              sleep 5
+              # 拉取最新并重试
+              git pull origin main --rebase
+            fi
+          done
         fi
+    
+    - name: 📊 输出结果
+      run: |
+        echo "=== 运行完成 ==="
+        echo "时间: $(date)"
+        echo "文件: DD.m3u"
+        echo "链接: https://raw.githubusercontent.com/${{ github.repository }}/main/DD.m3u"
+        echo "下次运行: 北京时间 06:00 和 17:00"
