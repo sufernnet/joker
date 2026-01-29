@@ -2,8 +2,9 @@ name: Extract TV Channels
 
 on:
   schedule:
-    - cron: '0 6 * * *'   # UTC 6:00
-    - cron: '0 17 * * *'  # UTC 17:00
+    # 每天UTC时间6:00和17:00运行
+    - cron: '0 6 * * *'
+    - cron: '0 17 * * *'
   workflow_dispatch:
 
 jobs:
@@ -13,9 +14,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      
+        
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -24,27 +23,28 @@ jobs:
       - name: Install dependencies
         run: pip install requests
       
-      - name: Run extraction script
-        run: |
-          cd scripts
-          python tv_extractor.py
-          cd ..
+      - name: Run extraction
+        working-directory: ./scripts
+        run: python tv_extractor.py
       
-      - name: Show file info
+      - name: Show results
         run: |
-          echo "=== 生成的文件信息 ==="
+          echo "=== 生成结果 ==="
           if [ -f "scripts/EE.m3u" ]; then
+            echo "✅ 文件生成成功"
+            echo "📊 文件信息:"
             ls -lh scripts/EE.m3u
-            echo "行数:"
-            wc -l scripts/EE.m3u
-            echo "前5行内容:"
-            head -5 scripts/EE.m3u
+            echo "📈 行数: $(wc -l < scripts/EE.m3u)"
+            echo "📝 前10行内容:"
+            head -10 scripts/EE.m3u
+            echo "🔄 频道数量:"
+            grep -c "#EXTINF" scripts/EE.m3u
           else
-            echo "错误：文件未生成"
+            echo "❌ 错误：文件未生成"
             exit 1
           fi
       
-      - name: Commit and push
+      - name: Commit changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
