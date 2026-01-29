@@ -1,8 +1,9 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
-# 生成时间: 2026-01-29 08:29:03
+# 生成时间: 2026-01-29 08:36:27
 # 源地址: https://raw.githubusercontent.com/yihad168/tv/refs/heads/main/tv.m3u
 # EPG源: http://epg.51zmt.top:8000/e.xml
 # 包含内容: BB.m3u + 港澳頻道 + 體育世界
+# 港澳頻道排序: 凤凰频道 → NOW频道 → 其他频道
 # 自动更新频道列表
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -164,16 +165,60 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=01
 #EXTINF:-1 tvg-id="杭州导视" tvg-name="杭州导视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州导视.png" group-title="浙江",杭州导视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
 
-#EXTINF:-1 group-title="港澳頻道",無線新聞
-http://hls.168.us.kg/u/83/master.m3u8
-#EXTINF:-1 group-title="港澳頻道",無線翡翠
-http://hls.168.us.kg/u/81/master.m3u8
+#==================================================
+# 以下为港澳頻道和體育世界
+#==================================================
+
+#EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
+# 港澳頻道排序规则: 凤凰频道 → NOW频道 → 其他频道
+#EXTINF:-1 group-title="港澳頻道",鳳凰中文
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixtv_hd
+#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixinfo_hd
+#EXTINF:-1 group-title="港澳頻道",鳳凰香港
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=hkphoenix_twn
+#EXTINF:-1 group-title="港澳頻道",鳳凰中文
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixtv_hd
+#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixinfo_hd
+#EXTINF:-1 group-title="港澳頻道",鳳凰香港
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=hkphoenix_twn
+#EXTINF:-1 group-title="港澳頻道",鳳凰中文
+http://cdn.veryfast.filegear-sg.me/live/fhzw/stream.m3u8
+#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
+http://cdn6.veryfast.filegear-sg.me/live/fhzx/stream.m3u8
+#EXTINF:-1 group-title="港澳頻道",鳳凰香港
+http://cdn6.veryfast.filegear-sg.me/live/fhhk/stream.m3u8
+#EXTINF:-1 group-title="港澳頻道",鳳凰中文
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixtv_hd
+#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixinfo_hd
+#EXTINF:-1 group-title="港澳頻道",鳳凰香港
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=hkphoenix_twn
+#EXTINF:-1 group-title="港澳頻道",鳳凰中文
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixtv_hd
+#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixinfo_hd
+#EXTINF:-1 group-title="港澳頻道",鳳凰香港
+http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=hkphoenix_twn
+#EXTINF:-1 group-title="港澳頻道",鳳凰中文
+http://php.jdshipin.com/TVOD/iptv.php?id=fhzw
+#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
+http://php.jdshipin.com/TVOD/iptv.php?id=fhzx
+#EXTINF:-1 group-title="港澳頻道",鳳凰香港
+http://php.jdshipin.com/TVOD/iptv.php?id=fhhk
 #EXTINF:-1 group-title="港澳頻道",NOW直播台
 http://hls.168.us.kg/u/331/master.m3u8
 #EXTINF:-1 group-title="港澳頻道",NOW財經台
 http://hls.168.us.kg/u/333/master.m3u8
 #EXTINF:-1 group-title="港澳頻道",NOW新聞台
 http://hls.168.us.kg/u/332/master.m3u8
+#EXTINF:-1 group-title="港澳頻道",NOW新聞
+http://cdn.veryfast.filegear-sg.me/live/now/stream.m3u8
+#EXTINF:-1 group-title="港澳頻道",無線新聞
+http://hls.168.us.kg/u/83/master.m3u8
+#EXTINF:-1 group-title="港澳頻道",無線翡翠
+http://hls.168.us.kg/u/81/master.m3u8
 #EXTINF:-1 group-title="港澳頻道",港台電視31
 http://hls.168.us.kg/u/31/master.m3u8
 #EXTINF:-1 group-title="港澳頻道",HOY國際財經台
@@ -334,12 +379,6 @@ http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=viusix_twn
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=rhk31_twn
 #EXTINF:-1 group-title="港澳頻道",RTHK32
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=rhk32_twn
-#EXTINF:-1 group-title="港澳頻道",鳳凰中文
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixtv_hd
-#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixinfo_hd
-#EXTINF:-1 group-title="港澳頻道",鳳凰香港
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=hkphoenix_twn
 #EXTINF:-1 group-title="港澳頻道",美亞電影
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=meiyamovie_twn
 #EXTINF:-1 group-title="港澳頻道",天映馬來西亞
@@ -384,20 +423,12 @@ http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=viusix_twn
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=rhk31_twn
 #EXTINF:-1 group-title="港澳頻道",RTHK32
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=rhk32_twn
-#EXTINF:-1 group-title="港澳頻道",鳳凰中文
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixtv_hd
-#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixinfo_hd
-#EXTINF:-1 group-title="港澳頻道",鳳凰香港
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=hkphoenix_twn
 #EXTINF:-1 group-title="港澳頻道",美亞電影
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=meiyamovie_twn
 #EXTINF:-1 group-title="港澳頻道",翡翠台4K
 http://cdn.veryfast.filegear-sg.me/live/fct4k/stream.m3u8
 #EXTINF:-1 group-title="港澳頻道",翡翠台
 http://cdn6.veryfast.filegear-sg.me/live/fct4k/stream.m3u8
-#EXTINF:-1 group-title="港澳頻道",鳳凰中文
-http://cdn.veryfast.filegear-sg.me/live/fhzw/stream.m3u8
 #EXTINF:-1 group-title="港澳頻道",RTHK33
 http://cdn.veryfast.filegear-sg.me/live/cctv1/stream.m3u8
 #EXTINF:-1 group-title="港澳頻道",TVB PLUS
@@ -408,8 +439,6 @@ http://cdn6.veryfast.filegear-sg.me/live/hoy/stream.m3u8
 http://cdn.veryfast.filegear-sg.me/live/hoy/stream.m3u8
 #EXTINF:-1 group-title="港澳頻道",VIUTV
 http://cdn.veryfast.filegear-sg.me/live/viu/stream.m3u8
-#EXTINF:-1 group-title="港澳頻道",NOW新聞
-http://cdn.veryfast.filegear-sg.me/live/now/stream.m3u8
 #EXTINF:-1 group-title="港澳頻道",RTHK31
 http://cdn.veryfast.filegear-sg.me/live/rthk31/stream.m3u8
 #EXTINF:-1 group-title="港澳頻道",RTHK32
@@ -420,10 +449,6 @@ http://cdn.veryfast.filegear-sg.me/live/asam/stream.m3u8
 http://cdn.veryfast.filegear-sg.me/live/as/stream.m3u8
 #EXTINF:-1 group-title="港澳頻道",重溫經典
 http://cdn6.veryfast.filegear-sg.me/live/cwjd/stream.m3u8
-#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
-http://cdn6.veryfast.filegear-sg.me/live/fhzx/stream.m3u8
-#EXTINF:-1 group-title="港澳頻道",鳳凰香港
-http://cdn6.veryfast.filegear-sg.me/live/fhhk/stream.m3u8
 #EXTINF:-1 group-title="港澳頻道",TVB1
 http://cdn6.veryfast.filegear-sg.me/live/tvb1/stream.m3u8
 #EXTINF:-1 group-title="港澳頻道",TVBJ1
@@ -488,12 +513,6 @@ http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=viusix_twn
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=rhk31_twn
 #EXTINF:-1 group-title="港澳頻道",RTHK32
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=rhk32_twn
-#EXTINF:-1 group-title="港澳頻道",鳳凰中文
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixtv_hd
-#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixinfo_hd
-#EXTINF:-1 group-title="港澳頻道",鳳凰香港
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=hkphoenix_twn
 #EXTINF:-1 group-title="港澳頻道",美亞電影
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=meiyamovie_twn
 #EXTINF:-1 group-title="港澳頻道",天映馬來西亞
@@ -566,12 +585,6 @@ http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=viusix_twn
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=rhk31_twn
 #EXTINF:-1 group-title="港澳頻道",RTHK32
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=rhk32_twn
-#EXTINF:-1 group-title="港澳頻道",鳳凰中文
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixtv_hd
-#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=phoenixinfo_hd
-#EXTINF:-1 group-title="港澳頻道",鳳凰香港
-http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=hkphoenix_twn
 #EXTINF:-1 group-title="港澳頻道",美亞電影
 http://smt.veryfast.filegear-sg.me/smt3.2.1.php?id=meiyamovie_twn
 #EXTINF:-1 group-title="港澳頻道",天映馬來西亞
@@ -618,12 +631,6 @@ http://cdn3.veryfast.filegear-sg.me/live/cctv9/stream.m3u8
 http://cdn3.veryfast.filegear-sg.me/live/hyyy/stream.m3u8
 #EXTINF:-1 group-title="港澳頻道",星光影院
 http://cdn3.veryfast.filegear-sg.me/live/xgyy/stream.m3u8
-#EXTINF:-1 group-title="港澳頻道",鳳凰中文
-http://php.jdshipin.com/TVOD/iptv.php?id=fhzw
-#EXTINF:-1 group-title="港澳頻道",鳳凰資訊
-http://php.jdshipin.com/TVOD/iptv.php?id=fhzx
-#EXTINF:-1 group-title="港澳頻道",鳳凰香港
-http://php.jdshipin.com/TVOD/iptv.php?id=fhhk
 #EXTINF:-1 group-title="港澳頻道",天映頻道
 http://php.jdshipin.com/smt.php?id=Celestial
 #EXTINF:-1 group-title="港澳頻道",Pearl
@@ -674,6 +681,7 @@ http://php.jdshipin.com/TVOD/iptv.php?id=hoytv
 http://php.jdshipin.com:8880/TVOD/iptv.php?id=rthk31
 #EXTINF:-1 group-title="港澳頻道",RTHK32
 http://php.jdshipin.com:8880/TVOD/iptv.php?id=rthk32
+# 體育世界频道
 #EXTINF:-1 tvg-name="CCTV5" tvg-logo="https://logo.catvod.com/CCTV5.png" group-title="體育世界",CCTV-5
 http://23.237.228.134/live5/CCTV5.m3u8
 #EXTINF:-1 tvg-name="CCTV5" tvg-logo="https://logo.catvod.com/CCTV5.png" group-title="體育世界",CCTV-5+
