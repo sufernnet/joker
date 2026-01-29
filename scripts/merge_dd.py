@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-DD.m3u 合并脚本（港澳台直提 + 凤凰/NOW 优先）
+DD.m3u 合并脚本（港澳台直提 + 凤凰/NOW 精确排序）
 
 功能：
 1. 提取“港澳台直播”分组
 2. 重命名为“港澳台”
-3. 港澳台分组内排序：凤凰 → NOW → 其他
+3. 港澳台分组内排序：
+   凤凰中文 → 凤凰资讯 → 凤凰香港 → 凤凰电影 → NOW → 其他
 4. 合并 BB.m3u
 5. 使用固定 EPG
 
@@ -25,10 +26,6 @@ SOURCE_GROUP = "港澳台直播"
 TARGET_GROUP = "港澳台"
 
 EPG_URL = "http://epg.51zmt.top:8000/e.xml"
-
-# 关键词
-PHOENIX_KEYWORDS = ["凤凰"]
-NOW_KEYWORDS = ["NOW"]
 
 # ================== 工具 ==================
 
@@ -81,19 +78,28 @@ def extract_gat_channels(content):
 
 def sort_gat_channels(channels):
     """
-    排序规则：
-    0 - 凤凰
-    1 - NOW
-    2 - 其他
+    排序权重（越小越靠前）：
+    0 凤凰中文
+    1 凤凰资讯
+    2 凤凰香港
+    3 凤凰电影
+    4 NOW
+    5 其他
     """
     def weight(name):
-        for k in PHOENIX_KEYWORDS:
-            if k in name:
-                return (0, name)
-        for k in NOW_KEYWORDS:
-            if k in name:
-                return (1, name)
-        return (2, name)
+        if "凤凰电影" in name:
+            return (3, name)
+        if "凤凰卫视中文" in name or "凤凰中文" in name:
+            return (0, name)
+        if "凤凰卫视资讯" in name or "凤凰资讯" in name:
+            return (1, name)
+        if "凤凰卫视香港" in name or "凤凰香港" in name:
+            return (2, name)
+        if "凤凰" in name:
+            return (2, name)  # 兜底：其他凤凰靠前但在电影前
+        if "NOW" in name:
+            return (4, name)
+        return (5, name)
 
     return sorted(channels, key=lambda x: weight(x[0]))
 
@@ -108,7 +114,6 @@ def main():
         return
 
     gat = download(GAT_URL, "港澳台直播源") or ""
-
     gat_channels = extract_gat_channels(gat) if gat else []
     gat_channels = sort_gat_channels(gat_channels)
 
