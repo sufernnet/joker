@@ -2,12 +2,8 @@ name: Extract TV Channels
 
 on:
   schedule:
-    # 每天UTC时间6:00运行（北京时间14:00）
-    - cron: '0 6 * * *'
-    # 每天UTC时间17:00运行（北京时间次日1:00）
-    - cron: '0 17 * * *'
-  
-  # 允许手动触发
+    - cron: '0 6 * * *'   # UTC 6:00
+    - cron: '0 17 * * *'  # UTC 17:00
   workflow_dispatch:
 
 jobs:
@@ -15,41 +11,43 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      # 1. 检出代码
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       
-      # 2. 设置Python环境
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
       
-      # 3. 安装依赖
       - name: Install dependencies
         run: pip install requests
       
-      # 4. 运行提取脚本
-      - name: Run extraction
-        run: python tv_extractor.py
+      - name: Run extraction script
+        run: |
+          cd scripts
+          python tv_extractor.py
+          cd ..
       
-      # 5. 显示生成的文件信息
       - name: Show file info
         run: |
           echo "=== 生成的文件信息 ==="
-          ls -lh EE.m3u
-          echo "行数:"
-          wc -l EE.m3u
-          echo "前5行内容:"
-          head -5 EE.m3u
+          if [ -f "scripts/EE.m3u" ]; then
+            ls -lh scripts/EE.m3u
+            echo "行数:"
+            wc -l scripts/EE.m3u
+            echo "前5行内容:"
+            head -5 scripts/EE.m3u
+          else
+            echo "错误：文件未生成"
+            exit 1
+          fi
       
-      # 6. 提交更改
       - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add EE.m3u
+          git add scripts/EE.m3u
           git commit -m "自动更新EE.m3u $(date +'%Y-%m-%d %H:%M:%S')" || echo "没有更改需要提交"
           git push
