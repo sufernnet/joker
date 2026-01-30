@@ -1,5 +1,5 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
-# 生成时间: 2026-01-29 17:28:05
+# 生成时间: 2026-01-30 06:40:43
 # 源地址: https://raw.githubusercontent.com/yihad168/tv/refs/heads/main/tv.m3u
 # EPG源: http://epg.51zmt.top:8000/e.xml
 # 包含内容: BB.m3u + 港澳頻道 + 體育世界
@@ -700,6 +700,16 @@ http://cdn6.bkpcp.top/tl/tuiliu.php?id=cctv5
 http://cdn6.bkpcp.top/tl/tuiliu.php?id=cctv5p
 #EXTINF:-1 group-title="體育世界",KTLA
 http://fuegotv.site/live/ndsz4od7te/loik7sbi0q/279327.ts
+#EXTINF:-1 tvg-id="BT Sport 1 UK" tvg-name="TNT Sports 1 UK" tvg-logo="https://img01.products.bt.co.uk/content/dam/bt/portal/images/logos/tnt/TNTSports1_Logo_White_RGB_Logo.png" group-title="體育世界",TNT Sports 1 UK
+http://185.225.115.68:8080/8gULQeqH3I/kbuahRdUJV/369
+#EXTINF:-1 tvg-id="BT Sport 2 UK" tvg-name="TNT Sports 2 UK" tvg-logo="https://img01.products.bt.co.uk/content/dam/bt/portal/images/logos/tnt/TNTSports2_Logo_White_RGB_Logo.png" group-title="體育世界",TNT Sports 2 UK
+http://185.225.115.68:8080/8gULQeqH3I/kbuahRdUJV/367
+#EXTINF:-1 tvg-id="BT Sport 3 UK" tvg-name="TNT Sports 3 UK" tvg-logo="https://img01.products.bt.co.uk/content/dam/bt/portal/images/logos/tnt/TNTSports3_Logo_White_RGB_Logo.png" group-title="體育世界",TNT Sports 3 UK
+http://185.225.115.68:8080/8gULQeqH3I/kbuahRdUJV/365
+#EXTINF:-1 tvg-id="BT Sport ESPN UK" tvg-name="TNT Sports 4 HD UK" tvg-logo="https://img01.products.bt.co.uk/content/dam/bt/portal/images/logos/tnt/TNTSports4_Logo_White_RGB_Logo.png" group-title="體育世界",TNT Sports 4 HD UK
+http://185.225.115.68:8080/8gULQeqH3I/kbuahRdUJV/1743
+#EXTINF:-1 tvg-id="BT Sport ESPN UK" tvg-name="TNT Sports 4 UK" tvg-logo="https://img01.products.bt.co.uk/content/dam/bt/portal/images/logos/tnt/TNTSports4_Logo_White_RGB_Logo.png" group-title="體育世界",TNT Sports 4 UK
+http://185.225.115.68:8080/8gULQeqH3I/kbuahRdUJV/1819
 #EXTINF:-1 group-title="體育世界",ELEVEN SPORTS 1
 http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=814327
 #EXTINF:-1 group-title="體育世界",ELEVEN SPORTS 2
@@ -874,3 +884,65 @@ https://jmp2.uk/stvp-USBD420002446
 https://jmp2.uk/stvp-IN270000230
 #EXTINF:-1 tvg-id="a90a91570ce0536cbb22b591ad7e0da2" tvg-name="NBC Sports NOW" tvg-logo="http://schedulesdirect-api20141201-logos.s3.dualstack.us-east-1.amazonaws.com/stationLogos/s114140_dark_360w_270h.png" group-title="體育世界",NBC Sports NOW
 https://jmp2.uk/plu-6549306c83595c000815a696.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="NBA TV HD" tvg-logo="https://epg-1.iill.top/logo/NBA.png" tvg-name="NBA TV HD",NBA TV
+https://hls.iill.top/api/NBA/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="TNT Sports 1 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-1.png" tvg-name="TNT Sports 1 HD",TNT Sport 1
+https://hls.iill.top/api/TNT-Sports-1/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="TNT Sports 2 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-2.png" tvg-name="TNT Sports 2 HD",TNT Sport 2
+https://hls.iill.top/api/TNT-Sports-2/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="TNT Sports 3 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-3.png" tvg-name="TNT Sports 3 HD",TNT Sport 3
+https://hls.iill.top/api/TNT-Sports-3/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="TNT Sports 4 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-4.png" tvg-name="TNT Sports 4 HD",TNT Sport 4
+https://hls.iill.top/api/TNT-Sports-4/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="beIN Sports HD" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-1.png" tvg-name="beIN Sports HD",beINSports 1
+http://hls.iill.top/api/beIN-Sports-1/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="beIN Sports 2 HD" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-2.png" tvg-name="beIN Sports 2 HD",beINSports 2
+http://hls.iill.top/api/beIN-Sports-2/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="beIN Sports 3" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-3.png" tvg-name="beIN Sports 3",beINSports 3
+http://hls.iill.top/api/beIN-Sports-3/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="beIN Sports 4" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-4.png" tvg-name="beIN Sports 4",beINSports 4
+http://hls.iill.top/api/beIN-Sports-4/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="beIN Sports 5" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-5.png" tvg-name="beIN Sports 5",beINSports 5
+http://hls.iill.top/api/beIN-Sports-5/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 1" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-1.png" tvg-name="Hub Premier 1",HubPremier 1
+http://hls.iill.top/api/Hub-Premier-1/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 2 (HD)" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-2.png" tvg-name="Hub Premier 2 (HD)",HubPremier 2
+http://hls.iill.top/api/Hub-Premier-2/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 3" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-3.png" tvg-name="Hub Premier 3",HubPremier 3
+http://hls.iill.top/api/Hub-Premier-3/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 4" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-4.png" tvg-name="Hub Premier 4",HubPremier 4
+http://hls.iill.top/api/Hub-Premier-4/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 5" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-5.png" tvg-name="Hub Premier 5",HubPremier 5
+http://hls.iill.top/api/Hub-Premier-5/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 6" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-6.png" tvg-name="Hub Premier 6",HubPremier 6
+http://hls.iill.top/api/Hub-Premier-6/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 7" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-7.png" tvg-name="Hub Premier 7",HubPremier 7
+http://hls.iill.top/api/Hub-Premier-7/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 8" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-8.png" tvg-name="Hub Premier 8",HubPremier 8
+http://hls.iill.top/api/Hub-Premier-8/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 1 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-1.png" tvg-name="Hub Sports 1 HD",HubSports 1
+http://hls.iill.top/api/Hub-Sports-1/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 2 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-2.png" tvg-name="Hub Sports 2 HD",HubSports 2
+http://hls.iill.top/api/Hub-Sports-2/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 3 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-3.png" tvg-name="Hub Sports 3 HD",HubSports 3
+http://hls.iill.top/api/Hub-Sports-3/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 4 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-4.png" tvg-name="Hub Sports 4 HD",HubSports 4
+http://hls.iill.top/api/Hub-Sports-4/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 5 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-5.png" tvg-name="Hub Sports 5 HD",HubSports 5
+http://hls.iill.top/api/Hub-Sports-5/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 6" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-6.png" tvg-name="Hub Sports 6",HubSports 6
+http://hls.iill.top/api/Hub-Sports-6/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 7" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-7.png" tvg-name="Hub Sports 7",HubSports 7
+http://hls.iill.top/api/Hub-Sports-7/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 8" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-8.png" tvg-name="Hub Sports 8",HubSports 8
+http://hls.iill.top/api/Hub-Sports-8/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="FIGHT SPORTS HD" tvg-logo="https://epg-1.iill.top/logo/Fight-Sports.png" tvg-name="FIGHT SPORTS HD",FightSports
+http://hls.iill.top/api/Fight-Sports/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Eurosport 1" tvg-logo="https://epg-1.iill.top/logo/Eurosport-1.png" tvg-name="Eurosport 1",Eurosport 1
+https://hls.iill.top/api/Eurosport-1/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="Eurosport 2" tvg-logo="https://epg-1.iill.top/logo/Eurosport-2.png" tvg-name="Eurosport 2",Eurosport 2
+https://hls.iill.top/api/Eurosport-2/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="SPOTV" tvg-logo="https://epg-1.iill.top/logo/Spotv-1.png" tvg-name="SPOTV",Spotv1
+http://hls.iill.top/api/Spotv-1/playlist.m3u8
+#EXTINF:-1 group-title="體育世界" tvg-id="SPOTV2" tvg-logo="https://epg-1.iill.top/logo/Spotv-2.png" tvg-name="SPOTV2",Spotv2
+http://hls.iill.top/api/Spotv-2/playlist.m3u8
