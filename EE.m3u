@@ -1,5 +1,5 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
-# 生成时间: 2026-02-02 06:56:18
+# 生成时间: 2026-02-02 17:29:06
 # 源地址: https://raw.githubusercontent.com/yihad168/tv/refs/heads/main/tv.m3u
 # EPG源: http://epg.51zmt.top:8000/e.xml
 # 包含内容: BB.m3u + 港澳頻道 + 體育世界
@@ -700,100 +700,30 @@ http://cdn6.bkpcp.top/tl/tuiliu.php?id=cctv5
 http://cdn6.bkpcp.top/tl/tuiliu.php?id=cctv5p
 #EXTINF:-1 group-title="體育世界",KTLA
 http://fuegotv.site/live/ndsz4od7te/loik7sbi0q/279327.ts
-#EXTINF:-1 tvg-id="BT Sport 1 UK" tvg-name="TNT Sports 1 UK" tvg-logo="https://img01.products.bt.co.uk/content/dam/bt/portal/images/logos/tnt/TNTSports1_Logo_White_RGB_Logo.png" group-title="體育世界",TNT Sports 1 UK
-http://185.225.115.68:8080/8gULQeqH3I/kbuahRdUJV/369
-#EXTINF:-1 tvg-id="BT Sport 2 UK" tvg-name="TNT Sports 2 UK" tvg-logo="https://img01.products.bt.co.uk/content/dam/bt/portal/images/logos/tnt/TNTSports2_Logo_White_RGB_Logo.png" group-title="體育世界",TNT Sports 2 UK
-http://185.225.115.68:8080/8gULQeqH3I/kbuahRdUJV/367
-#EXTINF:-1 tvg-id="BT Sport 3 UK" tvg-name="TNT Sports 3 UK" tvg-logo="https://img01.products.bt.co.uk/content/dam/bt/portal/images/logos/tnt/TNTSports3_Logo_White_RGB_Logo.png" group-title="體育世界",TNT Sports 3 UK
-http://185.225.115.68:8080/8gULQeqH3I/kbuahRdUJV/365
-#EXTINF:-1 tvg-id="BT Sport ESPN UK" tvg-name="TNT Sports 4 HD UK" tvg-logo="https://img01.products.bt.co.uk/content/dam/bt/portal/images/logos/tnt/TNTSports4_Logo_White_RGB_Logo.png" group-title="體育世界",TNT Sports 4 HD UK
-http://185.225.115.68:8080/8gULQeqH3I/kbuahRdUJV/1743
-#EXTINF:-1 tvg-id="BT Sport ESPN UK" tvg-name="TNT Sports 4 UK" tvg-logo="https://img01.products.bt.co.uk/content/dam/bt/portal/images/logos/tnt/TNTSports4_Logo_White_RGB_Logo.png" group-title="體育世界",TNT Sports 4 UK
-http://185.225.115.68:8080/8gULQeqH3I/kbuahRdUJV/1819
-#EXTINF:-1 group-title="體育世界",ELEVEN SPORTS 1
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=814327
-#EXTINF:-1 group-title="體育世界",ELEVEN SPORTS 2
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=814326
-#EXTINF:-1 group-title="體育世界",ELEVEN SPORTS 3
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=814325
-#EXTINF:-1 group-title="體育世界",ELEVEN SPORTS 4
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=814324
-#EXTINF:-1 group-title="體育世界",BEIN SPORTS 1
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=1178453
-#EXTINF:-1 group-title="體育世界",BEIN SPORTS 2
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=1178452
-#EXTINF:-1 group-title="體育世界",BEIN SPORTS 3
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=1178451
-#EXTINF:-1 group-title="體育世界",BEIN SPORTS 4
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=1178450
-#EXTINF:-1 group-title="體育世界",BEIN SPORTS 5
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=1178449
-#EXTINF:-1 group-title="體育世界",BEIN SPORTS 6
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=1178448
-#EXTINF:-1 group-title="體育世界",BEIN SPORTS 7
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=1178447
-#EXTINF:-1 group-title="體育世界",BEIN SPORTS 8
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=1178446
-#EXTINF:-1 group-title="體育世界",BEIN SPORTS 9
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=1178445
-#EXTINF:-1 group-title="體育世界",ESPN 1 NL
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=891520
-#EXTINF:-1 group-title="體育世界",ESPN 2 NL
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=891519
-#EXTINF:-1 group-title="體育世界",ESPN 3 NL
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=891518
-#EXTINF:-1 group-title="體育世界",ESPN 4 NL
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=891517
-#EXTINF:-1 group-title="體育世界",FOX SPORTS 1
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=487776
-#EXTINF:-1 group-title="體育世界",FOX SPORTS 2
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=469343
-#EXTINF:-1 group-title="體育世界",HUB PREMIER 1
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=802488
-#EXTINF:-1 group-title="體育世界",HUB PREMIER 2
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=827981
-#EXTINF:-1 group-title="體育世界",HUB PREMIER 3
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=827979
-#EXTINF:-1 group-title="體育世界",HUB PREMIER 4
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=827978
-#EXTINF:-1 group-title="體育世界",HUB PREMIER 5
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=827977
-#EXTINF:-1 group-title="體育世界",HUB PREMIER 6
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=827976
-#EXTINF:-1 group-title="體育世界",HUB PREMIER 7
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=827975
-#EXTINF:-1 group-title="體育世界",HUB PREMIER 8
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=827974
-#EXTINF:-1 group-title="體育世界",HUB PREMIER 9
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=827973
-#EXTINF:-1 group-title="體育世界",HUB PREMIER 10
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=827972
-#EXTINF:-1 group-title="體育世界",HUB PREMIER 11
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=827971
-#EXTINF:-1 group-title="體育世界",NOW SPORTS 1
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=802488
-#EXTINF:-1 group-title="體育世界",NOW SPORTS 2
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=802487
-#EXTINF:-1 group-title="體育世界",NOW SPORTS 3
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=802486
-#EXTINF:-1 group-title="體育世界",NOW SPORTS 4
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=802485
-#EXTINF:-1 group-title="體育世界",NOW SPORTS 5
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=802484
-#EXTINF:-1 group-title="體育世界",NOW SPORTS 6
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=802483
-#EXTINF:-1 group-title="體育世界",NOW SPORTS 7
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=802482
-#EXTINF:-1 group-title="體育世界",TNT SPORTS 1
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=578001
-#EXTINF:-1 group-title="體育世界",TNT SPORTS 2
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=578000
-#EXTINF:-1 group-title="體育世界",TNT SPORTS 3
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=577999
-#EXTINF:-1 group-title="體育世界",TNT SPORTS 4
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=577998
-#EXTINF:-1 group-title="體育世界",TNT SPORTS 5
-http://dragon1977.com:80/play/live.php?extension=ts&mac=00:1A:79:81:F8:6D&stream=577997
+#EXTINF:-1 tvg-id="" tvg-name="UK - ASTRO SPORTS 1 HD" tvg-logo="http://103.176.90.118/picons/logos/UK/Astro_Supersport_HD.png" group-title="體育世界",UK-ASTRO SPORTS 1 HD
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/828098.ts
+#EXTINF:-1 tvg-id="" tvg-name="UK - ASTRO SPORTS 2 HD" tvg-logo="http://103.176.90.118/picons/logos/UK/Astro_Supersport_HD.png" group-title="體育世界",UK-ASTRO SPORTS 2 HD
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/828097.ts
+#EXTINF:-1 tvg-id="" tvg-name="UK - ASTRO SPORTS 3 HD" tvg-logo="http://103.176.90.118/picons/logos/UK/Astro_Supersport_HD.png" group-title="體育世界",UK-ASTRO SPORTS 3 HD
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/828096.ts
+#EXTINF:-1 tvg-id="" tvg-name="UK - ASTRO SPORTS 4 HD" tvg-logo="http://103.176.90.118/picons/logos/UK/Astro_Supersport_HD.png" group-title="體育世界",UK-ASTRO SPORTS 4 HD
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/828095.ts
+#EXTINF:-1 tvg-id="" tvg-name="UK - ASTRO SPORTS 5 HD" tvg-logo="http://103.176.90.118/picons/logos/UK/Astro_Supersport_HD.png" group-title="體育世界",UK-ASTRO SPORTS 5 HD
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/828094.ts
+#EXTINF:-1 tvg-id="" tvg-name="UK - BEIN SPORTS 1 HD" tvg-logo="http://103.176.90.118/picons/logos/BEINGROUP/BEIN-1UHD.png" group-title="體育世界",UK-BEIN SPORTS 1 HD
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/828072.ts
+#EXTINF:-1 tvg-id="" tvg-name="UK - BEIN SPORTS 2 HD" tvg-logo="http://103.176.90.118/picons/logos/BEINGROUP/BEIN-2UHD.png" group-title="體育世界",UK-BEIN SPORTS 2 HD
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/828071.ts
+#EXTINF:-1 tvg-id="" tvg-name="UK - BEIN SPORTS 3 HD" tvg-logo="http://103.176.90.118/picons/logos/BEINGROUP/BEIN-3UHD.png" group-title="體育世界",UK-BEIN SPORTS 3 HD
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/828070.ts
+#EXTINF:-1 tvg-id="SkySportsMainEvent.uk" tvg-name="UK - SKY SPORTS MAIN EVENT" tvg-logo="https://logo.protv.cc/piconsnew/skysportsmainevent.png" group-title="體育世界",UK-SKY SPORTS MAIN EVENT
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/577947.ts
+#EXTINF:-1 tvg-id="SkySportsPremiereLeague.uk" tvg-name="UK - SKY SPORTS PREMIER LEAGUE" tvg-logo="https://logo.protv.cc/piconsnew/skysportspremierleague.png" group-title="體育世界",UK-SKY SPORTS PREMIER LEAGUE
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/577946.ts
+#EXTINF:-1 tvg-id="SkySportsArena.uk" tvg-name="UK - SKY SPORTS ARENA" tvg-logo="https://logo.protv.cc/piconsnew/skysportsarena.png" group-title="體育世界",UK - SKY SPORTS ARENA
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/577944.ts
+#EXTINF:-1 tvg-id="SkySportsF1.uk" tvg-name="UK - SKY SPORTS DARTS" tvg-logo="https://logo.protv.cc/piconsnew/skysportsf1.png" group-title="體育世界",UK - SKY SPORTS DARTS
+http://2k.tstvs.com/691eba43db76f/d07ee0f057/577942.ts
 #EXTINF:-1 tvg-id="eurosport1.fr" tvg-name="FR: EUROSPORT 1" tvg-logo="https://docdog.top/logo/countries/fr/EUROSPORT_1.png" group-title="體育世界",FR: EUROSPORT 1
 http://protzpwcf1.top:8080/pro3831767104449/252df4faac14/305
 #EXTINF:-1 tvg-id="eurosport2.fr" tvg-name="FR: EUROSPORT 2" tvg-logo="https://docdog.top/logo/countries/fr/EUROSPORT_2.png" group-title="體育世界",FR: EUROSPORT 2
@@ -834,18 +764,6 @@ http://hardcoremedia.xyz:80/NW3Vk7xXwW/8375773282/258601
 http://hardcoremedia.xyz:80/NW3Vk7xXwW/8375773282/258606
 #EXTINF:-1 tvg-id="TNTSports4.uk" tvg-name="TNT SPORTS 4 HD" tvg-logo="https://media.info/l/o/1/1491.1690027975.png" group-title="體育世界",TNT SPORTS 4 HD
 http://hardcoremedia.xyz:80/NW3Vk7xXwW/8375773282/258611
-#EXTINF:-1 tvg-id="NBA TV Canada TV HD" tvg-name="CA: NBA TV" tvg-logo="http://163.172.89.228/~msepg/logos/canada/nba-tv-ca.png" group-title="體育世界",CA: NBA TV
-http://lunar.pm:8080/Mrdon/4782314540/67105
-#EXTINF:-1 tvg-id="TSN1 HD" tvg-name="CA: TSN 1" tvg-logo="http://163.172.89.228/~msepg/logos/canada/tsn-1-ca.png" group-title="體育世界",CA: TSN 1
-http://lunar.pm:8080/Mrdon/4782314540/67052
-#EXTINF:-1 tvg-id="TSN2 HD" tvg-name="CA: TSN 2" tvg-logo="http://163.172.89.228/~msepg/logos/canada/tsn-2-ca.png" group-title="體育世界",CA: TSN 2
-http://lunar.pm:8080/Mrdon/4782314540/67050
-#EXTINF:-1 tvg-id="TSN3 HD" tvg-name="CA: TSN 3" tvg-logo="http://163.172.89.228/~msepg/logos/canada/tsn-3-ca.png" group-title="體育世界",CA: TSN 3
-http://lunar.pm:8080/Mrdon/4782314540/67048
-#EXTINF:-1 tvg-id="TSN4 HD" tvg-name="CA: TSN 4" tvg-logo="http://163.172.89.228/~msepg/logos/canada/tsn-4-ca.png" group-title="體育世界",CA: TSN 4
-http://lunar.pm:8080/Mrdon/4782314540/67046
-#EXTINF:-1 tvg-id="TSN5 HD" tvg-name="CA: TSN 5" tvg-logo="http://163.172.89.228/~msepg/logos/canada/tsn-5-ca.png" group-title="體育世界",CA: TSN 5
-http://lunar.pm:8080/Mrdon/4782314540/67044
 #EXTINF:-1 group-title="體育世界",Now Sports精選
 http://hls.168.us.kg/u/630/master.m3u8
 #EXTINF:-1 group-title="體育世界",NOW體育1
