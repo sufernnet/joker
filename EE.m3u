@@ -1,5 +1,5 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
-# 生成时间: 2026-02-02 17:29:06
+# 生成时间: 2026-02-03 06:42:07
 # 源地址: https://raw.githubusercontent.com/yihad168/tv/refs/heads/main/tv.m3u
 # EPG源: http://epg.51zmt.top:8000/e.xml
 # 包含内容: BB.m3u + 港澳頻道 + 體育世界
@@ -682,10 +682,54 @@ http://php.jdshipin.com:8880/TVOD/iptv.php?id=rthk31
 #EXTINF:-1 group-title="港澳頻道",RTHK32
 http://php.jdshipin.com:8880/TVOD/iptv.php?id=rthk32
 # 體育世界频道
-#EXTINF:-1 tvg-name="CCTV5" tvg-logo="https://logo.catvod.com/CCTV5.png" group-title="體育世界",CCTV-5
-http://23.237.228.134/live5/CCTV5.m3u8
-#EXTINF:-1 tvg-name="CCTV5" tvg-logo="https://logo.catvod.com/CCTV5.png" group-title="體育世界",CCTV-5+
-http://23.237.228.134/live5/CCTV5p.m3u8
+#EXTINF:-1 xui-id="{XUI_ID}" tvg-id="tsn1.ca" tvg-name="CA: TSN 1" tvg-logo="https://bananamuncher.com:443/images/p3048syZLWnj-1Td0r1nyIUnevSsVhj3jrPI9e7fjgZSbEROSCF7tb6pOvjNQEuSjk552o9x8QkOsjYDTt3f5K8v6gPA6nY2YYaUp9OZZyw.png" group-title="體育世界",CA: TSN 1
+http://mytv.digital:80/hevern1996/mIovw2mgx6/821797
+#EXTINF:-1 xui-id="{XUI_ID}" tvg-id="tsn2.ca" tvg-name="CA: TSN 2" tvg-logo="https://bananamuncher.com:443/images/p3048syZLWnj-1Td0r1nyIUnevSsVhj3jrPI9e7fjgZSbEROSCF7tb6pOvjNQEuSsjdoPkbyUmsUTV1oTTAEXQLum-_VHZyTB_8FDMtpMBU.png" group-title="體育世界",CA: TSN 2
+http://mytv.digital:80/hevern1996/mIovw2mgx6/821796
+#EXTINF:-1 xui-id="{XUI_ID}" tvg-id="tsn3.ca" tvg-name="CA: TSN 3" tvg-logo="https://bananamuncher.com:443/images/p3048syZLWnj-1Td0r1nyIUnevSsVhj3jrPI9e7fjgZSbEROSCF7tb6pOvjNQEuSr9VYGjwqS5VjtvULL_pGNlCG1yp2z8JCYC6c1nD_y6Q.png" group-title="體育世界",CA: TSN 3
+http://mytv.digital:80/hevern1996/mIovw2mgx6/821795
+#EXTINF:-1 xui-id="{XUI_ID}" tvg-id="tsn4.ca" tvg-name="CA: TSN 4" tvg-logo="https://bananamuncher.com:443/images/p3048syZLWnj-1Td0r1nyIUnevSsVhj3jrPI9e7fjgZSbEROSCF7tb6pOvjNQEuSwFPYgw630E183HgHqy8LNEvdXw7WQYlgP3ixyNDqQbk.png" group-title="體育世界",CA: TSN 4
+http://mytv.digital:80/hevern1996/mIovw2mgx6/821794
+#EXTINF:-1 xui-id="{XUI_ID}" tvg-id="tsn5.ca" tvg-name="CA: TSN 5" tvg-logo="https://bananamuncher.com:443/images/p3048syZLWnj-1Td0r1nyIUnevSsVhj3jrPI9e7fjgZSbEROSCF7tb6pOvjNQEuS5_Z3iMVVt6knQ4pgYH9VL_9CA-ss0Y8EzYH3o-uuUfA.png" group-title="體育世界",CA: TSN 5
+http://mytv.digital:80/hevern1996/mIovw2mgx6/821793
+#EXTINF:-1 tvg-id="" tvg-name="US: Fox Sports 2 HD VIP" tvg-logo="http://ltv-reloaded.xyz:2095/images/tvlogos/FOXSports2.png" group-title="體育世界",US: Fox Sports 2 HD VIP
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24022
+#EXTINF:-1 tvg-id="" tvg-name="US: Fox Sports 2 HD" tvg-logo="http://ltv-reloaded.xyz:2095/images/tvlogos/FOXSports2.png" group-title="體育世界",US: Fox Sports 2 HD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24023
+#EXTINF:-1 tvg-id="" tvg-name="US: Fox Sports 2 FHD" tvg-logo="http://ltv-reloaded.xyz:2095/images/tvlogos/FOXSports2.png" group-title="體育世界",US: Fox Sports 2 FHD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24024
+#EXTINF:-1 tvg-id="" tvg-name="US: Fox Sports 1" tvg-logo="https://cdn.mitvstatic.com/channels/cl_fox-sports-1-hd_m.png" group-title="體育世界",US: Fox Sports 1
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24025
+#EXTINF:-1 tvg-id="" tvg-name="US: Fox Sports 1 FHD" tvg-logo="https://cdn.mitvstatic.com/channels/cl_fox-sports-1-hd_m.png" group-title="體育世界",US: Fox Sports 1 FHD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24026
+#EXTINF:-1 tvg-id="" tvg-name="US: Fox Sports 1 HD" tvg-logo="https://cdn.mitvstatic.com/channels/cl_fox-sports-1-hd_m.png" group-title="體育世界",US: Fox Sports 1 HD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24027
+#EXTINF:-1 tvg-id="" tvg-name="US: Fox Soccer Plus HD" tvg-logo="https://static.wikia.nocookie.net/logopedia/images/2/2f/Fox_Soccer_Plus_%28Flat%29.svg/revision/latest?cb=20210112104241" group-title="體育世界",US: Fox Soccer Plus HD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24028
+#EXTINF:-1 tvg-id="" tvg-name="US: Bally Sports San Diego HD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Bally_Sports_San_Diego_logo.svg/1200px-Bally_Sports_San_Diego_logo.svg.png" group-title="體育世界",US: Bally Sports San Diego HD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24029
+#EXTINF:-1 tvg-id="" tvg-name="US: ESPN News HD" tvg-logo="https://archive.org/download/EspnNews/espn%20news.png" group-title="體育世界",US: ESPN News HD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24042
+#EXTINF:-1 tvg-id="" tvg-name="US: ESPN U HD" tvg-logo="https://static.wikia.nocookie.net/logopedia/images/e/e1/ESPNU_HD_1.png/revision/latest?cb=20221002035929" group-title="體育世界",US: ESPN U HD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24043
+#EXTINF:-1 tvg-id="" tvg-name="US: ESPN 1 HD" tvg-logo="https://tinyurl.com/y5xm55ya" group-title="體育世界",US: ESPN 1 HD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24044
+#EXTINF:-1 tvg-id="" tvg-name="US: ESPN 2 VIP" tvg-logo="http://ltv-reloaded.xyz:2095/images/tvlogos/espn2.png" group-title="體育世界",US: ESPN 2 VIP
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24045
+#EXTINF:-1 tvg-id="" tvg-name="US: ESPN 2" tvg-logo="http://ltv-reloaded.xyz:2095/images/tvlogos/espn2.png" group-title="體育世界",US: ESPN 2
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24046
+#EXTINF:-1 tvg-id="" tvg-name="US: ESPN 2 HD" tvg-logo="http://ltv-reloaded.xyz:2095/images/tvlogos/espn2.png" group-title="體育世界",US: ESPN 2 HD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24047
+#EXTINF:-1 tvg-id="" tvg-name="US: ESPN 2 FHD VIP" tvg-logo="http://ltv-reloaded.xyz:2095/images/tvlogos/espn2.png" group-title="體育世界",US: ESPN 2 FHD VIP
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24048
+#EXTINF:-1 tvg-id="" tvg-name="US: ESPN 2 FHD" tvg-logo="http://ltv-reloaded.xyz:2095/images/tvlogos/espn2.png" group-title="體育世界",US: ESPN 2 FHD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24049
+#EXTINF:-1 tvg-id="" tvg-name="US: ESPN 1 VIP" tvg-logo="https://tinyurl.com/y5xm55ya" group-title="體育世界",US: ESPN 1 VIP
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24050
+#EXTINF:-1 tvg-id="" tvg-name="US: ESPN 1 FHD" tvg-logo="https://tinyurl.com/y5xm55ya" group-title="體育世界",US: ESPN 1 FHD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24051
+#EXTINF:-1 tvg-id="" tvg-name="US: ESPN 3 FHD" tvg-logo="http://ltv-reloaded.xyz:2095/images/tvlogos/espn3.png" group-title="體育世界",US: ESPN 3 FHD
+http://canal-pro.xyz:8080/percycordova/78CBU8fxc76/24052
 #EXTINF:-1 group-title="體育世界",CCTV5
 http://go.bkpcp.top/mg/cctv5
 #EXTINF:-1 group-title="體育世界",CCTV5+
@@ -802,65 +846,129 @@ https://jmp2.uk/stvp-USBD420002446
 https://jmp2.uk/stvp-IN270000230
 #EXTINF:-1 tvg-id="a90a91570ce0536cbb22b591ad7e0da2" tvg-name="NBC Sports NOW" tvg-logo="http://schedulesdirect-api20141201-logos.s3.dualstack.us-east-1.amazonaws.com/stationLogos/s114140_dark_360w_270h.png" group-title="體育世界",NBC Sports NOW
 https://jmp2.uk/plu-6549306c83595c000815a696.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="NBA TV HD" tvg-logo="https://epg-1.iill.top/logo/NBA.png" tvg-name="NBA TV HD",NBA TV
-https://hls.iill.top/api/NBA/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="TNT Sports 1 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-1.png" tvg-name="TNT Sports 1 HD",TNT Sport 1
-https://hls.iill.top/api/TNT-Sports-1/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="TNT Sports 2 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-2.png" tvg-name="TNT Sports 2 HD",TNT Sport 2
-https://hls.iill.top/api/TNT-Sports-2/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="TNT Sports 3 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-3.png" tvg-name="TNT Sports 3 HD",TNT Sport 3
-https://hls.iill.top/api/TNT-Sports-3/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="TNT Sports 4 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-4.png" tvg-name="TNT Sports 4 HD",TNT Sport 4
-https://hls.iill.top/api/TNT-Sports-4/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="beIN Sports HD" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-1.png" tvg-name="beIN Sports HD",beINSports 1
-http://hls.iill.top/api/beIN-Sports-1/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="beIN Sports 2 HD" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-2.png" tvg-name="beIN Sports 2 HD",beINSports 2
-http://hls.iill.top/api/beIN-Sports-2/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="beIN Sports 3" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-3.png" tvg-name="beIN Sports 3",beINSports 3
-http://hls.iill.top/api/beIN-Sports-3/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="beIN Sports 4" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-4.png" tvg-name="beIN Sports 4",beINSports 4
-http://hls.iill.top/api/beIN-Sports-4/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="beIN Sports 5" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-5.png" tvg-name="beIN Sports 5",beINSports 5
-http://hls.iill.top/api/beIN-Sports-5/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 1" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-1.png" tvg-name="Hub Premier 1",HubPremier 1
-http://hls.iill.top/api/Hub-Premier-1/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 2 (HD)" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-2.png" tvg-name="Hub Premier 2 (HD)",HubPremier 2
-http://hls.iill.top/api/Hub-Premier-2/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 3" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-3.png" tvg-name="Hub Premier 3",HubPremier 3
-http://hls.iill.top/api/Hub-Premier-3/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 4" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-4.png" tvg-name="Hub Premier 4",HubPremier 4
-http://hls.iill.top/api/Hub-Premier-4/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 5" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-5.png" tvg-name="Hub Premier 5",HubPremier 5
-http://hls.iill.top/api/Hub-Premier-5/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 6" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-6.png" tvg-name="Hub Premier 6",HubPremier 6
-http://hls.iill.top/api/Hub-Premier-6/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 7" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-7.png" tvg-name="Hub Premier 7",HubPremier 7
-http://hls.iill.top/api/Hub-Premier-7/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Premier 8" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-8.png" tvg-name="Hub Premier 8",HubPremier 8
-http://hls.iill.top/api/Hub-Premier-8/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 1 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-1.png" tvg-name="Hub Sports 1 HD",HubSports 1
-http://hls.iill.top/api/Hub-Sports-1/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 2 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-2.png" tvg-name="Hub Sports 2 HD",HubSports 2
-http://hls.iill.top/api/Hub-Sports-2/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 3 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-3.png" tvg-name="Hub Sports 3 HD",HubSports 3
-http://hls.iill.top/api/Hub-Sports-3/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 4 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-4.png" tvg-name="Hub Sports 4 HD",HubSports 4
-http://hls.iill.top/api/Hub-Sports-4/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 5 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-5.png" tvg-name="Hub Sports 5 HD",HubSports 5
-http://hls.iill.top/api/Hub-Sports-5/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 6" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-6.png" tvg-name="Hub Sports 6",HubSports 6
-http://hls.iill.top/api/Hub-Sports-6/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 7" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-7.png" tvg-name="Hub Sports 7",HubSports 7
-http://hls.iill.top/api/Hub-Sports-7/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Hub Sports 8" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-8.png" tvg-name="Hub Sports 8",HubSports 8
-http://hls.iill.top/api/Hub-Sports-8/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="FIGHT SPORTS HD" tvg-logo="https://epg-1.iill.top/logo/Fight-Sports.png" tvg-name="FIGHT SPORTS HD",FightSports
-http://hls.iill.top/api/Fight-Sports/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Eurosport 1" tvg-logo="https://epg-1.iill.top/logo/Eurosport-1.png" tvg-name="Eurosport 1",Eurosport 1
-https://hls.iill.top/api/Eurosport-1/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="Eurosport 2" tvg-logo="https://epg-1.iill.top/logo/Eurosport-2.png" tvg-name="Eurosport 2",Eurosport 2
-https://hls.iill.top/api/Eurosport-2/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="SPOTV" tvg-logo="https://epg-1.iill.top/logo/Spotv-1.png" tvg-name="SPOTV",Spotv1
-http://hls.iill.top/api/Spotv-1/playlist.m3u8
-#EXTINF:-1 group-title="體育世界" tvg-id="SPOTV2" tvg-logo="https://epg-1.iill.top/logo/Spotv-2.png" tvg-name="SPOTV2",Spotv2
-http://hls.iill.top/api/Spotv-2/playlist.m3u8
+#EXTINF:-1 tvg-id="FIGHT SPORTS HD" tvg-name="FIGHTSPORTSHD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/FIGHT SPORTS HD.png" group-title="體育世界",FIGHT SPORTS HD
+https://012v4.goiptv.us.ci/stream/starhub/fightsportshd/
+#EXTINF:-1 tvg-id="Hub Sports 1 HD" tvg-name="HUBSPORTS1HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Sports 1 HD.png" group-title="體育世界",Hub Sports 1 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubsports1hd/
+#EXTINF:-1 tvg-id="Hub Sports 2 HD" tvg-name="HUBSPORTS2HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Sports 2 HD.png" group-title="體育世界",Hub Sports 2 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubsports2hd/
+#EXTINF:-1 tvg-id="Hub Sports 3 HD" tvg-name="HUBSPORTS3HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Sports 3 HD.png" group-title="體育世界",Hub Sports 3 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubsports3hd/
+#EXTINF:-1 tvg-id="Hub Sports 4 HD" tvg-name="HUBSPORTS4HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Sports 4 HD.png" group-title="體育世界",Hub Sports 4 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubsports4hd/
+#EXTINF:-1 tvg-id="Hub Sports 5 HD" tvg-name="HUBSPORTS5HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Sports 5 HD.png" group-title="體育世界",Hub Sports 5 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubsports5hd/
+#EXTINF:-1 tvg-id="Hub Sports 6 HD" tvg-name="HUBSPORTS6" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Sports 6.png" group-title="體育世界",Hub Sports 6 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubsports6hd/
+#EXTINF:-1 tvg-id="Hub Sports 7 HD" tvg-name="HUBSPORTS7" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Sports 7.png" group-title="體育世界",Hub Sports 7 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubsports7hd/
+#EXTINF:-1 tvg-id="Hub Sports 8 HD" tvg-name="HUBSPORTS8" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Sports 8.png" group-title="體育世界",Hub Sports 8 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubsports8hd/
+#EXTINF:-1 tvg-id="beIN Sports HD" tvg-name="BEINSPORTSHD" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/BEINSPORTSUSA.png" group-title="體育世界",beIN Sports HD
+https://012v4.goiptv.us.ci/stream/starhub/beinsportshd/
+#EXTINF:-1 tvg-id="beIN Sports 2 HD" tvg-name="BEINSPORTS2HD" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/BEINSPORTSUSA.png" group-title="體育世界",beIN Sports 2 HD
+https://012v4.goiptv.us.ci/stream/starhub/beinsports2hd/
+#EXTINF:-1 tvg-id="beIN Sports 3 HD" tvg-name="BEINSPORTS3HD" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/BEINSPORTSUSA.png" group-title="體育世界",beIN Sports 3 HD
+https://012v4.goiptv.us.ci/stream/starhub/beinsports3hd/
+#EXTINF:-1 tvg-id="beIN Sports 4 HD" tvg-name="BEINSPORTS4" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/BEINSPORTSUSA.png" group-title="體育世界",beIN Sports 4 HD
+https://012v4.goiptv.us.ci/stream/starhub/beinsports4hd/
+#EXTINF:-1 tvg-id="beIN Sports 5 HD" tvg-name="BEINSPORTS5" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/beIN Sports 5.png" group-title="體育世界",beIN Sports 5 HD
+https://012v4.goiptv.us.ci/stream/starhub/beinsports5hd/
+#EXTINF:-1 tvg-id="Hub Premier 1 HD" tvg-name="HUBPREMIER1" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/HUB Premier 1.png" group-title="體育世界",Hub Premier 1 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubpremier1hd/
+#EXTINF:-1 tvg-id="Hub Premier 2 HD" tvg-name="HUBPREMIER2" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Premier 2.png" group-title="體育世界",Hub Premier 2 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubpremier2hd/
+#EXTINF:-1 tvg-id="Hub Premier 2 4K" tvg-name="HUBPREMIER2" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Premier 2.png" group-title="體育世界",Hub Premier 2 4K
+https://012v4.goiptv.us.ci/stream/starhub/hubpremier24k/
+#EXTINF:-1 tvg-id="Hub Premier 3 HD" tvg-name="HUBPREMIER3" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Premier 3.png" group-title="體育世界",Hub Premier 3 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubpremier3hd/
+#EXTINF:-1 tvg-id="Hub Premier 4 HD" tvg-name="HUBPREMIER4" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Premier 4.png" group-title="體育世界",Hub Premier 4 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubpremier4hd/
+#EXTINF:-1 tvg-id="Hub Premier 5 HD" tvg-name="HUBPREMIER5" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Premier 5.png" group-title="體育世界",Hub Premier 5 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubpremier5hd/
+#EXTINF:-1 tvg-id="Hub Premier 6 HD" tvg-name="HUBPREMIER6" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Premier 6.png" group-title="體育世界",Hub Premier 6 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubpremier6hd/
+#EXTINF:-1 tvg-id="Hub Premier 7 HD" tvg-name="HUBPREMIER7" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Premier 7.png" group-title="體育世界",Hub Premier 7 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubpremier7hd/
+#EXTINF:-1 tvg-id="Hub Premier 8 HD" tvg-name="HUBPREMIER8" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub Premier 8.png" group-title="體育世界",Hub Premier 8 HD
+https://012v4.goiptv.us.ci/stream/starhub/hubpremier8hd/
+#EXTINF:-1 tvg-id="NBA TV HD" tvg-name="NBA TV HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/NBA.png"  group-title="體育世界", NBA TV
+https://hls.iill.top/api/NBA/index.m3u8
+#EXTINF:-1 tvg-id="TNT Sports 1 HD" tvg-name="TNT Sports 1 HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/TNT-Sports-1.png"  group-title="體育世界", TNT Sport 1
+https://hls.iill.top/api/TNT-Sports-1/index.m3u8
+#EXTINF:-1 tvg-id="TNT Sports 2 HD" tvg-name="TNT Sports 2 HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/TNT-Sports-2.png"  group-title="體育世界", TNT Sport 2
+https://hls.iill.top/api/TNT-Sports-2/index.m3u8
+#EXTINF:-1 tvg-id="TNT Sports 3 HD" tvg-name="TNT Sports 3 HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/TNT-Sports-3.png" group-title="體育世界", TNT Sport 3
+https://hls.iill.top/api/TNT-Sports-3/index.m3u8
+#EXTINF:-1 tvg-id="TNT Sports 4 HD" tvg-name="TNT Sports 4 HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/TNT-Sports-4.png" group-title="體育世界", TNT Sport 4
+https://hls.iill.top/api/TNT-Sports-4/index.m3u8
+#EXTINF:-1 tvg-id="beIN Sports HD" tvg-name="beIN Sports HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/beIN-Sports-1.png" group-title="體育世界",beIN Sports 1
+https://hls.iill.top/api/beIN-Sports-1/index.m3u8
+#EXTINF:-1 tvg-id="beIN Sports 2 HD" tvg-name="beIN Sports 2 HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/beIN-Sports-2.png" group-title="體育世界",beIN Sports 2
+https://hls.iill.top/api/beIN-Sports-2/index.m3u8
+#EXTINF:-1 tvg-id="beIN Sports 3" tvg-name="beIN Sports 3" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/beIN-Sports-3.png" group-title="體育世界",beIN Sports 3
+https://hls.iill.top/api/beIN-Sports-3/index.m3u8
+#EXTINF:-1 tvg-id="beIN Sports 4" tvg-name="beIN Sports 4" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/beIN-Sports-4.png" group-title="體育世界",beIN Sports 4
+https://hls.iill.top/api/beIN-Sports-4/index.m3u8
+#EXTINF:-1 tvg-id="beIN Sports 5" tvg-name="beIN Sports 5" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/beIN-Sports-5.png" group-title="體育世界",beIN Sports 5
+https://hls.iill.top/api/beIN-Sports-5/index.m3u8
+#EXTINF:-1 tvg-id="Hub Premier 1" tvg-name="Hub Premier 1" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Premier-1.png" group-title="體育世界",Hub Premier 1
+https://hls.iill.top/api/Hub-Premier-1/index.m3u8
+#EXTINF:-1 tvg-id="Hub Premier 2 (HD)" tvg-name="Hub Premier 2 (HD)" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Premier-2.png" group-title="體育世界",Hub Premier 2
+https://hls.iill.top/api/Hub-Premier-2/index.m3u8
+#EXTINF:-1 tvg-id="Hub Premier 3" tvg-name="Hub Premier 3" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Premier-3.png" group-title="體育世界",Hub Premier 3
+https://hls.iill.top/api/Hub-Premier-3/index.m3u8
+#EXTINF:-1 tvg-id="Hub Premier 4" tvg-name="Hub Premier 4" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Premier-4.png" group-title="體育世界",Hub Premier 4
+https://hls.iill.top/api/Hub-Premier-4/index.m3u8
+#EXTINF:-1 tvg-id="Hub Premier 5" tvg-name="Hub Premier 5" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Premier-5.png" group-title="體育世界",Hub Premier 5
+https://hls.iill.top/api/Hub-Premier-5/index.m3u8
+#EXTINF:-1 tvg-id="Hub Premier 6" tvg-name="Hub Premier 6" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Premier-6.png" group-title="體育世界",Hub Premier 6
+https://hls.iill.top/api/Hub-Premier-6/index.m3u8
+#EXTINF:-1 tvg-id="Hub Premier 7" tvg-name="Hub Premier 7" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Premier-7.png" group-title="體育世界",Hub Premier 7
+https://hls.iill.top/api/Hub-Premier-7/index.m3u8
+#EXTINF:-1 tvg-id="Hub Premier 8" tvg-name="Hub Premier 8" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Premier-8.png" group-title="體育世界",Hub Premier 8
+https://hls.iill.top/api/Hub-Premier-8/index.m3u8
+#EXTINF:-1 tvg-id="Hub Sports 1 HD" tvg-name="Hub Sports 1 HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Sports-1.png" group-title="體育世界",Hub Sports 1
+https://hls.iill.top/api/Hub-Sports-1/index.m3u8
+#EXTINF:-1 tvg-id="Hub Sports 2 HD" tvg-name="Hub Sports 2 HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Sports-2.png" group-title="體育世界",Hub Sports 2
+https://hls.iill.top/api/Hub-Sports-2/index.m3u8
+#EXTINF:-1 tvg-id="Hub Sports 3 HD" tvg-name="Hub Sports 3 HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Sports-3.png" group-title="體育世界",Hub Sports 3
+https://hls.iill.top/api/Hub-Sports-3/index.m3u8
+#EXTINF:-1 tvg-id="Hub Sports 4 HD" tvg-name="Hub Sports 4 HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Sports-4.png" group-title="體育世界",Hub Sports 4
+https://hls.iill.top/api/Hub-Sports-4/index.m3u8
+#EXTINF:-1 tvg-id="Hub Sports 5 HD" tvg-name="Hub Sports 5 HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Sports-5.png" group-title="體育世界",Hub Sports 5
+https://hls.iill.top/api/Hub-Sports-5/index.m3u8
+#EXTINF:-1 tvg-id="Hub Sports 6" tvg-name="Hub Sports 6" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Sports-6.png" group-title="體育世界",Hub Sports 6
+https://hls.iill.top/api/Hub-Sports-6/index.m3u8
+#EXTINF:-1 tvg-id="Hub Sports 7" tvg-name="Hub Sports 7" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Sports-7.png" group-title="體育世界",Hub Sports 7
+https://hls.iill.top/api/Hub-Sports-7/index.m3u8
+#EXTINF:-1 tvg-id="Hub Sports 8" tvg-name="Hub Sports 8" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Hub-Sports-8.png" group-title="體育世界",Hub Sports 8
+https://hls.iill.top/api/Hub-Sports-8/index.m3u8
+#EXTINF:-1 tvg-id="FIGHT SPORTS HD" tvg-name="FIGHT SPORTS HD" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Fight-Sports.png" group-title="體育世界",Fight Sports
+https://hls.iill.top/api/Fight-Sports/index.m3u8
+#EXTINF:-1 tvg-id="Eurosport 1" tvg-name="Eurosport 1" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Eurosport-1.png"  group-title="體育世界", Eurosport 1
+https://hls.iill.top/api/Eurosport-1/index.m3u8
+#EXTINF:-1 tvg-id="Eurosport 2" tvg-name="Eurosport 2" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Eurosport-2.png"  group-title="體育世界", Eurosport 2
+https://hls.iill.top/api/Eurosport-2/index.m3u8
+#EXTINF:-1 tvg-id="SPOTV" tvg-name="SPOTV" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Spotv-1.png" group-title="體育世界",Spotv 1
+https://hls.iill.top/api/Spotv-1/index.m3u8
+#EXTINF:-1 tvg-id="SPOTV2" tvg-name="SPOTV2" tvg-logo="https://cdn.jsdelivr.net/gh/luoluowoaini/666-@iill-logo-mytvsuper/Spotv-2.png" group-title="體育世界",Spotv 2
+https://hls.iill.top/api/Spotv-2/index.m3u8
+#EXTINF:-1 tvg-id="Now Sports 英超TV" tvg-name="Now Sports 英超TV" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/CCTV4K-LOGO@main/Now Sports Premier League TV.png" group-title="體育世界",Now Sports 英超TV
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382834&extension=ts&play_token=JBOlpsgTKU
+#EXTINF:-1 tvg-id="Now Sports 1" tvg-name="Now Sports 1" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/CCTV4K-LOGO@main/Now Sports 1.png" group-title="體育世界",Now Sports 1
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382843&extension=ts&play_token=KANAeecxcz
+#EXTINF:-1 tvg-id="Now Sports 2" tvg-name="Now Sports 2" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/CCTV4K-LOGO@main/Now Sports 2.png" group-title="體育世界",Now Sports 2
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382842&extension=ts&play_token=MCoDoR8s9G
+#EXTINF:-1 tvg-id="Now Sports 3" tvg-name="Now Sports 3" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/CCTV4K-LOGO@main/Now Sports 3.png" group-title="體育世界",Now Sports 3
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382841&extension=ts&play_token=5uiKCGTNCF
+#EXTINF:-1 tvg-id="Now Sports 4" tvg-name="Now Sports 4" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/CCTV4K-LOGO@main/Now Sports 4.png" group-title="體育世界",Now Sports 4
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382840&extension=ts&play_token=eoeYdjrkUg
+#EXTINF:-1 tvg-id="Now Sports 5" tvg-name="Now Sports 5" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/CCTV4K-LOGO@main/Now Sports 5.png" group-title="體育世界",Now Sports 5
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382839&extension=ts&play_token=lu0NOftGgg
+#EXTINF:-1 tvg-id="Now Sports 6" tvg-name="Now Sports 6" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/CCTV4K-LOGO@main/Now Sports 6.png" group-title="體育世界",Now Sports 6
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382838&extension=ts&play_token=WQ4pi5DTy3
+#EXTINF:-1 tvg-id="Now Sports 7" tvg-name="Now Sports 7" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/CCTV4K-LOGO@main/Now Sports 7.png" group-title="體育世界",Now Sports 7
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382837&extension=ts&play_token=rRmhe1TsX7
+#EXTINF:-1 tvg-id="now体育4k" tvg-name="now体育4k" tvg-logo="https://gcore.jsdelivr.net/gh/luoluowoaini/CCTV4K-LOGO@main/NowSports4K1.png" group-title="體育世界",Now Sports 4K 1
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382836&extension=ts&play_token=jSAYXQsMoY
