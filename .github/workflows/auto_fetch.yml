@@ -30,120 +30,155 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests
     
-    - name: Debug directory structure
+    - name: Show directory structure
       run: |
-        echo "📁 當前目錄結構:"
+        echo "=== 📁 目錄結構 ==="
         pwd
         ls -la
         echo ""
-        echo "📁 scripts目錄:"
-        ls -la scripts/ 2>/dev/null || echo "scripts目錄不存在"
+        echo "=== 📁 scripts目錄 ==="
+        ls -la scripts/ || echo "scripts目錄不存在"
     
-    - name: Run crawler (直接執行)
+    - name: Create simplified crawler in root
       run: |
-        echo "🚀 開始執行爬蟲..."
-        python scripts/youtube_crawler.py
+        echo "🛠️ 創建簡化版爬蟲到根目錄..."
+        cat > simple_crawler.py << 'EOF'
+#!/usr/bin/env python3
+import requests
+import re
+import os
+from datetime import datetime
+
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+}
+
+# 測試幾個頻道
+CHANNELS = [
+    {"name": "TVBS 新聞", "channel": "@TVBSNEWS01"},
+    {"name": "中天新聞", "channel": "@中天電視CtiT"},
+    {"name": "東森新聞", "channel": "@newsebc"},
+]
+
+def get_live_video(channel_id):
+    """從頻道獲取直播影片"""
+    try:
+        url = f"https://www.youtube.com/{channel_id}/videos"
+        resp = requests.get(url, headers=HEADERS, timeout=10)
+        html = resp.text
+        
+        # 尋找影片ID
+        match = re.search(r'"videoId":"([^"]{11})"', html)
+        if match:
+            video_id = match.group(1)
+            # 檢查是否為直播
+            video_url = f"https://www.youtube.com/watch?v={video_id}"
+            video_resp = requests.get(video_url, headers=HEADERS, timeout=5)
+            if '"isLive":true' in video_resp.text:
+                return video_id
+    except:
+        pass
+    return None
+
+def main():
+    print("🚀 開始抓取直播...")
+    results = []
+    
+    for ch in CHANNELS:
+        print(f"🔍 檢查 {ch['name']}...")
+        video_id = get_live_video(ch['channel'])
+        if video_id:
+            results.append({"name": ch['name'], "video_id": video_id})
+            print(f"  ✅ 找到直播")
+        else:
+            print(f"  ❌ 未找到")
+    
+    # 生成M3U
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    m3u_lines = ['#EXTM3U', f'# 更新時間: {now}', '']
+    
+    for ch in results:
+        m3u_lines.append(f'#EXTINF:-1 group-title="TW",{ch["name"]}')
+        m3u_lines.append(f'https://www.youtube.com/watch?v={ch["video_id"]}')
+        m3u_lines.append('')
+    
+    m3u_content = '\n'.join(m3u_lines)
+    
+    # 寫入文件
+    with open('live.m3u', 'w', encoding='utf-8') as f:
+        f.write(m3u_content)
+    
+    print(f"\n✅ 生成完成！共 {len(results)} 個頻道")
+    print(f"📁 文件路徑: {os.path.abspath('live.m3u')}")
+
+if __name__ == "__main__":
+    main()
+EOF
+        
+        echo "✅ 簡化版爬蟲創建完成"
+    
+    - name: Run the simplified crawler
+      run: |
+        echo "🚀 執行簡化版爬蟲..."
+        python simple_crawler.py
         
         echo ""
-        echo "📁 執行後文件列表:"
-        ls -la *.m3u 2>/dev/null || echo "未找到m3u文件"
+        echo "📁 檢查生成的文件..."
+        ls -la live.m3u 2>/dev/null || echo "live.m3u 不存在"
         
-        # 如果沒有生成在根目錄，檢查scripts目錄
-        if [ ! -f "live.m3u" ]; then
-          echo "檢查scripts目錄..."
-          ls -la scripts/*.m3u 2>/dev/null || echo "scripts目錄中也沒有m3u文件"
+        if [ -f "live.m3u" ]; then
+          echo "✅ live.m3u 已生成"
+          echo ""
+          echo "📄 文件內容:"
+          echo "=========="
+          cat live.m3u
+          echo "=========="
         fi
     
-    - name: Move M3U file if needed
+    - name: Now run the real crawler
       run: |
-        echo "🔧 處理文件位置..."
+        echo "🚀 現在執行真正的爬蟲..."
         
-        # 如果文件在scripts目錄，移動到根目錄
-        if [ -f "scripts/live.m3u" ]; then
-          echo "📁 移動 scripts/live.m3u 到根目錄"
-          mv scripts/live.m3u live.m3u
-        fi
+        # 首先複製到當前目錄
+        cp scripts/youtube_crawler.py .
         
-        # 確保文件存在
+        # 修改youtube_crawler.py的輸出路徑
+        sed -i "s/output_path = .*/output_path = 'live.m3u'/" youtube_crawler.py 2>/dev/null || \
+        sed -i "s/open(.*live\.m3u.*)/open('live.m3u', 'w', encoding='utf-8')/" youtube_crawler.py 2>/dev/null
+        
+        # 執行
+        python youtube_crawler.py
+        
+        echo ""
+        echo "📁 檢查文件..."
+        ls -la *.m3u
+    
+    - name: Verify and commit
+      run: |
+        echo "🔍 驗證文件..."
+        
         if [ -f "live.m3u" ]; then
-          echo "✅ live.m3u 文件已準備好"
+          echo "✅ live.m3u 存在"
           echo "文件大小: $(wc -l < live.m3u) 行"
-        else
-          echo "❌ 未找到 live.m3u 文件"
-          exit 1
-        fi
-    
-    - name: Show result details
-      run: |
-        echo ""
-        echo "=== 📊 執行結果詳細信息 ==="
-        echo ""
-        
-        if [ -f "live.m3u" ]; then
-          echo "✅ 直播源文件已生成"
           echo ""
+          echo "📄 前5行:"
+          head -5 live.m3u
           
-          # 計算頻道數量
-          CHANNEL_COUNT=$(grep -c 'tvg-id=' live.m3u)
-          echo "📺 頻道總數: $CHANNEL_COUNT 個"
+          # 提交
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
           
-          # 顯示更新時間
-          UPDATE_TIME=$(grep '更新時間:' live.m3u | head -1)
-          echo "🕐 $UPDATE_TIME"
+          git add live.m3u
           
-          # 顯示頻道列表
-          echo ""
-          echo "📡 頻道列表:"
-          echo "----------------"
-          grep 'tvg-name=' live.m3u | cut -d'"' -f4 | nl
-          echo "----------------"
-          
-          # 顯示文件頭部
-          echo ""
-          echo "📄 文件頭部內容:"
-          echo "----------------"
-          head -20 live.m3u
-          echo "----------------"
-          
-          # 顯示訪問連結
-          echo ""
-          echo "🌐 原始文件訪問連結:"
-          echo "https://raw.githubusercontent.com/${{ github.repository }}/main/live.m3u"
-        else
-          echo "❌ 未找到直播源文件"
-        fi
-    
-    - name: Commit and push changes
-      run: |
-        echo "📝 準備提交到GitHub..."
-        
-        git config user.name "GitHub Actions Bot"
-        git config user.email "actions@github.com"
-        
-        # 添加所有文件
-        git add live.m3u scripts/youtube_crawler.py .github/workflows/auto_fetch.yml 2>/dev/null || true
-        
-        # 檢查是否有變更
-        if git status --porcelain | grep -q .; then
-          echo "檢測到文件變更，準備提交..."
-          
-          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          
-          # 獲取頻道數量
-          if [ -f "live.m3u" ]; then
-            CHANNEL_COUNT=$(grep -c 'tvg-id=' live.m3u)
-            
-            # 生成提交信息
-            git commit -m "📺 更新台灣新聞直播源 $TIMESTAMP" \
-                       -m "頻道數: $CHANNEL_COUNT 個" \
-                       -m "來源: YouTube官方頻道" \
-                       -m "自動更新: 每30分鐘"
+          if git diff --cached --quiet; then
+            echo "📝 沒有變化"
           else
-            git commit -m "🔄 更新配置文件 $TIMESTAMP"
+            TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+            git commit -m "📺 更新直播源 $TIMESTAMP"
+            git push
+            echo "✅ 已提交"
           fi
-          
-          git push
-          echo "✅ 已成功提交並推送"
         else
-          echo "📝 文件沒有變化，無需提交"
+          echo "❌ 沒有生成 live.m3u"
+          exit 1
         fi
