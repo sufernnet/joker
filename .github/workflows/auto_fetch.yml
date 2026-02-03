@@ -1,4 +1,4 @@
-name: Fetch CTI TV Live
+name: Fetch Taiwan News Live
 
 on:
   schedule:
@@ -29,7 +29,17 @@ jobs:
       run: pip install requests
     
     - name: Run crawler
+      working-directory: ./scripts
       run: python youtube_crawler.py
+    
+    - name: Move M3U file to root
+      run: |
+        if [ -f "scripts/live.m3u" ]; then
+          mv scripts/live.m3u live.m3u
+          echo "✅ M3U文件已移動到根目錄"
+        else
+          echo "⚠️ 未找到M3U文件"
+        fi
     
     - name: Show result
       run: |
@@ -51,16 +61,17 @@ jobs:
             echo "✅ 格式正確: group-title=\"TW\""
           fi
           
-          # 提取信息
-          if grep -q 'tvg-id=' live.m3u; then
-            TG_ID=$(grep 'tvg-id=' live.m3u | head -1 | cut -d'"' -f2)
-            TG_NAME=$(grep 'tvg-name=' live.m3u | head -1 | cut -d'"' -f4)
-            echo ""
-            echo "📺 頻道信息:"
-            echo "tvg-id: $TG_ID"
-            echo "tvg-name: $TG_NAME"
-            echo "group-title: TW"
-          fi
+          # 計算頻道數量
+          CHANNEL_COUNT=$(grep -c 'tvg-id=' live.m3u)
+          echo ""
+          echo "📺 頻道總數: $CHANNEL_COUNT 個"
+          
+          # 提取前幾個頻道信息
+          echo ""
+          echo "📡 頻道列表 (前5個):"
+          echo "----------------"
+          grep 'tvg-name=' live.m3u | head -5 | cut -d'"' -f4 | nl
+          echo "----------------"
           
           echo ""
           echo "🌐 訪問連結:"
@@ -81,17 +92,13 @@ jobs:
         else
           TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           
-          # 提取頻道信息用於提交信息
+          # 計算頻道數量
           if [ -f "live.m3u" ]; then
-            if grep -q 'tvg-name=' live.m3u; then
-              CHANNEL_NAME=$(grep 'tvg-name=' live.m3u | head -1 | cut -d'"' -f4)
-              git commit -m "📺 更新直播源 - $CHANNEL_NAME $TIMESTAMP" \
-                         -m "格式: M3U with EPG" \
-                         -m "group-title: TW"
-            else
-              git commit -m "📺 更新中天電視直播源 $TIMESTAMP" \
-                         -m "格式: M3U with EPG"
-            fi
+            CHANNEL_COUNT=$(grep -c 'tvg-id=' live.m3u)
+            git commit -m "📺 更新台灣新聞直播源 $TIMESTAMP" \
+                       -m "頻道數: $CHANNEL_COUNT 個" \
+                       -m "格式: M3U with EPG" \
+                       -m "group-title: TW"
           else
             git commit -m "📺 更新直播源 $TIMESTAMP"
           fi
