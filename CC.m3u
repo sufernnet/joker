@@ -1,6 +1,6 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
 # 自动合并 M3U 文件
-# 生成时间: 2026-02-02 10:36:19 (北京时间)
+# 生成时间: 2026-02-03 10:31:27 (北京时间)
 # 下次更新: 每天 06:00 和 18:00 (北京时间)
 # BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u
 # 代理源: https://smt-proxy.sufern001.workers.dev/
@@ -190,7 +190,7 @@ https://smart.946985.filegear-sg.me/iptv.php?id=c1ynpe&token=tg_Thinkoo_bot
 https://smart.946985.filegear-sg.me/iptv.php?id=28auth&token=tg_Thinkoo_bot
 # --- 其他HK频道 ---
 #EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="HK",翡翠台
-https://smart.946985.filegear-sg.me/iptv.php?id=8hou8p&token=tg_Thinkoo_bot
+https://smart.946985.filegear-sg.me/iptv.php?id=4qbgsl&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="HK",翡翠台广电
 https://smart.946985.filegear-sg.me/iptv.php?id=ka4czm&token=tg_Thinkoo_bot
 #EXTINF:-1 tvg-name="翡翠台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/翡翠.png" group-title="HK",翡翠台4K
@@ -406,6 +406,6 @@ https://smart.946985.filegear-sg.me/iptv.php?id=2qlpav&token=tg_Thinkoo_bot
 # 过滤频道: 15 个
 # 总频道数: 185
 # EPG状态: ✅ 正常
-# 更新时间: 2026-02-02 10:36:19 (北京时间)
+# 更新时间: 2026-02-03 10:31:27 (北京时间)
 # 更新频率: 每天 06:00 和 18:00 (北京时间)
 # 排序规则: BB → HK(凤凰/NOW优先) → TW(已过滤)
