@@ -46,6 +46,12 @@ jobs:
         echo "🚀 Starting YouTube live stream crawler..."
         echo ""
         
+        # Check if scripts directory exists
+        if [ ! -d "scripts" ]; then
+          echo "❌ ERROR: scripts directory does not exist!"
+          exit 1
+        fi
+        
         # Go to scripts directory
         cd scripts
         
@@ -76,14 +82,20 @@ jobs:
             # Copy to root directory
             cp live.m3u ../live.m3u
             echo "📁 Copied to root directory"
+            
+            # Save channel count for later use
+            echo "CHANNEL_COUNT=$CHANNEL_COUNT" >> $GITHUB_ENV
           else
             echo "❌ live.m3u not created in scripts directory"
             echo "📁 Files in scripts directory:"
             ls -la
+            echo "CHANNEL_COUNT=0" >> $GITHUB_ENV
+            exit 1
           fi
           
         else
-          echo "❌ youtube_crawler.py not found!"
+          echo "❌ ERROR: youtube_crawler.py not found!"
+          echo "CHANNEL_COUNT=0" >> $GITHUB_ENV
           exit 1
         fi
         
@@ -103,7 +115,7 @@ jobs:
           # Get file stats
           FILE_SIZE=$(wc -c < live.m3u)
           FILE_LINES=$(wc -l < live.m3u)
-          CHANNEL_COUNT=$(grep -c 'tvg-id=' live.m3u)
+          CHANNEL_COUNT=${{ env.CHANNEL_COUNT }}
           
           echo "📊 File statistics:"
           echo "  • File size: $FILE_SIZE bytes"
@@ -129,9 +141,6 @@ jobs:
           head -10 live.m3u
           echo "-------------------"
           
-          # Save channel count to output
-          echo "channel_count=$CHANNEL_COUNT" >> $GITHUB_OUTPUT
-          
         else
           echo "❌ ERROR: live.m3u file not found!"
           echo ""
@@ -152,7 +161,7 @@ jobs:
         echo ""
         
         if [ -f "live.m3u" ]; then
-          CHANNEL_COUNT=$(grep -c 'tvg-id=' live.m3u)
+          CHANNEL_COUNT=${{ env.CHANNEL_COUNT }}
           UPDATE_TIME=$(grep '更新時間:' live.m3u | head -1 | cut -d':' -f2- || echo "Unknown")
           
           echo "✅ Successfully generated live stream file"
@@ -194,35 +203,45 @@ jobs:
         git add live.m3u
         
         # Check if there are changes
-        if ! git diff --cached --quiet; then
+        if git diff --cached --quiet; then
+          echo "📝 No changes to commit"
+        else
           echo "📝 Changes detected, creating commit..."
           
           # Get timestamp
           TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           
           # Get channel count
-          CHANNEL_COUNT=$(grep -c 'tvg-id=' live.m3u)
+          if [ -f "live.m3u" ]; then
+            CHANNEL_COUNT=$(grep -c 'tvg-id=' live.m3u)
+            UPDATE_TIME=$(grep '更新時間:' live.m3u | head -1 | cut -d':' -f2-)
+          else
+            CHANNEL_COUNT=0
+            UPDATE_TIME="Unknown"
+          fi
           
           # Create commit message
-          COMMIT_MSG="📺 Update Taiwan news live streams $TIMESTAMP"
-          COMMIT_MSG="$COMMIT_MSG"$'\n'"Channels: $CHANNEL_COUNT"
-          COMMIT_MSG="$COMMIT_MSG"$'\n'"Source: YouTube official channels"
-          COMMIT_MSG="$COMMIT_MSG"$'\n'"Auto-update: Every 30 minutes"
+          echo "📺 Update Taiwan news live streams $TIMESTAMP" > commit_msg.txt
+          echo "" >> commit_msg.txt
+          echo "Channels: $CHANNEL_COUNT" >> commit_msg.txt
+          echo "Update time: $UPDATE_TIME" >> commit_msg.txt
+          echo "Source: YouTube official channels" >> commit_msg.txt
+          echo "Auto-update: Every 30 minutes" >> commit_msg.txt
           
           echo "Commit message:"
-          echo "$COMMIT_MSG"
+          cat commit_msg.txt
           echo ""
           
-          # Commit
-          git commit -m "$COMMIT_MSG"
+          # Commit with the message from file
+          git commit -F commit_msg.txt
           
           # Push
           echo "Pushing to GitHub..."
           git push
           
+          # Clean up
+          rm -f commit_msg.txt
+          
           echo ""
           echo "✅ Successfully committed and pushed"
-          
-        else
-          echo "📝 No changes to commit"
         fi
