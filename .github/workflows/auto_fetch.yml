@@ -1,0 +1,101 @@
+name: Fetch CTI TV Live
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # 每30分鐘執行一次
+  workflow_dispatch:  # 手動觸發
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-live:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: pip install requests
+    
+    - name: Run crawler
+      run: python youtube_crawler.py
+    
+    - name: Show result
+      run: |
+        echo ""
+        echo "=== 📊 執行結果 ==="
+        echo ""
+        
+        if [ -f "live.m3u" ]; then
+          echo "✅ 直播源文件已生成"
+          echo ""
+          echo "📄 文件格式:"
+          echo "----------------"
+          head -15 live.m3u
+          echo "----------------"
+          
+          # 檢查格式
+          if grep -q 'group-title="TW"' live.m3u; then
+            echo ""
+            echo "✅ 格式正確: group-title=\"TW\""
+          fi
+          
+          # 提取信息
+          if grep -q 'tvg-id=' live.m3u; then
+            TG_ID=$(grep 'tvg-id=' live.m3u | head -1 | cut -d'"' -f2)
+            TG_NAME=$(grep 'tvg-name=' live.m3u | head -1 | cut -d'"' -f4)
+            echo ""
+            echo "📺 頻道信息:"
+            echo "tvg-id: $TG_ID"
+            echo "tvg-name: $TG_NAME"
+            echo "group-title: TW"
+          fi
+          
+          echo ""
+          echo "🌐 訪問連結:"
+          echo "https://raw.githubusercontent.com/${{ github.repository }}/main/live.m3u"
+        else
+          echo "❌ 未生成直播源文件"
+        fi
+    
+    - name: Commit to GitHub
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "actions@github.com"
+        
+        git add live.m3u
+        
+        if git diff --cached --quiet; then
+          echo "📝 文件沒有變化，無需提交"
+        else
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          
+          # 提取頻道信息用於提交信息
+          if [ -f "live.m3u" ]; then
+            if grep -q 'tvg-name=' live.m3u; then
+              CHANNEL_NAME=$(grep 'tvg-name=' live.m3u | head -1 | cut -d'"' -f4)
+              git commit -m "📺 更新直播源 - $CHANNEL_NAME $TIMESTAMP" \
+                         -m "格式: M3U with EPG" \
+                         -m "group-title: TW"
+            else
+              git commit -m "📺 更新中天電視直播源 $TIMESTAMP" \
+                         -m "格式: M3U with EPG"
+            fi
+          else
+            git commit -m "📺 更新直播源 $TIMESTAMP"
+          fi
+          
+          git push
+          echo "✅ 已提交到GitHub倉庫"
+        fi
