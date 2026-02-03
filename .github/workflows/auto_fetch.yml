@@ -1,4 +1,4 @@
-name: Fetch Taiwan News Live
+name: Fetch Taiwan News Live (Official Channels)
 
 on:
   schedule:
@@ -6,6 +6,9 @@ on:
   workflow_dispatch:  # 手動觸發
   push:
     branches: [main]
+    paths:
+      - 'scripts/youtube_crawler.py'
+      - '.github/workflows/auto_fetch.yml'
 
 permissions:
   contents: write
@@ -28,56 +31,92 @@ jobs:
     - name: Install dependencies
       run: pip install requests
     
-    - name: Run crawler
-      working-directory: ./scripts
-      run: python youtube_crawler.py
-    
-    - name: Move M3U file to root
+    - name: Create scripts directory
       run: |
-        if [ -f "scripts/live.m3u" ]; then
-          mv scripts/live.m3u live.m3u
-          echo "✅ M3U文件已移動到根目錄"
+        mkdir -p scripts
+        echo "📁 創建scripts目錄"
+    
+    - name: Copy crawler to scripts
+      run: |
+        if [ -f "youtube_crawler.py" ]; then
+          cp youtube_crawler.py scripts/
+          echo "✅ 已複製爬蟲程式到scripts目錄"
         else
-          echo "⚠️ 未找到M3U文件"
+          echo "⚠️ 未找到youtube_crawler.py"
         fi
     
-    - name: Show result
+    - name: Run crawler
+      run: python scripts/youtube_crawler.py
+    
+    - name: Verify and move M3U file
       run: |
         echo ""
-        echo "=== 📊 執行結果 ==="
+        echo "=== 📊 驗證生成結果 ==="
         echo ""
         
         if [ -f "live.m3u" ]; then
           echo "✅ 直播源文件已生成"
-          echo ""
-          echo "📄 文件格式:"
-          echo "----------------"
-          head -15 live.m3u
-          echo "----------------"
           
-          # 檢查格式
-          if grep -q 'group-title="TW"' live.m3u; then
-            echo ""
-            echo "✅ 格式正確: group-title=\"TW\""
+          # 移動到根目錄（如果不在根目錄）
+          if [ ! -f "live.m3u" ] || [ -f "scripts/live.m3u" ]; then
+            mv -f scripts/live.m3u live.m3u 2>/dev/null || true
+            echo "📁 文件已移動到根目錄"
           fi
           
+          # 檢查文件大小
+          FILESIZE=$(wc -c < "live.m3u")
+          echo "📄 文件大小: $((FILESIZE / 1024)) KB"
+          
+        else
+          echo "❌ 未找到live.m3u文件"
+          echo "正在搜索..."
+          find . -name "*.m3u" -type f | head -5
+          exit 1
+        fi
+    
+    - name: Show detailed result
+      run: |
+        echo ""
+        echo "=== 📋 詳細結果 ==="
+        echo ""
+        
+        if [ -f "live.m3u" ]; then
           # 計算頻道數量
           CHANNEL_COUNT=$(grep -c 'tvg-id=' live.m3u)
-          echo ""
           echo "📺 頻道總數: $CHANNEL_COUNT 個"
           
-          # 提取前幾個頻道信息
+          # 提取頻道來源
           echo ""
-          echo "📡 頻道列表 (前5個):"
+          echo "📡 頻道來源統計:"
           echo "----------------"
-          grep 'tvg-name=' live.m3u | head -5 | cut -d'"' -f4 | nl
+          if grep -q '來源: YouTube官方頻道' live.m3u; then
+            echo "✅ 使用官方頻道源"
+          fi
+          
+          # 顯示頻道列表
+          echo ""
+          echo "📋 頻道列表:"
           echo "----------------"
+          grep 'tvg-name=' live.m3u | cut -d'"' -f4 | nl
+          echo "----------------"
+          
+          # 顯示更新時間
+          echo ""
+          echo "🕐 更新時間:"
+          grep '更新時間:' live.m3u | head -1
           
           echo ""
           echo "🌐 訪問連結:"
           echo "https://raw.githubusercontent.com/${{ github.repository }}/main/live.m3u"
+          
+          # 顯示前幾個鏈接
+          echo ""
+          echo "🔗 直播鏈接示例 (前3個):"
+          echo "----------------"
+          grep 'https://www.youtube.com' live.m3u | head -3 | nl
+          echo "----------------"
         else
-          echo "❌ 未生成直播源文件"
+          echo "❌ 未找到live.m3u文件"
         fi
     
     - name: Commit to GitHub
@@ -85,24 +124,51 @@ jobs:
         git config user.name "GitHub Actions Bot"
         git config user.email "actions@github.com"
         
+        # 添加所有相關文件
         git add live.m3u
+        git add scripts/youtube_crawler.py 2>/dev/null || true
+        git add .github/workflows/auto_fetch.yml 2>/dev/null || true
         
         if git diff --cached --quiet; then
           echo "📝 文件沒有變化，無需提交"
         else
           TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           
-          # 計算頻道數量
+          # 獲取頻道數量
           if [ -f "live.m3u" ]; then
             CHANNEL_COUNT=$(grep -c 'tvg-id=' live.m3u)
-            git commit -m "📺 更新台灣新聞直播源 $TIMESTAMP" \
-                       -m "頻道數: $CHANNEL_COUNT 個" \
-                       -m "格式: M3U with EPG" \
-                       -m "group-title: TW"
+            
+            # 生成提交信息
+            COMMIT_MSG="📺 更新台灣新聞直播源 $TIMESTAMP"
+            COMMIT_MSG+=$'\n'$'\n'"頻道數: $CHANNEL_COUNT 個"
+            COMMIT_MSG+=$'\n'"來源: YouTube官方頻道"
+            COMMIT_MSG+=$'\n'"格式: M3U with EPG"
+            COMMIT_MSG+=$'\n'"group-title: TW"
+            COMMIT_MSG+=$'\n'"自動更新: 每30分鐘"
+            
+            git commit -m "$COMMIT_MSG"
           else
-            git commit -m "📺 更新直播源 $TIMESTAMP"
+            git commit -m "🔄 更新爬蟲配置 $TIMESTAMP"
           fi
           
           git push
           echo "✅ 已提交到GitHub倉庫"
+        fi
+    
+    - name: Create summary
+      if: always()
+      run: |
+        echo "## 🎯 執行結果" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ -f "live.m3u" ]; then
+          CHANNEL_COUNT=$(grep -c 'tvg-id=' live.m3u)
+          echo "✅ **成功生成直播源文件**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**頻道數量:** $CHANNEL_COUNT 個" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**訪問地址:**" >> $GITHUB_STEP_SUMMARY
+          echo "https://raw.githubusercontent.com/${{ github.repository }}/main/live.m3u" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **未成功生成直播源文件**" >> $GITHUB_STEP_SUMMARY
         fi
