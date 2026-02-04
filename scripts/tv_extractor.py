@@ -49,6 +49,7 @@ TW_BLACKLIST = [
     'liveABC',
     'UDN TV',
     'rollor',
+    'C+頻道',
     'MOMO',
     '大愛',
     '好訊息',
