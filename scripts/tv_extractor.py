@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 """
-从TV源中提取"港澳頻道"和"體育世界"并与BB.m3u合并，保存为EE.m3u
-港澳頻道中凤凰频道排前，NOW频道排后
+从两个TV源中提取HK和TW频道，校验播放状态后与BB.m3u合并
 """
 
 import requests
 import re
 import os
 import sys
+import time
+import subprocess
 from datetime import datetime
 import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # 配置日志
 logging.basicConfig(
@@ -19,21 +21,30 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # 常量定义
-SOURCE_URL = "https://raw.githubusercontent.com/yihad168/tv/refs/heads/main/tv.m3u"
+HK_SOURCE_URL = "https://hacks.sufern001.workers.dev/?type=hk"
+TW_SOURCE_URL = "https://hacks.sufern001.workers.dev/?type=tw"
 EPG_URL = "http://epg.51zmt.top:8000/e.xml"
 BB_FILE = "BB.m3u"  # 假设BB.m3u在仓库根目录
-OUTPUT_FILE = "../EE.m3u"  # 上一级目录（joker目录）
+OUTPUT_FILE = "../EE.m3u"  # 上一级目录
+FFMPEG_PATH = "ffmpeg"  # 假设ffmpeg已安装
+TIMEOUT = 10  # 播放校验超时时间（秒）
+MAX_WORKERS = 5  # 并发校验最大线程数
 
-def fetch_m3u_content():
-    """获取原始M3U文件内容"""
+def fetch_m3u_content(url, source_name):
+    """获取M3U文件内容"""
     try:
-        logger.info(f"正在从 {SOURCE_URL} 下载M3U文件...")
-        response = requests.get(SOURCE_URL, timeout=30)
+        logger.info(f"正在从 {source_name} 下载M3U文件...")
+        response = requests.get(url, timeout=30)
         response.raise_for_status()
-        logger.info(f"下载成功，大小: {len(response.text)} 字符")
-        return response.text
+        content = response.text
+        
+        if not content.strip().startswith("#EXTM3U"):
+            logger.warning(f"{source_name} 内容可能不是有效的M3U格式")
+            
+        logger.info(f"{source_name} 下载成功，大小: {len(content)} 字符")
+        return content
     except requests.RequestException as e:
-        logger.error(f"下载M3U文件失败: {e}")
+        logger.error(f"下载 {source_name} 失败: {e}")
         return None
 
 def read_bb_file():
@@ -53,41 +64,15 @@ def read_bb_file():
         logger.error(f"读取BB.m3u失败: {e}")
         return None
 
-def extract_and_sort_channels(content):
-    """提取港澳頻道和體育世界，并对港澳頻道排序"""
+def parse_m3u_content(content, default_group):
+    """解析M3U内容，返回频道列表"""
     if not content:
-        return None
+        return []
     
-    logger.info("开始提取指定分组频道...")
-    
-    # 目标分组
-    target_groups = ["港澳頻道", "體育世界"]
-    
-    # 按行分割内容
+    channels = []
     lines = content.split('\n')
-    
-    # 存储提取的频道，港澳頻道分组需要分类
-    phoenix_channels = []  # 凤凰频道
-    now_channels = []      # NOW频道
-    other_hk_channels = []  # 港澳頻道其他频道
-    sports_channels = []    # 體育世界频道
-    
-    # 用于调试
-    found_groups = {}
-    for group in target_groups:
-        found_groups[group] = 0
-    
-    # 查找所有分组用于调试
-    all_groups = set()
-    for line in lines:
-        if '#EXTINF' in line and 'group-title="' in line:
-            match = re.search(r'group-title="([^"]+)"', line)
-            if match:
-                all_groups.add(match.group(1))
-    
-    logger.info(f"源文件中找到的所有分组: {sorted(all_groups)}")
-    
     i = 0
+    
     while i < len(lines):
         line = lines[i].strip()
         
@@ -95,117 +80,197 @@ def extract_and_sort_channels(content):
             i += 1
             continue
         
-        # 检查是否是分组行
+        # 检查是否是频道信息行
         if line.startswith("#EXTINF"):
-            # 提取分组信息
-            group_match = re.search(r'group-title="([^"]+)"', line)
-            if group_match:
-                group_name = group_match.group(1)
+            # 提取频道信息
+            extinf_line = line
+            
+            # 查找对应的URL行
+            j = i + 1
+            url_line = ""
+            while j < len(lines):
+                temp_line = lines[j].strip()
+                if not temp_line:
+                    j += 1
+                    continue
+                if temp_line.startswith("#EXTINF"):
+                    break
+                if temp_line and not temp_line.startswith("#"):
+                    url_line = temp_line
+                    break
+                j += 1
+            
+            if url_line:
+                # 提取频道名称
+                channel_name = "未知频道"
+                name_match = re.search(r',([^,]+)$', extinf_line)
+                if name_match:
+                    channel_name = name_match.group(1).strip()
                 
-                # 检查是否为目标分组
-                if group_name in target_groups:
-                    # 查找对应的URL行
-                    j = i + 1
-                    url_line = ""
-                    while j < len(lines):
-                        temp_line = lines[j].strip()
-                        if not temp_line:
-                            j += 1
-                            continue
-                        if temp_line.startswith("#EXTINF"):
-                            break
-                        if temp_line and not temp_line.startswith("#"):
-                            url_line = temp_line
-                            break
-                        j += 1
-                    
-                    if url_line:
-                        channel_data = {
-                            'extinf': line,
-                            'url': url_line,
-                            'group': group_name
-                        }
-                        
-                        # 港澳頻道分组需要进一步分类
-                        if group_name == "港澳頻道":
-                            # 检查是否是凤凰频道
-                            if '凤凰' in line or '鳳凰' in line:
-                                phoenix_channels.append(channel_data)
-                                logger.info(f"凤凰频道: {line[:80]}")
-                            # 检查是否是NOW频道
-                            elif 'NOW' in line.upper():
-                                now_channels.append(channel_data)
-                                logger.info(f"NOW频道: {line[:80]}")
-                            else:
-                                other_hk_channels.append(channel_data)
-                            
-                            found_groups[group_name] += 1
-                        
-                        # 體育世界分组直接添加
-                        elif group_name == "體育世界":
-                            sports_channels.append(channel_data)
-                            found_groups[group_name] += 1
-                            logger.info(f"体育频道: {line[:80]}")
+                # 提取原始分组
+                original_group = default_group
+                group_match = re.search(r'group-title="([^"]+)"', extinf_line)
+                if group_match:
+                    original_group = group_match.group(1)
+                
+                # 创建新的EXTINF行，统一分组
+                new_extinf = re.sub(r'group-title="[^"]+"', f'group-title="{default_group}"', extinf_line)
+                if 'group-title=' not in new_extinf:
+                    # 如果原来没有分组信息，添加分组
+                    new_extinf = new_extinf.replace('#EXTINF:', f'#EXTINF: group-title="{default_group}",', 1)
+                
+                channel_data = {
+                    'original_extinf': extinf_line,
+                    'extinf': new_extinf,
+                    'url': url_line,
+                    'name': channel_name,
+                    'group': default_group,
+                    'original_group': original_group,
+                    'working': None  # 是否可播放，None表示未检查
+                }
+                channels.append(channel_data)
         
         i += 1
     
-    # 输出统计信息
-    logger.info("=== 提取统计 ===")
-    logger.info(f"港澳頻道 - 凤凰频道: {len(phoenix_channels)} 个")
-    logger.info(f"港澳頻道 - NOW频道: {len(now_channels)} 个")
-    logger.info(f"港澳頻道 - 其他频道: {len(other_hk_channels)} 个")
-    logger.info(f"體育世界: {len(sports_channels)} 个")
+    return channels
+
+def check_stream_playable(url, channel_name):
+    """检查流是否可以播放"""
+    try:
+        # 使用ffprobe检查流
+        command = [
+            FFMPEG_PATH, '-hide_banner', '-loglevel', 'error',
+            '-timeout', str(TIMEOUT * 1000000),  # 微秒
+            '-i', url,
+            '-t', '5',  # 只检查5秒
+            '-f', 'null', '-'
+        ]
+        
+        logger.debug(f"检查频道: {channel_name} - {url}")
+        
+        result = subprocess.run(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=TIMEOUT + 2
+        )
+        
+        # 根据返回码判断
+        if result.returncode == 0:
+            return True
+        else:
+            # 检查错误信息中是否包含超时或连接失败
+            error_msg = result.stderr.decode('utf-8', errors='ignore').lower()
+            if 'timeout' in error_msg or 'connection refused' in error_msg:
+                return False
+            # 有些流可能返回非0但实际上是可播放的
+            return True
+            
+    except subprocess.TimeoutExpired:
+        logger.warning(f"频道检查超时: {channel_name}")
+        return False
+    except Exception as e:
+        logger.warning(f"检查频道失败 {channel_name}: {e}")
+        return False
+
+def validate_channels(channels):
+    """验证频道是否可以播放"""
+    logger.info(f"开始验证 {len(channels)} 个频道的播放状态...")
     
-    total_channels = sum(found_groups.values())
-    logger.info(f"总计提取: {total_channels} 个频道")
+    valid_channels = []
+    invalid_channels = []
     
-    if total_channels == 0:
-        logger.error("没有提取到任何频道，请检查分组名称")
-        return None
+    # 如果没有ffmpeg，跳过验证
+    try:
+        subprocess.run([FFMPEG_PATH, '-version'], 
+                      stdout=subprocess.PIPE, 
+                      stderr=subprocess.PIPE,
+                      timeout=5)
+        has_ffmpeg = True
+        logger.info("检测到ffmpeg，将进行播放验证")
+    except:
+        has_ffmpeg = False
+        logger.warning("未检测到ffmpeg，跳过播放验证")
+        return channels, []
     
-    # 构建排序后的内容
-    extracted_lines = []
+    # 使用线程池并发验证
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        future_to_channel = {}
+        for channel in channels:
+            future = executor.submit(
+                check_stream_playable, 
+                channel['url'], 
+                channel['name']
+            )
+            future_to_channel[future] = channel
+        
+        completed = 0
+        for future in as_completed(future_to_channel):
+            channel = future_to_channel[future]
+            try:
+                is_playable = future.result()
+                channel['working'] = is_playable
+                
+                if is_playable:
+                    valid_channels.append(channel)
+                    logger.info(f"✅ 可播放: {channel['name']}")
+                else:
+                    invalid_channels.append(channel)
+                    logger.warning(f"❌ 不可播放: {channel['name']}")
+                
+                completed += 1
+                if completed % 10 == 0:
+                    logger.info(f"验证进度: {completed}/{len(channels)}")
+                    
+            except Exception as e:
+                logger.error(f"验证频道异常 {channel['name']}: {e}")
+                invalid_channels.append(channel)
+    
+    logger.info(f"验证完成: {len(valid_channels)} 个可播放, {len(invalid_channels)} 个不可播放")
+    return valid_channels, invalid_channels
+
+def build_m3u_content(hk_channels, tw_channels):
+    """构建M3U文件内容"""
+    lines = []
     
     # 添加文件头
-    extracted_lines.append(f'#EXTM3U url-tvg="{EPG_URL}"')
+    lines.append(f'#EXTM3U url-tvg="{EPG_URL}"')
     
-    # 添加注释说明排序规则
-    extracted_lines.append("# 港澳頻道排序规则: 凤凰频道 → NOW频道 → 其他频道")
-    extracted_lines.append("")
+    # 添加生成信息
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    lines.append(f"# 生成时间: {timestamp}")
+    lines.append(f"# HK源地址: {HK_SOURCE_URL}")
+    lines.append(f"# TW源地址: {TW_SOURCE_URL}")
+    lines.append(f"# EPG源: {EPG_URL}")
+    lines.append("# 包含内容: BB.m3u + HK频道 + TW频道")
+    lines.append("# 自动更新频道列表")
+    lines.append("")
     
-    # 按顺序添加港澳頻道
-    hk_added = False
+    # 添加HK频道
+    if hk_channels:
+        lines.append("#" + "="*60)
+        lines.append("# HK频道")
+        lines.append("#" + "="*60)
+        lines.append("")
+        
+        for channel in hk_channels:
+            lines.append(channel['extinf'])
+            lines.append(channel['url'])
+        
+        lines.append("")
     
-    # 1. 先添加凤凰频道
-    for channel in phoenix_channels:
-        extracted_lines.append(channel['extinf'])
-        extracted_lines.append(channel['url'])
-        hk_added = True
+    # 添加TW频道
+    if tw_channels:
+        lines.append("#" + "="*60)
+        lines.append("# TW频道")
+        lines.append("#" + "="*60)
+        lines.append("")
+        
+        for channel in tw_channels:
+            lines.append(channel['extinf'])
+            lines.append(channel['url'])
     
-    # 2. 再添加NOW频道
-    for channel in now_channels:
-        extracted_lines.append(channel['extinf'])
-        extracted_lines.append(channel['url'])
-        hk_added = True
-    
-    # 3. 最后添加其他港澳频道
-    for channel in other_hk_channels:
-        extracted_lines.append(channel['extinf'])
-        extracted_lines.append(channel['url'])
-        hk_added = True
-    
-    # 如果有港澳频道，添加分隔空行
-    if hk_added:
-        extracted_lines.append("")
-    
-    # 添加體育世界频道
-    if sports_channels:
-        extracted_lines.append("# 體育世界频道")
-        for channel in sports_channels:
-            extracted_lines.append(channel['extinf'])
-            extracted_lines.append(channel['url'])
-    
-    return '\n'.join(extracted_lines)
+    return '\n'.join(lines)
 
 def merge_with_bb(tv_content, bb_content):
     """将提取的TV内容与BB.m3u合并"""
@@ -217,10 +282,10 @@ def merge_with_bb(tv_content, bb_content):
     # 添加生成信息
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     merged_lines.append(f"# 生成时间: {timestamp}")
-    merged_lines.append(f"# 源地址: {SOURCE_URL}")
+    merged_lines.append(f"# HK源地址: {HK_SOURCE_URL}")
+    merged_lines.append(f"# TW源地址: {TW_SOURCE_URL}")
     merged_lines.append(f"# EPG源: {EPG_URL}")
-    merged_lines.append("# 包含内容: BB.m3u + 港澳頻道 + 體育世界")
-    merged_lines.append("# 港澳頻道排序: 凤凰频道 → NOW频道 → 其他频道")
+    merged_lines.append("# 包含内容: BB.m3u + HK频道 + TW频道")
     merged_lines.append("# 自动更新频道列表")
     merged_lines.append("")
     
@@ -240,9 +305,9 @@ def merge_with_bb(tv_content, bb_content):
         if bb_count > 0:
             logger.info(f"合并了 {bb_count} 个BB频道")
             merged_lines.append("")  # 添加空行分隔
-            merged_lines.append("#" + "="*50)
-            merged_lines.append("# 以下为港澳頻道和體育世界")
-            merged_lines.append("#" + "="*50)
+            merged_lines.append("#" + "="*60)
+            merged_lines.append("# 以下为HK和TW频道（已验证可播放）")
+            merged_lines.append("#" + "="*60)
             merged_lines.append("")
     
     # 添加提取的TV内容（跳过文件头）
@@ -284,40 +349,12 @@ def save_m3u_file(content):
             logger.info(f"📈 频道总数: {extinf_count}")
             
             # 统计各分类数量
-            phoenix_count = content.count("凤凰") + content.count("鳳凰")
-            now_count = content.upper().count("NOW")
-            sports_count = content.count("體育世界")
+            hk_count = content.count('group-title="HK"')
+            tw_count = content.count('group-title="TW"')
             
             logger.info("=== 详细分类统计 ===")
-            logger.info(f"凤凰频道: {phoenix_count} 个")
-            logger.info(f"NOW频道: {now_count} 个")
-            logger.info(f"體育世界: {sports_count} 个")
-            
-            # 显示排序验证
-            logger.info("=== 排序验证 ===")
-            with open(output_path, 'r', encoding='utf-8') as f:
-                lines = f.readlines()
-                
-                # 查找第一个凤凰频道和NOW频道的位置
-                first_phoenix = -1
-                first_now = -1
-                for idx, line in enumerate(lines):
-                    line_lower = line.lower()
-                    if ('凤凰' in line or '鳳凰' in line) and first_phoenix == -1:
-                        first_phoenix = idx
-                    if 'NOW' in line.upper() and first_now == -1:
-                        first_now = idx
-                
-                if first_phoenix != -1:
-                    logger.info(f"第一个凤凰频道在第 {first_phoenix + 1} 行")
-                if first_now != -1:
-                    logger.info(f"第一个NOW频道在第 {first_now + 1} 行")
-                
-                if first_phoenix != -1 and first_now != -1:
-                    if first_phoenix < first_now:
-                        logger.info("✅ 排序正确: 凤凰频道在NOW频道之前")
-                    else:
-                        logger.warning("⚠️  排序可能有问题: NOW频道在凤凰频道之前")
+            logger.info(f"HK频道: {hk_count} 个")
+            logger.info(f"TW频道: {tw_count} 个")
             
             return True
         else:
@@ -333,32 +370,78 @@ def save_m3u_file(content):
 def main():
     """主函数"""
     logger.info("=== M3U频道提取器开始运行 ===")
-    logger.info("排序规则: 港澳頻道中凤凰频道优先，NOW频道次之")
+    logger.info("将提取HK和TW频道，并验证播放状态")
     
-    # 1. 获取原始TV内容
-    raw_content = fetch_m3u_content()
-    if not raw_content:
-        logger.error("无法获取原始TV内容，程序退出")
-        sys.exit(1)
+    # 1. 获取HK源内容
+    logger.info("=== 处理HK源 ===")
+    hk_content = fetch_m3u_content(HK_SOURCE_URL, "HK源")
+    if hk_content:
+        hk_channels = parse_m3u_content(hk_content, "HK")
+        logger.info(f"从HK源解析出 {len(hk_channels)} 个频道")
+    else:
+        hk_channels = []
+        logger.warning("HK源获取失败，将使用空列表")
     
-    # 2. 提取并排序指定频道
-    extracted_content = extract_and_sort_channels(raw_content)
-    if not extracted_content:
-        logger.error("未找到指定的分组频道")
-        sys.exit(1)
+    # 2. 获取TW源内容
+    logger.info("=== 处理TW源 ===")
+    tw_content = fetch_m3u_content(TW_SOURCE_URL, "TW源")
+    if tw_content:
+        tw_channels = parse_m3u_content(tw_content, "TW")
+        logger.info(f"从TW源解析出 {len(tw_channels)} 个频道")
+    else:
+        tw_channels = []
+        logger.warning("TW源获取失败，将使用空列表")
     
-    # 3. 读取BB.m3u
+    # 3. 验证频道播放状态
+    logger.info("=== 开始验证频道播放状态 ===")
+    all_channels = hk_channels + tw_channels
+    
+    if all_channels:
+        valid_channels, invalid_channels = validate_channels(all_channels)
+        
+        # 重新分组
+        hk_valid = [c for c in valid_channels if c['group'] == 'HK']
+        tw_valid = [c for c in valid_channels if c['group'] == 'TW']
+        
+        logger.info(f"验证结果: HK有效 {len(hk_valid)} 个, TW有效 {len(tw_valid)} 个")
+        
+        # 记录无效频道
+        if invalid_channels:
+            logger.warning(f"以下 {len(invalid_channels)} 个频道不可播放:")
+            for channel in invalid_channels[:10]:  # 只显示前10个
+                logger.warning(f"  - {channel['name']} ({channel['group']})")
+            if len(invalid_channels) > 10:
+                logger.warning(f"  ... 还有 {len(invalid_channels) - 10} 个")
+    else:
+        hk_valid = []
+        tw_valid = []
+        logger.warning("没有提取到任何频道")
+    
+    # 4. 构建TV内容
+    tv_content = build_m3u_content(hk_valid, tw_valid)
+    
+    # 5. 读取BB.m3u
     bb_content = read_bb_file()
     
-    # 4. 合并内容
-    merged_content = merge_with_bb(extracted_content, bb_content)
+    # 6. 合并内容
+    merged_content = merge_with_bb(tv_content, bb_content)
     
-    # 5. 保存文件
+    # 7. 保存文件
     if save_m3u_file(merged_content):
         logger.info("=== 处理完成 ===")
+        
+        # 最终统计
+        final_hk_count = merged_content.count('group-title="HK"')
+        final_tw_count = merged_content.count('group-title="TW"')
+        final_total = merged_content.count("#EXTINF")
+        
+        logger.info(f"最终结果: 总频道数={final_total}, HK频道={final_hk_count}, TW频道={final_tw_count}")
+        
+        return True
     else:
         logger.error("=== 处理失败 ===")
-        sys.exit(1)
+        return False
 
 if __name__ == "__main__":
-    main()
+    success = main()
+    sys.exit(0 if success else 1)
