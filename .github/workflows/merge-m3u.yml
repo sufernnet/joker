@@ -1,4 +1,4 @@
-name: 自动合并M3U（抓取🔥全网通港澳台）
+name: 自动合并M3U（抓取全网通港澳台）
 
 on:
   # 手动触发
@@ -64,7 +64,14 @@ jobs:
           echo -e "\n=== 文件结构验证 ==="
           echo "EPG信息:"
           grep -i "url-tvg" CC.m3u || echo "未找到EPG信息"
-          echo "🔥全网通港澳台频道数: $(grep -c '🔥全网通港澳台' CC.m3u || echo 0)"
+          echo "全网通港澳台频道数: $(grep -c '全网通港澳台' CC.m3u || echo 0)"
+          
+          echo -e "\n=== 频道统计 ==="
+          echo "BB频道数: $(grep -c '#EXTINF:' CC.m3u | tail -1 || echo 0)"
+          
+          # 显示几个具体的频道
+          echo -e "\n=== 港澳台频道示例 ==="
+          grep -A1 '全网通港澳台' CC.m3u | head -6
         else
           echo "❌ CC.m3u 未生成"
           exit 1
@@ -101,8 +108,22 @@ jobs:
         # 添加文件
         git add CC.m3u
         
+        # 创建提交信息
+        TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
+        # 获取频道统计
+        BB_COUNT=$(grep -c '#EXTINF:' CC.m3u 2>/dev/null || echo 0)
+        GAT_COUNT=$(grep -c '全网通港澳台' CC.m3u 2>/dev/null || echo 0)
+        TOTAL=$((BB_COUNT + GAT_COUNT))
+        
+        COMMIT_MSG="🤖 自动更新 CC.m3u [$TIMESTAMP]
+        
+        统计信息:
+        • BB频道: $BB_COUNT
+        • 全网通港澳台: $GAT_COUNT
+        • 总计: $TOTAL"
+        
         # 提交
-        git commit -m "🤖 自动更新 CC.m3u [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+        git commit -m "$COMMIT_MSG"
         
         echo "提交信息:"
         git log -1 --oneline
@@ -113,7 +134,7 @@ jobs:
         
         echo "✅ 提交完成"
     
-        - name: 📊 输出结果
+    - name: 📊 输出结果
       if: always()
       run: |
         echo "=== 运行总结 ==="
@@ -130,18 +151,64 @@ jobs:
         echo ""
         echo "⚙️  配置信息:"
         echo "  • GitHub源: https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/main/Jsnzkpg1"
+        echo "  • BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
         echo "  • 搜索关键词: 全网通港澳台"
         echo "  • 脚本文件: scripts/merge_from_proxy.py"
-        echo "  • 更新频率: 每天2次"
+        echo "  • 工作流文件: .github/workflows/merge-m3u.yml"
+        echo "  • 更新频率: 每天2次 (06:00 和 18:00 北京时间)"
         echo ""
         echo "📊 运行状态:"
         if [ -f "CC.m3u" ]; then
           echo "  ✅ CC.m3u 生成成功"
           LINES=$(wc -l < CC.m3u)
           SIZE=$(wc -c < CC.m3u)
+          GAT_COUNT=$(grep -c '全网通港澳台' CC.m3u || echo 0)
+          BB_COUNT=$(grep -c '#EXTINF:' CC.m3u || echo 0)
+          TOTAL=$((BB_COUNT + GAT_COUNT))
+          
           echo "    行数: $LINES"
-          echo "    大小: $SIZE 字节"
-          echo "    全网通港澳台频道数: $(grep -c '全网通港澳台' CC.m3u || echo 0)"
+          echo "    大小: $((SIZE / 1024)) KB"
+          echo "    BB频道数: $BB_COUNT"
+          echo "    全网通港澳台频道数: $GAT_COUNT"
+          echo "    总频道数: $TOTAL"
+          
+          # 检查EPG状态
+          if grep -q 'url-tvg=' CC.m3u; then
+            EPG_URL=$(grep -o 'url-tvg="[^"]*"' CC.m3u | head -1 | sed 's/url-tvg="//' | sed 's/"//')
+            echo "    EPG状态: ✅ 正常"
+            echo "    EPG地址: $EPG_URL"
+          else
+            echo "    EPG状态: ❌ 无EPG"
+          fi
+          
+          # 显示更新时间
+          UPDATE_TIME=$(grep -o '# 生成时间: [0-9:-]*' CC.m3u | head -1 | sed 's/# 生成时间: //')
+          if [ -n "$UPDATE_TIME" ]; then
+            echo "    更新时间: $UPDATE_TIME (北京时间)"
+          fi
         else
           echo "  ❌ CC.m3u 生成失败"
+          echo "  ℹ️  请检查 scripts/merge_from_proxy.py 脚本"
         fi
+        
+        echo ""
+        echo "🔍 调试信息:"
+        echo "  仓库: ${{ github.repository }}"
+        echo "  分支: ${{ github.ref }}"
+        echo "  触发者: ${{ github.actor }}"
+        echo "  运行ID: ${{ github.run_id }}"
+        echo "  运行号: ${{ github.run_number }}"
+        
+        echo ""
+        echo "🔗 相关链接:"
+        echo "  • 工作流运行: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        echo "  • 提交历史: https://github.com/${{ github.repository }}/commits/main/CC.m3u"
+        echo "  • 原始BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
+        echo "  • 原始GitHub源: https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/main/Jsnzkpg1"
+        
+        echo ""
+        echo "🎯 使用说明:"
+        echo "  1. CC.m3u 可直接用于支持M3U格式的播放器"
+        echo "  2. 文件每天自动更新两次"
+        echo "  3. 如需手动更新，请在Actions页面点击 'Run workflow'"
+        echo "  4. 查看详细日志请访问工作流运行页面"
