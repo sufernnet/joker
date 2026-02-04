@@ -1,12 +1,11 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
 # 自动合并 M3U 文件
-# 生成时间: 2026-02-04 08:36:04 (北京时间)
+# 生成时间: 2026-02-04 08:45:44 (北京时间)
 # 下次更新: 每天 06:00 和 18:00 (北京时间)
 # BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u
 # 新源地址: https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1
-# 目标分组关键词: 🔥全网通港澳台, 全网通港澳台, 港澳台, Hongkong & Taiwan, HK & TW
+# 搜索关键词: 全网通港澳台
 # EPG源: http://epg.51zmt.top:8000/e.xml
-# 测试的EPG源: 3 个
 # GitHub Actions 自动生成
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -168,6 +167,8 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=01
 #EXTINF:-1 tvg-id="杭州导视" tvg-name="杭州导视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州导视.png" group-title="浙江",杭州导视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
 
+# 注意：未找到包含'全网通港澳台'的频道
+
 # EPG信息
 # 使用EPG: http://epg.51zmt.top:8000/e.xml
 # 测试的EPG源 (3个):
@@ -176,8 +177,8 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 #   ✅ http://epg.51zmt.top:8000/e.xml
 # 统计信息
 # BB 频道数: 79
-# 港澳台相关频道数: 0
+# 全网通港澳台 频道数: 0
 # 总频道数: 79
 # EPG状态: ✅ 正常
-# 更新时间: 2026-02-04 08:36:04 (北京时间)
+# 更新时间: 2026-02-04 08:45:44 (北京时间)
 # 更新频率: 每天 06:00 和 18:00 (北京时间)
