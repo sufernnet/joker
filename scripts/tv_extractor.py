@@ -59,11 +59,12 @@ TW_BLACKLIST = [
     '原民',
     'ABC',
     'UDN',
-    'Rollor',
+    'rollor',
     'Momo',
-    '好訊息',
+    '好訊息 1',
+    '好訊息 2',
     'FOX MOVIE',
-    'Petp'
+    'PET CLUB TV'
 ]
 
 # 凤凰频道关键词（用于排序）
@@ -283,8 +284,8 @@ def filter_and_sort_channels(channels, blacklist, group_name):
         
         # 对凤凰频道进行特定排序
         phoenix_order = {
-            '鳳凰中文': 1,
-            '鳳凰資訊': 2, 
+            '鳳凰衛視': 1,
+            '鳳凰資訊HD': 2, 
             '鳳凰香港': 3,
             '鳳凰電影': 4,
             '凤凰中文': 1,
