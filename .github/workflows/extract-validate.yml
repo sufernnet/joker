@@ -1,0 +1,154 @@
+name: Extract and Validate HK/TW Channels
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # UTC 6:00
+    - cron: '0 18 * * *'  # UTC 18:00
+  workflow_dispatch:
+    inputs:
+      skip_validation:
+        description: '跳过播放验证（加快速度）'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  extract-and-validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      
+      - name: Install Python dependencies
+        run: pip install requests
+      
+      - name: Create scripts directory
+        run: mkdir -p scripts
+      
+      - name: Copy extraction script
+        run: |
+          cp tv_extractor_new.py scripts/ || true
+          chmod +x scripts/tv_extractor_new.py
+      
+      - name: Run extraction with validation
+        working-directory: ./scripts
+        run: |
+          echo "=== 开始提取和验证频道 ==="
+          python tv_extractor_new.py
+      
+      - name: Verify EE.m3u file
+        run: |
+          echo "=== 验证EE.m3u文件 ==="
+          if [ -f "EE.m3u" ]; then
+            echo "✅ EE.m3u文件存在"
+            
+            # 统计信息
+            echo ""
+            echo "=== 频道统计 ==="
+            total=$(grep -c "#EXTINF" EE.m3u || echo 0)
+            hk=$(grep -c 'group-title="HK"' EE.m3u || echo 0)
+            tw=$(grep -c 'group-title="TW"' EE.m3u || echo 0)
+            bb_total=$((total - hk - tw))
+            
+            echo "总频道数: $total"
+            echo "BB频道数: $bb_total"
+            echo "HK频道数: $hk"
+            echo "TW频道数: $tw"
+            
+            # 检查文件格式
+            echo ""
+            echo "=== 文件格式检查 ==="
+            if head -1 EE.m3u | grep -q "#EXTM3U"; then
+              echo "✅ 文件格式正确（以#EXTM3U开头）"
+            else
+              echo "❌ 文件格式不正确"
+            fi
+            
+            # 显示前几个频道示例
+            echo ""
+            echo "=== 频道示例（前5个） ==="
+            grep -A1 "#EXTINF" EE.m3u | head -10
+            
+            # 检查是否有URL
+            url_count=$(grep -c "^http" EE.m3u || echo 0)
+            echo ""
+            echo "URL数量: $url_count"
+            
+          else
+            echo "❌ EE.m3u文件不存在"
+            exit 1
+          fi
+      
+      - name: Configure Git
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      
+      - name: Pull latest changes
+        run: git pull origin main --rebase || true
+      
+      - name: Commit changes
+        run: |
+          git add EE.m3u
+          if git diff --staged --quiet; then
+            echo "没有更改需要提交"
+          else
+            # 获取当前时间
+            current_time=$(date +'%Y-%m-%d %H:%M:%S')
+            # 统计信息用于提交信息
+            if [ -f "EE.m3u" ]; then
+              total=$(grep -c "#EXTINF" EE.m3u || echo 0)
+              hk=$(grep -c 'group-title="HK"' EE.m3u || echo 0)
+              tw=$(grep -c 'group-title="TW"' EE.m3u || echo 0)
+              commit_msg="更新EE.m3u - ${total}频道(HK:${hk}/TW:${tw}) ${current_time}"
+            else
+              commit_msg="更新EE.m3u ${current_time}"
+            fi
+            git commit -m "$commit_msg"
+          fi
+      
+      - name: Push to repository
+        run: git push origin main
+      
+      - name: Create summary report
+        if: always()
+        run: |
+          echo "## 频道提取报告" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f "EE.m3u" ]; then
+            total=$(grep -c "#EXTINF" EE.m3u || echo 0)
+            hk=$(grep -c 'group-title="HK"' EE.m3u || echo 0)
+            tw=$(grep -c 'group-title="TW"' EE.m3u || echo 0)
+            
+            echo "✅ **提取完成**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| 类别 | 数量 |" >> $GITHUB_STEP_SUMMARY
+            echo "|------|------|" >> $GITHUB_STEP_SUMMARY
+            echo "| 总频道数 | $total |" >> $GITHUB_STEP_SUMMARY
+            echo "| HK频道 | $hk |" >> $GITHUB_STEP_SUMMARY
+            echo "| TW频道 | $tw |" >> $GITHUB_STEP_SUMMARY
+            echo "| BB频道 | $((total - hk - tw)) |" >> $GITHUB_STEP_SUMMARY
+            
+            # 添加文件预览链接
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "📁 **文件已更新**: [EE.m3u](EE.m3u)" >> $GITHUB_STEP_SUMMARY
+            
+          else
+            echo "❌ **提取失败**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "EE.m3u文件未生成，请检查日志" >> $GITHUB_STEP_SUMMARY
+          fi
