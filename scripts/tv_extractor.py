@@ -17,7 +17,8 @@ from urllib.parse import urlparse
 # 配置日志
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
 )
 logger = logging.getLogger(__name__)
 
@@ -25,34 +26,46 @@ logger = logging.getLogger(__name__)
 HK_SOURCE_URL = "https://hacks.sufern001.workers.dev/?type=hk"
 TW_SOURCE_URL = "https://hacks.sufern001.workers.dev/?type=tw"
 EPG_URL = "http://epg.51zmt.top:8000/e.xml"
-BB_FILE = "BB.m3u"  # 在仓库根目录
-OUTPUT_FILE = "EE.m3u"  # 在仓库根目录
+BB_FILE = "BB.m3u"
+OUTPUT_FILE = "EE.m3u"
 TIMEOUT = 10  # 播放校验超时时间（秒）
 MAX_WORKERS = 5  # 并发校验最大线程数
+MAX_RETRIES = 2  # 最大重试次数
 
-def fetch_m3u_content(url, source_name):
+def fetch_m3u_content(url, source_name, retry_count=MAX_RETRIES):
     """获取M3U文件内容"""
-    try:
-        logger.info(f"正在从 {source_name} 下载M3U文件...")
-        response = requests.get(url, timeout=30)
-        response.raise_for_status()
-        content = response.text
-        
-        if not content.strip().startswith("#EXTM3U"):
-            logger.warning(f"{source_name} 内容可能不是有效的M3U格式")
+    for attempt in range(retry_count):
+        try:
+            logger.info(f"正在从 {source_name} 下载M3U文件 (尝试 {attempt+1}/{retry_count})...")
+            response = requests.get(url, timeout=30)
+            response.raise_for_status()
+            content = response.text
             
-        logger.info(f"{source_name} 下载成功，大小: {len(content)} 字符")
-        return content
-    except requests.RequestException as e:
-        logger.error(f"下载 {source_name} 失败: {e}")
-        return None
+            if not content.strip().startswith("#EXTM3U"):
+                logger.warning(f"{source_name} 内容可能不是有效的M3U格式")
+                
+            logger.info(f"{source_name} 下载成功，大小: {len(content)} 字符")
+            return content
+        except requests.RequestException as e:
+            logger.error(f"下载 {source_name} 失败 (尝试 {attempt+1}/{retry_count}): {e}")
+            if attempt < retry_count - 1:
+                wait_time = (attempt + 1) * 2  # 递增等待时间
+                logger.info(f"{wait_time}秒后重试...")
+                time.sleep(wait_time)
+    
+    logger.error(f"{source_name} 下载失败，已达到最大重试次数")
+    return None
 
 def read_bb_file():
     """读取BB.m3u文件内容"""
     try:
-        # BB.m3u在仓库根目录（相对于脚本位置）
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        bb_path = os.path.join(script_dir, "..", BB_FILE)
+        # 先尝试在当前目录查找
+        if os.path.exists(BB_FILE):
+            bb_path = BB_FILE
+        else:
+            # 尝试在脚本所在目录的上级目录查找
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            bb_path = os.path.join(script_dir, "..", BB_FILE)
         
         if os.path.exists(bb_path):
             with open(bb_path, 'r', encoding='utf-8') as f:
@@ -61,6 +74,24 @@ def read_bb_file():
             return content
         else:
             logger.warning(f"BB.m3u文件不存在: {bb_path}")
+            # 尝试其他可能位置
+            possible_paths = [
+                BB_FILE,
+                f"../{BB_FILE}",
+                f"../../{BB_FILE}",
+                os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", BB_FILE),
+                os.path.join(os.path.dirname(os.path.abspath(__file__)), BB_FILE)
+            ]
+            
+            for path in possible_paths:
+                if os.path.exists(path):
+                    with open(path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    logger.info(f"从 {path} 读取BB.m3u成功")
+                    return content
+            
+            logger.error(f"在所有可能位置都找不到BB.m3u文件")
+            logger.info("将创建不包含BB.m3u的频道列表")
             return None
     except Exception as e:
         logger.error(f"读取BB.m3u失败: {e}")
@@ -113,17 +144,39 @@ def parse_m3u_content(content, default_group):
                 original_group = default_group
                 group_match = re.search(r'group-title="([^"]+)"', extinf_line)
                 if group_match:
-                    original_group = group_match.group(1)  # 修正：使用 group_match 而不是 match
+                    original_group = group_match.group(1)
                 
-                # 创建新的EXTINF行，统一分组
-                new_extinf = re.sub(r'group-title="[^"]+"', f'group-title="{default_group}"', extinf_line)
-                if 'group-title=' not in new_extinf:
+                # 提取tvg-id（如果有）
+                tvg_id = ""
+                tvg_match = re.search(r'tvg-id="([^"]+)"', extinf_line)
+                if tvg_match:
+                    tvg_id = tvg_match.group(1)
+                
+                # 提取tvg-logo（如果有）
+                tvg_logo = ""
+                logo_match = re.search(r'tvg-logo="([^"]+)"', extinf_line)
+                if logo_match:
+                    tvg_logo = logo_match.group(1)
+                
+                # 创建新的EXTINF行，统一分组但保留其他属性
+                new_extinf = extinf_line
+                
+                # 如果有group-title，替换它
+                if 'group-title=' in new_extinf:
+                    new_extinf = re.sub(r'group-title="[^"]+"', f'group-title="{default_group}"', new_extinf)
+                else:
                     # 如果原来没有分组信息，添加分组
-                    # 确保格式正确
                     if ': ' in new_extinf:
                         new_extinf = new_extinf.replace('#EXTINF:', f'#EXTINF: group-title="{default_group}",', 1)
                     else:
-                        new_extinf = new_extinf.replace('#EXTINF:', f'#EXTINF: group-title="{default_group}",')
+                        # 检查是否有其他属性
+                        attr_match = re.match(r'#EXTINF:(-?\d+)\s+(.+)', new_extinf)
+                        if attr_match:
+                            duration = attr_match.group(1)
+                            attrs = attr_match.group(2)
+                            new_extinf = f'#EXTINF:{duration} group-title="{default_group}",{attrs.split(",")[-1]}'
+                        else:
+                            new_extinf = f'#EXTINF:-1 group-title="{default_group}",{channel_name}'
                 
                 channel_data = {
                     'original_extinf': extinf_line,
@@ -132,6 +185,8 @@ def parse_m3u_content(content, default_group):
                     'name': channel_name,
                     'group': default_group,
                     'original_group': original_group,
+                    'tvg_id': tvg_id,
+                    'tvg_logo': tvg_logo,
                     'working': None  # 是否可播放，None表示未检查
                 }
                 channels.append(channel_data)
@@ -140,69 +195,89 @@ def parse_m3u_content(content, default_group):
     
     return channels
 
-def check_stream_playable(url, channel_name):
+def check_stream_playable(url, channel_name, retry_count=1):
     """检查流是否可以播放"""
-    try:
-        parsed_url = urlparse(url)
-        
-        # 检查URL是否有效
-        if not parsed_url.scheme:
-            logger.debug(f"无效的URL格式: {url}")
-            return False
-        
-        # 对于HTTP/HTTPS流，使用curl检查
-        if parsed_url.scheme in ['http', 'https']:
-            command = [
-                'curl', '-s', '-o', '/dev/null',
-                '-w', '%{http_code}',
-                '--max-time', str(TIMEOUT),
-                '--head',  # 使用HEAD方法，只获取头部
-                url
-            ]
-            
-            logger.debug(f"检查频道: {channel_name}")
-            
-            result = subprocess.run(
-                command,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                timeout=TIMEOUT + 2
-            )
-            
-            if result.returncode == 0:
-                http_code = result.stdout.decode('utf-8', errors='ignore').strip()
-                # 2xx 或 3xx 状态码通常表示可访问
-                if http_code.startswith('2') or http_code.startswith('3'):
-                    return True
+    parsed_url = urlparse(url)
+    
+    # 检查URL是否有效
+    if not parsed_url.scheme:
+        logger.debug(f"无效的URL格式: {url}")
+        return False
+    
+    # 跳过某些协议的直接检查
+    skip_protocols = ['rtmp', 'rtsp', 'udp', 'rtp', 'p2p']
+    if parsed_url.scheme in skip_protocols:
+        logger.debug(f"跳过 {parsed_url.scheme} 协议检查: {channel_name}")
+        return True  # 假设这些协议可播放
+    
+    for attempt in range(retry_count):
+        try:
+            # 对于HTTP/HTTPS流，使用curl检查
+            if parsed_url.scheme in ['http', 'https']:
+                # 尝试HEAD请求
+                command = [
+                    'curl', '-s', '-o', '/dev/null',
+                    '-w', '%{http_code}',
+                    '--max-time', str(TIMEOUT),
+                    '--head',
+                    '--location',  # 跟随重定向
+                    '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                    url
+                ]
+                
+                logger.debug(f"检查频道 [{attempt+1}/{retry_count}]: {channel_name}")
+                
+                result = subprocess.run(
+                    command,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    timeout=TIMEOUT + 2
+                )
+                
+                if result.returncode == 0:
+                    http_code = result.stdout.decode('utf-8', errors='ignore').strip()
+                    # 2xx 或 3xx 或 4xx（某些服务器返回403但流仍然可用）
+                    if http_code.startswith('2') or http_code.startswith('3') or http_code == '403':
+                        return True
+                    else:
+                        logger.debug(f"频道 {channel_name} 返回HTTP状态码: {http_code}")
                 else:
-                    logger.debug(f"频道 {channel_name} 返回HTTP状态码: {http_code}")
-                    return False
-            else:
-                logger.debug(f"频道 {channel_name} curl命令失败")
-                return False
-        # 对于其他协议（如rtmp, rtp, udp等），跳过详细检查
-        else:
-            logger.debug(f"跳过非HTTP协议检查: {channel_name} ({parsed_url.scheme})")
-            return True  # 假设其他协议可播放
+                    stderr = result.stderr.decode('utf-8', errors='ignore')[:100]
+                    logger.debug(f"频道 {channel_name} curl命令失败: {stderr}")
             
-    except subprocess.TimeoutExpired:
-        logger.warning(f"频道检查超时: {channel_name}")
-        return False
-    except Exception as e:
-        logger.warning(f"检查频道失败 {channel_name}: {e}")
-        return False
+            # 如果是其他支持的协议，尝试简单连接
+            else:
+                logger.debug(f"尝试连接 {parsed_url.scheme} 协议: {channel_name}")
+                # 这里可以添加其他协议的检查逻辑
+                return True  # 暂时假设可连接
+                
+        except subprocess.TimeoutExpired:
+            logger.warning(f"频道检查超时 [{attempt+1}/{retry_count}]: {channel_name}")
+            if attempt < retry_count - 1:
+                time.sleep(1)  # 重试前等待
+        except Exception as e:
+            logger.warning(f"检查频道失败 [{attempt+1}/{retry_count}] {channel_name}: {str(e)[:100]}")
+            if attempt < retry_count - 1:
+                time.sleep(1)
+    
+    return False
 
-def validate_channels(channels):
+def validate_channels(channels, skip_validation=False):
     """验证频道是否可以播放"""
     if not channels:
         return [], []
+    
+    if skip_validation:
+        logger.info(f"跳过验证，标记所有 {len(channels)} 个频道为可播放")
+        for channel in channels:
+            channel['working'] = True
+        return channels, []
     
     logger.info(f"开始验证 {len(channels)} 个频道的播放状态...")
     
     valid_channels = []
     invalid_channels = []
     
-    # 简化验证：使用curl检查连接
     # 使用线程池并发验证
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         future_to_channel = {}
@@ -210,11 +285,14 @@ def validate_channels(channels):
             future = executor.submit(
                 check_stream_playable, 
                 channel['url'], 
-                channel['name']
+                channel['name'],
+                2  # 重试次数
             )
             future_to_channel[future] = channel
         
         completed = 0
+        start_time = time.time()
+        
         for future in as_completed(future_to_channel):
             channel = future_to_channel[future]
             try:
@@ -223,20 +301,30 @@ def validate_channels(channels):
                 
                 if is_playable:
                     valid_channels.append(channel)
-                    logger.info(f"✅ 可播放: {channel['name']}")
+                    if len(valid_channels) % 10 == 0:
+                        logger.info(f"✅ 已找到 {len(valid_channels)} 个可播放频道")
                 else:
                     invalid_channels.append(channel)
-                    logger.warning(f"❌ 不可播放: {channel['name']}")
+                    if len(invalid_channels) % 20 == 0:
+                        logger.info(f"❌ 已有 {len(invalid_channels)} 个不可播放频道")
                 
                 completed += 1
                 if completed % 20 == 0:
-                    logger.info(f"验证进度: {completed}/{len(channels)}")
+                    elapsed = time.time() - start_time
+                    logger.info(f"验证进度: {completed}/{len(channels)} (已用 {elapsed:.1f}秒)")
                     
             except Exception as e:
                 logger.error(f"验证频道异常 {channel['name']}: {e}")
+                channel['working'] = False
                 invalid_channels.append(channel)
     
-    logger.info(f"验证完成: {len(valid_channels)} 个可播放, {len(invalid_channels)} 个不可播放")
+    elapsed = time.time() - start_time
+    logger.info(f"验证完成: {len(valid_channels)} 个可播放, {len(invalid_channels)} 个不可播放 (用时 {elapsed:.1f}秒)")
+    
+    # 按频道名称排序
+    valid_channels.sort(key=lambda x: x['name'])
+    invalid_channels.sort(key=lambda x: x['name'])
+    
     return valid_channels, invalid_channels
 
 def build_m3u_content(hk_channels, tw_channels):
@@ -244,7 +332,7 @@ def build_m3u_content(hk_channels, tw_channels):
     lines = []
     
     # 添加文件头
-    lines.append(f'#EXTM3U url-tvg="{EPG_URL}"')
+    lines.append(f'#EXTM3U url-tvg="{EPG_URL}" x-tvg-url="{EPG_URL}"')
     
     # 添加生成信息
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -290,7 +378,7 @@ def merge_with_bb(tv_content, bb_content):
     merged_lines = []
     
     # 添加文件头
-    merged_lines.append(f'#EXTM3U url-tvg="{EPG_URL}"')
+    merged_lines.append(f'#EXTM3U url-tvg="{EPG_URL}" x-tvg-url="{EPG_URL}"')
     
     # 添加生成信息
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -306,14 +394,22 @@ def merge_with_bb(tv_content, bb_content):
     if bb_content:
         bb_lines = bb_content.split('\n')
         bb_count = 0
+        bb_section_started = False
+        
         for line in bb_lines:
             line = line.strip()
-            if line:
-                if line.startswith("#EXTM3U"):
-                    continue  # 跳过BB的文件头
-                if line.startswith("#EXTINF"):
-                    bb_count += 1
-                merged_lines.append(line)
+            if not line:
+                continue
+                
+            # 跳过BB的文件头
+            if line.startswith("#EXTM3U") and not bb_section_started:
+                continue
+            
+            bb_section_started = True
+            
+            if line.startswith("#EXTINF"):
+                bb_count += 1
+            merged_lines.append(line)
         
         if bb_count > 0:
             logger.info(f"合并了 {bb_count} 个BB频道")
@@ -326,13 +422,19 @@ def merge_with_bb(tv_content, bb_content):
     # 添加提取的TV内容（跳过文件头）
     if tv_content:
         tv_lines = tv_content.split('\n')
+        tv_section_started = False
+        
         for line in tv_lines:
             line = line.strip()
-            if line:
-                # 跳过文件头
-                if line.startswith("#EXTM3U"):
-                    continue
-                merged_lines.append(line)
+            if not line:
+                continue
+                
+            # 跳过TV的文件头
+            if line.startswith("#EXTM3U") and not tv_section_started:
+                continue
+            
+            tv_section_started = True
+            merged_lines.append(line)
     
     return '\n'.join(merged_lines)
 
@@ -343,14 +445,21 @@ def save_m3u_file(content, filename):
         return False
     
     try:
-        # 保存到仓库根目录（相对于脚本位置）
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        output_path = os.path.join(script_dir, "..", filename)
+        # 确定输出路径
+        output_path = filename
         
-        logger.info(f"将保存到: {output_path}")
+        # 如果脚本在scripts目录，输出到上级目录
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        if "scripts" in script_dir:
+            output_path = os.path.join(script_dir, "..", filename)
+        
+        logger.info(f"将保存到: {os.path.abspath(output_path)}")
+        
+        # 创建目录（如果需要）
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
         
         # 写入文件
-        with open(output_path, 'w', encoding='utf-8') as f:
+        with open(output_path, 'w', encoding='utf-8', newline='\n') as f:
             f.write(content)
         
         # 验证文件
@@ -359,17 +468,28 @@ def save_m3u_file(content, filename):
             extinf_count = content.count("#EXTINF")
             
             logger.info("✅ 文件保存成功")
-            logger.info(f"📁 文件路径: {output_path}")
-            logger.info(f"📊 文件大小: {file_size} 字节")
+            logger.info(f"📁 文件路径: {os.path.abspath(output_path)}")
+            logger.info(f"📊 文件大小: {file_size:,} 字节")
             logger.info(f"📈 频道总数: {extinf_count}")
             
             # 统计各分类数量
             hk_count = content.count('group-title="HK"')
             tw_count = content.count('group-title="TW"')
+            other_count = extinf_count - hk_count - tw_count
             
             logger.info("=== 详细分类统计 ===")
             logger.info(f"HK频道: {hk_count} 个")
             logger.info(f"TW频道: {tw_count} 个")
+            logger.info(f"其他频道(BB): {other_count} 个")
+            
+            # 显示文件前几行
+            logger.info("=== 文件头部预览 ===")
+            with open(output_path, 'r', encoding='utf-8') as f:
+                for i, line in enumerate(f):
+                    if i < 10:
+                        logger.info(line.rstrip())
+                    else:
+                        break
             
             return True
         else:
@@ -382,13 +502,17 @@ def save_m3u_file(content, filename):
         logger.error(traceback.format_exc())
         return False
 
-def main():
+def main(skip_validation=False):
     """主函数"""
-    logger.info("=== M3U频道提取器开始运行 ===")
-    logger.info("将提取HK和TW频道，并验证播放状态")
+    logger.info("="*60)
+    logger.info("M3U频道提取器开始运行")
+    logger.info("="*60)
+    logger.info(f"将提取HK和TW频道，验证播放状态: {'跳过' if skip_validation else '执行'}")
     
     # 1. 获取HK源内容
-    logger.info("=== 处理HK源 ===")
+    logger.info("="*40)
+    logger.info("处理HK源")
+    logger.info("="*40)
     hk_content = fetch_m3u_content(HK_SOURCE_URL, "HK源")
     if hk_content:
         hk_channels = parse_m3u_content(hk_content, "HK")
@@ -398,7 +522,9 @@ def main():
         logger.warning("HK源获取失败，将使用空列表")
     
     # 2. 获取TW源内容
-    logger.info("=== 处理TW源 ===")
+    logger.info("="*40)
+    logger.info("处理TW源")
+    logger.info("="*40)
     tw_content = fetch_m3u_content(TW_SOURCE_URL, "TW源")
     if tw_content:
         tw_channels = parse_m3u_content(tw_content, "TW")
@@ -408,11 +534,13 @@ def main():
         logger.warning("TW源获取失败，将使用空列表")
     
     # 3. 验证频道播放状态
-    logger.info("=== 开始验证频道播放状态 ===")
+    logger.info("="*40)
+    logger.info("验证频道播放状态")
+    logger.info("="*40)
     all_channels = hk_channels + tw_channels
     
     if all_channels:
-        valid_channels, invalid_channels = validate_channels(all_channels)
+        valid_channels, invalid_channels = validate_channels(all_channels, skip_validation)
         
         # 重新分组
         hk_valid = [c for c in valid_channels if c['group'] == 'HK']
@@ -421,21 +549,24 @@ def main():
         logger.info(f"验证结果: HK有效 {len(hk_valid)} 个, TW有效 {len(tw_valid)} 个")
         
         # 记录无效频道
-        if invalid_channels:
+        if invalid_channels and not skip_validation:
             logger.warning(f"以下 {len(invalid_channels)} 个频道不可播放:")
-            for channel in invalid_channels[:10]:  # 只显示前10个
-                logger.warning(f"  - {channel['name']} ({channel['group']})")
-            if len(invalid_channels) > 10:
-                logger.warning(f"  ... 还有 {len(invalid_channels) - 10} 个")
+            for i, channel in enumerate(invalid_channels[:20]):  # 只显示前20个
+                logger.warning(f"  {i+1:2d}. {channel['name']} ({channel['group']})")
+            if len(invalid_channels) > 20:
+                logger.warning(f"  ... 还有 {len(invalid_channels) - 20} 个")
     else:
         hk_valid = []
         tw_valid = []
-        logger.warning("没有提取到任何频道")
+        logger.warning("没有提取到任何HK/TW频道")
     
     # 4. 构建TV内容
     tv_content = build_m3u_content(hk_valid, tw_valid)
     
     # 5. 读取BB.m3u
+    logger.info("="*40)
+    logger.info("读取BB.m3u")
+    logger.info("="*40)
     bb_content = read_bb_file()
     
     # 6. 合并内容
@@ -443,20 +574,36 @@ def main():
     
     # 7. 保存文件
     if save_m3u_file(merged_content, OUTPUT_FILE):
-        logger.info("=== 处理完成 ===")
+        logger.info("="*60)
+        logger.info("处理完成")
+        logger.info("="*60)
         
         # 最终统计
         final_hk_count = merged_content.count('group-title="HK"')
         final_tw_count = merged_content.count('group-title="TW"')
         final_total = merged_content.count("#EXTINF")
+        final_other = final_total - final_hk_count - final_tw_count
         
-        logger.info(f"最终结果: 总频道数={final_total}, HK频道={final_hk_count}, TW频道={final_tw_count}")
+        logger.info(f"🎯 最终结果:")
+        logger.info(f"   总频道数: {final_total}")
+        logger.info(f"   HK频道: {final_hk_count}")
+        logger.info(f"   TW频道: {final_tw_count}")
+        logger.info(f"   其他频道: {final_other}")
         
         return True
     else:
-        logger.error("=== 处理失败 ===")
+        logger.error("="*60)
+        logger.error("处理失败")
+        logger.error("="*60)
         return False
 
 if __name__ == "__main__":
-    success = main()
+    # 检查是否跳过验证
+    skip_validation = False
+    if len(sys.argv) > 1:
+        if sys.argv[1] in ['--skip-validation', '--skip', '-s']:
+            skip_validation = True
+            logger.info("命令行参数: 跳过播放验证")
+    
+    success = main(skip_validation)
     sys.exit(0 if success else 1)
