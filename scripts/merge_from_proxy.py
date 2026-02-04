@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-M3U文件合并脚本 - 从新地址抓取全网通港澳台直播源
+M3U文件合并脚本 - 从新地址抓取🔥全网通港澳台直播源
 1. 下载BB.m3u（包含EPG信息）
-2. 从新地址抓取"全网通港澳台"直播源
+2. 从新地址抓取"🔥全网通港澳台"直播源
 3. 与BB合并生成CC.m3u
 北京时间每天6:00、18:00自动运行
 """
@@ -16,6 +16,7 @@ from datetime import datetime
 # 配置
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
 NEW_SOURCE_URL = "https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1"
+TARGET_GROUP = "🔥全网通港澳台"
 OUTPUT_FILE = "CC.m3u"
 
 # 备选EPG源（如果主要EPG失效）
@@ -100,9 +101,9 @@ def download_bb_m3u():
         return None
 
 def get_quanwangtong_gangaotai():
-    """从新地址抓取"全网通港澳台"直播源"""
+    """从新地址抓取"🔥全网通港澳台"直播源"""
     try:
-        log("从新地址抓取全网通港澳台直播源...")
+        log(f"从新地址抓取{TARGET_GROUP}直播源...")
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Accept': '*/*',
@@ -118,43 +119,41 @@ def get_quanwangtong_gangaotai():
             if content and content.strip():
                 log(f"✅ 获取到内容 ({len(content)} 字符)")
                 
-                # 查找"全网通港澳台"分组
-                if "全网通港澳台" in content:
-                    log("✅ 找到'全网通港澳台'分组")
+                # 查找"🔥全网通港澳台"分组
+                if TARGET_GROUP in content:
+                    log(f"✅ 找到'{TARGET_GROUP}'分组")
                     
-                    # 提取该分组的内容
-                    lines = content.split('\n')
-                    in_target_group = False
-                    extracted_lines = []
+                    # 提取该分组的所有频道
+                    extracted_channels = extract_target_group_channels(content, TARGET_GROUP)
                     
-                    for line in lines:
-                        line = line.rstrip()
-                        
-                        # 检查是否进入目标分组
-                        if 'group-title="全网通港澳台"' in line or 'group-title=".*全网通港澳台.*"' in line:
-                            in_target_group = True
-                        
-                        # 如果在目标分组中，收集内容直到遇到其他分组
-                        if in_target_group:
-                            # 检查是否遇到其他分组（但不是同一分组）
-                            if line.startswith('#EXTINF:') and 'group-title=' in line:
-                                # 如果遇到新的分组但不是全网通港澳台，则停止
-                                if '全网通港澳台' not in line:
-                                    break
-                            
-                            extracted_lines.append(line)
-                    
-                    # 确保包含M3U头
-                    if extracted_lines and not extracted_lines[0].startswith('#EXTM3U'):
-                        extracted_lines.insert(0, '#EXTM3U')
-                    
-                    extracted_content = '\n'.join(extracted_lines)
-                    log(f"✅ 提取到全网通港澳台内容 ({len(extracted_content)} 字符)")
-                    return extracted_content
+                    if extracted_channels:
+                        # 构建M3U内容
+                        m3u_content = "#EXTM3U\n" + "\n".join(extracted_channels)
+                        log(f"✅ 提取到 {len(extracted_channels)//2} 个{TARGET_GROUP}频道")
+                        return m3u_content
+                    else:
+                        log(f"⚠️  未能提取到{TARGET_GROUP}频道的具体内容")
                 else:
-                    log("⚠️  未找到'全网通港澳台'分组")
-                    # 如果没有找到，返回全部内容
-                    return content
+                    log(f"⚠️  未找到'{TARGET_GROUP}'分组")
+                    
+                    # 调试：列出所有分组
+                    log("正在分析内容中的分组...")
+                    groups = re.findall(r'group-title="([^"]+)"', content)
+                    unique_groups = list(set(groups))
+                    log(f"发现 {len(unique_groups)} 个分组:")
+                    for group in sorted(unique_groups)[:20]:  # 只显示前20个
+                        log(f"  - {group}")
+                    
+                    # 尝试查找包含"港澳台"的分组
+                    for group in unique_groups:
+                        if "港澳台" in group:
+                            log(f"⚠️  发现类似分组: {group}")
+                            # 尝试提取这个分组
+                            extracted_channels = extract_target_group_channels(content, group)
+                            if extracted_channels:
+                                m3u_content = "#EXTM3U\n" + "\n".join(extracted_channels)
+                                log(f"✅ 提取到 {len(extracted_channels)//2} 个'{group}'频道")
+                                return m3u_content
             else:
                 log("⚠️  内容为空")
         else:
@@ -164,6 +163,36 @@ def get_quanwangtong_gangaotai():
         log(f"❌ 从新地址抓取失败: {e}")
     
     return None
+
+def extract_target_group_channels(content, target_group):
+    """从内容中提取指定分组的所有频道"""
+    lines = content.split('\n')
+    channels = []
+    current_extinf = None
+    in_target_group = False
+    
+    for i, line in enumerate(lines):
+        line = line.strip()
+        if not line:
+            continue
+        
+        if line.startswith('#EXTINF:'):
+            # 检查是否在目标分组中
+            if target_group in line:
+                in_target_group = True
+                current_extinf = line
+            else:
+                in_target_group = False
+                current_extinf = None
+        
+        elif in_target_group and current_extinf and '://' in line and not line.startswith('#'):
+            # 这是一个频道URL，添加到结果中
+            channels.append(current_extinf)
+            channels.append(line)
+            current_extinf = None
+            in_target_group = False
+    
+    return channels
 
 def extract_epg_urls(content):
     """从内容中提取EPG URL"""
@@ -177,7 +206,6 @@ def extract_epg_urls(content):
         r'url-tvg="([^"]+)"',
         r'x-tvg-url="([^"]+)"',
         r'epg-url="([^"]+)"',
-        r'#EXTM3U.*?http[^"\s]+',
     ]
     
     for pattern in patterns:
@@ -198,6 +226,7 @@ def main():
     log(f"当前时间: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
     log(f"下次运行: 北京时间 06:00 和 18:00")
     log(f"新源地址: {NEW_SOURCE_URL}")
+    log(f"目标分组: {TARGET_GROUP}")
     
     # 1. 下载BB.m3u
     bb_content = download_bb_m3u()
@@ -205,7 +234,7 @@ def main():
         log("❌ 无法继续，BB.m3u下载失败")
         return
     
-    # 2. 从新地址抓取"全网通港澳台"直播源
+    # 2. 从新地址抓取"🔥全网通港澳台"直播源
     new_source_content = get_quanwangtong_gangaotai()
     
     # 3. 收集所有EPG源
@@ -234,37 +263,24 @@ def main():
     # 4. 获取最佳EPG
     best_epg = get_best_epg_url(epg_urls)
     
-    # 5. 解析新源内容（全网通港澳台）
+    # 5. 解析新源内容
     new_channels_count = 0
     new_channels_content = ""
     
     if new_source_content:
+        # 直接使用提取的内容，跳过M3U头
         lines = new_source_content.split('\n')
-        in_m3u = False
-        collecting = False
-        
         for line in lines:
             line = line.rstrip()
             if not line:
                 continue
             
             if line.startswith('#EXTM3U'):
-                in_m3u = True
-                # 跳过M3U头，我们会在后面添加自己的
                 continue
             
-            if in_m3u:
-                # 检查是否是"全网通港澳台"分组
-                if line.startswith('#EXTINF:'):
-                    if '全网通港澳台' in line:
-                        collecting = True
-                    else:
-                        collecting = False
-                
-                if collecting:
-                    new_channels_content += line + '\n'
-                    if line.startswith('#EXTINF:'):
-                        new_channels_count += 1
+            new_channels_content += line + '\n'
+            if line.startswith('#EXTINF:'):
+                new_channels_count += 1
     
     # 6. 构建M3U内容
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -282,7 +298,7 @@ def main():
 # 下次更新: 每天 06:00 和 18:00 (北京时间)
 # BB源: {BB_URL}
 # 新源地址: {NEW_SOURCE_URL}
-# 抓取分组: 全网通港澳台
+# 抓取分组: {TARGET_GROUP}
 # EPG源: {best_epg if best_epg else '无可用EPG'}
 # 测试的EPG源: {len(epg_urls)} 个
 # GitHub Actions 自动生成
@@ -307,9 +323,9 @@ def main():
         if line.startswith('#EXTINF:'):
             bb_count += 1
     
-    # 添加全网通港澳台频道
+    # 添加🔥全网通港澳台频道
     if new_channels_content:
-        output += f"\n# 全网通港澳台频道\n"
+        output += f"\n# {TARGET_GROUP}频道\n"
         output += f"# 来自: {NEW_SOURCE_URL}\n"
         output += new_channels_content
     
@@ -327,7 +343,7 @@ def main():
     output += f"""
 # 统计信息
 # BB 频道数: {bb_count}
-# 全网通港澳台 频道数: {new_channels_count}
+# {TARGET_GROUP} 频道数: {new_channels_count}
 # 总频道数: {bb_count + new_channels_count}
 # EPG状态: {'✅ 正常' if best_epg else '❌ 无可用EPG'}
 # 更新时间: {timestamp} (北京时间)
@@ -343,7 +359,7 @@ def main():
     log(f"📏 大小: {len(output)} 字符")
     log(f"📡 EPG: {best_epg if best_epg else '无可用EPG'}")
     log(f"📺 BB频道: {bb_count}")
-    log(f"📺 全网通港澳台频道: {new_channels_count}")
+    log(f"📺 {TARGET_GROUP}频道: {new_channels_count}")
     log(f"📺 总计: {bb_count + new_channels_count}")
     log(f"🕒 下次自动更新: 北京时间 06:00 和 18:00")
 
