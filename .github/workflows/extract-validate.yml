@@ -35,38 +35,90 @@ jobs:
       - name: Install Python dependencies
         run: pip install requests
       
+      - name: Check directory structure
+        run: |
+          echo "=== 检查目录结构 ==="
+          pwd
+          ls -la
+          echo "=== 检查scripts目录 ==="
+          if [ -d "scripts" ]; then
+            echo "scripts目录存在"
+            ls -la scripts/
+          else
+            echo "scripts目录不存在，查找所有目录..."
+            find . -type d -name "*script*" -o -type f -name "*.py"
+          fi
+      
       - name: Run extraction with validation
-        working-directory: ./joker/scripts
         run: |
           echo "=== 开始提取和验证频道 ==="
           
+          # 检查并进入scripts目录
+          if [ -d "scripts" ]; then
+            cd scripts
+            echo "当前目录: $(pwd)"
+          elif [ -f "tv_extractor.py" ]; then
+            echo "tv_extractor.py在当前目录"
+          else
+            echo "查找Python脚本..."
+            find . -name "tv_extractor.py" -type f
+            exit 1
+          fi
+          
           # 确保脚本有执行权限
-          chmod +x tv_extractor.py
+          if [ -f "tv_extractor.py" ]; then
+            chmod +x tv_extractor.py
+          else
+            echo "错误：找不到tv_extractor.py"
+            exit 1
+          fi
           
           # 运行Python脚本
           python tv_extractor.py
           
           # 检查是否成功生成文件
-          if [ -f "../EE.m3u" ]; then
-            echo "✅ EE.m3u文件已生成"
+          if [ -f "EE.m3u" ]; then
+            echo "✅ EE.m3u文件已生成在当前目录"
+            ls -la EE.m3u
+          elif [ -f "../EE.m3u" ]; then
+            echo "✅ EE.m3u文件已生成在上级目录"
+            ls -la ../EE.m3u
           else
             echo "❌ EE.m3u文件未生成"
+            # 查找所有EE.m3u文件
+            find . -name "EE.m3u" -type f
             exit 1
           fi
       
       - name: Verify EE.m3u file
-        working-directory: ./joker
         run: |
           echo "=== 验证EE.m3u文件 ==="
+          
+          # 查找EE.m3u文件
           if [ -f "EE.m3u" ]; then
+            EE_FILE="EE.m3u"
+          elif [ -f "scripts/EE.m3u" ]; then
+            EE_FILE="scripts/EE.m3u"
+          elif [ -f "../EE.m3u" ]; then
+            cd ..
+            EE_FILE="EE.m3u"
+          else
+            echo "查找EE.m3u文件..."
+            find . -name "EE.m3u" -type f
+            exit 1
+          fi
+          
+          echo "使用文件: $EE_FILE"
+          
+          if [ -f "$EE_FILE" ]; then
             echo "✅ EE.m3u文件存在"
             
             # 统计信息
             echo ""
             echo "=== 频道统计 ==="
-            total=$(grep -c "#EXTINF" EE.m3u 2>/dev/null || echo "0")
-            hk=$(grep -c 'group-title="HK"' EE.m3u 2>/dev/null || echo "0")
-            tw=$(grep -c 'group-title="TW"' EE.m3u 2>/dev/null || echo "0")
+            total=$(grep -c "#EXTINF" "$EE_FILE" 2>/dev/null || echo "0")
+            hk=$(grep -c 'group-title="HK"' "$EE_FILE" 2>/dev/null || echo "0")
+            tw=$(grep -c 'group-title="TW"' "$EE_FILE" 2>/dev/null || echo "0")
             
             echo "总频道数: $total"
             echo "HK频道数: $hk"
@@ -75,7 +127,7 @@ jobs:
             # 检查文件格式
             echo ""
             echo "=== 文件格式检查 ==="
-            if head -1 EE.m3u | grep -q "#EXTM3U"; then
+            if head -1 "$EE_FILE" | grep -q "#EXTM3U"; then
               echo "✅ 文件格式正确（以#EXTM3U开头）"
             else
               echo "❌ 文件格式不正确"
@@ -85,7 +137,7 @@ jobs:
             # 显示前几个频道示例
             echo ""
             echo "=== 频道示例（前5个） ==="
-            grep -A1 "#EXTINF" EE.m3u 2>/dev/null | head -10 || true
+            grep -A1 "#EXTINF" "$EE_FILE" 2>/dev/null | head -10 || true
             
           else
             echo "❌ EE.m3u文件不存在"
@@ -101,13 +153,26 @@ jobs:
         run: |
           git pull origin main --rebase || true
       
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
-          # 确保在joker目录下
-          cd joker
+          echo "=== 提交更改 ==="
           
+          # 查找EE.m3u文件
+          EE_FILE=""
           if [ -f "EE.m3u" ]; then
+            EE_FILE="EE.m3u"
             git add EE.m3u
+          elif [ -f "scripts/EE.m3u" ]; then
+            EE_FILE="scripts/EE.m3u"
+            git add scripts/EE.m3u
+          fi
+          
+          if [ -z "$EE_FILE" ]; then
+            echo "未找到EE.m3u文件，查找所有位置..."
+            find . -name "EE.m3u" -type f | while read file; do
+              echo "找到文件: $file"
+              git add "$file"
+            done
           fi
           
           if git diff --staged --quiet; then
@@ -117,20 +182,22 @@ jobs:
             current_time=$(date +'%Y-%m-%d %H:%M:%S')
             
             # 获取统计信息
-            if [ -f "EE.m3u" ]; then
-              total=$(grep -c "#EXTINF" EE.m3u 2>/dev/null || echo "0")
-              hk=$(grep -c 'group-title="HK"' EE.m3u 2>/dev/null || echo "0")
-              tw=$(grep -c 'group-title="TW"' EE.m3u 2>/dev/null || echo "0")
+            if [ -n "$EE_FILE" ] && [ -f "$EE_FILE" ]; then
+              total=$(grep -c "#EXTINF" "$EE_FILE" 2>/dev/null || echo "0")
+              hk=$(grep -c 'group-title="HK"' "$EE_FILE" 2>/dev/null || echo "0")
+              tw=$(grep -c 'group-title="TW"' "$EE_FILE" 2>/dev/null || echo "0")
               
               commit_msg="更新EE.m3u - ${total}频道(HK:${hk}/TW:${tw}) ${current_time}"
             else
               commit_msg="更新EE.m3u ${current_time}"
             fi
+            
+            echo "提交消息: $commit_msg"
             git commit -m "$commit_msg"
+            
+            echo "=== 推送到仓库 ==="
+            git push origin main
           fi
-      
-      - name: Push to repository
-        run: git push origin main
       
       - name: Create summary report
         if: always()
@@ -138,10 +205,21 @@ jobs:
           echo "## 频道提取报告" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
-          if [ -f "joker/EE.m3u" ]; then
-            total=$(grep -c "#EXTINF" joker/EE.m3u 2>/dev/null || echo "0")
-            hk=$(grep -c 'group-title="HK"' joker/EE.m3u 2>/dev/null || echo "0")
-            tw=$(grep -c 'group-title="TW"' joker/EE.m3u 2>/dev/null || echo "0")
+          # 查找EE.m3u文件
+          EE_FILE=""
+          if [ -f "EE.m3u" ]; then
+            EE_FILE="EE.m3u"
+          elif [ -f "scripts/EE.m3u" ]; then
+            EE_FILE="scripts/EE.m3u"
+          else
+            # 尝试查找
+            EE_FILE=$(find . -name "EE.m3u" -type f | head -1)
+          fi
+          
+          if [ -n "$EE_FILE" ] && [ -f "$EE_FILE" ]; then
+            total=$(grep -c "#EXTINF" "$EE_FILE" 2>/dev/null || echo "0")
+            hk=$(grep -c 'group-title="HK"' "$EE_FILE" 2>/dev/null || echo "0")
+            tw=$(grep -c 'group-title="TW"' "$EE_FILE" 2>/dev/null || echo "0")
             
             echo "✅ **提取完成**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
@@ -153,7 +231,7 @@ jobs:
             
             # 添加文件预览链接
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "📁 **文件已更新**: [EE.m3u](https://github.com/${{ github.repository }}/blob/main/joker/EE.m3u)" >> $GITHUB_STEP_SUMMARY
+            echo "📁 **文件已更新**: [EE.m3u](https://github.com/${{ github.repository }}/blob/main/$EE_FILE)" >> $GITHUB_STEP_SUMMARY
             
           else
             echo "❌ **提取失败**" >> $GITHUB_STEP_SUMMARY
