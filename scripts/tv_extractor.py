@@ -24,9 +24,9 @@ logger = logging.getLogger(__name__)
 HK_SOURCE_URL = "https://hacks.sufern001.workers.dev/?type=hk"
 TW_SOURCE_URL = "https://hacks.sufern001.workers.dev/?type=tw"
 EPG_URL = "http://epg.51zmt.top:8000/e.xml"
-BB_FILE = "BB.m3u"  # 假设BB.m3u在仓库根目录
-OUTPUT_FILE = "../EE.m3u"  # 上一级目录
-FFMPEG_PATH = "ffmpeg"  # 假设ffmpeg已安装
+BB_FILE = "BB.m3u"  # 在仓库根目录
+OUTPUT_FILE = "EE.m3u"  # 在仓库根目录
+FFMPEG_PATH = "ffmpeg"
 TIMEOUT = 10  # 播放校验超时时间（秒）
 MAX_WORKERS = 5  # 并发校验最大线程数
 
@@ -111,13 +111,17 @@ def parse_m3u_content(content, default_group):
                 original_group = default_group
                 group_match = re.search(r'group-title="([^"]+)"', extinf_line)
                 if group_match:
-                    original_group = group_match.group(1)
+                    original_group = match.group(1)
                 
                 # 创建新的EXTINF行，统一分组
                 new_extinf = re.sub(r'group-title="[^"]+"', f'group-title="{default_group}"', extinf_line)
                 if 'group-title=' not in new_extinf:
                     # 如果原来没有分组信息，添加分组
-                    new_extinf = new_extinf.replace('#EXTINF:', f'#EXTINF: group-title="{default_group}",', 1)
+                    # 确保格式正确
+                    if ': ' in new_extinf:
+                        new_extinf = new_extinf.replace('#EXTINF:', f'#EXTINF: group-title="{default_group}",', 1)
+                    else:
+                        new_extinf = new_extinf.replace('#EXTINF:', f'#EXTINF: group-title="{default_group}",')
                 
                 channel_data = {
                     'original_extinf': extinf_line,
@@ -137,16 +141,15 @@ def parse_m3u_content(content, default_group):
 def check_stream_playable(url, channel_name):
     """检查流是否可以播放"""
     try:
-        # 使用ffprobe检查流
+        # 简化检查，只检查连接和HTTP状态
         command = [
-            FFMPEG_PATH, '-hide_banner', '-loglevel', 'error',
-            '-timeout', str(TIMEOUT * 1000000),  # 微秒
-            '-i', url,
-            '-t', '5',  # 只检查5秒
-            '-f', 'null', '-'
+            'curl', '-s', '-o', '/dev/null',
+            '-w', '%{http_code}',
+            '--max-time', str(TIMEOUT),
+            url
         ]
         
-        logger.debug(f"检查频道: {channel_name} - {url}")
+        logger.debug(f"检查频道: {channel_name}")
         
         result = subprocess.run(
             command,
@@ -155,16 +158,16 @@ def check_stream_playable(url, channel_name):
             timeout=TIMEOUT + 2
         )
         
-        # 根据返回码判断
         if result.returncode == 0:
-            return True
-        else:
-            # 检查错误信息中是否包含超时或连接失败
-            error_msg = result.stderr.decode('utf-8', errors='ignore').lower()
-            if 'timeout' in error_msg or 'connection refused' in error_msg:
+            http_code = result.stdout.decode('utf-8', errors='ignore').strip()
+            # 2xx 或 3xx 状态码通常表示可访问
+            if http_code.startswith('2') or http_code.startswith('3'):
+                return True
+            else:
+                logger.debug(f"频道 {channel_name} 返回HTTP状态码: {http_code}")
                 return False
-            # 有些流可能返回非0但实际上是可播放的
-            return True
+        else:
+            return False
             
     except subprocess.TimeoutExpired:
         logger.warning(f"频道检查超时: {channel_name}")
@@ -180,19 +183,7 @@ def validate_channels(channels):
     valid_channels = []
     invalid_channels = []
     
-    # 如果没有ffmpeg，跳过验证
-    try:
-        subprocess.run([FFMPEG_PATH, '-version'], 
-                      stdout=subprocess.PIPE, 
-                      stderr=subprocess.PIPE,
-                      timeout=5)
-        has_ffmpeg = True
-        logger.info("检测到ffmpeg，将进行播放验证")
-    except:
-        has_ffmpeg = False
-        logger.warning("未检测到ffmpeg，跳过播放验证")
-        return channels, []
-    
+    # 简化验证：使用curl检查连接
     # 使用线程池并发验证
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         future_to_channel = {}
@@ -219,7 +210,7 @@ def validate_channels(channels):
                     logger.warning(f"❌ 不可播放: {channel['name']}")
                 
                 completed += 1
-                if completed % 10 == 0:
+                if completed % 20 == 0:
                     logger.info(f"验证进度: {completed}/{len(channels)}")
                     
             except Exception as e:
@@ -274,6 +265,9 @@ def build_m3u_content(hk_channels, tw_channels):
 
 def merge_with_bb(tv_content, bb_content):
     """将提取的TV内容与BB.m3u合并"""
+    if not tv_content and not bb_content:
+        return ""
+    
     merged_lines = []
     
     # 添加文件头
@@ -316,21 +310,22 @@ def merge_with_bb(tv_content, bb_content):
         for line in tv_lines:
             line = line.strip()
             if line:
+                # 跳过文件头
+                if line.startswith("#EXTM3U"):
+                    continue
                 merged_lines.append(line)
     
     return '\n'.join(merged_lines)
 
-def save_m3u_file(content):
+def save_m3u_file(content, filename):
     """保存M3U文件"""
     if not content:
         logger.error("没有内容可保存")
         return False
     
     try:
-        # 获取脚本目录的上一级目录（joker目录）
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        parent_dir = os.path.dirname(script_dir)
-        output_path = os.path.join(parent_dir, "EE.m3u")
+        # 保存到仓库根目录
+        output_path = f"../{filename}"
         
         logger.info(f"将保存到: {output_path}")
         
@@ -427,7 +422,7 @@ def main():
     merged_content = merge_with_bb(tv_content, bb_content)
     
     # 7. 保存文件
-    if save_m3u_file(merged_content):
+    if save_m3u_file(merged_content, OUTPUT_FILE):
         logger.info("=== 处理完成 ===")
         
         # 最终统计
