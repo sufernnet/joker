@@ -50,6 +50,7 @@ TW_BLACKLIST = [
     'UDN TV',
     'rollor',
     'C+頻道',
+    'snaap!',
     'MOMO',
     '大愛',
     '好訊息',
@@ -60,13 +61,19 @@ TW_BLACKLIST = [
     '原民',
     'ABC',
     'UDN',
-    'Rollor',
+    'rollor',
     'Momo',
     '好訊息 1',
     '好訊息 2',
     'FOX MOVIE',
     'PET CLUB TV'
 ]
+
+# 凤凰频道关键词（用于排序）
+PHOENIX_KEYWORDS = ['鳳凰', '凤凰']
+
+# NOW频道关键词（用于排序）
+NOW_KEYWORDS = ['NOW']
 
 def fetch_m3u_content(url, source_name, retry_count=MAX_RETRIES):
     """获取M3U文件内容"""
@@ -231,14 +238,14 @@ def parse_m3u_content(content, default_group):
     
     return channels
 
-def filter_channels(channels, blacklist, group_name):
-    """过滤频道"""
+def filter_and_sort_channels(channels, blacklist, group_name):
+    """过滤和排序频道"""
     if not channels:
         return []
     
-    logger.info(f"开始过滤 {group_name} 频道...")
+    logger.info(f"开始过滤和排序 {group_name} 频道...")
     
-    # 过滤黑名单频道
+    # 1. 过滤黑名单频道
     filtered_channels = []
     for channel in channels:
         channel_name = channel['name']
@@ -254,138 +261,57 @@ def filter_channels(channels, blacklist, group_name):
             filtered_channels.append(channel)
     
     logger.info(f"过滤后剩余 {len(filtered_channels)} 个{group_name}频道")
+    
+    # 2. 如果是HK频道，进行特殊排序
+    if group_name == "HK":
+        # 分离凤凰、NOW和其他频道
+        phoenix_channels = []
+        now_channels = []
+        other_channels = []
+        
+        for channel in filtered_channels:
+            channel_name = channel['name']
+            
+            # 检查是否为凤凰频道
+            is_phoenix = any(keyword in channel_name for keyword in PHOENIX_KEYWORDS)
+            # 检查是否为NOW频道
+            is_now = any(keyword in channel_name for keyword in NOW_KEYWORDS)
+            
+            if is_phoenix:
+                phoenix_channels.append(channel)
+            elif is_now:
+                now_channels.append(channel)
+            else:
+                other_channels.append(channel)
+        
+        # 对凤凰频道进行特定排序
+        phoenix_order = {
+            '鳳凰衛視': 1,
+            '鳳凰資訊HD': 2, 
+            '鳳凰香港': 3,
+            '鳳凰電影': 4,
+            '凤凰中文': 1,
+            '凤凰资讯': 2,
+            '凤凰香港': 3,
+            '凤凰电影': 4
+        }
+        
+        def get_phoenix_priority(channel_name):
+            for key, priority in phoenix_order.items():
+                if key in channel_name:
+                    return priority
+            return 99  # 其他凤凰频道放在后面
+        
+        phoenix_channels.sort(key=lambda x: get_phoenix_priority(x['name']))
+        
+        # 合并排序后的频道列表
+        sorted_channels = phoenix_channels + now_channels + other_channels
+        
+        logger.info(f"HK频道排序结果: 凤凰{len(phoenix_channels)}个, NOW{len(now_channels)}个, 其他{len(other_channels)}个")
+        return sorted_channels
+    
+    # 对于TW频道，只过滤不排序
     return filtered_channels
-
-def analyze_hk_channels(channels):
-    """分析HK频道，找出凤凰等频道的实际名称"""
-    if not channels:
-        return {}
-    
-    logger.info("=== 分析HK频道名称 ===")
-    
-    # 按关键词分类频道
-    categories = {
-        '凤凰': [],
-        'NOW': [],
-        'TVB': [],
-        'Viu': [],
-        '其他': []
-    }
-    
-    for channel in channels:
-        name = channel['name']
-        
-        if '鳳凰' in name or '凤凰' in name:
-            categories['凤凰'].append(name)
-        elif 'NOW' in name:
-            categories['NOW'].append(name)
-        elif 'TVB' in name or '無線' in name or '无线' in name:
-            categories['TVB'].append(name)
-        elif 'Viu' in name:
-            categories['Viu'].append(name)
-        else:
-            categories['其他'].append(name)
-    
-    # 打印分析结果
-    for category, names in categories.items():
-        if names:
-            logger.info(f"{category}频道 ({len(names)}个):")
-            for name in sorted(names):
-                logger.info(f"  - {name}")
-    
-    return categories
-
-def sort_hk_channels(channels):
-    """对HK频道进行排序"""
-    if not channels:
-        return []
-    
-    logger.info("开始排序HK频道...")
-    
-    # 先分析频道名称，了解实际有哪些频道
-    categories = analyze_hk_channels(channels)
-    
-    # 创建自定义排序规则
-    # 基于实际看到的频道名称创建优先级
-    custom_order = [
-        # 第一组：凤凰频道（按你的要求排序）
-        '鳳凰衛視中文台',
-        '鳳凰中文台',
-        '凤凰中文',
-        '鳳凰資訊台',
-        '鳳凰資訊',
-        '凤凰资讯',
-        '鳳凰香港台',
-        '鳳凰香港',
-        '凤凰香港',
-        '鳳凰衛視電影台',
-        '鳳凰電影台',
-        '鳳凰電影',
-        '凤凰电影',
-        
-        # 第二组：NOW频道
-        'NOW新聞台',
-        'NOW新闻台',
-        'NOW直播台',
-        'NOW直播',
-        'NOW財經台',
-        'NOW财经台',
-        'NOW體育台',
-        'NOW体育台',
-        'NOW直接',
-        
-        # 第三组：TVB频道
-        '無線新聞台',
-        '无线新闻台',
-        '無線財經台',
-        '无线财经台',
-        'TVB新聞台',
-        'TVB新闻台',
-        
-        # 第四组：ViuTV频道
-        'ViuTV',
-        'ViuTVsix',
-        
-        # 第五组：其他凤凰相关
-        '鳳凰衛視',
-        '鳳凰',
-        
-        # 第六组：其他NOW相关
-        'NOW',
-    ]
-    
-    def get_channel_priority(channel_name):
-        """根据频道名称获取优先级"""
-        # 在自定义列表中查找
-        for i, pattern in enumerate(custom_order):
-            if pattern in channel_name:
-                return i
-        
-        # 如果包含"HD"或"高清"，放在中间位置
-        if 'HD' in channel_name or '高清' in channel_name:
-            return 100
-        
-        # 默认放在最后
-        return 999
-    
-    def get_channel_sort_key(channel):
-        """获取排序键值"""
-        name = channel['name']
-        priority = get_channel_priority(name)
-        
-        # 返回元组：(优先级, 频道名称)
-        return (priority, name)
-    
-    # 按优先级和名称排序
-    sorted_channels = sorted(channels, key=get_channel_sort_key)
-    
-    # 记录排序结果
-    logger.info("=== HK频道排序结果（前20个） ===")
-    for i, channel in enumerate(sorted_channels[:20]):
-        priority = get_channel_priority(channel['name'])
-        logger.info(f"{i+1:2d}. [{priority:3d}] {channel['name']}")
-    
-    return sorted_channels
 
 def check_stream_playable(url, channel_name, retry_count=1):
     """检查流是否可以播放"""
@@ -440,6 +366,7 @@ def check_stream_playable(url, channel_name, retry_count=1):
             # 如果是其他支持的协议，尝试简单连接
             else:
                 logger.debug(f"尝试连接 {parsed_url.scheme} 协议: {channel_name}")
+                # 这里可以添加其他协议的检查逻辑
                 return True  # 暂时假设可连接
                 
         except subprocess.TimeoutExpired:
@@ -512,6 +439,10 @@ def validate_channels(channels, skip_validation=False):
     elapsed = time.time() - start_time
     logger.info(f"验证完成: {len(valid_channels)} 个可播放, {len(invalid_channels)} 个不可播放 (用时 {elapsed:.1f}秒)")
     
+    # 按频道名称排序
+    valid_channels.sort(key=lambda x: x['name'])
+    invalid_channels.sort(key=lambda x: x['name'])
+    
     return valid_channels, invalid_channels
 
 def build_m3u_content(hk_channels, tw_channels):
@@ -534,7 +465,7 @@ def build_m3u_content(hk_channels, tw_channels):
     # 添加HK频道
     if hk_channels:
         lines.append("#" + "="*60)
-        lines.append("# HK頻道 (已按鳳凰→NOW→其他排序)")
+        lines.append("# HK頻道")
         lines.append("#" + "="*60)
         lines.append("")
         
@@ -711,8 +642,8 @@ def main(skip_validation=False):
         hk_channels = parse_m3u_content(hk_content, "HK")
         logger.info(f"從HK源解析出 {len(hk_channels)} 個頻道")
         
-        # 过滤HK频道
-        hk_channels = filter_channels(hk_channels, HK_BLACKLIST, "HK")
+        # 过滤和排序HK频道
+        hk_channels = filter_and_sort_channels(hk_channels, HK_BLACKLIST, "HK")
     else:
         hk_channels = []
         logger.warning("HK源獲取失敗，將使用空列表")
@@ -727,7 +658,7 @@ def main(skip_validation=False):
         logger.info(f"從TW源解析出 {len(tw_channels)} 個頻道")
         
         # 过滤TW频道
-        tw_channels = filter_channels(tw_channels, TW_BLACKLIST, "TW")
+        tw_channels = filter_and_sort_channels(tw_channels, TW_BLACKLIST, "TW")
     else:
         tw_channels = []
         logger.warning("TW源獲取失敗，將使用空列表")
@@ -744,9 +675,6 @@ def main(skip_validation=False):
         # 重新分组
         hk_valid = [c for c in valid_channels if c['group'] == 'HK']
         tw_valid = [c for c in valid_channels if c['group'] == 'TW']
-        
-        # 验证后对HK频道进行排序
-        hk_valid = sort_hk_channels(hk_valid)
         
         logger.info(f"驗證結果: HK有效 {len(hk_valid)} 個, TW有效 {len(tw_valid)} 個")
         
