@@ -9,7 +9,7 @@ on:
       skip_validation:
         description: '跳过播放验证（加快速度）'
         required: false
-        default: 'false'
+        default: false
         type: boolean
 
 jobs:
@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -44,37 +45,51 @@ jobs:
           if [ -d "scripts" ]; then
             echo "scripts目录存在"
             ls -la scripts/
+          elif [ -d "joker/scripts" ]; then
+            echo "joker/scripts目录存在"
+            ls -la joker/scripts/
           else
-            echo "scripts目录不存在，查找所有目录..."
-            find . -type d -name "*script*" -o -type f -name "*.py"
+            echo "查找所有目录..."
+            find . -type d -name "*script*" -o -type f -name "*.py" | head -20
           fi
       
       - name: Run extraction with validation
         run: |
           echo "=== 开始提取和验证频道 ==="
           
-          # 检查并进入scripts目录
-          if [ -d "scripts" ]; then
-            cd scripts
-            echo "当前目录: $(pwd)"
-          elif [ -f "tv_extractor.py" ]; then
+          # 检查并进入正确的目录
+          if [ -f "tv_extractor.py" ]; then
             echo "tv_extractor.py在当前目录"
+            SCRIPT_DIR="."
+          elif [ -f "scripts/tv_extractor.py" ]; then
+            echo "tv_extractor.py在scripts目录"
+            cd scripts
+            SCRIPT_DIR="."
+          elif [ -f "joker/scripts/tv_extractor.py" ]; then
+            echo "tv_extractor.py在joker/scripts目录"
+            cd joker/scripts
+            SCRIPT_DIR="."
           else
             echo "查找Python脚本..."
             find . -name "tv_extractor.py" -type f
             exit 1
           fi
           
+          echo "当前目录: $(pwd)"
+          
           # 确保脚本有执行权限
-          if [ -f "tv_extractor.py" ]; then
-            chmod +x tv_extractor.py
-          else
-            echo "错误：找不到tv_extractor.py"
-            exit 1
+          chmod +x tv_extractor.py
+          
+          # 检查是否跳过验证
+          SKIP_VALIDATION=""
+          if [ "${{ github.event.inputs.skip_validation }}" = "true" ]; then
+            SKIP_VALIDATION="--skip-validation"
+            echo "将跳过播放验证"
           fi
           
           # 运行Python脚本
-          python tv_extractor.py
+          echo "运行提取脚本..."
+          python tv_extractor.py $SKIP_VALIDATION
           
           # 检查是否成功生成文件
           if [ -f "EE.m3u" ]; then
@@ -94,14 +109,18 @@ jobs:
         run: |
           echo "=== 验证EE.m3u文件 ==="
           
+          # 回到仓库根目录
+          cd $GITHUB_WORKSPACE
+          
           # 查找EE.m3u文件
           if [ -f "EE.m3u" ]; then
             EE_FILE="EE.m3u"
           elif [ -f "scripts/EE.m3u" ]; then
             EE_FILE="scripts/EE.m3u"
-          elif [ -f "../EE.m3u" ]; then
-            cd ..
-            EE_FILE="EE.m3u"
+          elif [ -f "joker/EE.m3u" ]; then
+            EE_FILE="joker/EE.m3u"
+          elif [ -f "joker/scripts/EE.m3u" ]; then
+            EE_FILE="joker/scripts/EE.m3u"
           else
             echo "查找EE.m3u文件..."
             find . -name "EE.m3u" -type f
@@ -134,10 +153,15 @@ jobs:
               exit 1
             fi
             
-            # 显示前几个频道示例
+            # 检查HK频道排序
             echo ""
-            echo "=== 频道示例（前5个） ==="
-            grep -A1 "#EXTINF" "$EE_FILE" 2>/dev/null | head -10 || true
+            echo "=== HK频道排序检查（前10个） ==="
+            grep -A1 'group-title="HK"' "$EE_FILE" 2>/dev/null | grep -E "^#EXTINF:" | head -10 | sed 's/.*,//' | nl
+            
+            # 显示文件前几行
+            echo ""
+            echo "=== 文件头部预览 ==="
+            head -15 "$EE_FILE"
             
           else
             echo "❌ EE.m3u文件不存在"
@@ -148,33 +172,43 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git config pull.rebase true
       
       - name: Pull latest changes
         run: |
-          git pull origin main --rebase || true
+          echo "=== 拉取最新变更 ==="
+          git fetch origin
+          git reset --hard origin/main
+          git pull origin main --rebase --allow-unrelated-histories || true
       
-      - name: Commit and push changes
+      - name: Commit changes
         run: |
           echo "=== 提交更改 ==="
           
-          # 查找EE.m3u文件
-          EE_FILE=""
+          # 回到仓库根目录
+          cd $GITHUB_WORKSPACE
+          
+          # 查找EE.m3u文件并添加
           if [ -f "EE.m3u" ]; then
-            EE_FILE="EE.m3u"
             git add EE.m3u
+            EE_FILE="EE.m3u"
           elif [ -f "scripts/EE.m3u" ]; then
-            EE_FILE="scripts/EE.m3u"
             git add scripts/EE.m3u
+            EE_FILE="scripts/EE.m3u"
+          elif [ -f "joker/EE.m3u" ]; then
+            git add joker/EE.m3u
+            EE_FILE="joker/EE.m3u"
+          elif [ -f "joker/scripts/EE.m3u" ]; then
+            git add joker/scripts/EE.m3u
+            EE_FILE="joker/scripts/EE.m3u"
+          else
+            echo "错误：未找到EE.m3u文件"
+            exit 1
           fi
           
-          if [ -z "$EE_FILE" ]; then
-            echo "未找到EE.m3u文件，查找所有位置..."
-            find . -name "EE.m3u" -type f | while read file; do
-              echo "找到文件: $file"
-              git add "$file"
-            done
-          fi
+          echo "添加文件: $EE_FILE"
           
+          # 检查是否有更改
           if git diff --staged --quiet; then
             echo "没有更改需要提交"
           else
@@ -182,7 +216,7 @@ jobs:
             current_time=$(date +'%Y-%m-%d %H:%M:%S')
             
             # 获取统计信息
-            if [ -n "$EE_FILE" ] && [ -f "$EE_FILE" ]; then
+            if [ -f "$EE_FILE" ]; then
               total=$(grep -c "#EXTINF" "$EE_FILE" 2>/dev/null || echo "0")
               hk=$(grep -c 'group-title="HK"' "$EE_FILE" 2>/dev/null || echo "0")
               tw=$(grep -c 'group-title="TW"' "$EE_FILE" 2>/dev/null || echo "0")
@@ -194,16 +228,29 @@ jobs:
             
             echo "提交消息: $commit_msg"
             git commit -m "$commit_msg"
-            
-            echo "=== 推送到仓库 ==="
-            git push origin main
+          fi
+      
+      - name: Push to repository
+        run: |
+          echo "=== 推送到仓库 ==="
+          
+          # 检查是否有需要推送的提交
+          if git log origin/main..HEAD --oneline | grep -q .; then
+            echo "检测到需要推送的提交"
+            echo "推送变更到仓库..."
+            git push origin main --force-with-lease
+          else
+            echo "没有需要推送的提交"
           fi
       
       - name: Create summary report
         if: always()
         run: |
-          echo "## 频道提取报告" >> $GITHUB_STEP_SUMMARY
+          echo "## 📺 频道提取报告" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # 回到仓库根目录
+          cd $GITHUB_WORKSPACE
           
           # 查找EE.m3u文件
           EE_FILE=""
@@ -211,27 +258,57 @@ jobs:
             EE_FILE="EE.m3u"
           elif [ -f "scripts/EE.m3u" ]; then
             EE_FILE="scripts/EE.m3u"
+          elif [ -f "joker/EE.m3u" ]; then
+            EE_FILE="joker/EE.m3u"
+          elif [ -f "joker/scripts/EE.m3u" ]; then
+            EE_FILE="joker/scripts/EE.m3u"
           else
-            # 尝试查找
-            EE_FILE=$(find . -name "EE.m3u" -type f | head -1)
+            echo "❌ **提取失败**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "EE.m3u文件未生成，请检查日志" >> $GITHUB_STEP_SUMMARY
+            exit 0
           fi
           
           if [ -n "$EE_FILE" ] && [ -f "$EE_FILE" ]; then
             total=$(grep -c "#EXTINF" "$EE_FILE" 2>/dev/null || echo "0")
             hk=$(grep -c 'group-title="HK"' "$EE_FILE" 2>/dev/null || echo "0")
             tw=$(grep -c 'group-title="TW"' "$EE_FILE" 2>/dev/null || echo "0")
+            other=$((total - hk - tw))
             
             echo "✅ **提取完成**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📊 频道统计" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "| 类别 | 数量 |" >> $GITHUB_STEP_SUMMARY
             echo "|------|------|" >> $GITHUB_STEP_SUMMARY
             echo "| 总频道数 | $total |" >> $GITHUB_STEP_SUMMARY
             echo "| HK频道 | $hk |" >> $GITHUB_STEP_SUMMARY
             echo "| TW频道 | $tw |" >> $GITHUB_STEP_SUMMARY
+            echo "| 其他频道 | $other |" >> $GITHUB_STEP_SUMMARY
+            
+            # 显示HK频道排序
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📋 HK频道排序（前5个）" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            grep -A1 'group-title="HK"' "$EE_FILE" 2>/dev/null | grep -E "^#EXTINF:" | head -5 | sed 's/.*,//' | while IFS= read -r line; do
+              echo "1. $line" >> $GITHUB_STEP_SUMMARY
+            done
             
             # 添加文件预览链接
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "📁 **文件已更新**: [EE.m3u](https://github.com/${{ github.repository }}/blob/main/$EE_FILE)" >> $GITHUB_STEP_SUMMARY
+            echo "### 📁 文件信息" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**文件已更新**: [$EE_FILE](https://github.com/${{ github.repository }}/blob/main/$EE_FILE)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**更新时间**: $(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+            
+            # 过滤信息
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### ⚙️ 过滤设置" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **HK过滤**: snaap、C+、甄子丹影视频道" >> $GITHUB_STEP_SUMMARY
+            echo "- **TW过滤**: 国会频道、原住民、liveABC、UDN TV、rollor、MOMO、大爱、好讯息、Smith、FOX MOVIES、PETP" >> $GITHUB_STEP_SUMMARY
+            echo "- **HK排序**: 凤凰中文 → 凤凰资讯 → 凤凰香港 → 凤凰电影 → NOW频道 → 其他" >> $GITHUB_STEP_SUMMARY
             
           else
             echo "❌ **提取失败**" >> $GITHUB_STEP_SUMMARY
