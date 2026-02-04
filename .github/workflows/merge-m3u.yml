@@ -113,7 +113,7 @@ jobs:
         
         echo "✅ 提交完成"
     
-    - name: 📊 输出结果
+        - name: 📊 输出结果
       if: always()
       run: |
         echo "=== 运行总结 ==="
@@ -129,8 +129,8 @@ jobs:
         echo "  • Raw: https://raw.githubusercontent.com/${{ github.repository }}/main/CC.m3u"
         echo ""
         echo "⚙️  配置信息:"
-        echo "  • 新源地址: https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1"
-        echo "  • 抓取分组: 🔥全网通港澳台"
+        echo "  • GitHub源: https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/main/Jsnzkpg1"
+        echo "  • 搜索关键词: 全网通港澳台"
         echo "  • 脚本文件: scripts/merge_from_proxy.py"
         echo "  • 更新频率: 每天2次"
         echo ""
@@ -141,7 +141,7 @@ jobs:
           SIZE=$(wc -c < CC.m3u)
           echo "    行数: $LINES"
           echo "    大小: $SIZE 字节"
-          echo "    🔥全网通港澳台频道数: $(grep -c '🔥全网通港澳台' CC.m3u || echo 0)"
+          echo "    全网通港澳台频道数: $(grep -c '全网通港澳台' CC.m3u || echo 0)"
         else
           echo "  ❌ CC.m3u 生成失败"
         fi
