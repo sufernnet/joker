@@ -12,6 +12,7 @@ import subprocess
 from datetime import datetime
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from urllib.parse import urlparse
 
 # 配置日志
 logging.basicConfig(
@@ -26,7 +27,6 @@ TW_SOURCE_URL = "https://hacks.sufern001.workers.dev/?type=tw"
 EPG_URL = "http://epg.51zmt.top:8000/e.xml"
 BB_FILE = "BB.m3u"  # 在仓库根目录
 OUTPUT_FILE = "EE.m3u"  # 在仓库根目录
-FFMPEG_PATH = "ffmpeg"
 TIMEOUT = 10  # 播放校验超时时间（秒）
 MAX_WORKERS = 5  # 并发校验最大线程数
 
@@ -50,8 +50,10 @@ def fetch_m3u_content(url, source_name):
 def read_bb_file():
     """读取BB.m3u文件内容"""
     try:
-        # BB.m3u在仓库根目录
-        bb_path = "../BB.m3u"
+        # BB.m3u在仓库根目录（相对于脚本位置）
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        bb_path = os.path.join(script_dir, "..", BB_FILE)
+        
         if os.path.exists(bb_path):
             with open(bb_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -111,7 +113,7 @@ def parse_m3u_content(content, default_group):
                 original_group = default_group
                 group_match = re.search(r'group-title="([^"]+)"', extinf_line)
                 if group_match:
-                    original_group = match.group(1)
+                    original_group = group_match.group(1)  # 修正：使用 group_match 而不是 match
                 
                 # 创建新的EXTINF行，统一分组
                 new_extinf = re.sub(r'group-title="[^"]+"', f'group-title="{default_group}"', extinf_line)
@@ -141,33 +143,47 @@ def parse_m3u_content(content, default_group):
 def check_stream_playable(url, channel_name):
     """检查流是否可以播放"""
     try:
-        # 简化检查，只检查连接和HTTP状态
-        command = [
-            'curl', '-s', '-o', '/dev/null',
-            '-w', '%{http_code}',
-            '--max-time', str(TIMEOUT),
-            url
-        ]
+        parsed_url = urlparse(url)
         
-        logger.debug(f"检查频道: {channel_name}")
-        
-        result = subprocess.run(
-            command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            timeout=TIMEOUT + 2
-        )
-        
-        if result.returncode == 0:
-            http_code = result.stdout.decode('utf-8', errors='ignore').strip()
-            # 2xx 或 3xx 状态码通常表示可访问
-            if http_code.startswith('2') or http_code.startswith('3'):
-                return True
-            else:
-                logger.debug(f"频道 {channel_name} 返回HTTP状态码: {http_code}")
-                return False
-        else:
+        # 检查URL是否有效
+        if not parsed_url.scheme:
+            logger.debug(f"无效的URL格式: {url}")
             return False
+        
+        # 对于HTTP/HTTPS流，使用curl检查
+        if parsed_url.scheme in ['http', 'https']:
+            command = [
+                'curl', '-s', '-o', '/dev/null',
+                '-w', '%{http_code}',
+                '--max-time', str(TIMEOUT),
+                '--head',  # 使用HEAD方法，只获取头部
+                url
+            ]
+            
+            logger.debug(f"检查频道: {channel_name}")
+            
+            result = subprocess.run(
+                command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                timeout=TIMEOUT + 2
+            )
+            
+            if result.returncode == 0:
+                http_code = result.stdout.decode('utf-8', errors='ignore').strip()
+                # 2xx 或 3xx 状态码通常表示可访问
+                if http_code.startswith('2') or http_code.startswith('3'):
+                    return True
+                else:
+                    logger.debug(f"频道 {channel_name} 返回HTTP状态码: {http_code}")
+                    return False
+            else:
+                logger.debug(f"频道 {channel_name} curl命令失败")
+                return False
+        # 对于其他协议（如rtmp, rtp, udp等），跳过详细检查
+        else:
+            logger.debug(f"跳过非HTTP协议检查: {channel_name} ({parsed_url.scheme})")
+            return True  # 假设其他协议可播放
             
     except subprocess.TimeoutExpired:
         logger.warning(f"频道检查超时: {channel_name}")
@@ -178,6 +194,9 @@ def check_stream_playable(url, channel_name):
 
 def validate_channels(channels):
     """验证频道是否可以播放"""
+    if not channels:
+        return [], []
+    
     logger.info(f"开始验证 {len(channels)} 个频道的播放状态...")
     
     valid_channels = []
@@ -324,8 +343,9 @@ def save_m3u_file(content, filename):
         return False
     
     try:
-        # 保存到仓库根目录
-        output_path = f"../{filename}"
+        # 保存到仓库根目录（相对于脚本位置）
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        output_path = os.path.join(script_dir, "..", filename)
         
         logger.info(f"将保存到: {output_path}")
         
