@@ -60,19 +60,13 @@ TW_BLACKLIST = [
     '原民',
     'ABC',
     'UDN',
-    'rollor',
+    'Rollor',
     'Momo',
     '好訊息 1',
     '好訊息 2',
     'FOX MOVIE',
     'PET CLUB TV'
 ]
-
-# 凤凰频道关键词（用于排序）
-PHOENIX_KEYWORDS = ['鳳凰', '凤凰']
-
-# NOW频道关键词（用于排序）
-NOW_KEYWORDS = ['NOW']
 
 def fetch_m3u_content(url, source_name, retry_count=MAX_RETRIES):
     """获取M3U文件内容"""
@@ -237,14 +231,14 @@ def parse_m3u_content(content, default_group):
     
     return channels
 
-def filter_and_sort_channels(channels, blacklist, group_name):
-    """过滤和排序频道"""
+def filter_channels(channels, blacklist, group_name):
+    """过滤频道"""
     if not channels:
         return []
     
-    logger.info(f"开始过滤和排序 {group_name} 频道...")
+    logger.info(f"开始过滤 {group_name} 频道...")
     
-    # 1. 过滤黑名单频道
+    # 过滤黑名单频道
     filtered_channels = []
     for channel in channels:
         channel_name = channel['name']
@@ -260,57 +254,95 @@ def filter_and_sort_channels(channels, blacklist, group_name):
             filtered_channels.append(channel)
     
     logger.info(f"过滤后剩余 {len(filtered_channels)} 个{group_name}频道")
-    
-    # 2. 如果是HK频道，进行特殊排序
-    if group_name == "HK":
-        # 分离凤凰、NOW和其他频道
-        phoenix_channels = []
-        now_channels = []
-        other_channels = []
-        
-        for channel in filtered_channels:
-            channel_name = channel['name']
-            
-            # 检查是否为凤凰频道
-            is_phoenix = any(keyword in channel_name for keyword in PHOENIX_KEYWORDS)
-            # 检查是否为NOW频道
-            is_now = any(keyword in channel_name for keyword in NOW_KEYWORDS)
-            
-            if is_phoenix:
-                phoenix_channels.append(channel)
-            elif is_now:
-                now_channels.append(channel)
-            else:
-                other_channels.append(channel)
-        
-        # 对凤凰频道进行特定排序
-        phoenix_order = {
-            '鳳凰衛視': 1,
-            '鳳凰資訊HD': 2, 
-            '鳳凰香港': 3,
-            '鳳凰電影': 4,
-            '凤凰中文': 1,
-            '凤凰资讯': 2,
-            '凤凰香港': 3,
-            '凤凰电影': 4
-        }
-        
-        def get_phoenix_priority(channel_name):
-            for key, priority in phoenix_order.items():
-                if key in channel_name:
-                    return priority
-            return 99  # 其他凤凰频道放在后面
-        
-        phoenix_channels.sort(key=lambda x: get_phoenix_priority(x['name']))
-        
-        # 合并排序后的频道列表
-        sorted_channels = phoenix_channels + now_channels + other_channels
-        
-        logger.info(f"HK频道排序结果: 凤凰{len(phoenix_channels)}个, NOW{len(now_channels)}个, 其他{len(other_channels)}个")
-        return sorted_channels
-    
-    # 对于TW频道，只过滤不排序
     return filtered_channels
+
+def sort_hk_channels(channels):
+    """对HK频道进行排序"""
+    if not channels:
+        return []
+    
+    logger.info("开始排序HK频道...")
+    
+    # 定义详细的排序规则
+    # 优先级从1开始，数字越小优先级越高
+    priority_rules = [
+        # 凤凰频道 - 第一优先级（精确匹配）
+        (['鳳凰衛視中文台', '鳳凰衛視中文', '鳳凰中文台', '鳳凰中文', '凤凰中文', '鳳凰衛視中文台 HD'], 1),
+        (['鳳凰衛視資訊台', '鳳凰資訊台', '鳳凰資訊HD', '鳳凰資訊', '凤凰资讯', '鳳凰衛視資訊台 HD'], 2),
+        (['鳳凰香港台', '鳳凰香港', '凤凰香港', '鳳凰香港台 HD'], 3),
+        (['鳳凰衛視電影台', '鳳凰電影台', '鳳凰電影', '凤凰电影', '鳳凰衛視電影台 HD'], 4),
+        
+        # NOW频道 - 第二优先级（精确匹配）
+        (['NOW新聞台', 'NOW新闻台', 'NOW新聞台 HD'], 10),
+        (['NOW直播台', 'NOW直播', 'NOW直播台 HD'], 11),
+        (['NOW財經台', 'NOW财经台', 'NOW財經台 HD'], 12),
+        (['NOW體育台', 'NOW体育台', 'NOW體育台 HD'], 13),
+        (['NOW直接', 'NOW DIRECT', 'NOW直接 HD'], 14),
+        
+        # TVB频道 - 第三优先级
+        (['無線新聞台', '无线新闻台', '無線新聞台 HD'], 20),
+        (['無線財經台', '无线财经台', '無線財經台 HD'], 21),
+        (['無線綜合台', '无线综合台', '無線綜合台 HD'], 22),
+        (['TVB新聞台', 'TVB新闻台'], 23),
+        (['TVB財經台', 'TVB财经台'], 24),
+        
+        # ViuTV频道 - 第四优先级
+        (['ViuTV', 'Viu TV', 'ViuTV HD'], 30),
+        (['ViuTVsix', 'Viu TVsix', 'ViuTVsix HD'], 31),
+        
+        # 其他凤凰相关频道（模糊匹配）
+        (['鳳凰衛視'], 40),
+        (['鳳凰'], 41),
+        
+        # NOW相关频道（模糊匹配）
+        (['NOW'], 50),
+    ]
+    
+    def get_channel_priority(channel_name):
+        """根据频道名称获取优先级"""
+        # 默认优先级（越大越靠后）
+        default_priority = 100
+        
+        # 先尝试精确匹配
+        for keywords, priority in priority_rules:
+            for keyword in keywords:
+                if keyword in channel_name:
+                    return priority
+        
+        # 如果频道名包含"HD"，适当提高优先级
+        if 'HD' in channel_name or '高清' in channel_name:
+            return 60
+        
+        return default_priority
+    
+    def get_channel_sort_key(channel):
+        """获取排序键值"""
+        name = channel['name']
+        priority = get_channel_priority(name)
+        
+        # 返回元组：(优先级, 频道名称)
+        return (priority, name)
+    
+    # 按优先级和名称排序
+    sorted_channels = sorted(channels, key=get_channel_sort_key)
+    
+    # 记录排序结果
+    logger.info("HK频道已按以下顺序排序:")
+    logger.info("  1. 凤凰中文台/凤凰卫视中文台")
+    logger.info("  2. 凤凰资讯台")
+    logger.info("  3. 凤凰香港台")
+    logger.info("  4. 凤凰电影台")
+    logger.info("  5. NOW新闻台")
+    logger.info("  6. NOW财经台")
+    logger.info("  7. 其他HK频道")
+    
+    # 显示前15个频道验证排序
+    logger.info("=== 前15个HK频道排序结果 ===")
+    for i, channel in enumerate(sorted_channels[:15]):
+        priority = get_channel_priority(channel['name'])
+        logger.info(f"{i+1:2d}. [{priority:3d}] {channel['name']}")
+    
+    return sorted_channels
 
 def check_stream_playable(url, channel_name, retry_count=1):
     """检查流是否可以播放"""
@@ -365,7 +397,6 @@ def check_stream_playable(url, channel_name, retry_count=1):
             # 如果是其他支持的协议，尝试简单连接
             else:
                 logger.debug(f"尝试连接 {parsed_url.scheme} 协议: {channel_name}")
-                # 这里可以添加其他协议的检查逻辑
                 return True  # 暂时假设可连接
                 
         except subprocess.TimeoutExpired:
@@ -437,10 +468,6 @@ def validate_channels(channels, skip_validation=False):
     
     elapsed = time.time() - start_time
     logger.info(f"验证完成: {len(valid_channels)} 个可播放, {len(invalid_channels)} 个不可播放 (用时 {elapsed:.1f}秒)")
-    
-    # 按频道名称排序
-    valid_channels.sort(key=lambda x: x['name'])
-    invalid_channels.sort(key=lambda x: x['name'])
     
     return valid_channels, invalid_channels
 
@@ -641,8 +668,8 @@ def main(skip_validation=False):
         hk_channels = parse_m3u_content(hk_content, "HK")
         logger.info(f"從HK源解析出 {len(hk_channels)} 個頻道")
         
-        # 过滤和排序HK频道
-        hk_channels = filter_and_sort_channels(hk_channels, HK_BLACKLIST, "HK")
+        # 过滤HK频道
+        hk_channels = filter_channels(hk_channels, HK_BLACKLIST, "HK")
     else:
         hk_channels = []
         logger.warning("HK源獲取失敗，將使用空列表")
@@ -657,7 +684,7 @@ def main(skip_validation=False):
         logger.info(f"從TW源解析出 {len(tw_channels)} 個頻道")
         
         # 过滤TW频道
-        tw_channels = filter_and_sort_channels(tw_channels, TW_BLACKLIST, "TW")
+        tw_channels = filter_channels(tw_channels, TW_BLACKLIST, "TW")
     else:
         tw_channels = []
         logger.warning("TW源獲取失敗，將使用空列表")
@@ -674,6 +701,9 @@ def main(skip_validation=False):
         # 重新分组
         hk_valid = [c for c in valid_channels if c['group'] == 'HK']
         tw_valid = [c for c in valid_channels if c['group'] == 'TW']
+        
+        # 验证后对HK频道进行排序
+        hk_valid = sort_hk_channels(hk_valid)
         
         logger.info(f"驗證結果: HK有效 {len(hk_valid)} 個, TW有效 {len(tw_valid)} 個")
         
