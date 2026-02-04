@@ -1,4 +1,4 @@
-name: 自动合并M3U（使用新源地址）
+name: 自动合并M3U（抓取🔥全网通港澳台）
 
 on:
   # 手动触发
@@ -64,7 +64,7 @@ jobs:
           echo -e "\n=== 文件结构验证 ==="
           echo "EPG信息:"
           grep -i "url-tvg" CC.m3u || echo "未找到EPG信息"
-          echo "全网通港澳台频道数: $(grep -c '全网通港澳台' CC.m3u || echo 0)"
+          echo "🔥全网通港澳台频道数: $(grep -c '🔥全网通港澳台' CC.m3u || echo 0)"
         else
           echo "❌ CC.m3u 未生成"
           exit 1
@@ -130,7 +130,7 @@ jobs:
         echo ""
         echo "⚙️  配置信息:"
         echo "  • 新源地址: https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1"
-        echo "  • 抓取分组: 全网通港澳台"
+        echo "  • 抓取分组: 🔥全网通港澳台"
         echo "  • 脚本文件: scripts/merge_from_proxy.py"
         echo "  • 更新频率: 每天2次"
         echo ""
@@ -141,7 +141,7 @@ jobs:
           SIZE=$(wc -c < CC.m3u)
           echo "    行数: $LINES"
           echo "    大小: $SIZE 字节"
-          echo "    全网通港澳台频道数: $(grep -c '全网通港澳台' CC.m3u || echo 0)"
+          echo "    🔥全网通港澳台频道数: $(grep -c '🔥全网通港澳台' CC.m3u || echo 0)"
         else
           echo "  ❌ CC.m3u 生成失败"
         fi
