@@ -256,6 +256,45 @@ def filter_channels(channels, blacklist, group_name):
     logger.info(f"过滤后剩余 {len(filtered_channels)} 个{group_name}频道")
     return filtered_channels
 
+def analyze_hk_channels(channels):
+    """分析HK频道，找出凤凰等频道的实际名称"""
+    if not channels:
+        return {}
+    
+    logger.info("=== 分析HK频道名称 ===")
+    
+    # 按关键词分类频道
+    categories = {
+        '凤凰': [],
+        'NOW': [],
+        'TVB': [],
+        'Viu': [],
+        '其他': []
+    }
+    
+    for channel in channels:
+        name = channel['name']
+        
+        if '鳳凰' in name or '凤凰' in name:
+            categories['凤凰'].append(name)
+        elif 'NOW' in name:
+            categories['NOW'].append(name)
+        elif 'TVB' in name or '無線' in name or '无线' in name:
+            categories['TVB'].append(name)
+        elif 'Viu' in name:
+            categories['Viu'].append(name)
+        else:
+            categories['其他'].append(name)
+    
+    # 打印分析结果
+    for category, names in categories.items():
+        if names:
+            logger.info(f"{category}频道 ({len(names)}个):")
+            for name in sorted(names):
+                logger.info(f"  - {name}")
+    
+    return categories
+
 def sort_hk_channels(channels):
     """对HK频道进行排序"""
     if not channels:
@@ -263,57 +302,71 @@ def sort_hk_channels(channels):
     
     logger.info("开始排序HK频道...")
     
-    # 定义详细的排序规则
-    # 优先级从1开始，数字越小优先级越高
-    priority_rules = [
-        # 凤凰频道 - 第一优先级（精确匹配）
-        (['鳳凰衛視中文台', '鳳凰衛視中文', '鳳凰中文台', '鳳凰中文', '凤凰中文', '鳳凰衛視中文台 HD'], 1),
-        (['鳳凰衛視資訊台', '鳳凰資訊台', '鳳凰資訊HD', '鳳凰資訊', '凤凰资讯', '鳳凰衛視資訊台 HD'], 2),
-        (['鳳凰香港台', '鳳凰香港', '凤凰香港', '鳳凰香港台 HD'], 3),
-        (['鳳凰衛視電影台', '鳳凰電影台', '鳳凰電影', '凤凰电影', '鳳凰衛視電影台 HD'], 4),
+    # 先分析频道名称，了解实际有哪些频道
+    categories = analyze_hk_channels(channels)
+    
+    # 创建自定义排序规则
+    # 基于实际看到的频道名称创建优先级
+    custom_order = [
+        # 第一组：凤凰频道（按你的要求排序）
+        '鳳凰衛視中文台',
+        '鳳凰中文台',
+        '凤凰中文',
+        '鳳凰資訊台',
+        '鳳凰資訊',
+        '凤凰资讯',
+        '鳳凰香港台',
+        '鳳凰香港',
+        '凤凰香港',
+        '鳳凰衛視電影台',
+        '鳳凰電影台',
+        '鳳凰電影',
+        '凤凰电影',
         
-        # NOW频道 - 第二优先级（精确匹配）
-        (['NOW新聞台', 'NOW新闻台', 'NOW新聞台 HD'], 10),
-        (['NOW直播台', 'NOW直播', 'NOW直播台 HD'], 11),
-        (['NOW財經台', 'NOW财经台', 'NOW財經台 HD'], 12),
-        (['NOW體育台', 'NOW体育台', 'NOW體育台 HD'], 13),
-        (['NOW直接', 'NOW DIRECT', 'NOW直接 HD'], 14),
+        # 第二组：NOW频道
+        'NOW新聞台',
+        'NOW新闻台',
+        'NOW直播台',
+        'NOW直播',
+        'NOW財經台',
+        'NOW财经台',
+        'NOW體育台',
+        'NOW体育台',
+        'NOW直接',
         
-        # TVB频道 - 第三优先级
-        (['無線新聞台', '无线新闻台', '無線新聞台 HD'], 20),
-        (['無線財經台', '无线财经台', '無線財經台 HD'], 21),
-        (['無線綜合台', '无线综合台', '無線綜合台 HD'], 22),
-        (['TVB新聞台', 'TVB新闻台'], 23),
-        (['TVB財經台', 'TVB财经台'], 24),
+        # 第三组：TVB频道
+        '無線新聞台',
+        '无线新闻台',
+        '無線財經台',
+        '无线财经台',
+        'TVB新聞台',
+        'TVB新闻台',
         
-        # ViuTV频道 - 第四优先级
-        (['ViuTV', 'Viu TV', 'ViuTV HD'], 30),
-        (['ViuTVsix', 'Viu TVsix', 'ViuTVsix HD'], 31),
+        # 第四组：ViuTV频道
+        'ViuTV',
+        'ViuTVsix',
         
-        # 其他凤凰相关频道（模糊匹配）
-        (['鳳凰衛視'], 40),
-        (['鳳凰'], 41),
+        # 第五组：其他凤凰相关
+        '鳳凰衛視',
+        '鳳凰',
         
-        # NOW相关频道（模糊匹配）
-        (['NOW'], 50),
+        # 第六组：其他NOW相关
+        'NOW',
     ]
     
     def get_channel_priority(channel_name):
         """根据频道名称获取优先级"""
-        # 默认优先级（越大越靠后）
-        default_priority = 100
+        # 在自定义列表中查找
+        for i, pattern in enumerate(custom_order):
+            if pattern in channel_name:
+                return i
         
-        # 先尝试精确匹配
-        for keywords, priority in priority_rules:
-            for keyword in keywords:
-                if keyword in channel_name:
-                    return priority
-        
-        # 如果频道名包含"HD"，适当提高优先级
+        # 如果包含"HD"或"高清"，放在中间位置
         if 'HD' in channel_name or '高清' in channel_name:
-            return 60
+            return 100
         
-        return default_priority
+        # 默认放在最后
+        return 999
     
     def get_channel_sort_key(channel):
         """获取排序键值"""
@@ -327,18 +380,8 @@ def sort_hk_channels(channels):
     sorted_channels = sorted(channels, key=get_channel_sort_key)
     
     # 记录排序结果
-    logger.info("HK频道已按以下顺序排序:")
-    logger.info("  1. 凤凰中文台/凤凰卫视中文台")
-    logger.info("  2. 凤凰资讯台")
-    logger.info("  3. 凤凰香港台")
-    logger.info("  4. 凤凰电影台")
-    logger.info("  5. NOW新闻台")
-    logger.info("  6. NOW财经台")
-    logger.info("  7. 其他HK频道")
-    
-    # 显示前15个频道验证排序
-    logger.info("=== 前15个HK频道排序结果 ===")
-    for i, channel in enumerate(sorted_channels[:15]):
+    logger.info("=== HK频道排序结果（前20个） ===")
+    for i, channel in enumerate(sorted_channels[:20]):
         priority = get_channel_priority(channel['name'])
         logger.info(f"{i+1:2d}. [{priority:3d}] {channel['name']}")
     
@@ -491,7 +534,7 @@ def build_m3u_content(hk_channels, tw_channels):
     # 添加HK频道
     if hk_channels:
         lines.append("#" + "="*60)
-        lines.append("# HK頻道")
+        lines.append("# HK頻道 (已按鳳凰→NOW→其他排序)")
         lines.append("#" + "="*60)
         lines.append("")
         
