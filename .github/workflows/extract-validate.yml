@@ -2,8 +2,8 @@ name: Extract and Validate HK/TW Channels
 
 on:
   schedule:
-    - cron: '0 6 * * *'   # UTC 6:00
-    - cron: '0 18 * * *'  # UTC 18:00
+    - cron: '30 5 * * *'   # UTC 5:30 (北京时间13:30)
+    - cron: '0 17 * * *'   # UTC 17:00 (北京时间次日01:00)
   workflow_dispatch:
     inputs:
       skip_validation:
