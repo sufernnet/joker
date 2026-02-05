@@ -1,9 +1,10 @@
 #EXTM3U
-# CC.m3u - 标准M3U格式
-# 生成时间: 2026-02-05 02:27:48
+# CC.m3u - 标准M3U格式（带台标）
+# 生成时间: 2026-02-05 02:33:26
 # 源URL: https://stymei.sufern001.workers.dev/
 # 提取分组: 🔥全网通港澳台 -> 全网通港澳台
-# 频道总数: 66 个港澳台频道
+# 港澳台频道数: 66
+# 台标源: iptv-org/logos, fanmingming/live
 
 #============================================================
 # 本地频道
@@ -360,210 +361,212 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 
 #============================================================
-# 全网通港澳台频道
+# 全网通港澳台频道（带台标）
 #============================================================
 
-#EXTINF:-1 tvg-id="SPOTV" tvg-name="SPOTV" tvg-logo="" group-title="全网通港澳台",SPOTV
+#EXTINF:-1 tvg-id="SPOTV" tvg-name="SPOTV" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/spotv.png" group-title="全网通港澳台",SPOTV
 http://iptv.4666888.xyz/iptv2A.php?id=2
 
-#EXTINF:-1 tvg-id="SPOTV2" tvg-name="SPOTV2" tvg-logo="" group-title="全网通港澳台",SPOTV2
+#EXTINF:-1 tvg-id="SPOTV2" tvg-name="SPOTV2" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/spotv2.png" group-title="全网通港澳台",SPOTV2
 http://iptv.4666888.xyz/iptv2A.php?id=1
 
-#EXTINF:-1 tvg-id="AstroFootball" tvg-name="AstroFootball" tvg-logo="" group-title="全网通港澳台",AstroFootball
+#EXTINF:-1 tvg-id="AstroFootball" tvg-name="AstroFootball" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/astrofootball.png" group-title="全网通港澳台",AstroFootball
 http://iptv.4666888.xyz/iptv2A.php?id=4
 
-#EXTINF:-1 tvg-id="TNTSports3" tvg-name="TNTSports3" tvg-logo="" group-title="全网通港澳台",TNTSports3
+#EXTINF:-1 tvg-id="TNTSports3" tvg-name="TNTSports3" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tntsports3.png" group-title="全网通港澳台",TNTSports3
 http://iptv.4666888.xyz/iptv2A.php?id=3
 
-#EXTINF:-1 tvg-id="channel_2617" tvg-name="博斯運動1" tvg-logo="" group-title="全网通港澳台",博斯運動1
+#EXTINF:-1 tvg-id="channel_88d2c046" tvg-name="博斯運動1" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/博斯運動1.png" group-title="全网通港澳台",博斯運動1
 http://iptv.4666888.xyz/iptv2A.php?id=6
 
-#EXTINF:-1 tvg-id="channel_4392" tvg-name="鳳凰中文" tvg-logo="" group-title="全网通港澳台",鳳凰中文
+#EXTINF:-1 tvg-id="channel_4df0f8f9" tvg-name="鳳凰中文" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/鳳凰中文.png" group-title="全网通港澳台",鳳凰中文
 http://iptv.4666888.xyz/iptv2A.php?id=27
 
-#EXTINF:-1 tvg-id="channel_3533" tvg-name="TVB翡翠" tvg-logo="" group-title="全网通港澳台",TVB翡翠
+#EXTINF:-1 tvg-id="channel_7157f879" tvg-name="TVB翡翠" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVB翡翠
 http://iptv.4666888.xyz/iptv2A.php?id=34
 
-#EXTINF:-1 tvg-id="channel_1536" tvg-name="TVB翡翠(馬來)" tvg-logo="" group-title="全网通港澳台",TVB翡翠(馬來)
+#EXTINF:-1 tvg-id="channel_ccdb2e7f" tvg-name="TVB翡翠(馬來)" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVB翡翠(馬來)
 http://iptv.4666888.xyz/iptv2A.php?id=28
 
-#EXTINF:-1 tvg-id="channel_2249" tvg-name="TVB明珠" tvg-logo="" group-title="全网通港澳台",TVB明珠
+#EXTINF:-1 tvg-id="channel_b3ef2974" tvg-name="TVB明珠" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVB明珠
 http://iptv.4666888.xyz/iptv2A.php?id=29
 
-#EXTINF:-1 tvg-id="TVBJ1" tvg-name="TVBJ1" tvg-logo="" group-title="全网通港澳台",TVBJ1
+#EXTINF:-1 tvg-id="TVBJ1" tvg-name="TVBJ1" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVBJ1
 http://iptv.4666888.xyz/iptv2A.php?id=26
 
-#EXTINF:-1 tvg-id="TVB1" tvg-name="TVB1" tvg-logo="" group-title="全网通港澳台",TVB1
+#EXTINF:-1 tvg-id="TVB1" tvg-name="TVB1" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVB1
 http://iptv.4666888.xyz/iptv2A.php?id=25
 
-#EXTINF:-1 tvg-id="channel_8882" tvg-name="千禧经典" tvg-logo="" group-title="全网通港澳台",千禧经典
+#EXTINF:-1 tvg-id="channel_2fad8f46" tvg-name="千禧经典" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/千禧经典.png" group-title="全网通港澳台",千禧经典
 http://iptv.4666888.xyz/iptv2A.php?id=22
 
-#EXTINF:-1 tvg-id="HOY77" tvg-name="HOY77" tvg-logo="" group-title="全网通港澳台",HOY77
+#EXTINF:-1 tvg-id="HOY77" tvg-name="HOY77" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/hoy77.png" group-title="全网通港澳台",HOY77
 http://iptv.4666888.xyz/iptv2A.php?id=35
 
-#EXTINF:-1 tvg-id="HOY78" tvg-name="HOY78" tvg-logo="" group-title="全网通港澳台",HOY78
+#EXTINF:-1 tvg-id="HOY78" tvg-name="HOY78" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/hoy78.png" group-title="全网通港澳台",HOY78
 http://iptv.4666888.xyz/iptv2A.php?id=31
 
-#EXTINF:-1 tvg-id="RTHK31" tvg-name="RTHK31" tvg-logo="" group-title="全网通港澳台",RTHK31
+#EXTINF:-1 tvg-id="RTHK31" tvg-name="RTHK31" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/香港国际.png" group-title="全网通港澳台",RTHK31
 http://iptv.4666888.xyz/iptv2A.php?id=23
 
-#EXTINF:-1 tvg-id="channel_3596" tvg-name="TVB娱乐新闻" tvg-logo="" group-title="全网通港澳台",TVB娱乐新闻
+#EXTINF:-1 tvg-id="channel_3598ddf5" tvg-name="TVB娱乐新闻" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVB娱乐新闻
 http://iptv.4666888.xyz/iptv2A.php?id=36
 
-#EXTINF:-1 tvg-id="channel_4688" tvg-name="MYTV黃金翡翠" tvg-logo="" group-title="全网通港澳台",MYTV黃金翡翠
+#EXTINF:-1 tvg-id="channel_371e20bb" tvg-name="MYTV黃金翡翠" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/mytv黃金翡翠.png" group-title="全网通港澳台",MYTV黃金翡翠
 http://iptv.4666888.xyz/iptv2A.php?id=32
 
-#EXTINF:-1 tvg-id="channel_2909" tvg-name="TVB翡翠劇集" tvg-logo="" group-title="全网通港澳台",TVB翡翠劇集
+#EXTINF:-1 tvg-id="channel_874e8f39" tvg-name="TVB翡翠劇集" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVB翡翠劇集
 http://iptv.4666888.xyz/iptv2A.php?id=33
 
-#EXTINF:-1 tvg-id="channel_3257" tvg-name="澳視澳門" tvg-logo="" group-title="全网通港澳台",澳視澳門
+#EXTINF:-1 tvg-id="channel_fa21f4b4" tvg-name="澳視澳門" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/澳視澳門.png" group-title="全网通港澳台",澳視澳門
 http://iptv.4666888.xyz/iptv2A.php?id=41
 
-#EXTINF:-1 tvg-id="channel_4776" tvg-name="TVBS新聞" tvg-logo="" group-title="全网通港澳台",TVBS新聞
+#EXTINF:-1 tvg-id="channel_63977ad8" tvg-name="TVBS新聞" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVBS新聞
 http://iptv.4666888.xyz/iptv2A.php?id=43
 
-#EXTINF:-1 tvg-id="channel_9094" tvg-name="非凡新闻" tvg-logo="" group-title="全网通港澳台",非凡新闻
+#EXTINF:-1 tvg-id="channel_8a4f70c5" tvg-name="非凡新闻" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/非凡新闻.png" group-title="全网通港澳台",非凡新闻
 http://iptv.4666888.xyz/iptv2A.php?id=44
 
-#EXTINF:-1 tvg-id="channel_5658" tvg-name="民视" tvg-logo="" group-title="全网通港澳台",民视
+#EXTINF:-1 tvg-id="channel_1f5cb7f8" tvg-name="民视" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/民视.png" group-title="全网通港澳台",民视
 http://iptv.4666888.xyz/iptv2A.php?id=55
 
-#EXTINF:-1 tvg-id="channel_3071" tvg-name="華藝中文" tvg-logo="" group-title="全网通港澳台",華藝中文
+#EXTINF:-1 tvg-id="channel_4b47ef84" tvg-name="華藝中文" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/華藝中文.png" group-title="全网通港澳台",華藝中文
 http://iptv.4666888.xyz/iptv2A.php?id=37
 
-#EXTINF:-1 tvg-id="channel_5941" tvg-name="爱奇艺" tvg-logo="" group-title="全网通港澳台",爱奇艺
+#EXTINF:-1 tvg-id="channel_c9ccbdce" tvg-name="爱奇艺" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/爱奇艺.png" group-title="全网通港澳台",爱奇艺
 http://iptv.4666888.xyz/iptv2A.php?id=21
 
-#EXTINF:-1 tvg-id="channel_9756" tvg-name="靖洋戏剧" tvg-logo="" group-title="全网通港澳台",靖洋戏剧
+#EXTINF:-1 tvg-id="channel_a4073006" tvg-name="靖洋戏剧" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/靖洋戏剧.png" group-title="全网通港澳台",靖洋戏剧
 http://iptv.4666888.xyz/iptv2A.php?id=42
 
-#EXTINF:-1 tvg-id="channel_7989" tvg-name="靖天电影" tvg-logo="" group-title="全网通港澳台",靖天电影
+#EXTINF:-1 tvg-id="channel_f61adc30" tvg-name="靖天电影" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/靖天电影.png" group-title="全网通港澳台",靖天电影
 http://iptv.4666888.xyz/iptv2A.php?id=56
 
-#EXTINF:-1 tvg-id="channel_6211" tvg-name="邵氏武侠" tvg-logo="" group-title="全网通港澳台",邵氏武侠
+#EXTINF:-1 tvg-id="channel_6202a49c" tvg-name="邵氏武侠" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/邵氏武侠.png" group-title="全网通港澳台",邵氏武侠
 http://iptv.4666888.xyz/iptv2A.php?id=40
 
-#EXTINF:-1 tvg-id="channel_2262" tvg-name="東森电影" tvg-logo="" group-title="全网通港澳台",東森电影
+#EXTINF:-1 tvg-id="channel_af305adf" tvg-name="東森电影" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/東森电影.png" group-title="全网通港澳台",東森电影
 http://iptv.4666888.xyz/iptv2A.php?id=48
 
-#EXTINF:-1 tvg-id="channel_6102" tvg-name="龍華电影" tvg-logo="" group-title="全网通港澳台",龍華电影
+#EXTINF:-1 tvg-id="channel_71e9ada2" tvg-name="龍華电影" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/龍華电影.png" group-title="全网通港澳台",龍華电影
 http://iptv.4666888.xyz/iptv2A.php?id=45
 
-#EXTINF:-1 tvg-id="channel_2451" tvg-name="民視綜藝" tvg-logo="" group-title="全网通港澳台",民視綜藝
+#EXTINF:-1 tvg-id="channel_bdf990e0" tvg-name="民視綜藝" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/民視綜藝.png" group-title="全网通港澳台",民視綜藝
 http://iptv.4666888.xyz/iptv2A.php?id=46
 
-#EXTINF:-1 tvg-id="channel_9461" tvg-name="TVBS精采" tvg-logo="" group-title="全网通港澳台",TVBS精采
+#EXTINF:-1 tvg-id="channel_d16f1ff4" tvg-name="TVBS精采" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVBS精采
 http://iptv.4666888.xyz/iptv2A.php?id=47
 
-#EXTINF:-1 tvg-id="channel_3028" tvg-name="邵氏电影" tvg-logo="" group-title="全网通港澳台",邵氏电影
+#EXTINF:-1 tvg-id="channel_c80cdce5" tvg-name="邵氏电影" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/邵氏电影.png" group-title="全网通港澳台",邵氏电影
 http://iptv.4666888.xyz/iptv2A.php?id=39
 
-#EXTINF:-1 tvg-id="channel_1949" tvg-name="東森洋片" tvg-logo="" group-title="全网通港澳台",東森洋片
+#EXTINF:-1 tvg-id="channel_4317e913" tvg-name="東森洋片" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/東森洋片.png" group-title="全网通港澳台",東森洋片
 http://iptv.4666888.xyz/iptv2A.php?id=45
 
-#EXTINF:-1 tvg-id="channel_2948" tvg-name="爱尔达综合" tvg-logo="" group-title="全网通港澳台",爱尔达综合
+#EXTINF:-1 tvg-id="channel_6d24885c" tvg-name="爱尔达综合" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/爱尔达综合.png" group-title="全网通港澳台",爱尔达综合
 http://iptv.4666888.xyz/iptv2A.php?id=49
 
-#EXTINF:-1 tvg-id="ROCK_Action" tvg-name="ROCK_Action" tvg-logo="" group-title="全网通港澳台",ROCK_Action
+#EXTINF:-1 tvg-id="ROCK_Action" tvg-name="ROCK_Action" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/中天.png" group-title="全网通港澳台",ROCK_Action
 http://iptv.4666888.xyz/iptv2A.php?id=50
 
-#EXTINF:-1 tvg-id="channel_3643" tvg-name="台视综合" tvg-logo="" group-title="全网通港澳台",台视综合
+#EXTINF:-1 tvg-id="channel_f2245618" tvg-name="台视综合" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/台视.png" group-title="全网通港澳台",台视综合
 http://iptv.4666888.xyz/iptv2A.php?id=51
 
-#EXTINF:-1 tvg-id="channel_1737" tvg-name="八度空间" tvg-logo="" group-title="全网通港澳台",八度空间
+#EXTINF:-1 tvg-id="channel_a2d4fbb8" tvg-name="八度空间" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/八度空间.png" group-title="全网通港澳台",八度空间
 http://iptv.4666888.xyz/iptv2A.php?id=52
 
-#EXTINF:-1 tvg-id="channel_1968" tvg-name="民视影剧" tvg-logo="" group-title="全网通港澳台",民视影剧
+#EXTINF:-1 tvg-id="channel_744de097" tvg-name="民视影剧" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/民视.png" group-title="全网通港澳台",民视影剧
 http://iptv.4666888.xyz/iptv2A.php?id=53
 
-#EXTINF:-1 tvg-id="channel_4245" tvg-name="中视经典" tvg-logo="" group-title="全网通港澳台",中视经典
+#EXTINF:-1 tvg-id="channel_d77f4a11" tvg-name="中视经典" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/中视.png" group-title="全网通港澳台",中视经典
 http://iptv.4666888.xyz/iptv2A.php?id=54
 
-#EXTINF:-1 tvg-id="channel_1064" tvg-name="Now体育台" tvg-logo="" group-title="全网通港澳台",Now体育台
+#EXTINF:-1 tvg-id="channel_195c5a10" tvg-name="Now体育台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/now体育台.png" group-title="全网通港澳台",Now体育台
 http://109.61.81.35:443/767/mpegts?token=1d8c18a3d377f5418d2501aa54082b60
 
-#EXTINF:-1 tvg-id="channel_3422" tvg-name="Now爆谷台" tvg-logo="" group-title="全网通港澳台",Now爆谷台
+#EXTINF:-1 tvg-id="channel_2f7f7306" tvg-name="Now爆谷台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/now爆谷台.png" group-title="全网通港澳台",Now爆谷台
 http://74.91.26.218:82/live/nowbg.m3u8
 
-#EXTINF:-1 tvg-id="channel_6842" tvg-name="Now星影台" tvg-logo="" group-title="全网通港澳台",Now星影台
+#EXTINF:-1 tvg-id="channel_909c4828" tvg-name="Now星影台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/now星影台.png" group-title="全网通港澳台",Now星影台
 http://74.91.26.218:82/live/nowxy.m3u8
 
-#EXTINF:-1 tvg-id="channel_4347" tvg-name="Now新闻台" tvg-logo="" group-title="全网通港澳台",Now新闻台
+#EXTINF:-1 tvg-id="channel_56ea1688" tvg-name="Now新闻台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/now新闻台.png" group-title="全网通港澳台",Now新闻台
 http://cdn.163189.xyz/163189/now
 
-#EXTINF:-1 tvg-id="POPC" tvg-name="POPC" tvg-logo="" group-title="全网通港澳台",POPC
+#EXTINF:-1 tvg-id="POPC" tvg-name="POPC" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/popc.png" group-title="全网通港澳台",POPC
 http://tl.061833.xyz/tl/popc
 
-#EXTINF:-1 tvg-id="AXN" tvg-name="AXN" tvg-logo="" group-title="全网通港澳台",AXN
+#EXTINF:-1 tvg-id="AXN" tvg-name="AXN" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/axn.png" group-title="全网通港澳台",AXN
 http://tl.061833.xyz/tl/axn
 
-#EXTINF:-1 tvg-id="channel_1435" tvg-name="无线新闻" tvg-logo="" group-title="全网通港澳台",无线新闻
+#EXTINF:-1 tvg-id="channel_5b0ef89e" tvg-name="无线新闻" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/无线新闻.png" group-title="全网通港澳台",无线新闻
 http://74.91.26.218:82/live/inews.m3u8
 
-#EXTINF:-1 tvg-id="CCM" tvg-name="CCM" tvg-logo="" group-title="全网通港澳台",CCM
+#EXTINF:-1 tvg-id="CCM" tvg-name="CCM" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/ccm.png" group-title="全网通港澳台",CCM
 http://74.91.26.218:82/live/tyjd.m3u8
 
-#EXTINF:-1 tvg-id="channel_481" tvg-name="TVB星河" tvg-logo="" group-title="全网通港澳台",TVB星河
+#EXTINF:-1 tvg-id="channel_b71ea0a9" tvg-name="TVB星河" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVB星河
 https://o11.163189.xyz/stream/live/tvbxh/
 
-#EXTINF:-1 tvg-id="channel_2249" tvg-name="TVB明珠" tvg-logo="" group-title="全网通港澳台",TVB明珠
+#EXTINF:-1 tvg-id="channel_b3ef2974" tvg-name="TVB明珠" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVB明珠
 https://mytv.cdn.loc.cc/o12.php?id=mzt
 
-#EXTINF:-1 tvg-id="TVBPlus" tvg-name="TVB Plus" tvg-logo="" group-title="全网通港澳台",TVB Plus
+#EXTINF:-1 tvg-id="TVBPlus" tvg-name="TVB Plus" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVB Plus
 https://o11.163189.xyz/stream/tvb/tvbp/
 
-#EXTINF:-1 tvg-id="TVBPlus" tvg-name="TVB Plus" tvg-logo="" group-title="全网通港澳台",TVB Plus
+#EXTINF:-1 tvg-id="TVBPlus" tvg-name="TVB Plus" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVB Plus
 http://74.91.26.218:82/live/j2.m3u8
 
-#EXTINF:-1 tvg-id="channel_284" tvg-name="TVBS新闻台" tvg-logo="" group-title="全网通港澳台",TVBS新闻台
+#EXTINF:-1 tvg-id="channel_6bbfa82b" tvg-name="TVBS新闻台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png" group-title="全网通港澳台",TVBS新闻台
 http://rihou.cc:555/tv/[FY]tvbS新闻
 
-#EXTINF:-1 tvg-id="channel_6214" tvg-name="千禧经典台" tvg-logo="" group-title="全网通港澳台",千禧经典台
+#EXTINF:-1 tvg-id="channel_86098baa" tvg-name="千禧经典台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/千禧经典台.png" group-title="全网通港澳台",千禧经典台
 https://o11.163189.xyz/stream/live/tvbc/
 
-#EXTINF:-1 tvg-id="channel_8480" tvg-name="翡翠台" tvg-logo="" group-title="全网通港澳台",翡翠台
+#EXTINF:-1 tvg-id="channel_ca9b1951" tvg-name="翡翠台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/翡翠台.png" group-title="全网通港澳台",翡翠台
 https://o11.163189.xyz/stream/tvb/fct4k/
 
-#EXTINF:-1 tvg-id="channel_2765" tvg-name="华丽翡翠台" tvg-logo="" group-title="全网通港澳台",华丽翡翠台
+#EXTINF:-1 tvg-id="channel_5e569334" tvg-name="华丽翡翠台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/翡翠台.png" group-title="全网通港澳台",华丽翡翠台
 https://o11.163189.xyz/stream/live/hlt/
 
-#EXTINF:-1 tvg-id="channel_8543" tvg-name="唐NTD" tvg-logo="" group-title="全网通港澳台",唐NTD
+#EXTINF:-1 tvg-id="channel_35ccfd04" tvg-name="唐NTD" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/唐ntd.png" group-title="全网通港澳台",唐NTD
 https://ntd02.akamaized.net/HD-NY/tracks-v3a1/mono.m3u8
 
-#EXTINF:-1 tvg-id="channel_6851" tvg-name="美亚电影台" tvg-logo="" group-title="全网通港澳台",美亚电影台
+#EXTINF:-1 tvg-id="channel_a4c5b4ec" tvg-name="美亚电影台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/美亚电影台.png" group-title="全网通港澳台",美亚电影台
 http://74.91.26.218:82/live/mydy.m3u8
 
-#EXTINF:-1 tvg-id="iQIYI" tvg-name="iQIYI" tvg-logo="" group-title="全网通港澳台",iQIYI
+#EXTINF:-1 tvg-id="iQIYI" tvg-name="iQIYI" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/iqiyi.png" group-title="全网通港澳台",iQIYI
 https://o11.163189.xyz/stream/live/iqiyi/
 
-#EXTINF:-1 tvg-id="AstroAEC" tvg-name="Astro AEC" tvg-logo="" group-title="全网通港澳台",Astro AEC
+#EXTINF:-1 tvg-id="AstroAEC" tvg-name="Astro AEC" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/astro_aec.png" group-title="全网通港澳台",Astro AEC
 https://o11.163189.xyz/stream/live/aec/
 
-#EXTINF:-1 tvg-id="AstroAOD" tvg-name="Astro AOD" tvg-logo="" group-title="全网通港澳台",Astro AOD
+#EXTINF:-1 tvg-id="AstroAOD" tvg-name="Astro AOD" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/astro_aod.png" group-title="全网通港澳台",Astro AOD
 https://o11.163189.xyz/stream/live/aod/
 
-#EXTINF:-1 tvg-id="channel_4048" tvg-name="ASTV亚洲卫视" tvg-logo="" group-title="全网通港澳台",ASTV亚洲卫视
+#EXTINF:-1 tvg-id="channel_3ca52a7e" tvg-name="ASTV亚洲卫视" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/astv亚洲卫视.png" group-title="全网通港澳台",ASTV亚洲卫视
 https://p2hs.vzan.com/slowlive/821481626725612419/live.m3u8
 
-#EXTINF:-1 tvg-id="channel_9657" tvg-name="星空卫视" tvg-logo="" group-title="全网通港澳台",星空卫视
+#EXTINF:-1 tvg-id="channel_bc420cf8" tvg-name="星空卫视" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/星空卫视.png" group-title="全网通港澳台",星空卫视
 http://iot-mqqt.111yao.cn:8080/live/diyp_xingkong.m3u8
 
-#EXTINF:-1 tvg-id="channel_3756" tvg-name="澳视澳门" tvg-logo="" group-title="全网通港澳台",澳视澳门
+#EXTINF:-1 tvg-id="channel_8d8e3996" tvg-name="澳视澳门" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/澳视澳门.png" group-title="全网通港澳台",澳视澳门
 http://r.jdshipin.com/n2YZI
 
-#EXTINF:-1 tvg-id="channel_3501" tvg-name="凤凰香港" tvg-logo="" group-title="全网通港澳台",凤凰香港
+#EXTINF:-1 tvg-id="channel_aff37a70" tvg-name="凤凰香港" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/凤凰香港.png" group-title="全网通港澳台",凤凰香港
 https://cdn9.163189.xyz/smt3.1.1.php?id=hkphoenix_twn
 
-#EXTINF:-1 tvg-id="channel_1748" tvg-name="凤凰中文" tvg-logo="" group-title="全网通港澳台",凤凰中文
+#EXTINF:-1 tvg-id="channel_20d2d963" tvg-name="凤凰中文" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/凤凰中文.png" group-title="全网通港澳台",凤凰中文
 http://61.184.46.85:85/tsfile/live/1029_1.m3u8?key=txiptv&playlive=1&authid=0
 
-#EXTINF:-1 tvg-id="channel_7653" tvg-name="凤凰资讯" tvg-logo="" group-title="全网通港澳台",凤凰资讯
+#EXTINF:-1 tvg-id="channel_c23cb91e" tvg-name="凤凰资讯" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/凤凰资讯.png" group-title="全网通港澳台",凤凰资讯
 https://cdn9.163189.xyz/smt3.1.1.php?id=phoenixinfo_hd
 
 #============================================================
 # 统计信息
 # 港澳台频道数: 66
-# 更新时间: 2026-02-05 02:27:48
+# 台标库: https://github.com/iptv-org/iptv/tree/master/logos
+# 备用台标库: https://github.com/fanmingming/live
+# 更新时间: 2026-02-05 02:33:26
 # GitHub Actions 自动生成
 #============================================================
