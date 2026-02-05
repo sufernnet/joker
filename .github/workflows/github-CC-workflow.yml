@@ -1,0 +1,139 @@
+name: Merge M3U and Generate CC
+
+on:
+  workflow_dispatch:  # 手动触发
+  schedule:
+    # 每天UTC时间00:00和12:00各运行一次（北京时间08:00和20:00）
+    - cron: '0 0,12 * * *'
+  push:
+    paths:
+      - 'BB.m3u'  # 当BB.m3u更新时也触发
+
+jobs:
+  merge-m3u:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+        
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+        
+    - name: Check for BB.m3u
+      id: check_bb
+      run: |
+        if [ -f "BB.m3u" ]; then
+          echo "BB.m3u存在"
+          echo "bb_exists=true" >> $GITHUB_OUTPUT
+          echo "bb_lines=$(wc -l < BB.m3u)" >> $GITHUB_OUTPUT
+        else
+          echo "BB.m3u不存在，将创建空的CC.m3u"
+          echo "bb_exists=false" >> $GITHUB_OUTPUT
+          echo "bb_lines=0" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Run merge script
+      id: merge
+      run: |
+        echo "开始执行M3U合并脚本..."
+        python merge_to_CC.py \
+          --url "https://stymei.sufern001.workers.dev/" \
+          --group "🔥全网通港澳台" \
+          --local "BB.m3u" \
+          --output "CC.m3u"
+        
+        # 检查输出文件
+        if [ -f "CC.m3u" ]; then
+          cc_lines=$(wc -l < CC.m3u)
+          echo "CC.m3u已创建，行数: $cc_lines"
+          echo "cc_lines=$cc_lines" >> $GITHUB_OUTPUT
+          echo "success=true" >> $GITHUB_OUTPUT
+        else
+          echo "CC.m3u创建失败"
+          echo "success=false" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+        
+    - name: Display CC.m3u info
+      if: steps.merge.outputs.success == 'true'
+      run: |
+        echo "CC.m3u文件信息:"
+        echo "================"
+        head -20 CC.m3u
+        echo "..."
+        echo "================"
+        echo "文件大小: $(wc -c < CC.m3u) 字节"
+        echo "总行数: $(wc -l < CC.m3u)"
+        
+        # 统计分组数量
+        genre_count=$(grep -c '#genre#' CC.m3u || true)
+        echo "分组数量: $genre_count"
+        
+        # 统计港澳台分组频道数
+        hk_tw_count=$(awk '/全网通港澳台,#genre#/{p=1;next} p&&/#genre#/{p=0} p' CC.m3u | grep -c '://' || true)
+        echo "全网通港澳台频道数: $hk_tw_count"
+        
+    - name: Commit CC.m3u
+      if: steps.merge.outputs.success == 'true'
+      run: |
+        # 配置git
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # 检查文件是否有变化
+        if git diff --quiet CC.m3u 2>/dev/null; then
+          echo "CC.m3u没有变化，无需提交"
+        else
+          echo "检测到CC.m3u变化，提交更新"
+          git add CC.m3u
+          git commit -m "Auto-update: Regenerate CC.m3u [skip ci]"
+          
+          # 尝试推送，忽略错误（可能没有权限）
+          git push origin HEAD:${{ github.ref_name }} || echo "推送失败（可能没有写权限）"
+        fi
+        
+    - name: Upload CC.m3u as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: CC-m3u-file
+        path: CC.m3u
+        retention-days: 7
+        
+    - name: Create summary
+      if: always()
+      run: |
+        echo "# M3U合并结果" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## 执行信息" >> $GITHUB_STEP_SUMMARY
+        echo "- **运行时间:** $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "- **触发方式:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        echo "## 文件状态" >> $GITHUB_STEP_SUMMARY
+        echo "- **输入文件:** BB.m3u" >> $GITHUB_STEP_SUMMARY
+        if ${{ steps.check_bb.outputs.bb_exists == 'true' }}; then
+          echo "  - ✅ 存在 (${{ steps.check_bb.outputs.bb_lines }} 行)" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "  - ⚠️ 不存在" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "- **输出文件:** CC.m3u" >> $GITHUB_STEP_SUMMARY
+        if ${{ steps.merge.outputs.success == 'true' }}; then
+          echo "  - ✅ 生成成功 (${{ steps.merge.outputs.cc_lines }} 行)" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "  - ❌ 生成失败" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        echo "## 数据源" >> $GITHUB_STEP_SUMMARY
+        echo "- **订阅链接:** https://stymei.sufern001.workers.dev/" >> $GITHUB_STEP_SUMMARY
+        echo "- **提取分组:** 🔥全网通港澳台 → 全网通港澳台" >> $GITHUB_STEP_SUMMARY
