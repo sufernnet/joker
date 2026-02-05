@@ -1,12 +1,14 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
 # CC.m3u - 自动生成（EPG+排序+过滤版）
-# 生成时间: 2026-02-05 03:09:47
+# 生成时间: 2026-02-05 03:25:29
 # 源地址: https://stymei.sufern001.workers.dev/
 # EPG地址: http://epg.51zmt.top:8000/e.xml
 # 提取分组: 🔥全网通港澳台, 🔮港澳台直播 → 全网通港澳台
 # 排序规则: 凤凰→NOW→TVB→HOY→VIUTV→其他
-# 过滤频道: SPOTV, GOODTV, GOOD2, 番薯111, 人间卫视, 唯心电视, 中旺电视, 生命电影, 唐人卫视, 香港卫视, 唐NTD, NTDTV, 新唐人
-# 唯一频道数: 98
+# 过滤频道: 共21个关键词
+# 新增剔除: 凤凰电影、C+、MoMoTV、DAZN1、DAZN2、ELEVEN体育1、ELEVEN体育2、爱奇艺
+# 唯一频道数: 90
+# 自动运行: 北京时间 06:00, 17:30
 # GitHub Actions 自动生成
 
 #============================================================
@@ -367,6 +369,7 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 # 全网通港澳台 (合并自: 🔥全网通港澳台, 🔮港澳台直播)
 # 说明：每个频道可能包含多个播放地址，播放器会自动选择可用源
 # 排序：凤凰系列→NOW系列→TVB系列→HOY系列→VIUTV系列→其他
+# 过滤：已剔除凤凰电影、C+、MoMoTV、DAZN1、DAZN2、ELEVEN体育1、ELEVEN体育2、爱奇艺等频道
 #============================================================
 
 # --- 凤凰系列 ---
@@ -383,10 +386,6 @@ http://r.jdshipin.com/0Rp07
 #EXTINF:-1 tvg-id="channel_aff37a70" tvg-name="凤凰香港" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/phoenix.hongkong.png" group-title="全网通港澳台",凤凰香港
 https://cdn9.163189.xyz/smt3.1.1.php?id=hkphoenix_twn
 http://r.jdshipin.com/yDoTN
-
-# --- 凤凰系列 ---
-#EXTINF:-1 tvg-id="channel_3ea54960" tvg-name="凤凰电影" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/phoenix.movie.png" group-title="全网通港澳台",凤凰电影
-http://iot-mqqt.111yao.cn:8080/live/diyp_fhdy.m3u8
 
 # --- NOW系列 ---
 #EXTINF:-1 tvg-id="channel_3de307bc" tvg-name="NOW体育台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/now.png" group-title="全网通港澳台",NOW体育台
@@ -470,8 +469,6 @@ http://php.jdshipin.com/TVOD/iptv.php?id=aod
 http://php.jdshipin.com/smt.php?id=Quanjia
 #EXTINF:-1 tvg-id="channel_0a1a9d91" tvg-name="AstroFootball" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",AstroFootball
 http://iptv.4666888.xyz/iptv2A.php?id=4
-#EXTINF:-1 tvg-id="channel_f2224ff9" tvg-name="C+" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",C+
-http://ottproxy2.ist.ooo/livehls/MOB-U1-NO/01.m3u8
 #EXTINF:-1 tvg-id="channel_29ca5e95" tvg-name="CCM" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",CCM
 http://74.91.26.218:82/live/tyjd.m3u8
 #EXTINF:-1 tvg-id="channel_9906695e" tvg-name="CH5" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",CH5
@@ -486,18 +483,8 @@ http://cdn6.163189.xyz/163189/ch5
 http://cdn6.163189.xyz/163189/ch8
 #EXTINF:-1 tvg-id="channel_4023a664" tvg-name="Channel U" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",Channel U
 http://cdn6.163189.xyz/163189/chu
-#EXTINF:-1 tvg-id="channel_3a10bc67" tvg-name="DAZN1" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",DAZN1
-rtmp://f13h.mine.nu/sat/tv731
-#EXTINF:-1 tvg-id="channel_dca699d0" tvg-name="DAZN2" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",DAZN2
-rtmp://f13h.mine.nu/sat/tv741
-#EXTINF:-1 tvg-id="channel_0ebea7db" tvg-name="ELEVEN体育1" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/sports.png" group-title="全网通港澳台",ELEVEN体育1
-rtmp://f13h.mine.nu/sat/tv731
-#EXTINF:-1 tvg-id="channel_7c41505a" tvg-name="ELEVEN体育2" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/sports.png" group-title="全网通港澳台",ELEVEN体育2
-rtmp://f13h.mine.nu/sat/tv741
 #EXTINF:-1 tvg-id="channel_371e20bb" tvg-name="MYTV黃金翡翠" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",MYTV黃金翡翠
 http://iptv.4666888.xyz/iptv2A.php?id=32
-#EXTINF:-1 tvg-id="channel_60cc75a9" tvg-name="MoMoTV" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",MoMoTV
-rtmp://f13h.mine.nu/sat/tv761
 #EXTINF:-1 tvg-id="channel_195c5a10" tvg-name="Now体育台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/sports.png" group-title="全网通港澳台",Now体育台
 http://109.61.81.35:443/767/mpegts?token=1d8c18a3d377f5418d2501aa54082b60
 #EXTINF:-1 tvg-id="channel_56ea1688" tvg-name="Now新闻台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/news.png" group-title="全网通港澳台",Now新闻台
@@ -574,8 +561,6 @@ http://php.jdshipin.com/TVOD/iptv.php?id=as
 http://cdn6.163189.xyz/163189/amty
 #EXTINF:-1 tvg-id="channel_d04f05c8" tvg-name="澳门综艺" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",澳门综艺
 http://cdn6.163189.xyz/163189/amzy
-#EXTINF:-1 tvg-id="channel_c9ccbdce" tvg-name="爱奇艺" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",爱奇艺
-http://iptv.4666888.xyz/iptv2A.php?id=21
 #EXTINF:-1 tvg-id="channel_6d24885c" tvg-name="爱尔达综合" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",爱尔达综合
 http://iptv.4666888.xyz/iptv2A.php?id=49
 #EXTINF:-1 tvg-id="channel_c0331d87" tvg-name="纬来体育" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/sports.png" group-title="全网通港澳台",纬来体育
@@ -609,15 +594,16 @@ http://iptv.4666888.xyz/iptv2A.php?id=45
 #============================================================
 # 统计信息
 # 本地频道数: 79
-# 港澳台唯一频道数: 98
-# 港澳台播放源总数: 115
+# 港澳台唯一频道数: 90
+# 港澳台播放源总数: 107
 # 频道系列分布:
-#   凤凰: 4个频道
+#   凤凰: 3个频道
 #   NOW: 3个频道
 #   TVB: 17个频道
 #   HOY: 2个频道
 #   VIUTV: 1个频道
-#   其他: 71个频道
-# 更新时间: 2026-02-05 03:09:47
+#   其他: 64个频道
+# 更新时间: 2026-02-05 03:25:29
 # EPG节目单: 已集成，播放器会自动加载
+# 过滤规则: 已剔除凤凰电影等8个新增频道
 #============================================================
