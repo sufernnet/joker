@@ -1,17 +1,14 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
 # CC.m3u - 自动生成（EPG+排序+过滤+合并版）
-<<<<<<< Updated upstream
-# 生成时间: 2026-02-05 03:40:14
-=======
-# 生成时间: 2026-02-05 03:40:20
->>>>>>> Stashed changes
+# 生成时间: 2026-02-05 04:23:05
 # 源地址: https://stymei.sufern001.workers.dev/
 # EPG地址: http://epg.51zmt.top:8000/e.xml
 # 提取分组: 🔥全网通港澳台, 🔮港澳台直播 → 全网通港澳台
 # 排序规则: 凤凰→NOW→TVB→HOY→VIUTV→爆谷→星影台→其他
-# 频道合并: NOW相关频道统一为NOW，凤凰中文添加特殊链接
+# 频道合并: 凤凰中文完全合并，NOW相关频道统一为NOW
+# 特殊链接: 凤凰中文已添加倒数第二个链接及其他优质链接
 # 过滤频道: 共21个关键词
-# 唯一频道数: 84
+# 唯一频道数: 86
 # 自动运行: 北京时间 06:00, 17:30
 # GitHub Actions 自动生成
 
@@ -373,16 +370,17 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 # 全网通港澳台 (合并自: 🔥全网通港澳台, 🔮港澳台直播)
 # 说明：每个频道可能包含多个播放地址，播放器会自动选择可用源
 # 排序：凤凰系列→NOW系列→TVB系列→HOY系列→VIUTV系列→爆谷台→星影台→其他
-# 合并：NOW直播台、NOW新闻台等统一合并为NOW频道
-# 链接：凤凰中文已添加特殊优质链接
+# 合并：凤凰中文完全合并，NOW直播台、NOW新闻台等统一合并为NOW频道
+# 链接：凤凰中文已合并倒数第二个链接并添加特殊优质链接
 #============================================================
 
-# --- 凤凰系列 ---
+# --- 凤凰系列（已完全合并） ---
 #EXTINF:-1 tvg-id="channel_20d2d963" tvg-name="凤凰中文" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/phoenix.chinese.png" group-title="全网通港澳台",凤凰中文
 http://61.184.46.85:85/tsfile/live/1029_1.m3u8?key=txiptv&playlive=1&authid=0
 http://r.jdshipin.com/cCCzW
 http://iptv.4666888.xyz/iptv2A.php?id=45
-# ↑ 以上为凤凰中文特殊优质链接
+# ↑ 倒数第二个凤凰中文链接（已合并）
+# ↑ 凤凰中文特殊优质链接（共3个源）
 
 # --- 凤凰系列 ---
 #EXTINF:-1 tvg-id="channel_c23cb91e" tvg-name="凤凰资讯" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/phoenix.infonews.png" group-title="全网通港澳台",凤凰资讯
@@ -395,15 +393,9 @@ https://cdn9.163189.xyz/smt3.1.1.php?id=hkphoenix_twn
 http://r.jdshipin.com/yDoTN
 
 # --- NOW系列（合并所有NOW相关频道） ---
-<<<<<<< Updated upstream
-# 合并自: NOW直播台, NOW体育台, Now星影台, ...等6个频道
-=======
-# 合并自: Now星影台, NOW直播台, Now新闻台, ...等6个频道
->>>>>>> Stashed changes
+# 合并自: NOW体育台, NOW直播台, Now体育台, ...等4个频道
 #EXTINF:-1 tvg-id="channel_3dce1fce" tvg-name="NOW" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/now.png" group-title="全网通港澳台",NOW
 http://109.61.81.35:443/767/mpegts?token=1d8c18a3d377f5418d2501aa54082b60
-http://74.91.26.218:82/live/nowbg.m3u8
-http://74.91.26.218:82/live/nowxy.m3u8
 http://cdn.163189.xyz/163189/now
 http://rihou.cc:555/tv/[Mt]Now直播
 http://rihou.cc:555/tv/[Mt]Now体育
@@ -467,6 +459,14 @@ http://iptv.4666888.xyz/iptv2A.php?id=31
 # --- VIUTV系列 ---
 #EXTINF:-1 tvg-id="channel_981e5c1c" tvg-name="VIUTV" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/viutv.png" group-title="全网通港澳台",VIUTV
 https://cdn.163189.xyz/163189/viu
+
+# --- 爆谷台 ---
+#EXTINF:-1 tvg-id="channel_2f7f7306" tvg-name="Now爆谷台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/popcorn.png" group-title="全网通港澳台",Now爆谷台
+http://74.91.26.218:82/live/nowbg.m3u8
+
+# --- 星影台 ---
+#EXTINF:-1 tvg-id="channel_909c4828" tvg-name="Now星影台" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/starmovie.png" group-title="全网通港澳台",Now星影台
+http://74.91.26.218:82/live/nowxy.m3u8
 
 # --- 其他频道 ---
 #EXTINF:-1 tvg-id="channel_3ca52a7e" tvg-name="ASTV亚洲卫视" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="全网通港澳台",ASTV亚洲卫视
@@ -599,20 +599,19 @@ http://iptv.4666888.xyz/iptv2A.php?id=45
 #============================================================
 # 统计信息
 # 本地频道数: 79
-# 港澳台唯一频道数: 84
+# 港澳台唯一频道数: 86
 # 港澳台播放源总数: 107
 # 频道系列分布:
 #   凤凰: 3个频道
-#   NOW: 1个频道 (合并自6个相关频道)
+#   NOW: 1个频道 (合并自4个相关频道)
 #   TVB: 17个频道
 #   HOY: 2个频道
 #   VIUTV: 1个频道
+#   爆谷台: 1个频道
+#   星影台: 1个频道
 #   其他: 60个频道
-<<<<<<< Updated upstream
-# 更新时间: 2026-02-05 03:40:14
-=======
-# 更新时间: 2026-02-05 03:40:20
->>>>>>> Stashed changes
+# 更新时间: 2026-02-05 04:23:05
 # EPG节目单: 已集成，播放器会自动加载
-# 特殊功能: NOW频道合并、凤凰中文特殊链接、爆谷/星影台排序
+# 特殊功能: 凤凰中文完全合并、NOW频道合并、爆谷/星影台排序
+# 倒数第二个凤凰中文链接: 已成功合并
 #============================================================
