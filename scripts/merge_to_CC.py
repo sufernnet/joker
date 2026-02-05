@@ -4,160 +4,156 @@
 """
 
 import requests
-import re
 import sys
 import os
-import argparse
 from datetime import datetime
-import traceback
 
-def extract_group_from_url(url, target_group_name):
-    """从订阅链接中提取指定分组的内容"""
+print("=" * 70)
+print("🚀 开始执行 M3U 合并脚本")
+print("=" * 70)
+
+# 打印基本信息
+print(f"📂 当前工作目录: {os.getcwd()}")
+print(f"📁 脚本位置: {os.path.abspath(__file__)}")
+print(f"📊 Python 版本: {sys.version}")
+print("=" * 70)
+
+def extract_group_from_url():
+    """从订阅链接中提取港澳台分组"""
     try:
-        print(f"📡 正在从 {url} 获取数据...")
+        url = "https://stymei.sufern001.workers.dev/"
+        print(f"🌐 正在从 {url} 获取数据...")
+        
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
-        response = requests.get(url, timeout=30, headers=headers)
+        
+        response = requests.get(url, headers=headers, timeout=30)
         response.raise_for_status()
+        
         content = response.text
+        print(f"✅ 获取数据成功，长度: {len(content)} 字符")
         
-        print(f"✅ 数据获取成功，长度: {len(content)} 字符")
-        
-        # 搜索分组
+        # 查找目标分组
         lines = content.split('\n')
-        extracted_channels = []
-        found_group = False
-        capture_started = False
+        channels = []
+        in_target_group = False
         
-        for i, line in enumerate(lines):
+        for line in lines:
             line = line.strip()
             if not line:
                 continue
                 
-            # 检查是否为分组标题行
-            if '#genre#' in line:
-                if target_group_name in line:
-                    found_group = True
-                    capture_started = True
-                    print(f"🎯 找到目标分组: {line}")
-                    continue
-                elif capture_started:
-                    # 遇到下一个分组，停止捕获
-                    break
-            
-            # 如果已开始捕获目标分组，收集频道行
-            if capture_started and line and ',' in line:
-                # 检查是否是有效的频道行（频道名称,URL）
-                parts = line.split(',')
-                if len(parts) >= 2 and ('://' in parts[-1] or parts[-1].startswith('http')):
-                    extracted_channels.append(line)
+            # 查找目标分组
+            if '🔥全网通港澳台,#genre#' in line:
+                print(f"🎯 找到目标分组: {line}")
+                in_target_group = True
+                continue
+                
+            # 如果在下个分组开始，停止收集
+            if in_target_group and line.endswith(',#genre#'):
+                break
+                
+            # 收集频道
+            if in_target_group and ',' in line and '://' in line.split(',')[-1]:
+                channels.append(line)
         
-        if found_group:
-            print(f"✅ 成功提取到 {len(extracted_channels)} 个频道")
-            return "全网通港澳台,#genre#", extracted_channels
+        if channels:
+            print(f"✅ 提取到 {len(channels)} 个港澳台频道")
+            return channels
         else:
-            print(f"⚠️  未找到分组: {target_group_name}")
+            print("⚠️  未提取到港澳台频道")
+            # 显示前几个分组供调试
             print("找到的分组有:")
+            count = 0
             for line in lines:
                 if '#genre#' in line:
                     print(f"  - {line}")
-            return None, []
+                    count += 1
+                    if count >= 5:
+                        break
+            return []
             
-    except requests.RequestException as e:
-        print(f"❌ 网络请求失败: {e}")
-        return None, []
     except Exception as e:
         print(f"❌ 提取失败: {e}")
-        return None, []
+        import traceback
+        traceback.print_exc()
+        return []
 
-def load_local_m3u(filepath):
-    """加载本地M3U文件"""
+def load_local_m3u():
+    """加载本地BB.m3u文件"""
     try:
-        # 转换为绝对路径
-        if not os.path.isabs(filepath):
-            filepath = os.path.join(os.getcwd(), filepath)
-        
-        print(f"📂 尝试加载本地文件: {filepath}")
+        filepath = "BB.m3u"
+        print(f"\n📖 正在加载本地文件: {filepath}")
         
         if not os.path.exists(filepath):
-            print(f"⚠️  文件不存在: {filepath}")
-            # 创建基本的M3U结构
-            return ["#EXTM3U", "# 自动生成的BB.m3u文件"]
+            print(f"⚠️  {filepath} 不存在，创建空文件")
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write("#EXTM3U\n")
+                f.write("# 自动创建的本地文件\n")
+            return []
         
         with open(filepath, 'r', encoding='utf-8') as f:
             content = f.read()
         
         lines = [line.rstrip() for line in content.split('\n') if line.strip()]
-        print(f"✅ 已加载本地文件，{len(lines)} 行")
+        print(f"✅ 加载成功，共 {len(lines)} 行")
         return lines
-    except Exception as e:
-        print(f"❌ 加载失败: {e}")
-        return ["#EXTM3U", f"# 错误: 无法加载 {filepath}"]
-
-def merge_and_save(local_content, group_header, channels, output_file):
-    """合并内容并保存"""
-    try:
-        # 确保输出路径是绝对路径
-        if not os.path.isabs(output_file):
-            output_file = os.path.join(os.getcwd(), output_file)
         
-        print(f"\n💾 准备生成文件: {output_file}")
-        print(f"   当前工作目录: {os.getcwd()}")
+    except Exception as e:
+        print(f"❌ 加载本地文件失败: {e}")
+        return []
+
+def save_cc_m3u(local_lines, hk_channels):
+    """保存CC.m3u文件"""
+    try:
+        output_file = "CC.m3u"
+        print(f"\n💾 正在生成: {output_file}")
         
         output_lines = []
         
-        # 添加M3U头
+        # M3U头
         output_lines.append("#EXTM3U")
         output_lines.append(f"# 生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        output_lines.append(f"# 工具: merge_to_CC.py")
-        output_lines.append(f"# 源URL: https://stymei.sufern001.workers.dev/")
+        output_lines.append("# 来源: https://stymei.sufern001.workers.dev/")
         output_lines.append("")
         
-        # 添加本地内容（如果有）
-        if local_content and len(local_content) > 0:
-            print(f"📝 添加本地内容: {len(local_content)} 行")
-            # 跳过已存在的EXTM3U头
-            extm3u_found = False
-            for line in local_content:
-                if line.strip() == "#EXTM3U":
-                    if not extm3u_found:
-                        extm3u_found = True
-                        continue
+        # 本地内容
+        if local_lines:
+            print(f"📝 添加本地内容: {len(local_lines)} 行")
+            # 跳过第一个#EXTM3U
+            added = False
+            for line in local_lines:
+                if line.strip() == "#EXTM3U" and not added:
+                    added = True
+                    continue
                 output_lines.append(line)
             output_lines.append("")
         
-        # 添加提取的分组
-        if group_header and channels and len(channels) > 0:
-            print(f"📺 添加提取分组: {len(channels)} 个频道")
-            output_lines.append("#" + "="*60)
-            output_lines.append("# 全网通港澳台频道（从源URL提取）")
-            output_lines.append("#" + "="*60)
-            output_lines.append(group_header)
-            for channel in channels:
+        # 港澳台分组
+        if hk_channels:
+            print(f"📺 添加港澳台分组: {len(hk_channels)} 个频道")
+            output_lines.append("#" + "=" * 50)
+            output_lines.append("# 全网通港澳台频道")
+            output_lines.append("#" + "=" * 50)
+            output_lines.append("全网通港澳台,#genre#")
+            for channel in hk_channels:
                 output_lines.append(channel)
         
-        # 确保输出目录存在
-        output_dir = os.path.dirname(output_file)
-        if output_dir and not os.path.exists(output_dir):
-            os.makedirs(output_dir, exist_ok=True)
-        
         # 写入文件
-        print(f"🔄 写入文件到: {output_file}")
         with open(output_file, 'w', encoding='utf-8', newline='\n') as f:
             f.write('\n'.join(output_lines))
         
-        # 验证文件已创建
+        # 验证
         if os.path.exists(output_file):
             file_size = os.path.getsize(output_file)
-            line_count = len(output_lines)
-            print(f"\n🎉 文件创建成功!")
-            print(f"   📍 文件路径: {output_file}")
-            print(f"   📊 文件大小: {file_size} 字节")
-            print(f"   📄 总行数: {line_count}")
+            print(f"\n🎉 {output_file} 生成成功!")
+            print(f"   位置: {os.path.abspath(output_file)}")
+            print(f"   大小: {file_size} 字节")
+            print(f"   行数: {len(output_lines)}")
             
-            # 显示文件部分内容
-            print(f"\n📋 文件前10行内容:")
+            # 显示文件内容
+            print("\n📋 文件前10行:")
             with open(output_file, 'r', encoding='utf-8') as f:
                 for i, line in enumerate(f):
                     if i < 10:
@@ -167,73 +163,43 @@ def merge_and_save(local_content, group_header, channels, output_file):
             
             return True
         else:
-            print(f"❌ 文件创建失败! 路径: {output_file}")
-            print(f"   当前目录内容:")
-            for item in os.listdir('.'):
-                print(f"   - {item}")
+            print(f"❌ 文件未生成!")
             return False
-        
+            
     except Exception as e:
         print(f"❌ 保存失败: {e}")
+        import traceback
         traceback.print_exc()
         return False
 
 def main():
     """主函数"""
-    parser = argparse.ArgumentParser(description='提取订阅链接分组并合并到CC.m3u')
-    parser.add_argument('--url', default='https://stymei.sufern001.workers.dev/',
-                       help='订阅链接URL')
-    parser.add_argument('--group', default='🔥全网通港澳台',
-                       help='要提取的分组名称')
-    parser.add_argument('--local', default='BB.m3u',
-                       help='本地M3U文件')
-    parser.add_argument('--output', default='CC.m3u',
-                       help='输出文件')
+    print("\n" + "=" * 70)
+    print("🔄 开始处理流程")
+    print("=" * 70)
     
-    args = parser.parse_args()
+    # 1. 提取港澳台频道
+    hk_channels = extract_group_from_url()
     
-    print("="*70)
-    print("🔄 M3U合并工具 - 生成 CC.m3u")
-    print("="*70)
-    print(f"🏠 工作目录: {os.getcwd()}")
-    print(f"🐍 脚本位置: {os.path.abspath(__file__)}")
-    print(f"📥 本地文件: {args.local}")
-    print(f"📤 输出文件: {args.output}")
-    print(f"🌐 源URL: {args.url}")
-    print(f"🏷️  提取分组: {args.group}")
-    print("="*70)
+    # 2. 加载本地文件
+    local_lines = load_local_m3u()
     
-    # 提取分组
-    group_header, channels = extract_group_from_url(args.url, args.group)
+    # 3. 保存CC.m3u
+    success = save_cc_m3u(local_lines, hk_channels)
     
-    # 加载本地文件
-    local_content = load_local_m3u(args.local)
-    
-    # 合并保存
-    print("\n" + "="*70)
-    success = merge_and_save(local_content, group_header, channels, args.output)
-    
-    # 最终检查
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     if success:
-        # 再次确认文件存在
-        if os.path.exists(args.output):
-            with open(args.output, 'r', encoding='utf-8') as f:
-                lines = f.readlines()
-            print(f"✅ 最终确认: {args.output} 已成功生成")
-            print(f"   文件位置: {os.path.abspath(args.output)}")
-            print(f"   实际行数: {len(lines)}")
-            print("🎊 任务完成!")
-        else:
-            print(f"⚠️  警告: 文件 {args.output} 不存在于预期位置")
-            print("当前目录内容:")
-            for item in os.listdir('.'):
-                print(f"  - {item}")
+        print("✅ 任务完成!")
+        # 列出当前目录
+        print("\n📁 当前目录文件:")
+        for item in os.listdir('.'):
+            if item.endswith('.m3u') or item == 'scripts':
+                print(f"   - {item}")
     else:
         print("❌ 任务失败")
         sys.exit(1)
     
-    print("="*70)
+    print("=" * 70)
 
 if __name__ == "__main__":
     main()
