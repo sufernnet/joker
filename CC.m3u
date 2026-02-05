@@ -1,235 +1,569 @@
 #EXTM3U
-# CC.m3u - 生成时间: 2026-02-05 02:18:26
+# CC.m3u - 标准M3U格式
+# 生成时间: 2026-02-05 02:27:18
 # 源URL: https://stymei.sufern001.workers.dev/
 # 提取分组: 🔥全网通港澳台 -> 全网通港澳台
+# 频道总数: 66 个港澳台频道
+
+#============================================================
+# 本地频道
+#============================================================
 
 #EXTM3U url-tvg="https://epg.112114.xyz/pp.xml"
+
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV2" tvg-name="CCTV2" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV2.png" group-title="央视",CCTV2
 http://124.90.44.40:6060/010/2/00000001000000060000000000000471?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV3" tvg-name="CCTV3" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV3.png" group-title="央视",CCTV3
 http://124.90.44.40:6060/010/2/00000001000000060000000000000642?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV4" tvg-name="CCTV4" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4.png" group-title="央视",CCTV4
 http://124.90.44.40:6060/010/2/00000009000000060000000000002077?AuthInfo=z65J6ZDNYqti%2F6F%2BPX%2BzfKPQRt%2FPjzMSkozGSNJ866M5ClWLEgr2w%2FyaoOVDLtcRIuYreqxL1izhEYmHsZHZ4tlsMiU76bF1Tbh0JdAOKAM%3D&version=v1.0&BreakPoint=0&virtualDomain=010.live_hls.zte.com&programid=ch00000000000000001392&boid=001&contentid=ch00000000000000001392&stbid=00000433002420502508E81711206E58&terminalflag=1&videoid=ch00000090990000001378&userid=057401350507&recommendtype=0
+
 #EXTINF:-1 tvg-id="CCTV5" tvg-name="CCTV5" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV5.png" group-title="央视",CCTV5
 http://124.90.44.40:6060/010/2/00000001000000060000000000000643?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV5+" tvg-name="CCTV5+" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV5+.png" group-title="央视",CCTV5+
 http://124.90.44.40:6060/010/2/00000001000000060000000000000788?AuthInfo=z65J6ZDNYqti%2F6F%2BPX%2BzfKPQRt%2FPjzMSkozGSNJ866M5ClWLEgr2w%2FyaoOVDLtcRHeaXnTVxdXKTwjEYXPsrMdlsMiU76bF1Tbh0JdAOKAM%3D&version=v1.0&BreakPoint=0&virtualDomain=010.live_hls.zte.com&programid=ch00000000000000001376&boid=001&contentid=ch00000000000000001376&stbid=00000433002420502508E81711206E58&terminalflag=1&videoid=ch00000090990000001366&userid=057401350507&recommendtype=0"
+
 #EXTINF:-1 tvg-id="CCTV6" tvg-name="CCTV6" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV6.png" group-title="央视",CCTV6
 http://124.90.44.40:6060/010/2/00000001000000060000000000000644?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV7" tvg-name="CCTV7" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV7.png" group-title="央视",CCTV7
 http://124.90.44.40:6060/010/2/00000001000000060000000000000472?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV8" tvg-name="CCTV8" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV8.png" group-title="央视",CCTV8
 http://124.90.44.40:6060/010/2/00000001000000060000000000000645?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV9" tvg-name="CCTV9" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV9.png" group-title="央视",CCTV9
 http://124.90.44.40:6060/010/2/00000001000000060000000000000473?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV10" tvg-name="CCTV10" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV10.png" group-title="央视",CCTV10
 http://124.90.44.40:6060/010/2/00000001000000060000000000000474?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV11" tvg-name="CCTV11" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV11.png" group-title="央视",CCTV11
 http://124.93.18.238:81/hls/11/index.m3u8
+
 #EXTINF:-1 tvg-id="CCTV12" tvg-name="CCTV12" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV12.png" group-title="央视",CCTV12
 http://124.90.44.40:6060/010/2/00000001000000060000000000000476?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV13" tvg-name="CCTV13" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV13.png" group-title="央视",CCTV13
 http://124.90.44.40:6060/010/2/00000001000000060000000000000793?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV14" tvg-name="CCTV14" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV14.png" group-title="央视",CCTV14
 http://124.90.44.40:6060/010/2/00000001000000060000000000000477?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV15" tvg-name="CCTV15" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV15.png" group-title="央视",CCTV15
 http://124.93.18.238:81/hls/15/index.m3u8
+
 #EXTINF:-1 tvg-id="CCTV16" tvg-name="CCTV16" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV16.png" group-title="央视",CCTV16
 http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="CCTV17" tvg-name="CCTV17" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV17.png" group-title="央视",CCTV17
 http://39.164.138.145:8899/hls/17/index.m3u8
+
 #EXTINF:-1 tvg-id="cctv4k" tvg-name="cctv4k" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
 http://www.520345.xyz:8188/rtp/239.69.1.111:10304?
+
 #EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/BJ4K.png" group-title="4K",北京卫视
 http://124.90.44.40:6060/010/2/01000010000000060000000000002865?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="东方卫视" tvg-name="东方卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/DF4K.png" group-title="4K",东方卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002067?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="湖南卫视" tvg-name="湖南卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/HN4K.png" group-title="4K",湖南卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002069?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="江苏卫视" tvg-name="江苏卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/JS4K.png" group-title="4K",江苏卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002071?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="深圳卫视" tvg-name="深圳卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/SZ4K.png" group-title="4K",深圳卫视
 http://124.90.44.40:6060/010/2/01000010000000060000000000002878?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="浙江卫视" tvg-name="浙江卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/ZJ4K.png" group-title="4K",浙江卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002065?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="广东卫视" tvg-name="广东卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/GD4K.png" group-title="4K",广东卫视
 http://124.90.44.40:6060/010/2/01000010000000060000000000002877?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="四川卫视" tvg-name="四川卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/SC4K.png" group-title="4K",四川卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002075?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="山东卫视" tvg-name="山东卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/SD4K.png" group-title="4K",山东卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002073?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="浙江卫视" tvg-name="浙江卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/zhejiang.png" group-title="卫视",浙江卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000392?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="东方卫视" tvg-name="东方卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/dongfang.png" group-title="卫视",东方卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000478?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="湖南卫视" tvg-name="湖南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/hunan.png" group-title="卫视",湖南卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000394?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/beijing.png" group-title="卫视",北京卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000449?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="北京纪实" tvg-name="北京纪实" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/BJJS.png" group-title="卫视",北京纪实
 http://124.90.44.40:6060/010/2/01000010000000060000000000002855?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="江苏卫视" tvg-name="江苏卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/jiangsu.png" group-title="卫视",江苏卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000450?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="深圳卫视" tvg-name="深圳卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/shenzhen.png" group-title="卫视",深圳卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000393?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="天津卫视" tvg-name="天津卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/tianjin.png" group-title="卫视",天津卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000365?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="重庆卫视" tvg-name="重庆卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/chongqing.png" group-title="卫视",重庆卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000585?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="广东卫视" tvg-name="广东卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/guangdong.png" group-title="卫视",广东卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000395?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="江西卫视" tvg-name="江西卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/jiangxi.png" group-title="卫视",江西卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000587?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="东南卫视" tvg-name="东南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/dongnan.png" group-title="卫视",东南卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000588?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="湖北卫视" tvg-name="湖北卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/hubei.png" group-title="卫视",湖北卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000461?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="辽宁卫视" tvg-name="辽宁卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/liaoning.png" group-title="卫视",辽宁卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000583?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="山东卫视" tvg-name="山东卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/shandong.png" group-title="卫视",山东卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000436?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="黑龙江卫视" tvg-name="黑龙江卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/heilongjiang.png" group-title="卫视",黑龙江卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000462?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="河北卫视" tvg-name="河北卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/hebei.png" group-title="卫视",河北卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000582?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="四川卫视" tvg-name="四川卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/sichuan.png" group-title="卫视",四川卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000581?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="贵州卫视" tvg-name="贵州卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/guizhou.png" group-title="卫视",贵州卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000584?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="云南卫视" tvg-name="云南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/yunnan.png" group-title="卫视",云南卫视
 http://124.90.44.40:6060/010/2/20002000000000010000000002776036?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="安徽卫视" tvg-name="安徽卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/anhui.png" group-title="卫视",安徽卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000459?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="河南卫视" tvg-name="河南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/henan.png" group-title="卫视",河南卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000586?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="广西卫视" tvg-name="广西卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/guangxi.png" group-title="卫视",广西卫视
 http://124.90.44.40:6060/010/2/20002000000000010000000002776028?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="甘肃卫视" tvg-name="甘肃卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/gansu.png" group-title="卫视",甘肃卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000594?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="海南卫视" tvg-name="海南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/lvyou.png" group-title="卫视",海南卫视
 http://124.90.44.40:6060/010/2/20002000000000010000000002776012?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="青海卫视" tvg-name="青海卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/qinghai.png" group-title="卫视",青海卫视
 http://124.90.44.40:6060/010/2/20002000000000010000000002775980?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="吉林卫视" tvg-name="吉林卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/jilin.png" group-title="卫视",吉林卫视
 http://124.90.44.40:6060/010/2/20002000000000010000000002776032?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="山西卫视" tvg-name="山西卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/shanxi_.png" group-title="卫视",山西卫视
 http://124.90.44.40:6060/010/2/20002000000000010000000002776020?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="内蒙古卫视" tvg-name="内蒙古卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/neimeng.png" group-title="卫视",内蒙古卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000593?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="陕西卫视" tvg-name="陕西卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/shanxi.png" group-title="卫视",陕西卫视
 http://124.90.44.40:6060/010/2/20002000000000010000000002776000?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="新疆卫视" tvg-name="新疆卫视" tvg-logo="https://epg.112114.xyz/logo/xinjiang.png" group-title="卫视",新疆卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002051?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="西藏卫视" tvg-name="西藏卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/xizang.png" group-title="卫视",西藏卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002057?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="兵团卫视" tvg-name="兵团卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/bingtuan.png" group-title="卫视",兵团卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002055?virtualDomain=010.live_hls.zte.com
+
+
 #EXTINF:-1 tvg-id="民生休闲" tvg-name="民生休闲" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/浙江民生.png" group-title="浙江",民生休闲
 http://124.90.44.40:6060/010/2/00000001000000060000000000000578?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="浙江少儿" tvg-name="浙江少儿" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/浙江少儿.png" group-title="浙江",浙江少儿
 http://124.90.44.40:6060/010/2/00000001000000060000000000000580?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="宁波综合" tvg-name="宁波综合" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/宁波新闻综合.png" group-title="浙江",宁波综合
 http://124.90.44.40:6060/010/2/00000001000000060000000000000600?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="宁波生活" tvg-name="宁波生活" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/宁波经济生活.png" group-title="浙江",宁波生活
 http://124.90.44.40:6060/010/2/00000001000000060000000000000789?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="宁波都市" tvg-name="宁波都市" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/宁波都市文体.png" group-title="浙江",宁波都市
 http://124.90.44.40:6060/010/2/00000001000000060000000000000790?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="宁波影视" tvg-name="宁波影视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/宁波影视剧.png" group-title="浙江",宁波影视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000791?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="衢州一套" tvg-name="衢州一套" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/衢州新闻综合.png" group-title="浙江",衢州一套
 http://124.90.44.40:6060/010/2/01000010000000060000000000002837?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="衢州二套" tvg-name="衢州二套" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/衢州公共.png" group-title="浙江",衢州二套
 http://124.90.44.40:6060/010/2/01000010000000060000000000002838?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="之江记录" tvg-name="之江记录" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/之江记录.png" group-title="浙江",之江记录
 http://124.90.44.40:6060/010/2/01000010000000060000000000002844?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="杭州综合" tvg-name="杭州综合" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州综合.png" group-title="浙江",杭州综合
 http://124.90.44.40:6060/010/2/00000001000000060000000000000782?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="杭州生活" tvg-name="杭州生活" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州生活.png" group-title="浙江",杭州生活
 http://124.90.44.40:6060/010/2/00000001000000060000000000000784?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="杭州影视" tvg-name="杭州影视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州影视.png" group-title="浙江",杭州影视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000785?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="浙江教影" tvg-name="浙江教影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/浙江教科影视.png" group-title="浙江",浙江教影
 http://124.90.44.40:6060/010/2/00000001000000060000000000000576?AuthInfo=z65J6ZDNYqti%2F6F%2BPX%2BzfKPQRt%2FPjzMSkozGSNJ866M5ClWLEgr2w%2FyaoOVDLtcRnz1WKm2SzJ4k357k9Z%2BUDNlsMiU76bF1Tbh0JdAOKAM%3D&version=v1.0&BreakPoint=0&virtualDomain=010.live_hls.zte.com&programid=ch00000000000000001328&boid=001&contentid=ch00000000000000001328&stbid=00000433002420502508E81711206E58&terminalflag=1&videoid=ch00000090990000001329&userid=057401350507&recommendtype=0"
+
 #EXTINF:-1 tvg-id="杭州青体" tvg-name="杭州青体" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州青少体育.png" group-title="浙江",杭州青体
 http://124.90.44.40:6060/010/2/00000001000000060000000000000786?AuthInfo=z65J6ZDNYqti%2F6F%2BPX%2BzfKPQRt%2FPjzMSkozGSNJ866M5ClWLEgr2w%2FyaoOVDLtcRJ092mXV7SGgr2MydjvFIz9lsMiU76bF1Tbh0JdAOKAM%3D&version=v1.0&BreakPoint=0&virtualDomain=010.live_hls.zte.com&programid=ch00000000000000001340&boid=001&contentid=ch00000000000000001340&stbid=00000433002420502508E81711206E58&terminalflag=1&videoid=ch00000090990000001338&userid=057401350507&recommendtype=0"
+
 #EXTINF:-1 tvg-id="钱江都市" tvg-name="钱江都市" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/浙江钱江都市.png" group-title="浙江",钱江都市
 http://124.90.44.40:6060/010/2/00000001000000060000000000000571?AuthInfo=z65J6ZDNYqti%2F6F%2BPX%2BzfKPQRt%2FPjzMSkozGSNJ866M5ClWLEgr2w%2FyaoOVDLtcR%2BpYIzq1HSA%2BEhAaSpzXBhtlsMiU76bF1Tbh0JdAOKAM%3D&version=v1.0&BreakPoint=0&virtualDomain=010.live_hls.zte.com&programid=ch00000000000000001324&boid=001&contentid=ch00000000000000001324&stbid=00000433002420502508E81711206E58&terminalflag=1&videoid=ch00000090990000001327&userid=057401350507&recommendtype=0"
+
 #EXTINF:-1 tvg-id="绍兴一套" tvg-name="绍兴一套" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/绍兴新闻综合.png" group-title="浙江",绍兴一套
 http://124.90.44.40:6060/010/2/00000001000000060000000000000496?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="温州一套" tvg-name="温州一套" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/温州新闻综合.png" group-title="浙江",温州一套
 http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=010.live_hls.zte.com
+
 #EXTINF:-1 tvg-id="杭州导视" tvg-name="杭州导视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州导视.png" group-title="浙江",杭州导视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #============================================================
 # 全网通港澳台频道
 #============================================================
-全网通港澳台,#genre#
-SPOTV,http://iptv.4666888.xyz/iptv2A.php?id=2
-SPOTV2,http://iptv.4666888.xyz/iptv2A.php?id=1
-AstroFootball,http://iptv.4666888.xyz/iptv2A.php?id=4
-TNTSports3,http://iptv.4666888.xyz/iptv2A.php?id=3
-博斯運動1,http://iptv.4666888.xyz/iptv2A.php?id=6
-鳳凰中文,http://iptv.4666888.xyz/iptv2A.php?id=27
-TVB翡翠,http://iptv.4666888.xyz/iptv2A.php?id=34
-TVB翡翠(馬來),http://iptv.4666888.xyz/iptv2A.php?id=28
-TVB明珠,http://iptv.4666888.xyz/iptv2A.php?id=29
-TVBJ1,http://iptv.4666888.xyz/iptv2A.php?id=26
-TVB1,http://iptv.4666888.xyz/iptv2A.php?id=25
-千禧经典,http://iptv.4666888.xyz/iptv2A.php?id=22
-HOY77,http://iptv.4666888.xyz/iptv2A.php?id=35
-HOY78,http://iptv.4666888.xyz/iptv2A.php?id=31
-RTHK31,http://iptv.4666888.xyz/iptv2A.php?id=23
-TVB娱乐新闻,http://iptv.4666888.xyz/iptv2A.php?id=36
-MYTV黃金翡翠,http://iptv.4666888.xyz/iptv2A.php?id=32
-TVB翡翠劇集,http://iptv.4666888.xyz/iptv2A.php?id=33
-澳視澳門,http://iptv.4666888.xyz/iptv2A.php?id=41
-TVBS新聞,http://iptv.4666888.xyz/iptv2A.php?id=43
-非凡新闻,http://iptv.4666888.xyz/iptv2A.php?id=44
-民视,http://iptv.4666888.xyz/iptv2A.php?id=55
-華藝中文,http://iptv.4666888.xyz/iptv2A.php?id=37
-爱奇艺,http://iptv.4666888.xyz/iptv2A.php?id=21
-靖洋戏剧,http://iptv.4666888.xyz/iptv2A.php?id=42
-靖天电影,http://iptv.4666888.xyz/iptv2A.php?id=56
-邵氏武侠,http://iptv.4666888.xyz/iptv2A.php?id=40
-東森电影,http://iptv.4666888.xyz/iptv2A.php?id=48
-龍華电影,http://iptv.4666888.xyz/iptv2A.php?id=45
-民視綜藝,http://iptv.4666888.xyz/iptv2A.php?id=46
-TVBS精采,http://iptv.4666888.xyz/iptv2A.php?id=47
-邵氏电影,http://iptv.4666888.xyz/iptv2A.php?id=39
-東森洋片,http://iptv.4666888.xyz/iptv2A.php?id=45
-爱尔达综合,http://iptv.4666888.xyz/iptv2A.php?id=49
-ROCK_Action,http://iptv.4666888.xyz/iptv2A.php?id=50
-台视综合,http://iptv.4666888.xyz/iptv2A.php?id=51
-八度空间,http://iptv.4666888.xyz/iptv2A.php?id=52
-民视影剧,http://iptv.4666888.xyz/iptv2A.php?id=53
-中视经典,http://iptv.4666888.xyz/iptv2A.php?id=54
-Now体育台,http://109.61.81.35:443/767/mpegts?token=1d8c18a3d377f5418d2501aa54082b60
-Now爆谷台,http://74.91.26.218:82/live/nowbg.m3u8
-Now星影台,http://74.91.26.218:82/live/nowxy.m3u8
-Now新闻台,http://cdn.163189.xyz/163189/now
-POPC,http://tl.061833.xyz/tl/popc
-AXN,http://tl.061833.xyz/tl/axn
-无线新闻,http://74.91.26.218:82/live/inews.m3u8
-CCM,http://74.91.26.218:82/live/tyjd.m3u8
-TVB星河,https://o11.163189.xyz/stream/live/tvbxh/
-TVB明珠,https://mytv.cdn.loc.cc/o12.php?id=mzt
-TVB Plus,https://o11.163189.xyz/stream/tvb/tvbp/
-TVB Plus,http://74.91.26.218:82/live/j2.m3u8
-TVBS新闻台,http://rihou.cc:555/tv/[FY]tvbS新闻
-千禧经典台,https://o11.163189.xyz/stream/live/tvbc/
-翡翠台,https://o11.163189.xyz/stream/tvb/fct4k/
-华丽翡翠台,https://o11.163189.xyz/stream/live/hlt/
-唐NTD,https://ntd02.akamaized.net/HD-NY/tracks-v3a1/mono.m3u8
-美亚电影台,http://74.91.26.218:82/live/mydy.m3u8
-iQIYI,https://o11.163189.xyz/stream/live/iqiyi/
-Astro AEC,https://o11.163189.xyz/stream/live/aec/
-Astro AOD,https://o11.163189.xyz/stream/live/aod/
-ASTV亚洲卫视,https://p2hs.vzan.com/slowlive/821481626725612419/live.m3u8
-星空卫视,http://iot-mqqt.111yao.cn:8080/live/diyp_xingkong.m3u8
-澳视澳门,http://r.jdshipin.com/n2YZI
-凤凰香港,https://cdn9.163189.xyz/smt3.1.1.php?id=hkphoenix_twn
-凤凰中文,http://61.184.46.85:85/tsfile/live/1029_1.m3u8?key=txiptv&playlive=1&authid=0
-凤凰资讯,https://cdn9.163189.xyz/smt3.1.1.php?id=phoenixinfo_hd
+
+#EXTINF:-1 tvg-id="SPOTV" tvg-name="SPOTV" tvg-logo="" group-title="全网通港澳台",SPOTV
+http://iptv.4666888.xyz/iptv2A.php?id=2
+
+#EXTINF:-1 tvg-id="SPOTV2" tvg-name="SPOTV2" tvg-logo="" group-title="全网通港澳台",SPOTV2
+http://iptv.4666888.xyz/iptv2A.php?id=1
+
+#EXTINF:-1 tvg-id="AstroFootball" tvg-name="AstroFootball" tvg-logo="" group-title="全网通港澳台",AstroFootball
+http://iptv.4666888.xyz/iptv2A.php?id=4
+
+#EXTINF:-1 tvg-id="TNTSports3" tvg-name="TNTSports3" tvg-logo="" group-title="全网通港澳台",TNTSports3
+http://iptv.4666888.xyz/iptv2A.php?id=3
+
+#EXTINF:-1 tvg-id="channel_9011" tvg-name="博斯運動1" tvg-logo="" group-title="全网通港澳台",博斯運動1
+http://iptv.4666888.xyz/iptv2A.php?id=6
+
+#EXTINF:-1 tvg-id="channel_9959" tvg-name="鳳凰中文" tvg-logo="" group-title="全网通港澳台",鳳凰中文
+http://iptv.4666888.xyz/iptv2A.php?id=27
+
+#EXTINF:-1 tvg-id="channel_8716" tvg-name="TVB翡翠" tvg-logo="" group-title="全网通港澳台",TVB翡翠
+http://iptv.4666888.xyz/iptv2A.php?id=34
+
+#EXTINF:-1 tvg-id="channel_2121" tvg-name="TVB翡翠(馬來)" tvg-logo="" group-title="全网通港澳台",TVB翡翠(馬來)
+http://iptv.4666888.xyz/iptv2A.php?id=28
+
+#EXTINF:-1 tvg-id="channel_5759" tvg-name="TVB明珠" tvg-logo="" group-title="全网通港澳台",TVB明珠
+http://iptv.4666888.xyz/iptv2A.php?id=29
+
+#EXTINF:-1 tvg-id="TVBJ1" tvg-name="TVBJ1" tvg-logo="" group-title="全网通港澳台",TVBJ1
+http://iptv.4666888.xyz/iptv2A.php?id=26
+
+#EXTINF:-1 tvg-id="TVB1" tvg-name="TVB1" tvg-logo="" group-title="全网通港澳台",TVB1
+http://iptv.4666888.xyz/iptv2A.php?id=25
+
+#EXTINF:-1 tvg-id="channel_6844" tvg-name="千禧经典" tvg-logo="" group-title="全网通港澳台",千禧经典
+http://iptv.4666888.xyz/iptv2A.php?id=22
+
+#EXTINF:-1 tvg-id="HOY77" tvg-name="HOY77" tvg-logo="" group-title="全网通港澳台",HOY77
+http://iptv.4666888.xyz/iptv2A.php?id=35
+
+#EXTINF:-1 tvg-id="HOY78" tvg-name="HOY78" tvg-logo="" group-title="全网通港澳台",HOY78
+http://iptv.4666888.xyz/iptv2A.php?id=31
+
+#EXTINF:-1 tvg-id="RTHK31" tvg-name="RTHK31" tvg-logo="" group-title="全网通港澳台",RTHK31
+http://iptv.4666888.xyz/iptv2A.php?id=23
+
+#EXTINF:-1 tvg-id="channel_6381" tvg-name="TVB娱乐新闻" tvg-logo="" group-title="全网通港澳台",TVB娱乐新闻
+http://iptv.4666888.xyz/iptv2A.php?id=36
+
+#EXTINF:-1 tvg-id="channel_8674" tvg-name="MYTV黃金翡翠" tvg-logo="" group-title="全网通港澳台",MYTV黃金翡翠
+http://iptv.4666888.xyz/iptv2A.php?id=32
+
+#EXTINF:-1 tvg-id="channel_7337" tvg-name="TVB翡翠劇集" tvg-logo="" group-title="全网通港澳台",TVB翡翠劇集
+http://iptv.4666888.xyz/iptv2A.php?id=33
+
+#EXTINF:-1 tvg-id="channel_2934" tvg-name="澳視澳門" tvg-logo="" group-title="全网通港澳台",澳視澳門
+http://iptv.4666888.xyz/iptv2A.php?id=41
+
+#EXTINF:-1 tvg-id="channel_2525" tvg-name="TVBS新聞" tvg-logo="" group-title="全网通港澳台",TVBS新聞
+http://iptv.4666888.xyz/iptv2A.php?id=43
+
+#EXTINF:-1 tvg-id="channel_2586" tvg-name="非凡新闻" tvg-logo="" group-title="全网通港澳台",非凡新闻
+http://iptv.4666888.xyz/iptv2A.php?id=44
+
+#EXTINF:-1 tvg-id="channel_2217" tvg-name="民视" tvg-logo="" group-title="全网通港澳台",民视
+http://iptv.4666888.xyz/iptv2A.php?id=55
+
+#EXTINF:-1 tvg-id="channel_4017" tvg-name="華藝中文" tvg-logo="" group-title="全网通港澳台",華藝中文
+http://iptv.4666888.xyz/iptv2A.php?id=37
+
+#EXTINF:-1 tvg-id="channel_2936" tvg-name="爱奇艺" tvg-logo="" group-title="全网通港澳台",爱奇艺
+http://iptv.4666888.xyz/iptv2A.php?id=21
+
+#EXTINF:-1 tvg-id="channel_2460" tvg-name="靖洋戏剧" tvg-logo="" group-title="全网通港澳台",靖洋戏剧
+http://iptv.4666888.xyz/iptv2A.php?id=42
+
+#EXTINF:-1 tvg-id="channel_7891" tvg-name="靖天电影" tvg-logo="" group-title="全网通港澳台",靖天电影
+http://iptv.4666888.xyz/iptv2A.php?id=56
+
+#EXTINF:-1 tvg-id="channel_4235" tvg-name="邵氏武侠" tvg-logo="" group-title="全网通港澳台",邵氏武侠
+http://iptv.4666888.xyz/iptv2A.php?id=40
+
+#EXTINF:-1 tvg-id="channel_8293" tvg-name="東森电影" tvg-logo="" group-title="全网通港澳台",東森电影
+http://iptv.4666888.xyz/iptv2A.php?id=48
+
+#EXTINF:-1 tvg-id="channel_9759" tvg-name="龍華电影" tvg-logo="" group-title="全网通港澳台",龍華电影
+http://iptv.4666888.xyz/iptv2A.php?id=45
+
+#EXTINF:-1 tvg-id="channel_7925" tvg-name="民視綜藝" tvg-logo="" group-title="全网通港澳台",民視綜藝
+http://iptv.4666888.xyz/iptv2A.php?id=46
+
+#EXTINF:-1 tvg-id="channel_6959" tvg-name="TVBS精采" tvg-logo="" group-title="全网通港澳台",TVBS精采
+http://iptv.4666888.xyz/iptv2A.php?id=47
+
+#EXTINF:-1 tvg-id="channel_3731" tvg-name="邵氏电影" tvg-logo="" group-title="全网通港澳台",邵氏电影
+http://iptv.4666888.xyz/iptv2A.php?id=39
+
+#EXTINF:-1 tvg-id="channel_7059" tvg-name="東森洋片" tvg-logo="" group-title="全网通港澳台",東森洋片
+http://iptv.4666888.xyz/iptv2A.php?id=45
+
+#EXTINF:-1 tvg-id="channel_1199" tvg-name="爱尔达综合" tvg-logo="" group-title="全网通港澳台",爱尔达综合
+http://iptv.4666888.xyz/iptv2A.php?id=49
+
+#EXTINF:-1 tvg-id="ROCK_Action" tvg-name="ROCK_Action" tvg-logo="" group-title="全网通港澳台",ROCK_Action
+http://iptv.4666888.xyz/iptv2A.php?id=50
+
+#EXTINF:-1 tvg-id="channel_9806" tvg-name="台视综合" tvg-logo="" group-title="全网通港澳台",台视综合
+http://iptv.4666888.xyz/iptv2A.php?id=51
+
+#EXTINF:-1 tvg-id="channel_1844" tvg-name="八度空间" tvg-logo="" group-title="全网通港澳台",八度空间
+http://iptv.4666888.xyz/iptv2A.php?id=52
+
+#EXTINF:-1 tvg-id="channel_9701" tvg-name="民视影剧" tvg-logo="" group-title="全网通港澳台",民视影剧
+http://iptv.4666888.xyz/iptv2A.php?id=53
+
+#EXTINF:-1 tvg-id="channel_3691" tvg-name="中视经典" tvg-logo="" group-title="全网通港澳台",中视经典
+http://iptv.4666888.xyz/iptv2A.php?id=54
+
+#EXTINF:-1 tvg-id="channel_5838" tvg-name="Now体育台" tvg-logo="" group-title="全网通港澳台",Now体育台
+http://109.61.81.35:443/767/mpegts?token=1d8c18a3d377f5418d2501aa54082b60
+
+#EXTINF:-1 tvg-id="channel_2734" tvg-name="Now爆谷台" tvg-logo="" group-title="全网通港澳台",Now爆谷台
+http://74.91.26.218:82/live/nowbg.m3u8
+
+#EXTINF:-1 tvg-id="channel_7622" tvg-name="Now星影台" tvg-logo="" group-title="全网通港澳台",Now星影台
+http://74.91.26.218:82/live/nowxy.m3u8
+
+#EXTINF:-1 tvg-id="channel_178" tvg-name="Now新闻台" tvg-logo="" group-title="全网通港澳台",Now新闻台
+http://cdn.163189.xyz/163189/now
+
+#EXTINF:-1 tvg-id="POPC" tvg-name="POPC" tvg-logo="" group-title="全网通港澳台",POPC
+http://tl.061833.xyz/tl/popc
+
+#EXTINF:-1 tvg-id="AXN" tvg-name="AXN" tvg-logo="" group-title="全网通港澳台",AXN
+http://tl.061833.xyz/tl/axn
+
+#EXTINF:-1 tvg-id="channel_7866" tvg-name="无线新闻" tvg-logo="" group-title="全网通港澳台",无线新闻
+http://74.91.26.218:82/live/inews.m3u8
+
+#EXTINF:-1 tvg-id="CCM" tvg-name="CCM" tvg-logo="" group-title="全网通港澳台",CCM
+http://74.91.26.218:82/live/tyjd.m3u8
+
+#EXTINF:-1 tvg-id="channel_9820" tvg-name="TVB星河" tvg-logo="" group-title="全网通港澳台",TVB星河
+https://o11.163189.xyz/stream/live/tvbxh/
+
+#EXTINF:-1 tvg-id="channel_5759" tvg-name="TVB明珠" tvg-logo="" group-title="全网通港澳台",TVB明珠
+https://mytv.cdn.loc.cc/o12.php?id=mzt
+
+#EXTINF:-1 tvg-id="TVBPlus" tvg-name="TVB Plus" tvg-logo="" group-title="全网通港澳台",TVB Plus
+https://o11.163189.xyz/stream/tvb/tvbp/
+
+#EXTINF:-1 tvg-id="TVBPlus" tvg-name="TVB Plus" tvg-logo="" group-title="全网通港澳台",TVB Plus
+http://74.91.26.218:82/live/j2.m3u8
+
+#EXTINF:-1 tvg-id="channel_4551" tvg-name="TVBS新闻台" tvg-logo="" group-title="全网通港澳台",TVBS新闻台
+http://rihou.cc:555/tv/[FY]tvbS新闻
+
+#EXTINF:-1 tvg-id="channel_8567" tvg-name="千禧经典台" tvg-logo="" group-title="全网通港澳台",千禧经典台
+https://o11.163189.xyz/stream/live/tvbc/
+
+#EXTINF:-1 tvg-id="channel_8674" tvg-name="翡翠台" tvg-logo="" group-title="全网通港澳台",翡翠台
+https://o11.163189.xyz/stream/tvb/fct4k/
+
+#EXTINF:-1 tvg-id="channel_5935" tvg-name="华丽翡翠台" tvg-logo="" group-title="全网通港澳台",华丽翡翠台
+https://o11.163189.xyz/stream/live/hlt/
+
+#EXTINF:-1 tvg-id="channel_8379" tvg-name="唐NTD" tvg-logo="" group-title="全网通港澳台",唐NTD
+https://ntd02.akamaized.net/HD-NY/tracks-v3a1/mono.m3u8
+
+#EXTINF:-1 tvg-id="channel_6492" tvg-name="美亚电影台" tvg-logo="" group-title="全网通港澳台",美亚电影台
+http://74.91.26.218:82/live/mydy.m3u8
+
+#EXTINF:-1 tvg-id="iQIYI" tvg-name="iQIYI" tvg-logo="" group-title="全网通港澳台",iQIYI
+https://o11.163189.xyz/stream/live/iqiyi/
+
+#EXTINF:-1 tvg-id="AstroAEC" tvg-name="Astro AEC" tvg-logo="" group-title="全网通港澳台",Astro AEC
+https://o11.163189.xyz/stream/live/aec/
+
+#EXTINF:-1 tvg-id="AstroAOD" tvg-name="Astro AOD" tvg-logo="" group-title="全网通港澳台",Astro AOD
+https://o11.163189.xyz/stream/live/aod/
+
+#EXTINF:-1 tvg-id="channel_4356" tvg-name="ASTV亚洲卫视" tvg-logo="" group-title="全网通港澳台",ASTV亚洲卫视
+https://p2hs.vzan.com/slowlive/821481626725612419/live.m3u8
+
+#EXTINF:-1 tvg-id="channel_8165" tvg-name="星空卫视" tvg-logo="" group-title="全网通港澳台",星空卫视
+http://iot-mqqt.111yao.cn:8080/live/diyp_xingkong.m3u8
+
+#EXTINF:-1 tvg-id="channel_4486" tvg-name="澳视澳门" tvg-logo="" group-title="全网通港澳台",澳视澳门
+http://r.jdshipin.com/n2YZI
+
+#EXTINF:-1 tvg-id="channel_2" tvg-name="凤凰香港" tvg-logo="" group-title="全网通港澳台",凤凰香港
+https://cdn9.163189.xyz/smt3.1.1.php?id=hkphoenix_twn
+
+#EXTINF:-1 tvg-id="channel_4643" tvg-name="凤凰中文" tvg-logo="" group-title="全网通港澳台",凤凰中文
+http://61.184.46.85:85/tsfile/live/1029_1.m3u8?key=txiptv&playlive=1&authid=0
+
+#EXTINF:-1 tvg-id="channel_5118" tvg-name="凤凰资讯" tvg-logo="" group-title="全网通港澳台",凤凰资讯
+https://cdn9.163189.xyz/smt3.1.1.php?id=phoenixinfo_hd
+
+#============================================================
+# 统计信息
+# 港澳台频道数: 66
+# 更新时间: 2026-02-05 02:27:18
+# GitHub Actions 自动生成
+#============================================================
