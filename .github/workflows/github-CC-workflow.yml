@@ -97,6 +97,31 @@ jobs:
           exit 1
         fi
         
+    - name: Check for output files
+      run: |
+        echo "=== 检查工作目录 ==="
+        pwd
+        echo ""
+        echo "=== 所有文件列表 ==="
+        ls -la
+        echo ""
+        echo "=== 检查CC.m3u是否存在 ==="
+        if [ -f "CC.m3u" ]; then
+          echo "✅ CC.m3u 存在"
+          echo "文件大小: $(wc -c < CC.m3u) 字节"
+          echo "行数: $(wc -l < CC.m3u)"
+          echo "前5行内容:"
+          head -5 CC.m3u
+        else
+          echo "❌ CC.m3u 不存在"
+          echo "当前目录文件:"
+          find . -name "*.m3u" -type f
+        fi
+        echo ""
+        echo "=== 检查脚本输出目录 ==="
+        echo "脚本位置: scripts/merge_to_CC.py"
+        ls -la scripts/ 2>/dev/null || echo "scripts目录不存在"
+        
     - name: Display CC.m3u info
       if: steps.merge.outputs.success == 'true'
       run: |
@@ -172,28 +197,3 @@ jobs:
         echo "## 数据源" >> $GITHUB_STEP_SUMMARY
         echo "- **订阅链接:** https://stymei.sufern001.workers.dev/" >> $GITHUB_STEP_SUMMARY
         echo "- **提取分组:** 🔥全网通港澳台 → 全网通港澳台" >> $GITHUB_STEP_SUMMARY
-# 在 "Run merge script from scripts directory" 步骤后添加：
-- name: Check for output files
-  run: |
-    echo "=== 检查工作目录 ==="
-    pwd
-    echo ""
-    echo "=== 所有文件列表 ==="
-    ls -la
-    echo ""
-    echo "=== 检查CC.m3u是否存在 ==="
-    if [ -f "CC.m3u" ]; then
-      echo "✅ CC.m3u 存在"
-      echo "文件大小: $(wc -c < CC.m3u) 字节"
-      echo "行数: $(wc -l < CC.m3u)"
-      echo "前5行内容:"
-      head -5 CC.m3u
-    else
-      echo "❌ CC.m3u 不存在"
-      echo "当前目录文件:"
-      find . -name "*.m3u" -type f
-    fi
-    echo ""
-    echo "=== 检查脚本输出目录 ==="
-    echo "脚本位置: scripts/merge_to_CC.py"
-    ls -la scripts/ 2>/dev/null || echo "scripts目录不存在"
