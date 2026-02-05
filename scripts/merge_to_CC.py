@@ -40,7 +40,6 @@ CHANNEL_PRIORITY = {
     "凤凰中文": 1,
     "凤凰资讯": 2,
     "凤凰香港": 3,
-    "凤凰电影": 4,
     "凤凰卫视": 5,
     # 第二优先级：NOW系列
     "NOW": 10,
@@ -68,6 +67,7 @@ CHANNEL_PRIORITY = {
 
 # 需要剔除的频道关键词（完全匹配或部分匹配）
 BLACKLIST_KEYWORDS = [
+    # 原黑名单
     "SPOTV",
     "GOODTV",
     "GOOD2",
@@ -79,8 +79,17 @@ BLACKLIST_KEYWORDS = [
     "唐人卫视",
     "香港卫视",
     "唐NTD",
-    "NTDTV",  # 可能的相关频道
-    "新唐人",  # 可能的相关频道
+    "NTDTV",
+    "新唐人",
+    # 新增剔除频道
+    "凤凰电影",    # 新增
+    "C+",          # 新增
+    "MoMoTV",      # 新增
+    "DAZN1",       # 新增
+    "DAZN2",       # 新增
+    "ELEVEN体育1", # 新增
+    "ELEVEN体育2", # 新增
+    "爱奇艺",       # 新增
 ]
 
 # ================== 工具函数 ==================
@@ -107,8 +116,8 @@ def get_channel_priority(channel_name):
         if key in channel_name:
             return priority
     
-    # 特殊规则：包含"凤凰"但不是已定义的
-    if "凤凰" in channel_name and channel_name not in CHANNEL_PRIORITY:
+    # 特殊规则：包含"凤凰"但不是已定义的（不包括"凤凰电影"）
+    if "凤凰" in channel_name and channel_name not in CHANNEL_PRIORITY and "凤凰电影" not in channel_name:
         return 6  # 其他凤凰频道放在已定义凤凰频道之后
     
     # 默认优先级
@@ -142,7 +151,6 @@ def sort_channels(channel_dict):
         1: "凤凰系列",
         2: "凤凰系列",
         3: "凤凰系列",
-        4: "凤凰系列",
         5: "凤凰系列",
         6: "凤凰系列",
         10: "NOW系列",
@@ -180,7 +188,6 @@ def get_channel_logo(channel_name):
         "凤凰资讯": "phoenix.infonews.png",
         "凤凰香港": "phoenix.hongkong.png",
         "凤凰卫视": "phoenix.tv.png",
-        "凤凰电影": "phoenix.movie.png",
         # TVB系列
         "翡翠台": "tvb.jade.png",
         "明珠台": "tvb.pearl.png",
@@ -278,7 +285,8 @@ def extract_and_merge_channels(content):
     lines = content.split('\n')
     
     log(f"开始提取并合并分组: {SOURCE_GROUPS}")
-    log(f"黑名单过滤: {BLACKLIST_KEYWORDS}")
+    log(f"黑名单过滤: 共{len(BLACKLIST_KEYWORDS)}个关键词")
+    log(f"新增剔除: 凤凰电影、C+、MoMoTV、DAZN1、DAZN2、ELEVEN体育1、ELEVEN体育2、爱奇艺")
     
     for source_group in SOURCE_GROUPS:
         in_section = False
@@ -393,8 +401,10 @@ def generate_m3u_content(local_content, channel_dict):
         f"# EPG地址: {EPG_URL}",
         f"# 提取分组: {', '.join(SOURCE_GROUPS)} → {TARGET_GROUP}",
         f"# 排序规则: 凤凰→NOW→TVB→HOY→VIUTV→其他",
-        f"# 过滤频道: {', '.join(BLACKLIST_KEYWORDS)}",
+        f"# 过滤频道: 共{len(BLACKLIST_KEYWORDS)}个关键词",
+        f"# 新增剔除: 凤凰电影、C+、MoMoTV、DAZN1、DAZN2、ELEVEN体育1、ELEVEN体育2、爱奇艺",
         f"# 唯一频道数: {len(channel_dict)}",
+        f"# 自动运行: 北京时间 06:00, 17:30",
         f"# GitHub Actions 自动生成",
         ""
     ]
@@ -420,6 +430,7 @@ def generate_m3u_content(local_content, channel_dict):
         output_lines.append(f"# {TARGET_GROUP} (合并自: {', '.join(SOURCE_GROUPS)})")
         output_lines.append("# 说明：每个频道可能包含多个播放地址，播放器会自动选择可用源")
         output_lines.append("# 排序：凤凰系列→NOW系列→TVB系列→HOY系列→VIUTV系列→其他")
+        output_lines.append("# 过滤：已剔除凤凰电影、C+、MoMoTV、DAZN1、DAZN2、ELEVEN体育1、ELEVEN体育2、爱奇艺等频道")
         output_lines.append("#" + "=" * 60)
         output_lines.append("")
         
@@ -429,7 +440,6 @@ def generate_m3u_content(local_content, channel_dict):
             1: "凤凰系列",
             2: "凤凰系列",
             3: "凤凰系列",
-            4: "凤凰系列",
             5: "凤凰系列",
             6: "凤凰系列",
             10: "NOW系列",
@@ -487,7 +497,7 @@ def generate_m3u_content(local_content, channel_dict):
     for channel_name in channel_dict.keys():
         priority = get_channel_priority(channel_name)
         series_mapping = {
-            1: "凤凰", 2: "凤凰", 3: "凤凰", 4: "凤凰", 5: "凤凰", 6: "凤凰",
+            1: "凤凰", 2: "凤凰", 3: "凤凰", 5: "凤凰", 6: "凤凰",
             10: "NOW", 11: "NOW", 12: "NOW", 13: "NOW",
             20: "TVB", 21: "TVB", 22: "TVB", 23: "TVB", 24: "TVB", 25: "TVB",
             30: "HOY", 31: "HOY", 32: "HOY", 33: "HOY",
@@ -508,6 +518,7 @@ def generate_m3u_content(local_content, channel_dict):
     
     output_lines.append(f"# 更新时间: {timestamp}")
     output_lines.append("# EPG节目单: 已集成，播放器会自动加载")
+    output_lines.append("# 过滤规则: 已剔除凤凰电影等8个新增频道")
     output_lines.append("#" + "=" * 60)
     
     return '\n'.join(output_lines)
@@ -572,7 +583,7 @@ def main():
             
             # 系列映射
             series_mapping = {
-                1: "凤凰", 2: "凤凰", 3: "凤凰", 4: "凤凰", 5: "凤凰", 6: "凤凰",
+                1: "凤凰", 2: "凤凰", 3: "凤凰", 5: "凤凰", 6: "凤凰",
                 10: "NOW", 11: "NOW", 12: "NOW", 13: "NOW",
                 20: "TVB", 21: "TVB", 22: "TVB", 23: "TVB", 24: "TVB", 25: "TVB",
                 30: "HOY", 31: "HOY", 32: "HOY", 33: "HOY",
@@ -596,10 +607,22 @@ def main():
                         filtered.append(channel_name)
             
             if filtered:
-                for i, name in enumerate(filtered[:10]):  # 最多显示10个
-                    print(f"  {i+1}. {name}")
-                if len(filtered) > 10:
-                    print(f"  ... 还有{len(filtered)-10}个")
+                # 显示新增的过滤频道
+                new_filters = ["凤凰电影", "C+", "MoMoTV", "DAZN1", "DAZN2", "ELEVEN体育1", "ELEVEN体育2", "爱奇艺"]
+                print("新增过滤频道:")
+                for keyword in new_filters:
+                    matched = [name for name in filtered if keyword in name]
+                    for name in matched:
+                        print(f"  ✓ {name}")
+                
+                # 显示其他过滤频道
+                other_filtered = [name for name in filtered if not any(keyword in name for keyword in new_filters)]
+                if other_filtered:
+                    print("\n其他过滤频道:")
+                    for i, name in enumerate(other_filtered[:5]):  # 最多显示5个
+                        print(f"  {i+1}. {name}")
+                    if len(other_filtered) > 5:
+                        print(f"  ... 还有{len(other_filtered)-5}个")
             else:
                 print("  无匹配的黑名单频道")
             
