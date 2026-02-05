@@ -1,33 +1,186 @@
 #!/usr/bin/env python3
 """
-CC.m3u 合并脚本 - 标准M3U格式
+CC.m3u 合并脚本 - 标准M3U格式（带公开台标）
 从 https://stymei.sufern001.workers.dev/ 提取"🔥全网通港澳台"分组
-生成标准M3U格式：#EXTINF标签 + group-title属性
+生成标准M3U格式：#EXTINF标签 + group-title属性 + 公开台标
 """
 
 import requests
 from datetime import datetime
 import os
 import re
+import urllib.parse
 
 def log(msg):
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
 
+def get_channel_logo_public(channel_name):
+    """使用公开台标库获取台标URL"""
+    
+    # 主要台标库（按优先级）
+    logo_sources = [
+        # 1. IPTV-org 官方台标库（最全）
+        "https://raw.githubusercontent.com/iptv-org/iptv/master/logos/",
+        
+        # 2. 中文台标库
+        "https://raw.githubusercontent.com/fanmingming/live/main/tv/",
+        
+        # 3. 另一个中文台标库
+        "https://raw.githubusercontent.com/lqist/IPTVlogos/main/",
+        
+        # 4. 备用台标库
+        "https://raw.githubusercontent.com/ChengShide/IPTVlogos/main/",
+    ]
+    
+    # 常见港澳台频道名到标准名的映射
+    name_mapping = {
+        # 凤凰系列
+        '凤凰卫视': ['凤凰卫视', '凤凰电视', '凤凰台', 'Phoenix'],
+        '凤凰中文': ['凤凰中文', '凤凰卫视中文台', 'Phoenix Chinese'],
+        '凤凰资讯': ['凤凰资讯', '凤凰卫视资讯台', 'Phoenix Info'],
+        '凤凰香港': ['凤凰香港', '凤凰卫视香港台', 'Phoenix Hong Kong'],
+        '凤凰电影': ['凤凰电影', 'Phoenix Movies'],
+        
+        # TVB系列
+        'TVB': ['TVB', '无线电视'],
+        '翡翠台': ['翡翠台', 'TVB Jade'],
+        '明珠台': ['明珠台', 'TVB Pearl'],
+        'J2': ['J2'],
+        
+        # 港台电视台
+        '香港开电视': ['香港开电视', 'HOY TV'],
+        '香港国际': ['香港国际', 'RTHK'],
+        '港台电视': ['港台电视', 'RTHK TV'],
+        '有线新闻': ['有线新闻', 'Cable News'],
+        
+        # 澳门
+        '澳门卫视': ['澳门卫视', 'Macau Satellite'],
+        '澳视澳门': ['澳视澳门', 'TDM Macau'],
+        '澳视体育': ['澳视体育', 'TDM Sports'],
+        
+        # 台湾
+        '中视': ['中视', 'CTV'],
+        '中天': ['中天', 'CTi'],
+        '东森': ['东森', 'ETTV'],
+        '三立': ['三立', 'SET'],
+        '民视': ['民视', 'FTV'],
+        'TVBS': ['TVBS'],
+        '八大': ['八大', 'GTV'],
+        '纬来': ['纬来', 'VL'],
+        '台视': ['台视', 'TTV'],
+        '华视': ['华视', 'CTS'],
+        '公视': ['公视', 'PTS'],
+        
+        # 国际频道（港澳台常见）
+        'CNN': ['CNN'],
+        'BBC': ['BBC'],
+        'HBO': ['HBO'],
+        'Discovery': ['Discovery'],
+        'National Geographic': ['国家地理', 'Nat Geo', 'National Geographic'],
+        'ESPN': ['ESPN'],
+        'FOX': ['FOX'],
+        'CCTV4': ['CCTV4', '央视四套'],
+        '湖南卫视': ['湖南卫视', 'Hunan TV'],
+        '浙江卫视': ['浙江卫视', 'Zhejiang TV'],
+    }
+    
+    # 首先检查是否有标准映射
+    standard_name = None
+    for std_name, variants in name_mapping.items():
+        for variant in variants:
+            if variant.lower() in channel_name.lower():
+                standard_name = std_name
+                break
+        if standard_name:
+            break
+    
+    # 如果没有找到映射，使用原始名称
+    if not standard_name:
+        standard_name = channel_name
+    
+    # 清理名称用于URL
+    def clean_for_url(name):
+        # 移除特殊字符，保留字母数字
+        cleaned = re.sub(r'[^\w\s]', '', name)
+        # 替换空格为下划线或连字符
+        cleaned = cleaned.replace(' ', '_')
+        # 转换为小写
+        return cleaned.lower()
+    
+    cleaned_name = clean_for_url(standard_name)
+    
+    # 尝试从不同源获取台标
+    test_sources = []
+    
+    # 源1: iptv-org格式（channel_name.png）
+    test_sources.append(f"{logo_sources[0]}{cleaned_name}.png")
+    test_sources.append(f"{logo_sources[0]}{cleaned_name}.jpg")
+    test_sources.append(f"{logo_sources[0]}{cleaned_name}.webp")
+    
+    # 源2: fanmingming格式（channel_name.png）
+    test_sources.append(f"{logo_sources[1]}{cleaned_name}.png")
+    
+    # 源3: lqist格式（channel_name.png）
+    test_sources.append(f"{logo_sources[2]}{cleaned_name}.png")
+    
+    # 源4: ChengShide格式（channel_name.png）
+    test_sources.append(f"{logo_sources[3]}{cleaned_name}.png")
+    
+    # 特殊：一些频道可能有特定格式
+    if '凤凰' in channel_name:
+        test_sources.append("https://raw.githubusercontent.com/iptv-org/iptv/master/logos/phoenix.tv.png")
+        test_sources.append("https://raw.githubusercontent.com/fanmingming/live/main/tv/phoenix.png")
+    
+    if 'TVB' in channel_name or '翡翠' in channel_name or '明珠' in channel_name:
+        test_sources.append("https://raw.githubusercontent.com/iptv-org/iptv/master/logos/tvb.png")
+        test_sources.append("https://raw.githubusercontent.com/fanmingming/live/main/tv/tvb.png")
+    
+    if '中天' in channel_name:
+        test_sources.append("https://raw.githubusercontent.com/iptv-org/iptv/master/logos/cti.tv.png")
+    
+    if '东森' in channel_name:
+        test_sources.append("https://raw.githubusercontent.com/iptv-org/iptv/master/logos/ettv.png")
+    
+    # 默认台标（如果所有源都不可用）
+    default_logos = [
+        "https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png",
+        "https://raw.githubusercontent.com/fanmingming/live/main/tv/default.png",
+        "https://via.placeholder.com/128x72.png?text=TV"
+    ]
+    
+    # 添加到测试列表
+    test_sources.extend(default_logos)
+    
+    # 返回第一个有效的URL（实际使用时客户端会去获取）
+    # 注意：这里不实际测试URL有效性，因为GitHub Actions中可能无法访问
+    # 直接返回一个最有可能的URL，让播放器去处理
+    primary_logo = test_sources[0]
+    
+    log(f"  台标匹配: {channel_name} -> {standard_name}")
+    log(f"  使用台标URL: {primary_logo}")
+    
+    return primary_logo
+
 def extract_tvg_info(channel_name):
-    """从频道名提取tvg-id和tvg-name"""
-    # 移除特殊字符，只保留字母数字和中文字符
+    """从频道名提取tvg-id、tvg-name和台标"""
+    # 清理名称
     clean_name = re.sub(r'[^\w\u4e00-\u9fff]', '', channel_name)
     
-    # 如果包含中文，使用原名称作为tvg-name
+    # 生成tvg-id
     if re.search(r'[\u4e00-\u9fff]', channel_name):
+        # 中文频道：使用拼音首字母或hash
+        import hashlib
+        tvg_id = f"channel_{hashlib.md5(channel_name.encode()).hexdigest()[:8]}"
         tvg_name = channel_name
-        # 生成英文ID：取拼音首字母或使用数字
-        tvg_id = f"channel_{hash(channel_name) % 10000}"
     else:
-        tvg_name = channel_name
+        # 英文频道：直接使用清理后的名称
         tvg_id = clean_name
+        tvg_name = channel_name
     
-    return tvg_id, tvg_name
+    # 获取台标
+    logo_url = get_channel_logo_public(channel_name)
+    
+    return tvg_id, tvg_name, logo_url
 
 def download_source():
     """下载源数据"""
@@ -87,27 +240,28 @@ def extract_channels(content):
             parts = line.split(',')
             if len(parts) >= 2:
                 channel_name = parts[0].strip()
-                url = ','.join(parts[1:]).strip()  # 处理URL中可能包含逗号的情况
+                url = ','.join(parts[1:]).strip()
                 
                 # 验证URL
                 if url and ('://' in url or url.startswith('http')):
-                    # 提取tvg信息
-                    tvg_id, tvg_name = extract_tvg_info(channel_name)
+                    # 提取tvg信息和台标
+                    tvg_id, tvg_name, logo_url = extract_tvg_info(channel_name)
                     channels.append({
                         'name': channel_name,
                         'url': url,
                         'tvg_id': tvg_id,
                         'tvg_name': tvg_name,
+                        'logo': logo_url,
                         'group': target_group
                     })
     
     log(f"✅ 提取到 {len(channels)} 个港澳台频道")
     
-    # 调试：显示前几个频道
+    # 显示台标匹配情况
     if channels:
-        log("前5个频道:")
+        log("台标匹配情况（前5个频道）:")
         for i, ch in enumerate(channels[:5]):
-            log(f"  {i+1}. {ch['name']} -> {ch['url'][:50]}...")
+            log(f"  {i+1}. {ch['name']} -> {ch['logo']}")
     
     return channels
 
@@ -118,18 +272,17 @@ def load_local_bb():
     try:
         if not os.path.exists(bb_file):
             log(f"⚠️  {bb_file} 不存在，创建默认文件")
-            # 创建标准M3U格式的默认文件
+            # 创建标准M3U格式的默认文件（带台标）
             default_content = '''#EXTM3U
-#EXTINF:-1 tvg-id="" tvg-name="本地频道1" tvg-logo="" group-title="本地",本地频道1
+#EXTINF:-1 tvg-id="local1" tvg-name="本地频道1" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="本地",本地频道1
 http://example.com/channel1
 
-#EXTINF:-1 tvg-id="" tvg-name="本地频道2" tvg-logo="" group-title="本地",本地频道2
+#EXTINF:-1 tvg-id="local2" tvg-name="本地频道2" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png" group-title="本地",本地频道2
 http://example.com/channel2'''
             
             with open(bb_file, 'w', encoding='utf-8') as f:
                 f.write(default_content)
             
-            # 读取创建的内容
             content = default_content
         else:
             log(f"正在加载本地文件: {bb_file}")
@@ -139,7 +292,6 @@ http://example.com/channel2'''
         lines = content.split('\n')
         log(f"✅ 加载本地文件成功，{len(lines)} 行")
         
-        # 返回原始内容，保持原有格式
         return content
         
     except Exception as e:
@@ -147,21 +299,22 @@ http://example.com/channel2'''
         return "#EXTM3U\n"
 
 def generate_cc_m3u(local_content, hk_channels):
-    """生成标准M3U格式的CC.m3u"""
+    """生成标准M3U格式的CC.m3u（带台标）"""
     output_file = "CC.m3u"
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
-    log(f"正在生成标准M3U格式文件: {output_file}")
+    log(f"正在生成标准M3U格式文件（带台标）: {output_file}")
     
     output_lines = []
     
     # 1. M3U头部信息
     output_lines.append("#EXTM3U")
-    output_lines.append(f"# CC.m3u - 标准M3U格式")
+    output_lines.append(f"# CC.m3u - 标准M3U格式（带台标）")
     output_lines.append(f"# 生成时间: {timestamp}")
     output_lines.append(f"# 源URL: https://stymei.sufern001.workers.dev/")
     output_lines.append(f"# 提取分组: 🔥全网通港澳台 -> 全网通港澳台")
-    output_lines.append(f"# 频道总数: {len(hk_channels)} 个港澳台频道")
+    output_lines.append(f"# 港澳台频道数: {len(hk_channels)}")
+    output_lines.append(f"# 台标源: iptv-org/logos, fanmingming/live")
     output_lines.append("")
     
     # 2. 添加本地内容（保持原样）
@@ -172,7 +325,6 @@ def generate_cc_m3u(local_content, hk_channels):
         output_lines.append("")
         
         local_lines = local_content.split('\n')
-        # 跳过空的#EXTM3U行（如果已添加）
         for line in local_lines:
             if line.strip() == "#EXTM3U" and len(output_lines) > 1:
                 continue
@@ -180,22 +332,22 @@ def generate_cc_m3u(local_content, hk_channels):
         
         output_lines.append("")
     
-    # 3. 添加港澳台频道（标准M3U格式）
+    # 3. 添加港澳台频道（带台标的标准M3U格式）
     if hk_channels:
         output_lines.append("#" + "=" * 60)
-        output_lines.append("# 全网通港澳台频道")
+        output_lines.append("# 全网通港澳台频道（带台标）")
         output_lines.append("#" + "=" * 60)
         output_lines.append("")
         
         for channel in hk_channels:
-            # 生成#EXTINF行
-            extinf_line = f'#EXTINF:-1 tvg-id="{channel["tvg_id"]}" tvg-name="{channel["tvg_name"]}" tvg-logo="" group-title="{channel["group"]}",{channel["name"]}'
+            # 生成#EXTINF行，包含台标
+            extinf_line = f'#EXTINF:-1 tvg-id="{channel["tvg_id"]}" tvg-name="{channel["tvg_name"]}" tvg-logo="{channel["logo"]}" group-title="{channel["group"]}",{channel["name"]}'
             output_lines.append(extinf_line)
             
             # URL行
             output_lines.append(channel["url"])
             
-            # 可选：添加空行分隔（美观）
+            # 可选：添加空行分隔
             output_lines.append("")
         
         # 移除最后一个空行
@@ -207,6 +359,9 @@ def generate_cc_m3u(local_content, hk_channels):
     output_lines.append("#" + "=" * 60)
     output_lines.append("# 统计信息")
     output_lines.append(f"# 港澳台频道数: {len(hk_channels)}")
+    if hk_channels:
+        output_lines.append("# 台标库: https://github.com/iptv-org/iptv/tree/master/logos")
+        output_lines.append("# 备用台标库: https://github.com/fanmingming/live")
     output_lines.append(f"# 更新时间: {timestamp}")
     output_lines.append("# GitHub Actions 自动生成")
     output_lines.append("#" + "=" * 60)
@@ -214,7 +369,7 @@ def generate_cc_m3u(local_content, hk_channels):
     return '\n'.join(output_lines)
 
 def main():
-    log("开始生成标准M3U格式的CC.m3u ...")
+    log("开始生成带台标的CC.m3u ...")
     print("=" * 70)
     
     try:
@@ -229,7 +384,6 @@ def main():
         
         if not hk_channels:
             log("⚠️  未提取到港澳台频道，检查源数据格式")
-            # 显示源数据中的分组供调试
             lines = source_content.split('\n')
             log("源数据中的分组:")
             for line in lines:
@@ -258,22 +412,23 @@ def main():
             log(f"   总行数: {line_count}")
             log(f"   港澳台频道数: {len(hk_channels)}")
             
-            # 显示文件格式示例
-            print("\n📋 生成的文件格式示例:")
-            print("=" * 60)
-            lines = cc_content.split('\n')
-            for i, line in enumerate(lines[:15]):  # 显示前15行
-                if i < len(lines):
-                    print(line)
-            print("...")
-            print("=" * 60)
-            
-            # 显示具体的EXTINF示例
-            print("\n🎯 生成的EXTINF格式示例:")
-            for channel in hk_channels[:3]:  # 显示前3个频道
-                print(f'#EXTINF:-1 tvg-id="{channel["tvg_id"]}" tvg-name="{channel["tvg_name"]}" tvg-logo="" group-title="{channel["group"]}",{channel["name"]}')
-                print(channel["url"][:50] + "..." if len(channel["url"]) > 50 else channel["url"])
+            # 显示生成的文件格式示例
+            print("\n📋 生成的EXTINF格式示例（带台标）:")
+            print("=" * 70)
+            for i, channel in enumerate(hk_channels[:3]):  # 显示前3个
+                print(f'#EXTINF:-1 tvg-id="{channel["tvg_id"]}" tvg-name="{channel["tvg_name"]}" tvg-logo="{channel["logo"]}" group-title="{channel["group"]}",{channel["name"]}')
+                print(channel["url"])
                 print()
+            print("=" * 70)
+            
+            # 显示实际文件内容（前20行）
+            print("\n📄 文件内容预览（前20行）:")
+            print("-" * 70)
+            lines = cc_content.split('\n')
+            for i, line in enumerate(lines[:20]):
+                print(line)
+            print("..." if len(lines) > 20 else "")
+            print("-" * 70)
             
         else:
             log("❌ 文件保存失败")
