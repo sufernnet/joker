@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-CC.m3u 合并脚本 - 标准M3U格式（带公开台标）
+CC.m3u 合并脚本 - 标准M3U格式（支持频道源合并）
 从 https://stymei.sufern001.workers.dev/ 提取：
 1. 🔥全网通港澳台
 2. 🔮港澳台直播
-合并为「全网通港澳台」分组，并与本地 BB.m3u 合并输出 CC.m3u
+将相同频道合并，支持多播放地址，并与本地 BB.m3u 合并输出 CC.m3u
 """
 
 import requests
@@ -12,6 +12,7 @@ from datetime import datetime
 import os
 import re
 import hashlib
+from collections import defaultdict
 
 # ================== 配置区域 ==================
 SOURCE_URL = "https://stymei.sufern001.workers.dev/"
@@ -42,10 +43,10 @@ def get_channel_logo(channel_name):
     # 频道名映射表（可自行扩展）
     logo_map = {
         # 凤凰系列
-        "凤凰卫视": "phoenix.tv.png",
         "凤凰中文": "phoenix.chinese.png",
         "凤凰资讯": "phoenix.infonews.png",
         "凤凰香港": "phoenix.hongkong.png",
+        "凤凰卫视": "phoenix.tv.png",
         # TVB系列
         "翡翠台": "tvb.jade.png",
         "明珠台": "tvb.pearl.png",
@@ -70,7 +71,6 @@ def get_channel_logo(channel_name):
         if key in channel_name:
             for source in LOGO_SOURCES:
                 logo_url = f"{source}{filename}"
-                # 这里不实际验证URL，由播放器处理
                 return logo_url
     
     # 2. 关键词匹配
@@ -91,23 +91,16 @@ def get_channel_logo(channel_name):
                 logo_url = f"{source}{filename}"
                 return logo_url
     
-    # 3. 生成基于名称的猜测
-    clean_name = re.sub(r'[^\w]', '', channel_name)
-    for source in LOGO_SOURCES:
-        logo_url = f"{source}{clean_name.lower()}.png"
-        return logo_url  # 返回第一个猜测
+    # 3. 返回默认台标
+    return "https://raw.githubusercontent.com/iptv-org/iptv/master/logos/default.png"
 
 def extract_tvg_info(channel_name):
     """生成频道的tvg信息"""
     # 清理名称生成tvg-id
     clean_name = re.sub(r'[^\w\u4e00-\u9fff]', '', channel_name)
     
-    if re.search(r'[\u4e00-\u9fff]', channel_name):
-        # 中文名称使用MD5哈希
-        tvg_id = f"channel_{hashlib.md5(channel_name.encode()).hexdigest()[:8]}"
-    else:
-        tvg_id = clean_name
-    
+    # 使用MD5生成一致的tvg-id，确保相同频道名有相同ID
+    tvg_id = f"channel_{hashlib.md5(channel_name.encode()).hexdigest()[:8]}"
     tvg_name = channel_name
     logo_url = get_channel_logo(channel_name)
     
@@ -130,15 +123,28 @@ def download_source():
         log(f"❌ 下载失败: {e}")
         return None
 
-def extract_channels(content):
-    """从内容中提取指定分组的所有频道"""
+def extract_and_merge_channels(content):
+    """
+    从内容中提取指定分组的所有频道，并合并相同频道的多个源
+    返回结构: {channel_name: {tvg_id, tvg_name, logo, group, urls: [url1, url2, ...]}}
+    """
     if not content:
-        return []
+        return {}
     
-    channels = []
+    # 使用字典合并相同频道，值是一个包含所有URL的列表
+    channel_dict = defaultdict(lambda: {
+        'name': '',
+        'tvg_id': '',
+        'tvg_name': '',
+        'logo': '',
+        'group': TARGET_GROUP,
+        'urls': [],  # 存储多个播放地址
+        'source_groups': set()  # 记录来源分组
+    })
+    
     lines = content.split('\n')
     
-    log(f"开始提取分组: {SOURCE_GROUPS}")
+    log(f"开始提取并合并分组: {SOURCE_GROUPS}")
     
     for source_group in SOURCE_GROUPS:
         in_section = False
@@ -169,37 +175,42 @@ def extract_channels(content):
                     url = ','.join(parts[1:]).strip()
                     
                     if url and ('://' in url or url.startswith('http')):
-                        tvg_id, tvg_name, logo_url = extract_tvg_info(channel_name)
-                        channels.append({
-                            'name': channel_name,
-                            'url': url,
-                            'tvg_id': tvg_id,
-                            'tvg_name': tvg_name,
-                            'logo': logo_url,
-                            'group': TARGET_GROUP,
-                            'source_group': source_group  # 记录原始分组
-                        })
-                        group_count += 1
+                        # 如果是首次遇到这个频道，生成tvg信息
+                        if channel_name not in channel_dict or not channel_dict[channel_name]['tvg_id']:
+                            tvg_id, tvg_name, logo_url = extract_tvg_info(channel_name)
+                            channel_dict[channel_name].update({
+                                'name': channel_name,
+                                'tvg_id': tvg_id,
+                                'tvg_name': tvg_name,
+                                'logo': logo_url,
+                                'group': TARGET_GROUP,
+                            })
+                        
+                        # 添加URL到列表
+                        if url not in channel_dict[channel_name]['urls']:
+                            channel_dict[channel_name]['urls'].append(url)
+                            channel_dict[channel_name]['source_groups'].add(source_group)
+                            group_count += 1
         
         if group_found:
-            log(f"  从「{source_group}」提取 {group_count} 个频道")
+            log(f"  从「{source_group}」提取 {group_count} 个播放源")
         else:
             log(f"⚠️  未找到分组: {source_group}")
     
-    log(f"✅ 总计提取 {len(channels)} 个频道")
+    # 转换为普通字典并统计
+    result = dict(channel_dict)
+    total_channels = len(result)
+    total_urls = sum(len(ch['urls']) for ch in result.values())
     
-    # 去重（基于频道名称）
-    unique_channels = []
-    seen_names = set()
-    for ch in channels:
-        if ch['name'] not in seen_names:
-            seen_names.add(ch['name'])
-            unique_channels.append(ch)
+    log(f"✅ 合并后得到 {total_channels} 个唯一频道，共 {total_urls} 个播放源")
     
-    if len(unique_channels) < len(channels):
-        log(f"✅ 去重后剩余 {len(unique_channels)} 个唯一频道")
+    # 显示合并示例
+    if result:
+        log("频道合并示例:")
+        for name, data in list(result.items())[:3]:
+            log(f"  {name}: {len(data['urls'])} 个播放源 (来自: {', '.join(data['source_groups'])})")
     
-    return unique_channels
+    return result
 
 def load_local_m3u():
     """加载本地BB.m3u文件"""
@@ -223,17 +234,17 @@ http://example.com/local2"""
         log(f"❌ 加载本地文件失败: {e}")
         return "#EXTM3U\n"
 
-def generate_m3u_content(local_content, channels):
-    """生成最终的M3U内容"""
+def generate_m3u_content(local_content, channel_dict):
+    """生成最终的M3U内容（支持多播放地址）"""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     output_lines = [
         "#EXTM3U",
-        f"# CC.m3u - 自动生成",
+        f"# CC.m3u - 自动生成（频道源合并版）",
         f"# 生成时间: {timestamp}",
         f"# 源地址: {SOURCE_URL}",
         f"# 提取分组: {', '.join(SOURCE_GROUPS)} → {TARGET_GROUP}",
-        f"# 港澳台频道数: {len(channels)}",
+        f"# 唯一频道数: {len(channel_dict)}",
         f"# GitHub Actions 自动生成",
         ""
     ]
@@ -253,32 +264,42 @@ def generate_m3u_content(local_content, channels):
         
         output_lines.append("")
     
-    # 添加港澳台频道
-    if channels:
+    # 添加港澳台频道（支持多播放地址）
+    if channel_dict:
         output_lines.append("#" + "=" * 60)
         output_lines.append(f"# {TARGET_GROUP} (合并自: {', '.join(SOURCE_GROUPS)})")
+        output_lines.append("# 说明：每个频道可能包含多个播放地址，播放器会自动选择可用源")
         output_lines.append("#" + "=" * 60)
         output_lines.append("")
         
-        for i, channel in enumerate(channels, 1):
+        for i, (channel_name, data) in enumerate(channel_dict.items(), 1):
             # EXTINF 行
-            extinf = f'#EXTINF:-1 tvg-id="{channel["tvg_id"]}" tvg-name="{channel["tvg_name"]}" tvg-logo="{channel["logo"]}" group-title="{TARGET_GROUP}",{channel["name"]}'
+            extinf = f'#EXTINF:-1 tvg-id="{data["tvg_id"]}" tvg-name="{data["tvg_name"]}" tvg-logo="{data["logo"]}" group-title="{TARGET_GROUP}",{channel_name}'
             output_lines.append(extinf)
-            # URL 行
-            output_lines.append(channel["url"])
-            # 每5个频道加一个空行（美观）
-            if i % 5 == 0 and i < len(channels):
+            
+            # 多个播放地址（每个地址一行）
+            for url in data['urls']:
+                output_lines.append(url)
+            
+            # 每3个频道加一个空行（美观）
+            if i % 3 == 0 and i < len(channel_dict):
                 output_lines.append("")
+        
+        # 移除最后的空行（如果有）
+        while output_lines and output_lines[-1] == "":
+            output_lines.pop()
     
     # 统计信息
     output_lines.append("")
     output_lines.append("#" + "=" * 60)
     output_lines.append("# 统计信息")
     local_channels = len([l for l in local_content.split('\n') if l.startswith('#EXTINF')])
+    total_urls = sum(len(ch['urls']) for ch in channel_dict.values())
     output_lines.append(f"# 本地频道数: {local_channels}")
-    output_lines.append(f"# 港澳台频道数: {len(channels)}")
-    output_lines.append(f"# 总频道数: {local_channels + len(channels)}")
+    output_lines.append(f"# 港澳台唯一频道数: {len(channel_dict)}")
+    output_lines.append(f"# 港澳台播放源总数: {total_urls}")
     output_lines.append(f"# 更新时间: {timestamp}")
+    output_lines.append("# 说明：相同频道的多个播放地址已合并，播放器会尝试所有地址直到成功")
     output_lines.append("#" + "=" * 60)
     
     return '\n'.join(output_lines)
@@ -286,7 +307,7 @@ def generate_m3u_content(local_content, channels):
 def main():
     """主函数"""
     print("=" * 70)
-    log("开始生成 CC.m3u ...")
+    log("开始生成 CC.m3u（频道源合并版）...")
     print("=" * 70)
     
     try:
@@ -296,10 +317,10 @@ def main():
             log("❌ 无法获取源数据，退出")
             return
         
-        # 2. 提取频道
-        channels = extract_channels(source_content)
+        # 2. 提取并合并频道
+        channel_dict = extract_and_merge_channels(source_content)
         
-        if not channels:
+        if not channel_dict:
             log("⚠️  未提取到任何频道，检查源数据格式")
             # 显示前5个分组供调试
             lines = source_content.split('\n')
@@ -314,7 +335,7 @@ def main():
         local_content = load_local_m3u()
         
         # 4. 生成内容
-        m3u_content = generate_m3u_content(local_content, channels)
+        m3u_content = generate_m3u_content(local_content, channel_dict)
         
         # 5. 保存文件
         with open(OUTPUT_FILE, 'w', encoding='utf-8', newline='\n') as f:
@@ -330,23 +351,38 @@ def main():
             log(f"   文件位置: {os.path.abspath(OUTPUT_FILE)}")
             log(f"   文件大小: {file_size} 字节")
             log(f"   总行数: {line_count}")
-            log(f"   港澳台频道: {len(channels)} 个")
+            log(f"   唯一频道数: {len(channel_dict)}")
             
-            # 显示示例
-            print("\n📋 生成示例 (前3个频道):")
+            # 显示合并示例
+            print("\n📋 频道合并示例:")
             print("-" * 70)
+            for name, data in list(channel_dict.items())[:2]:
+                print(f'{data["tvg_name"]} ({len(data["urls"])}个播放源):')
+                for url in data['urls'][:2]:  # 只显示前2个URL
+                    print(f"  {url[:80]}..." if len(url) > 80 else f"  {url}")
+                if len(data['urls']) > 2:
+                    print(f"  ... 还有{len(data['urls'])-2}个播放源")
+                print()
+            print("-" * 70)
+            
+            # 显示实际文件内容示例
+            print("\n📄 生成文件格式示例:")
+            print("-" * 50)
             lines = m3u_content.split('\n')
-            extinf_count = 0
-            for line in lines:
-                if line.startswith('#EXTINF'):
-                    print(line[:100] + "..." if len(line) > 100 else line)
-                    extinf_count += 1
-                    if extinf_count >= 3:
+            # 找到第一个多源频道的部分
+            for i, line in enumerate(lines):
+                if line.startswith('#EXTINF') and i+1 < len(lines) and lines[i+1].startswith('http'):
+                    if i+2 < len(lines) and lines[i+2].startswith('http'):
+                        # 这是一个多源频道
+                        print(lines[i])
+                        print(lines[i+1])
+                        print(lines[i+2])
+                        if i+3 < len(lines) and lines[i+3].startswith('http'):
+                            print(lines[i+3])
+                        print("...")
                         break
-            print("-" * 70)
+            print("-" * 50)
             
-            # 显示实际文件位置
-            print(f"\n📁 文件已保存至: {os.path.abspath(OUTPUT_FILE)}")
         else:
             log("❌ 文件保存失败")
     
