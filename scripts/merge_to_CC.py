@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-CC.m3u 合并脚本 - 标准M3U格式（支持频道源合并）
+CC.m3u 合并脚本 - 标准M3U格式（支持EPG、频道排序、频道过滤）
 从 https://stymei.sufern001.workers.dev/ 提取：
 1. 🔥全网通港澳台
 2. 🔮港澳台直播
-将相同频道合并，支持多播放地址，并与本地 BB.m3u 合并输出 CC.m3u
+将相同频道合并，支持多播放地址，并按指定规则排序、过滤
 """
 
 import requests
@@ -18,6 +18,7 @@ from collections import defaultdict
 SOURCE_URL = "https://stymei.sufern001.workers.dev/"
 BB_FILE = "BB.m3u"
 OUTPUT_FILE = "CC.m3u"
+EPG_URL = "http://epg.51zmt.top:8000/e.xml"  # EPG节目单地址
 
 # 要提取的源分组（可扩展多个）
 SOURCE_GROUPS = [
@@ -33,10 +34,121 @@ LOGO_SOURCES = [
     "https://raw.githubusercontent.com/lqist/IPTVlogos/main/",
 ]
 
+# 频道排序优先级（依次为:凤凰→NOW→TVB→HOY→VIUTV→其他）
+CHANNEL_PRIORITY = {
+    # 最高优先级：凤凰系列
+    "凤凰中文": 1,
+    "凤凰资讯": 2,
+    "凤凰香港": 3,
+    "凤凰电影": 4,
+    "凤凰卫视": 5,
+    # 第二优先级：NOW系列
+    "NOW": 10,
+    "NOW新闻": 11,
+    "NOW财经": 12,
+    "NOW体育": 13,
+    # 第三优先级：TVB系列
+    "TVB": 20,
+    "翡翠台": 21,
+    "明珠台": 22,
+    "J2": 23,
+    "无线新闻": 24,
+    "无线财经": 25,
+    # 第四优先级：HOY系列
+    "HOY": 30,
+    "HOY TV": 31,
+    "HOY资讯台": 32,
+    "香港开电视": 33,  # HOY TV前身
+    # 第五优先级：VIUTV系列
+    "VIUTV": 40,
+    "VIUTV中文台": 41,
+    "VIUTV综艺台": 42,
+    # 其他频道默认优先级：100
+}
+
+# 需要剔除的频道关键词（完全匹配或部分匹配）
+BLACKLIST_KEYWORDS = [
+    "SPOTV",
+    "GOODTV",
+    "GOOD2",
+    "番薯111",
+    "人间卫视",
+    "唯心电视",
+    "中旺电视",
+    "生命电影",
+    "唐人卫视",
+    "香港卫视",
+    "唐NTD",
+    "NTDTV",  # 可能的相关频道
+    "新唐人",  # 可能的相关频道
+]
+
 # ================== 工具函数 ==================
 def log(msg):
     """日志输出"""
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
+
+def is_channel_blacklisted(channel_name):
+    """检查频道是否在黑名单中"""
+    for keyword in BLACKLIST_KEYWORDS:
+        if keyword in channel_name:
+            return True
+    return False
+
+def get_channel_priority(channel_name):
+    """获取频道排序优先级"""
+    # 检查精确匹配
+    for key, priority in CHANNEL_PRIORITY.items():
+        if key == channel_name:
+            return priority
+    
+    # 检查部分匹配
+    for key, priority in CHANNEL_PRIORITY.items():
+        if key in channel_name:
+            return priority
+    
+    # 特殊规则：包含"凤凰"但不是已定义的
+    if "凤凰" in channel_name and channel_name not in CHANNEL_PRIORITY:
+        return 6  # 其他凤凰频道放在已定义凤凰频道之后
+    
+    # 默认优先级
+    return 100
+
+def sort_channels(channel_dict):
+    """按指定规则排序频道"""
+    # 转换为列表便于排序
+    channels_list = [(name, data) for name, data in channel_dict.items()]
+    
+    # 排序规则：1.优先级 2.频道名称
+    def sort_key(item):
+        channel_name = item[0]
+        priority = get_channel_priority(channel_name)
+        return (priority, channel_name)
+    
+    sorted_channels = sorted(channels_list, key=sort_key)
+    
+    # 转换回字典
+    sorted_dict = {name: data for name, data in sorted_channels}
+    
+    # 记录排序信息
+    log(f"频道排序完成，优先级分布:")
+    priority_groups = defaultdict(list)
+    for name, _ in sorted_channels:
+        priority = get_channel_priority(name)
+        priority_groups[priority].append(name)
+    
+    for priority in sorted(priority_groups.keys()):
+        if priority <= 40:  # 只显示主要优先级组
+            group_name = {
+                1: "凤凰系列",
+                10: "NOW系列",
+                20: "TVB系列",
+                30: "HOY系列",
+                40: "VIUTV系列"
+            }.get(priority, f"优先级{priority}")
+            log(f"  {group_name}: {len(priority_groups[priority])}个频道")
+    
+    return sorted_dict
 
 def get_channel_logo(channel_name):
     """根据频道名匹配台标"""
@@ -47,23 +159,26 @@ def get_channel_logo(channel_name):
         "凤凰资讯": "phoenix.infonews.png",
         "凤凰香港": "phoenix.hongkong.png",
         "凤凰卫视": "phoenix.tv.png",
+        "凤凰电影": "phoenix.movie.png",
         # TVB系列
         "翡翠台": "tvb.jade.png",
         "明珠台": "tvb.pearl.png",
         "J2": "tvb.j2.png",
+        "TVB": "tvb.png",
+        # HOY系列
+        "HOY": "hoy.png",
+        "HOY TV": "hoy.tv.png",
+        "香港开电视": "hoy.tv.png",
+        # VIUTV系列
+        "VIUTV": "viutv.png",
+        # NOW系列
+        "NOW": "now.png",
+        "NOW新闻": "now.news.png",
         # 其他常见频道
-        "TVBS": "tvbs.png",
         "中天": "cti.png",
         "东森": "ettv.png",
         "三立": "set.png",
         "民视": "ftv.png",
-        "HBO": "hbo.png",
-        "CNN": "cnn.png",
-        "BBC": "bbc.png",
-        "Discovery": "discovery.png",
-        "National Geographic": "natgeo.png",
-        "ESPN": "espn.png",
-        "FOX": "fox.png",
     }
     
     # 1. 精确匹配
@@ -79,10 +194,7 @@ def get_channel_logo(channel_name):
         "体育": "sports.png",
         "电影": "movie.png",
         "音乐": "music.png",
-        "儿童": "kids.png",
-        "卡通": "cartoon.png",
         "财经": "finance.png",
-        "教育": "education.png",
     }
     
     for keyword, filename in keywords.items():
@@ -145,11 +257,13 @@ def extract_and_merge_channels(content):
     lines = content.split('\n')
     
     log(f"开始提取并合并分组: {SOURCE_GROUPS}")
+    log(f"黑名单过滤: {BLACKLIST_KEYWORDS}")
     
     for source_group in SOURCE_GROUPS:
         in_section = False
         group_found = False
         group_count = 0
+        blacklist_count = 0
         
         for i, line in enumerate(lines):
             line = line.strip()
@@ -174,6 +288,12 @@ def extract_and_merge_channels(content):
                     channel_name = parts[0].strip()
                     url = ','.join(parts[1:]).strip()
                     
+                    # 检查是否在黑名单中
+                    if is_channel_blacklisted(channel_name):
+                        blacklist_count += 1
+                        log(f"  过滤黑名单频道: {channel_name}")
+                        continue
+                    
                     if url and ('://' in url or url.startswith('http')):
                         # 如果是首次遇到这个频道，生成tvg信息
                         if channel_name not in channel_dict or not channel_dict[channel_name]['tvg_id']:
@@ -193,16 +313,22 @@ def extract_and_merge_channels(content):
                             group_count += 1
         
         if group_found:
-            log(f"  从「{source_group}」提取 {group_count} 个播放源")
+            log(f"  从「{source_group}」提取 {group_count} 个播放源，过滤 {blacklist_count} 个黑名单频道")
         else:
             log(f"⚠️  未找到分组: {source_group}")
     
-    # 转换为普通字典并统计
+    # 转换为普通字典
     result = dict(channel_dict)
+    
+    # 统计信息
     total_channels = len(result)
     total_urls = sum(len(ch['urls']) for ch in result.values())
     
     log(f"✅ 合并后得到 {total_channels} 个唯一频道，共 {total_urls} 个播放源")
+    
+    # 显示过滤统计
+    if blacklist_count > 0:
+        log(f"✅ 共过滤 {blacklist_count} 个黑名单频道")
     
     # 显示合并示例
     if result:
@@ -217,7 +343,7 @@ def load_local_m3u():
     try:
         if not os.path.exists(BB_FILE):
             log(f"⚠️  {BB_FILE} 不存在，创建默认文件")
-            default_content = """#EXTM3U
+            default_content = f"""#EXTM3U
 #EXTINF:-1 tvg-id="" tvg-name="本地测试1" tvg-logo="" group-title="本地",本地测试1
 http://example.com/local1
 #EXTINF:-1 tvg-id="" tvg-name="本地测试2" tvg-logo="" group-title="本地",本地测试2
@@ -239,11 +365,14 @@ def generate_m3u_content(local_content, channel_dict):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     output_lines = [
-        "#EXTM3U",
-        f"# CC.m3u - 自动生成（频道源合并版）",
+        f'#EXTM3U url-tvg="{EPG_URL}"',
+        f"# CC.m3u - 自动生成（EPG+排序+过滤版）",
         f"# 生成时间: {timestamp}",
         f"# 源地址: {SOURCE_URL}",
+        f"# EPG地址: {EPG_URL}",
         f"# 提取分组: {', '.join(SOURCE_GROUPS)} → {TARGET_GROUP}",
+        f"# 排序规则: 凤凰→NOW→TVB→HOY→VIUTV→其他",
+        f"# 过滤频道: {', '.join(BLACKLIST_KEYWORDS)}",
         f"# 唯一频道数: {len(channel_dict)}",
         f"# GitHub Actions 自动生成",
         ""
@@ -269,10 +398,48 @@ def generate_m3u_content(local_content, channel_dict):
         output_lines.append("#" + "=" * 60)
         output_lines.append(f"# {TARGET_GROUP} (合并自: {', '.join(SOURCE_GROUPS)})")
         output_lines.append("# 说明：每个频道可能包含多个播放地址，播放器会自动选择可用源")
+        output_lines.append("# 排序：凤凰系列→NOW系列→TVB系列→HOY系列→VIUTV系列→其他")
         output_lines.append("#" + "=" * 60)
         output_lines.append("")
         
+        # 添加分组标题便于识别
+        current_priority = None
         for i, (channel_name, data) in enumerate(channel_dict.items(), 1):
+            priority = get_channel_priority(channel_name)
+            
+            # 添加分组分隔
+            if current_priority != priority:
+                current_priority = priority
+                group_name = {
+                    1: "凤凰系列",
+                    2: "凤凰系列",
+                    3: "凤凰系列",
+                    4: "凤凰系列",
+                    5: "凤凰系列",
+                    6: "凤凰系列",
+                    10: "NOW系列",
+                    11: "NOW系列",
+                    12: "NOW系列",
+                    13: "NOW系列",
+                    20: "TVB系列",
+                    21: "TVB系列",
+                    22: "TVB系列",
+                    23: "TVB系列",
+                    24: "TVB系列",
+                    25: "TVB系列",
+                    30: "HOY系列",
+                    31: "HOY系列",
+                    32: "HOY系列",
+                    33: "HOY系列",
+                    40: "VIUTV系列",
+                    41: "VIUTV系列",
+                    42: "VIUTV系列",
+                }.get(priority, "其他频道")
+                
+                if i > 1:  # 不是第一个频道才添加空行
+                    output_lines.append("")
+                output_lines.append(f"# --- {group_name} ---")
+            
             # EXTINF 行
             extinf = f'#EXTINF:-1 tvg-id="{data["tvg_id"]}" tvg-name="{data["tvg_name"]}" tvg-logo="{data["logo"]}" group-title="{TARGET_GROUP}",{channel_name}'
             output_lines.append(extinf)
@@ -280,10 +447,6 @@ def generate_m3u_content(local_content, channel_dict):
             # 多个播放地址（每个地址一行）
             for url in data['urls']:
                 output_lines.append(url)
-            
-            # 每3个频道加一个空行（美观）
-            if i % 3 == 0 and i < len(channel_dict):
-                output_lines.append("")
         
         # 移除最后的空行（如果有）
         while output_lines and output_lines[-1] == "":
@@ -295,11 +458,32 @@ def generate_m3u_content(local_content, channel_dict):
     output_lines.append("# 统计信息")
     local_channels = len([l for l in local_content.split('\n') if l.startswith('#EXTINF')])
     total_urls = sum(len(ch['urls']) for ch in channel_dict.values())
+    
+    # 统计各系列数量
+    series_count = defaultdict(int)
+    for channel_name in channel_dict.keys():
+        priority = get_channel_priority(channel_name)
+        series = {
+            1: "凤凰", 2: "凤凰", 3: "凤凰", 4: "凤凰", 5: "凤凰", 6: "凤凰",
+            10: "NOW", 11: "NOW", 12: "NOW", 13: "NOW",
+            20: "TVB", 21: "TVB", 22: "TVB", 23: "TVB", 24: "TVB", 25: "TVB",
+            30: "HOY", 31: "HOY", 32: "HOY", 33: "HOY",
+            40: "VIUTV", 41: "VIUTV", 42: "VIUTV",
+        }.get(priority, "其他")
+        series_count[series] += 1
+    
     output_lines.append(f"# 本地频道数: {local_channels}")
     output_lines.append(f"# 港澳台唯一频道数: {len(channel_dict)}")
     output_lines.append(f"# 港澳台播放源总数: {total_urls}")
+    
+    if series_count:
+        output_lines.append("# 频道系列分布:")
+        for series in ["凤凰", "NOW", "TVB", "HOY", "VIUTV", "其他"]:
+            if series_count.get(series, 0) > 0:
+                output_lines.append(f"#   {series}: {series_count[series]}个频道")
+    
     output_lines.append(f"# 更新时间: {timestamp}")
-    output_lines.append("# 说明：相同频道的多个播放地址已合并，播放器会尝试所有地址直到成功")
+    output_lines.append("# EPG节目单: 已集成，播放器会自动加载")
     output_lines.append("#" + "=" * 60)
     
     return '\n'.join(output_lines)
@@ -307,7 +491,7 @@ def generate_m3u_content(local_content, channel_dict):
 def main():
     """主函数"""
     print("=" * 70)
-    log("开始生成 CC.m3u（频道源合并版）...")
+    log("开始生成 CC.m3u（EPG+排序+过滤版）...")
     print("=" * 70)
     
     try:
@@ -331,17 +515,21 @@ def main():
                     log(f"  - {line}")
                     count += 1
         
-        # 3. 加载本地文件
+        # 3. 按规则排序频道
+        log("开始按规则排序频道...")
+        sorted_channel_dict = sort_channels(channel_dict)
+        
+        # 4. 加载本地文件
         local_content = load_local_m3u()
         
-        # 4. 生成内容
-        m3u_content = generate_m3u_content(local_content, channel_dict)
+        # 5. 生成内容
+        m3u_content = generate_m3u_content(local_content, sorted_channel_dict)
         
-        # 5. 保存文件
+        # 6. 保存文件
         with open(OUTPUT_FILE, 'w', encoding='utf-8', newline='\n') as f:
             f.write(m3u_content)
         
-        # 6. 验证结果
+        # 7. 验证结果
         if os.path.exists(OUTPUT_FILE):
             file_size = os.path.getsize(OUTPUT_FILE)
             line_count = m3u_content.count('\n') + 1
@@ -351,36 +539,48 @@ def main():
             log(f"   文件位置: {os.path.abspath(OUTPUT_FILE)}")
             log(f"   文件大小: {file_size} 字节")
             log(f"   总行数: {line_count}")
-            log(f"   唯一频道数: {len(channel_dict)}")
+            log(f"   唯一频道数: {len(sorted_channel_dict)}")
+            log(f"   EPG地址: {EPG_URL}")
             
-            # 显示合并示例
-            print("\n📋 频道合并示例:")
+            # 显示排序结果
+            print("\n📋 频道排序结果（前10个）:")
             print("-" * 70)
-            for name, data in list(channel_dict.items())[:2]:
-                print(f'{data["tvg_name"]} ({len(data["urls"])}个播放源):')
-                for url in data['urls'][:2]:  # 只显示前2个URL
-                    print(f"  {url[:80]}..." if len(url) > 80 else f"  {url}")
-                if len(data['urls']) > 2:
-                    print(f"  ... 还有{len(data['urls'])-2}个播放源")
-                print()
+            for i, (name, data) in enumerate(list(sorted_channel_dict.items())[:10]):
+                priority = get_channel_priority(name)
+                series = {
+                    1: "凤凰", 2: "凤凰", 3: "凤凰", 4: "凤凰", 5: "凤凰", 6: "凤凰": "凤凰",
+                    10: "NOW", 11: "NOW", 12: "NOW", 13: "NOW": "NOW",
+                    20: "TVB", 21: "TVB", 22: "TVB", 23: "TVB", 24: "TVB", 25: "TVB": "TVB",
+                    30: "HOY", 31: "HOY", 32: "HOY", 33: "HOY": "HOY",
+                    40: "VIUTV", 41: "VIUTV", 42: "VIUTV": "VIUTV",
+                }.get(priority, "其他")
+                print(f"{i+1:2d}. [{series}] {name} ({len(data['urls'])}个源)")
             print("-" * 70)
             
-            # 显示实际文件内容示例
-            print("\n📄 生成文件格式示例:")
+            # 显示过滤结果
+            print("\n🚫 已过滤的黑名单频道:")
+            lines = source_content.split('\n')
+            filtered = []
+            for line in lines:
+                if ',' in line:
+                    channel_name = line.split(',')[0].strip()
+                    if is_channel_blacklisted(channel_name):
+                        filtered.append(channel_name)
+            
+            if filtered:
+                for i, name in enumerate(filtered[:10]):  # 最多显示10个
+                    print(f"  {i+1}. {name}")
+                if len(filtered) > 10:
+                    print(f"  ... 还有{len(filtered)-10}个")
+            else:
+                print("  无匹配的黑名单频道")
+            
+            # 显示文件头
+            print("\n📄 生成文件头部:")
             print("-" * 50)
             lines = m3u_content.split('\n')
-            # 找到第一个多源频道的部分
-            for i, line in enumerate(lines):
-                if line.startswith('#EXTINF') and i+1 < len(lines) and lines[i+1].startswith('http'):
-                    if i+2 < len(lines) and lines[i+2].startswith('http'):
-                        # 这是一个多源频道
-                        print(lines[i])
-                        print(lines[i+1])
-                        print(lines[i+2])
-                        if i+3 < len(lines) and lines[i+3].startswith('http'):
-                            print(lines[i+3])
-                        print("...")
-                        break
+            for line in lines[:15]:
+                print(line)
             print("-" * 50)
             
         else:
