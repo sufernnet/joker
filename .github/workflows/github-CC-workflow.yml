@@ -1,47 +1,178 @@
-name: Create CC.m3u
+name: Generate CC.m3u
 
 on:
-  workflow_dispatch:
-  push:
-    paths: ['BB.m3u', 'scripts/merge_to_CC.py']
+  workflow_dispatch:  # 手动触发
+  schedule:
+    # 每天UTC 00:00运行（北京时间08:00）
+    - cron: '0 0 * * *'
 
 jobs:
-  build:
+  generate-cc:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Python
-      uses: actions/setup-python@v5
+    - name: 📥 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 🐍 设置Python
+      uses: actions/setup-python@v4
       with:
         python-version: '3.10'
         
-    - name: Install dependencies
-      run: pip install requests
-      
-    - name: Check for BB.m3u
+    - name: 📦 安装依赖
       run: |
+        python -m pip install --upgrade pip
+        pip install requests
+        
+    - name: 🔍 显示目录结构
+      run: |
+        echo "当前目录: $(pwd)"
+        echo ""
+        echo "📁 目录结构:"
+        ls -la
+        echo ""
+        echo "📂 scripts目录:"
+        ls -la scripts/ || echo "scripts目录不存在"
+        echo ""
+        echo "📄 查找M3U文件:"
+        find . -name "*.m3u" -type f 2>/dev/null || echo "未找到M3U文件"
+        
+    - name: 📝 创建或检查BB.m3u
+      run: |
+        echo "检查BB.m3u文件..."
         if [ ! -f "BB.m3u" ]; then
-          echo "#EXTM3U" > BB.m3u
-          echo "# 本地频道" >> BB.m3u
-          echo "创建了空的 BB.m3u"
+          echo "创建BB.m3u文件..."
+          cat > BB.m3u << 'EOF'
+#EXTM3U
+# 本地频道列表
+# 创建于 $(date)
+
+# 示例频道1
+示例频道1,http://example.com/channel1
+
+# 示例频道2  
+示例频道2,http://example.com/channel2
+EOF
+          echo "✅ BB.m3u已创建"
+        else
+          echo "✅ BB.m3u已存在"
+          echo "文件大小: $(wc -c < BB.m3u) bytes"
+          echo "行数: $(wc -l < BB.m3u)"
         fi
         
-    - name: Run script
-      run: python scripts/merge_to_CC.py
-      
-    - name: List files
-      run: ls -la
-      
-    - name: Show result
+    - name: 🚀 运行Python脚本
+      id: run-script
       run: |
+        echo "开始执行合并脚本..."
+        echo ""
+        
+        # 确保脚本可执行
+        chmod +x scripts/merge_to_CC.py
+        
+        # 运行脚本
+        python scripts/merge_to_CC.py
+        
+        echo ""
+        echo "脚本执行完成"
+        
+    - name: ✅ 验证CC.m3u生成
+      run: |
+        echo "验证输出文件..."
+        echo ""
+        
         if [ -f "CC.m3u" ]; then
-          echo "✅ CC.m3u 已创建"
-          echo "行数: $(wc -l < CC.m3u)"
-          echo "前3行:"
-          head -3 CC.m3u
+          echo "🎉 CC.m3u 生成成功!"
+          echo ""
+          echo "📊 文件信息:"
+          echo "  位置: $(pwd)/CC.m3u"
+          echo "  大小: $(wc -c < CC.m3u) bytes"
+          echo "  行数: $(wc -l < CC.m3u)"
+          echo ""
+          echo "📋 文件内容预览:"
+          echo "----------------------------------------"
+          head -20 CC.m3u
+          echo "----------------------------------------"
+          echo ""
+          
+          # 统计信息
+          echo "📈 统计信息:"
+          channel_count=$(grep -c '://' CC.m3u || true)
+          echo "  总频道数: $channel_count"
+          
+          hk_count=$(grep -c '港澳台' CC.m3u || true)
+          echo "  港澳台相关行数: $hk_count"
+          
+          # 确保有内容
+          if [ $(wc -l < CC.m3u) -lt 5 ]; then
+            echo "⚠️  警告: 文件内容可能过少"
+            echo "完整内容:"
+            cat CC.m3u
+          fi
         else
-          echo "❌ CC.m3u 未创建"
+          echo "❌ CC.m3u 未生成!"
+          echo ""
+          echo "当前目录文件:"
+          ls -la
+          echo ""
+          echo "尝试查找所有文件:"
+          find . -type f -name "*.m3u" 2>/dev/null || echo "未找到M3U文件"
           exit 1
+        fi
+        
+    - name: 💾 保存CC.m3u为工件
+      uses: actions/upload-artifact@v4
+      with:
+        name: CC-m3u-file
+        path: CC.m3u
+        retention-days: 7
+        
+    - name: 📤 推送到仓库
+      run: |
+        echo "配置Git..."
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        
+        echo "添加CC.m3u..."
+        git add CC.m3u
+        
+        echo "检查状态..."
+        git status
+        
+        if git diff --cached --quiet; then
+          echo "没有变化需要提交"
+        else
+          echo "提交更改..."
+          git commit -m "🤖 自动更新CC.m3u $(date '+%Y-%m-%d %H:%M:%S')"
+          echo "推送更改..."
+          git push
+          echo "✅ 推送完成"
+        fi
+        
+    - name: 📊 生成报告
+      if: always()
+      run: |
+        echo "## 📋 执行报告" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        echo "### 📅 基本信息" >> $GITHUB_STEP_SUMMARY
+        echo "- **运行时间:** $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "- **工作目录:** $(pwd)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ -f "CC.m3u" ]; then
+          echo "### ✅ 成功生成 CC.m3u" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**文件信息:**" >> $GITHUB_STEP_SUMMARY
+          echo "- 大小: $(wc -c < CC.m3u) bytes" >> $GITHUB_STEP_SUMMARY
+          echo "- 行数: $(wc -l < CC.m3u)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "**内容预览:**" >> $GITHUB_STEP_SUMMARY
+          echo '```m3u' >> $GITHUB_STEP_SUMMARY
+          head -10 CC.m3u >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+        else
+          echo "### ❌ 生成失败" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "未能生成 CC.m3u 文件" >> $GITHUB_STEP_SUMMARY
         fi
