@@ -1,6 +1,10 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
 # CC.m3u - 自动生成（EPG+排序+过滤+合并版）
+<<<<<<< Updated upstream
 # 生成时间: 2026-02-05 04:23:05
+=======
+# 生成时间: 2026-02-05 04:23:17
+>>>>>>> Stashed changes
 # 源地址: https://stymei.sufern001.workers.dev/
 # EPG地址: http://epg.51zmt.top:8000/e.xml
 # 提取分组: 🔥全网通港澳台, 🔮港澳台直播 → 全网通港澳台
@@ -393,7 +397,11 @@ https://cdn9.163189.xyz/smt3.1.1.php?id=hkphoenix_twn
 http://r.jdshipin.com/yDoTN
 
 # --- NOW系列（合并所有NOW相关频道） ---
+<<<<<<< Updated upstream
 # 合并自: NOW体育台, NOW直播台, Now体育台, ...等4个频道
+=======
+# 合并自: Now体育台, Now新闻台, NOW直播台, ...等4个频道
+>>>>>>> Stashed changes
 #EXTINF:-1 tvg-id="channel_3dce1fce" tvg-name="NOW" tvg-logo="https://raw.githubusercontent.com/iptv-org/iptv/master/logos/now.png" group-title="全网通港澳台",NOW
 http://109.61.81.35:443/767/mpegts?token=1d8c18a3d377f5418d2501aa54082b60
 http://cdn.163189.xyz/163189/now
@@ -610,7 +618,11 @@ http://iptv.4666888.xyz/iptv2A.php?id=45
 #   爆谷台: 1个频道
 #   星影台: 1个频道
 #   其他: 60个频道
+<<<<<<< Updated upstream
 # 更新时间: 2026-02-05 04:23:05
+=======
+# 更新时间: 2026-02-05 04:23:17
+>>>>>>> Stashed changes
 # EPG节目单: 已集成，播放器会自动加载
 # 特殊功能: 凤凰中文完全合并、NOW频道合并、爆谷/星影台排序
 # 倒数第二个凤凰中文链接: 已成功合并
