@@ -1,4 +1,4 @@
-name: 自动生成CC.m3u
+name: 生成CC.m3u
 
 on:
   # 手动触发
@@ -8,12 +8,6 @@ on:
   schedule:
     - cron: '0 22 * * *'  # UTC 22:00 = 北京时间 06:00（次日）
     - cron: '0 9 * * *'   # UTC 09:00 = 北京时间 17:00
-  
-  # 当脚本更新时也触发
-  push:
-    paths:
-      - 'scripts/merge_to_CC.py'
-      - '.github/workflows/generate-cc.yml'
 
 jobs:
   generate-cc:
@@ -21,22 +15,22 @@ jobs:
     
     steps:
     - name: 📥 检出代码
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: 🐍 设置Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.9'
+        python-version: '3.10'
     
     - name: 📦 安装依赖
       run: pip install requests
     
-    - name: 🔍 显示当前状态
+    - name: 🔍 检查文件状态
       run: |
-        echo "=== 当前目录 ==="
+        echo "=== 当前工作目录 ==="
         pwd
         echo ""
-        echo "=== 文件列表 ==="
+        echo "=== 目录结构 ==="
         ls -la
         echo ""
         echo "=== scripts目录 ==="
@@ -45,114 +39,165 @@ jobs:
         echo "=== BB.m3u状态 ==="
         if [ -f "BB.m3u" ]; then
           echo "✅ BB.m3u存在"
+          echo "文件大小: $(wc -c < BB.m3u) 字节"
           echo "行数: $(wc -l < BB.m3u)"
           echo "前3行:"
           head -3 BB.m3u
         else
-          echo "⚠️ BB.m3u不存在，将创建空文件"
+          echo "⚠️ BB.m3u不存在，创建默认文件"
           echo "#EXTM3U" > BB.m3u
           echo "# 本地频道列表" >> BB.m3u
+          echo "# 创建时间: $(date)" >> BB.m3u
+          echo "✅ 已创建BB.m3u"
         fi
     
-    - name: 🚀 运行CC生成脚本
+    - name: 🚀 运行Python脚本
       id: run-script
       run: |
-        echo "开始生成CC.m3u..."
+        echo "开始执行Python脚本..."
+        echo "工作目录: $(pwd)"
         echo ""
+        
+        # 确保脚本存在
+        if [ ! -f "scripts/merge_to_CC.py" ]; then
+          echo "❌ 错误: scripts/merge_to_CC.py 不存在"
+          echo "当前目录内容:"
+          ls -la
+          exit 1
+        fi
+        
+        # 运行脚本
         python scripts/merge_to_CC.py
         
-        echo -e "\n=== 检查生成的文件 ==="
+        echo ""
+        echo "脚本执行完成"
+        
+    - name: ✅ 验证输出文件
+      id: verify
+      run: |
+        echo "验证CC.m3u文件..."
+        echo ""
+        
         if [ -f "CC.m3u" ]; then
-          echo "✅ CC.m3u 已生成"
-          echo "文件大小: $(wc -c < CC.m3u) 字节"
-          echo "行数: $(wc -l < CC.m3u)"
+          echo "✅ CC.m3u 生成成功!"
+          echo "文件信息:"
+          echo "  位置: $(pwd)/CC.m3u"
+          echo "  大小: $(wc -c < CC.m3u) 字节"
+          echo "  行数: $(wc -l < CC.m3u)"
+          echo ""
+          echo "文件内容预览:"
+          echo "----------------------------"
+          head -15 CC.m3u
+          echo "----------------------------"
           
-          echo -e "\n=== 文件内容预览 ==="
-          echo "前10行:"
-          head -10 CC.m3u
-          echo "..."
-          
-          # 统计港澳台频道数
-          hk_count=$(grep -c "全网通港澳台" CC.m3u || true)
+          # 统计信息
+          total_lines=$(wc -l < CC.m3u)
           channel_count=$(grep -c '://' CC.m3u || true)
+          hk_group_count=$(grep -c '全网通港澳台,#genre#' CC.m3u || true)
+          
           echo ""
           echo "📊 统计信息:"
-          echo "  港澳台分组行数: $hk_count"
-          echo "  总频道链接数: $channel_count"
+          echo "  总行数: $total_lines"
+          echo "  频道链接数: $channel_count"
+          echo "  港澳台分组: $hk_group_count"
           
+          # 设置输出变量
           echo "success=true" >> $GITHUB_OUTPUT
+          echo "lines=$total_lines" >> $GITHUB_OUTPUT
+          echo "channels=$channel_count" >> $GITHUB_OUTPUT
         else
-          echo "❌ CC.m3u 未生成"
-          echo "当前目录文件:"
-          pwd
+          echo "❌ CC.m3u 未生成!"
+          echo ""
+          echo "当前目录文件列表:"
           ls -la
+          echo ""
+          echo "尝试查找所有m3u文件:"
+          find . -name "*.m3u" -type f 2>/dev/null || echo "未找到m3u文件"
+          
           echo "success=false" >> $GITHUB_OUTPUT
           exit 1
         fi
     
-    - name: 📤 提交更新
-      if: steps.run-script.outputs.success == 'true'
+    - name: 📤 提交更改到仓库
+      if: steps.verify.outputs.success == 'true'
       run: |
-        echo "准备提交CC.m3u..."
+        echo "准备提交CC.m3u文件..."
         
-        # 配置git
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git config user.name "github-actions[bot]"
+        # 配置Git
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         
         # 添加文件
         git add CC.m3u
         
-        # 检查是否有变化
+        # 检查是否有更改
         if git diff --cached --quiet; then
-          echo "📭 文件无变化，无需提交"
+          echo "📭 CC.m3u没有变化，无需提交"
         else
-          # 提交
-          git commit -m "🤖 自动更新 CC.m3u [$(date +'%Y-%m-%d %H:%M')]"
-          echo "✅ 提交完成: $(git log -1 --oneline)"
+          # 提交更改
+          git commit -m "🤖 自动更新CC.m3u [$(date +'%Y-%m-%d %H:%M')]
           
-          # 推送
-          echo "推送更改..."
+          - 总行数: ${{ steps.verify.outputs.lines }}
+          - 频道数: ${{ steps.verify.outputs.channels }}
+          - 生成时间: $(date)"
+          
+          echo "✅ 提交信息: $(git log -1 --oneline)"
+          
+          # 推送更改
+          echo "推送更改到仓库..."
           git push
-          echo "✅ 推送成功"
+          echo "✅ 推送完成"
         fi
     
-    - name: 📊 上传工件
-      uses: actions/upload-artifact@v3
+    - name: 💾 上传CC.m3u为工件
+      if: steps.verify.outputs.success == 'true'
+      uses: actions/upload-artifact@v4
       with:
-        name: cc-m3u-file
+        name: CC-m3u-file
         path: CC.m3u
         retention-days: 7
     
-    - name: 📋 生成总结
+    - name: 📊 生成工作报告
       if: always()
       run: |
         echo "# CC.m3u 生成报告" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         
         echo "## 📅 执行信息" >> $GITHUB_STEP_SUMMARY
-        echo "- **时间:** $(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+        echo "- **执行时间:** $(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
         echo "- **触发方式:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **仓库:** ${{ github.repository }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **仓库分支:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **工作目录:** $(pwd)" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         
+        echo "## 📁 文件状态" >> $GITHUB_STEP_SUMMARY
+        if [ -f "BB.m3u" ]; then
+          bb_lines=$(wc -l < BB.m3u)
+          echo "- **BB.m3u:** ✅ 存在 ($bb_lines 行)" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "- **BB.m3u:** ⚠️ 不存在" >> $GITHUB_STEP_SUMMARY
+        fi
+        
         if [ -f "CC.m3u" ]; then
-          echo "## ✅ 生成成功" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**文件信息:**" >> $GITHUB_STEP_SUMMARY
-          echo "- 大小: $(wc -c < CC.m3u) 字节" >> $GITHUB_STEP_SUMMARY
-          echo "- 行数: $(wc -l < CC.m3u)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
+          cc_lines=$(wc -l < CC.m3u)
+          cc_size=$(wc -c < CC.m3u)
+          echo "- **CC.m3u:** ✅ 生成成功" >> $GITHUB_STEP_SUMMARY
+          echo "  - 行数: $cc_lines" >> $GITHUB_STEP_SUMMARY
+          echo "  - 大小: $cc_size 字节" >> $GITHUB_STEP_SUMMARY
           
-          echo "**内容预览:**" >> $GITHUB_STEP_SUMMARY
+          # 显示部分内容
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 📋 文件预览" >> $GITHUB_STEP_SUMMARY
           echo '```m3u' >> $GITHUB_STEP_SUMMARY
-          head -8 CC.m3u >> $GITHUB_STEP_SUMMARY
+          head -10 CC.m3u >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**直链地址:**" >> $GITHUB_STEP_SUMMARY
-          echo "https://raw.githubusercontent.com/${{ github.repository }}/main/CC.m3u" >> $GITHUB_STEP_SUMMARY
+          echo "## 🔗 直链地址" >> $GITHUB_STEP_SUMMARY
+          echo "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/CC.m3u" >> $GITHUB_STEP_SUMMARY
         else
-          echo "## ❌ 生成失败" >> $GITHUB_STEP_SUMMARY
+          echo "- **CC.m3u:** ❌ 生成失败" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "未能生成 CC.m3u 文件" >> $GITHUB_STEP_SUMMARY
+          echo "## ❌ 错误信息" >> $GITHUB_STEP_SUMMARY
+          echo "未能生成CC.m3u文件，请检查脚本执行日志。" >> $GITHUB_STEP_SUMMARY
         fi
