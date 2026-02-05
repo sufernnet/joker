@@ -29,24 +29,57 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests
         
+    - name: Check repository structure
+      run: |
+        echo "当前目录: $(pwd)"
+        echo "目录结构:"
+        ls -la
+        echo "scripts目录内容:"
+        ls -la scripts/ || echo "scripts目录不存在"
+        echo "BB.m3u位置:"
+        find . -name "BB.m3u" -type f 2>/dev/null || echo "未找到BB.m3u"
+        
     - name: Check for BB.m3u
       id: check_bb
       run: |
+        # 在根目录查找BB.m3u
         if [ -f "BB.m3u" ]; then
-          echo "BB.m3u存在"
+          echo "BB.m3u存在于根目录"
           echo "bb_exists=true" >> $GITHUB_OUTPUT
+          echo "bb_location=./BB.m3u" >> $GITHUB_OUTPUT
+          echo "bb_lines=$(wc -l < BB.m3u)" >> $GITHUB_OUTPUT
+        elif [ -f "./BB.m3u" ]; then
+          echo "BB.m3u存在于根目录(./)"
+          echo "bb_exists=true" >> $GITHUB_OUTPUT
+          echo "bb_location=./BB.m3u" >> $GITHUB_OUTPUT
           echo "bb_lines=$(wc -l < BB.m3u)" >> $GITHUB_OUTPUT
         else
-          echo "BB.m3u不存在，将创建空的CC.m3u"
+          echo "BB.m3u不存在"
           echo "bb_exists=false" >> $GITHUB_OUTPUT
           echo "bb_lines=0" >> $GITHUB_OUTPUT
+          # 创建空的BB.m3u文件
+          echo "#EXTM3U" > BB.m3u
+          echo "# Empty BB.m3u created by workflow" >> BB.m3u
         fi
         
-    - name: Run merge script
+    - name: Run merge script from scripts directory
       id: merge
       run: |
+        echo "当前工作目录: $(pwd)"
         echo "开始执行M3U合并脚本..."
-        python merge_to_CC.py \
+        
+        # 检查脚本是否存在
+        if [ -f "scripts/merge_to_CC.py" ]; then
+          echo "找到脚本: scripts/merge_to_CC.py"
+        else
+          echo "错误: 未找到 scripts/merge_to_CC.py"
+          echo "当前目录内容:"
+          ls -la
+          exit 1
+        fi
+        
+        # 运行脚本，指定正确的路径
+        python scripts/merge_to_CC.py \
           --url "https://stymei.sufern001.workers.dev/" \
           --group "🔥全网通港澳台" \
           --local "BB.m3u" \
@@ -117,6 +150,7 @@ jobs:
         echo "## 执行信息" >> $GITHUB_STEP_SUMMARY
         echo "- **运行时间:** $(date)" >> $GITHUB_STEP_SUMMARY
         echo "- **触发方式:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **工作目录:** $(pwd)" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         
         echo "## 文件状态" >> $GITHUB_STEP_SUMMARY
@@ -124,7 +158,7 @@ jobs:
         if ${{ steps.check_bb.outputs.bb_exists == 'true' }}; then
           echo "  - ✅ 存在 (${{ steps.check_bb.outputs.bb_lines }} 行)" >> $GITHUB_STEP_SUMMARY
         else
-          echo "  - ⚠️ 不存在" >> $GITHUB_STEP_SUMMARY
+          echo "  - ⚠️ 不存在，已创建空文件" >> $GITHUB_STEP_SUMMARY
         fi
         echo "- **输出文件:** CC.m3u" >> $GITHUB_STEP_SUMMARY
         if ${{ steps.merge.outputs.success == 'true' }}; then
@@ -132,6 +166,7 @@ jobs:
         else
           echo "  - ❌ 生成失败" >> $GITHUB_STEP_SUMMARY
         fi
+        echo "- **脚本位置:** scripts/merge_to_CC.py" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         
         echo "## 数据源" >> $GITHUB_STEP_SUMMARY
