@@ -137,15 +137,36 @@ def sort_channels(channel_dict):
         priority = get_channel_priority(name)
         priority_groups[priority].append(name)
     
+    # 显示主要优先级组
+    priority_mapping = {
+        1: "凤凰系列",
+        2: "凤凰系列",
+        3: "凤凰系列",
+        4: "凤凰系列",
+        5: "凤凰系列",
+        6: "凤凰系列",
+        10: "NOW系列",
+        11: "NOW系列",
+        12: "NOW系列",
+        13: "NOW系列",
+        20: "TVB系列",
+        21: "TVB系列",
+        22: "TVB系列",
+        23: "TVB系列",
+        24: "TVB系列",
+        25: "TVB系列",
+        30: "HOY系列",
+        31: "HOY系列",
+        32: "HOY系列",
+        33: "HOY系列",
+        40: "VIUTV系列",
+        41: "VIUTV系列",
+        42: "VIUTV系列",
+    }
+    
     for priority in sorted(priority_groups.keys()):
-        if priority <= 40:  # 只显示主要优先级组
-            group_name = {
-                1: "凤凰系列",
-                10: "NOW系列",
-                20: "TVB系列",
-                30: "HOY系列",
-                40: "VIUTV系列"
-            }.get(priority, f"优先级{priority}")
+        if priority <= 42:  # 只显示主要优先级组
+            group_name = priority_mapping.get(priority, f"优先级{priority}")
             log(f"  {group_name}: {len(priority_groups[priority])}个频道")
     
     return sorted_dict
@@ -404,37 +425,39 @@ def generate_m3u_content(local_content, channel_dict):
         
         # 添加分组标题便于识别
         current_priority = None
+        priority_mapping = {
+            1: "凤凰系列",
+            2: "凤凰系列",
+            3: "凤凰系列",
+            4: "凤凰系列",
+            5: "凤凰系列",
+            6: "凤凰系列",
+            10: "NOW系列",
+            11: "NOW系列",
+            12: "NOW系列",
+            13: "NOW系列",
+            20: "TVB系列",
+            21: "TVB系列",
+            22: "TVB系列",
+            23: "TVB系列",
+            24: "TVB系列",
+            25: "TVB系列",
+            30: "HOY系列",
+            31: "HOY系列",
+            32: "HOY系列",
+            33: "HOY系列",
+            40: "VIUTV系列",
+            41: "VIUTV系列",
+            42: "VIUTV系列",
+        }
+        
         for i, (channel_name, data) in enumerate(channel_dict.items(), 1):
             priority = get_channel_priority(channel_name)
             
             # 添加分组分隔
             if current_priority != priority:
                 current_priority = priority
-                group_name = {
-                    1: "凤凰系列",
-                    2: "凤凰系列",
-                    3: "凤凰系列",
-                    4: "凤凰系列",
-                    5: "凤凰系列",
-                    6: "凤凰系列",
-                    10: "NOW系列",
-                    11: "NOW系列",
-                    12: "NOW系列",
-                    13: "NOW系列",
-                    20: "TVB系列",
-                    21: "TVB系列",
-                    22: "TVB系列",
-                    23: "TVB系列",
-                    24: "TVB系列",
-                    25: "TVB系列",
-                    30: "HOY系列",
-                    31: "HOY系列",
-                    32: "HOY系列",
-                    33: "HOY系列",
-                    40: "VIUTV系列",
-                    41: "VIUTV系列",
-                    42: "VIUTV系列",
-                }.get(priority, "其他频道")
+                group_name = priority_mapping.get(priority, "其他频道")
                 
                 if i > 1:  # 不是第一个频道才添加空行
                     output_lines.append("")
@@ -463,13 +486,14 @@ def generate_m3u_content(local_content, channel_dict):
     series_count = defaultdict(int)
     for channel_name in channel_dict.keys():
         priority = get_channel_priority(channel_name)
-        series = {
+        series_mapping = {
             1: "凤凰", 2: "凤凰", 3: "凤凰", 4: "凤凰", 5: "凤凰", 6: "凤凰",
             10: "NOW", 11: "NOW", 12: "NOW", 13: "NOW",
             20: "TVB", 21: "TVB", 22: "TVB", 23: "TVB", 24: "TVB", 25: "TVB",
             30: "HOY", 31: "HOY", 32: "HOY", 33: "HOY",
             40: "VIUTV", 41: "VIUTV", 42: "VIUTV",
-        }.get(priority, "其他")
+        }
+        series = series_mapping.get(priority, "其他")
         series_count[series] += 1
     
     output_lines.append(f"# 本地频道数: {local_channels}")
@@ -545,15 +569,19 @@ def main():
             # 显示排序结果
             print("\n📋 频道排序结果（前10个）:")
             print("-" * 70)
+            
+            # 系列映射
+            series_mapping = {
+                1: "凤凰", 2: "凤凰", 3: "凤凰", 4: "凤凰", 5: "凤凰", 6: "凤凰",
+                10: "NOW", 11: "NOW", 12: "NOW", 13: "NOW",
+                20: "TVB", 21: "TVB", 22: "TVB", 23: "TVB", 24: "TVB", 25: "TVB",
+                30: "HOY", 31: "HOY", 32: "HOY", 33: "HOY",
+                40: "VIUTV", 41: "VIUTV", 42: "VIUTV",
+            }
+            
             for i, (name, data) in enumerate(list(sorted_channel_dict.items())[:10]):
                 priority = get_channel_priority(name)
-                series = {
-                    1: "凤凰", 2: "凤凰", 3: "凤凰", 4: "凤凰", 5: "凤凰", 6: "凤凰": "凤凰",
-                    10: "NOW", 11: "NOW", 12: "NOW", 13: "NOW": "NOW",
-                    20: "TVB", 21: "TVB", 22: "TVB", 23: "TVB", 24: "TVB", 25: "TVB": "TVB",
-                    30: "HOY", 31: "HOY", 32: "HOY", 33: "HOY": "HOY",
-                    40: "VIUTV", 41: "VIUTV", 42: "VIUTV": "VIUTV",
-                }.get(priority, "其他")
+                series = series_mapping.get(priority, "其他")
                 print(f"{i+1:2d}. [{series}] {name} ({len(data['urls'])}个源)")
             print("-" * 70)
             
