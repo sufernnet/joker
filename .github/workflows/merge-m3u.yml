@@ -18,8 +18,6 @@ on:
 jobs:
   merge-m3u:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # 重要：添加写入权限
     
     steps:
     - name: 📥 检出代码（带深度）
@@ -68,62 +66,50 @@ jobs:
           grep -i "url-tvg" CC.m3u || echo "未找到EPG信息"
           echo "HK频道数: $(grep -c 'group-title=\"HK\"' CC.m3u || echo 0)"
           echo "TW频道数: $(grep -c 'group-title=\"TW\"' CC.m3u || echo 0)"
-          
-          # 显示文件路径
-          echo -e "\n=== 文件路径 ==="
-          pwd
-          ls -la CC.m3u
         else
           echo "❌ CC.m3u 未生成"
-          # 查看当前目录内容
-          echo "当前目录内容:"
-          ls -la
           exit 1
         fi
     
-    - name: 📤 配置Git
+    - name: 🔄 同步远程更改
       run: |
-        echo "配置Git用户..."
-        git config user.name "github-actions[bot]"
+        echo "同步远程仓库..."
+        # 配置Git用户
         git config user.email "github-actions[bot]@users.noreply.github.com"
-    
-    - name: 🔄 拉取最新更改
-      run: |
-        echo "拉取最新更改..."
+        git config user.name "github-actions[bot]"
+        
+        # 拉取最新更改（使用rebase避免合并提交）
         git pull origin main --rebase --autostash
-    
-    - name: 🔍 检查更改
-      id: check_changes
-      run: |
-        echo "检查文件更改..."
-        git status
         
-        # 检查CC.m3u是否有变化
-        if git diff --quiet CC.m3u 2>/dev/null; then
-          echo "CC.m3u 无变化"
-          echo "has_changes=false" >> $GITHUB_OUTPUT
-        else
-          echo "CC.m3u 有变化"
-          echo "has_changes=true" >> $GITHUB_OUTPUT
+        echo "✅ 同步完成"
+    
+    - name: 📤 提交更新
+      run: |
+        echo "准备提交更新..."
+        
+        # 检查文件是否存在
+        if [ ! -f "CC.m3u" ]; then
+          echo "❌ CC.m3u不存在，无法提交"
+          exit 1
         fi
-    
-    - name: 📝 提交和推送
-      if: steps.check_changes.outputs.has_changes == 'true'
-      run: |
-        echo "提交更改..."
         
-        # 添加所有更改
+        # 检查文件是否有变化
+        if git diff --quiet CC.m3u; then
+          echo "📭 CC.m3u 无变化，无需提交"
+          exit 0
+        fi
+        
+        # 添加文件
         git add CC.m3u
         
-        # 创建提交
+        # 提交
         git commit -m "🤖 自动更新 CC.m3u [$(date -u '+%Y-%m-%d %H:%M UTC')]"
         
-        # 显示提交信息
         echo "提交信息:"
         git log -1 --oneline
         
         # 推送更改
-        echo "推送到仓库..."
+        echo "推送更改..."
         git push origin main
         
         echo "✅ 提交完成"
@@ -139,14 +125,13 @@ jobs:
         echo "  • UTC 22:00 (北京时间 06:00)"
         echo "  • UTC 09:00 (北京时间 17:00)"
         echo ""
-        echo "🔗 文件链接:"
-        echo "  • 仓库主页: https://github.com/${{ github.repository }}"
-        echo "  • CC.m3u: https://github.com/${{ github.repository }}/blob/main/CC.m3u"
-        echo "  • Raw CC.m3u: https://raw.githubusercontent.com/${{ github.repository }}/main/CC.m3u"
+        echo "🔗 生成的文件:"
+        echo "  • GitHub: https://github.com/${{ github.repository }}/blob/main/CC.m3u"
+        echo "  • Raw: https://raw.githubusercontent.com/${{ github.repository }}/main/CC.m3u"
         echo ""
         echo "⚙️  配置信息:"
         echo "  • 代理地址: https://smt-proxy.sufern001.workers.dev/"
-        echo "  • BB源: https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
+        echo "  • 脚本文件: scripts/merge_from_proxy.py"
         echo "  • 更新频率: 每天2次 (06:00, 17:00 北京时间)"
         echo ""
         echo "📊 运行状态:"
@@ -155,19 +140,7 @@ jobs:
           LINES=$(wc -l < CC.m3u)
           SIZE=$(wc -c < CC.m3u)
           echo "    行数: $LINES"
-          echo "    大小: $SIZE 字节 ($(echo "scale=2; $SIZE/1024" | bc) KB)"
-          
-          # 显示部分内容
-          echo -e "\n📺 频道统计:"
-          echo "  HK频道: $(grep -c 'group-title=\"HK\"' CC.m3u 2>/dev/null || echo 0)"
-          echo "  TW频道: $(grep -c 'group-title=\"TW\"' CC.m3u 2>/dev/null || echo 0)"
+          echo "    大小: $SIZE 字节"
         else
           echo "  ❌ CC.m3u 生成失败"
         fi
-        
-        # 显示工作流信息
-        echo -e "\n📋 工作流信息:"
-        echo "  运行ID: ${{ github.run_id }}"
-        echo "  运行号: ${{ github.run_number }}"
-        echo "  触发者: ${{ github.actor }}"
-        echo "  提交SHA: ${{ github.sha }}"
