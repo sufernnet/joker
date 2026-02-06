@@ -12,7 +12,7 @@ on:
   # 当CC相关文件更新时触发
   push:
     paths:
-      - 'cc_merge.py'
+      - 'scripts/cc_merge.py'
       - '.github/workflows/cc-workflow.yml'
 
 jobs:
@@ -34,33 +34,49 @@ jobs:
     - name: 🕒 显示当前时间
       run: |
         echo "=== CC更新工作流 ==="
+        echo "仓库: ${{ github.repository }}"
         echo "开始时间（北京时间）: $(date -d '+8 hours' '+%Y-%m-%d %H:%M:%S')"
         echo "触发方式: ${{ github.event_name }}"
-        echo "脚本文件: cc_merge.py"
-        echo "输出文件: CC.m3u"
+        echo "脚本位置: scripts/cc_merge.py"
+        echo "输出文件: CC.m3u（根目录）"
     
     - name: 🚀 运行CC合并脚本
       run: |
-        echo "正在运行 cc_merge.py..."
+        echo "正在运行 CC 合并脚本..."
+        cd scripts
         python cc_merge.py
         
-        echo -e "\n=== 检查CC.m3u文件 ==="
-        if [ -f "CC.m3u" ]; then
+        echo -e "\n=== 检查输出文件 ==="
+        if [ -f "../CC.m3u" ]; then
           echo "✅ CC.m3u 创建成功"
-          echo "文件大小: $(wc -c < CC.m3u) 字节"
-          echo "行数: $(wc -l < CC.m3u)"
+          echo "位置: 仓库根目录"
+          echo "文件大小: $(wc -c < ../CC.m3u) 字节"
+          echo "行数: $(wc -l < ../CC.m3u)"
           
           echo -e "\n=== 内容预览（前10行）==="
-          head -10 CC.m3u
+          head -10 ../CC.m3u
           echo "..."
           
           echo -e "\n=== 频道统计 ==="
-          echo "HK频道: $(grep -c 'group-title="HK"' CC.m3u || echo 0)"
-          echo "TW频道: $(grep -c 'group-title="TW"' CC.m3u || echo 0)"
-          echo "总频道: $(grep -c '^#EXTINF:' CC.m3u || echo 0)"
+          echo "HK频道: $(grep -c 'group-title="HK"' ../CC.m3u || echo 0)"
+          echo "TW频道: $(grep -c 'group-title="TW"' ../CC.m3u || echo 0)"
+          echo "总频道: $(grep -c '^#EXTINF:' ../CC.m3u || echo 0)"
+          
+          # 移动到根目录（如果脚本输出在scripts目录）
+          if [ -f "CC.m3u" ]; then
+            mv CC.m3u ../CC.m3u
+            echo "已将CC.m3u移动到根目录"
+          fi
         else
-          echo "❌ 错误：CC.m3u 未创建"
-          exit 1
+          # 检查是否在scripts目录中
+          if [ -f "CC.m3u" ]; then
+            mv CC.m3u ../CC.m3u
+            echo "✅ CC.m3u 创建成功（从scripts目录移动）"
+            echo "文件大小: $(wc -c < ../CC.m3u) 字节"
+          else
+            echo "❌ 错误：CC.m3u 未创建"
+            exit 1
+          fi
         fi
     
     - name: 🔄 自动提交CC文件
@@ -72,7 +88,7 @@ jobs:
         git config user.email "cc-bot@users.noreply.github.com"
         git config user.name "CC自动更新机器人"
         
-        # 添加CC.m3u文件
+        # 添加CC.m3u文件（在根目录）
         git add CC.m3u
         
         # 检查是否有变更
@@ -92,24 +108,32 @@ jobs:
       if: always()
       run: |
         echo "=== CC更新报告 ==="
+        echo "仓库: ${{ github.repository }}"
         echo "完成时间: $(date -d '+8 hours' '+%Y-%m-%d %H:%M:%S 北京时间')"
         echo ""
-        echo "📁 文件状态:"
+        echo "📁 文件位置:"
+        echo "  脚本: scripts/cc_merge.py"
+        echo "  输出: CC.m3u（根目录）"
+        echo ""
         if [ -f "CC.m3u" ]; then
           SIZE=$(wc -c < CC.m3u)
           LINES=$(wc -l < CC.m3u)
-          echo "  ✅ CC.m3u - $SIZE 字节, $LINES 行"
+          echo "✅ CC.m3u 状态:"
+          echo "  - 大小: $SIZE 字节"
+          echo "  - 行数: $LINES 行"
+          echo "  - HK频道: $(grep -c 'group-title="HK"' CC.m3u || echo 0)"
+          echo "  - TW频道: $(grep -c 'group-title="TW"' CC.m3u || echo 0)"
           echo ""
           echo "🔗 直接链接:"
           echo "  https://raw.githubusercontent.com/${{ github.repository }}/main/CC.m3u"
         else
-          echo "  ❌ CC.m3u - 文件不存在"
+          echo "❌ CC.m3u 状态: 文件不存在"
         fi
         echo ""
-        echo "⏰ 下次更新:"
+        echo "⏰ 下次更新时间:"
         echo "  • 北京时间 06:00"
         echo "  • 北京时间 17:00"
         echo ""
         echo "⚙️ 配置文件:"
         echo "  • 工作流: .github/workflows/cc-workflow.yml"
-        echo "  • 脚本: cc_merge.py"
+        echo "  • 脚本: scripts/cc_merge.py"
