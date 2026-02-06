@@ -4,7 +4,7 @@ CC合并脚本 - 完整版
 生成CC.m3u文件，统一使用CC前缀便于记忆
 1. 下载BB.m3u（包含EPG信息）
 2. 从Cloudflare代理获取内容
-3. 提取JULI频道，分组改为HK，按指定顺序排列
+3. 提取JULI频道，分组改为HK，按指定顺序排列（合并相同频道的多个源）
 4. 提取4gtv前30个直播，分组改为TW，过滤指定频道
 5. 合并生成CC.m3u，包含多个EPG源
 北京时间每天6:00、17:00自动运行
@@ -307,7 +307,7 @@ def get_channel_priority(channel_name):
     return len(HK_PRIORITY_ORDER)  # 非优先频道排在最后
 
 def extract_and_sort_hk_channels(content):
-    """提取JULI频道，分组改为HK，按指定顺序排列"""
+    """提取JULI频道，分组改为HK，按指定顺序排列，合并相同频道的多个源"""
     if not content:
         return []
     
@@ -332,54 +332,79 @@ def extract_and_sort_hk_channels(content):
     
     log(f"总频道数: {len(channels)}")
     
-    # 过滤JULI频道并重命名
-    hk_channels_with_priority = []
-    seen = set()
-    juli_count = 0
+    # 创建频道字典来合并相同频道的多个源
+    channel_dict = {}
     
     for extinf, url in channels:
-        # 查找JULI频道（不区分大小写）
+        # 只处理JULI频道（不区分大小写）
         if 'juli' in extinf.lower():
-            juli_count += 1
             # 提取原始频道名
-            channel_name = extinf.split(',', 1)[1] if ',' in extinf else extsplit(',', 1)[1] if ',' in extinf else extinf
-            
-            # 重命名为HK分组
-            new_extinf = re.sub(r'juli', 'HK', extinf, flags=re.IGNORECASE)
-            
-            # 确保group-title为HK
-            if 'group-title=' in new_extinf:
-                new_extinf = re.sub(r'group-title="[^"]*"', 'group-title="HK"', new_extinf)
+            if ',' in extinf:
+                # 获取频道名称部分
+                parts = extinf.split(',', 1)
+                channel_info = parts[0]
+                channel_name = parts[1]
+                
+                # 清理频道名：去掉SMT_前缀，保留原始名称
+                clean_channel_name = re.sub(r'^SMT_', '', channel_name)
+                
+                # 创建标准化的频道信息（使用清理后的名称）
+                # 确保group-title为HK
+                if 'group-title=' in channel_info:
+                    clean_channel_info = re.sub(r'group-title="[^"]*"', 'group-title="HK"', channel_info)
+                else:
+                    clean_channel_info = channel_info + ' group-title="HK"'
+                
+                # 完整的EXTINF行
+                clean_extinf = f'{clean_channel_info},{clean_channel_name}'
+                
+                # 添加到字典
+                if clean_extinf not in channel_dict:
+                    channel_dict[clean_extinf] = []
+                
+                # 添加URL到列表
+                channel_dict[clean_extinf].append(url)
             else:
-                # 添加group-title
-                if ',' in new_extinf:
-                    parts = new_extinf.split(',', 1)
-                    new_extinf = f'{parts[0]} group-title="HK",{parts[1]}'
-            
-            # 去重
-            key = f"{new_extinf}|{url}"
-            if key not in seen:
-                seen.add(key)
-                # 计算优先级
-                priority = get_channel_priority(channel_name)
-                hk_channels_with_priority.append((priority, new_extinf, url, channel_name))
+                log(f"⚠️  无法解析EXTINF行: {extinf}")
     
-    log(f"找到 {juli_count} 个JULI频道")
+    # 统计合并效果
+    juli_channels = [c for c in channels if 'juli' in c[0].lower()]
+    log(f"合并前JULI频道数: {len(juli_channels)}")
+    log(f"合并后唯一频道数: {len(channel_dict)}")
+    
+    # 显示合并统计
+    if channel_dict:
+        total_sources = sum(len(urls) for urls in channel_dict.values())
+        log(f"总源数量: {total_sources}")
+        log(f"平均每个频道源数: {total_sources/len(channel_dict):.1f}")
+    
+    # 按优先级排序
+    hk_channels_with_priority = []
+    
+    for extinf, urls in channel_dict.items():
+        # 提取频道名
+        channel_name = extinf.split(',', 1)[1] if ',' in extinf else extinf
+        
+        # 计算优先级
+        priority = get_channel_priority(channel_name)
+        
+        # 存储：优先级, EXTINF行, URL列表, 频道名
+        hk_channels_with_priority.append((priority, extinf, urls, channel_name))
     
     # 按优先级排序
     hk_channels_with_priority.sort(key=lambda x: x[0])
     
     # 提取排序后的频道
-    hk_channels = [(extinf, url) for _, extinf, url, _ in hk_channels_with_priority]
+    hk_channels = [(extinf, urls) for _, extinf, urls, _ in hk_channels_with_priority]
     
-    log(f"✅ 提取到 {len(hk_channels)} 个HK频道（原JULI）")
+    log(f"✅ 提取到 {len(hk_channels)} 个HK频道（原JULI，已合并重复源）")
     
     # 显示排序结果
     if hk_channels:
-        log("HK频道排序结果 (前10个):")
-        for i, (extinf, url) in enumerate(hk_channels[:10], 1):
+        log("HK频道合并结果 (前10个):")
+        for i, (extinf, urls) in enumerate(hk_channels[:10], 1):
             channel_name = extinf.split(',', 1)[1] if ',' in extinf else extinf
-            log(f"  {i:2d}. {channel_name[:50]}")
+            log(f"  {i:2d}. {channel_name[:40]} - {len(urls)} 个源")
         if len(hk_channels) > 10:
             log(f"  ... 还有 {len(hk_channels) - 10} 个频道")
     
@@ -575,7 +600,7 @@ def main():
         m3u_header = '#EXTM3U\n'
         log("⚠️  未找到可用EPG")
     
-    # 计算频道数量
+    # 计算BB频道数量
     bb_count = len(re.findall(r'^#EXTINF:', bb_content, re.MULTILINE))
     
     output = m3u_header + f"""# =============================================
@@ -621,30 +646,37 @@ def main():
 # HK频道 (原JULI，按指定顺序排列在最前面)
 # =============================================
 # 优先顺序: {', '.join(HK_PRIORITY_ORDER)}
+# 说明：相同频道的多个源已合并，每个URL单独一行，提供冗余备份
 """
         
         # 显示优先频道
         priority_added = False
         for channel_type in HK_PRIORITY_ORDER:
-            type_channels = [(extinf, url) for extinf, url in hk_channels if channel_type.lower() in extinf.lower()]
+            type_channels = [(extinf, urls) for extinf, urls in hk_channels if channel_type.lower() in extinf.lower()]
             if type_channels:
                 if not priority_added:
                     output += f"\n# --- 优先频道（按指定顺序） ---\n"
                     priority_added = True
                 
-                for extinf, url in type_channels:
+                for extinf, urls in type_channels:
                     output += extinf + '\n'
-                    output += url + '\n'
+                    # 每个URL单独一行
+                    for url in urls:
+                        output += url + '\n'
+                    output += '\n'  # 频道间空行
         
         # 显示其他HK频道
-        other_hk_channels = [(extinf, url) for extinf, url in hk_channels 
+        other_hk_channels = [(extinf, urls) for extinf, urls in hk_channels 
                            if not any(channel_type.lower() in extinf.lower() for channel_type in HK_PRIORITY_ORDER)]
         
         if other_hk_channels:
             output += f"\n# --- 其他HK频道 ---\n"
-            for extinf, url in other_hk_channels:
+            for extinf, urls in other_hk_channels:
                 output += extinf + '\n'
-                output += url + '\n'
+                # 每个URL单独一行
+                for url in urls:
+                    output += url + '\n'
+                output += '\n'  # 频道间空行
     
     # 添加TW频道（4gtv）- 排在后面（已过滤）
     if tw_channels:
@@ -671,12 +703,16 @@ def main():
             output += f"\n#   {status} {i:2d}. {epg}"
     
     # 添加统计信息
+    # 计算HK频道的总源数
+    hk_total_sources = sum(len(urls) for _, urls in hk_channels) if hk_channels else 0
+    
     output += f"""
 # =============================================
 # 统计信息
 # =============================================
 # BB 频道数: {bb_actual_count}
 # HK 频道数: {len(hk_channels)} (原JULI，按指定顺序排列)
+# HK 总源数: {hk_total_sources} (相同频道多个源已合并)
 # TW 频道数: {len(tw_channels)} (原4gtv前30个，已过滤，排在后)
 # 过滤频道数: {len(BLACKLIST_TW)} 个
 # 总频道数: {bb_actual_count + len(hk_channels) + len(tw_channels)}
@@ -700,8 +736,9 @@ def main():
         log(f"📡 EPG: {best_epg if best_epg else '无可用EPG'}")
         log(f"📺 BB频道: {bb_actual_count}")
         log(f"📺 HK频道: {len(hk_channels)} (按指定顺序排列)")
+        log(f"📺 HK总源数: {hk_total_sources}")
         log(f"📺 TW频道: {len(tw_channels)} (已过滤指定频道)")
-        log(f"📺 总计: {bb_actual_count + len(hk_channels) + len(tw_channels)}")
+        log(f"📺 总计频道数: {bb_actual_count + len(hk_channels) + len(tw_channels)}")
         log(f"🕒 下次自动更新: 北京时间 06:00 和 17:00")
         log(f"🔗 工作流: .github/workflows/cc-workflow.yml")
         
@@ -709,6 +746,14 @@ def main():
         if os.path.exists(output_path):
             file_size = os.path.getsize(output_path)
             log(f"✅ 文件保存成功，大小: {file_size} 字节")
+            
+            # 显示部分内容确认
+            with open(output_path, 'r', encoding='utf-8') as f:
+                lines = f.readlines()[:20]
+                log(f"📄 文件前20行预览:")
+                for i, line in enumerate(lines[:10], 1):
+                    log(f"  {i:2d}: {line.strip()}")
+                log("  ...")
         else:
             log("❌ 文件保存失败")
             
