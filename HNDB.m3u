@@ -1,0 +1,236 @@
+#EXTM3U x-tvg-url="https://epg.v1.mk/fy.xml"
+# 央视分组 (CCTV1~CCTV17，去掉“高清”，按数字排序)
+#EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="http://30803.cn/0/LOGO/CCTV1.png" group-title="央视",CCTV1
+http://124.232.231.172:8089/000000002000/201500000063/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV2" tvg-name="CCTV2" tvg-logo="http://30803.cn/0/LOGO/CCTV2.png" group-title="央视",CCTV2
+http://124.232.231.172:8089/000000002000/201500000129/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV3" tvg-name="CCTV3" tvg-logo="http://30803.cn/0/LOGO/CCTV3.png" group-title="央视",CCTV3
+http://124.232.231.172:8089/000000002000/201500000124/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV4" tvg-name="CCTV4" tvg-logo="http://30803.cn/0/LOGO/CCTV4.png" group-title="央视",CCTV4
+http://124.232.231.172:8089/000000002000/201500000204/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV4" tvg-name="CCTV4" tvg-logo="http://30803.cn/0/LOGO/CCTV4.png" group-title="央视",CCTV4欧洲
+http://124.232.231.172:8089/000000002000/201500000495/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV4" tvg-name="CCTV4" tvg-logo="http://30803.cn/0/LOGO/CCTV4.png" group-title="央视",CCTV4美洲
+http://124.232.231.172:8089/000000002000/201500000496/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV5" tvg-name="CCTV5" tvg-logo="http://30803.cn/0/LOGO/CCTV5.png" group-title="央视",CCTV5
+http://124.232.231.172:8089/000000002000/201500000548/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV5+" tvg-name="CCTV5+" tvg-logo="http://30803.cn/0/LOGO/CCTV5+.png" group-title="央视",CCTV5+
+http://124.232.231.172:8089/000000002000/201500000549/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV6" tvg-name="CCTV6" tvg-logo="http://30803.cn/0/LOGO/CCTV6.png" group-title="央视",CCTV6
+http://124.232.231.172:8089/000000002000/201500000126/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV7" tvg-name="CCTV7" tvg-logo="http://30803.cn/0/LOGO/CCTV7.png" group-title="央视",CCTV7
+http://124.232.231.172:8089/000000002000/201500000130/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV8" tvg-name="CCTV8" tvg-logo="http://30803.cn/0/LOGO/CCTV8.png" group-title="央视",CCTV8
+http://124.232.231.172:8089/000000002000/201500000127/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV9" tvg-name="CCTV9" tvg-logo="http://30803.cn/0/LOGO/CCTV9.png" group-title="央视",CCTV9
+http://124.232.231.172:8089/000000002000/201500000131/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV10" tvg-name="CCTV10" tvg-logo="http://30803.cn/0/LOGO/CCTV10.png" group-title="央视",CCTV10
+http://124.232.231.172:8089/000000002000/201500000132/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV11" tvg-name="CCTV11" tvg-logo="http://30803.cn/0/LOGO/CCTV11.png" group-title="央视",CCTV11
+http://124.232.231.172:8089/000000002000/201500000389/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV12" tvg-name="CCTV12" tvg-logo="http://30803.cn/0/LOGO/CCTV12.png" group-title="央视",CCTV12
+http://124.232.231.172:8089/000000002000/201500000133/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV13" tvg-name="CCTV13" tvg-logo="http://30803.cn/0/LOGO/CCTV13.png" group-title="央视",CCTV13
+http://124.232.231.172:8089/000000002000/201500000460/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV14" tvg-name="CCTV14" tvg-logo="http://30803.cn/0/LOGO/CCTV14.png" group-title="央视",CCTV14
+http://124.232.231.172:8089/000000002000/201500000134/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV15" tvg-name="CCTV15" tvg-logo="http://30803.cn/0/LOGO/CCTV15.png" group-title="央视",CCTV15
+http://124.232.231.172:8089/000000002000/201500000390/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV16" tvg-name="CCTV16" tvg-logo="http://30803.cn/0/LOGO/CCTV16.png" group-title="央视",CCTV16
+http://124.232.231.172:8089/000000002000/201500000501/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="CCTV17" tvg-name="CCTV17" tvg-logo="http://30803.cn/0/LOGO/CCTV17.png" group-title="央视",CCTV17
+http://124.232.231.172:8089/000000002000/201500000382/index.m3u8?ispcode=2&zte_offset=0
+
+# 4K分组 (CCTV相关排前面)
+#EXTINF:-1 tvg-id="CCTV16" tvg-name="CCTV16" tvg-logo="http://30803.cn/0/LOGO/CCTV16.png" group-title="4K",CCTV16 4K
+http://124.232.231.172:8089/000000002000/201500000508/index.m3u8?ispcode=2&zte_offset=0
+
+#EXTINF:-1 tvg-id="CCTV 4K" tvg-name="CCTV 4K" tvg-logo="https://raw.github.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV 4K
+http://124.232.231.172:8089/000000002000/201500000508/index.m3u8?ispcode=2&zte_offset=0
+
+#EXTINF:-1 tvg-id="湖南卫视4K" tvg-name="湖南卫视4K" tvg-logo="http://30803.cn/0/LOGO/湖南卫视4K.png" group-title="4K",湖南卫视4K
+http://124.232.231.172:8089/000000002000/201500000219/index.m3u8?ispcode=2&zte_offset=0&starttime=
+
+#EXTINF:-1 tvg-id="北京卫视4K" tvg-name="北京卫视4K" tvg-logo="http://30803.cn/0/LOGO/北京卫视4K.png" group-title="4K",北京卫视4K
+http://124.232.231.172:8089/000000002000/201500000638/index.m3u8?ispcode=2&zte_offset=0&starttime=
+
+#EXTINF:-1 tvg-id="江苏卫视4K" tvg-name="江苏卫视4K" tvg-logo="http://30803.cn/0/LOGO/江苏卫视4K.png" group-title="4K",江苏卫视4K
+http://124.232.231.172:8089/000000002000/201500000664/index.m3u8?ispcode=2&zte_offset=0&starttime=
+
+#EXTINF:-1 tvg-id="浙江卫视4K" tvg-name="浙江卫视4K" tvg-logo="http://30803.cn/0/LOGO/浙江卫视4K.png" group-title="4K",浙江卫视4K
+http://124.232.231.172:8089/000000002000/201500000666/index.m3u8?ispcode=2&zte_offset=0&starttime=
+
+#EXTINF:-1 tvg-id="东方卫视4K" tvg-name="东方卫视4K" tvg-logo="http://30803.cn/0/LOGO/东方卫视4K.png" group-title="4K",东方卫视4K
+http://124.232.231.172:8089/000000002000/201500000668/index.m3u8?ispcode=2&zte_offset=0&starttime=
+
+#EXTINF:-1 tvg-id="深圳卫视4K" tvg-name="深圳卫视4K" tvg-logo="http://30803.cn/0/LOGO/深圳卫视4K.png" group-title="4K",深圳卫视4K
+http://124.232.231.172:8089/000000002000/201500000656/index.m3u8?ispcode=2&zte_offset=0&starttime=
+
+#EXTINF:-1 tvg-id="广东卫视4K" tvg-name="广东卫视4K" tvg-logo="http://30803.cn/0/LOGO/广东卫视4K.png" group-title="4K",广东卫视4K
+http://124.232.231.172:8089/000000002000/201500000658/index.m3u8?ispcode=2&zte_offset=0&starttime=
+
+#EXTINF:-1 tvg-id="山东卫视4K" tvg-name="山东卫视4K" tvg-logo="http://30803.cn/0/LOGO/山东卫视4K.png" group-title="4K",山东卫视4K
+http://124.232.231.172:8089/000000002000/201500000670/index.m3u8?ispcode=2&zte_offset=0&starttime=
+
+#EXTINF:-1 tvg-id="四川卫视4K" tvg-name="四川卫视4K" tvg-logo="http://30803.cn/0/LOGO/四川卫视4K.png" group-title="4K",四川卫视4K
+http://124.232.231.172:8089/000000002000/201500000672/index.m3u8?ispcode=2&zte_offset=0&starttime=
+
+# 卫视分组 (高清版统一去掉"高清"二字)
+#EXTINF:-1 tvg-id="湖南卫视" tvg-name="湖南卫视" tvg-logo="http://30803.cn/0/LOGO/湖南卫视.png" group-title="卫视",湖南卫视
+http://124.232.231.172:8089/000000002000/201500000233/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="江苏卫视" tvg-name="江苏卫视" tvg-logo="http://30803.cn/0/LOGO/江苏卫视.png" group-title="卫视",江苏卫视
+http://124.232.231.172:8089/000000002000/201500000070/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="浙江卫视" tvg-name="浙江卫视" tvg-logo="http://30803.cn/0/LOGO/浙江卫视.png" group-title="卫视",浙江卫视
+http://124.232.231.172:8089/000000002000/201500000064/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="安徽卫视" tvg-name="安徽卫视" tvg-logo="http://30803.cn/0/LOGO/安徽卫视.png" group-title="卫视",安徽卫视
+http://124.232.231.172:8089/000000002000/201500000345/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="http://30803.cn/0/LOGO/北京卫视.png" group-title="卫视",北京卫视
+http://124.232.231.172:8089/000000002000/201500000065/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="天津卫视" tvg-name="天津卫视" tvg-logo="http://30803.cn/0/LOGO/天津卫视.png" group-title="卫视",天津卫视
+http://124.232.231.172:8089/000000002000/201500000123/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="东方卫视" tvg-name="东方卫视" tvg-logo="http://30803.cn/0/LOGO/东方卫视.png" group-title="卫视",东方卫视
+http://124.232.231.172:8089/000000002000/201500000069/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="江西卫视" tvg-name="江西卫视" tvg-logo="http://30803.cn/0/LOGO/江西卫视.png" group-title="卫视",江西卫视
+http://124.232.231.172:8089/000000002000/201500000356/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="深圳卫视" tvg-name="深圳卫视" tvg-logo="http://30803.cn/0/LOGO/深圳卫视.png" group-title="卫视",深圳卫视
+http://124.232.231.172:8089/000000002000/201500000066/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="辽宁卫视" tvg-name="辽宁卫视" tvg-logo="http://30803.cn/0/LOGO/辽宁卫视.png" group-title="卫视",辽宁卫视
+http://124.232.231.172:8089/000000002000/201500000346/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="东南卫视" tvg-name="东南卫视" tvg-logo="http://30803.cn/0/LOGO/东南卫视.png" group-title="卫视",东南卫视
+http://124.232.231.172:8089/000000002000/201500000336/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="海南卫视" tvg-name="海南卫视" tvg-logo="http://30803.cn/0/LOGO/海南卫视.png" group-title="卫视",海南卫视
+http://124.232.231.172:8089/000000002000/201500000477/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="广东卫视" tvg-name="广东卫视" tvg-logo="http://30803.cn/0/LOGO/广东卫视.png" group-title="卫视",广东卫视
+http://124.232.231.172:8089/000000002000/201500000335/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="湖北卫视" tvg-name="湖北卫视" tvg-logo="http://30803.cn/0/LOGO/湖北卫视.png" group-title="卫视",湖北卫视
+http://124.232.231.172:8089/000000002000/201500000159/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="广西卫视" tvg-name="广西卫视" tvg-logo="http://30803.cn/0/LOGO/广西卫视.png" group-title="卫视",广西卫视
+http://124.232.231.172:8089/000000002000/201500000512/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="山东卫视" tvg-name="山东卫视" tvg-logo="http://30803.cn/0/LOGO/山东卫视.png" group-title="卫视",山东卫视
+http://124.232.231.172:8089/000000002000/201500000071/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="四川卫视" tvg-name="四川卫视" tvg-logo="http://30803.cn/0/LOGO/四川卫视.png" group-title="卫视",四川卫视
+http://124.232.231.172:8089/000000002000/201500000458/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="重庆卫视" tvg-name="重庆卫视" tvg-logo="http://30803.cn/0/LOGO/重庆卫视.png" group-title="卫视",重庆卫视
+http://124.232.231.172:8089/000000002000/201500000459/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="云南卫视" tvg-name="云南卫视" tvg-logo="http://30803.cn/0/LOGO/云南卫视.png" group-title="卫视",云南卫视
+http://124.232.231.172:8089/000000002000/201500000513/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="河南卫视" tvg-name="河南卫视" tvg-logo="http://30803.cn/0/LOGO/河南卫视.png" group-title="卫视",河南卫视
+http://124.232.231.172:8089/000000002000/201500000476/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="黑龙江卫视" tvg-name="黑龙江卫视" tvg-logo="http://30803.cn/0/LOGO/黑龙江卫视.png" group-title="卫视",黑龙江卫视
+http://124.232.231.172:8089/000000002000/201500000072/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="贵州卫视" tvg-name="贵州卫视" tvg-logo="http://30803.cn/0/LOGO/贵州卫视.png" group-title="卫视",贵州卫视
+http://124.232.231.172:8089/000000002000/201500000347/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="河北卫视" tvg-name="河北卫视" tvg-logo="http://30803.cn/0/LOGO/河北卫视.png" group-title="卫视",河北卫视
+http://124.232.231.172:8089/000000002000/201500000348/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="吉林卫视" tvg-name="吉林卫视" tvg-logo="http://30803.cn/0/LOGO/吉林卫视.png" group-title="卫视",吉林卫视
+http://124.232.231.172:8089/000000002000/201500000475/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="陕西卫视" tvg-name="陕西卫视" tvg-logo="http://30803.cn/0/LOGO/陕西卫视.png" group-title="卫视",陕西卫视
+http://124.232.231.172:8089/000000002000/201500000514/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="山西卫视" tvg-name="山西卫视" tvg-logo="http://30803.cn/0/LOGO/山西卫视.png" group-title="卫视",山西卫视
+http://124.232.231.172:8089/000000002000/201500000111/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="内蒙古卫视" tvg-name="内蒙古卫视" tvg-logo="http://30803.cn/0/LOGO/内蒙古卫视.png" group-title="卫视",内蒙古卫视
+http://124.232.231.172:8089/000000002000/201500000107/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="宁夏卫视" tvg-name="宁夏卫视" tvg-logo="http://30803.cn/0/LOGO/宁夏卫视.png" group-title="卫视",宁夏卫视
+http://124.232.231.172:8089/000000002000/201500000108/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="西藏卫视" tvg-name="西藏卫视" tvg-logo="http://30803.cn/0/LOGO/西藏卫视.png" group-title="卫视",西藏卫视
+http://124.232.231.172:8089/000000002000/201500000117/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="新疆卫视" tvg-name="新疆卫视" tvg-logo="http://30803.cn/0/LOGO/新疆卫视.png" group-title="卫视",新疆卫视
+http://124.232.231.172:8089/000000002000/201500000116/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="甘肃卫视" tvg-name="甘肃卫视" tvg-logo="http://30803.cn/0/LOGO/甘肃卫视.png" group-title="卫视",甘肃卫视
+http://124.232.231.172:8089/000000002000/201500000461/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="青海卫视" tvg-name="青海卫视" tvg-logo="http://30803.cn/0/LOGO/青海卫视.png" group-title="卫视",青海卫视
+http://124.232.231.172:8089/000000002000/201500000516/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="厦门卫视" tvg-name="厦门卫视" tvg-logo="http://30803.cn/0/LOGO/厦门卫视.png" group-title="卫视",厦门卫视
+http://124.232.231.172:8089/000000002000/201500000375/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="兵团卫视" tvg-name="兵团卫视" tvg-logo="http://30803.cn/0/LOGO/兵团卫视.png" group-title="卫视",兵团卫视
+http://124.232.231.172:8089/000000002000/201500000376/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="三沙卫视" tvg-name="三沙卫视" tvg-logo="http://30803.cn/0/LOGO/三沙卫视.png" group-title="卫视",三沙卫视
+http://124.232.231.172:8089/000000002000/201500000396/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="延边卫视" tvg-name="延边卫视" tvg-logo="http://30803.cn/0/LOGO/延边卫视.png" group-title="卫视",延边卫视
+http://124.232.231.172:8089/000000002000/201500000554/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="四川康巴卫视" tvg-name="四川康巴卫视" tvg-logo="http://30803.cn/0/LOGO/四川康巴卫视.png" group-title="卫视",四川康巴卫视
+http://124.232.231.172:8089/000000002000/201500000411/index.m3u8?ispcode=2&zte_offset=0
+
+# 地方分组 (原湖南分组改为地方)
+#EXTINF:-1 tvg-id="湖南经视" tvg-name="湖南经视" tvg-logo="http://30803.cn/0/LOGO/湖南经视.png" group-title="地方",湖南经视
+http://124.232.231.172:8089/000000002000/201500000234/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="湖南都市" tvg-name="湖南都市" tvg-logo="http://30803.cn/0/LOGO/湖南都市.png" group-title="地方",湖南都市
+http://124.232.231.172:8089/000000002000/201500000235/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="湖南电视剧" tvg-name="湖南电视剧" tvg-logo="http://30803.cn/0/LOGO/湖南电视剧.png" group-title="地方",湖南电视剧
+http://124.232.231.172:8089/000000002000/201500000236/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="湖南电影" tvg-name="湖南电影" tvg-logo="http://30803.cn/0/LOGO/湖南电影.png" group-title="地方",湖南电影
+http://124.232.231.172:8089/000000002000/201500000237/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="湖南爱晚" tvg-name="湖南爱晚" tvg-logo="http://30803.cn/0/LOGO/湖南爱晚.png" group-title="地方",湖南爱晚
+http://124.232.231.172:8089/000000002000/201500000241/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="湖南娱乐" tvg-name="湖南娱乐" tvg-logo="http://30803.cn/0/LOGO/湖南娱乐.png" group-title="地方",湖南娱乐
+http://124.232.231.172:8089/000000002000/201500000239/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="湖南国际" tvg-name="湖南国际" tvg-logo="http://30803.cn/0/LOGO/湖南国际.png" group-title="地方",湖南国际
+http://124.232.231.172:8089/000000002000/201500000153/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="湖南教育" tvg-name="湖南教育" tvg-logo="http://30803.cn/0/LOGO/湖南教育.png" group-title="地方",湖南教育
+http://124.232.231.172:8089/000000002000/201500000377/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="山东教育" tvg-name="山东教育" tvg-logo="http://30803.cn/0/LOGO/山东教育.png" group-title="地方",山东教育
+http://124.232.231.172:8089/000000002000/201500000341/index.m3u8?ispcode=2&zte_offset=0
+# 数字分组 (整理后的数字频道)
+#EXTINF:-1 tvg-id="金鹰纪实" tvg-name="金鹰纪实" tvg-logo="http://30803.cn/0/LOGO/金鹰纪实.png" group-title="数字",金鹰纪实
+http://124.232.231.172:8089/000000002000/201500000240/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="金鹰卡通" tvg-name="金鹰卡通" tvg-logo="http://30803.cn/0/LOGO/金鹰卡通.png" group-title="数字",金鹰卡通
+http://124.232.231.172:8089/000000002000/201500000238/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="卡酷少儿" tvg-name="卡酷少儿" tvg-logo="http://30803.cn/0/LOGO/卡酷少儿.png" group-title="数字",卡酷少儿
+http://124.232.231.172:8089/000000002000/201500000515/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="优漫卡通" tvg-name="优漫卡通" tvg-logo="http://30803.cn/0/LOGO/优漫卡通.png" group-title="数字",优漫卡通
+http://124.232.231.172:8089/000000002000/201500000059/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="嘉佳卡通" tvg-name="嘉佳卡通" tvg-logo="https://raw.github.com/xiasufern/AA/main/icon/嘉佳卡通.png" group-title="数字",嘉佳卡通
+http://124.232.231.172:8089/000000002000/201500000374/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="茶频道" tvg-name="茶频道" tvg-logo="http://30803.cn/0/LOGO/茶频道.png" group-title="数字",茶频道
+http://124.232.231.172:8089/000000002000/201500000383/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="纪实科教" tvg-name="纪实科教" tvg-logo="http://30803.cn/0/LOGO/纪实科教.png" group-title="数字",纪实科教
+http://124.232.231.172:8089/000000002000/201500000575/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="天元围棋" tvg-name="天元围棋" tvg-logo="http://30803.cn/0/LOGO/天元围棋.png" group-title="数字",天元围棋
+http://124.232.231.172:8089/000000002000/201500000113/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="快乐垂钓" tvg-name="快乐垂钓" tvg-logo="http://30803.cn/0/LOGO/快乐垂钓.png" group-title="数字",快乐垂钓
+http://124.232.231.172:8089/000000002000/201500000245/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="国学" tvg-name="国学" tvg-logo="http://30803.cn/0/LOGO/国学.png" group-title="数字",国学
+http://124.232.231.172:8089/000000002000/201500000486/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="新动漫" tvg-name="新动漫" tvg-logo="http://30803.cn/0/LOGO/新动漫.png" group-title="数字",新动漫
+http://124.232.231.172:8089/000000002000/201500000387/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="早期教育" tvg-name="早期教育" tvg-logo="http://30803.cn/0/LOGO/早期教育.png" group-title="数字",早期教育
+http://124.232.231.172:8089/000000002000/201500000563/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="环球奇观" tvg-name="环球奇观" tvg-logo="http://30803.cn/0/LOGO/环球奇观.png" group-title="数字",环球奇观
+http://124.232.231.172:8089/000000002000/201500000560/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="中国天气" tvg-name="中国天气" tvg-logo="http://30803.cn/0/LOGO/中国天气.png" group-title="数字",中国天气
+http://124.232.231.172:8089/000000002000/201500000158/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="书画" tvg-name="书画" tvg-logo="http://30803.cn/0/LOGO/书画.png" group-title="数字",书画
+http://124.232.231.172:8089/000000002000/201500000399/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="梨园" tvg-name="梨园" tvg-logo="http://30803.cn/0/LOGO/梨园.png" group-title="数字",梨园
+http://124.232.231.172:8089/000000002000/201500000478/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="文物宝库" tvg-name="文物宝库" tvg-logo="http://30803.cn/0/LOGO/文物宝库.png" group-title="数字",文物宝库
+http://124.232.231.172:8089/000000002000/201500000479/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="武术世界" tvg-name="武术世界" tvg-logo="http://30803.cn/0/LOGO/武术世界.png" group-title="数字",武术世界
+http://124.232.231.172:8089/000000002000/201500000480/index.m3u8?ispcode=2&zte_offset=0
+# SiTV分组
+#EXTINF:-1 tvg-id="都市剧场" tvg-name="都市剧场" tvg-logo="http://30803.cn/0/LOGO/都市剧场.png" group-title="SiTV",都市剧场
+http://124.232.231.172:8089/000000002000/201500000585/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="动漫秀场" tvg-name="动漫秀场" tvg-logo="http://30803.cn/0/LOGO/动漫秀场.png" group-title="SiTV",动漫秀场
+http://124.232.231.172:8089/000000002000/201500000581/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="法治天地" tvg-name="法治天地" tvg-logo="http://30803.cn/0/LOGO/法治天地.png" group-title="SiTV",法治天地
+http://124.232.231.172:8089/000000002000/201500000578/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="金色学堂" tvg-name="金色学堂" tvg-logo="http://30803.cn/0/LOGO/金色学堂.png" group-title="SiTV",金色学堂
+http://124.232.231.172:8089/000000002000/201500000586/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="游戏风云" tvg-name="游戏风云" tvg-logo="http://30803.cn/0/LOGO/游戏风云.png" group-title="SiTV",游戏风云
+http://124.232.231.172:8089/000000002000/201500000582/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="乐游" tvg-name="乐游" tvg-logo="http://30803.cn/0/LOGO/乐游.png" group-title="SiTV",乐游
+http://124.232.231.172:8089/000000002000/201500000579/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="生活时尚" tvg-name="生活时尚" tvg-logo="http://30803.cn/0/LOGO/生活时尚.png" group-title="SiTV",生活时尚
+http://124.232.231.172:8089/000000002000/201500000584/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="东方财经" tvg-name="东方财经" tvg-logo="http://30803.cn/0/LOGO/东方财经.png" group-title="SiTV",东方财经
+http://124.232.231.172:8089/000000002000/201500000580/index.m3u8?ispcode=2&zte_offset=0
+# CGTN分组
+# 其他分组
+#EXTINF:-1 tvg-id="四海钓鱼" tvg-name="四海钓鱼" tvg-logo="http://30803.cn/0/LOGO/四海钓鱼.png" group-title="其他",四海钓鱼
+http://124.232.231.172:8089/000000002000/201500000054/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="生态环境" tvg-name="生态环境" tvg-logo="http://30803.cn/0/LOGO/生态环境.png" group-title="其他",生态环境
+http://124.232.231.172:8089/000000002000/201500000534/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="优优宝贝" tvg-name="优优宝贝" tvg-logo="http://30803.cn/0/LOGO/优优宝贝.png" group-title="其他",优优宝贝
+http://124.232.231.172:8089/000000002000/201500000119/index.m3u8?ispcode=2&zte_offset=0
+#EXTINF:-1 tvg-id="环球旅游" tvg-name="环球旅游" tvg-logo="http://30803.cn/0/LOGO/环球旅游.png" group-title="其他",环球旅游
+http://124.232.231.172:8089/000000002000/201500000484/index.m3u8?ispcode=2&zte_offset=0
