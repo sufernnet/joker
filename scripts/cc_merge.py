@@ -13,9 +13,10 @@ CC合并脚本 - 完整版
 import requests
 import re
 import os
-import time
+import sys
 from datetime import datetime
 import urllib3
+import time
 
 # 禁用SSL警告
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -59,12 +60,31 @@ BACKUP_EPG_URLS = [
     "https://epg.112114.xyz/pp.xml",
     "https://epg.946985.filegear-sg.me/t.xml.gz",
     "http://epg.51zmt.top:8000/e.xml",
-    "https://epg.112114.xyz/pp.xml",
 ]
 
 def log(msg):
     """输出日志"""
-    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    print(f"[{timestamp}] {msg}")
+
+def get_output_path():
+    """获取输出文件路径"""
+    # 获取当前脚本所在目录
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # 获取项目根目录
+    root_dir = os.path.dirname(script_dir)
+    
+    # 检查当前工作目录
+    cwd = os.getcwd()
+    log(f"当前工作目录: {cwd}")
+    log(f"脚本目录: {script_dir}")
+    log(f"根目录: {root_dir}")
+    
+    # 优先保存到根目录
+    root_output = os.path.join(root_dir, OUTPUT_FILE)
+    log(f"输出路径: {root_output}")
+    
+    return root_output
 
 def test_epg_url(epg_url):
     """测试EPG URL是否可访问"""
@@ -85,19 +105,18 @@ def test_epg_url(epg_url):
             response = requests.get(epg_url, headers=headers, timeout=timeout, stream=True, verify=False)
             if response.status_code == 200:
                 # 尝试读取前几个字节检查是否是gzip
-                import gzip
                 try:
                     # 读取前100字节检查
                     chunk = response.raw.read(100)
-                    # 尝试解压
-                    try:
-                        gzip.decompress(chunk)
+                    # 检查是否是gzip文件（前两个字节是1f 8b）
+                    if len(chunk) >= 2 and chunk[0] == 0x1f and chunk[1] == 0x8b:
                         log(f"✅ EPG可用 (GZIP格式): {epg_url}")
                         return True
-                    except:
+                    else:
                         log(f"⚠️  EPG不是有效的GZIP格式: {epg_url}")
                         return False
-                except:
+                except Exception as e:
+                    log(f"⚠️  GZIP文件读取失败: {e}")
                     return False
         else:
             # 常规XML文件
@@ -108,22 +127,36 @@ def test_epg_url(epg_url):
                 content_type = response.headers.get('content-type', '').lower()
                 
                 # 读取前1KB检查
-                chunk = response.raw.read(1024)
-                text = chunk.decode('utf-8', errors='ignore')
-                
-                # 检查是否是XML格式
-                if '<?xml' in text or '<tv' in text or '<programme' in text:
-                    log(f"✅ EPG可用: {epg_url}")
-                    return True
-                else:
-                    log(f"⚠️  EPG不是XML格式: {epg_url}")
-                    return False
+                try:
+                    chunk = response.raw.read(1024)
+                    text = chunk.decode('utf-8', errors='ignore')
+                    
+                    # 检查是否是XML格式
+                    if '<?xml' in text or '<tv' in text or '<programme' in text:
+                        log(f"✅ EPG可用: {epg_url}")
+                        return True
+                    else:
+                        log(f"⚠️  EPG不是XML格式: {epg_url}")
+                        return False
+                except UnicodeDecodeError:
+                    # 可能是二进制文件，尝试其他编码
+                    try:
+                        text = chunk.decode('gbk', errors='ignore')
+                        if '<?xml' in text or '<tv' in text or '<programme' in text:
+                            log(f"✅ EPG可用 (GBK编码): {epg_url}")
+                            return True
+                        else:
+                            log(f"⚠️  EPG不是XML格式: {epg_url}")
+                            return False
+                    except:
+                        log(f"⚠️  EPG解码失败: {epg_url}")
+                        return False
             else:
                 log(f"❌ EPG不可访问: {epg_url} (状态码: {response.status_code})")
                 return False
             
     except Exception as e:
-        log(f"❌ EPG测试失败 {epg_url}: {e}")
+        log(f"❌ EPG测试失败 {epg_url}: {str(e)[:100]}")
         return False
 
 def get_best_epg_url(epg_urls):
@@ -183,76 +216,83 @@ def get_content_from_proxy():
             'Sec-Fetch-Site': 'cross-site'
         }
         
-        response = requests.get(CLOUDFLARE_PROXY, headers=headers, timeout=20, verify=False)
-        
-        if response.status_code == 200:
-            content = response.text
-            
-            # 如果是HTML，尝试提取M3U内容
-            if '<html' in content.lower():
-                log("检测到HTML响应，尝试提取M3U内容...")
+        # 尝试多次请求
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = requests.get(CLOUDFLARE_PROXY, headers=headers, timeout=30, verify=False)
                 
-                # 方法1：查找<pre>或<code>标签中的内容
-                m3u_match = re.search(r'(?i)<pre[^>]*>(.*?)</pre>', content, re.DOTALL)
-                if not m3u_match:
-                    m3u_match = re.search(r'(?i)<code[^>]*>(.*?)</code>', content, re.DOTALL)
-                
-                if m3u_match:
-                    content = m3u_match.group(1).strip()
-                    log("✅ 从HTML标签提取到M3U内容")
-                else:
-                    # 方法2：查找#EXTM3U开头的行
-                    lines = content.split('\n')
-                    m3u_lines = []
-                    in_m3u = False
+                if response.status_code == 200:
+                    content = response.text
                     
-                    for line in lines:
-                        line = line.strip()
-                        if line.startswith('#EXTM3U'):
-                            in_m3u = True
-                            m3u_lines.append(line)
-                        elif in_m3u:
-                            if line.startswith('#EXTINF:') or ('://' in line and not line.startswith('<') and not line.startswith('<!')):
-                                m3u_lines.append(line)
-                            elif not line:
-                                m3u_lines.append(line)
-                            else:
-                                # 遇到非M3U内容，停止收集
-                                break
+                    # 检查内容是否有效
+                    if not content or len(content.strip()) < 100:
+                        log(f"尝试 {attempt + 1}/{max_retries}: 内容过短 ({len(content)} 字符)")
+                        if attempt < max_retries - 1:
+                            time.sleep(2)
+                            continue
                     
-                    if m3u_lines:
-                        content = '\n'.join(m3u_lines)
-                        log(f"✅ 提取到 {len(m3u_lines)} 行M3U内容")
-                    else:
-                        # 方法3：提取所有看起来像频道的行
-                        channel_lines = []
-                        for line in lines:
-                            line = line.strip()
-                            if line.startswith('#EXTINF:') or ('.m3u8' in line and '://' in line):
-                                channel_lines.append(line)
+                    # 如果是HTML，尝试提取M3U内容
+                    if '<html' in content.lower():
+                        log(f"尝试 {attempt + 1}/{max_retries}: 检测到HTML响应")
                         
-                        if channel_lines:
-                            content = '#EXTM3U\n' + '\n'.join(channel_lines)
-                            log(f"✅ 提取到 {len(channel_lines)} 个频道行")
-                        else:
-                            log("⚠️  无法从HTML提取M3U内容")
-                            return None
+                        # 方法1：查找M3U内容
+                        m3u_patterns = [
+                            r'(#EXTM3U.*?)(?:\n\n|\Z)',  # 直到两个换行或结尾
+                            r'(#EXTM3U.*?)(?:</pre>|</code>|\Z)',  # 直到标签结束或结尾
+                            r'<pre[^>]*>(.*?)</pre>',  # pre标签内
+                            r'<code[^>]*>(.*?)</code>'  # code标签内
+                        ]
+                        
+                        for pattern in m3u_patterns:
+                            match = re.search(pattern, content, re.DOTALL | re.IGNORECASE)
+                            if match:
+                                extracted = match.group(1) if len(match.groups()) > 0 else match.group(0)
+                                if '#EXTM3U' in extracted or '#EXTINF:' in extracted:
+                                    content = extracted.strip()
+                                    log(f"✅ 使用模式提取到M3U内容 ({len(content)} 字符)")
+                                    break
+                        
+                        # 如果没提取到，尝试逐行提取
+                        if '<html' in content.lower() or not ('#EXTM3U' in content or '#EXTINF:' in content):
+                            lines = content.split('\n')
+                            m3u_lines = []
+                            for line in lines:
+                                line = line.strip()
+                                if line.startswith('#EXTM3U') or line.startswith('#EXTINF:') or ('.m3u8' in line and '://' in line):
+                                    m3u_lines.append(line)
+                            
+                            if m3u_lines:
+                                content = '\n'.join(m3u_lines)
+                                log(f"✅ 逐行提取到 {len(m3u_lines)} 行M3U内容")
+                    
+                    # 确保以#EXTM3U开头
+                    if content and '#EXTM3U' not in content[:20]:
+                        if '#EXTINF:' in content or '.m3u8' in content:
+                            content = '#EXTM3U\n' + content
+                            log("已添加#EXTM3U头部")
+                    
+                    if content and len(content.strip()) > 100:
+                        log(f"✅ 获取到内容 ({len(content)} 字符)")
+                        return content
+                    else:
+                        log(f"尝试 {attempt + 1}/{max_retries}: 内容无效 ({len(content) if content else 0} 字符)")
+                        
+                else:
+                    log(f"尝试 {attempt + 1}/{max_retries}: HTTP {response.status_code}")
+                    
+            except requests.exceptions.Timeout:
+                log(f"尝试 {attempt + 1}/{max_retries}: 请求超时")
+            except Exception as e:
+                log(f"尝试 {attempt + 1}/{max_retries}: {str(e)[:100]}")
             
-            if content and content.strip():
-                log(f"✅ 获取到内容 ({len(content)} 字符)")
-                
-                # 确保以#EXTM3U开头
-                if not content.startswith('#EXTM3U'):
-                    content = '#EXTM3U\n' + content
-                
-                return content
-            else:
-                log("⚠️  内容为空")
-        else:
-            log(f"❌ 代理返回错误: {response.status_code}")
+            if attempt < max_retries - 1:
+                time.sleep(3)
+        
+        log("❌ 所有重试失败")
             
     except Exception as e:
-        log(f"❌ 代理访问失败: {e}")
+        log(f"❌ 代理访问失败: {str(e)[:100]}")
     
     return None
 
@@ -302,7 +342,7 @@ def extract_and_sort_hk_channels(content):
         if 'juli' in extinf.lower():
             juli_count += 1
             # 提取原始频道名
-            channel_name = extinf.split(',', 1)[1] if ',' in extinf else extinf
+            channel_name = extinf.split(',', 1)[1] if ',' in extinf else extsplit(',', 1)[1] if ',' in extinf else extinf
             
             # 重命名为HK分组
             new_extinf = re.sub(r'juli', 'HK', extinf, flags=re.IGNORECASE)
@@ -336,10 +376,10 @@ def extract_and_sort_hk_channels(content):
     
     # 显示排序结果
     if hk_channels:
-        log("HK频道排序结果:")
-        for i, (extinf, url) in enumerate(hk_channels[:10], 1):  # 显示前10个
+        log("HK频道排序结果 (前10个):")
+        for i, (extinf, url) in enumerate(hk_channels[:10], 1):
             channel_name = extinf.split(',', 1)[1] if ',' in extinf else extinf
-            log(f"  {i:2d}. {channel_name}")
+            log(f"  {i:2d}. {channel_name[:50]}")
         if len(hk_channels) > 10:
             log(f"  ... 还有 {len(hk_channels) - 10} 个频道")
     
@@ -352,7 +392,6 @@ def should_skip_channel(channel_name):
     # 检查是否在黑名单中
     for black_word in BLACKLIST_TW:
         if black_word.lower() in channel_name_lower:
-            log(f"  过滤掉: {channel_name} (包含: {black_word})")
             return True
     
     return False
@@ -363,7 +402,7 @@ def extract_filtered_4gtv_channels(content, limit=30):
         return []
     
     log(f"提取4gtv前{limit}个直播，分组改为TW，过滤指定频道...")
-    log(f"过滤列表: {', '.join(BLACKLIST_TW)}")
+    log(f"过滤列表: {', '.join(BLACKLIST_TW[:5])}...")
     
     # 解析M3U内容
     lines = content.split('\n')
@@ -393,6 +432,8 @@ def extract_filtered_4gtv_channels(content, limit=30):
     
     # 过滤黑名单频道
     filtered_by_blacklist = []
+    skipped_channels = []
+    
     for extinf, url in filtered_channels:
         # 提取频道名
         channel_name = extinf.split(',', 1)[1] if ',' in extinf else extinf
@@ -401,7 +442,14 @@ def extract_filtered_4gtv_channels(content, limit=30):
         if not should_skip_channel(channel_name):
             filtered_by_blacklist.append((extinf, url))
         else:
-            log(f"  ⛔ 过滤: {channel_name}")
+            skipped_channels.append(channel_name[:40])
+    
+    if skipped_channels:
+        log(f"过滤掉 {len(skipped_channels)} 个频道")
+        for i, channel in enumerate(skipped_channels[:5], 1):
+            log(f"  ⛔ {i}. {channel}")
+        if len(skipped_channels) > 5:
+            log(f"  ... 还有 {len(skipped_channels) - 5} 个被过滤的频道")
     
     log(f"过滤后剩余 {len(filtered_by_blacklist)} 个4gtv频道")
     
@@ -441,24 +489,27 @@ def extract_filtered_4gtv_channels(content, limit=30):
     
     # 显示前几个TW频道
     if tw_channels:
-        log("TW频道示例:")
+        log("TW频道示例 (前5个):")
         for i, (extinf, url) in enumerate(tw_channels[:5], 1):
             channel_name = extinf.split(',', 1)[1] if ',' in extinf else extinf
-            log(f"  {i:2d}. {channel_name}")
+            log(f"  {i:2d}. {channel_name[:40]}")
     
     return tw_channels
 
 def main():
     """主函数"""
     log("🚀 CC脚本开始运行...")
-    log(f"📁 输出文件: {OUTPUT_FILE}")
+    
+    # 获取输出路径
+    output_path = get_output_path()
+    log(f"📁 输出文件: {output_path}")
     
     # 显示当前时间（用于调试定时任务）
     current_time = datetime.now()
     log(f"当前时间: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
     log(f"下次运行: 北京时间 06:00 和 17:00")
     log(f"HK优先顺序: {', '.join(HK_PRIORITY_ORDER)}")
-    log(f"TW频道过滤列表: {', '.join(BLACKLIST_TW)}")
+    log(f"TW频道过滤列表: {', '.join(BLACKLIST_TW[:3])}...")
     
     # 1. 下载BB.m3u
     bb_content = download_bb_m3u()
@@ -524,6 +575,9 @@ def main():
         m3u_header = '#EXTM3U\n'
         log("⚠️  未找到可用EPG")
     
+    # 计算频道数量
+    bb_count = len(re.findall(r'^#EXTINF:', bb_content, re.MULTILINE))
+    
     output = m3u_header + f"""# =============================================
 # CC.m3u - 统一频道列表
 # 由 cc_merge.py 自动生成
@@ -544,7 +598,7 @@ def main():
     
     # 添加BB内容（跳过第一行）
     bb_lines = bb_content.split('\n')
-    bb_count = 0
+    bb_actual_count = 0
     skip_first = True
     
     for line in bb_lines:
@@ -558,7 +612,7 @@ def main():
         
         output += line + '\n'
         if line.startswith('#EXTINF:'):
-            bb_count += 1
+            bb_actual_count += 1
     
     # 添加HK频道（JULI）- 按指定顺序排列在最前面
     if hk_channels:
@@ -614,40 +668,60 @@ def main():
 # 测试的EPG源 ({len(unique_epgs)}个):"""
         for i, epg in enumerate(unique_epgs, 1):
             status = "✅" if epg == best_epg else "  "
-            output += f"\n#   {status} {epg}"
+            output += f"\n#   {status} {i:2d}. {epg}"
     
     # 添加统计信息
     output += f"""
 # =============================================
 # 统计信息
 # =============================================
-# BB 频道数: {bb_count}
+# BB 频道数: {bb_actual_count}
 # HK 频道数: {len(hk_channels)} (原JULI，按指定顺序排列)
 # TW 频道数: {len(tw_channels)} (原4gtv前30个，已过滤，排在后)
-# 过滤频道: {len(BLACKLIST_TW)} 个
-# 总频道数: {bb_count + len(hk_channels) + len(tw_channels)}
+# 过滤频道数: {len(BLACKLIST_TW)} 个
+# 总频道数: {bb_actual_count + len(hk_channels) + len(tw_channels)}
 # EPG状态: {'✅ 正常' if best_epg else '❌ 无可用EPG'}
 # 更新时间: {timestamp} (北京时间)
 # 更新频率: 每天 06:00 和 17:00 (北京时间)
 # 排序规则: BB → HK(凤凰/NOW优先) → TW(已过滤)
-# 脚本文件: cc_merge.py
+# 脚本文件: scripts/cc_merge.py
 # 工作流: .github/workflows/cc-workflow.yml
+# 仓库: https://github.com/${{ github.repository }}
 """
     
     # 8. 保存文件
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(output)
-    
-    log(f"\n🎉 CC脚本完成!")
-    log(f"📁 文件: {OUTPUT_FILE}")
-    log(f"📏 大小: {len(output)} 字符")
-    log(f"📡 EPG: {best_epg if best_epg else '无可用EPG'}")
-    log(f"📺 BB频道: {bb_count}")
-    log(f"📺 HK频道: {len(hk_channels)} (按指定顺序排列)")
-    log(f"📺 TW频道: {len(tw_channels)} (已过滤指定频道)")
-    log(f"📺 总计: {bb_count + len(hk_channels) + len(tw_channels)}")
-    log(f"🕒 下次自动更新: 北京时间 06:00 和 17:00")
-    log(f"🔗 工作流: .github/workflows/cc-workflow.yml")
+    try:
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(output)
+        
+        log(f"\n🎉 CC脚本完成!")
+        log(f"📁 文件: {output_path}")
+        log(f"📏 大小: {len(output)} 字符")
+        log(f"📡 EPG: {best_epg if best_epg else '无可用EPG'}")
+        log(f"📺 BB频道: {bb_actual_count}")
+        log(f"📺 HK频道: {len(hk_channels)} (按指定顺序排列)")
+        log(f"📺 TW频道: {len(tw_channels)} (已过滤指定频道)")
+        log(f"📺 总计: {bb_actual_count + len(hk_channels) + len(tw_channels)}")
+        log(f"🕒 下次自动更新: 北京时间 06:00 和 17:00")
+        log(f"🔗 工作流: .github/workflows/cc-workflow.yml")
+        
+        # 检查文件是否保存成功
+        if os.path.exists(output_path):
+            file_size = os.path.getsize(output_path)
+            log(f"✅ 文件保存成功，大小: {file_size} 字节")
+        else:
+            log("❌ 文件保存失败")
+            
+    except Exception as e:
+        log(f"❌ 文件保存失败: {e}")
+        # 尝试保存到当前目录作为备份
+        try:
+            backup_path = OUTPUT_FILE
+            with open(backup_path, "w", encoding="utf-8") as f:
+                f.write(output)
+            log(f"⚠️  已保存备份文件到: {backup_path}")
+        except:
+            log("❌ 备份文件保存也失败")
 
 if __name__ == "__main__":
     main()
