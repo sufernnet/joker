@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
 
 # DD.m3u
-# 生成时间: 2026-02-07 09:26:24
+# 生成时间: 2026-02-07 22:20:49
 # 更新频率: 每天 06:00 / 17:00
 # EPG: http://epg.51zmt.top:8000/e.xml
 # GitHub Actions 自动生成
@@ -354,7 +354,7 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 
 
-# 港澳台频道 (70)
+# 港澳台频道 (68)
 #EXTINF:-1 group-title="港澳台",凤凰中文
 http://r.jdshipin.com/cCCzW
 #EXTINF:-1 group-title="港澳台",凤凰资讯
@@ -363,12 +363,8 @@ http://r.jdshipin.com/0Rp07
 http://r.jdshipin.com/yDoTN
 #EXTINF:-1 group-title="港澳台",凤凰电影
 http://iot-mqqt.111yao.cn:8080/live/diyp_fhdy.m3u8
-#EXTINF:-1 group-title="港澳台",NOW体育台
-http://rihou.cc:555/tv/[Mt]Now体育
 #EXTINF:-1 group-title="港澳台",NOW新闻台
 http://cdn.163189.xyz/163189/now
-#EXTINF:-1 group-title="港澳台",NOW直播台
-http://rihou.cc:555/tv/[Mt]Now直播
 #EXTINF:-1 group-title="港澳台",Astro AOD
 http://php.jdshipin.com/TVOD/iptv.php?id=aod
 #EXTINF:-1 group-title="港澳台",Astro QJ
@@ -498,6 +494,6 @@ https://stream1.freetv.fun/6130c4439e91813125415b749209467f8da4f3d09d09ac80d7848
 
 # 统计信息
 # BB 频道数: 79
-# 港澳台频道数: 70
-# 总频道数: 149
-# 更新时间: 2026-02-07 09:26:24
+# 港澳台频道数: 68
+# 总频道数: 147
+# 更新时间: 2026-02-07 22:20:49
