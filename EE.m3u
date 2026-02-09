@@ -1,5 +1,5 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml" x-tvg-url="http://epg.51zmt.top:8000/e.xml"
-# 生成時間: 2026-02-08 17:25:21
+# 生成時間: 2026-02-09 06:42:45
 # HK源地址: https://hacks.sufern001.workers.dev/?type=hk
 # TW源地址: https://hacks.sufern001.workers.dev/?type=tw
 # EPG源: http://epg.51zmt.top:8000/e.xml
@@ -169,7 +169,7 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 # 以下為HK和TW頻道（已驗證可播放）
 #============================================================
 
-# 生成時間: 2026-02-08 17:25:21
+# 生成時間: 2026-02-09 06:42:45
 # HK源地址: https://hacks.sufern001.workers.dev/?type=hk
 # TW源地址: https://hacks.sufern001.workers.dev/?type=tw
 # EPG源: http://epg.51zmt.top:8000/e.xml
@@ -206,13 +206,13 @@ https://stream1.freetv.fun/38198a8fb9e075b47b838bc3e982921643497f7ca4b4590cc5cfe
 https://stream1.freetv.fun/4dcfe6b94315e523fdc36c33af599d211682761d528521f889ff25a32659ef44.m3u8
 #EXTINF:-1 tvg-name="now Sports HD" tvg-id="" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2023/07/22/large/20230722205957773276_84.png" group-title="HK",[BD]nbc sports now[geo-blocked]
 https://stream1.freetv.fun/259f8cf0c66ab8638ca593f2d185133facfc4ec0c5d6306e1188fe42440e0fcc.m3u8
-#EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[BD]news12 plus connecticut[geo-blocked]
+#EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[BD]news12 plus connecticut
 https://stream1.freetv.fun/af4179dea97e8b02f203794e426e98ed008ec51832d1182fc58ccc65ace71aef.m3u8
 #EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[BD]news12 plus hudson valley[geo-blocked]
 https://stream1.freetv.fun/4bdaa634eec6f743c1ee7434baa573dbd8be2b2197115953add3c45f762ff5a7.m3u8
 #EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[BD]news12 plus long island[geo-blocked]
 https://stream1.freetv.fun/65863b150a9cc44389ad0f3d10dc2da9b74a2957c88f1f7668bb631a2c29ce24.m3u8
-#EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[BD]news12 plus new jersey[geo-blocked]
+#EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[BD]news12 plus new jersey
 https://stream1.freetv.fun/7027ae0c77c6cd4a138d80ca6c2bc30e3256a22defa7c7db0f2e841cd31251f1.m3u8
 #EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[BD]news12 plus new york[geo-blocked]
 https://stream1.freetv.fun/923117e42044abbcf1f8802e170cb9c09740641bb182304d7d72f8af9c491230.m3u8
@@ -223,11 +223,11 @@ https://stream1.freetv.fun/b74fbbfca7444dedf15dd7218f336deba5514687facbda0a203ff
 #EXTINF:-1 tvg-name="TVB Plus" tvg-id="368361" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/22/large/20230722193451659796_71.png" group-title="HK",[BD]tvb plus
 https://stream1.freetv.fun/6ade45822dc9265d4aba6c1854bfd6a2635b13d96624929150024f662eca25d7.ctv
 #EXTINF:-1 tvg-name="TVB Plus" tvg-id="368361" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/22/large/20230722193451659796_71.png" group-title="HK",[BD]tvb plus
-https://stream1.freetv.fun/efea08e40d2af040689b157636dfc39a60cdd414ca5fa586e091a12876bb4bbf.m3u8
-#EXTINF:-1 tvg-name="TVB Plus" tvg-id="368361" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/22/large/20230722193451659796_71.png" group-title="HK",[BD]tvb plus
 https://stream1.freetv.fun/dec5e1d162ddc4e733fb714c2c8795323ccf94261596cffe7ee65f0034986c70.ctv
 #EXTINF:-1 tvg-name="TVB Plus" tvg-id="368361" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/22/large/20230722193451659796_71.png" group-title="HK",[BD]tvb plus
 https://stream1.freetv.fun/5c71ddc1ee039d8057898c807e9cda2dfc61c7534d017fbf7c0de04c5c58c890.ctv
+#EXTINF:-1 tvg-name="TVB Plus" tvg-id="368361" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/22/large/20230722193451659796_71.png" group-title="HK",[BD]tvb plus
+https://stream1.freetv.fun/efea08e40d2af040689b157636dfc39a60cdd414ca5fa586e091a12876bb4bbf.m3u8
 #EXTINF:-1 tvg-name="TVB亞洲劇" tvg-id="368335" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/12/08/large/20231208223626594389_27.png" group-title="HK",[BD]tvbs亚洲
 https://stream1.freetv.fun/5d67b3e9131d07f6e7da4e6fafda09cc609ee7fefb2e14ca14cf5bd6da5e4107.m3u8
 #EXTINF:-1 tvg-name="TVB亞洲劇" tvg-id="368335" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/12/08/large/20231208223626594389_27.png" group-title="HK",[BD]tvbs亚洲
@@ -237,9 +237,9 @@ https://stream1.freetv.fun/490340d742eb83c96123103e77460d8be396d5b87ee81e045aeca
 #EXTINF:-1 tvg-name="TVB亞洲劇" tvg-id="368335" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/12/08/large/20231208223626594389_27.png" group-title="HK",[BD]tvbs亚洲
 https://stream1.freetv.fun/0e9dc5f67eeae3d90d5afce9b70b9a06d6b3db352230f64d93221b83afb9e9ff.m3u8
 #EXTINF:-1 tvg-name="TVB亞洲劇" tvg-id="368335" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/12/08/large/20231208223626594389_27.png" group-title="HK",[BD]tvbs亚洲
-https://stream1.freetv.fun/52055e00fcf09c1a1fdd4289f27dce8639ebf402e478b7204b22711cb6589d4c.m3u8
-#EXTINF:-1 tvg-name="TVB亞洲劇" tvg-id="368335" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/12/08/large/20231208223626594389_27.png" group-title="HK",[BD]tvbs亚洲
 https://stream1.freetv.fun/395aa9bcecda230deb8046ff6d1b97f4158ab2d965e8610e865dc27560447d33.m3u8
+#EXTINF:-1 tvg-name="TVB亞洲劇" tvg-id="368335" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/12/08/large/20231208223626594389_27.png" group-title="HK",[BD]tvbs亚洲
+https://stream1.freetv.fun/52055e00fcf09c1a1fdd4289f27dce8639ebf402e478b7204b22711cb6589d4c.m3u8
 #EXTINF:-1 tvg-name="TVB亞洲劇" tvg-id="368335" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/12/08/large/20231208223626594389_27.png" group-title="HK",[BD]tvbs亞洲
 https://stream1.freetv.fun/0854ce5d4e8860e055549f5881ef05ab76b1bd0bc5bea78057553ed66f44d800.m3u8
 #EXTINF:-1 tvg-name="TVB星河(粵)" tvg-id="3493" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2018/03/13/large/20180313203118850563_68.jpg" group-title="HK",[BD]tvb星河
@@ -252,8 +252,6 @@ https://stream1.freetv.fun/855fcf2cb6242c3bbf91d073a966eefcecb239f58f03460b4947d
 rtmp://vkvsd182.okcdn.ru/playback/9942884887405?stkn=9VVfByDOizlWlr_rfoRi8TpelV04alIYQ_0Jk3cI_HojytXGIOqVjegIFH3lVi14ozMs9MWxBP0&uid=0&sp=uid,sp&sig=vlibqm4nyu&fromCache=1
 #EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[BD]детский 6 plus[geo-blocked]
 rtmp://vkvsd21.okcdn.ru/playback/9707377929063?stkn=DFG1rqI3FgXeZ_htnEwsbN6VQTD1f94i2q76f9zRxAS8Cfi2DmoeIt6qPK7S1qCXEQaRA_Cy79E&uid=0&sp=uid,sp&sig=vlibqm4nyu&fromCache=1
-#EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[BD]енисей plus 4
-https://stream1.freetv.fun/6b503a2ff40e8a14a7cb8d82ea01ae98245805caa6620b859b284be3605e4e80.m3u8
 #EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[BD]иллюзион plus
 https://stream1.freetv.fun/03f1e9455dfcba128c111a0427e1fdb27b37e43083a34ebc85efab3553407f40.m3u8
 #EXTINF:-1 tvg-name="鳳凰衛視中文" tvg-id="368338" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2025/01/28/large/20250128061049622730_55.png" group-title="HK",[BD]凤凰中文
@@ -273,19 +271,21 @@ https://stream1.freetv.fun/ac251cfa2842fa2be9c70e0f852ca810ccfcaada7d0c4a67c41b1
 #EXTINF:-1 tvg-name="明珠臺(備)" tvg-id="368369" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2024/12/26/large/20241226141312380293_76.png" group-title="HK",[BD]明珠
 https://stream1.freetv.fun/e56abfec74a8d135ddfc2c074a81751b6fc41d0272d5f5519c218b2e56d3265f.ctv
 #EXTINF:-1 tvg-name="明珠臺(備)" tvg-id="368369" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2024/12/26/large/20241226141312380293_76.png" group-title="HK",[BD]明珠
-https://stream1.freetv.fun/b49f11a7e68a76202daba76fb5c90eb8ef1c34d977c5e9eac0825112f74f87d3.m3u8
-#EXTINF:-1 tvg-name="明珠臺(備)" tvg-id="368369" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2024/12/26/large/20241226141312380293_76.png" group-title="HK",[BD]明珠
 https://stream1.freetv.fun/18147fe9227d749afdbf2b79ad6a6182ecd2276f2338a696d0c23d998e2763b2.ctv
+#EXTINF:-1 tvg-name="明珠臺(備)" tvg-id="368369" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2024/12/26/large/20241226141312380293_76.png" group-title="HK",[BD]明珠
+https://stream1.freetv.fun/b49f11a7e68a76202daba76fb5c90eb8ef1c34d977c5e9eac0825112f74f87d3.m3u8
 #EXTINF:-1 tvg-name="明珠臺(備)" tvg-id="368369" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2024/12/26/large/20241226141312380293_76.png" group-title="HK",[BD]明珠
 https://stream1.freetv.fun/fc542dddf6d96335d494c255d5df19fc0f2c61c46779dd9fe85e54b1559c3460.ctv
 #EXTINF:-1 tvg-name="星空衛視國際頻道" tvg-id="" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/" group-title="HK",[BD]星空国际[geo-blocked]
 https://stream1.freetv.fun/75e262d43778a32cb887d4ede15dc972143a0522e4d89a81f45b7307f6fedd61.m3u8
+#EXTINF:-1 tvg-name="環球電視臺" tvg-id="" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2022/03/18/large/20220318090803853591_56.png" group-title="HK",[BD]环球电视
+https://stream1.freetv.fun/1e86a557d2d00ae53094f006c0167ca6e17e6f14817302f75057618fb631c774.m3u8
 #EXTINF:-1 tvg-name="翡翠台" tvg-id="368366" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/20/large/20230720173151124119_90.png" group-title="HK",[BD]翡翠
 https://stream1.freetv.fun/8a31735d012894cb8c275ebf1a898a3bb42f7201dd54d6d1201d724877fd9c19.m3u8
 #EXTINF:-1 tvg-name="翡翠台" tvg-id="368366" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/20/large/20230720173151124119_90.png" group-title="HK",[BD]翡翠
-https://stream1.freetv.fun/169afe453d043b4888d3e0684163a3c8e7c13738df07bcfa187dcd05223e3891.m3u8
-#EXTINF:-1 tvg-name="翡翠台" tvg-id="368366" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/20/large/20230720173151124119_90.png" group-title="HK",[BD]翡翠
 https://stream1.freetv.fun/b1128a129ebb9fd5ddde711ab565c82831400d80e5aa6aa9822e6c1b33ed95c5.ctv
+#EXTINF:-1 tvg-name="翡翠台" tvg-id="368366" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/20/large/20230720173151124119_90.png" group-title="HK",[BD]翡翠
+https://stream1.freetv.fun/169afe453d043b4888d3e0684163a3c8e7c13738df07bcfa187dcd05223e3891.m3u8
 #EXTINF:-1 tvg-name="翡翠台" tvg-id="368366" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/20/large/20230720173151124119_90.png" group-title="HK",[BD]翡翠[geo-blocked]
 https://stream1.freetv.fun/ad698c68f995a760534e836438ea8e8bc65abf16cd0ed1d6b8e005cd9b90913c.ctv
 #EXTINF:-1 tvg-name="翡翠台" tvg-id="368366" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/20/large/20230720173151124119_90.png" group-title="HK",[BD]翡翠[geo-blocked]
@@ -314,15 +314,15 @@ https://stream1.freetv.fun/bcd3e759b0c9f8807280e9cb8fc50c6919ffad577b1d5d21f392f
 https://stream1.freetv.fun/e1f2e0d3c534c1d7b467fa6bf2a647527e6841c6c2d76b14b29e22682fba93f1.ctv
 #EXTINF:-1 tvg-name="ViuTV HD" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/20/large/20230720193225282526_84.png" group-title="HK",[HD]viutv
 https://stream1.freetv.fun/ad77293b3968d9314a0a612d10a82fcd2617e3370c750355a5ff31cced30ca13.ctv
+#EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[HD]енисей plus 4
+https://stream1.freetv.fun/6b503a2ff40e8a14a7cb8d82ea01ae98245805caa6620b859b284be3605e4e80.m3u8
 #EXTINF:-1 tvg-name="Sports Plus 1" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/07/large/20220807222724425696_46.jpg" group-title="HK",[HD]ช่อง sky sports plus
 https://stream1.freetv.fun/c7c938e0400853bc3ef002eb4f5f9dcb6342ea669dab8fb17101b2997266a35c.m3u8
-#EXTINF:-1 tvg-name="鳳凰香港" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/20/large/20230720101153992346_85.png" group-title="HK",[HD]凤凰香港
+#EXTINF:-1 tvg-name="鳳凰香港" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/20/large/20230720101153992346_85.png" group-title="HK",[HD]凤凰香港[geo-blocked]
 https://stream1.freetv.fun/ada32bf1237524edb183dcdef8285a2da3dd390b3d59be112c09d1a9c38c1077.ctv
-#EXTINF:-1 tvg-name="環球電視臺" tvg-id="" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2022/03/18/large/20220318090803853591_56.png" group-title="HK",[HD]环球电视
-https://stream1.freetv.fun/1e86a557d2d00ae53094f006c0167ca6e17e6f14817302f75057618fb631c774.m3u8
 #EXTINF:-1 tvg-name="翡翠台" tvg-id="368366" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2023/07/20/large/20230720173151124119_90.png" group-title="HK",[HD]翡翠
 https://stream1.freetv.fun/b6805e649e0c7b8193b4fd6d6b407675b3254a0eca4b30ef8ed033b5202b285e.ctv
-#EXTINF:-1 tvg-name="CCTV1(RTHK33)" tvg-id="368552" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2024/05/16/large/20240516043525045887_55.png" group-title="HK",[SD]cctv1
+#EXTINF:-1 tvg-name="CCTV1(RTHK33)" tvg-id="368552" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2024/05/16/large/20240516043525045887_55.png" group-title="HK",[SD]cctv1[geo-blocked]
 https://stream1.freetv.fun/31f1a5c3a963625aff1eb70a33e10695ddabfc1d0f6c0c4e8bfeadf9d62a225e.ctv
 #EXTINF:-1 tvg-name="Discovery Kids" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/05/12/large/20220512210531766962_16.jpg" group-title="HK",[SD]discovery kids[geo-blocked]
 https://stream1.freetv.fun/bb7f1ff370bc4f3fedd17c6a6745f85c3ff4d805f979f661e5e3f5631e8e0bd7.m3u8
@@ -342,7 +342,7 @@ https://stream1.freetv.fun/ebe64afc03ab75c2742c035c9bc9aee02e74e4104b84dbdb816ed
 https://stream1.freetv.fun/eb5c379a2d045382ce7f8ffa78e5b7d184a3c44fffe574d72e3fab54a7d696f7.m3u8
 #EXTINF:-1 tvg-name="星空衛視" tvg-id="" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2024/03/11/large/20240311112750924244_65.png" group-title="HK",[SD]星空卫视
 https://stream1.freetv.fun/ec98a9ccdf617ca10e287a87558d44b94346626aea3863392cc314b0fe235dfc.m3u8
-#EXTINF:-1 tvg-name="星空衛視" tvg-id="" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2024/03/11/large/20240311112750924244_65.png" group-title="HK",[SD]星空卫视[geo-blocked]
+#EXTINF:-1 tvg-name="星空衛視" tvg-id="" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2024/03/11/large/20240311112750924244_65.png" group-title="HK",[SD]星空卫视
 https://stream1.freetv.fun/a2764fcf64d61e4ea32f4f9972a630f99d2d3fac7cef4d2afb96818616f8e9d7.m3u8
 #EXTINF:-1 tvg-name="KIX[HK]" tvg-id="368350" tvg-country="香港" tvg-language="韓語" tvg-logo="https://epg.pw/media/images/channel/2024/01/14/large/20240114164852936879_83.png" group-title="HK",[VGA]Kix *a
 https://stream1.freetv.fun/9377f46a9bf98114be8a5b30933e1bbc3f6cc633d9eb14bac066049e58439c5e.m3u8
@@ -354,7 +354,7 @@ https://stream1.freetv.fun/94be5ea815f654a16d914c4c2f3ba36aeef4d60936e2094822c36
 https://stream1.freetv.fun/2fe27211dc98c0af25f8fcb27b10ea6b7c5dbecc94584cf630e55d5083af35b3.m3u8
 #EXTINF:-1 tvg-name="鳳凰衛視中文" tvg-id="368338" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2025/01/28/large/20250128061049622730_55.png" group-title="HK",[VGA]凤凰中文
 https://stream1.freetv.fun/a4e7e8c192fe538f4878412af5f611bf10948212e980cf029ac0500a7cb8962f.ctv
-#EXTINF:-1 tvg-name="鳳凰資訊HD" tvg-id="" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2023/07/23/large/20230723140505929891_55.png" group-title="HK",[VGA]凤凰资讯
+#EXTINF:-1 tvg-name="鳳凰資訊HD" tvg-id="" tvg-country="香港" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2023/07/23/large/20230723140505929891_55.png" group-title="HK",[VGA]凤凰资讯[geo-blocked]
 https://stream1.freetv.fun/7d3e0683dbf6e0636efa3bc17815aba2c44580449b0be83ed1e3ca97ed45bccc.ctv
 #EXTINF:-1 tvg-name="C+頻道" tvg-id="" tvg-country="香港" tvg-language="粵語" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806135716055628_86.jpg" group-title="HK",[VGA]香港c plus[geo-blocked]
 https://stream1.freetv.fun/a4111f1cb8867dfcb4059fe13e27c223f54a287ccf12034aba10299dde08c7c7.m3u8
@@ -365,6 +365,8 @@ https://stream1.freetv.fun/a4111f1cb8867dfcb4059fe13e27c223f54a287ccf12034aba102
 https://stream1.freetv.fun/3651118dc8f23f829471c256e8435d62366b35b31cd12d1227e7f8bfdd35649c.m3u8
 #EXTINF:-1 tvg-name="BBC Earth(tw)" tvg-id="" tvg-country="台灣" tvg-language="英文" tvg-logo="https://epg.pw/media/images/channel/2023/07/17/large/20230717234812634336_85.jpg" group-title="TW",[BD]bbc earth
 https://stream1.freetv.fun/24358f38712d187d2fd38cb6f4c48fa88543e025ac9a386899adec203cb10b0a.m3u8
+#EXTINF:-1 tvg-name="BBC Earth(tw)" tvg-id="" tvg-country="台灣" tvg-language="英文" tvg-logo="https://epg.pw/media/images/channel/2023/07/17/large/20230717234812634336_85.jpg" group-title="TW",[BD]bbc earth
+https://stream1.freetv.fun/8ceea8c7e1961842e551fc90916350de2838ee500e19edf3fdbf2f2c0c3561bf.m3u8
 #EXTINF:-1 tvg-name="BBC Earth(tw)" tvg-id="" tvg-country="台灣" tvg-language="英文" tvg-logo="https://epg.pw/media/images/channel/2023/07/17/large/20230717234812634336_85.jpg" group-title="TW",[BD]bbc earth us
 https://stream1.freetv.fun/02205072306ac6c143d2707e909bda809deef2a1bda1923da9681ec5744f7081.m3u8
 #EXTINF:-1 tvg-name="CHANNEL [V]" tvg-id="" tvg-country="台灣" tvg-language="英文" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806161730161952_53.jpg" group-title="TW",[BD]channel divya
@@ -460,11 +462,11 @@ https://stream1.freetv.fun/3ed496bfd2b9085ce32897fc284434616dfdf14874c99889983d2
 #EXTINF:-1 tvg-name="人間衛視" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/img/logo/1_164.jpg" group-title="TW",[BD]人間衛視
 https://stream1.freetv.fun/81436eb2165b97790751ba60841fb0c81755301b8905b42c6a577298104d277f.m3u8
 #EXTINF:-1 tvg-name="臺視新聞臺" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/uploads/tmp_logo/2016/11/22/20161122123940121042_91.png" group-title="TW",[BD]台視新聞
-https://stream1.freetv.fun/62baa54083438e0ff42bd762a75f962b815d012dc6d9b56df64929f5c12e2bdf.m3u8
-#EXTINF:-1 tvg-name="臺視新聞臺" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/uploads/tmp_logo/2016/11/22/20161122123940121042_91.png" group-title="TW",[BD]台視新聞
 https://stream1.freetv.fun/d96ca80f2e6d7eb1a1737aaf17284caded271210e4432dfb4378a9ab6d8ef7b2.m3u8
 #EXTINF:-1 tvg-name="臺視新聞臺" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/uploads/tmp_logo/2016/11/22/20161122123940121042_91.png" group-title="TW",[BD]台視新聞
 https://stream1.freetv.fun/ffa3a8fc52b4834c300b3587a667310b5eb8a46d000498709791be4bd1799514.m3u8
+#EXTINF:-1 tvg-name="臺視新聞臺" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/uploads/tmp_logo/2016/11/22/20161122123940121042_91.png" group-title="TW",[BD]台視新聞
+https://stream1.freetv.fun/62baa54083438e0ff42bd762a75f962b815d012dc6d9b56df64929f5c12e2bdf.m3u8
 #EXTINF:-1 tvg-name="臺視新聞臺" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/uploads/tmp_logo/2016/11/22/20161122123940121042_91.png" group-title="TW",[BD]台视新聞
 https://stream1.freetv.fun/9e87c84976d8ad7ce1dac1ba154da29c85371dffd4a6c00a3dfde2bf1fed5735.m3u8
 #EXTINF:-1 tvg-name="台視新聞FHD" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2023/07/24/large/20230724094914581648_75.png" group-title="TW",[BD]台视新闻
@@ -495,8 +497,6 @@ https://stream1.freetv.fun/999d5e5605f738c169f98d42b6d5d9502c8b42857e29d0628dbc1
 https://stream1.freetv.fun/2468c7e34ca09c24e5c170085819e94e53b00bf19824b2c7064f62d1a7acdc78.m3u8
 #EXTINF:-1 tvg-name="華視HD" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2022/05/06/large/20220506164257585081_80.png" group-title="TW",[BD]華視[geo-blocked]
 https://stream1.freetv.fun/60c715f5b961e2226107f69b2bab88a391c92f9f2444b64574cf6c450eb88b9e.m3u8
-#EXTINF:-1 tvg-name="華視新聞" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/uploads/tmp_logo/2017/05/08/20170508123606517919_39.png" group-title="TW",[BD]華視新聞[geo-blocked]
-https://stream1.freetv.fun/e159b93114a44d525a361167a5d74a614b6cc976f88913dcb6613aaac886dd67.m3u8
 #EXTINF:-1 tvg-name="金光布袋戲" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2023/07/03/large/20230703010822122677_34.jpeg" group-title="TW",[BD]金光布袋戲
 https://stream1.freetv.fun/e47bdab2d74162f1d408da823bffd62ef1cac43e295575c9ce982c23983686ac.m3u8
 #EXTINF:-1 tvg-name="鏡新聞" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2023/06/05/large/20230605011449264065_58.jpg" group-title="TW",[BD]镜新闻
@@ -548,9 +548,9 @@ rtmp://f13h.mine.nu/sat/tv091
 #EXTINF:-1 tvg-name="中視HD" tvg-id="460779" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2025/01/28/large/20250128055838912553_80.png" group-title="TW",[HD]中视[geo-blocked]
 rtmp://f13h.mine.nu:1935/sat/tv091
 #EXTINF:-1 tvg-name="人間衛視" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/img/logo/1_164.jpg" group-title="TW",[HD]人间卫视
-https://stream1.freetv.fun/5b84e533cb668769468a8f5dbc6fe5cd1cb13b02fed0c7ca665de291f59d7cee.ctv
-#EXTINF:-1 tvg-name="人間衛視" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/img/logo/1_164.jpg" group-title="TW",[HD]人间卫视
 https://stream1.freetv.fun/9f76ad62b7ac59970b10e209f250df382971823ed12f12459c11d5ca71e0d7b9.ctv
+#EXTINF:-1 tvg-name="人間衛視" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/img/logo/1_164.jpg" group-title="TW",[HD]人间卫视
+https://stream1.freetv.fun/5b84e533cb668769468a8f5dbc6fe5cd1cb13b02fed0c7ca665de291f59d7cee.ctv
 #EXTINF:-1 tvg-name="華視" tvg-id="370143" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2020/07/26/large/20200726143140379428_88.jpg" group-title="TW",[HD]华视[geo-blocked]
 rtmp://f13h.mine.nu/sat/tv111
 #EXTINF:-1 tvg-name="台視HD" tvg-id="460808" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2023/07/24/large/20230724092817835507_62.png" group-title="TW",[HD]台视[geo-blocked]
@@ -571,8 +571,6 @@ https://stream1.freetv.fun/a4b8fe407a4b5437b5f42b2022fce49f1c00bfacacf85437bc818
 https://stream1.freetv.fun/637ceff2dfb72b24ad6929da061ccf235af38b9469ba999c577b1c3d1ee25740.ctv
 #EXTINF:-1 tvg-name="非凡新聞HD" tvg-id="456560" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2016/06/17/large/20160617165249161501_56.png" group-title="TW",[HD]非凡新聞[geo-blocked]
 rtmp://f13h.mine.nu/sat/tv581
-#EXTINF:-1 tvg-name="龍華戲劇" tvg-id="" tvg-country="台灣" tvg-language="國語" tvg-logo="https://epg.pw/media/images/channel/2023/07/24/large/20230724170326264507_47.png" group-title="TW",[HD]龙华戏剧[geo-blocked]
-https://stream1.freetv.fun/70b5ad6ff59705957267010cfef48103f103a460f450474547b3b76da85d491b.m3u8
 #EXTINF:-1 tvg-name="FOX Movies HD(TW)" tvg-id="" tvg-country="台灣" tvg-language="英文" tvg-logo="https://epg.pw/media/images/channel/2019/07/19/large/20190719001432212041_14.png" group-title="TW",[SD]bflix movies
 https://stream1.freetv.fun/2fda0dbc8ad206b2ea146eca06e1ae4c228af479c5eb9e98fe39f28b3a634661.m3u8
 #EXTINF:-1 tvg-name="CHANNEL [V]" tvg-id="" tvg-country="台灣" tvg-language="英文" tvg-logo="https://epg.pw/media/images/channel/2022/08/06/large/20220806161730161952_53.jpg" group-title="TW",[SD]channel s uk
