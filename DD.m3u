@@ -1,11 +1,7 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
 
 # DD.m3u
-<<<<<<< Updated upstream
-# 生成时间: 2026-02-25 01:26:55
-=======
-# 生成时间: 2026-02-25 01:26:58
->>>>>>> Stashed changes
+# 生成时间: 2026-02-25 01:51:21
 # 更新频率: 每天 06:00 / 17:00
 # EPG: http://epg.51zmt.top:8000/e.xml
 # GitHub Actions 自动生成
@@ -359,85 +355,33 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 
 
-# 港澳台频道 (140)
+# 港澳台频道 (115)
 #EXTINF:-1 group-title="港澳台",凤凰中文
 http://61.184.46.85:85/tsfile/live/1029_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 group-title="港澳台",凤凰资讯
 https://cdn9.163189.xyz/smt3.1.1.php?id=phoenixinfo_hd
-#EXTINF:-1 group-title="港澳台",凤凰电影
-http://iot-mqqt.111yao.cn:8080/live/diyp_fhdy.m3u8
-#EXTINF:-1 group-title="港澳台",凤凰电影
-http://39.107.120.164:8080/live/diyp_fhdy.m3u8
+#EXTINF:-1 group-title="港澳台",Now新闻
+http://cdn.163189.xyz/163189/now
 #EXTINF:-1 group-title="港澳台",NOW新闻台
 http://cdn.163189.xyz/163189/now
-#EXTINF:-1 group-title="港澳台",ASTV亚洲卫视
-https://p2hs.vzan.com/slowlive/821481626725612419/live.m3u8
-#EXTINF:-1 group-title="港澳台",Astro AEC
-https://o11.163189.xyz/stream/live/aec/
-#EXTINF:-1 group-title="港澳台",Astro AOD
-https://o11.163189.xyz/stream/live/aod/
-#EXTINF:-1 group-title="港澳台",Astro酷哒哒
-https://o11.163189.xyz/stream/live/test/
-#EXTINF:-1 group-title="港澳台",CH5
-http://cdn6.163189.xyz/163189/ch5
-#EXTINF:-1 group-title="港澳台",CH8
-http://cdn6.163189.xyz/163189/ch8
-#EXTINF:-1 group-title="港澳台",CHU
-http://cdn6.163189.xyz/163189/chu
-#EXTINF:-1 group-title="港澳台",Channel 5
-http://cdn6.163189.xyz/163189/ch5
-#EXTINF:-1 group-title="港澳台",Channel 8
-http://cdn6.163189.xyz/163189/ch8
-#EXTINF:-1 group-title="港澳台",Channel U
-http://cdn6.163189.xyz/163189/chu
-#EXTINF:-1 group-title="港澳台",DAZN1
-rtmp://f13h.mine.nu/sat/tv731
-#EXTINF:-1 group-title="港澳台",DAZN2
-rtmp://f13h.mine.nu/sat/tv741
-#EXTINF:-1 group-title="港澳台",ELEVEN体育1
-rtmp://f13h.mine.nu/sat/tv731
-#EXTINF:-1 group-title="港澳台",ELEVEN体育2
-rtmp://f13h.mine.nu/sat/tv741
-#EXTINF:-1 group-title="港澳台",GOOD2
-http://165.154.226.214:50007/of-litv-ftv17/index.m3u8?proxy=true
-#EXTINF:-1 group-title="港澳台",GOOD2
-http://live-350k.streamingfast.net/hls-live/goodtv/_definst_/liveevent/live-ch2-1.m3u8
-#EXTINF:-1 group-title="港澳台",GOOD2
-https://dqhxk7sbp7xog.cloudfront.net/hls-live/goodtv/_definst_/liveevent/live-ch2-2.m3u8
-#EXTINF:-1 group-title="港澳台",GOODTV
-http://live-350k.streamingfast.net/hls-live/goodtv/_definst_/liveevent/live-ch1-1.m3u8
-#EXTINF:-1 group-title="港澳台",GOODTV
-https://dqhxk7sbp7xog.cloudfront.net/hls-live/goodtv/_definst_/liveevent/live-ch1-2.m3u8
-#EXTINF:-1 group-title="港澳台",GOODTV好消息
-http://165.154.226.214:50007/of-litv-ftv16/index.m3u8?proxy=true
+#EXTINF:-1 group-title="港澳台",Now体育
+http://rihou.cc:555/tv/[Mt]Now体育
+#EXTINF:-1 group-title="港澳台",Now财经
+http://hls.168.us.kg/u/333/master.m3u8
+#EXTINF:-1 group-title="港澳台",Now直播
+https://stream1.freetv.fun/20a385a5c465c7bbffb60b3309e265829208c3fbf4e3fd0eedbca1776b2c8f23.m3u8
+#EXTINF:-1 group-title="港澳台",POPC
+http://tl.061833.xyz/tl/popc
 #EXTINF:-1 group-title="港澳台",HOY76
 http://hls.168.us.kg/u/76/master.m3u8
 #EXTINF:-1 group-title="港澳台",HOY77
 http://iptv.4666888.xyz/iptv2A.php?id=35
 #EXTINF:-1 group-title="港澳台",HOY78
 http://iptv.4666888.xyz/iptv2A.php?id=31
-#EXTINF:-1 group-title="港澳台",MYTV黃金翡翠
-http://iptv.4666888.xyz/iptv2A.php?id=32
-#EXTINF:-1 group-title="港澳台",MoMoTV
-rtmp://f13h.mine.nu/sat/tv761
-#EXTINF:-1 group-title="港澳台",Now体育
-http://rihou.cc:555/tv/[Mt]Now体育
-#EXTINF:-1 group-title="港澳台",Now新闻
-http://cdn.163189.xyz/163189/now
-#EXTINF:-1 group-title="港澳台",Now直播
-https://stream1.freetv.fun/20a385a5c465c7bbffb60b3309e265829208c3fbf4e3fd0eedbca1776b2c8f23.m3u8
-#EXTINF:-1 group-title="港澳台",Now财经
-http://hls.168.us.kg/u/333/master.m3u8
-#EXTINF:-1 group-title="港澳台",POPC
-http://tl.061833.xyz/tl/popc
 #EXTINF:-1 group-title="港澳台",RHK31
 http://iptv.4666888.xyz/iptv2A.php?id=23
 #EXTINF:-1 group-title="港澳台",RHK32
 http://cdn.163189.xyz/163189/rthk32
-#EXTINF:-1 group-title="港澳台",ROCK_Action
-http://iptv.4666888.xyz/iptv2A.php?id=50
-#EXTINF:-1 group-title="港澳台",TNTSports3
-http://iptv.4666888.xyz/iptv2A.php?id=3
 #EXTINF:-1 group-title="港澳台",TVB Plus
 https://o11.163189.xyz/stream/tvb/tvbp/
 #EXTINF:-1 group-title="港澳台",TVB Plus
@@ -472,6 +416,40 @@ http://iptv.4666888.xyz/iptv2A.php?id=34
 http://iptv.4666888.xyz/iptv2A.php?id=28
 #EXTINF:-1 group-title="港澳台",TVB翡翠劇集
 http://iptv.4666888.xyz/iptv2A.php?id=33
+#EXTINF:-1 group-title="港澳台",Astro AEC
+https://o11.163189.xyz/stream/live/aec/
+#EXTINF:-1 group-title="港澳台",Astro AOD
+https://o11.163189.xyz/stream/live/aod/
+#EXTINF:-1 group-title="港澳台",Astro酷哒哒
+https://o11.163189.xyz/stream/live/test/
+#EXTINF:-1 group-title="港澳台",CH5
+http://cdn6.163189.xyz/163189/ch5
+#EXTINF:-1 group-title="港澳台",CH8
+http://cdn6.163189.xyz/163189/ch8
+#EXTINF:-1 group-title="港澳台",CHU
+http://cdn6.163189.xyz/163189/chu
+#EXTINF:-1 group-title="港澳台",DAZN1
+rtmp://f13h.mine.nu/sat/tv731
+#EXTINF:-1 group-title="港澳台",DAZN2
+rtmp://f13h.mine.nu/sat/tv741
+#EXTINF:-1 group-title="港澳台",ELEVEN体育1
+rtmp://f13h.mine.nu/sat/tv731
+#EXTINF:-1 group-title="港澳台",ELEVEN体育2
+rtmp://f13h.mine.nu/sat/tv741
+#EXTINF:-1 group-title="港澳台",GOOD2
+http://165.154.226.214:50007/of-litv-ftv17/index.m3u8?proxy=true
+#EXTINF:-1 group-title="港澳台",GOOD2
+http://live-350k.streamingfast.net/hls-live/goodtv/_definst_/liveevent/live-ch2-1.m3u8
+#EXTINF:-1 group-title="港澳台",GOOD2
+https://dqhxk7sbp7xog.cloudfront.net/hls-live/goodtv/_definst_/liveevent/live-ch2-2.m3u8
+#EXTINF:-1 group-title="港澳台",MYTV黃金翡翠
+http://iptv.4666888.xyz/iptv2A.php?id=32
+#EXTINF:-1 group-title="港澳台",MoMoTV
+rtmp://f13h.mine.nu/sat/tv761
+#EXTINF:-1 group-title="港澳台",ROCK_Action
+http://iptv.4666888.xyz/iptv2A.php?id=50
+#EXTINF:-1 group-title="港澳台",TNTSports3
+http://iptv.4666888.xyz/iptv2A.php?id=3
 #EXTINF:-1 group-title="港澳台",VIUTV
 https://cdn.163189.xyz/163189/viu
 #EXTINF:-1 group-title="港澳台",ViuTV
@@ -482,8 +460,6 @@ https://o11.163189.xyz/stream/live/iqiyi/
 rtmp://f13h.mine.nu/sat/tv331
 #EXTINF:-1 group-title="港澳台",中天新闻
 https://stream1.freetv.fun/1b67bc523c86ffa05707cd3f9471cfe1ced1c17d0537471788e00679a1d6cde3.m3u8
-#EXTINF:-1 group-title="港澳台",中旺电视
-http://38.64.72.148:80/hls/modn/list/4010/chunklist1.m3u8
 #EXTINF:-1 group-title="港澳台",中视
 http://74.91.26.218:82/live/ctv.m3u8
 #EXTINF:-1 group-title="港澳台",中视
@@ -494,8 +470,6 @@ http://74.91.26.218:82/live/ctvnews.m3u8
 http://74.91.26.218:82/live/ctvjd.m3u8
 #EXTINF:-1 group-title="港澳台",中视菁采台
 http://74.91.26.218:82/live/ctvjc.m3u8
-#EXTINF:-1 group-title="港澳台",亚洲卫视
-https://p2hs.vzan.com/slowlive/821481626725612419/live.m3u8
 #EXTINF:-1 group-title="港澳台",人间卫视
 http://61.216.67.119:1935/bltvhd/bltv1/chunklist_w1266569526.m3u8
 #EXTINF:-1 group-title="港澳台",人间卫视
@@ -508,12 +482,6 @@ https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/chunklist_w511254805.m3u8
 http://iptv.4666888.xyz/iptv2A.php?id=52
 #EXTINF:-1 group-title="港澳台",八度空间
 http://cdn6.163189.xyz/163189/8tv
-#EXTINF:-1 group-title="港澳台",公视
-http://74.91.26.218:82/live/pts.m3u8
-#EXTINF:-1 group-title="港澳台",公视
-rtmp://f13h.mine.nu/sat/tv771
-#EXTINF:-1 group-title="港澳台",公视台语台
-http://74.91.26.218:82/live/ptsty.m3u8
 #EXTINF:-1 group-title="港澳台",千禧经典
 http://iptv.4666888.xyz/iptv2A.php?id=22
 #EXTINF:-1 group-title="港澳台",千禧经典台
@@ -540,12 +508,6 @@ http://38.64.72.148:80/hls/modn/list/4013/chunklist1.m3u8
 http://iptv.4666888.xyz/iptv2A.php?id=51
 #EXTINF:-1 group-title="港澳台",台视财经
 http://74.91.26.218:82/live/ttvcj.m3u8
-#EXTINF:-1 group-title="港澳台",唐NTD
-https://ntd02.akamaized.net/HD-NY/tracks-v3a1/mono.m3u8
-#EXTINF:-1 group-title="港澳台",唐人卫视
-https://ntd02.akamaized.net/HD-NY/tracks-v3a1/mono.m3u8
-#EXTINF:-1 group-title="港澳台",唯心电视
-http://mobile.ccdntech.com/transcoder/_definst_/vod164_Live/live/playlist.m3u8
 #EXTINF:-1 group-title="港澳台",天映经典
 https://cdn9.163189.xyz/smt1.1.php?id=Celestial2
 #EXTINF:-1 group-title="港澳台",寰宇新聞
@@ -554,10 +516,6 @@ https://stream1.freetv.fun/05d08ea65b8b2d697984abf19f4545c698308338fdf8aaeac8678
 http://74.91.26.218:82/live/inews.m3u8
 #EXTINF:-1 group-title="港澳台",明珠台
 https://mytv.cdn.loc.cc/o12.php?id=mzt
-#EXTINF:-1 group-title="港澳台",星空卫视
-http://iot-mqqt.111yao.cn:8080/live/diyp_xingkong.m3u8
-#EXTINF:-1 group-title="港澳台",星空音乐
-http://iot-mqqt.111yao.cn:8080/live/diyp_channelv.m3u8
 #EXTINF:-1 group-title="港澳台",民視綜藝
 http://iptv.4666888.xyz/iptv2A.php?id=46
 #EXTINF:-1 group-title="港澳台",民视
@@ -578,8 +536,6 @@ http://74.91.26.218:82/live/ftvdy.m3u8
 http://iptv.4666888.xyz/iptv2A.php?id=41
 #EXTINF:-1 group-title="港澳台",澳门体育
 http://cdn6.163189.xyz/163189/amty
-#EXTINF:-1 group-title="港澳台",澳门综艺
-http://cdn6.163189.xyz/163189/amzy
 #EXTINF:-1 group-title="港澳台",爱奇艺
 http://iptv.4666888.xyz/iptv2A.php?id=21
 #EXTINF:-1 group-title="港澳台",生命电影
@@ -596,18 +552,8 @@ https://cdn6.163189.xyz/163189/fct4k
 https://mytv.cdn.loc.cc/o12.php?id=fct
 #EXTINF:-1 group-title="港澳台",耀才财经台
 https://v3.mediacast.hk/webcast/bshdlive-pc/playlist.m3u8
-#EXTINF:-1 group-title="港澳台",華藝中文
-http://iptv.4666888.xyz/iptv2A.php?id=37
 #EXTINF:-1 group-title="港澳台",邵氏动作
 http://feilong123.vip/409990236/tv.php?id=ssdz
-#EXTINF:-1 group-title="港澳台",邵氏喜剧
-http://feilong123.vip/409990236/tv.php?id=ssxj
-#EXTINF:-1 group-title="港澳台",邵氏武侠
-http://iptv.4666888.xyz/iptv2A.php?id=40
-#EXTINF:-1 group-title="港澳台",邵氏武侠
-http://feilong123.vip/409990236/tv.php?id=sswx
-#EXTINF:-1 group-title="港澳台",邵氏电影
-http://feilong123.vip/409990236/tv.php?id=ssdy
 #EXTINF:-1 group-title="港澳台",重温经典
 http://8.138.7.223/tv/cwjd.php
 #EXTINF:-1 group-title="港澳台",镜新闻
@@ -643,10 +589,7 @@ https://cdn8.163189.xyz/163189/lhjd
 
 # 统计信息
 # BB 频道数: 79
-# 港澳台频道数: 140
-# 总频道数: 219
-<<<<<<< Updated upstream
-# 更新时间: 2026-02-25 01:26:55
-=======
-# 更新时间: 2026-02-25 01:26:58
->>>>>>> Stashed changes
+# 港澳台频道数: 115
+# 过滤频道数: 25
+# 总频道数: 194
+# 更新时间: 2026-02-25 01:51:21
