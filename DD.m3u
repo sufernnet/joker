@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
 
 # DD.m3u
-# 生成时间: 2026-02-25 01:51:21
+# 生成时间: 2026-02-25 02:00:54
 # 更新频率: 每天 06:00 / 17:00
 # EPG: http://epg.51zmt.top:8000/e.xml
 # GitHub Actions 自动生成
@@ -355,14 +355,12 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 
 
-# 港澳台频道 (115)
+# 港澳台频道 (106)
 #EXTINF:-1 group-title="港澳台",凤凰中文
 http://61.184.46.85:85/tsfile/live/1029_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 group-title="港澳台",凤凰资讯
 https://cdn9.163189.xyz/smt3.1.1.php?id=phoenixinfo_hd
 #EXTINF:-1 group-title="港澳台",Now新闻
-http://cdn.163189.xyz/163189/now
-#EXTINF:-1 group-title="港澳台",NOW新闻台
 http://cdn.163189.xyz/163189/now
 #EXTINF:-1 group-title="港澳台",Now体育
 http://rihou.cc:555/tv/[Mt]Now体育
@@ -383,8 +381,6 @@ http://iptv.4666888.xyz/iptv2A.php?id=23
 #EXTINF:-1 group-title="港澳台",RHK32
 http://cdn.163189.xyz/163189/rthk32
 #EXTINF:-1 group-title="港澳台",TVB Plus
-https://o11.163189.xyz/stream/tvb/tvbp/
-#EXTINF:-1 group-title="港澳台",TVB Plus
 http://74.91.26.218:82/live/j2.m3u8
 #EXTINF:-1 group-title="港澳台",TVB plus
 https://o11.163189.xyz/stream/tvb/tvbp/
@@ -404,8 +400,6 @@ http://iptv.4666888.xyz/iptv2A.php?id=47
 http://iptv.4666888.xyz/iptv2A.php?id=36
 #EXTINF:-1 group-title="港澳台",TVB明珠
 http://iptv.4666888.xyz/iptv2A.php?id=29
-#EXTINF:-1 group-title="港澳台",TVB明珠
-https://mytv.cdn.loc.cc/o12.php?id=mzt
 #EXTINF:-1 group-title="港澳台",TVB星河
 http://r.jdshipin.com/Voac4
 #EXTINF:-1 group-title="港澳台",TVB星河
@@ -432,10 +426,6 @@ http://cdn6.163189.xyz/163189/chu
 rtmp://f13h.mine.nu/sat/tv731
 #EXTINF:-1 group-title="港澳台",DAZN2
 rtmp://f13h.mine.nu/sat/tv741
-#EXTINF:-1 group-title="港澳台",ELEVEN体育1
-rtmp://f13h.mine.nu/sat/tv731
-#EXTINF:-1 group-title="港澳台",ELEVEN体育2
-rtmp://f13h.mine.nu/sat/tv741
 #EXTINF:-1 group-title="港澳台",GOOD2
 http://165.154.226.214:50007/of-litv-ftv17/index.m3u8?proxy=true
 #EXTINF:-1 group-title="港澳台",GOOD2
@@ -450,8 +440,6 @@ rtmp://f13h.mine.nu/sat/tv761
 http://iptv.4666888.xyz/iptv2A.php?id=50
 #EXTINF:-1 group-title="港澳台",TNTSports3
 http://iptv.4666888.xyz/iptv2A.php?id=3
-#EXTINF:-1 group-title="港澳台",VIUTV
-https://cdn.163189.xyz/163189/viu
 #EXTINF:-1 group-title="港澳台",ViuTV
 https://cdn.163189.xyz/163189/viu
 #EXTINF:-1 group-title="港澳台",iQIYI
@@ -470,10 +458,6 @@ http://74.91.26.218:82/live/ctvnews.m3u8
 http://74.91.26.218:82/live/ctvjd.m3u8
 #EXTINF:-1 group-title="港澳台",中视菁采台
 http://74.91.26.218:82/live/ctvjc.m3u8
-#EXTINF:-1 group-title="港澳台",人间卫视
-http://61.216.67.119:1935/bltvhd/bltv1/chunklist_w1266569526.m3u8
-#EXTINF:-1 group-title="港澳台",人间卫视
-https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/chunklist_w511254805.m3u8
 #EXTINF:-1 group-title="港澳台",人间卫视
 http://61.216.67.119:1935/bltvhd/bltv1/chunklist_w1266569526.m3u8
 #EXTINF:-1 group-title="港澳台",人间卫视
@@ -566,8 +550,6 @@ http://iptv.4666888.xyz/iptv2A.php?id=42
 http://iptv.4666888.xyz/iptv2A.php?id=44
 #EXTINF:-1 group-title="港澳台",非凡新闻
 rtmp://f13h.mine.nu/sat/tv581
-#EXTINF:-1 group-title="港澳台",非凡新闻
-rtmp://f13h.mine.nu/sat/tv581
 #EXTINF:-1 group-title="港澳台",面包台
 https://video.bread-tv.com:8091/hls-live24/online/index.m3u8
 #EXTINF:-1 group-title="港澳台",香港卫视
@@ -589,7 +571,8 @@ https://cdn8.163189.xyz/163189/lhjd
 
 # 统计信息
 # BB 频道数: 79
-# 港澳台频道数: 115
+# 港澳台频道数: 106
 # 过滤频道数: 25
-# 总频道数: 194
-# 更新时间: 2026-02-25 01:51:21
+# 去重频道数: 9
+# 总频道数: 185
+# 更新时间: 2026-02-25 02:00:54
