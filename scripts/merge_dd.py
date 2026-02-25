@@ -6,10 +6,11 @@ DD.m3u 合并脚本（港澳台直提 + 精确过滤与排序）
 1. 提取“🔮[三网]港澳台直播”分组
 2. 重命名为“港澳台”
 3. 过滤掉指定频道
-4. 港澳台分组内按新规则排序：
+4. 去重处理：保留标准名称，去掉带"台"字的重复频道
+5. 港澳台分组内按新规则排序：
    凤凰中文 → 凤凰资讯 → NOW新闻 → NOW体育 → NOW财经 → NOW直播 → POPC → HOY76~78 → RHK31~32 → TVB系列（TVB翡翠排前面）
-5. 合并 BB.m3u
-6. 使用固定 EPG
+6. 合并 BB.m3u
+7. 使用固定 EPG
 
 北京时间每天 06:00 / 17:00 自动运行
 """
@@ -52,6 +53,25 @@ FILTER_KEYWORDS = [
     "公视",
     "公视台语台",
     "中旺电视"
+]
+
+# 频道名称标准化映射（用于去重）
+# 格式：{"需要去掉的变体": "保留的标准名称"}
+NAME_NORMALIZATION = {
+    "NOW新闻台": "Now新闻",
+    "NOW新闻台 ": "Now新闻",  # 带空格的变体
+    "Now新闻台": "Now新闻",
+    "now新闻台": "Now新闻",
+    "NOW 新闻台": "Now新闻",
+    "Now 新闻台": "Now新闻",
+}
+
+# 需要优先保留的名称模式（不区分大小写）
+PREFERRED_NAMES = [
+    "Now新闻",
+    "Now体育",
+    "Now财经", 
+    "Now直播",
 ]
 
 # ================== 工具 ==================
@@ -111,6 +131,73 @@ def should_filter(name):
             log(f"过滤频道: {name} (匹配关键词: {keyword})")
             return True
     return False
+
+
+def normalize_channel_name(name):
+    """标准化频道名称（用于去重）"""
+    name_stripped = name.strip()
+    
+    # 检查是否需要标准化
+    for variant, standard in NAME_NORMALIZATION.items():
+        if name_stripped == variant or name_stripped.lower() == variant.lower():
+            log(f"标准化名称: '{name}' -> '{standard}'")
+            return standard
+    
+    return name_stripped
+
+
+def is_preferred_name(name):
+    """检查是否为优先保留的名称"""
+    name_lower = name.lower()
+    for preferred in PREFERRED_NAMES:
+        if name_lower == preferred.lower():
+            return True
+    return False
+
+
+def deduplicate_channels(channels):
+    """
+    去重处理
+    策略：对于相同内容的频道，优先保留标准名称，去掉带"台"字的变体
+    """
+    # 按URL分组
+    url_groups = {}
+    for name, url in channels:
+        if url not in url_groups:
+            url_groups[url] = []
+        url_groups[url].append(name)
+    
+    # 对每个URL组进行去重选择
+    deduped = []
+    for url, names in url_groups.items():
+        if len(names) == 1:
+            # 只有一个名称，直接使用
+            deduped.append((names[0], url))
+        else:
+            # 多个名称对应同一URL，选择优先保留的
+            log(f"发现重复URL: {url}")
+            for name in names:
+                log(f"  - 名称变体: {name}")
+            
+            # 优先选择标准名称
+            selected = None
+            for name in names:
+                if is_preferred_name(name):
+                    selected = name
+                    log(f"  ✅ 选择优先名称: {name}")
+                    break
+            
+            # 如果没有优先名称，选择最短的（通常是不带"台"字的）
+            if not selected:
+                # 按长度排序，选最短的
+                sorted_names = sorted(names, key=len)
+                selected = sorted_names[0]
+                log(f"  ⚠️ 无优先名称，选择最短的: {selected}")
+            
+            deduped.append((selected, url))
+    
+    log(f"去重前频道数: {len(channels)}，去重后: {len(deduped)}")
+    return deduped
 
 
 def sort_gat_channels(channels):
@@ -200,8 +287,14 @@ def main():
     filtered_channels = [(name, url) for name, url in gat_channels if not should_filter(name)]
     log(f"过滤后剩余频道数: {len(filtered_channels)}")
     
+    # 先标准化名称
+    normalized_channels = [(normalize_channel_name(name), url) for name, url in filtered_channels]
+    
+    # 去重处理
+    deduped_channels = deduplicate_channels(normalized_channels)
+    
     # 排序
-    sorted_channels = sort_gat_channels(filtered_channels)
+    sorted_channels = sort_gat_channels(deduped_channels)
     log(f"排序完成")
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -234,14 +327,16 @@ def main():
 
     total = bb_count + len(sorted_channels)
 
-    # 统计过滤数量
-    filtered_count = len(gat_channels) - len(sorted_channels) if gat_channels else 0
+    # 统计过滤和去重数量
+    filtered_count = len(gat_channels) - len(filtered_channels) if gat_channels else 0
+    deduped_count = len(filtered_channels) - len(sorted_channels)
 
     output += f"""
 # 统计信息
 # BB 频道数: {bb_count}
 # {TARGET_GROUP}频道数: {len(sorted_channels)}
 # 过滤频道数: {filtered_count}
+# 去重频道数: {deduped_count}
 # 总频道数: {total}
 # 更新时间: {timestamp}
 """
@@ -253,6 +348,8 @@ def main():
         log(f"📺 BB({bb_count}) + 港澳台({len(sorted_channels)}) = {total}")
         if filtered_count > 0:
             log(f"🗑️ 过滤了 {filtered_count} 个频道")
+        if deduped_count > 0:
+            log(f"🔄 去重了 {deduped_count} 个重复频道")
     except Exception as e:
         log(f"❌ 保存失败: {e}")
 
