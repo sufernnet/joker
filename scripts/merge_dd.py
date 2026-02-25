@@ -5,7 +5,7 @@ DD.m3u 合并脚本（港澳台直提 + 精确过滤与排序）
 功能：
 1. 提取“🔮[三网]港澳台直播”分组
 2. 重命名为“港澳台”
-3. 过滤掉指定频道
+3. 过滤掉指定频道和指定URL
 4. 去重处理：保留标准名称，去掉带"台"字的重复频道
 5. 港澳台分组内按新规则排序：
    凤凰中文 → 凤凰资讯 → NOW新闻 → NOW体育 → NOW财经 → NOW直播 → POPC → HOY76~78 → RHK31~32 → TVB系列（TVB翡翠排前面）
@@ -33,6 +33,12 @@ EPG_URL = "http://epg.51zmt.top:8000/e.xml"
 # 需要过滤掉的频道关键词（不区分大小写）
 FILTER_KEYWORDS = [
     "凤凰电影",
+    "人间卫视",
+    "邵氏动作",
+    "邵氏武侠",
+    "邵氏电影",
+    "邵氏喜剧",
+    "生命电影",
     "ASTV",
     "亚洲卫视",
     "Channel 5",
@@ -46,13 +52,15 @@ FILTER_KEYWORDS = [
     "星空卫视",
     "星空音乐",
     "澳门综艺",
-    "邵氏武侠",
-    "邵氏电影",
-    "邵氏喜剧",
     "華藝中文",
     "公视",
     "公视台语台",
     "中旺电视"
+]
+
+# 需要过滤掉的特定URL（精确匹配）
+FILTER_URLS = [
+    "http://iptv.4666888.xyz/iptv2A.php?id=27",  # 凤凰中文特定源
 ]
 
 # 频道名称标准化映射（用于去重）
@@ -123,12 +131,21 @@ def extract_gat_channels(content):
     return channels
 
 
-def should_filter(name):
-    """检查频道名称是否应该被过滤"""
+def should_filter_by_keyword(name):
+    """根据关键词检查频道名称是否应该被过滤"""
     name_lower = name.lower()
     for keyword in FILTER_KEYWORDS:
         if keyword.lower() in name_lower:
-            log(f"过滤频道: {name} (匹配关键词: {keyword})")
+            log(f"关键词过滤频道: {name} (匹配关键词: {keyword})")
+            return True
+    return False
+
+
+def should_filter_by_url(url):
+    """根据URL检查频道是否应该被过滤"""
+    for filter_url in FILTER_URLS:
+        if url == filter_url or url.startswith(filter_url):
+            log(f"URL过滤频道: {url}")
             return True
     return False
 
@@ -283,12 +300,16 @@ def main():
     gat_channels = extract_gat_channels(gat) if gat else []
     log(f"提取后原始频道数: {len(gat_channels)}")
     
-    # 过滤频道
-    filtered_channels = [(name, url) for name, url in gat_channels if not should_filter(name)]
-    log(f"过滤后剩余频道数: {len(filtered_channels)}")
+    # 过滤频道（关键词过滤）
+    keyword_filtered = [(name, url) for name, url in gat_channels if not should_filter_by_keyword(name)]
+    log(f"关键词过滤后剩余频道数: {len(keyword_filtered)}")
+    
+    # 过滤频道（URL过滤）
+    url_filtered = [(name, url) for name, url in keyword_filtered if not should_filter_by_url(url)]
+    log(f"URL过滤后剩余频道数: {len(url_filtered)}")
     
     # 先标准化名称
-    normalized_channels = [(normalize_channel_name(name), url) for name, url in filtered_channels]
+    normalized_channels = [(normalize_channel_name(name), url) for name, url in url_filtered]
     
     # 去重处理
     deduped_channels = deduplicate_channels(normalized_channels)
@@ -328,14 +349,16 @@ def main():
     total = bb_count + len(sorted_channels)
 
     # 统计过滤和去重数量
-    filtered_count = len(gat_channels) - len(filtered_channels) if gat_channels else 0
-    deduped_count = len(filtered_channels) - len(sorted_channels)
+    keyword_filtered_count = len(gat_channels) - len(keyword_filtered) if gat_channels else 0
+    url_filtered_count = len(keyword_filtered) - len(url_filtered)
+    deduped_count = len(url_filtered) - len(sorted_channels)
 
     output += f"""
 # 统计信息
 # BB 频道数: {bb_count}
 # {TARGET_GROUP}频道数: {len(sorted_channels)}
-# 过滤频道数: {filtered_count}
+# 关键词过滤数: {keyword_filtered_count}
+# URL过滤数: {url_filtered_count}
 # 去重频道数: {deduped_count}
 # 总频道数: {total}
 # 更新时间: {timestamp}
@@ -346,8 +369,10 @@ def main():
             f.write(output)
         log("🎉 DD.m3u 生成成功")
         log(f"📺 BB({bb_count}) + 港澳台({len(sorted_channels)}) = {total}")
-        if filtered_count > 0:
-            log(f"🗑️ 过滤了 {filtered_count} 个频道")
+        if keyword_filtered_count > 0:
+            log(f"🗑️ 关键词过滤了 {keyword_filtered_count} 个频道")
+        if url_filtered_count > 0:
+            log(f"🔗 URL过滤了 {url_filtered_count} 个频道")
         if deduped_count > 0:
             log(f"🔄 去重了 {deduped_count} 个重复频道")
     except Exception as e:
