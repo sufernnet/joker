@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # EE.m3u
-# 生成时间: 2026-02-25 15:21:57
+# 生成时间: 2026-02-25 15:47:16
 # 更新频率: 每天 06:00 / 17:00
 # EPG: https://epg.zsdc.eu.org/t.xml.gz
 # GitHub Actions 自动生成
@@ -372,6 +372,14 @@ https://cdn6.101.qzz.io/163189/fhzx
 http://rihou.cc:555/tv/[PL]凤凰资讯
 #EXTINF:-1 group-title="港澳台",凤凰资讯
 http://r.jdshipin.com/0Rp07
+#EXTINF:-1 group-title="港澳台",凤凰香港台
+https://cdn6.101.qzz.io/163189/fhhk
+#EXTINF:-1 group-title="港澳台",凤凰香港台
+http://rihou.cc:555/tv/[Bx]凤凰香港
+#EXTINF:-1 group-title="港澳台",凤凰香港台
+http://rihou.cc:555/tv/[PL]凤凰香港
+#EXTINF:-1 group-title="港澳台",凤凰香港台
+http://r.jdshipin.com/yDoTN
 #EXTINF:-1 group-title="港澳台",Now体育
 http://rihou.cc:555/tv/[Mt]Now体育
 #EXTINF:-1 group-title="港澳台",Now财经
@@ -398,22 +406,34 @@ http://cdn.163189.xyz/163189/hoy
 http://hls.168.us.kg/u/78/master.m3u8
 #EXTINF:-1 group-title="港澳台",HOY78
 http://iptv.4666888.xyz/iptv2A.php?id=31
-#EXTINF:-1 group-title="港澳台",RHK31
-https://live.catvod.com/iptv.php?id=rthk31
-#EXTINF:-1 group-title="港澳台",RHK31
-http://php.jdshipin.com/TVOD/iptv.php?id=rthk31
-#EXTINF:-1 group-title="港澳台",RHK31
-http://rihou.cc:555/tv/[PL]RTHK-31
-#EXTINF:-1 group-title="港澳台",RHK31
-http://cdn.163189.xyz/163189/rthk31
-#EXTINF:-1 group-title="港澳台",RHK32
-https://live.catvod.com/iptv.php?id=rthk32
-#EXTINF:-1 group-title="港澳台",RHK32
-http://cdn.163189.xyz/163189/rthk32
-#EXTINF:-1 group-title="港澳台",RHK32
-http://php.jdshipin.com:8880/TVOD/iptv.php?id=rthk32
-#EXTINF:-1 group-title="港澳台",RHK32
-http://php.jdshipin.com/TVOD/iptv.php?id=rthk32
+#EXTINF:-1 group-title="港澳台",翡翠台
+http://74.91.26.218:82/live/jade.m3u8
+#EXTINF:-1 group-title="港澳台",翡翠台
+https://o11.163189.xyz/stream/tvb/fct/
+#EXTINF:-1 group-title="港澳台",翡翠台
+http://bxtv.3a.ink/api.php?id=fct
+#EXTINF:-1 group-title="港澳台",翡翠台
+http://rihou.cc:555/tv/[Pd]无线翡翠
+#EXTINF:-1 group-title="港澳台",翡翠台
+http://r.jdshipin.com/62WM7
+#EXTINF:-1 group-title="港澳台",翡翠台
+http://mytv.cdn.loc.cc/o12.php?id=fct
+#EXTINF:-1 group-title="港澳台",翡翠台
+http://php.jdshipin.com:8880/TVOD/iptv.php?id=fct2
+#EXTINF:-1 group-title="港澳台",翡翠台4K
+http://rihou.cc:555/tv/[PL]无线翡4k
+#EXTINF:-1 group-title="港澳台",翡翠台4K
+https://www.wmviv.com/iptv/bc2t.php?id=fct4k
+#EXTINF:-1 group-title="港澳台",明珠台
+http://iptv.4666888.xyz/iptv2A.php?id=29
+#EXTINF:-1 group-title="港澳台",明珠台
+http://rihou.cc:555/tv/[Pd]无线明珠
+#EXTINF:-1 group-title="港澳台",明珠台
+https://o11.163189.xyz/stream/tvb/mzt/
+#EXTINF:-1 group-title="港澳台",明珠台
+http://php.jdshipin.com/PLTV/iptv.php?id=mzt
+#EXTINF:-1 group-title="港澳台",明珠台
+http://php.jdshipin.com/TVOD/iptv.php?id=mzt
 #EXTINF:-1 group-title="港澳台",TVB plus
 http://74.91.26.218:82/live/j2.m3u8
 #EXTINF:-1 group-title="港澳台",TVB plus
@@ -432,8 +452,6 @@ http://iptv.4666888.xyz/iptv2A.php?id=26
 https://6.cdn.loc.cc/163189.php?id=j1
 #EXTINF:-1 group-title="港澳台",TVBJ1
 http://php.jdshipin.com/TVOD/iptv.php?id=j1
-#EXTINF:-1 group-title="港澳台",TVBS精采台
-http://iptv.4666888.xyz/iptv2A.php?id=47
 #EXTINF:-1 group-title="港澳台",TVB功夫720p
 http://rihou.cc:555/tv/[Pd]无线功夫
 #EXTINF:-1 group-title="港澳台",TVB功夫720p
@@ -458,12 +476,6 @@ http://rihou.cc:555/tv/[Pd]无线星河
 http://rihou.cc:555/tv/[PL]无线星河
 #EXTINF:-1 group-title="港澳台",TVB星河720p
 http://r.jdshipin.com/Voac4
-#EXTINF:-1 group-title="港澳台",CH5综合
-http://rihou.cc:555/tv/[Pd]CH5综合
-#EXTINF:-1 group-title="港澳台",CH8综合
-http://rihou.cc:555/tv/[Pd]CH8综合
-#EXTINF:-1 group-title="港澳台",CHU综合
-http://rihou.cc:555/tv/[Pd]CHU综合
 #EXTINF:-1 group-title="港澳台",ViuTV
 https://stream1.freetv.fun/5fc2ba313b387d2b2538a2e46aee6266cc10890fc8b8ccf478498b82af6f7c3b.m3u8
 #EXTINF:-1 group-title="港澳台",ViuTV
@@ -472,18 +484,28 @@ https://stream1.freetv.fun/45181db55db70a3fc349faf2ef2b901599a9cbc7106f2674134ca
 https://cdn.163189.xyz/163189/viu
 #EXTINF:-1 group-title="港澳台",ViuTV6
 https://stream1.freetv.fun/732f193d67c8884d4ea74fab208403ff6495f2298e32f33ffbb019c1171ac507.ctv
-#EXTINF:-1 group-title="港澳台",三立台湾台
-http://23.128.116.71:5589/live.php?id=sanlitaiwan&h=23.128.116.71&p=22364&token=1768656088.86691cca94504da575d8df777cf38454e46d310d063477dfb6dc26c93a6a248f
-#EXTINF:-1 group-title="港澳台",三立戏剧台
-http://23.128.116.71:5589/live.php?id=sanlixiju_twn&h=23.128.116.71&p=22364&token=1768656088.9fbb23a20a7c3a7360e8bad0e362e55915cf9ff0026941769f8a92f662dfcf70
-#EXTINF:-1 group-title="港澳台",三立综合台720p
-http://23.128.116.71:5589/live.php?id=sanlizhonghe&h=23.128.116.71&p=22364&token=1768656088.492115de19636f0cd4cf03421832bbed5f62da67f42781bc53be1a0faaf20858
-#EXTINF:-1 group-title="港澳台",三立都会台
-http://23.128.116.71:5589/live.php?id=sanlidouhui_twn&h=23.128.116.71&p=22364&token=1768656088.71792c6eb5cad5cf0b18fea078d4b239afcebabadce35bd9315d491180a5e404
-#EXTINF:-1 group-title="港澳台",中天娱乐
-http://free.cnlive.club/channel/41d6f491.m3u8?q=111.170.171.148
-#EXTINF:-1 group-title="港澳台",中天综合
-http://free.cnlive.club/channel/41db6ede.m3u8?q=111.170.171.148
+#EXTINF:-1 group-title="港澳台",CH5综合
+http://rihou.cc:555/tv/[Pd]CH5综合
+#EXTINF:-1 group-title="港澳台",CH8综合
+http://rihou.cc:555/tv/[Pd]CH8综合
+#EXTINF:-1 group-title="港澳台",CHU综合
+http://rihou.cc:555/tv/[Pd]CHU综合
+#EXTINF:-1 group-title="港澳台",RHK31
+https://live.catvod.com/iptv.php?id=rthk31
+#EXTINF:-1 group-title="港澳台",RHK31
+http://php.jdshipin.com/TVOD/iptv.php?id=rthk31
+#EXTINF:-1 group-title="港澳台",RHK31
+http://rihou.cc:555/tv/[PL]RTHK-31
+#EXTINF:-1 group-title="港澳台",RHK31
+http://cdn.163189.xyz/163189/rthk31
+#EXTINF:-1 group-title="港澳台",RHK32
+https://live.catvod.com/iptv.php?id=rthk32
+#EXTINF:-1 group-title="港澳台",RHK32
+http://cdn.163189.xyz/163189/rthk32
+#EXTINF:-1 group-title="港澳台",RHK32
+http://php.jdshipin.com:8880/TVOD/iptv.php?id=rthk32
+#EXTINF:-1 group-title="港澳台",RHK32
+http://php.jdshipin.com/TVOD/iptv.php?id=rthk32
 #EXTINF:-1 group-title="港澳台",中視
 http://74.91.26.218:82/live/ctv.m3u8
 #EXTINF:-1 group-title="港澳台",中視
@@ -492,14 +514,6 @@ http://165.154.226.214:50007/of-4gtv-4gtv040/index.m3u8?proxy=true
 https://stream1.freetv.fun/71452b2d800ddbab4c04d56a1a0fc217af67502c171e2cdf11afeb724ddae007.m3u8
 #EXTINF:-1 group-title="港澳台",中視HD 720p
 rtmp://f13h.mine.nu:1935/sat/tv091
-#EXTINF:-1 group-title="港澳台",中视经典
-http://74.91.26.218:82/live/ctvjd.m3u8
-#EXTINF:-1 group-title="港澳台",中视菁采
-http://74.91.26.218:82/live/ctvjc.m3u8
-#EXTINF:-1 group-title="港澳台",八大精彩台
-http://165.154.226.214:50007/li-4gtv-4gtv034/index.m3u8?proxy=true
-#EXTINF:-1 group-title="港澳台",八大綜藝台
-http://165.154.226.214:50007/li-4gtv-4gtv039/index.m3u8?proxy=true
 #EXTINF:-1 group-title="港澳台",八度空间
 http://rihou.cc:555/tv/[Pd]八度空间
 #EXTINF:-1 group-title="港澳台",八度空间
@@ -510,48 +524,16 @@ https://cdn6.101.qzz.io/163189/8tv
 http://74.91.26.218:82/live/pts.m3u8
 #EXTINF:-1 group-title="港澳台",公視戲劇
 https://stream1.freetv.fun/04b3a7cbbc832bbba2b720c1211a49f8f0663c18021ab85200b1bd0fe0cf713e.m3u8
-#EXTINF:-1 group-title="港澳台",凤凰香港台
-https://cdn6.101.qzz.io/163189/fhhk
-#EXTINF:-1 group-title="港澳台",凤凰香港台
-http://rihou.cc:555/tv/[Bx]凤凰香港
-#EXTINF:-1 group-title="港澳台",凤凰香港台
-http://rihou.cc:555/tv/[PL]凤凰香港
-#EXTINF:-1 group-title="港澳台",凤凰香港台
-http://r.jdshipin.com/yDoTN
-#EXTINF:-1 group-title="港澳台",华视
-http://74.91.26.218:82/live/cts.m3u8
-#EXTINF:-1 group-title="港澳台",华视HD 720p
-https://t.freetv.fun/live/hua-shi-2.ts
-#EXTINF:-1 group-title="港澳台",华视HD 720p
-rtmp://f13h.mine.nu/sat/tv111
-#EXTINF:-1 group-title="港澳台",华视教育体育文化
-http://74.91.26.218:82/live/ctsjy.m3u8
 #EXTINF:-1 group-title="港澳台",台視
 http://74.91.26.218:82/live/ttv.m3u8
 #EXTINF:-1 group-title="港澳台",台視
 http://165.154.226.214:50007/li-4gtv-4gtv066/index.m3u8?proxy=true
 #EXTINF:-1 group-title="港澳台",台視HD 720P
 rtmp://f13h.mine.nu/sat/tv071
-#EXTINF:-1 group-title="港澳台",台视综合
-http://74.91.26.218:82/live/ttvzh.m3u8
-#EXTINF:-1 group-title="港澳台",台视综合
-http://iptv.4666888.xyz/iptv2A.php?id=51
-#EXTINF:-1 group-title="港澳台",台视财经
-http://74.91.26.218:82/live/ttvcj.m3u8
 #EXTINF:-1 group-title="港澳台",天映经典
 https://smt.1678520.xyz/smt3.2.1.php?id=Celestial2
 #EXTINF:-1 group-title="港澳台",天映经典
 https://cdn9.163189.xyz/smt1.1.php?id=Celestial2
-#EXTINF:-1 group-title="港澳台",明珠台
-http://iptv.4666888.xyz/iptv2A.php?id=29
-#EXTINF:-1 group-title="港澳台",明珠台
-http://rihou.cc:555/tv/[Pd]无线明珠
-#EXTINF:-1 group-title="港澳台",明珠台
-https://o11.163189.xyz/stream/tvb/mzt/
-#EXTINF:-1 group-title="港澳台",明珠台
-http://php.jdshipin.com/PLTV/iptv.php?id=mzt
-#EXTINF:-1 group-title="港澳台",明珠台
-http://php.jdshipin.com/TVOD/iptv.php?id=mzt
 #EXTINF:-1 group-title="港澳台",民視影劇
 https://stream1.freetv.fun/07a927f5ea19746f63e8e92cd1889151f4edb274910ea867c19eaf31e04a9901.m3u8
 #EXTINF:-1 group-title="港澳台",民視旅遊
@@ -564,20 +546,6 @@ https://stream1.freetv.fun/19ee45515520ddf60e585588407481e11751df85fcd5cbdb78204
 http://141.11.87.241:20013/4gtv-4gtv003/index.m3u8?proxy=true
 #EXTINF:-1 group-title="港澳台",民視第一台
 http://165.154.226.214:50007/li-4gtv-4gtv003/index.m3u8?proxy=true
-#EXTINF:-1 group-title="港澳台",民视
-http://74.91.26.218:82/live/ftv.m3u8
-#EXTINF:-1 group-title="港澳台",民视
-http://iptv.4666888.xyz/iptv2A.php?id=55
-#EXTINF:-1 group-title="港澳台",民视720p
-rtmp://f13h.mine.nu/sat/tv051
-#EXTINF:-1 group-title="港澳台",民视台湾台
-http://74.91.26.218:82/live/ftvtw.m3u8
-#EXTINF:-1 group-title="港澳台",民视影劇
-http://iptv.4666888.xyz/iptv2A.php?id=53
-#EXTINF:-1 group-title="港澳台",民视综艺
-http://iptv.4666888.xyz/iptv2A.php?id=46
-#EXTINF:-1 group-title="港澳台",民视综艺
-https://stream1.freetv.fun/1b47ca26b5937e3c39bafc6969f66e1ef01d0ea00773163e5b7a9b7fccf082c5.m3u8
 #EXTINF:-1 group-title="港澳台",澳视Macau
 http://php.jdshipin.com/TVOD/iptv.php?id=as
 #EXTINF:-1 group-title="港澳台",澳视Macau
@@ -600,24 +568,26 @@ http://utv1.hqtvzb.com:9999/hls/world.m3u8
 https://stream1.freetv.fun/409fbf8e0ec33500b4d76956cca00af9fddacac6dd2f8822f464b089fb583a6b.m3u8
 #EXTINF:-1 group-title="港澳台",緯來綜合
 https://stream1.freetv.fun/541f6094f34e0290077cf0d55df31c49bc148118e6b030fa2165d5c8c35a6d1f.m3u8
-#EXTINF:-1 group-title="港澳台",翡翠台
-http://74.91.26.218:82/live/jade.m3u8
-#EXTINF:-1 group-title="港澳台",翡翠台
-https://o11.163189.xyz/stream/tvb/fct/
-#EXTINF:-1 group-title="港澳台",翡翠台
-http://bxtv.3a.ink/api.php?id=fct
-#EXTINF:-1 group-title="港澳台",翡翠台
-http://rihou.cc:555/tv/[Pd]无线翡翠
-#EXTINF:-1 group-title="港澳台",翡翠台
-http://r.jdshipin.com/62WM7
-#EXTINF:-1 group-title="港澳台",翡翠台
-http://mytv.cdn.loc.cc/o12.php?id=fct
-#EXTINF:-1 group-title="港澳台",翡翠台
-http://php.jdshipin.com:8880/TVOD/iptv.php?id=fct2
-#EXTINF:-1 group-title="港澳台",翡翠台4K
-http://rihou.cc:555/tv/[PL]无线翡4k
-#EXTINF:-1 group-title="港澳台",翡翠台4K
-https://www.wmviv.com/iptv/bc2t.php?id=fct4k
+#EXTINF:-1 group-title="港澳台",民视
+http://74.91.26.218:82/live/ftv.m3u8
+#EXTINF:-1 group-title="港澳台",民视
+http://iptv.4666888.xyz/iptv2A.php?id=55
+#EXTINF:-1 group-title="港澳台",民视720p
+rtmp://f13h.mine.nu/sat/tv051
+#EXTINF:-1 group-title="港澳台",民视台湾台
+http://74.91.26.218:82/live/ftvtw.m3u8
+#EXTINF:-1 group-title="港澳台",民视影劇
+http://iptv.4666888.xyz/iptv2A.php?id=53
+#EXTINF:-1 group-title="港澳台",民视综艺
+http://iptv.4666888.xyz/iptv2A.php?id=46
+#EXTINF:-1 group-title="港澳台",民视综艺
+https://stream1.freetv.fun/1b47ca26b5937e3c39bafc6969f66e1ef01d0ea00773163e5b7a9b7fccf082c5.m3u8
+#EXTINF:-1 group-title="港澳台",台视综合
+http://74.91.26.218:82/live/ttvzh.m3u8
+#EXTINF:-1 group-title="港澳台",台视综合
+http://iptv.4666888.xyz/iptv2A.php?id=51
+#EXTINF:-1 group-title="港澳台",台视财经
+http://74.91.26.218:82/live/ttvcj.m3u8
 #EXTINF:-1 group-title="港澳台",龙华偶像
 http://rihou.cc:555/tv/[Pd]龙华偶像
 #EXTINF:-1 group-title="港澳台",龙华偶像1080
@@ -640,6 +610,36 @@ https://cdn8.163189.xyz/163189/lhrh
 https://cdn8.163189.xyz/163189/lhjd
 #EXTINF:-1 group-title="港澳台",龙华经典
 http://rihou.cc:555/tv/[Pd]龙华经典
+#EXTINF:-1 group-title="港澳台",TVBS精采台
+http://iptv.4666888.xyz/iptv2A.php?id=47
+#EXTINF:-1 group-title="港澳台",三立台湾台
+http://23.128.116.71:5589/live.php?id=sanlitaiwan&h=23.128.116.71&p=22364&token=1768656088.86691cca94504da575d8df777cf38454e46d310d063477dfb6dc26c93a6a248f
+#EXTINF:-1 group-title="港澳台",三立戏剧台
+http://23.128.116.71:5589/live.php?id=sanlixiju_twn&h=23.128.116.71&p=22364&token=1768656088.9fbb23a20a7c3a7360e8bad0e362e55915cf9ff0026941769f8a92f662dfcf70
+#EXTINF:-1 group-title="港澳台",三立综合台720p
+http://23.128.116.71:5589/live.php?id=sanlizhonghe&h=23.128.116.71&p=22364&token=1768656088.492115de19636f0cd4cf03421832bbed5f62da67f42781bc53be1a0faaf20858
+#EXTINF:-1 group-title="港澳台",三立都会台
+http://23.128.116.71:5589/live.php?id=sanlidouhui_twn&h=23.128.116.71&p=22364&token=1768656088.71792c6eb5cad5cf0b18fea078d4b239afcebabadce35bd9315d491180a5e404
+#EXTINF:-1 group-title="港澳台",中天娱乐
+http://free.cnlive.club/channel/41d6f491.m3u8?q=111.170.171.148
+#EXTINF:-1 group-title="港澳台",中天综合
+http://free.cnlive.club/channel/41db6ede.m3u8?q=111.170.171.148
+#EXTINF:-1 group-title="港澳台",中视经典
+http://74.91.26.218:82/live/ctvjd.m3u8
+#EXTINF:-1 group-title="港澳台",中视菁采
+http://74.91.26.218:82/live/ctvjc.m3u8
+#EXTINF:-1 group-title="港澳台",八大精彩台
+http://165.154.226.214:50007/li-4gtv-4gtv034/index.m3u8?proxy=true
+#EXTINF:-1 group-title="港澳台",八大綜藝台
+http://165.154.226.214:50007/li-4gtv-4gtv039/index.m3u8?proxy=true
+#EXTINF:-1 group-title="港澳台",华视
+http://74.91.26.218:82/live/cts.m3u8
+#EXTINF:-1 group-title="港澳台",华视HD 720p
+https://t.freetv.fun/live/hua-shi-2.ts
+#EXTINF:-1 group-title="港澳台",华视HD 720p
+rtmp://f13h.mine.nu/sat/tv111
+#EXTINF:-1 group-title="港澳台",华视教育体育文化
+http://74.91.26.218:82/live/ctsjy.m3u8
 
 # 统计信息
 # BB 频道数: 79
@@ -648,4 +648,4 @@ http://rihou.cc:555/tv/[Pd]龙华经典
 # URL过滤数: 0
 # 去重频道数: 2
 # 总频道数: 221
-# 更新时间: 2026-02-25 15:21:57
+# 更新时间: 2026-02-25 15:47:16
