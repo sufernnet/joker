@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
 
 # DD.m3u
-# 生成时间: 2026-02-25 02:00:54
+# 生成时间: 2026-02-25 02:07:10
 # 更新频率: 每天 06:00 / 17:00
 # EPG: http://epg.51zmt.top:8000/e.xml
 # GitHub Actions 自动生成
@@ -355,7 +355,7 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 
 
-# 港澳台频道 (106)
+# 港澳台频道 (101)
 #EXTINF:-1 group-title="港澳台",凤凰中文
 http://61.184.46.85:85/tsfile/live/1029_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 group-title="港澳台",凤凰资讯
@@ -458,10 +458,6 @@ http://74.91.26.218:82/live/ctvnews.m3u8
 http://74.91.26.218:82/live/ctvjd.m3u8
 #EXTINF:-1 group-title="港澳台",中视菁采台
 http://74.91.26.218:82/live/ctvjc.m3u8
-#EXTINF:-1 group-title="港澳台",人间卫视
-http://61.216.67.119:1935/bltvhd/bltv1/chunklist_w1266569526.m3u8
-#EXTINF:-1 group-title="港澳台",人间卫视
-https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/chunklist_w511254805.m3u8
 #EXTINF:-1 group-title="港澳台",八度空间
 http://iptv.4666888.xyz/iptv2A.php?id=52
 #EXTINF:-1 group-title="港澳台",八度空间
@@ -522,8 +518,6 @@ http://iptv.4666888.xyz/iptv2A.php?id=41
 http://cdn6.163189.xyz/163189/amty
 #EXTINF:-1 group-title="港澳台",爱奇艺
 http://iptv.4666888.xyz/iptv2A.php?id=21
-#EXTINF:-1 group-title="港澳台",生命电影
-http://61.216.67.119:1935/lifetv/lifetv.stream/manifest.m3u8
 #EXTINF:-1 group-title="港澳台",纬来体育
 rtmp://f13h.mine.nu/sat/tv721
 #EXTINF:-1 group-title="港澳台",纬来育乐
@@ -536,8 +530,6 @@ https://cdn6.163189.xyz/163189/fct4k
 https://mytv.cdn.loc.cc/o12.php?id=fct
 #EXTINF:-1 group-title="港澳台",耀才财经台
 https://v3.mediacast.hk/webcast/bshdlive-pc/playlist.m3u8
-#EXTINF:-1 group-title="港澳台",邵氏动作
-http://feilong123.vip/409990236/tv.php?id=ssdz
 #EXTINF:-1 group-title="港澳台",重温经典
 http://8.138.7.223/tv/cwjd.php
 #EXTINF:-1 group-title="港澳台",镜新闻
@@ -556,8 +548,6 @@ https://video.bread-tv.com:8091/hls-live24/online/index.m3u8
 https://stream1.freetv.fun/6130c4439e91813125415b749209467f8da4f3d09d09ac80d7848321fc5e709e.m3u8
 #EXTINF:-1 group-title="港澳台",香港卫视
 http://webcast.hkstv.tv/livestream/mutfysrq/playlist.m3u8
-#EXTINF:-1 group-title="港澳台",鳳凰中文
-http://iptv.4666888.xyz/iptv2A.php?id=27
 #EXTINF:-1 group-title="港澳台",龙华偶像
 https://cdn8.163189.xyz/163189/lhox
 #EXTINF:-1 group-title="港澳台",龙华戏剧
@@ -571,8 +561,9 @@ https://cdn8.163189.xyz/163189/lhjd
 
 # 统计信息
 # BB 频道数: 79
-# 港澳台频道数: 106
-# 过滤频道数: 25
-# 去重频道数: 9
-# 总频道数: 185
-# 更新时间: 2026-02-25 02:00:54
+# 港澳台频道数: 101
+# 关键词过滤数: 31
+# URL过滤数: 1
+# 去重频道数: 7
+# 总频道数: 180
+# 更新时间: 2026-02-25 02:07:10
