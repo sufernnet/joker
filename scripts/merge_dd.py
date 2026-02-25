@@ -3,7 +3,7 @@
 DD.m3u 合并脚本（港澳台直提 + 凤凰/NOW 精确排序）
 
 功能：
-1. 提取“港澳台直播”分组
+1. 提取“🔮[三网]港澳台直播”分组
 2. 重命名为“港澳台”
 3. 港澳台分组内排序：
    凤凰中文 → 凤凰资讯 → 凤凰香港 → 凤凰电影 → NOW → 其他
@@ -22,7 +22,8 @@ BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
 GAT_URL = "https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1"
 OUTPUT_FILE = "DD.m3u"
 
-SOURCE_GROUP = "港澳台直播"
+# 修改为新的分组名称
+SOURCE_GROUP = "🔮[三网]港澳台直播"
 TARGET_GROUP = "港澳台"
 
 EPG_URL = "http://epg.51zmt.top:8000/e.xml"
