@@ -75,6 +75,14 @@ NAME_NORMALIZATION = {
     "Now 新闻台": "Now新闻",
 }
 
+# 需要优先保留的名称模式（不区分大小写）
+PREFERRED_NAMES = [
+    "Now新闻",
+    "Now体育",
+    "Now财经", 
+    "Now直播",
+]
+
 # 台湾频道关键词（用于区分台湾/香港）
 TAIWAN_KEYWORDS = [
     "民视", "台视", "纬来", "龙华", "八大", "东森", "三立", "中视", "华视",
@@ -243,7 +251,7 @@ def get_hk_group_and_sub(name):
 
     # 凤凰中文
     if "凤凰中文" in name or ("凤凰" in name and "中文" in name):
-        return (0, 0)  # group 0, sub 0
+        return (0, 0)
 
     # 凤凰资讯
     if "凤凰资讯" in name or ("凤凰" in name and "资讯" in name):
@@ -255,7 +263,6 @@ def get_hk_group_and_sub(name):
 
     # Now系列
     if "now" in name_lower:
-        # 内部排序：新闻(0) < 体育(1) < 财经(2) < 直播(3) < 其他(4)
         if "新闻" in name or "news" in name_lower:
             sub = 0
         elif "体育" in name or "sports" in name_lower:
@@ -270,17 +277,15 @@ def get_hk_group_and_sub(name):
 
     # HOY系列
     if "hoy" in name_lower:
-        # 提取数字部分作为子键，如 76,77,78
         match = re.search(r'(\d+)', name)
         if match:
             sub = int(match.group(1))
         else:
-            sub = 99  # 无数字的放最后
+            sub = 99
         return (4, sub)
 
     # TVB系列
     if any(k in name_lower for k in ["tvb", "翡翠", "明珠", "j2", "无线"]):
-        # 内部排序：翡翠(0) < 明珠(1) < J2(2) < 其他TVB(3)
         if "翡翠" in name:
             sub = 0
         elif "明珠" in name:
@@ -297,7 +302,6 @@ def get_hk_group_and_sub(name):
 
     # CH5~CH8
     if "ch5" in name_lower or "ch8" in name_lower or "channel 5" in name_lower or "channel 8" in name_lower:
-        # 提取数字
         match = re.search(r'[ch\s]*(\d+)', name_lower)
         if match:
             sub = int(match.group(1))
@@ -313,11 +317,9 @@ def get_tw_group_and_sub(name):
     """
     返回台湾频道的主组优先级和内部排序子键
     主组优先级：0民视系列,1台视系列,2纬来系列,3龙华系列,4其他台湾
-    子键暂不使用（可设为0）
     """
     name_lower = name.lower()
 
-    # 按顺序匹配
     if "民视" in name:
         return (0, 0)
     if "台视" in name:
@@ -326,7 +328,6 @@ def get_tw_group_and_sub(name):
         return (2, 0)
     if "龙华" in name:
         return (3, 0)
-    # 其他台湾
     return (4, 0)
 
 
@@ -335,7 +336,7 @@ def sort_gat_channels(channels):
     新的排序函数：先香港后台湾，各系列内部按指定顺序
     排序键格式：(region, group, sub, name)
         region: 0=香港, 1=台湾
-        group: 各区域内主组优先级（数字越小越靠前）
+        group: 各区域内主组优先级
         sub: 组内精细排序键
         name: 最后按名称字母顺序
     """
@@ -345,7 +346,7 @@ def sort_gat_channels(channels):
             region = 1
             group, sub = get_tw_group_and_sub(name)
         else:
-            region = 0  # 非台湾即视为香港
+            region = 0
             group, sub = get_hk_group_and_sub(name)
         return (region, group, sub, name)
 
