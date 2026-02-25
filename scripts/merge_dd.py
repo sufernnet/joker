@@ -28,7 +28,7 @@ OUTPUT_FILE = "DD.m3u"
 SOURCE_GROUP = "🔮[三网]港澳台直播"
 TARGET_GROUP = "港澳台"
 
-EPG_URL = "http://epg.51zmt.top:8000/e.xml"
+EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 
 # 需要过滤掉的频道关键词（不区分大小写）
 FILTER_KEYWORDS = [
