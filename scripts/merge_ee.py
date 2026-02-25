@@ -8,8 +8,9 @@ EE.m3u 合并脚本（港台频道版）
 3. 过滤掉指定频道和指定URL
 4. 去除频道名称中的分辨率标记（如“HD 1080p”、“1080p”）
 5. 去重处理：保留标准名称，去掉带"台"字的重复频道
-6. 港台分组内按新规则排序：
-   凤凰中文 → 凤凰资讯 → NOW新闻 → NOW体育 → NOW财经 → NOW直播 → POPC → HOY76~78 → RHK31~32 → TVB系列（TVB翡翠排前面）
+6. 按“香港在前，台湾在后”的规则排序，各系列内部顺序精细化：
+   香港：凤凰中文 → 凤凰资讯 → 凤凰香港 → Now系列（新闻/体育/财经/直播）→ HOY系列（按数字）→ TVB系列（翡翠优先）→ ViuTV → CH5~CH8 → 其他香港
+   台湾：民视系列 → 台视系列 → 纬来系列 → 龙华系列 → 其他台湾
 7. 合并 BB.m3u
 8. 使用固定 EPG
 
@@ -74,12 +75,10 @@ NAME_NORMALIZATION = {
     "Now 新闻台": "Now新闻",
 }
 
-# 需要优先保留的名称模式（不区分大小写）
-PREFERRED_NAMES = [
-    "Now新闻",
-    "Now体育",
-    "Now财经", 
-    "Now直播",
+# 台湾频道关键词（用于区分台湾/香港）
+TAIWAN_KEYWORDS = [
+    "民视", "台视", "纬来", "龙华", "八大", "东森", "三立", "中视", "华视",
+    "TVBS", "非凡", "年代", "壹电视", "寰宇", "靖天", "爱尔达", "中天", "高点"
 ]
 
 # ================== 工具 ==================
@@ -135,11 +134,8 @@ def clean_channel_name(name):
     """去除频道名称末尾的分辨率标记如 'HD 1080p', '1080p' 等"""
     original = name
     # 去除末尾常见的分辨率标记
-    # 1. 包含 HD 和 1080p 的，如 "凤凰中文HD 1080p"
     name = re.sub(r'\s*[Hh][Dd]\s*1080[pP]?\s*$', '', name)
-    # 2. 只有 1080p，如 "Now体育1080p"
     name = re.sub(r'\s*1080[pP]\s*$', '', name)
-    # 3. 只有 HD，如 "凤凰中文HD"
     name = re.sub(r'\s*[Hh][Dd]\s*$', '', name)
     # 去除可能留下的空格
     name = name.strip()
@@ -226,59 +222,134 @@ def deduplicate_channels(channels):
     return deduped
 
 
+# ================== 新的排序逻辑 ==================
+
+def is_taiwan(name):
+    """根据关键词判断是否为台湾频道"""
+    name_lower = name.lower()
+    for kw in TAIWAN_KEYWORDS:
+        if kw.lower() in name_lower:
+            return True
+    return False
+
+
+def get_hk_group_and_sub(name):
+    """
+    返回香港频道的主组优先级和内部排序子键
+    主组优先级：0凤凰中文,1凤凰资讯,2凤凰香港,3Now系列,4HOY系列,5TVB系列,6ViuTV,7CH5~8,8其他香港
+    子键用于组内精细排序
+    """
+    name_lower = name.lower()
+
+    # 凤凰中文
+    if "凤凰中文" in name or ("凤凰" in name and "中文" in name):
+        return (0, 0)  # group 0, sub 0
+
+    # 凤凰资讯
+    if "凤凰资讯" in name or ("凤凰" in name and "资讯" in name):
+        return (1, 0)
+
+    # 凤凰香港
+    if "凤凰香港" in name or ("凤凰" in name and "香港" in name):
+        return (2, 0)
+
+    # Now系列
+    if "now" in name_lower:
+        # 内部排序：新闻(0) < 体育(1) < 财经(2) < 直播(3) < 其他(4)
+        if "新闻" in name or "news" in name_lower:
+            sub = 0
+        elif "体育" in name or "sports" in name_lower:
+            sub = 1
+        elif "财经" in name or "finance" in name_lower:
+            sub = 2
+        elif "直播" in name or "live" in name_lower:
+            sub = 3
+        else:
+            sub = 4
+        return (3, sub)
+
+    # HOY系列
+    if "hoy" in name_lower:
+        # 提取数字部分作为子键，如 76,77,78
+        match = re.search(r'(\d+)', name)
+        if match:
+            sub = int(match.group(1))
+        else:
+            sub = 99  # 无数字的放最后
+        return (4, sub)
+
+    # TVB系列
+    if any(k in name_lower for k in ["tvb", "翡翠", "明珠", "j2", "无线"]):
+        # 内部排序：翡翠(0) < 明珠(1) < J2(2) < 其他TVB(3)
+        if "翡翠" in name:
+            sub = 0
+        elif "明珠" in name:
+            sub = 1
+        elif "j2" in name_lower:
+            sub = 2
+        else:
+            sub = 3
+        return (5, sub)
+
+    # ViuTV系列
+    if "viu" in name_lower:
+        return (6, 0)
+
+    # CH5~CH8
+    if "ch5" in name_lower or "ch8" in name_lower or "channel 5" in name_lower or "channel 8" in name_lower:
+        # 提取数字
+        match = re.search(r'[ch\s]*(\d+)', name_lower)
+        if match:
+            sub = int(match.group(1))
+        else:
+            sub = 99
+        return (7, sub)
+
+    # 其他香港频道
+    return (8, 0)
+
+
+def get_tw_group_and_sub(name):
+    """
+    返回台湾频道的主组优先级和内部排序子键
+    主组优先级：0民视系列,1台视系列,2纬来系列,3龙华系列,4其他台湾
+    子键暂不使用（可设为0）
+    """
+    name_lower = name.lower()
+
+    # 按顺序匹配
+    if "民视" in name:
+        return (0, 0)
+    if "台视" in name:
+        return (1, 0)
+    if "纬来" in name:
+        return (2, 0)
+    if "龙华" in name:
+        return (3, 0)
+    # 其他台湾
+    return (4, 0)
+
+
 def sort_gat_channels(channels):
     """
-    排序权重（越小越靠前）：
-    0: 凤凰中文
-    1: 凤凰资讯
-    2: NOW新闻
-    3: NOW体育
-    4: NOW财经
-    5: NOW直播
-    6: POPC
-    7: HOY 76-78
-    8: RHK 31-32
-    9: TVB系列（TVB翡翠最前）
-    10: 其他
+    新的排序函数：先香港后台湾，各系列内部按指定顺序
+    排序键格式：(region, group, sub, name)
+        region: 0=香港, 1=台湾
+        group: 各区域内主组优先级（数字越小越靠前）
+        sub: 组内精细排序键
+        name: 最后按名称字母顺序
     """
-    def weight(name):
-        name_lower = name.lower()
-        
-        if "凤凰中文" in name or ("凤凰卫视" in name and "中文" in name):
-            return (0, "00_凤凰中文")
-        
-        if "凤凰资讯" in name or ("凤凰卫视" in name and "资讯" in name):
-            return (1, "01_凤凰资讯")
-        
-        if "now新闻" in name_lower or "now 新闻" in name_lower:
-            return (2, "02_NOW新闻")
-        
-        if "now体育" in name_lower or "now 体育" in name_lower:
-            return (3, "03_NOW体育")
-        
-        if "now财经" in name_lower or "now 财经" in name_lower:
-            return (4, "04_NOW财经")
-        
-        if "now直播" in name_lower or "now 直播" in name_lower:
-            return (5, "05_NOW直播")
-        
-        if "popc" in name_lower:
-            return (6, "06_POPC")
-        
-        if "hoy" in name_lower and any(x in name_lower for x in ["76", "77", "78"]):
-            return (7, f"07_HOY_{name}")
-        
-        if "rhk" in name_lower and any(x in name_lower for x in ["31", "32"]):
-            return (8, f"08_RHK_{name}")
-        
-        if "tvb" in name_lower:
-            if "翡翠" in name:
-                return (9, "09_TVB翡翠")
-            return (9, f"09_TVB_{name}")
-        
-        return (10, name)
+    def key_func(item):
+        name, _ = item
+        if is_taiwan(name):
+            region = 1
+            group, sub = get_tw_group_and_sub(name)
+        else:
+            region = 0  # 非台湾即视为香港
+            group, sub = get_hk_group_and_sub(name)
+        return (region, group, sub, name)
 
-    return sorted(channels, key=lambda x: weight(x[0]))
+    return sorted(channels, key=key_func)
 
 
 # ================== 主流程 ==================
@@ -297,15 +368,11 @@ def main():
     log(f"提取后原始频道数: {len(gat_channels)}")
     
     # 清洗名称：去除分辨率标记
-    cleaned_channels = []
-    for name, url in gat_channels:
-        cleaned_name = clean_channel_name(name)
-        cleaned_channels.append((cleaned_name, url))
-    gat_channels = cleaned_channels
-    log(f"清洗后频道数: {len(gat_channels)}")
+    cleaned_channels = [(clean_channel_name(name), url) for name, url in gat_channels]
+    log(f"清洗后频道数: {len(cleaned_channels)}")
     
     # 过滤频道（关键词过滤）
-    keyword_filtered = [(name, url) for name, url in gat_channels if not should_filter_by_keyword(name)]
+    keyword_filtered = [(name, url) for name, url in cleaned_channels if not should_filter_by_keyword(name)]
     log(f"关键词过滤后剩余频道数: {len(keyword_filtered)}")
     
     # 过滤频道（URL过滤）
@@ -349,7 +416,7 @@ def main():
 
     total = bb_count + len(sorted_channels)
 
-    keyword_filtered_count = len(gat_channels) - len(keyword_filtered) if gat_channels else 0
+    keyword_filtered_count = len(cleaned_channels) - len(keyword_filtered) if cleaned_channels else 0
     url_filtered_count = len(keyword_filtered) - len(url_filtered)
     deduped_count = len(url_filtered) - len(sorted_channels)
 
