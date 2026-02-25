@@ -4,13 +4,14 @@ EE.m3u 合并脚本（港台频道版）
 
 功能：
 1. 提取“港台频道”分组
-2. 重命名为“港澳台”（可自定义）
+2. 重命名为“港澳台”
 3. 过滤掉指定频道和指定URL
-4. 去重处理：保留标准名称，去掉带"台"字的重复频道
-5. 港台分组内按新规则排序：
+4. 去除频道名称中的分辨率标记（如“HD 1080p”、“1080p”）
+5. 去重处理：保留标准名称，去掉带"台"字的重复频道
+6. 港台分组内按新规则排序：
    凤凰中文 → 凤凰资讯 → NOW新闻 → NOW体育 → NOW财经 → NOW直播 → POPC → HOY76~78 → RHK31~32 → TVB系列（TVB翡翠排前面）
-6. 合并 BB.m3u
-7. 使用固定 EPG
+7. 合并 BB.m3u
+8. 使用固定 EPG
 
 北京时间每天 06:00 / 17:00 自动运行
 """
@@ -22,12 +23,11 @@ from datetime import datetime
 # ================== 配置 ==================
 
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
-# 新的源地址：港台大陆文件，提取“港台频道”分组
 GAT_URL = "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/FG/refs/heads/main/港台大陆"
 OUTPUT_FILE = "EE.m3u"
 
-SOURCE_GROUP = "港台频道"          # 需要提取的分组名
-TARGET_GROUP = "港澳台"            # 输出分组名称（可保留原名或改为“港台”）
+SOURCE_GROUP = "港台频道"
+TARGET_GROUP = "港澳台"
 
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 
@@ -129,6 +129,23 @@ def extract_gat_channels(content):
 
     log(f"提取到 {len(channels)} 个频道")
     return channels
+
+
+def clean_channel_name(name):
+    """去除频道名称末尾的分辨率标记如 'HD 1080p', '1080p' 等"""
+    original = name
+    # 去除末尾常见的分辨率标记
+    # 1. 包含 HD 和 1080p 的，如 "凤凰中文HD 1080p"
+    name = re.sub(r'\s*[Hh][Dd]\s*1080[pP]?\s*$', '', name)
+    # 2. 只有 1080p，如 "Now体育1080p"
+    name = re.sub(r'\s*1080[pP]\s*$', '', name)
+    # 3. 只有 HD，如 "凤凰中文HD"
+    name = re.sub(r'\s*[Hh][Dd]\s*$', '', name)
+    # 去除可能留下的空格
+    name = name.strip()
+    if name != original:
+        log(f"清洗名称: '{original}' -> '{name}'")
+    return name
 
 
 def should_filter_by_keyword(name):
@@ -275,19 +292,33 @@ def main():
 
     gat = download(GAT_URL, "港台频道源") or ""
     
+    # 提取频道
     gat_channels = extract_gat_channels(gat) if gat else []
     log(f"提取后原始频道数: {len(gat_channels)}")
     
+    # 清洗名称：去除分辨率标记
+    cleaned_channels = []
+    for name, url in gat_channels:
+        cleaned_name = clean_channel_name(name)
+        cleaned_channels.append((cleaned_name, url))
+    gat_channels = cleaned_channels
+    log(f"清洗后频道数: {len(gat_channels)}")
+    
+    # 过滤频道（关键词过滤）
     keyword_filtered = [(name, url) for name, url in gat_channels if not should_filter_by_keyword(name)]
     log(f"关键词过滤后剩余频道数: {len(keyword_filtered)}")
     
+    # 过滤频道（URL过滤）
     url_filtered = [(name, url) for name, url in keyword_filtered if not should_filter_by_url(url)]
     log(f"URL过滤后剩余频道数: {len(url_filtered)}")
     
+    # 标准化名称（用于去重）
     normalized_channels = [(normalize_channel_name(name), url) for name, url in url_filtered]
     
+    # 去重处理
     deduped_channels = deduplicate_channels(normalized_channels)
     
+    # 排序
     sorted_channels = sort_gat_channels(deduped_channels)
     log(f"排序完成")
 
