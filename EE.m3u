@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # EE.m3u
-# 生成时间: 2026-02-25 22:27:32
+# 生成时间: 2026-02-26 02:46:35
 # 更新频率: 每天 06:00 / 17:00
 # EPG: https://epg.zsdc.eu.org/t.xml.gz
 # GitHub Actions 自动生成
@@ -41,7 +41,7 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000473?virtualDomain=01
 http://124.90.44.40:6060/010/2/00000001000000060000000000000474?virtualDomain=010.live_hls.zte.com
 
 #EXTINF:-1 tvg-id="CCTV11" tvg-name="CCTV11" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV11.png" group-title="央视",CCTV11
-http://124.93.18.238:81/hls/11/index.m3u8
+http://74.91.26.218:82/live/cctv11hd.m3u8
 
 #EXTINF:-1 tvg-id="CCTV12" tvg-name="CCTV12" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV12.png" group-title="央视",CCTV12
 http://124.90.44.40:6060/010/2/00000001000000060000000000000476?virtualDomain=010.live_hls.zte.com
@@ -355,7 +355,8 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 
 
-# 港澳台频道 (133)
+
+# 港澳台频道 (126)
 #EXTINF:-1 group-title="港澳台",凤凰中文
 https://cdn6.101.qzz.io/163189/fhzw
 #EXTINF:-1 group-title="港澳台",凤凰中文
@@ -518,8 +519,6 @@ http://74.91.26.218:82/live/pts.m3u8
 http://74.91.26.218:82/live/ttv.m3u8
 #EXTINF:-1 group-title="港澳台",台視
 http://165.154.226.214:50007/li-4gtv-4gtv066/index.m3u8?proxy=true
-#EXTINF:-1 group-title="港澳台",台視HD 720P
-rtmp://f13h.mine.nu/sat/tv071
 #EXTINF:-1 group-title="港澳台",天映经典
 https://smt.1678520.xyz/smt3.2.1.php?id=Celestial2
 #EXTINF:-1 group-title="港澳台",天映经典
@@ -556,16 +555,12 @@ https://cdn6.101.qzz.io/163189/amty
 http://utv1.hqtvzb.com:9999/hls/world.m3u8
 #EXTINF:-1 group-title="港澳台",緯來精彩720p
 https://stream1.freetv.fun/409fbf8e0ec33500b4d76956cca00af9fddacac6dd2f8822f464b089fb583a6b.m3u8
-#EXTINF:-1 group-title="港澳台",緯來綜合
-https://stream1.freetv.fun/541f6094f34e0290077cf0d55df31c49bc148118e6b030fa2165d5c8c35a6d1f.m3u8
 #EXTINF:-1 group-title="港澳台",民视
 http://74.91.26.218:82/live/ftv.m3u8
 #EXTINF:-1 group-title="港澳台",民视
 http://iptv.4666888.xyz/iptv2A.php?id=55
 #EXTINF:-1 group-title="港澳台",民视台湾台
 http://74.91.26.218:82/live/ftvtw.m3u8
-#EXTINF:-1 group-title="港澳台",民视影劇
-http://iptv.4666888.xyz/iptv2A.php?id=53
 #EXTINF:-1 group-title="港澳台",民视综艺
 http://iptv.4666888.xyz/iptv2A.php?id=46
 #EXTINF:-1 group-title="港澳台",民视综艺
@@ -598,14 +593,6 @@ https://cdn8.163189.xyz/163189/lhjd
 http://rihou.cc:555/tv/[Pd]龙华经典
 #EXTINF:-1 group-title="港澳台",TVBS精采台
 http://iptv.4666888.xyz/iptv2A.php?id=47
-#EXTINF:-1 group-title="港澳台",三立台湾台
-http://23.128.116.71:5589/live.php?id=sanlitaiwan&h=23.128.116.71&p=22364&token=1768656088.86691cca94504da575d8df777cf38454e46d310d063477dfb6dc26c93a6a248f
-#EXTINF:-1 group-title="港澳台",三立戏剧台
-http://23.128.116.71:5589/live.php?id=sanlixiju_twn&h=23.128.116.71&p=22364&token=1768656088.9fbb23a20a7c3a7360e8bad0e362e55915cf9ff0026941769f8a92f662dfcf70
-#EXTINF:-1 group-title="港澳台",三立综合台720p
-http://23.128.116.71:5589/live.php?id=sanlizhonghe&h=23.128.116.71&p=22364&token=1768656088.492115de19636f0cd4cf03421832bbed5f62da67f42781bc53be1a0faaf20858
-#EXTINF:-1 group-title="港澳台",三立都会台
-http://23.128.116.71:5589/live.php?id=sanlidouhui_twn&h=23.128.116.71&p=22364&token=1768656088.71792c6eb5cad5cf0b18fea078d4b239afcebabadce35bd9315d491180a5e404
 #EXTINF:-1 group-title="港澳台",中天娱乐
 http://free.cnlive.club/channel/41d6f491.m3u8?q=111.170.171.148
 #EXTINF:-1 group-title="港澳台",中天综合
@@ -625,9 +612,9 @@ http://74.91.26.218:82/live/ctsjy.m3u8
 
 # 统计信息
 # BB 频道数: 79
-# 港澳台频道数: 133
-# 关键词过滤数: 15
+# 港澳台频道数: 126
+# 关键词过滤数: 22
 # URL过滤数: 0
 # 去重频道数: 2
-# 总频道数: 212
-# 更新时间: 2026-02-25 22:27:32
+# 总频道数: 205
+# 更新时间: 2026-02-26 02:46:35
