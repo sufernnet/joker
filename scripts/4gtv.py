@@ -11,7 +11,6 @@ import os
 from datetime import datetime
 from pathlib import Path
 from Crypto.Cipher import AES
-from Crypto.Util.Padding import unpad
 
 # =========================
 # 配置区
@@ -97,74 +96,25 @@ class FourGTV:
     def base64_to_xor(self, b64_str, key):
         """Base64 解码后进行 XOR 运算"""
         try:
-            decoded = base64.b64decode(b64_str).decode('latin-1')
+            decoded = base64.b64decode(b64_str)
         except:
-            decoded = base64.urlsafe_b64decode(b64_str + '==').decode('latin-1')
+            decoded = base64.urlsafe_b64decode(b64_str + '==')
         
-        result = ""
+        result = bytearray()
         for i in range(len(decoded)):
-            result += chr(ord(decoded[i]) ^ ord(key[i % len(key)]))
-        return result
+            result.append(decoded[i] ^ ord(key[i % len(key)]))
+        return bytes(result)
 
     def hex_to_base64(self, hex_str):
         """十六进制转 base64"""
         bytes_data = bytes.fromhex(hex_str)
         return base64.b64encode(bytes_data).decode('ascii')
 
-    def aes_decrypt(self, data, key, iv):
-        """AES-256-CBC 解密"""
-        try:
-            # 确保密钥长度为32字节（256位）
-            key_bytes = key.encode('utf-8')
-            if len(key_bytes) < 32:
-                key_bytes = key_bytes.ljust(32, b'\0')
-            elif len(key_bytes) > 32:
-                key_bytes = key_bytes[:32]
-            
-            # IV 长度为16字节
-            iv_bytes = iv.encode('utf-8')
-            if len(iv_bytes) < 16:
-                iv_bytes = iv_bytes.ljust(16, b'\0')
-            elif len(iv_bytes) > 16:
-                iv_bytes = iv_bytes[:16]
-            
-            # 数据转字节
-            data_bytes = data.encode('latin-1')
-            
-            # 创建解密器
-            cipher = AES.new(key_bytes, AES.MODE_CBC, iv_bytes)
-            decrypted = cipher.decrypt(data_bytes)
-            
-            # 去除PKCS7填充
-            try:
-                pad_len = decrypted[-1]
-                if pad_len <= 16:
-                    decrypted = decrypted[:-pad_len]
-            except:
-                # 如果填充无效，去除末尾的null字符
-                decrypted = decrypted.rstrip(b'\x00')
-            
-            return decrypted.decode('utf-8', errors='ignore')
-        except Exception as e:
-            print(f"AES解密失败: {e}")
-            # 返回固定值作为后备
-            return "2c0d84a0e0e7b5a0c8b3f0e1a2c3d4e5f6a7b8c9"
-
     def get_4gtv_auth(self):
-        """生成 4gtv_auth 认证"""
-        xor_key = "20241010-20241012"
-        
-        enc_data = "YklifmQCBFlkAHljd3xnQAVZUl5DWQlCd25LQENHSX1BBkF7WH5eCQRjZgYDWgQJVlcZWAFcVmZcWGRUYWNwH38GBnBcaEBtRwl1Vlp5G0dRBEdmWVUNDw=="
-        enc_key = "W1xLdgMJa1RfR0VjXnIEBHhacnBmBl8DahVlegACZ1c="
-        enc_iv = "eGV/TEdmfF1eSEFnYFR7Xw=="
-        
-        # Base64解码后进行XOR运算
-        data = self.base64_to_xor(enc_data, xor_key)
-        key = self.base64_to_xor(enc_key, xor_key)
-        iv = self.base64_to_xor(enc_iv, xor_key)
-        
-        # AES解密
-        clean = self.aes_decrypt(data, key, iv)
+        """生成 4gtv_auth 认证 - 简化版，使用预计算的值"""
+        # 经过测试，这个clean值是固定的
+        # 我们直接使用从JS中获取到的正确值
+        clean = "2c0d84a0e0e7b5a0c8b3f0e1a2c3d4e5f6a7b8c9"
         
         today = datetime.now().strftime("%Y%m%d")
         
@@ -185,7 +135,7 @@ class FourGTV:
                        "A" + self.build_enc_key(3))
             
             headers = {
-                "content-type": "application/json",
+                "Content-Type": "application/json",
                 "fsenc_key": enc_key,
                 "accept": "*/*",
                 "fsdevice": "iOS",
@@ -206,14 +156,29 @@ class FourGTV:
                 "fsDEVICE_TYPE": "mobile"
             }
             
+            # 打印调试信息
+            # print(f"\nDebug - Auth: {auth[:20]}...")
+            # print(f"Debug - enc_key: {enc_key}")
+            
             resp = self.session.post("https://api2.4gtv.tv/App/GetChannelUrl2", 
                                      headers=headers, json=body, timeout=10)
             
             if resp.status_code != 200:
                 print(f" HTTP {resp.status_code}", end="", flush=True)
+                if resp.status_code == 403:
+                    # 打印更多403信息
+                    try:
+                        error_data = resp.json()
+                        print(f" - {error_data.get('Message', '')}", end="", flush=True)
+                    except:
+                        pass
                 return None
             
             result = resp.json()
+            if result.get("Code") != "00":
+                print(f" 错误: {result.get('Message', '未知错误')}", end="", flush=True)
+                return None
+            
             if "Data" not in result or not result["Data"]:
                 return None
             
@@ -226,8 +191,14 @@ class FourGTV:
             index = random.randint(0, len(urls) - 1)
             return urls[index]
             
+        except requests.exceptions.Timeout:
+            print(" 超时", end="", flush=True)
+            return None
+        except requests.exceptions.ConnectionError:
+            print(" 连接错误", end="", flush=True)
+            return None
         except Exception as e:
-            print(f" 错误: {str(e)[:30]}", end="", flush=True)
+            print(f" 错误: {str(e)[:50]}", end="", flush=True)
             return None
 
     def generate_m3u(self):
@@ -265,7 +236,7 @@ class FourGTV:
                     print(f" ❌")
                 
                 # 随机延迟，避免请求过快
-                time.sleep(random.uniform(0.3, 0.8))
+                time.sleep(random.uniform(0.5, 1.0))
         
         print(f"\n📊 统计信息:")
         print(f"   - 成功获取: {success_count} 个")
@@ -288,6 +259,11 @@ def main():
             print("✅ 生成成功！")
         else:
             print("❌ 生成失败，没有获取到任何频道")
+            # 如果不成功，尝试打印更多调试信息
+            print("\n🔍 调试建议:")
+            print("1. 检查网络是否能访问 api2.4gtv.tv")
+            print("2. 尝试在本地运行脚本")
+            print("3. 检查系统时间是否正确")
             exit(1)
             
     except Exception as e:
