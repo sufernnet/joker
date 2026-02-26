@@ -4,7 +4,7 @@ EE.m3u 合并脚本（港台频道版 + 新聞频道）
 
 功能：
 1. 从同一个源文件（港台大陆）中提取“港台频道”和“新聞频道”两个分组
-2. 将频道分为 HK 和 TW 两个独立分组
+2. 将频道分为 HK 和 TW 两个独立分组，无法识别的频道全部归入 TW
 3. 过滤掉指定频道
 4. 去除频道名称中的分辨率标记（如“HD 1080p”、“1080p”）
 5. 按指定顺序对 HK 和 TW 分组分别排序
@@ -55,15 +55,15 @@ FILTER_KEYWORDS = [
     "澳门综艺",
     "華藝中文",
     "中旺电视",
-    "中天娱乐",           # 新增过滤
-    "中天新聞",           # 新增过滤
-    "中天新聞1080p(梯子)", # 新增过滤
-    "中天新聞720p",       # 新增过滤
-    "中天综合",           # 新增过滤
-    "寰宇新聞台",         # 新增过滤
-    "寰宇新聞台720p",     # 新增过滤
-    "年代新聞",           # 新增过滤
-    "東森新聞台",         # 新增过滤
+    "中天娱乐",
+    "中天新聞",
+    "中天新聞1080p(梯子)",
+    "中天新聞720p",
+    "中天综合",
+    "寰宇新聞台",
+    "寰宇新聞台720p",
+    "年代新聞",
+    "東森新聞台",
 ]
 
 # 需要过滤掉的特定URL（精确匹配）
@@ -79,13 +79,13 @@ NAME_NORMALIZATION = {
     "now新闻台": "Now新闻",
     "NOW 新闻台": "Now新闻",
     "Now 新闻台": "Now新闻",
-    "翡翠台4K": "翡翠台4K",      # 保留4K标识
+    "翡翠台4K": "翡翠台4K",
     "翡翠台": "翡翠台",
     "明珠台": "明珠台",
     "TVB plus": "TVB plus",
     "TVB1": "TVB1",
     "TVBJ1": "TVBJ1",
-    "TVB功夫720p": "TVB功夫",   # 去除分辨率
+    "TVB功夫720p": "TVB功夫",
     "TVB千禧经典": "TVB千禧经典",
     "TVB娱乐新闻台720p": "TVB娱乐新闻台",
     "TVB星河720p": "TVB星河",
@@ -108,7 +108,7 @@ NAME_NORMALIZATION = {
     "民视综艺": "民视综艺",
     "CTS華視新聞资讯": "CTS華視新聞资讯",
     "龙华偶像": "龙华偶像",
-    "龙华偶像1080": "龙华偶像",  # 合并
+    "龙华偶像1080": "龙华偶像",
     "龙华戏剧": "龙华戏剧",
     "龙华日韩": "龙华日韩",
     "龙华经典": "龙华经典",
@@ -274,7 +274,7 @@ def clean_channel_name(name):
     name = re.sub(r'\s*[Hh][Dd]\s*1080[pP]?\s*$', '', name)
     name = re.sub(r'\s*1080[pP]\s*$', '', name)
     name = re.sub(r'\s*[Hh][Dd]\s*$', '', name)
-    name = re.sub(r'\s*720[pP]\s*$', '', name)  # 增加720p处理
+    name = re.sub(r'\s*720[pP]\s*$', '', name)
     # 去除可能留下的空格
     name = name.strip()
     if name != original:
@@ -393,7 +393,7 @@ def is_tw_channel(name):
 def sort_by_custom_order(channels, order_list):
     """
     根据指定的顺序列表对频道进行排序
-    不在列表中的频道放在最后
+    不在列表中的频道按名称字母顺序排序，但放在列表内频道的后面
     """
     # 创建顺序映射
     order_map = {name: i for i, name in enumerate(order_list)}
@@ -456,29 +456,23 @@ def main():
     # 去重处理
     deduped_channels = deduplicate_channels(normalized_channels)
     
-    # 分离 HK 和 TW 频道
+    # 分离 HK 频道，其余全部归入 TW
     hk_channels = []
     tw_channels = []
-    others = []
     
     for name, url in deduped_channels:
         if is_hk_channel(name):
             hk_channels.append((name, url))
-        elif is_tw_channel(name):
-            tw_channels.append((name, url))
         else:
-            others.append((name, url))
+            # 所有非 HK 频道（包括无法识别的）都归入 TW
+            tw_channels.append((name, url))
     
     log(f"HK频道数: {len(hk_channels)}")
     log(f"TW频道数: {len(tw_channels)}")
-    log(f"其他频道数: {len(others)}")
     
     # 分别排序
     sorted_hk = sort_by_custom_order(hk_channels, HK_ORDER)
     sorted_tw = sort_by_custom_order(tw_channels, TW_ORDER)
-    
-    # 其他频道按名称排序
-    sorted_others = sorted(others, key=lambda x: x[0])
     
     log(f"排序完成")
 
@@ -508,21 +502,14 @@ def main():
             output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n'
             output += f"{url}\n"
 
-    # 写入 TW 分组
+    # 写入 TW 分组（包含所有非 HK 频道）
     if sorted_tw:
         output += f"\n# {TW_GROUP}频道 ({len(sorted_tw)})\n"
         for name, url in sorted_tw:
             output += f'#EXTINF:-1 group-title="{TW_GROUP}",{name}\n'
             output += f"{url}\n"
 
-    # 写入其他频道（如果需要）
-    if sorted_others:
-        output += f"\n# 其他频道 ({len(sorted_others)})\n"
-        for name, url in sorted_others:
-            output += f'#EXTINF:-1 group-title="其他",{name}\n'
-            output += f"{url}\n"
-
-    total = bb_count + len(sorted_hk) + len(sorted_tw) + len(sorted_others)
+    total = bb_count + len(sorted_hk) + len(sorted_tw)
 
     keyword_filtered_count = len(cleaned_channels) - len(keyword_filtered) if cleaned_channels else 0
     url_filtered_count = len(keyword_filtered) - len(url_filtered)
@@ -533,7 +520,6 @@ def main():
 # BB 频道数: {bb_count}
 # {HK_GROUP}频道数: {len(sorted_hk)}
 # {TW_GROUP}频道数: {len(sorted_tw)}
-# 其他频道数: {len(sorted_others)}
 # 关键词过滤数: {keyword_filtered_count}
 # URL过滤数: {url_filtered_count}
 # 去重频道数: {deduped_count}
