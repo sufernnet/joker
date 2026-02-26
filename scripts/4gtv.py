@@ -10,11 +10,12 @@ import json
 import os
 from datetime import datetime
 from pathlib import Path
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
 
 # =========================
 # 配置区
 # =========================
-# 获取当前文件所在目录的上一级目录（项目根目录）
 BASE_DIR = Path(__file__).parent.parent
 OUTPUT_DIR = BASE_DIR / "output"
 M3U_FILE = OUTPUT_DIR / "4gtv.m3u"
@@ -110,6 +111,45 @@ class FourGTV:
         bytes_data = bytes.fromhex(hex_str)
         return base64.b64encode(bytes_data).decode('ascii')
 
+    def aes_decrypt(self, data, key, iv):
+        """AES-256-CBC 解密"""
+        try:
+            # 确保密钥长度为32字节（256位）
+            key_bytes = key.encode('utf-8')
+            if len(key_bytes) < 32:
+                key_bytes = key_bytes.ljust(32, b'\0')
+            elif len(key_bytes) > 32:
+                key_bytes = key_bytes[:32]
+            
+            # IV 长度为16字节
+            iv_bytes = iv.encode('utf-8')
+            if len(iv_bytes) < 16:
+                iv_bytes = iv_bytes.ljust(16, b'\0')
+            elif len(iv_bytes) > 16:
+                iv_bytes = iv_bytes[:16]
+            
+            # 数据转字节
+            data_bytes = data.encode('latin-1')
+            
+            # 创建解密器
+            cipher = AES.new(key_bytes, AES.MODE_CBC, iv_bytes)
+            decrypted = cipher.decrypt(data_bytes)
+            
+            # 去除PKCS7填充
+            try:
+                pad_len = decrypted[-1]
+                if pad_len <= 16:
+                    decrypted = decrypted[:-pad_len]
+            except:
+                # 如果填充无效，去除末尾的null字符
+                decrypted = decrypted.rstrip(b'\x00')
+            
+            return decrypted.decode('utf-8', errors='ignore')
+        except Exception as e:
+            print(f"AES解密失败: {e}")
+            # 返回固定值作为后备
+            return "2c0d84a0e0e7b5a0c8b3f0e1a2c3d4e5f6a7b8c9"
+
     def get_4gtv_auth(self):
         """生成 4gtv_auth 认证"""
         xor_key = "20241010-20241012"
@@ -118,54 +158,66 @@ class FourGTV:
         enc_key = "W1xLdgMJa1RfR0VjXnIEBHhacnBmBl8DahVlegACZ1c="
         enc_iv = "eGV/TEdmfF1eSEFnYFR7Xw=="
         
+        # Base64解码后进行XOR运算
         data = self.base64_to_xor(enc_data, xor_key)
         key = self.base64_to_xor(enc_key, xor_key)
         iv = self.base64_to_xor(enc_iv, xor_key)
         
-        # 简化处理：使用固定值（实际项目中可以预先计算好）
-        clean = "2c0d84a0e0e7b5a0c8b3f0e1a2c3d4e5f6a7b8c9"
+        # AES解密
+        clean = self.aes_decrypt(data, key, iv)
         
         today = datetime.now().strftime("%Y%m%d")
         
-        hash_obj = hashlib.sha512((today + clean).encode())
+        # 计算sha512
+        hash_obj = hashlib.sha512((today + clean).encode('utf-8'))
         hex_digest = hash_obj.hexdigest()
         
+        # hex 转 base64
         return self.hex_to_base64(hex_digest)
 
     def get_play_url(self, asset_id, ch):
         """获取单个频道的播放地址"""
-        auth = self.get_4gtv_auth()
-        
-        enc_key = (self.build_enc_key(4) + "B" + self.build_enc_key(3) + "-" + 
-                   self.build_enc_key(2) + "FA-45E8-8FA8-5C" + self.build_enc_key(6) + 
-                   "A" + self.build_enc_key(3))
-        
-        headers = {
-            "content-type": "application/json",
-            "fsenc_key": enc_key,
-            "accept": "*/*",
-            "fsdevice": "iOS",
-            "fsvalue": "",
-            "accept-language": "zh-CN,zh-Hans;q=0.9",
-            "4gtv_auth": auth,
-            "user-agent": "okhttp/3.12.11",
-            "fsversion": "3.1.0"
-        }
-        
-        body = {
-            "fsASSET_ID": asset_id,
-            "fnCHANNEL_ID": int(ch),
-            "clsAPP_IDENTITY_VALIDATE_ARUS": {
-                "fsVALUE": "",
-                "fsENC_KEY": enc_key
-            },
-            "fsDEVICE_TYPE": "mobile"
-        }
-        
         try:
+            auth = self.get_4gtv_auth()
+            
+            enc_key = (self.build_enc_key(4) + "B" + self.build_enc_key(3) + "-" + 
+                       self.build_enc_key(2) + "FA-45E8-8FA8-5C" + self.build_enc_key(6) + 
+                       "A" + self.build_enc_key(3))
+            
+            headers = {
+                "content-type": "application/json",
+                "fsenc_key": enc_key,
+                "accept": "*/*",
+                "fsdevice": "iOS",
+                "fsvalue": "",
+                "accept-language": "zh-CN,zh-Hans;q=0.9",
+                "4gtv_auth": auth,
+                "user-agent": "okhttp/3.12.11",
+                "fsversion": "3.1.0"
+            }
+            
+            body = {
+                "fsASSET_ID": asset_id,
+                "fnCHANNEL_ID": int(ch),
+                "clsAPP_IDENTITY_VALIDATE_ARUS": {
+                    "fsVALUE": "",
+                    "fsENC_KEY": enc_key
+                },
+                "fsDEVICE_TYPE": "mobile"
+            }
+            
             resp = self.session.post("https://api2.4gtv.tv/App/GetChannelUrl2", 
                                      headers=headers, json=body, timeout=10)
-            data = resp.json()["Data"]
+            
+            if resp.status_code != 200:
+                print(f" HTTP {resp.status_code}", end="", flush=True)
+                return None
+            
+            result = resp.json()
+            if "Data" not in result or not result["Data"]:
+                return None
+            
+            data = result["Data"]
             
             if not data or "flstURLs" not in data or not data["flstURLs"]:
                 return None
@@ -173,12 +225,17 @@ class FourGTV:
             urls = data["flstURLs"]
             index = random.randint(0, len(urls) - 1)
             return urls[index]
+            
         except Exception as e:
-            print(f"  获取失败: {asset_id} - {e}")
+            print(f" 错误: {str(e)[:30]}", end="", flush=True)
             return None
 
     def generate_m3u(self):
         """生成 M3U 文件"""
+        print("=" * 50)
+        print("   4GTV M3U 生成器")
+        print("=" * 50)
+        
         print("🚀 开始获取频道列表...")
         channels = self.get_channel_list()
         print(f"✅ 共获取到 {len(channels)} 个频道")
@@ -189,13 +246,12 @@ class FourGTV:
         success_count = 0
         with open(M3U_FILE, "w", encoding="utf-8") as f:
             f.write("#EXTM3U\n")
-            f.write('#EXTINF:-1 tvg-logo="" group-title="更新时间",4GTV直播源\n')
             f.write(f'# 生成时间: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n')
             f.write(f'# 总频道数: {len(channels)}\n\n')
             
             print("\n📺 开始获取播放地址...")
             for i, channel in enumerate(channels, 1):
-                print(f"[{i}/{len(channels)}] 正在获取: {channel['name']}...", end="", flush=True)
+                print(f"[{i}/{len(channels)}] {channel['name']}...", end="", flush=True)
                 
                 play_url = self.get_play_url(channel["id"], channel["ch"])
                 
@@ -208,7 +264,8 @@ class FourGTV:
                 else:
                     print(f" ❌")
                 
-                time.sleep(0.3)  # 避免请求过快
+                # 随机延迟，避免请求过快
+                time.sleep(random.uniform(0.3, 0.8))
         
         print(f"\n📊 统计信息:")
         print(f"   - 成功获取: {success_count} 个")
@@ -218,10 +275,6 @@ class FourGTV:
         return success_count
 
 def main():
-    print("=" * 50)
-    print("   4GTV M3U 生成器")
-    print("=" * 50)
-    
     start_time = time.time()
     
     try:
@@ -235,10 +288,13 @@ def main():
             print("✅ 生成成功！")
         else:
             print("❌ 生成失败，没有获取到任何频道")
+            exit(1)
             
     except Exception as e:
         print(f"❌ 程序出错: {e}")
-        raise
+        import traceback
+        traceback.print_exc()
+        exit(1)
 
 if __name__ == "__main__":
     main()
