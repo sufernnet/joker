@@ -31,7 +31,7 @@ jobs:
       - name: 安装依赖
         run: |
           python -m pip install --upgrade pip
-          pip install requests
+          pip install requests pycryptodome
           pip list
       
       - name: 测试网络连接
@@ -80,7 +80,6 @@ jobs:
           ## ⏰ 更新信息
           - 最后更新: ${UPDATE_TIME}
           - 触发方式: ${{ github.event_name }}
-          - 运行ID: ${{ github.run_id }}
           
           ## 📊 统计信息
           - 总频道数: ${CHANNEL_COUNT}
@@ -88,9 +87,6 @@ jobs:
           
           ## 🔧 使用方法
           在支持M3U的播放器（TiviMate、VLC、PotPlayer等）中添加上述地址即可。
-          
-          ## ⚠️ 免责声明
-          本仓库仅用于技术学习交流，所有内容均来自互联网，如有侵权请联系删除。
           EOF
       
       - name: 部署到GitHub Pages
@@ -105,15 +101,3 @@ jobs:
             update 4gtv.m3u
             🕒 ${{ env.UPDATE_TIME }}
             📊 频道: ${{ env.CHANNEL_COUNT }}
-      
-      - name: 发送通知
-        if: always()
-        run: |
-          if [ "${{ job.status }}" == "success" ]; then
-            echo "✅ 更新成功！"
-            echo "M3U地址: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/4gtv.m3u"
-            echo "频道数量: ${{ env.CHANNEL_COUNT }}"
-          else
-            echo "❌ 更新失败！"
-            echo "请检查Actions日志: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          fi
