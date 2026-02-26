@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # EE.m3u
-# 生成时间: 2026-02-26 10:35:23
+# 生成时间: 2026-02-26 10:40:22
 # 更新频率: 每天 06:00 / 17:00
 # EPG: https://epg.zsdc.eu.org/t.xml.gz
 # GitHub Actions 自动生成
@@ -548,7 +548,7 @@ http://bxtv.3a.ink/api.php?id=qxjd
 #EXTINF:-1 group-title="HK",TVB无线千禧
 http://rihou.cc:555/tv/[Bx]无线千禧
 
-# TW频道 (51)
+# TW频道 (70)
 #EXTINF:-1 group-title="TW",镜新聞
 https://d36dgdk71xuzzg.cloudfront.net/v1/manifest/3a2ac8e6b6c76471996ebf627393d9c9417a60b6/linetv-6-627778910172-MediaTailor-production/c9b2313d-efdd-4777-9fae-573be8a86755/0.m3u8
 #EXTINF:-1 group-title="TW",镜新聞
@@ -631,6 +631,16 @@ rtmp://f13h.mine.nu/sat/tv071
 https://stream1.freetv.fun/409fbf8e0ec33500b4d76956cca00af9fddacac6dd2f8822f464b089fb583a6b.m3u8
 #EXTINF:-1 group-title="TW",环球电视台
 http://utv1.hqtvzb.com:9999/hls/world.m3u8
+#EXTINF:-1 group-title="TW",台视新闻
+http://74.91.26.218:82/live/ttvnews.m3u8
+#EXTINF:-1 group-title="TW",台视综合
+http://74.91.26.218:82/live/ttvzh.m3u8
+#EXTINF:-1 group-title="TW",台视综合
+http://iptv.4666888.xyz/iptv2A.php?id=51
+#EXTINF:-1 group-title="TW",中视经典
+http://74.91.26.218:82/live/ctvjd.m3u8
+#EXTINF:-1 group-title="TW",中视菁采
+http://74.91.26.218:82/live/ctvjc.m3u8
 #EXTINF:-1 group-title="TW",八大精彩台
 http://165.154.226.214:50007/li-4gtv-4gtv034/index.m3u8?proxy=true
 #EXTINF:-1 group-title="TW",八大綜藝台
@@ -645,60 +655,47 @@ rtmp://f13h.mine.nu/sat/tv111
 http://74.91.26.218:82/live/ctsjy.m3u8
 #EXTINF:-1 group-title="TW",非凡新聞HD
 rtmp://f13h.mine.nu/sat/tv581
+#EXTINF:-1 group-title="TW",三立台湾台
+http://23.128.116.71:5589/live.php?id=sanlitaiwan&h=23.128.116.71&p=22364&token=1768656088.86691cca94504da575d8df777cf38454e46d310d063477dfb6dc26c93a6a248f
+#EXTINF:-1 group-title="TW",三立戏剧台
+http://23.128.116.71:5589/live.php?id=sanlixiju_twn&h=23.128.116.71&p=22364&token=1768656088.9fbb23a20a7c3a7360e8bad0e362e55915cf9ff0026941769f8a92f662dfcf70
+#EXTINF:-1 group-title="TW",三立综合台
+http://23.128.116.71:5589/live.php?id=sanlizhonghe&h=23.128.116.71&p=22364&token=1768656088.492115de19636f0cd4cf03421832bbed5f62da67f42781bc53be1a0faaf20858
+#EXTINF:-1 group-title="TW",三立都会台
+http://23.128.116.71:5589/live.php?id=sanlidouhui_twn&h=23.128.116.71&p=22364&token=1768656088.71792c6eb5cad5cf0b18fea078d4b239afcebabadce35bd9315d491180a5e404
+#EXTINF:-1 group-title="TW",公视台语台
+http://74.91.26.218:82/live/ptsty.m3u8
+#EXTINF:-1 group-title="TW",台视财经
+http://74.91.26.218:82/live/ttvcj.m3u8
 #EXTINF:-1 group-title="TW",民視影劇
 https://stream1.freetv.fun/07a927f5ea19746f63e8e92cd1889151f4edb274910ea867c19eaf31e04a9901.m3u8
 #EXTINF:-1 group-title="TW",民視旅遊
 https://stream1.freetv.fun/3439333a186efc0756e2eba2d5dadafc25d63abc56ae450e1d9df49c0180668d.m3u8
+#EXTINF:-1 group-title="TW",澳视Macau
+http://php.jdshipin.com/TVOD/iptv.php?id=as
+#EXTINF:-1 group-title="TW",澳视Macau
+https://cdn6.101.qzz.io/163189/as
+#EXTINF:-1 group-title="TW",澳视Macau
+http://r.jdshipin.com/QFhCq
+#EXTINF:-1 group-title="TW",澳视澳门
+https://cdn6.101.qzz.io/163189/asam
+#EXTINF:-1 group-title="TW",澳视澳门
+http://iptv.4666888.xyz/iptv2A.php?id=41
+#EXTINF:-1 group-title="TW",澳视澳门
+http://r.jdshipin.com/n2YZI
+#EXTINF:-1 group-title="TW",澳门体育
+http://cdn6.veryfast.filegear-sg.me/live/amty/stream.m3u8
+#EXTINF:-1 group-title="TW",澳门体育
+https://cdn6.101.qzz.io/163189/amty
 #EXTINF:-1 group-title="TW",緯來綜合
 https://stream1.freetv.fun/541f6094f34e0290077cf0d55df31c49bc148118e6b030fa2165d5c8c35a6d1f.m3u8
-
-# 其他频道 (19)
-#EXTINF:-1 group-title="其他",三立台湾台
-http://23.128.116.71:5589/live.php?id=sanlitaiwan&h=23.128.116.71&p=22364&token=1768656088.86691cca94504da575d8df777cf38454e46d310d063477dfb6dc26c93a6a248f
-#EXTINF:-1 group-title="其他",三立戏剧台
-http://23.128.116.71:5589/live.php?id=sanlixiju_twn&h=23.128.116.71&p=22364&token=1768656088.9fbb23a20a7c3a7360e8bad0e362e55915cf9ff0026941769f8a92f662dfcf70
-#EXTINF:-1 group-title="其他",三立综合台
-http://23.128.116.71:5589/live.php?id=sanlizhonghe&h=23.128.116.71&p=22364&token=1768656088.492115de19636f0cd4cf03421832bbed5f62da67f42781bc53be1a0faaf20858
-#EXTINF:-1 group-title="其他",三立都会台
-http://23.128.116.71:5589/live.php?id=sanlidouhui_twn&h=23.128.116.71&p=22364&token=1768656088.71792c6eb5cad5cf0b18fea078d4b239afcebabadce35bd9315d491180a5e404
-#EXTINF:-1 group-title="其他",中视经典
-http://74.91.26.218:82/live/ctvjd.m3u8
-#EXTINF:-1 group-title="其他",中视菁采
-http://74.91.26.218:82/live/ctvjc.m3u8
-#EXTINF:-1 group-title="其他",公视台语台
-http://74.91.26.218:82/live/ptsty.m3u8
-#EXTINF:-1 group-title="其他",台视新闻
-http://74.91.26.218:82/live/ttvnews.m3u8
-#EXTINF:-1 group-title="其他",台视综合
-http://74.91.26.218:82/live/ttvzh.m3u8
-#EXTINF:-1 group-title="其他",台视综合
-http://iptv.4666888.xyz/iptv2A.php?id=51
-#EXTINF:-1 group-title="其他",台视财经
-http://74.91.26.218:82/live/ttvcj.m3u8
-#EXTINF:-1 group-title="其他",澳视Macau
-http://php.jdshipin.com/TVOD/iptv.php?id=as
-#EXTINF:-1 group-title="其他",澳视Macau
-https://cdn6.101.qzz.io/163189/as
-#EXTINF:-1 group-title="其他",澳视Macau
-http://r.jdshipin.com/QFhCq
-#EXTINF:-1 group-title="其他",澳视澳门
-https://cdn6.101.qzz.io/163189/asam
-#EXTINF:-1 group-title="其他",澳视澳门
-http://iptv.4666888.xyz/iptv2A.php?id=41
-#EXTINF:-1 group-title="其他",澳视澳门
-http://r.jdshipin.com/n2YZI
-#EXTINF:-1 group-title="其他",澳门体育
-http://cdn6.veryfast.filegear-sg.me/live/amty/stream.m3u8
-#EXTINF:-1 group-title="其他",澳门体育
-https://cdn6.101.qzz.io/163189/amty
 
 # 统计信息
 # BB 频道数: 79
 # HK频道数: 95
-# TW频道数: 51
-# 其他频道数: 19
+# TW频道数: 70
 # 关键词过滤数: 18
 # URL过滤数: 0
 # 去重频道数: 2
 # 总频道数: 244
-# 更新时间: 2026-02-26 10:35:23
+# 更新时间: 2026-02-26 10:40:22
