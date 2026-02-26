@@ -4,15 +4,12 @@ EE.m3u 合并脚本（港台频道版 + 新聞频道）
 
 功能：
 1. 从同一个源文件（港台大陆）中提取“港台频道”和“新聞频道”两个分组
-2. 合并后重命名为“港澳台”
-3. 过滤掉指定频道和指定URL
+2. 将频道分为 HK 和 TW 两个独立分组
+3. 过滤掉指定频道
 4. 去除频道名称中的分辨率标记（如“HD 1080p”、“1080p”）
-5. 去重处理：保留标准名称，去掉带"台"字的重复频道
-6. 按“香港在前，台湾在后”的规则排序，各系列内部顺序精细化：
-   香港：凤凰中文 → 凤凰资讯 → 凤凰香港 → Now系列（新闻/体育/财经/直播）→ HOY系列（按数字）→ TVB系列（翡翠优先）→ ViuTV → CH5~CH8 → 其他香港
-   台湾：民视系列 → 台视系列 → 纬来系列 → 龙华系列 → 其他台湾
-7. 合并 BB.m3u
-8. 使用固定 EPG
+5. 按指定顺序对 HK 和 TW 分组分别排序
+6. 合并 BB.m3u
+7. 使用固定 EPG
 
 北京时间每天 06:00 / 17:00 自动运行
 """
@@ -30,7 +27,10 @@ OUTPUT_FILE = "EE.m3u"
 
 # 需要从同一个源文件中提取的两个分组名
 SOURCE_GROUPS = ["港台频道", "新聞频道"]
-TARGET_GROUP = "港澳台"
+
+# 输出分组名称
+HK_GROUP = "HK"
+TW_GROUP = "TW"
 
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 
@@ -42,30 +42,11 @@ FILTER_KEYWORDS = [
     "邵氏武侠",
     "邵氏电影",
     "邵氏喜剧",
-    "TVB千禧经典540p",
-    "TVB无线千禧",
-    "中視HD 720p",
-    "台視HD 720p",
     "生命电影",
     "ASTV",
     "亚洲卫视",
-    "Channel 5",
-    "Channel 8",
-    "Channel U",
     "GOODTV",
     "好消息",
-    "民视720p",
-    "緯來綜合",
-    "民視旅遊",
-    "民視影劇",
-    "民视影劇",
-    "民視影劇",
-    "三立台湾台",
-    "三立戏剧台",
-    "三立综合台720p",
-    "三立都会台",
-    "龙华偶像720p",
-    "华视HD 720p",
     "唐NTD",
     "唐人卫视",
     "唯心电视",
@@ -73,9 +54,16 @@ FILTER_KEYWORDS = [
     "星空音乐",
     "澳门综艺",
     "華藝中文",
-    "公視戲劇",
-    "公视台语台",
-    "中旺电视"
+    "中旺电视",
+    "中天娱乐",           # 新增过滤
+    "中天新聞",           # 新增过滤
+    "中天新聞1080p(梯子)", # 新增过滤
+    "中天新聞720p",       # 新增过滤
+    "中天综合",           # 新增过滤
+    "寰宇新聞台",         # 新增过滤
+    "寰宇新聞台720p",     # 新增过滤
+    "年代新聞",           # 新增过滤
+    "東森新聞台",         # 新增过滤
 ]
 
 # 需要过滤掉的特定URL（精确匹配）
@@ -91,6 +79,55 @@ NAME_NORMALIZATION = {
     "now新闻台": "Now新闻",
     "NOW 新闻台": "Now新闻",
     "Now 新闻台": "Now新闻",
+    "翡翠台4K": "翡翠台4K",      # 保留4K标识
+    "翡翠台": "翡翠台",
+    "明珠台": "明珠台",
+    "TVB plus": "TVB plus",
+    "TVB1": "TVB1",
+    "TVBJ1": "TVBJ1",
+    "TVB功夫720p": "TVB功夫",   # 去除分辨率
+    "TVB千禧经典": "TVB千禧经典",
+    "TVB娱乐新闻台720p": "TVB娱乐新闻台",
+    "TVB星河720p": "TVB星河",
+    "无线新闻台": "无线新闻台",
+    "ViuTV": "ViuTV",
+    "ViuTV6": "ViuTV6",
+    "RHK31": "RHK31",
+    "RHK32": "RHK32",
+    "CH5综合": "CH5综合",
+    "CH8综合": "CH8综合",
+    "CHU综合": "CHU综合",
+    "CCTV13新闻": "CCTV13新闻",
+    "八度空间": "八度空间",
+    "天映经典": "天映经典",
+    "镜新聞": "镜新聞",
+    "民视": "民视",
+    "民视台湾台": "民视台湾台",
+    "民視新聞台": "民視新聞台",
+    "民視第一台": "民視第一台",
+    "民视综艺": "民视综艺",
+    "CTS華視新聞资讯": "CTS華視新聞资讯",
+    "龙华偶像": "龙华偶像",
+    "龙华偶像1080": "龙华偶像",  # 合并
+    "龙华戏剧": "龙华戏剧",
+    "龙华日韩": "龙华日韩",
+    "龙华经典": "龙华经典",
+    "中視": "中視",
+    "中視新聞": "中視新聞",
+    "公視": "公視",
+    "台視": "台視",
+    "緯來精彩720p": "緯來精彩",
+    "环球电视台720p": "环球电视台",
+    "台视新闻": "台视新闻",
+    "台视综合": "台视综合",
+    "TVBS精采台": "TVBS精采台",
+    "中视经典": "中视经典",
+    "中视菁采": "中视菁采",
+    "八大精彩台": "八大精彩台",
+    "八大綜藝台": "八大綜藝台",
+    "华视": "华视",
+    "华视教育体育文化": "华视教育体育文化",
+    "非凡新聞HD 720p": "非凡新聞",
 }
 
 # 需要优先保留的名称模式（不区分大小写）
@@ -99,12 +136,75 @@ PREFERRED_NAMES = [
     "Now体育",
     "Now财经", 
     "Now直播",
+    "翡翠台",
+    "翡翠台4K",
+    "明珠台",
 ]
 
-# 台湾频道关键词（用于区分台湾/香港）
-TAIWAN_KEYWORDS = [
-    "民视", "台视", "纬来", "龙华", "八大", "东森", "三立", "中视", "华视",
-    "TVBS", "非凡", "年代", "壹电视", "寰宇", "靖天", "爱尔达", "中天", "高点"
+# ================== HK频道指定顺序 ==================
+HK_ORDER = [
+    "凤凰中文",
+    "凤凰资讯",
+    "凤凰香港台",
+    "Now新闻",
+    "Now体育",
+    "Now财经",
+    "Now直播",
+    "HOY76",
+    "HOY77",
+    "HOY78",
+    "翡翠台",
+    "翡翠台4K",
+    "明珠台",
+    "TVB plus",
+    "TVB1",
+    "TVBJ1",
+    "TVB功夫",
+    "TVB千禧经典",
+    "TVB娱乐新闻台",
+    "TVB星河",
+    "无线新闻台",
+    "ViuTV",
+    "ViuTV6",
+    "RHK31",
+    "RHK32",
+    "CH5综合",
+    "CH8综合",
+    "CHU综合",
+    "CCTV13新闻",
+    "八度空间",
+    "天映经典",
+]
+
+# ================== TW频道指定顺序 ==================
+TW_ORDER = [
+    "镜新聞",
+    "民视",
+    "民视台湾台",
+    "民視新聞台",
+    "民視第一台",
+    "民视综艺",
+    "CTS華視新聞资讯",
+    "龙华偶像",
+    "龙华戏剧",
+    "龙华日韩",
+    "龙华经典",
+    "中視",
+    "中視新聞",
+    "公視",
+    "台視",
+    "緯來精彩",
+    "环球电视台",
+    "台视新闻",
+    "台视综合",
+    "TVBS精采台",
+    "中视经典",
+    "中视菁采",
+    "八大精彩台",
+    "八大綜藝台",
+    "华视",
+    "华视教育体育文化",
+    "非凡新聞",
 ]
 
 # ================== 工具 ==================
@@ -174,6 +274,7 @@ def clean_channel_name(name):
     name = re.sub(r'\s*[Hh][Dd]\s*1080[pP]?\s*$', '', name)
     name = re.sub(r'\s*1080[pP]\s*$', '', name)
     name = re.sub(r'\s*[Hh][Dd]\s*$', '', name)
+    name = re.sub(r'\s*720[pP]\s*$', '', name)  # 增加720p处理
     # 去除可能留下的空格
     name = name.strip()
     if name != original:
@@ -224,7 +325,7 @@ def is_preferred_name(name):
 def deduplicate_channels(channels):
     """
     去重处理
-    策略：对于相同内容的频道，优先保留标准名称，去掉带"台"字的变体
+    策略：对于相同内容的频道，优先保留标准名称
     """
     url_groups = {}
     for name, url in channels:
@@ -259,126 +360,62 @@ def deduplicate_channels(channels):
     return deduped
 
 
-# ================== 排序逻辑 ==================
+# ================== 分组判断函数 ==================
 
-def is_taiwan(name):
-    """根据关键词判断是否为台湾频道"""
+def is_hk_channel(name):
+    """判断是否为香港频道"""
+    hk_identifiers = [
+        "凤凰", "Now", "HOY", "翡翠", "明珠", "TVB", "无线", "Viu", "RHK",
+        "CH5", "CH8", "CHU", "CCTV13", "八度空间", "天映"
+    ]
     name_lower = name.lower()
-    for kw in TAIWAN_KEYWORDS:
-        if kw.lower() in name_lower:
+    for identifier in hk_identifiers:
+        if identifier.lower() in name_lower:
             return True
     return False
 
 
-def get_hk_group_and_sub(name):
-    """
-    返回香港频道的主组优先级和内部排序子键
-    主组优先级：0凤凰中文,1凤凰资讯,2凤凰香港,3Now系列,4HOY系列,5TVB系列,6ViuTV,7CH5~8,8其他香港
-    子键用于组内精细排序
-    """
+def is_tw_channel(name):
+    """判断是否为台湾频道"""
+    tw_identifiers = [
+        "镜新聞", "民视", "民視", "華視", "CTS", "龙华", "中視", "公視", 
+        "台視", "緯來", "环球", "TVBS", "八大", "华视", "非凡"
+    ]
     name_lower = name.lower()
-
-    # 凤凰中文
-    if "凤凰中文" in name or ("凤凰" in name and "中文" in name):
-        return (0, 0)
-
-    # 凤凰资讯
-    if "凤凰资讯" in name or ("凤凰" in name and "资讯" in name):
-        return (1, 0)
-
-    # 凤凰香港
-    if "凤凰香港" in name or ("凤凰" in name and "香港" in name):
-        return (2, 0)
-
-    # Now系列
-    if "now" in name_lower:
-        if "新闻" in name or "news" in name_lower:
-            sub = 0
-        elif "体育" in name or "sports" in name_lower:
-            sub = 1
-        elif "财经" in name or "finance" in name_lower:
-            sub = 2
-        elif "直播" in name or "live" in name_lower:
-            sub = 3
-        else:
-            sub = 4
-        return (3, sub)
-
-    # HOY系列
-    if "hoy" in name_lower:
-        match = re.search(r'(\d+)', name)
-        if match:
-            sub = int(match.group(1))
-        else:
-            sub = 99
-        return (4, sub)
-
-    # TVB系列
-    if any(k in name_lower for k in ["tvb", "翡翠", "明珠", "j2", "无线"]):
-        if "翡翠" in name:
-            sub = 0
-        elif "明珠" in name:
-            sub = 1
-        elif "j2" in name_lower:
-            sub = 2
-        else:
-            sub = 3
-        return (5, sub)
-
-    # ViuTV系列
-    if "viu" in name_lower:
-        return (6, 0)
-
-    # CH5~CH8
-    if "ch5" in name_lower or "ch8" in name_lower or "channel 5" in name_lower or "channel 8" in name_lower:
-        match = re.search(r'[ch\s]*(\d+)', name_lower)
-        if match:
-            sub = int(match.group(1))
-        else:
-            sub = 99
-        return (7, sub)
-
-    # 其他香港频道
-    return (8, 0)
+    for identifier in tw_identifiers:
+        if identifier.lower() in name_lower:
+            return True
+    return False
 
 
-def get_tw_group_and_sub(name):
+# ================== 自定义排序函数 ==================
+
+def sort_by_custom_order(channels, order_list):
     """
-    返回台湾频道的主组优先级和内部排序子键
-    主组优先级：0民视系列,1台视系列,2纬来系列,3龙华系列,4其他台湾
+    根据指定的顺序列表对频道进行排序
+    不在列表中的频道放在最后
     """
-    name_lower = name.lower()
-
-    if "民视" in name:
-        return (0, 0)
-    if "台视" in name:
-        return (1, 0)
-    if "纬来" in name:
-        return (2, 0)
-    if "龙华" in name:
-        return (3, 0)
-    return (4, 0)
-
-
-def sort_gat_channels(channels):
-    """
-    新的排序函数：先香港后台湾，各系列内部按指定顺序
-    排序键格式：(region, group, sub, name)
-        region: 0=香港, 1=台湾
-        group: 各区域内主组优先级
-        sub: 组内精细排序键
-        name: 最后按名称字母顺序
-    """
+    # 创建顺序映射
+    order_map = {name: i for i, name in enumerate(order_list)}
+    
     def key_func(item):
         name, _ = item
-        if is_taiwan(name):
-            region = 1
-            group, sub = get_tw_group_and_sub(name)
-        else:
-            region = 0
-            group, sub = get_hk_group_and_sub(name)
-        return (region, group, sub, name)
-
+        # 获取基础名称（去除可能的分辨率后缀）
+        base_name = re.sub(r'\s*(?:HD|1080p|720p|4K).*$', '', name).strip()
+        
+        # 尝试匹配完整名称
+        if name in order_map:
+            return (0, order_map[name])
+        # 尝试匹配基础名称
+        elif base_name in order_map:
+            return (0, order_map[base_name])
+        # 尝试部分匹配
+        for idx, order_name in enumerate(order_list):
+            if order_name in name:
+                return (0, idx)
+        # 不在列表中，按字母顺序排序但放在后面
+        return (1, name)
+    
     return sorted(channels, key=key_func)
 
 
@@ -419,8 +456,30 @@ def main():
     # 去重处理
     deduped_channels = deduplicate_channels(normalized_channels)
     
-    # 排序
-    sorted_channels = sort_gat_channels(deduped_channels)
+    # 分离 HK 和 TW 频道
+    hk_channels = []
+    tw_channels = []
+    others = []
+    
+    for name, url in deduped_channels:
+        if is_hk_channel(name):
+            hk_channels.append((name, url))
+        elif is_tw_channel(name):
+            tw_channels.append((name, url))
+        else:
+            others.append((name, url))
+    
+    log(f"HK频道数: {len(hk_channels)}")
+    log(f"TW频道数: {len(tw_channels)}")
+    log(f"其他频道数: {len(others)}")
+    
+    # 分别排序
+    sorted_hk = sort_by_custom_order(hk_channels, HK_ORDER)
+    sorted_tw = sort_by_custom_order(tw_channels, TW_ORDER)
+    
+    # 其他频道按名称排序
+    sorted_others = sorted(others, key=lambda x: x[0])
+    
     log(f"排序完成")
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -442,22 +501,39 @@ def main():
         if line.startswith("#EXTINF"):
             bb_count += 1
 
-    if sorted_channels:
-        output += f"\n# {TARGET_GROUP}频道 ({len(sorted_channels)})\n"
-        for name, url in sorted_channels:
-            output += f'#EXTINF:-1 group-title="{TARGET_GROUP}",{name}\n'
+    # 写入 HK 分组
+    if sorted_hk:
+        output += f"\n# {HK_GROUP}频道 ({len(sorted_hk)})\n"
+        for name, url in sorted_hk:
+            output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n'
             output += f"{url}\n"
 
-    total = bb_count + len(sorted_channels)
+    # 写入 TW 分组
+    if sorted_tw:
+        output += f"\n# {TW_GROUP}频道 ({len(sorted_tw)})\n"
+        for name, url in sorted_tw:
+            output += f'#EXTINF:-1 group-title="{TW_GROUP}",{name}\n'
+            output += f"{url}\n"
+
+    # 写入其他频道（如果需要）
+    if sorted_others:
+        output += f"\n# 其他频道 ({len(sorted_others)})\n"
+        for name, url in sorted_others:
+            output += f'#EXTINF:-1 group-title="其他",{name}\n'
+            output += f"{url}\n"
+
+    total = bb_count + len(sorted_hk) + len(sorted_tw) + len(sorted_others)
 
     keyword_filtered_count = len(cleaned_channels) - len(keyword_filtered) if cleaned_channels else 0
     url_filtered_count = len(keyword_filtered) - len(url_filtered)
-    deduped_count = len(url_filtered) - len(sorted_channels)
+    deduped_count = len(url_filtered) - len(deduped_channels)
 
     output += f"""
 # 统计信息
 # BB 频道数: {bb_count}
-# {TARGET_GROUP}频道数: {len(sorted_channels)}
+# {HK_GROUP}频道数: {len(sorted_hk)}
+# {TW_GROUP}频道数: {len(sorted_tw)}
+# 其他频道数: {len(sorted_others)}
 # 关键词过滤数: {keyword_filtered_count}
 # URL过滤数: {url_filtered_count}
 # 去重频道数: {deduped_count}
@@ -469,7 +545,7 @@ def main():
         with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             f.write(output)
         log("🎉 EE.m3u 生成成功")
-        log(f"📺 BB({bb_count}) + {TARGET_GROUP}({len(sorted_channels)}) = {total}")
+        log(f"📺 BB({bb_count}) + HK({len(sorted_hk)}) + TW({len(sorted_tw)}) = {total}")
         if keyword_filtered_count > 0:
             log(f"🗑️ 关键词过滤了 {keyword_filtered_count} 个频道")
         if url_filtered_count > 0:
