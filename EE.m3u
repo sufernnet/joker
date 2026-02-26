@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # EE.m3u
-# 生成时间: 2026-02-26 02:46:35
+# 生成时间: 2026-02-26 02:49:07
 # 更新频率: 每天 06:00 / 17:00
 # EPG: https://epg.zsdc.eu.org/t.xml.gz
 # GitHub Actions 自动生成
@@ -356,7 +356,7 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 
 
-# 港澳台频道 (126)
+# 港澳台频道 (125)
 #EXTINF:-1 group-title="港澳台",凤凰中文
 https://cdn6.101.qzz.io/163189/fhzw
 #EXTINF:-1 group-title="港澳台",凤凰中文
@@ -523,10 +523,6 @@ http://165.154.226.214:50007/li-4gtv-4gtv066/index.m3u8?proxy=true
 https://smt.1678520.xyz/smt3.2.1.php?id=Celestial2
 #EXTINF:-1 group-title="港澳台",天映经典
 https://cdn9.163189.xyz/smt1.1.php?id=Celestial2
-#EXTINF:-1 group-title="港澳台",民視影劇
-https://stream1.freetv.fun/07a927f5ea19746f63e8e92cd1889151f4edb274910ea867c19eaf31e04a9901.m3u8
-#EXTINF:-1 group-title="港澳台",民視旅遊
-https://stream1.freetv.fun/3439333a186efc0756e2eba2d5dadafc25d63abc56ae450e1d9df49c0180668d.m3u8
 #EXTINF:-1 group-title="港澳台",民視第一台
 http://74.91.26.218:82/live/ftvdy.m3u8
 #EXTINF:-1 group-title="港澳台",民視第一台
@@ -561,6 +557,8 @@ http://74.91.26.218:82/live/ftv.m3u8
 http://iptv.4666888.xyz/iptv2A.php?id=55
 #EXTINF:-1 group-title="港澳台",民视台湾台
 http://74.91.26.218:82/live/ftvtw.m3u8
+#EXTINF:-1 group-title="港澳台",民视影劇
+http://iptv.4666888.xyz/iptv2A.php?id=53
 #EXTINF:-1 group-title="港澳台",民视综艺
 http://iptv.4666888.xyz/iptv2A.php?id=46
 #EXTINF:-1 group-title="港澳台",民视综艺
@@ -612,9 +610,9 @@ http://74.91.26.218:82/live/ctsjy.m3u8
 
 # 统计信息
 # BB 频道数: 79
-# 港澳台频道数: 126
-# 关键词过滤数: 22
+# 港澳台频道数: 125
+# 关键词过滤数: 23
 # URL过滤数: 0
 # 去重频道数: 2
-# 总频道数: 205
-# 更新时间: 2026-02-26 02:46:35
+# 总频道数: 204
+# 更新时间: 2026-02-26 02:49:07
