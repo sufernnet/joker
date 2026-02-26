@@ -12,7 +12,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'scripts/4gtv.py'  # 修正为4gtv.py
+      - 'scripts/4gtv.py'
 
 jobs:
   update-m3u:
@@ -24,12 +24,14 @@ jobs:
       - name: 检出仓库
         uses: actions/checkout@v3
       
-      # 2. 设置Python环境
+      # 2. 设置Python环境（去掉缓存配置）
       - name: 设置Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-          cache: 'pip'
+          # 移除 cache 配置，或者改为：
+          # cache: 'pip'
+          # cache-dependency-path: 'scripts/requirements.txt'
       
       # 3. 安装依赖
       - name: 安装依赖
@@ -40,7 +42,7 @@ jobs:
       # 4. 运行生成脚本
       - name: 运行4GTV生成器
         run: |
-          python scripts/4gtv.py   # 修正为4gtv.py
+          python scripts/4gtv.py
         continue-on-error: false
       
       # 5. 准备文件列表
@@ -48,7 +50,7 @@ jobs:
         run: |
           ls -la output/
           echo "文件大小:"
-          wc -l output/4gtv.m3u
+          wc -l output/4gtv.m3u || echo "文件不存在"
       
       # 6. 部署到GitHub Pages分支
       - name: 部署到gh-pages分支
@@ -62,27 +64,3 @@ jobs:
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: '更新4GTV直播源 - ${{ github.event.head_commit.message }}'
-      
-      # 7. 创建M3U链接文件（可选）
-      - name: 生成使用说明
-        run: |
-          echo "# 4GTV 直播源" > output/README.md
-          echo "" >> output/README.md
-          echo "## M3U 地址" >> output/README.md
-          echo "" >> output/README.md
-          echo "https://你的用户名.github.io/joker/4gtv.m3u" >> output/README.md
-          echo "" >> output/README.md
-          echo "最后更新: $(date '+%Y-%m-%d %H:%M:%S')" >> output/README.md
-      
-      # 8. 再次部署（包含README）
-      - name: 部署README
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./output
-          publish_branch: gh-pages
-          destination_dir: ./
-          keep_files: true
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: '更新README文件'
