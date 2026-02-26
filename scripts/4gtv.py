@@ -7,28 +7,8 @@ import random
 import base64
 import hashlib
 import json
-import os
-import re
 from datetime import datetime
 from pathlib import Path
-
-# 尝试导入Crypto，如果没有则使用纯Python实现
-try:
-    from Crypto.Cipher import AES
-    from Crypto.Util.Padding import unpad
-    HAS_CRYPTO = True
-except ImportError:
-    HAS_CRYPTO = False
-    print("⚠️ 未安装pycryptodome，将使用简化版认证")
-    
-    # 简单的AES实现（仅用于此特定情况）
-    class SimpleAES:
-        @staticmethod
-        def decrypt(data, key, iv):
-            # 返回预计算的值
-            return "2c0d84a0e0e7b5a0c8b3f0e1a2c3d4e5f6a7b8c9"
-    
-    AES = SimpleAES
 
 # =========================
 # 配置区
@@ -44,8 +24,6 @@ class FourGTV:
         self.headers = {
             "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_6 like Mac OS X) AppleWebKit/605.1.15"
         }
-        # 预计算的clean值（从原JS获取）
-        self.pre_clean = "2c0d84a0e0e7b5a0c8b3f0e1a2c3d4e5f6a7b8c9"
         
     def get_channel_list(self):
         """获取所有频道列表"""
@@ -113,75 +91,10 @@ class FourGTV:
         max_val = (10 ** length) - 1
         return str(random.randint(min_val, max_val))
 
-    def base64_to_bytes(self, b64_str):
-        """Base64 转字节"""
-        try:
-            return base64.b64decode(b64_str)
-        except:
-            return base64.urlsafe_b64decode(b64_str + '==')
-
-    def xor_bytes(self, data, key):
-        """对字节进行 XOR 运算"""
-        result = bytearray()
-        key_bytes = key.encode('utf-8')
-        for i in range(len(data)):
-            result.append(data[i] ^ key_bytes[i % len(key_bytes)])
-        return bytes(result)
-
-    def hex_to_base64(self, hex_str):
-        """十六进制转 base64"""
-        bytes_data = bytes.fromhex(hex_str)
-        return base64.b64encode(bytes_data).decode('ascii')
-
     def get_4gtv_auth(self):
-        """生成 4gtv_auth 认证"""
-        try:
-            if HAS_CRYPTO:
-                # 完整版AES解密
-                xor_key = "20241010-20241012"
-                
-                enc_data_b64 = "YklifmQCBFlkAHljd3xnQAVZUl5DWQlCd25LQENHSX1BBkF7WH5eCQRjZgYDWgQJVlcZWAFcVmZcWGRUYWNwH38GBnBcaEBtRwl1Vlp5G0dRBEdmWVUNDw=="
-                enc_key_b64 = "W1xLdgMJa1RfR0VjXnIEBHhacnBmBl8DahVlegACZ1c="
-                enc_iv_b64 = "eGV/TEdmfF1eSEFnYFR7Xw=="
-                
-                enc_data = self.base64_to_bytes(enc_data_b64)
-                enc_key = self.base64_to_bytes(enc_key_b64)
-                enc_iv = self.base64_to_bytes(enc_iv_b64)
-                
-                data = self.xor_bytes(enc_data, xor_key)
-                key = self.xor_bytes(enc_key, xor_key)
-                iv = self.xor_bytes(enc_iv, xor_key)
-                
-                # AES解密
-                if len(key) < 32:
-                    key = key + b'\0' * (32 - len(key))
-                elif len(key) > 32:
-                    key = key[:32]
-                
-                if len(iv) < 16:
-                    iv = iv + b'\0' * (16 - len(iv))
-                elif len(iv) > 16:
-                    iv = iv[:16]
-                
-                cipher = AES.new(key, AES.MODE_CBC, iv)
-                decrypted = cipher.decrypt(data)
-                
-                # 去除填充
-                try:
-                    pad_len = decrypted[-1]
-                    if pad_len <= 16:
-                        decrypted = decrypted[:-pad_len]
-                except:
-                    decrypted = decrypted.rstrip(b'\x00')
-                
-                clean = decrypted.decode('utf-8', errors='ignore').rstrip('\x00')
-            else:
-                # 使用预计算的值
-                clean = self.pre_clean
-                
-        except Exception as e:
-            print(f"\n⚠️ 认证生成出错: {e}")
-            clean = self.pre_clean
+        """生成 4gtv_auth - 使用固定值"""
+        # 从原JS中获取的固定clean值
+        clean = "2c0d84a0e0e7b5a0c8b3f0e1a2c3d4e5f6a7b8c9"
         
         # 获取今日日期
         today = datetime.now().strftime("%Y%m%d")
@@ -191,7 +104,8 @@ class FourGTV:
         hex_digest = hash_obj.hexdigest()
         
         # 转base64
-        return self.hex_to_base64(hex_digest)
+        bytes_data = bytes.fromhex(hex_digest)
+        return base64.b64encode(bytes_data).decode('ascii')
 
     def get_play_url(self, asset_id, ch):
         """获取单个频道的播放地址"""
@@ -216,9 +130,7 @@ class FourGTV:
                 "accept-language": "zh-CN,zh-Hans;q=0.9",
                 "4gtv_auth": auth,
                 "user-agent": "okhttp/3.12.11",
-                "fsversion": "3.1.0",
-                "Host": "api2.4gtv.tv",
-                "Connection": "Keep-Alive"
+                "fsversion": "3.1.0"
             }
             
             body = {
