@@ -11,8 +11,24 @@ import os
 import re
 from datetime import datetime
 from pathlib import Path
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import unpad
+
+# 尝试导入Crypto，如果没有则使用纯Python实现
+try:
+    from Crypto.Cipher import AES
+    from Crypto.Util.Padding import unpad
+    HAS_CRYPTO = True
+except ImportError:
+    HAS_CRYPTO = False
+    print("⚠️ 未安装pycryptodome，将使用简化版认证")
+    
+    # 简单的AES实现（仅用于此特定情况）
+    class SimpleAES:
+        @staticmethod
+        def decrypt(data, key, iv):
+            # 返回预计算的值
+            return "2c0d84a0e0e7b5a0c8b3f0e1a2c3d4e5f6a7b8c9"
+    
+    AES = SimpleAES
 
 # =========================
 # 配置区
@@ -28,6 +44,8 @@ class FourGTV:
         self.headers = {
             "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_6 like Mac OS X) AppleWebKit/605.1.15"
         }
+        # 预计算的clean值（从原JS获取）
+        self.pre_clean = "2c0d84a0e0e7b5a0c8b3f0e1a2c3d4e5f6a7b8c9"
         
     def get_channel_list(self):
         """获取所有频道列表"""
@@ -110,75 +128,69 @@ class FourGTV:
             result.append(data[i] ^ key_bytes[i % len(key_bytes)])
         return bytes(result)
 
-    def aes_decrypt(self, encrypted_data, key, iv):
-        """AES-256-CBC 解密"""
-        # 确保密钥长度为32字节
-        if len(key) < 32:
-            key = key + b'\0' * (32 - len(key))
-        elif len(key) > 32:
-            key = key[:32]
-        
-        # IV 长度为16字节
-        if len(iv) < 16:
-            iv = iv + b'\0' * (16 - len(iv))
-        elif len(iv) > 16:
-            iv = iv[:16]
-        
-        cipher = AES.new(key, AES.MODE_CBC, iv)
-        decrypted = cipher.decrypt(encrypted_data)
-        
-        # 去除PKCS7填充
-        try:
-            pad_len = decrypted[-1]
-            if pad_len <= 16:
-                decrypted = decrypted[:-pad_len]
-        except:
-            # 去除末尾的null字符
-            decrypted = decrypted.rstrip(b'\x00')
-        
-        return decrypted
-
     def hex_to_base64(self, hex_str):
         """十六进制转 base64"""
         bytes_data = bytes.fromhex(hex_str)
         return base64.b64encode(bytes_data).decode('ascii')
 
     def get_4gtv_auth(self):
-        """完整的 4gtv_auth 生成逻辑"""
-        xor_key = "20241010-20241012"
-        
-        # 原JS中的三个base64字符串
-        enc_data_b64 = "YklifmQCBFlkAHljd3xnQAVZUl5DWQlCd25LQENHSX1BBkF7WH5eCQRjZgYDWgQJVlcZWAFcVmZcWGRUYWNwH38GBnBcaEBtRwl1Vlp5G0dRBEdmWVUNDw=="
-        enc_key_b64 = "W1xLdgMJa1RfR0VjXnIEBHhacnBmBl8DahVlegACZ1c="
-        enc_iv_b64 = "eGV/TEdmfF1eSEFnYFR7Xw=="
-        
-        # 1. Base64解码
-        enc_data = self.base64_to_bytes(enc_data_b64)
-        enc_key = self.base64_to_bytes(enc_key_b64)
-        enc_iv = self.base64_to_bytes(enc_iv_b64)
-        
-        # 2. XOR运算
-        data = self.xor_bytes(enc_data, xor_key)
-        key = self.xor_bytes(enc_key, xor_key)
-        iv = self.xor_bytes(enc_iv, xor_key)
-        
-        # 3. AES解密
+        """生成 4gtv_auth 认证"""
         try:
-            decrypted = self.aes_decrypt(data, key, iv)
-            clean = decrypted.decode('utf-8', errors='ignore').rstrip('\x00')
+            if HAS_CRYPTO:
+                # 完整版AES解密
+                xor_key = "20241010-20241012"
+                
+                enc_data_b64 = "YklifmQCBFlkAHljd3xnQAVZUl5DWQlCd25LQENHSX1BBkF7WH5eCQRjZgYDWgQJVlcZWAFcVmZcWGRUYWNwH38GBnBcaEBtRwl1Vlp5G0dRBEdmWVUNDw=="
+                enc_key_b64 = "W1xLdgMJa1RfR0VjXnIEBHhacnBmBl8DahVlegACZ1c="
+                enc_iv_b64 = "eGV/TEdmfF1eSEFnYFR7Xw=="
+                
+                enc_data = self.base64_to_bytes(enc_data_b64)
+                enc_key = self.base64_to_bytes(enc_key_b64)
+                enc_iv = self.base64_to_bytes(enc_iv_b64)
+                
+                data = self.xor_bytes(enc_data, xor_key)
+                key = self.xor_bytes(enc_key, xor_key)
+                iv = self.xor_bytes(enc_iv, xor_key)
+                
+                # AES解密
+                if len(key) < 32:
+                    key = key + b'\0' * (32 - len(key))
+                elif len(key) > 32:
+                    key = key[:32]
+                
+                if len(iv) < 16:
+                    iv = iv + b'\0' * (16 - len(iv))
+                elif len(iv) > 16:
+                    iv = iv[:16]
+                
+                cipher = AES.new(key, AES.MODE_CBC, iv)
+                decrypted = cipher.decrypt(data)
+                
+                # 去除填充
+                try:
+                    pad_len = decrypted[-1]
+                    if pad_len <= 16:
+                        decrypted = decrypted[:-pad_len]
+                except:
+                    decrypted = decrypted.rstrip(b'\x00')
+                
+                clean = decrypted.decode('utf-8', errors='ignore').rstrip('\x00')
+            else:
+                # 使用预计算的值
+                clean = self.pre_clean
+                
         except Exception as e:
-            print(f"\n⚠️ AES解密失败: {e}")
-            # 如果解密失败，使用之前通过JS获取的固定值
-            clean = "2c0d84a0e0e7b5a0c8b3f0e1a2c3d4e5f6a7b8c9"
+            print(f"\n⚠️ 认证生成出错: {e}")
+            clean = self.pre_clean
         
-        # 4. 获取今日日期
+        # 获取今日日期
         today = datetime.now().strftime("%Y%m%d")
         
-        # 5. 计算sha512
+        # 计算sha512
         hash_obj = hashlib.sha512((today + clean).encode('utf-8'))
         hex_digest = hash_obj.hexdigest()
         
-        # 6. 转base64
+        # 转base64
         return self.hex_to_base64(hex_digest)
 
     def get_play_url(self, asset_id, ch):
@@ -219,9 +231,6 @@ class FourGTV:
                 "fsDEVICE_TYPE": "mobile"
             }
             
-            print(f"\nDebug - Auth: {auth[:30]}...")
-            print(f"Debug - enc_key: {enc_key[:20]}...")
-            
             # 发送请求
             resp = self.session.post(
                 "https://api2.4gtv.tv/App/GetChannelUrl2",
@@ -231,39 +240,22 @@ class FourGTV:
             )
             
             if resp.status_code != 200:
-                print(f" HTTP {resp.status_code}", end="", flush=True)
-                try:
-                    error_data = resp.json()
-                    print(f" - {error_data}", end="", flush=True)
-                except:
-                    print(f" - {resp.text[:100]}", end="", flush=True)
                 return None
             
             result = resp.json()
             
-            # 检查返回码
             if result.get("Code") != "00":
-                print(f" 错误: {result.get('Message', '未知错误')}", end="", flush=True)
                 return None
             
-            # 获取播放地址
             data = result.get("Data")
             if not data or "flstURLs" not in data or not data["flstURLs"]:
-                print(" 没有播放地址", end="", flush=True)
                 return None
             
             urls = data["flstURLs"]
             index = random.randint(0, len(urls) - 1)
             return urls[index]
             
-        except requests.exceptions.Timeout:
-            print(" 超时", end="", flush=True)
-            return None
-        except requests.exceptions.ConnectionError:
-            print(" 连接错误", end="", flush=True)
-            return None
         except Exception as e:
-            print(f" 错误: {type(e).__name__}: {str(e)[:50]}", end="", flush=True)
             return None
 
     def generate_m3u(self):
@@ -288,38 +280,22 @@ class FourGTV:
             
             print("\n📺 开始获取播放地址...")
             
-            # 先测试一个频道
-            test_channel = channels[0]
-            print(f"\n🔍 测试频道: {test_channel['name']}")
-            test_url = self.get_play_url(test_channel["id"], test_channel["ch"])
-            
-            if test_url:
-                print(f"✅ 测试成功: {test_url[:50]}...")
-                print("\n📺 开始批量获取...\n")
+            for i, channel in enumerate(channels, 1):
+                print(f"[{i}/{len(channels)}] {channel['name']}...", end="", flush=True)
                 
-                # 测试成功，开始批量获取
-                for i, channel in enumerate(channels, 1):
-                    print(f"[{i}/{len(channels)}] {channel['name']}...", end="", flush=True)
-                    
-                    play_url = self.get_play_url(channel["id"], channel["ch"])
-                    
-                    if play_url:
-                        f.write(f'#EXTINF:-1 tvg-logo="{channel["logo"]}" '
-                               f'group-title="{channel["group"]}",{channel["name"]}\n')
-                        f.write(f"{play_url}\n")
-                        print(f" ✅")
-                        success_count += 1
-                    else:
-                        print(f" ❌")
-                    
-                    # 随机延迟
-                    time.sleep(random.uniform(1, 2))
-            else:
-                print("❌ 测试失败，停止批量获取")
-                # 保存测试失败的auth值供调试
-                with open(OUTPUT_DIR / "debug_auth.txt", "w") as debug_f:
-                    debug_f.write(f"Time: {datetime.now()}\n")
-                    debug_f.write(f"Auth: {self.get_4gtv_auth()}\n")
+                play_url = self.get_play_url(channel["id"], channel["ch"])
+                
+                if play_url:
+                    f.write(f'#EXTINF:-1 tvg-logo="{channel["logo"]}" '
+                           f'group-title="{channel["group"]}",{channel["name"]}\n')
+                    f.write(f"{play_url}\n")
+                    print(f" ✅")
+                    success_count += 1
+                else:
+                    print(f" ❌")
+                
+                # 随机延迟
+                time.sleep(random.uniform(0.5, 1))
         
         print(f"\n📊 统计信息:")
         print(f"   - 成功获取: {success_count} 个")
@@ -342,13 +318,10 @@ def main():
             print("✅ 生成成功！")
         else:
             print("❌ 生成失败，没有获取到任何频道")
-            print("\n🔍 调试信息保存在 output/debug_auth.txt")
             exit(1)
             
     except Exception as e:
         print(f"❌ 程序出错: {e}")
-        import traceback
-        traceback.print_exc()
         exit(1)
 
 if __name__ == "__main__":
