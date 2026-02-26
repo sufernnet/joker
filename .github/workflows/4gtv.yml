@@ -29,12 +29,12 @@ jobs:
       - name: 检出仓库
         uses: actions/checkout@v4
       
-      # 2. 设置Python环境
+      # 2. 设置Python环境（去掉cache配置）
       - name: 设置Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
+          # 移除 cache 配置
       
       # 3. 安装依赖
       - name: 安装依赖
@@ -62,9 +62,11 @@ jobs:
           if [ -f "output/4gtv.m3u" ]; then
             echo "✅ M3U文件生成成功"
             echo "文件大小: $(wc -c < output/4gtv.m3u) 字节"
-            echo "频道数量: $(grep -c ^#EXTINF output/4gtv.m3u)"
+            CHANNEL_COUNT=$(grep -c ^#EXTINF output/4gtv.m3u || echo "0")
+            echo "频道数量: $CHANNEL_COUNT"
             echo "文件预览:"
             head -n 10 output/4gtv.m3u
+            echo "CHANNEL_COUNT=$CHANNEL_COUNT" >> $GITHUB_ENV
           else
             echo "❌ M3U文件不存在"
             exit 1
@@ -73,21 +75,22 @@ jobs:
       # 7. 创建README文件
       - name: 创建README
         run: |
-          cat > output/README.md << 'EOF'
+          CHANNEL_COUNT=${CHANNEL_COUNT:-0}
+          cat > output/README.md << EOF
           # 4GTV 直播源
           
           ## 📺 M3U 地址
-          ```
+          \`\`\`
           https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/4gtv.m3u
-          ```
+          \`\`\`
           
           ## ⏰ 更新信息
-          - 最后更新: $(date '+%Y-%m-%d %H:%M:%S')(UTC+8)
+          - 最后更新: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
           - 触发方式: ${{ github.event_name }}
           - 运行ID: ${{ github.run_id }}
           
           ## 📊 统计信息
-          - 总频道数: $(grep -c ^#EXTINF output/4gtv.m3u || echo "0")
+          - 总频道数: ${CHANNEL_COUNT}
           - 文件大小: $(wc -c < output/4gtv.m3u || echo "0") 字节
           
           ## 🔧 使用方法
@@ -96,9 +99,6 @@ jobs:
           ## ⚠️ 免责声明
           本仓库仅用于技术学习交流，所有内容均来自互联网，如有侵权请联系删除。
           EOF
-          
-          # 添加更新时间
-          sed -i "s/$(date '+%Y-%m-%d %H:%M:%S')/$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')/g" output/README.md
       
       # 8. 部署到GitHub Pages
       - name: 部署到GitHub Pages
@@ -115,7 +115,7 @@ jobs:
             update 4gtv.m3u
             
             🕒 更新时间: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
-            📊 频道数量: $(grep -c ^#EXTINF output/4gtv.m3u || echo "0")
+            📊 频道数量: ${CHANNEL_COUNT}
             🔄 触发方式: ${{ github.event_name }}
       
       # 9. 发送通知（可选）
