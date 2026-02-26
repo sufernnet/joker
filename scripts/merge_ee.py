@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-EE.m3u 合并脚本（港台频道版）
+EE.m3u 合并脚本（港台频道版 + 新聞频道）
 
 功能：
-1. 提取“港台频道”分组
-2. 重命名为“港澳台”
+1. 提取“港台频道”和“新聞频道”两个分组
+2. 合并后重命名为“港澳台”
 3. 过滤掉指定频道和指定URL
 4. 去除频道名称中的分辨率标记（如“HD 1080p”、“1080p”）
 5. 去重处理：保留标准名称，去掉带"台"字的重复频道
@@ -24,10 +24,14 @@ from datetime import datetime
 # ================== 配置 ==================
 
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
+# 主要源：港台大陆
 GAT_URL = "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/FG/refs/heads/main/港台大陆"
+# 新增源：新聞频道
+NEWS_URL = "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/FG/refs/heads/main/新聞频道"
 OUTPUT_FILE = "EE.m3u"
 
 SOURCE_GROUP = "港台频道"
+NEWS_GROUP = "新聞频道"
 TARGET_GROUP = "港澳台"
 
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
@@ -123,13 +127,14 @@ def download(url, desc):
         return None
 
 
-def extract_gat_channels(content):
+def extract_channels(content, group_name):
+    """从指定分组提取频道"""
     lines = content.splitlines()
     channels = []
     in_section = False
-    marker = f"{SOURCE_GROUP},#genre#"
+    marker = f"{group_name},#genre#"
 
-    log(f"开始提取分组：{SOURCE_GROUP}")
+    log(f"开始提取分组：{group_name}")
 
     for i, line in enumerate(lines):
         line = line.strip()
@@ -150,7 +155,7 @@ def extract_gat_channels(content):
                 name, url = line.split(",", 1)
                 channels.append((name.strip(), url.strip()))
 
-    log(f"提取到 {len(channels)} 个频道")
+    log(f"从 {group_name} 提取到 {len(channels)} 个频道")
     return channels
 
 
@@ -378,14 +383,25 @@ def main():
     if not bb:
         return
 
-    gat = download(GAT_URL, "港台频道源") or ""
+    # 下载两个源
+    gat_content = download(GAT_URL, "港台频道源") or ""
+    news_content = download(NEWS_URL, "新聞频道源") or ""
     
-    # 提取频道
-    gat_channels = extract_gat_channels(gat) if gat else []
-    log(f"提取后原始频道数: {len(gat_channels)}")
+    # 从两个分组提取频道
+    all_channels = []
+    
+    if gat_content:
+        gat_channels = extract_channels(gat_content, SOURCE_GROUP)
+        all_channels.extend(gat_channels)
+    
+    if news_content:
+        news_channels = extract_channels(news_content, NEWS_GROUP)
+        all_channels.extend(news_channels)
+    
+    log(f"总共提取到 {len(all_channels)} 个频道")
     
     # 清洗名称：去除分辨率标记
-    cleaned_channels = [(clean_channel_name(name), url) for name, url in gat_channels]
+    cleaned_channels = [(clean_channel_name(name), url) for name, url in all_channels]
     log(f"清洗后频道数: {len(cleaned_channels)}")
     
     # 过滤频道（关键词过滤）
