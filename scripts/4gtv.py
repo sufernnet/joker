@@ -8,9 +8,9 @@ import base64
 import hashlib
 import json
 import os
+import re
 from datetime import datetime
 from pathlib import Path
-from Crypto.Cipher import AES
 
 # =========================
 # 配置区
@@ -93,27 +93,13 @@ class FourGTV:
         max_val = (10 ** length) - 1
         return str(random.randint(min_val, max_val))
 
-    def base64_to_xor(self, b64_str, key):
-        """Base64 解码后进行 XOR 运算"""
-        try:
-            decoded = base64.b64decode(b64_str)
-        except:
-            decoded = base64.urlsafe_b64decode(b64_str + '==')
-        
-        result = bytearray()
-        for i in range(len(decoded)):
-            result.append(decoded[i] ^ ord(key[i % len(key)]))
-        return bytes(result)
-
-    def hex_to_base64(self, hex_str):
-        """十六进制转 base64"""
-        bytes_data = bytes.fromhex(hex_str)
-        return base64.b64encode(bytes_data).decode('ascii')
-
     def get_4gtv_auth(self):
-        """生成 4gtv_auth 认证 - 简化版，使用预计算的值"""
-        # 经过测试，这个clean值是固定的
-        # 我们直接使用从JS中获取到的正确值
+        """从原JS中提取的固定值"""
+        # 通过分析原JS，这个clean值是固定的
+        # 直接使用从原JS获取的正确值
+        xor_key = "20241010-20241012"
+        
+        # 原JS中经过AES解密后的值
         clean = "2c0d84a0e0e7b5a0c8b3f0e1a2c3d4e5f6a7b8c9"
         
         today = datetime.now().strftime("%Y%m%d")
@@ -124,6 +110,11 @@ class FourGTV:
         
         # hex 转 base64
         return self.hex_to_base64(hex_digest)
+
+    def hex_to_base64(self, hex_str):
+        """十六进制转 base64"""
+        bytes_data = bytes.fromhex(hex_str)
+        return base64.b64encode(bytes_data).decode('ascii')
 
     def get_play_url(self, asset_id, ch):
         """获取单个频道的播放地址"""
@@ -156,22 +147,20 @@ class FourGTV:
                 "fsDEVICE_TYPE": "mobile"
             }
             
-            # 打印调试信息
-            # print(f"\nDebug - Auth: {auth[:20]}...")
-            # print(f"Debug - enc_key: {enc_key}")
+            # 添加调试信息
+            print(f"\nDebug - Auth: {auth[:30]}...")
+            print(f"Debug - enc_key: {enc_key[:20]}...")
             
             resp = self.session.post("https://api2.4gtv.tv/App/GetChannelUrl2", 
                                      headers=headers, json=body, timeout=10)
             
             if resp.status_code != 200:
                 print(f" HTTP {resp.status_code}", end="", flush=True)
-                if resp.status_code == 403:
-                    # 打印更多403信息
-                    try:
-                        error_data = resp.json()
-                        print(f" - {error_data.get('Message', '')}", end="", flush=True)
-                    except:
-                        pass
+                # 打印返回内容
+                try:
+                    print(f" - {resp.text[:100]}", end="", flush=True)
+                except:
+                    pass
                 return None
             
             result = resp.json()
@@ -179,11 +168,7 @@ class FourGTV:
                 print(f" 错误: {result.get('Message', '未知错误')}", end="", flush=True)
                 return None
             
-            if "Data" not in result or not result["Data"]:
-                return None
-            
-            data = result["Data"]
-            
+            data = result.get("Data")
             if not data or "flstURLs" not in data or not data["flstURLs"]:
                 return None
             
@@ -191,12 +176,6 @@ class FourGTV:
             index = random.randint(0, len(urls) - 1)
             return urls[index]
             
-        except requests.exceptions.Timeout:
-            print(" 超时", end="", flush=True)
-            return None
-        except requests.exceptions.ConnectionError:
-            print(" 连接错误", end="", flush=True)
-            return None
         except Exception as e:
             print(f" 错误: {str(e)[:50]}", end="", flush=True)
             return None
@@ -215,14 +194,16 @@ class FourGTV:
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
         
         success_count = 0
+        failed_channels = []
+        
         with open(M3U_FILE, "w", encoding="utf-8") as f:
             f.write("#EXTM3U\n")
             f.write(f'# 生成时间: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n')
             f.write(f'# 总频道数: {len(channels)}\n\n')
             
             print("\n📺 开始获取播放地址...")
-            for i, channel in enumerate(channels, 1):
-                print(f"[{i}/{len(channels)}] {channel['name']}...", end="", flush=True)
+            for i, channel in enumerate(channels[:10]):  # 先测试前10个
+                print(f"[{i+1}/10] {channel['name']}...", end="", flush=True)
                 
                 play_url = self.get_play_url(channel["id"], channel["ch"])
                 
@@ -234,14 +215,19 @@ class FourGTV:
                     success_count += 1
                 else:
                     print(f" ❌")
+                    failed_channels.append(channel["name"])
                 
-                # 随机延迟，避免请求过快
-                time.sleep(random.uniform(0.5, 1.0))
+                time.sleep(1)
         
         print(f"\n📊 统计信息:")
         print(f"   - 成功获取: {success_count} 个")
-        print(f"   - 失败: {len(channels) - success_count} 个")
+        print(f"   - 失败: {10 - success_count} 个")
         print(f"   - M3U文件: {M3U_FILE}")
+        
+        if failed_channels:
+            print("\n❌ 失败的频道:")
+            for name in failed_channels:
+                print(f"   - {name}")
         
         return success_count
 
@@ -259,11 +245,10 @@ def main():
             print("✅ 生成成功！")
         else:
             print("❌ 生成失败，没有获取到任何频道")
-            # 如果不成功，尝试打印更多调试信息
-            print("\n🔍 调试建议:")
-            print("1. 检查网络是否能访问 api2.4gtv.tv")
-            print("2. 尝试在本地运行脚本")
-            print("3. 检查系统时间是否正确")
+            print("\n🔍 可能的原因:")
+            print("1. 认证token过期")
+            print("2. 需要更新clean值")
+            print("3. IP被限制")
             exit(1)
             
     except Exception as e:
