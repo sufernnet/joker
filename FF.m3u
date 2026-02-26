@@ -1,7 +1,5 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
-# FF.m3u | 生成时间: 2026-02-26 07:12:01
-
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -352,659 +350,679 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 
 
-# HK 频道 (79)
-#EXTINF:-1 group-title="HK",TVB 翡翠台1080p(HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/7.ts
-#EXTINF:-1 group-title="HK",TVB 明珠台1080p(HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/10.ts
-#EXTINF:-1 group-title="HK",TVB Plus 1080p(HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/11.ts
-#EXTINF:-1 group-title="HK",ViuTV 1080p(HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/6.ts
-#EXTINF:-1 group-title="HK",鳳凰衛視 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/18.ts
-#EXTINF:-1 group-title="HK",鳳凰香港 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/19.ts
-#EXTINF:-1 group-title="HK",HOY TV (開電視) (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/21.ts
-#EXTINF:-1 group-title="HK",RTHK 31 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/24.ts
-#EXTINF:-1 group-title="HK",RTHK 32 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/25.ts
-#EXTINF:-1 group-title="HK",RTHK 33 CCTV1 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/26.ts
-#EXTINF:-1 group-title="HK",RTHK 34 CGTN記錄 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/27.ts
-#EXTINF:-1 group-title="HK",RTHK 35 CGTN (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/28.ts
-#EXTINF:-1 group-title="HK",Now 直播台 CH331 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/31.ts
-#EXTINF:-1 group-title="HK",Now Viu劇集台 CH102 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/33.ts
-#EXTINF:-1 group-title="HK",Now 華劇台 (粵) CH105 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/34.ts
-#EXTINF:-1 group-title="HK",Now 華劇台 (國) CH105  (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/35.ts
-#EXTINF:-1 group-title="HK",Now Jelli 紫金 CH108 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/36.ts
-#EXTINF:-1 group-title="HK",MOVIE MOVIE CH116 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/38.ts
-#EXTINF:-1 group-title="HK",Cinemax CH118 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/39.ts
-#EXTINF:-1 group-title="HK",KIX CH304 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/46.ts
-#EXTINF:-1 group-title="HK",Love Nature 4K CH403 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/69.ts
-#EXTINF:-1 group-title="HK",Global Treker CH407 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/70.ts
-#EXTINF:-1 group-title="HK",DreamWorks (粵) CH440 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/73.ts
-#EXTINF:-1 group-title="HK",DreamWorks (國) CH440 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/74.ts
-#EXTINF:-1 group-title="HK",卡通頻道 (粵) CN CH443 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/75.ts
-#EXTINF:-1 group-title="HK",卡通頻道 (國) CN CH443 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/76.ts
-#EXTINF:-1 group-title="HK",BBC CBeebies (粵) CH447 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/77.ts
-#EXTINF:-1 group-title="HK",Da Vinci 達文西頻道 CH460 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/78.ts
-#EXTINF:-1 group-title="HK",ROCK Entertainment CH501 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/71.ts
-#EXTINF:-1 group-title="HK",ROCK Action CH502 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/72.ts
-#EXTINF:-1 group-title="HK",AXN CH503 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/79.ts
-#EXTINF:-1 group-title="HK",Animax CH504 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/80.ts
-#EXTINF:-1 group-title="HK",tvN CH505 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/81.ts
-#EXTINF:-1 group-title="HK",Fashion Box CH603 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/84.ts
-#EXTINF:-1 group-title="HK",Mezzo Live CH604 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/85.ts
-#EXTINF:-1 group-title="HK",鳳凰中文台 CH610 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/87.ts
-#EXTINF:-1 group-title="HK",鳳凰香港台 CH612 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/86.ts
-#EXTINF:-1 group-title="HK",TVB SUPER-FREE (粵) CH01 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/47.ts
-#EXTINF:-1 group-title="HK",TVB SUPER-FREE (國) CH001 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/50.ts
-#EXTINF:-1 group-title="HK",TVB 黃金翡翠台 CH080 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/52.ts
-#EXTINF:-1 group-title="HK",TVB 千禧經典台 CH086 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/53.ts
-#EXTINF:-1 group-title="HK",TVB 亞洲劇台 (原聲) CH087  (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/54.ts
-#EXTINF:-1 group-title="HK",TVB 亞洲劇台 (粵) CH087 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/55.ts
-#EXTINF:-1 group-title="HK",TVB 華語劇台 (粵) CH089 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/56.ts
-#EXTINF:-1 group-title="HK",TVB 華語劇台 (國) CH089 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/57.ts
-#EXTINF:-1 group-title="HK",TVB 黃金華劇台 (粵) CH090 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/58.ts
-#EXTINF:-1 group-title="HK",TVB 黃金華劇台 (國) CH090 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/59.ts
-#EXTINF:-1 group-title="HK",TVB 娛樂新聞台 CH091 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/60.ts
-#EXTINF:-1 group-title="HK",TVB 戲曲台 CH098 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/61.ts
-#EXTINF:-1 group-title="HK",SUPER Kids Channel CH100 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/62.ts
-#EXTINF:-1 group-title="HK",ZooMoo CH101 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/63.ts
-#EXTINF:-1 group-title="HK",尼克兒童 Nickelodeon CH104 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/64.ts
-#EXTINF:-1 group-title="HK",TVB 粵語片台 CH200 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65.ts
-#EXTINF:-1 group-title="HK",Thrill CH202 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/66.ts
-#EXTINF:-1 group-title="HK",TVB 功夫台 (粵) (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/118.ts
-#EXTINF:-1 group-title="HK",TVB 功夫台 (國) (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/119.ts
-#EXTINF:-1 group-title="HK",TVB 星河 (國) (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/121.ts
-#EXTINF:-1 group-title="HK",TVB 星河 (粵) (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/120.ts
-#EXTINF:-1 group-title="HK",TVB Pearl Drama 明珠劇集台 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/117.ts
-#EXTINF:-1 group-title="HK",TVB 生活台 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/126.ts
-#EXTINF:-1 group-title="HK",SUPER 獎門人 CH02 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/127.ts
-#EXTINF:-1 group-title="HK",SUPER EYT CH03 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/128.ts
-#EXTINF:-1 group-title="HK",SUPER 識食 CH04 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/129.ts
-#EXTINF:-1 group-title="HK",SUPER 識歎 CH05 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/130.ts
-#EXTINF:-1 group-title="HK",SUPER Music CH06 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/131.ts
-#EXTINF:-1 group-title="HK",SUPER 金曲 CH07 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/132.ts
-#EXTINF:-1 group-title="HK",SUPER 煲劇 CH08 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/133.ts
-#EXTINF:-1 group-title="HK",SUPER 劇場 CH09 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/134.ts
-#EXTINF:-1 group-title="HK",SUPER 話當年 CH10 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/135.ts
-#EXTINF:-1 group-title="HK",香港C＋頻道 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/147.ts
-#EXTINF:-1 group-title="HK",Channel V 音樂台 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/143.ts
-#EXTINF:-1 group-title="HK",澳視澳門台 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/150.ts
-#EXTINF:-1 group-title="HK",澳視衛星台 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/151.ts
-#EXTINF:-1 group-title="HK",澳門蓮花衛視 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/148.ts
-#EXTINF:-1 group-title="HK",澳門體育台 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/152.ts
-#EXTINF:-1 group-title="HK",Now Sports Plus CH680 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/114.ts
-#EXTINF:-1 group-title="HK",Now Golf 2 CH683 (HK)
+# HK频道 (79)
+#EXTINF:-1 group-title="HK",Now Golf 2 CH683
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/115.ts
-#EXTINF:-1 group-title="HK",Now Golf 3 CH684 (HK)
+#EXTINF:-1 group-title="HK",Now Golf 3 CH684
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/116.ts
-#EXTINF:-1 group-title="HK",SUPER Sports CH11(HK)
+#EXTINF:-1 group-title="HK",Now Jelli 紫金 CH108
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/36.ts
+#EXTINF:-1 group-title="HK",Now Sports Plus CH680
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/114.ts
+#EXTINF:-1 group-title="HK",Now Viu劇集台 CH102
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/33.ts
+#EXTINF:-1 group-title="HK",Now 直播台 CH331
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/31.ts
+#EXTINF:-1 group-title="HK",Now 華劇台 (國) CH105
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/35.ts
+#EXTINF:-1 group-title="HK",Now 華劇台 (粵) CH105
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/34.ts
+#EXTINF:-1 group-title="HK",TVB Pearl Drama 明珠劇集台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/117.ts
+#EXTINF:-1 group-title="HK",TVB Plus 1080p
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/11.ts
+#EXTINF:-1 group-title="HK",TVB SUPER-FREE (國) CH001
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/50.ts
+#EXTINF:-1 group-title="HK",TVB SUPER-FREE (粵) CH01
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/47.ts
+#EXTINF:-1 group-title="HK",TVB 亞洲劇台 (原聲) CH087
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/54.ts
+#EXTINF:-1 group-title="HK",TVB 亞洲劇台 (粵) CH087
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/55.ts
+#EXTINF:-1 group-title="HK",TVB 功夫台 (國)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/119.ts
+#EXTINF:-1 group-title="HK",TVB 功夫台 (粵)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/118.ts
+#EXTINF:-1 group-title="HK",TVB 千禧經典台 CH086
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/53.ts
+#EXTINF:-1 group-title="HK",TVB 娛樂新聞台 CH091
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/60.ts
+#EXTINF:-1 group-title="HK",TVB 戲曲台 CH098
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/61.ts
+#EXTINF:-1 group-title="HK",TVB 明珠台1080p
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/10.ts
+#EXTINF:-1 group-title="HK",TVB 星河 (國)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/121.ts
+#EXTINF:-1 group-title="HK",TVB 星河 (粵)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/120.ts
+#EXTINF:-1 group-title="HK",TVB 生活台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/126.ts
+#EXTINF:-1 group-title="HK",TVB 粵語片台 CH200
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65.ts
+#EXTINF:-1 group-title="HK",TVB 翡翠台1080p
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/7.ts
+#EXTINF:-1 group-title="HK",TVB 華語劇台 (國) CH089
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/57.ts
+#EXTINF:-1 group-title="HK",TVB 華語劇台 (粵) CH089
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/56.ts
+#EXTINF:-1 group-title="HK",TVB 黃金翡翠台 CH080
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/52.ts
+#EXTINF:-1 group-title="HK",TVB 黃金華劇台 (國) CH090
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/59.ts
+#EXTINF:-1 group-title="HK",TVB 黃金華劇台 (粵) CH090
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/58.ts
+#EXTINF:-1 group-title="HK",HOY TV (開電視)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/21.ts
+#EXTINF:-1 group-title="HK",RTHK 31
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/24.ts
+#EXTINF:-1 group-title="HK",RTHK 32
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/25.ts
+#EXTINF:-1 group-title="HK",RTHK 33 CCTV1
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/26.ts
+#EXTINF:-1 group-title="HK",RTHK 34 CGTN記錄
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/27.ts
+#EXTINF:-1 group-title="HK",RTHK 35 CGTN
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/28.ts
+#EXTINF:-1 group-title="HK",AXN CH503
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/79.ts
+#EXTINF:-1 group-title="HK",Animax CH504
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/80.ts
+#EXTINF:-1 group-title="HK",BBC CBeebies (粵) CH447
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/77.ts
+#EXTINF:-1 group-title="HK",Channel V 音樂台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/143.ts
+#EXTINF:-1 group-title="HK",Cinemax CH118
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/39.ts
+#EXTINF:-1 group-title="HK",Da Vinci 達文西頻道 CH460
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/78.ts
+#EXTINF:-1 group-title="HK",DreamWorks (國) CH440
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/74.ts
+#EXTINF:-1 group-title="HK",DreamWorks (粵) CH440
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/73.ts
+#EXTINF:-1 group-title="HK",Fashion Box CH603
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/84.ts
+#EXTINF:-1 group-title="HK",Global Treker CH407
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/70.ts
+#EXTINF:-1 group-title="HK",KIX CH304
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/46.ts
+#EXTINF:-1 group-title="HK",Love Nature 4K CH403
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/69.ts
+#EXTINF:-1 group-title="HK",MOVIE MOVIE CH116
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/38.ts
+#EXTINF:-1 group-title="HK",Mezzo Live CH604
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/85.ts
+#EXTINF:-1 group-title="HK",ROCK Action CH502
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/72.ts
+#EXTINF:-1 group-title="HK",ROCK Entertainment CH501
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/71.ts
+#EXTINF:-1 group-title="HK",SUPER EYT CH03
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/128.ts
+#EXTINF:-1 group-title="HK",SUPER Kids Channel CH100
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/62.ts
+#EXTINF:-1 group-title="HK",SUPER Music CH06
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/131.ts
+#EXTINF:-1 group-title="HK",SUPER Sports CH11
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/48.ts
+#EXTINF:-1 group-title="HK",SUPER 劇場 CH09
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/134.ts
+#EXTINF:-1 group-title="HK",SUPER 煲劇 CH08
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/133.ts
+#EXTINF:-1 group-title="HK",SUPER 獎門人 CH02
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/127.ts
+#EXTINF:-1 group-title="HK",SUPER 話當年 CH10
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/135.ts
+#EXTINF:-1 group-title="HK",SUPER 識歎 CH05
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/130.ts
+#EXTINF:-1 group-title="HK",SUPER 識食 CH04
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/129.ts
+#EXTINF:-1 group-title="HK",SUPER 金曲 CH07
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/132.ts
+#EXTINF:-1 group-title="HK",Thrill CH202
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/66.ts
+#EXTINF:-1 group-title="HK",ViuTV 1080p
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/6.ts
+#EXTINF:-1 group-title="HK",ZooMoo CH101
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/63.ts
+#EXTINF:-1 group-title="HK",tvN CH505
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/81.ts
+#EXTINF:-1 group-title="HK",卡通頻道 (國) CN CH443
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/76.ts
+#EXTINF:-1 group-title="HK",卡通頻道 (粵) CN CH443
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/75.ts
+#EXTINF:-1 group-title="HK",尼克兒童 Nickelodeon CH104
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/64.ts
+#EXTINF:-1 group-title="HK",澳視澳門台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/150.ts
+#EXTINF:-1 group-title="HK",澳視衛星台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/151.ts
+#EXTINF:-1 group-title="HK",澳門蓮花衛視
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/148.ts
+#EXTINF:-1 group-title="HK",澳門體育台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/152.ts
+#EXTINF:-1 group-title="HK",香港C＋頻道
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/147.ts
+#EXTINF:-1 group-title="HK",鳳凰中文台 CH610
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/87.ts
+#EXTINF:-1 group-title="HK",鳳凰衛視
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/18.ts
+#EXTINF:-1 group-title="HK",鳳凰香港
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/19.ts
+#EXTINF:-1 group-title="HK",鳳凰香港台 CH612
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/86.ts
 
-# TW 频道 (200)
-#EXTINF:-1 group-title="TW",民视 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/156.ts
-#EXTINF:-1 group-title="TW",中视 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/159.ts
-#EXTINF:-1 group-title="TW",华视 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/158.ts
-#EXTINF:-1 group-title="TW",台视 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/157.ts
-#EXTINF:-1 group-title="TW",公视 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/160.ts
-#EXTINF:-1 group-title="TW",中天综合台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/175.ts
-#EXTINF:-1 group-title="TW",中天娱乐台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/176.ts
-#EXTINF:-1 group-title="TW",中天亚洲台 (TW)
+# TW频道 (200)
+#EXTINF:-1 group-title="TW",Love Nature
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/296.ts
+#EXTINF:-1 group-title="TW",中天亚洲台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/177.ts
-#EXTINF:-1 group-title="TW",东森综合台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/178.ts
-#EXTINF:-1 group-title="TW",东森戏剧台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/180.ts
-#EXTINF:-1 group-title="TW",TVBS 综合 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/182.ts
-#EXTINF:-1 group-title="TW",TVBS 欢乐台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/183.ts
-#EXTINF:-1 group-title="TW",TVBS 精采台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/184.ts
-#EXTINF:-1 group-title="TW",TVBS 台剧台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/186.ts
-#EXTINF:-1 group-title="TW",TVBS 综艺台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/185.ts
-#EXTINF:-1 group-title="TW",三立综合台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/187.ts
-#EXTINF:-1 group-title="TW",三立台湾台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/188.ts
-#EXTINF:-1 group-title="TW",三立戏剧台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/190.ts
-#EXTINF:-1 group-title="TW",三立都会台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/189.ts
-#EXTINF:-1 group-title="TW",中视经典台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/196.ts
-#EXTINF:-1 group-title="TW",中视菁采台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/197.ts
-#EXTINF:-1 group-title="TW",民视台湾台 (TW)
+#EXTINF:-1 group-title="TW",中天娱乐 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/411.ts
+#EXTINF:-1 group-title="TW",中天娱乐台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/176.ts
+#EXTINF:-1 group-title="TW",中天综合 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/410.ts
+#EXTINF:-1 group-title="TW",中天综合台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/175.ts
+#EXTINF:-1 group-title="TW",民视
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/156.ts
+#EXTINF:-1 group-title="TW",民视台湾台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/192.ts
-#EXTINF:-1 group-title="TW",民视影剧台 (TW)
+#EXTINF:-1 group-title="TW",民视影剧台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/194.ts
-#EXTINF:-1 group-title="TW",民视旅游台 (TW)
+#EXTINF:-1 group-title="TW",民视旅游台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/195.ts
-#EXTINF:-1 group-title="TW",民视第一台 (TW)
+#EXTINF:-1 group-title="TW",民视第一台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/191.ts
-#EXTINF:-1 group-title="TW",民视综艺台 (TW)
+#EXTINF:-1 group-title="TW",民视综艺台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/193.ts
-#EXTINF:-1 group-title="TW",台视综合台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/198.ts
-#EXTINF:-1 group-title="TW",公视3 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/200.ts
-#EXTINF:-1 group-title="TW",公视台语台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/199.ts
-#EXTINF:-1 group-title="TW",公视戏剧 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/201.ts
-#EXTINF:-1 group-title="TW",HBO Family (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/204.ts
-#EXTINF:-1 group-title="TW",HBO Hits (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/205.ts
-#EXTINF:-1 group-title="TW",HBO Signature (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/203.ts
-#EXTINF:-1 group-title="TW",HBO LOGO (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/206.ts
-#EXTINF:-1 group-title="TW",CINEMAX (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/207.ts
-#EXTINF:-1 group-title="TW",影迷数位纪实台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/214.ts
-#EXTINF:-1 group-title="TW",CI 罪案侦查频道 (TW)
+#EXTINF:-1 group-title="TW",三立台湾台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/188.ts
+#EXTINF:-1 group-title="TW",三立台湾台 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/419.ts
+#EXTINF:-1 group-title="TW",三立戏剧台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/190.ts
+#EXTINF:-1 group-title="TW",三立新闻 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/418.ts
+#EXTINF:-1 group-title="TW",三立综合台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/187.ts
+#EXTINF:-1 group-title="TW",三立都会台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/189.ts
+#EXTINF:-1 group-title="TW",三立都会台 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/420.ts
+#EXTINF:-1 group-title="TW",TVBS H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/412.ts
+#EXTINF:-1 group-title="TW",TVBS 台剧台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/186.ts
+#EXTINF:-1 group-title="TW",TVBS 欢乐台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/183.ts
+#EXTINF:-1 group-title="TW",TVBS 欢乐台 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/413.ts
+#EXTINF:-1 group-title="TW",TVBS 精采台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/184.ts
+#EXTINF:-1 group-title="TW",TVBS 综合
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/182.ts
+#EXTINF:-1 group-title="TW",TVBS 综艺台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/185.ts
+#EXTINF:-1 group-title="TW",无线卫星亚洲台 TVBS Asia
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/332.ts
+#EXTINF:-1 group-title="TW",Animax 卡通
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/310.ts
+#EXTINF:-1 group-title="TW",Asia 亚洲旅游台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/297.ts
+#EXTINF:-1 group-title="TW",BBC Cbeebies
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/319.ts
+#EXTINF:-1 group-title="TW",BBC Earth
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/304.ts
+#EXTINF:-1 group-title="TW",BBC Lifestyle
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/305.ts
+#EXTINF:-1 group-title="TW",Baby TV
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/320.ts
+#EXTINF:-1 group-title="TW",Boomerang
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/309.ts
+#EXTINF:-1 group-title="TW",CI 罪案侦查频道
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/213.ts
-#EXTINF:-1 group-title="TW",Cinema World (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/215.ts
-#EXTINF:-1 group-title="TW",CNEX 视纳华仁纪实频道 (TW)
+#EXTINF:-1 group-title="TW",CINEMAX
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/207.ts
+#EXTINF:-1 group-title="TW",CNEX 视纳华仁纪实频道
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/217.ts
-#EXTINF:-1 group-title="TW",HITS频道 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/212.ts
-#EXTINF:-1 group-title="TW",Lifetime娱乐频道 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/223.ts
-#EXTINF:-1 group-title="TW",tvN (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/224.ts
-#EXTINF:-1 group-title="TW",纬来综合台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/229.ts
-#EXTINF:-1 group-title="TW",纬来戏剧台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/230.ts
-#EXTINF:-1 group-title="TW",纬来日本台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/227.ts
-#EXTINF:-1 group-title="TW",纬来精彩台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/232.ts
-#EXTINF:-1 group-title="TW",纬来育乐台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/228.ts
-#EXTINF:-1 group-title="TW",龙华偶像台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/236.ts
-#EXTINF:-1 group-title="TW",龙华卡通台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/239.ts
-#EXTINF:-1 group-title="TW",龙华戏剧台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/235.ts
-#EXTINF:-1 group-title="TW",龙华日韩台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/234.ts
-#EXTINF:-1 group-title="TW",八大综合台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/241.ts
-#EXTINF:-1 group-title="TW",八大娱乐台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/245.ts
-#EXTINF:-1 group-title="TW",八大戏剧台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/242.ts
-#EXTINF:-1 group-title="TW",八大第一台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/244.ts
-#EXTINF:-1 group-title="TW",八大精彩台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/240.ts
-#EXTINF:-1 group-title="TW",八大综艺台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/243.ts
-#EXTINF:-1 group-title="TW",ELTA 爱尔达娱乐台 (TW)
+#EXTINF:-1 group-title="TW",Channel V 音乐台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/357.ts
+#EXTINF:-1 group-title="TW",Cinema World
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/215.ts
+#EXTINF:-1 group-title="TW",Cinemax H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/430.ts
+#EXTINF:-1 group-title="TW",Discovery EVE
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/291.ts
+#EXTINF:-1 group-title="TW",ELTA 爱尔达娱乐台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/252.ts
-#EXTINF:-1 group-title="TW",ELTA 爱尔达影剧台 (TW)
+#EXTINF:-1 group-title="TW",ELTA 爱尔达影剧台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/248.ts
-#EXTINF:-1 group-title="TW",ELTA 爱尔达日韩台 (TW)
+#EXTINF:-1 group-title="TW",ELTA 爱尔达日韩台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/250.ts
-#EXTINF:-1 group-title="TW",ELTA 爱尔达生活旅游台 (TW)
+#EXTINF:-1 group-title="TW",ELTA 爱尔达生活旅游台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/251.ts
-#EXTINF:-1 group-title="TW",ELTA 爱尔达综合台 (TW)
+#EXTINF:-1 group-title="TW",ELTA 爱尔达综合台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/249.ts
-#EXTINF:-1 group-title="TW",靖天综合台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/279.ts
-#EXTINF:-1 group-title="TW",靖天卡通台 (TW)
+#EXTINF:-1 group-title="TW",ELTV生活英语台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/392.ts
+#EXTINF:-1 group-title="TW",ETtoday 综合台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/367.ts
+#EXTINF:-1 group-title="TW",EYE 戏剧台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/307.ts
+#EXTINF:-1 group-title="TW",EYE 旅游台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/306.ts
+#EXTINF:-1 group-title="TW",Fashion TV
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/341.ts
+#EXTINF:-1 group-title="TW",Fun 探索娱乐台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/356.ts
+#EXTINF:-1 group-title="TW",GINX Esports TV
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/334.ts
+#EXTINF:-1 group-title="TW",Global Trekker
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/333.ts
+#EXTINF:-1 group-title="TW",HBO Family
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/204.ts
+#EXTINF:-1 group-title="TW",HBO Hits
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/205.ts
+#EXTINF:-1 group-title="TW",HBO LOGO
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/206.ts
+#EXTINF:-1 group-title="TW",HBO Signature
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/203.ts
+#EXTINF:-1 group-title="TW",HITS频道
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/212.ts
+#EXTINF:-1 group-title="TW",INULTRA
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/363.ts
+#EXTINF:-1 group-title="TW",JET 综合台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/322.ts
+#EXTINF:-1 group-title="TW",JET 综合台 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/408.ts
+#EXTINF:-1 group-title="TW",KLT-靖天国际
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/286.ts
+#EXTINF:-1 group-title="TW",LUXE TV Channel
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/362.ts
+#EXTINF:-1 group-title="TW",Lifetime娱乐频道
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/223.ts
+#EXTINF:-1 group-title="TW",LiveABC互动英语频道
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/391.ts
+#EXTINF:-1 group-title="TW",MOMO 亲子台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/313.ts
+#EXTINF:-1 group-title="TW",MOMO 亲子台 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/435.ts
+#EXTINF:-1 group-title="TW",MOMO 综合台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/321.ts
+#EXTINF:-1 group-title="TW",MOMO 综合台 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/436.ts
+#EXTINF:-1 group-title="TW",MTV Asia
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/330.ts
+#EXTINF:-1 group-title="TW",Mezzo Live
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/343.ts
+#EXTINF:-1 group-title="TW",Moonbug
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/364.ts
+#EXTINF:-1 group-title="TW",NHK WORLD JAPAN
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/388.ts
+#EXTINF:-1 group-title="TW",Nick Jr.儿童频道
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/311.ts
+#EXTINF:-1 group-title="TW",ROCK Action
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/328.ts
+#EXTINF:-1 group-title="TW",ROCK Entertainment
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/327.ts
+#EXTINF:-1 group-title="TW",ROCK Extreme
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/329.ts
+#EXTINF:-1 group-title="TW",Smart 知识台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/331.ts
+#EXTINF:-1 group-title="TW",TLC 旅游台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/298.ts
+#EXTINF:-1 group-title="TW",TLC 旅遊生活台 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/432.ts
+#EXTINF:-1 group-title="TW",TRACE Urban
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/342.ts
+#EXTINF:-1 group-title="TW",TaiWan Plus H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/437.ts
+#EXTINF:-1 group-title="TW",Travel Channel 旅游台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/299.ts
+#EXTINF:-1 group-title="TW",Z频道
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/339.ts
+#EXTINF:-1 group-title="TW",tvN
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/224.ts
+#EXTINF:-1 group-title="TW",东森幼幼 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/414.ts
+#EXTINF:-1 group-title="TW",东森幼幼台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/308.ts
+#EXTINF:-1 group-title="TW",东森戏剧 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/416.ts
+#EXTINF:-1 group-title="TW",东森戏剧台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/180.ts
+#EXTINF:-1 group-title="TW",东森综合 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/415.ts
+#EXTINF:-1 group-title="TW",东森综合台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/178.ts
+#EXTINF:-1 group-title="TW",东森财经 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/417.ts
+#EXTINF:-1 group-title="TW",东森购物1台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/375.ts
+#EXTINF:-1 group-title="TW",东森购物2台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/376.ts
+#EXTINF:-1 group-title="TW",东森购物3台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/377.ts
+#EXTINF:-1 group-title="TW",东森购物5台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/378.ts
+#EXTINF:-1 group-title="TW",东森超视台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/374.ts
+#EXTINF:-1 group-title="TW",东风卫视
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/340.ts
+#EXTINF:-1 group-title="TW",中视
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/159.ts
+#EXTINF:-1 group-title="TW",中视经典台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/196.ts
+#EXTINF:-1 group-title="TW",中视菁采台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/197.ts
+#EXTINF:-1 group-title="TW",亚洲美食频道 Asian Food Network
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/300.ts
+#EXTINF:-1 group-title="TW",人间卫视
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/395.ts
+#EXTINF:-1 group-title="TW",八大娱乐台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/245.ts
+#EXTINF:-1 group-title="TW",八大戏剧 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/423.ts
+#EXTINF:-1 group-title="TW",八大戏剧台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/242.ts
+#EXTINF:-1 group-title="TW",八大第一 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/422.ts
+#EXTINF:-1 group-title="TW",八大第一台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/244.ts
+#EXTINF:-1 group-title="TW",八大精彩台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/240.ts
+#EXTINF:-1 group-title="TW",八大综合 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/421.ts
+#EXTINF:-1 group-title="TW",八大综合台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/241.ts
+#EXTINF:-1 group-title="TW",八大综艺台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/243.ts
+#EXTINF:-1 group-title="TW",公视
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/160.ts
+#EXTINF:-1 group-title="TW",公视3
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/200.ts
+#EXTINF:-1 group-title="TW",公视台语台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/199.ts
+#EXTINF:-1 group-title="TW",公视戏剧
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/201.ts
+#EXTINF:-1 group-title="TW",动物星球
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/295.ts
+#EXTINF:-1 group-title="TW",动物星球 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/433.ts
+#EXTINF:-1 group-title="TW",十方法界
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/400.ts
+#EXTINF:-1 group-title="TW",华艺中文台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/345.ts
+#EXTINF:-1 group-title="TW",华藏卫视
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/398.ts
+#EXTINF:-1 group-title="TW",华视
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/158.ts
+#EXTINF:-1 group-title="TW",博斯 Pace Sport
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/365.ts
+#EXTINF:-1 group-title="TW",卡通台 Cartoonito
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/318.ts
+#EXTINF:-1 group-title="TW",卡通频道 CN
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/314.ts
+#EXTINF:-1 group-title="TW",历史频道 2HISTORY 2
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/293.ts
+#EXTINF:-1 group-title="TW",历史频道 History
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/292.ts
+#EXTINF:-1 group-title="TW",原住民族电视台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/381.ts
+#EXTINF:-1 group-title="TW",古典乐 CLASSICA
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/348.ts
+#EXTINF:-1 group-title="TW",台湾戏剧台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/325.ts
+#EXTINF:-1 group-title="TW",台视
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/157.ts
+#EXTINF:-1 group-title="TW",台视综合台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/198.ts
+#EXTINF:-1 group-title="TW",国会频道 1
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/393.ts
+#EXTINF:-1 group-title="TW",国会频道 2
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/394.ts
+#EXTINF:-1 group-title="TW",国兴卫视
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/338.ts
+#EXTINF:-1 group-title="TW",国兴卫视 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/431.ts
+#EXTINF:-1 group-title="TW",国家地理 National Geographic
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/294.ts
+#EXTINF:-1 group-title="TW",壹新闻台 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/407.ts
+#EXTINF:-1 group-title="TW",大爱二台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/397.ts
+#EXTINF:-1 group-title="TW",大爱电视
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/396.ts
+#EXTINF:-1 group-title="TW",好消息
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/401.ts
+#EXTINF:-1 group-title="TW",好消息2台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/402.ts
+#EXTINF:-1 group-title="TW",客家电视台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/380.ts
+#EXTINF:-1 group-title="TW",尼克儿童频道 Nickelodeon
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/312.ts
+#EXTINF:-1 group-title="TW",居家乐活频道 HGTV
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/303.ts
+#EXTINF:-1 group-title="TW",希望频道
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/405.ts
+#EXTINF:-1 group-title="TW",年代MUCH台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/358.ts
+#EXTINF:-1 group-title="TW",年代MUCH台 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/434.ts
+#EXTINF:-1 group-title="TW",年代新闻台 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/406.ts
+#EXTINF:-1 group-title="TW",幸福空间居家台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/347.ts
+#EXTINF:-1 group-title="TW",彩昌影剧
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/355.ts
+#EXTINF:-1 group-title="TW",影迷数位纪实台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/214.ts
+#EXTINF:-1 group-title="TW",探索亚洲 Discovery Asia
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/288.ts
+#EXTINF:-1 group-title="TW",探索动力 Discovery DMAX
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/290.ts
+#EXTINF:-1 group-title="TW",探索科学 Discovery Science
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/289.ts
+#EXTINF:-1 group-title="TW",探索频道 Discovery Channel
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/287.ts
+#EXTINF:-1 group-title="TW",无上师电视台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/399.ts
+#EXTINF:-1 group-title="TW",时尚运动X
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/346.ts
+#EXTINF:-1 group-title="TW",梦工厂动画 Dreamworks
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/317.ts
+#EXTINF:-1 group-title="TW",爱放动漫台 I-Fun
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/315.ts
+#EXTINF:-1 group-title="TW",猪哥亮歌厅秀
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/354.ts
+#EXTINF:-1 group-title="TW",环球旅行家 Globetrotter
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/302.ts
+#EXTINF:-1 group-title="TW",生命电视台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/404.ts
+#EXTINF:-1 group-title="TW",生活時尚 TV5MONDE STYLE
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/361.ts
+#EXTINF:-1 group-title="TW",电影原声台 CMusic
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/326.ts
+#EXTINF:-1 group-title="TW",纬来戏剧 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/426.ts
+#EXTINF:-1 group-title="TW",纬来戏剧台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/230.ts
+#EXTINF:-1 group-title="TW",纬来日本 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/427.ts
+#EXTINF:-1 group-title="TW",纬来日本台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/227.ts
+#EXTINF:-1 group-title="TW",纬来精彩台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/232.ts
+#EXTINF:-1 group-title="TW",纬来综合 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/425.ts
+#EXTINF:-1 group-title="TW",纬来综合台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/229.ts
+#EXTINF:-1 group-title="TW",纬来育乐 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/428.ts
+#EXTINF:-1 group-title="TW",纬来育乐台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/228.ts
+#EXTINF:-1 group-title="TW",经典卡通台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/360.ts
+#EXTINF:-1 group-title="TW",美食星球
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/301.ts
+#EXTINF:-1 group-title="TW",诚心电视台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/403.ts
+#EXTINF:-1 group-title="TW",达文西频道 DaVinCi
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/316.ts
+#EXTINF:-1 group-title="TW",金光布袋戏
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/352.ts
+#EXTINF:-1 group-title="TW",阿里郎频道 Arirang
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/350.ts
+#EXTINF:-1 group-title="TW",霹雳台湾台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/351.ts
+#EXTINF:-1 group-title="TW",靖天卡通台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/277.ts
-#EXTINF:-1 group-title="TW",靖天戏剧台 (TW)
+#EXTINF:-1 group-title="TW",靖天戏剧台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/275.ts
-#EXTINF:-1 group-title="TW",靖天日本台 (TW)
+#EXTINF:-1 group-title="TW",靖天日本台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/280.ts
-#EXTINF:-1 group-title="TW",靖天映画台 (TW)
+#EXTINF:-1 group-title="TW",靖天映画台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/281.ts
-#EXTINF:-1 group-title="TW",靖天欢乐台 (TW)
+#EXTINF:-1 group-title="TW",靖天欢乐台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/284.ts
-#EXTINF:-1 group-title="TW",靖天育乐台 (TW)
+#EXTINF:-1 group-title="TW",靖天综合台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/279.ts
+#EXTINF:-1 group-title="TW",靖天育乐台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/283.ts
-#EXTINF:-1 group-title="TW",靖天资讯台 (TW)
+#EXTINF:-1 group-title="TW",靖天资讯台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/285.ts
-#EXTINF:-1 group-title="TW",靖洋戏剧台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/276.ts
 #EXTINF:-1 group-title="TW",靖洋卡通Nice Bingo
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/278.ts
-#EXTINF:-1 group-title="TW",KLT-靖天国际 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/286.ts
-#EXTINF:-1 group-title="TW",探索频道 Discovery Channel  (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/287.ts
-#EXTINF:-1 group-title="TW",探索亚洲 Discovery Asia (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/288.ts
-#EXTINF:-1 group-title="TW",探索动力 Discovery DMAX (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/290.ts
-#EXTINF:-1 group-title="TW",探索科学 Discovery Science (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/289.ts
-#EXTINF:-1 group-title="TW",历史频道 2HISTORY 2 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/293.ts
-#EXTINF:-1 group-title="TW",历史频道 History (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/292.ts
-#EXTINF:-1 group-title="TW",国家地理 National Geographic (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/294.ts
-#EXTINF:-1 group-title="TW",动物星球 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/295.ts
-#EXTINF:-1 group-title="TW",亚洲美食频道 Asian Food Network (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/300.ts
-#EXTINF:-1 group-title="TW",Discovery EVE (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/291.ts
-#EXTINF:-1 group-title="TW",Smart 知识台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/331.ts
-#EXTINF:-1 group-title="TW",TLC 旅游台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/298.ts
-#EXTINF:-1 group-title="TW",Love Nature (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/296.ts
-#EXTINF:-1 group-title="TW",BBC Earth (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/304.ts
-#EXTINF:-1 group-title="TW",BBC Lifestyle (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/305.ts
-#EXTINF:-1 group-title="TW",Asia 亚洲旅游台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/297.ts
-#EXTINF:-1 group-title="TW",Travel Channel 旅游台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/299.ts
-#EXTINF:-1 group-title="TW",居家乐活频道 HGTV (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/303.ts
-#EXTINF:-1 group-title="TW",美食星球 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/301.ts
-#EXTINF:-1 group-title="TW",幸福空间居家台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/347.ts
-#EXTINF:-1 group-title="TW",东森幼幼台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/308.ts
-#EXTINF:-1 group-title="TW",卡通频道 CN (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/314.ts
-#EXTINF:-1 group-title="TW",卡通台 Cartoonito (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/318.ts
-#EXTINF:-1 group-title="TW",达文西频道 DaVinCi (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/316.ts
-#EXTINF:-1 group-title="TW",梦工厂动画 Dreamworks (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/317.ts
-#EXTINF:-1 group-title="TW",尼克儿童频道 Nickelodeon (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/312.ts
-#EXTINF:-1 group-title="TW",MOMO 亲子台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/313.ts
-#EXTINF:-1 group-title="TW",Animax 卡通 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/310.ts
-#EXTINF:-1 group-title="TW",BBC Cbeebies (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/319.ts
-#EXTINF:-1 group-title="TW",Baby TV (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/320.ts
-#EXTINF:-1 group-title="TW",Boomerang (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/309.ts
-#EXTINF:-1 group-title="TW",Nick Jr.儿童频道 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/311.ts
-#EXTINF:-1 group-title="TW",爱放动漫台 I-Fun (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/315.ts
-#EXTINF:-1 group-title="TW",经典卡通台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/360.ts
-#EXTINF:-1 group-title="TW",高点综合台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/324.ts
-#EXTINF:-1 group-title="TW",JET 综合台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/322.ts
-#EXTINF:-1 group-title="TW",MOMO 综合台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/321.ts
-#EXTINF:-1 group-title="TW",ETtoday 综合台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/367.ts
-#EXTINF:-1 group-title="TW",EYE 戏剧台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/307.ts
-#EXTINF:-1 group-title="TW",EYE 旅游台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/306.ts
-#EXTINF:-1 group-title="TW",ROCK Action (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/328.ts
-#EXTINF:-1 group-title="TW",ROCK Entertainment (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/327.ts
-#EXTINF:-1 group-title="TW",ROCK Extreme (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/329.ts
-#EXTINF:-1 group-title="TW",Z频道 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/339.ts
-#EXTINF:-1 group-title="TW",东风卫视 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/340.ts
-#EXTINF:-1 group-title="TW",彩昌影剧 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/355.ts
-#EXTINF:-1 group-title="TW",华艺中文台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/345.ts
-#EXTINF:-1 group-title="TW",台湾戏剧台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/325.ts
-#EXTINF:-1 group-title="TW",无线卫星亚洲台 TVBS Asia (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/332.ts
-#EXTINF:-1 group-title="TW",INULTRA (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/363.ts
-#EXTINF:-1 group-title="TW",Fashion TV (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/341.ts
-#EXTINF:-1 group-title="TW",Fun 探索娱乐台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/356.ts
-#EXTINF:-1 group-title="TW",Global Trekker (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/333.ts
-#EXTINF:-1 group-title="TW",Channel V 音乐台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/357.ts
-#EXTINF:-1 group-title="TW",LUXE TV Channel (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/362.ts
-#EXTINF:-1 group-title="TW",Mezzo Live (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/343.ts
-#EXTINF:-1 group-title="TW",Moonbug (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/364.ts
-#EXTINF:-1 group-title="TW",年代MUCH台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/358.ts
-#EXTINF:-1 group-title="TW",电影原声台 CMusic (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/326.ts
-#EXTINF:-1 group-title="TW",音乐频道 MTV Live (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/344.ts
-#EXTINF:-1 group-title="TW",MTV Asia (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/330.ts
-#EXTINF:-1 group-title="TW",TRACE Urban (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/342.ts
-#EXTINF:-1 group-title="TW",猪哥亮歌厅秀 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/354.ts
-#EXTINF:-1 group-title="TW",古典乐 CLASSICA (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/348.ts
-#EXTINF:-1 group-title="TW",GINX Esports TV (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/334.ts
-#EXTINF:-1 group-title="TW",博斯 Pace Sport (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/365.ts
-#EXTINF:-1 group-title="TW",时尚运动X (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/346.ts
-#EXTINF:-1 group-title="TW",环球旅行家 Globetrotter (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/302.ts
-#EXTINF:-1 group-title="TW",生活時尚 TV5MONDE STYLE (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/361.ts
-#EXTINF:-1 group-title="TW",金光布袋戏 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/352.ts
-#EXTINF:-1 group-title="TW",霹雳台湾台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/351.ts
-#EXTINF:-1 group-title="TW",阿里郎频道 Arirang (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/350.ts
-#EXTINF:-1 group-title="TW",韩国娱乐台 (TW) KMTV
+#EXTINF:-1 group-title="TW",靖洋戏剧台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/276.ts
+#EXTINF:-1 group-title="TW",韩国娱乐台  KMTV
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/349.ts
-#EXTINF:-1 group-title="TW",麦哲伦频道 Magellan TV (TW)
+#EXTINF:-1 group-title="TW",音乐频道 MTV Live
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/344.ts
+#EXTINF:-1 group-title="TW",高点综合台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/324.ts
+#EXTINF:-1 group-title="TW",麦哲伦频道 Magellan TV
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/366.ts
-#EXTINF:-1 group-title="TW",原住民族电视台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/381.ts
-#EXTINF:-1 group-title="TW",客家电视台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/380.ts
-#EXTINF:-1 group-title="TW",国会频道 1 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/393.ts
-#EXTINF:-1 group-title="TW",国会频道 2 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/394.ts
-#EXTINF:-1 group-title="TW",国兴卫视 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/338.ts
-#EXTINF:-1 group-title="TW",东森购物1台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/375.ts
-#EXTINF:-1 group-title="TW",东森购物2台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/376.ts
-#EXTINF:-1 group-title="TW",东森购物3台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/377.ts
-#EXTINF:-1 group-title="TW",东森购物5台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/378.ts
-#EXTINF:-1 group-title="TW",东森超视台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/374.ts
-#EXTINF:-1 group-title="TW",大爱电视 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/396.ts
-#EXTINF:-1 group-title="TW",大爱二台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/397.ts
-#EXTINF:-1 group-title="TW",好消息 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/401.ts
-#EXTINF:-1 group-title="TW",好消息2台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/402.ts
-#EXTINF:-1 group-title="TW",华藏卫视 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/398.ts
-#EXTINF:-1 group-title="TW",人间卫视 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/395.ts
-#EXTINF:-1 group-title="TW",十方法界 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/400.ts
-#EXTINF:-1 group-title="TW",希望频道 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/405.ts
-#EXTINF:-1 group-title="TW",诚心电视台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/403.ts
-#EXTINF:-1 group-title="TW",生命电视台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/404.ts
-#EXTINF:-1 group-title="TW",无上师电视台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/399.ts
-#EXTINF:-1 group-title="TW",NHK WORLD JAPAN (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/388.ts
-#EXTINF:-1 group-title="TW",ELTV生活英语台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/392.ts
-#EXTINF:-1 group-title="TW",LiveABC互动英语频道 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/391.ts
-#EXTINF:-1 group-title="TW",Cinemax H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/430.ts
-#EXTINF:-1 group-title="TW",JET 综合台 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/408.ts
-#EXTINF:-1 group-title="TW",MOMO 综合台 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/436.ts
-#EXTINF:-1 group-title="TW",MOMO 亲子台 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/435.ts
-#EXTINF:-1 group-title="TW",TVBS H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/412.ts
-#EXTINF:-1 group-title="TW",TVBS 欢乐台 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/413.ts
-#EXTINF:-1 group-title="TW",东森幼幼 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/414.ts
-#EXTINF:-1 group-title="TW",东森戏剧 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/416.ts
-#EXTINF:-1 group-title="TW",东森综合 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/415.ts
-#EXTINF:-1 group-title="TW",东森财经 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/417.ts
-#EXTINF:-1 group-title="TW",中天娱乐 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/411.ts
-#EXTINF:-1 group-title="TW",中天综合 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/410.ts
-#EXTINF:-1 group-title="TW",三立新闻 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/418.ts
-#EXTINF:-1 group-title="TW",三立台湾台 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/419.ts
-#EXTINF:-1 group-title="TW",三立都会台 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/420.ts
-#EXTINF:-1 group-title="TW",国兴卫视 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/431.ts
-#EXTINF:-1 group-title="TW",壹新闻台 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/407.ts
-#EXTINF:-1 group-title="TW",年代新闻台 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/406.ts
-#EXTINF:-1 group-title="TW",年代MUCH台 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/434.ts
-#EXTINF:-1 group-title="TW",纬来戏剧 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/426.ts
-#EXTINF:-1 group-title="TW",纬来日本 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/427.ts
-#EXTINF:-1 group-title="TW",纬来综合 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/425.ts
-#EXTINF:-1 group-title="TW",纬来育乐 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/428.ts
-#EXTINF:-1 group-title="TW",八大综合 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/421.ts
-#EXTINF:-1 group-title="TW",八大戏剧 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/423.ts
-#EXTINF:-1 group-title="TW",八大第一 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/422.ts
-#EXTINF:-1 group-title="TW",动物星球 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/433.ts
-#EXTINF:-1 group-title="TW",TLC 旅遊生活台 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/432.ts
-#EXTINF:-1 group-title="TW",TaiWan Plus H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/437.ts
+#EXTINF:-1 group-title="TW",龙华偶像台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/236.ts
+#EXTINF:-1 group-title="TW",龙华卡通台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/239.ts
+#EXTINF:-1 group-title="TW",龙华戏剧台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/235.ts
+#EXTINF:-1 group-title="TW",龙华日韩台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/234.ts
 
-# Sports 频道 (222)
-#EXTINF:-1 group-title="Sports",Fight Sports CH642 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/108.ts
-#EXTINF:-1 group-title="Sports",Now 668 (粵) CH668 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/112.ts
-#EXTINF:-1 group-title="Sports",Now 668 (國) CH668 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/113.ts
-#EXTINF:-1 group-title="Sports",TVB 88 跑馬台 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/136.ts
-#EXTINF:-1 group-title="Sports",HKC 有線18台 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/122.ts
-#EXTINF:-1 group-title="Sports",HKC 有線18台(低延時) (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/123.ts
-#EXTINF:-1 group-title="Sports",TVB myTV SUPER 18台 CH018 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/51.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育1台 (TW) 540P(TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/257.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育2台 (TW) 540P(TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/258.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育3台 (TW) 540P(TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/259.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育4台 (TW) 540P(TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/260.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育 MAX1台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/261.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育 MAX2台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/262.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育 MAX3台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/263.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育 MAX4台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/264.ts
-#EXTINF:-1 group-title="Sports",博斯无限1台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/270.ts
-#EXTINF:-1 group-title="Sports",博斯无限2台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/271.ts
-#EXTINF:-1 group-title="Sports",博斯网球台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/272.ts
-#EXTINF:-1 group-title="Sports",博斯运动1台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/265.ts
-#EXTINF:-1 group-title="Sports",博斯运动2台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/266.ts
-#EXTINF:-1 group-title="Sports",博斯高球1台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/268.ts
-#EXTINF:-1 group-title="Sports",博斯高球2台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/269.ts
-#EXTINF:-1 group-title="Sports",博斯魅力台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/267.ts
-#EXTINF:-1 group-title="Sports",DAZN 1 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/273.ts
-#EXTINF:-1 group-title="Sports",DAZN 2 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/274.ts
-#EXTINF:-1 group-title="Sports",MOMOTV Sports (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/336.ts
-#EXTINF:-1 group-title="Sports",TRACE Sport Stars (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/335.ts
-#EXTINF:-1 group-title="Sports",智林体育台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/337.ts
+# Sports频道 (222)
+#EXTINF:-1 group-title="Sports",Astro Arena 1 (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/690.ts
+#EXTINF:-1 group-title="Sports",Astro Arena 2 (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/691.ts
+#EXTINF:-1 group-title="Sports",Astro Arena Bola 1 (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/692.ts
+#EXTINF:-1 group-title="Sports",Astro Arena Bola 2 (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/693.ts
+#EXTINF:-1 group-title="Sports",Astro Badminton (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/688.ts
+#EXTINF:-1 group-title="Sports",Astro Cricket (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/703.ts
+#EXTINF:-1 group-title="Sports",Astro Football (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/689.ts
+#EXTINF:-1 group-title="Sports",Astro Grandstand (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/687.ts
+#EXTINF:-1 group-title="Sports",Astro Sports Plus (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/686.ts
+#EXTINF:-1 group-title="Sports",BS釣りビジョン Tsuri Vision (JP)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/816.ts
+#EXTINF:-1 group-title="Sports",CA Bein sport
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1466.ts
+#EXTINF:-1 group-title="Sports",CA Fight Network
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1317.ts
+#EXTINF:-1 group-title="Sports",CA Golf Channel
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1421.ts
+#EXTINF:-1 group-title="Sports",CA NBA
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1410.ts
+#EXTINF:-1 group-title="Sports",CA RDS
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1475.ts
+#EXTINF:-1 group-title="Sports",CA RDS 2
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1339.ts
+#EXTINF:-1 group-title="Sports",CA Sportsnet 1
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1443.ts
+#EXTINF:-1 group-title="Sports",CA Sportsnet 360
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1444.ts
+#EXTINF:-1 group-title="Sports",CA Sportsnet O
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1445.ts
+#EXTINF:-1 group-title="Sports",CA Sportsnet P
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1446.ts
+#EXTINF:-1 group-title="Sports",CA Sportsnet W
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1447.ts
+#EXTINF:-1 group-title="Sports",CA Sportsnet World
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1457.ts
+#EXTINF:-1 group-title="Sports",CA TSN 1
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1395.ts
+#EXTINF:-1 group-title="Sports",CA TSN 2
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1396.ts
+#EXTINF:-1 group-title="Sports",CA TSN 3
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1397.ts
+#EXTINF:-1 group-title="Sports",CA TSN 4
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1398.ts
+#EXTINF:-1 group-title="Sports",CA TSN 5
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1399.ts
+#EXTINF:-1 group-title="Sports",CA TVA Sport 1
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1471.ts
+#EXTINF:-1 group-title="Sports",CA TVA Sport 2
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1478.ts
 #EXTINF:-1 group-title="Sports",CCTV5
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/537.ts
 #EXTINF:-1 group-title="Sports",CCTV5
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/538.ts
-#EXTINF:-1 group-title="Sports",五星体育 (CN)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/526.ts
-#EXTINF:-1 group-title="Sports",广东体育频道 (CN)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/527.ts
-#EXTINF:-1 group-title="Sports",纬来体育台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/226.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育1台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/253.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育2台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/254.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育3台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/255.ts
-#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育4台 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/256.ts
-#EXTINF:-1 group-title="Sports",纬来体育台 H265 (TW)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/424.ts
 #EXTINF:-1 group-title="Sports",CCTV5
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/479.ts
 #EXTINF:-1 group-title="Sports",CCTV5
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/492.ts
-#EXTINF:-1 group-title="Sports",Hub Sports 1 (SG)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/633.ts
-#EXTINF:-1 group-title="Sports",Hub Sports 2 (SG)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/634.ts
-#EXTINF:-1 group-title="Sports",Hub Sports 3 (SG)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/635.ts
-#EXTINF:-1 group-title="Sports",Hub Sports 4 (SG)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/636.ts
-#EXTINF:-1 group-title="Sports",Hub Sports 5 (SG)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/637.ts
+#EXTINF:-1 group-title="Sports",DAZN 1
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/273.ts
+#EXTINF:-1 group-title="Sports",DAZN 2
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/274.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育 MAX1台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/261.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育 MAX2台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/262.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育 MAX3台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/263.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育 MAX4台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/264.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育1台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/253.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育1台  540P
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/257.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育2台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/254.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育2台  540P
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/258.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育3台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/255.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育3台  540P
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/259.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育4台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/256.ts
+#EXTINF:-1 group-title="Sports",ELTA 爱尔达体育4台  540P
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/260.ts
+#EXTINF:-1 group-title="Sports",EUROSPORT (SG)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/646.ts
+#EXTINF:-1 group-title="Sports",Fight Sports (SG)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/645.ts
+#EXTINF:-1 group-title="Sports",Fight Sports CH642
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/108.ts
+#EXTINF:-1 group-title="Sports",GAORA SPORTS (JP)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/837.ts
+#EXTINF:-1 group-title="Sports",Golf Channel (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/701.ts
+#EXTINF:-1 group-title="Sports",HK NBA TV
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65070.ts
+#EXTINF:-1 group-title="Sports",HKC 有線18台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/122.ts
+#EXTINF:-1 group-title="Sports",HKC 有線18台(低延時)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/123.ts
 #EXTINF:-1 group-title="Sports",Hub Premier 1 (SG)
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/638.ts
 #EXTINF:-1 group-title="Sports",Hub Premier 2 (SG)
@@ -1019,50 +1037,16 @@ http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/642.ts
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/643.ts
 #EXTINF:-1 group-title="Sports",Hub Premier 7 (SG)
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/644.ts
-#EXTINF:-1 group-title="Sports",EUROSPORT (SG)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/646.ts
-#EXTINF:-1 group-title="Sports",Fight Sports (SG)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/645.ts
-#EXTINF:-1 group-title="Sports",Astro Grandstand (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/687.ts
-#EXTINF:-1 group-title="Sports",Astro Badminton (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/688.ts
-#EXTINF:-1 group-title="Sports",Astro Sports Plus (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/686.ts
-#EXTINF:-1 group-title="Sports",Astro Cricket (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/703.ts
-#EXTINF:-1 group-title="Sports",Astro Football (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/689.ts
-#EXTINF:-1 group-title="Sports",Astro Arena 1 (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/690.ts
-#EXTINF:-1 group-title="Sports",Astro Arena 2 (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/691.ts
-#EXTINF:-1 group-title="Sports",Astro Arena Bola 1 (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/692.ts
-#EXTINF:-1 group-title="Sports",Astro Arena Bola 2 (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/693.ts
-#EXTINF:-1 group-title="Sports",beIN Sports 1 (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/697.ts
-#EXTINF:-1 group-title="Sports",beIN Sports 2 (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/698.ts
-#EXTINF:-1 group-title="Sports",bEIN Sports 3 (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/699.ts
-#EXTINF:-1 group-title="Sports",Premier Sports (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/702.ts
-#EXTINF:-1 group-title="Sports",Premier League 1 (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/694.ts
-#EXTINF:-1 group-title="Sports",Premier League 2 (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/695.ts
-#EXTINF:-1 group-title="Sports",WWE Network (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/700.ts
-#EXTINF:-1 group-title="Sports",SPOTV (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/704.ts
-#EXTINF:-1 group-title="Sports",SPOTV 2(MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/705.ts
-#EXTINF:-1 group-title="Sports",W Sport (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/696.ts
-#EXTINF:-1 group-title="Sports",Golf Channel (MY)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/701.ts
+#EXTINF:-1 group-title="Sports",Hub Sports 1 (SG)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/633.ts
+#EXTINF:-1 group-title="Sports",Hub Sports 2 (SG)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/634.ts
+#EXTINF:-1 group-title="Sports",Hub Sports 3 (SG)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/635.ts
+#EXTINF:-1 group-title="Sports",Hub Sports 4 (SG)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/636.ts
+#EXTINF:-1 group-title="Sports",Hub Sports 5 (SG)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/637.ts
 #EXTINF:-1 group-title="Sports",JSPORTS 1 BS242 (JP)
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/801.ts
 #EXTINF:-1 group-title="Sports",JSPORTS 2 BS243 (JP)
@@ -1071,176 +1055,20 @@ http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/802.ts
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/803.ts
 #EXTINF:-1 group-title="Sports",JSPORTS 4 BS245 (JP)
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/804.ts
-#EXTINF:-1 group-title="Sports",ゴルフネットワークGolf Network (JP)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/839.ts
-#EXTINF:-1 group-title="Sports",GAORA SPORTS (JP)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/837.ts
-#EXTINF:-1 group-title="Sports",BS釣りビジョン Tsuri Vision (JP)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/816.ts
+#EXTINF:-1 group-title="Sports",JTBC Golf & Sports (KR)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/934.ts
+#EXTINF:-1 group-title="Sports",JTBC Golf (KR)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/933.ts
 #EXTINF:-1 group-title="Sports",KBSN Sports (KR)
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/937.ts
 #EXTINF:-1 group-title="Sports",MBC Sports (KR)
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/935.ts
-#EXTINF:-1 group-title="Sports",SBS Sports (KR)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/932.ts
-#EXTINF:-1 group-title="Sports",SBS Golf (KR)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/931.ts
-#EXTINF:-1 group-title="Sports",JTBC Golf (KR)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/933.ts
-#EXTINF:-1 group-title="Sports",JTBC Golf & Sports (KR)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/934.ts
-#EXTINF:-1 group-title="Sports",SPOTV (KR)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/939.ts
-#EXTINF:-1 group-title="Sports",SPOTV 2 (KR)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/936.ts
-#EXTINF:-1 group-title="Sports",SPOTV Golf & HEALTH (KR)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/930.ts
-#EXTINF:-1 group-title="Sports",SPOTV Prime (KR)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/940.ts
-#EXTINF:-1 group-title="Sports",SPOTV Prime2 (KR)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/941.ts
-#EXTINF:-1 group-title="Sports",SKY Sports (KR)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/938.ts
-#EXTINF:-1 group-title="Sports",Now Sports 1 CH631 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/97.ts
-#EXTINF:-1 group-title="Sports",Now Sports 2 CH632 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/98.ts
-#EXTINF:-1 group-title="Sports",Now Sports 3 CH633 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/99.ts
-#EXTINF:-1 group-title="Sports",Now Sports 4 CH634 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/100.ts
-#EXTINF:-1 group-title="Sports",Now Sports 5 CH635 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/101.ts
-#EXTINF:-1 group-title="Sports",Now Sports 6 CH636 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/102.ts
-#EXTINF:-1 group-title="Sports",Now Sports 7 CH637 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/103.ts
-#EXTINF:-1 group-title="Sports",Now 英超Premier League 1台 CH621 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/89.ts
-#EXTINF:-1 group-title="Sports",Now 英超Premier League 1台 (EN) CH621 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/90.ts
-#EXTINF:-1 group-title="Sports",Now 英超Premier League 2台 CH622 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/91.ts
-#EXTINF:-1 group-title="Sports",Now 英超Premier League 3台CH623 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/92.ts
-#EXTINF:-1 group-title="Sports",Now 英超Premier League 4台 CH624 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/93.ts
-#EXTINF:-1 group-title="Sports",Now 英超Premier League 5台 CH625 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/94.ts
-#EXTINF:-1 group-title="Sports",Now 英超Premier League 6台 CH626 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/95.ts
-#EXTINF:-1 group-title="Sports",Now Sports CH630 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/96.ts
-#EXTINF:-1 group-title="Sports",曼聯電視 MUTV CH640 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/107.ts
-#EXTINF:-1 group-title="Sports",HK NBA TV
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65070.ts
-#EXTINF:-1 group-title="Sports",Now Sports NBA CH641
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65073.ts
-#EXTINF:-1 group-title="Sports",beIN SPORTS 1 CH638 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/104.ts
-#EXTINF:-1 group-title="Sports",beIN SPORTS 2 CH639 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/105.ts
-#EXTINF:-1 group-title="Sports",beIN SPORTS 3 CH643 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/106.ts
-#EXTINF:-1 group-title="Sports",Now Sports 651 英足總 CH651 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/110.ts
-#EXTINF:-1 group-title="Sports",Now Sports 652 英足總 CH652 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/111.ts
-#EXTINF:-1 group-title="Sports",myTV SUPER直播足球2台 CH901 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/137.ts
-#EXTINF:-1 group-title="Sports",myTV SUPER直播足球3台 CH902 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/138.ts
-#EXTINF:-1 group-title="Sports",myTV SUPER直播足球4台 CH903 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/139.ts
-#EXTINF:-1 group-title="Sports",myTV SUPER直播足球5台 CH904 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/140.ts
-#EXTINF:-1 group-title="Sports",myTV SUPER直播足球6台 CH905 (HK)
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/141.ts
-#EXTINF:-1 group-title="Sports",US ESPN
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1218.ts
-#EXTINF:-1 group-title="Sports",US ESPN 2
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1237.ts
-#EXTINF:-1 group-title="Sports",US ESPN News
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1279.ts
-#EXTINF:-1 group-title="Sports",US ESPN U
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1196.ts
-#EXTINF:-1 group-title="Sports",US Fox Sports 1
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1227.ts
-#EXTINF:-1 group-title="Sports",US Fox Sports 2
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1226.ts
-#EXTINF:-1 group-title="Sports",US NBC Sports
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1190.ts
-#EXTINF:-1 group-title="Sports",US Tennis
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1266.ts
-#EXTINF:-1 group-title="Sports",US MLB Network
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1406.ts
-#EXTINF:-1 group-title="Sports",US MLB Strike Zone
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1484.ts
-#EXTINF:-1 group-title="Sports",US Fox Soccer Plus
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1187.ts
-#EXTINF:-1 group-title="Sports",US Bein Sports
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1259.ts
-#EXTINF:-1 group-title="Sports",US Bein Sports ES
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1234.ts
-#EXTINF:-1 group-title="Sports",US NBA TV
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1219.ts
-#EXTINF:-1 group-title="Sports",US NHL Network
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1232.ts
-#EXTINF:-1 group-title="Sports",US Outdoor
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1239.ts
-#EXTINF:-1 group-title="Sports",US NFL Red Zone
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1299.ts
-#EXTINF:-1 group-title="Sports",US Sec Network
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1240.ts
-#EXTINF:-1 group-title="Sports",US Sports Man
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1233.ts
-#EXTINF:-1 group-title="Sports",US CBS Sports
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1168.ts
-#EXTINF:-1 group-title="Sports",US BTN
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1202.ts
-#EXTINF:-1 group-title="Sports",US NBC SP BAY
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1253.ts
-#EXTINF:-1 group-title="Sports",US Fishing Network
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1255.ts
-#EXTINF:-1 group-title="Sports",US Willow
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1270.ts
-#EXTINF:-1 group-title="Sports",US NESN
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1171.ts
-#EXTINF:-1 group-title="Sports",US UFC Pass
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1170.ts
-#EXTINF:-1 group-title="Sports",US Boxing ppv
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1252.ts
-#EXTINF:-1 group-title="Sports",US WWE Network
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1169.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 1
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1692.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 2
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1693.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 3
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1694.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 4
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1695.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 5
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1696.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 6
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1697.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 7
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1698.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 8
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1699.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 9
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1700.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 10
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1701.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 11
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1702.ts
-#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 12
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1703.ts
-#EXTINF:-1 group-title="Sports",US TNT
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1220.ts
+#EXTINF:-1 group-title="Sports",MOMOTV Sports
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/336.ts
 #EXTINF:-1 group-title="Sports",NBA League Pass 1
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65077.ts
+#EXTINF:-1 group-title="Sports",NBA League Pass 10
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65086.ts
 #EXTINF:-1 group-title="Sports",NBA League Pass 2
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65078.ts
 #EXTINF:-1 group-title="Sports",NBA League Pass 3
@@ -1257,10 +1085,20 @@ http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65083.ts
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65084.ts
 #EXTINF:-1 group-title="Sports",NBA League Pass 9
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65085.ts
-#EXTINF:-1 group-title="Sports",NBA League Pass 10
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65086.ts
+#EXTINF:-1 group-title="Sports",NFL Network
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1441.ts
 #EXTINF:-1 group-title="Sports",NHL Centre Ice 1
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65092.ts
+#EXTINF:-1 group-title="Sports",NHL Centre Ice 10
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65101.ts
+#EXTINF:-1 group-title="Sports",NHL Centre Ice 11
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65102.ts
+#EXTINF:-1 group-title="Sports",NHL Centre Ice 12
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65103.ts
+#EXTINF:-1 group-title="Sports",NHL Centre Ice 13
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65104.ts
+#EXTINF:-1 group-title="Sports",NHL Centre Ice 14
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65105.ts
 #EXTINF:-1 group-title="Sports",NHL Centre Ice 2
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65093.ts
 #EXTINF:-1 group-title="Sports",NHL Centre Ice 3
@@ -1277,76 +1115,102 @@ http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65098.ts
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65099.ts
 #EXTINF:-1 group-title="Sports",NHL Centre Ice 9
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65100.ts
-#EXTINF:-1 group-title="Sports",NHL Centre Ice 10
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65101.ts
-#EXTINF:-1 group-title="Sports",NHL Centre Ice 11
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65102.ts
-#EXTINF:-1 group-title="Sports",NHL Centre Ice 12
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65103.ts
-#EXTINF:-1 group-title="Sports",NHL Centre Ice 13
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65104.ts
-#EXTINF:-1 group-title="Sports",NHL Centre Ice 14
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65105.ts
-#EXTINF:-1 group-title="Sports",CA TSN 1
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1395.ts
-#EXTINF:-1 group-title="Sports",CA TSN 2
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1396.ts
-#EXTINF:-1 group-title="Sports",CA TSN 3
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1397.ts
-#EXTINF:-1 group-title="Sports",CA TSN 4
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1398.ts
-#EXTINF:-1 group-title="Sports",CA TSN 5
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1399.ts
-#EXTINF:-1 group-title="Sports",CA Sportsnet 1
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1443.ts
-#EXTINF:-1 group-title="Sports",CA Sportsnet 360
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1444.ts
-#EXTINF:-1 group-title="Sports",CA Sportsnet O
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1445.ts
-#EXTINF:-1 group-title="Sports",CA Sportsnet P
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1446.ts
-#EXTINF:-1 group-title="Sports",CA Sportsnet W
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1447.ts
-#EXTINF:-1 group-title="Sports",CA Sportsnet World
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1457.ts
-#EXTINF:-1 group-title="Sports",CA Fight Network
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1317.ts
-#EXTINF:-1 group-title="Sports",CA Bein sport
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1466.ts
-#EXTINF:-1 group-title="Sports",NFL Network
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1441.ts
-#EXTINF:-1 group-title="Sports",CA Golf Channel
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1421.ts
-#EXTINF:-1 group-title="Sports",CA NBA
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1410.ts
-#EXTINF:-1 group-title="Sports",CA RDS
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1475.ts
-#EXTINF:-1 group-title="Sports",CA RDS 2
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1339.ts
-#EXTINF:-1 group-title="Sports",CA TVA Sport 1
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1471.ts
-#EXTINF:-1 group-title="Sports",CA TVA Sport 2
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1478.ts
-#EXTINF:-1 group-title="Sports",UK Sky Sports Main Event
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1558.ts
-#EXTINF:-1 group-title="Sports",UK Sky Sports Cricket
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1559.ts
+#EXTINF:-1 group-title="Sports",Now 668 (國) CH668
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/113.ts
+#EXTINF:-1 group-title="Sports",Now 668 (粵) CH668
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/112.ts
+#EXTINF:-1 group-title="Sports",Now Sports 1 CH631
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/97.ts
+#EXTINF:-1 group-title="Sports",Now Sports 2 CH632
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/98.ts
+#EXTINF:-1 group-title="Sports",Now Sports 3 CH633
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/99.ts
+#EXTINF:-1 group-title="Sports",Now Sports 4 CH634
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/100.ts
+#EXTINF:-1 group-title="Sports",Now Sports 5 CH635
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/101.ts
+#EXTINF:-1 group-title="Sports",Now Sports 6 CH636
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/102.ts
+#EXTINF:-1 group-title="Sports",Now Sports 651 英足總 CH651
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/110.ts
+#EXTINF:-1 group-title="Sports",Now Sports 652 英足總 CH652
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/111.ts
+#EXTINF:-1 group-title="Sports",Now Sports 7 CH637
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/103.ts
+#EXTINF:-1 group-title="Sports",Now Sports CH630
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/96.ts
+#EXTINF:-1 group-title="Sports",Now Sports NBA CH641
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/65073.ts
+#EXTINF:-1 group-title="Sports",Now 英超Premier League 1台 (EN) CH621
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/90.ts
+#EXTINF:-1 group-title="Sports",Now 英超Premier League 1台 CH621
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/89.ts
+#EXTINF:-1 group-title="Sports",Now 英超Premier League 2台 CH622
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/91.ts
+#EXTINF:-1 group-title="Sports",Now 英超Premier League 3台CH623
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/92.ts
+#EXTINF:-1 group-title="Sports",Now 英超Premier League 4台 CH624
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/93.ts
+#EXTINF:-1 group-title="Sports",Now 英超Premier League 5台 CH625
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/94.ts
+#EXTINF:-1 group-title="Sports",Now 英超Premier League 6台 CH626
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/95.ts
+#EXTINF:-1 group-title="Sports",Premier League 1 (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/694.ts
+#EXTINF:-1 group-title="Sports",Premier League 2 (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/695.ts
+#EXTINF:-1 group-title="Sports",Premier Sports (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/702.ts
+#EXTINF:-1 group-title="Sports",SBS Golf (KR)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/931.ts
+#EXTINF:-1 group-title="Sports",SBS Sports (KR)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/932.ts
+#EXTINF:-1 group-title="Sports",SKY Sports (KR)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/938.ts
+#EXTINF:-1 group-title="Sports",SPOTV (KR)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/939.ts
+#EXTINF:-1 group-title="Sports",SPOTV (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/704.ts
+#EXTINF:-1 group-title="Sports",SPOTV 2 (KR)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/936.ts
+#EXTINF:-1 group-title="Sports",SPOTV 2(MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/705.ts
+#EXTINF:-1 group-title="Sports",SPOTV Golf & HEALTH (KR)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/930.ts
+#EXTINF:-1 group-title="Sports",SPOTV Prime (KR)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/940.ts
+#EXTINF:-1 group-title="Sports",SPOTV Prime2 (KR)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/941.ts
+#EXTINF:-1 group-title="Sports",TRACE Sport Stars
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/335.ts
+#EXTINF:-1 group-title="Sports",TVB 88 跑馬台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/136.ts
+#EXTINF:-1 group-title="Sports",TVB myTV SUPER 18台 CH018
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/51.ts
+#EXTINF:-1 group-title="Sports",UK Euro Sport 1
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1512.ts
+#EXTINF:-1 group-title="Sports",UK Euro Sport 2
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1511.ts
 #EXTINF:-1 group-title="Sports",UK Sky Sports Action
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1560.ts
-#EXTINF:-1 group-title="Sports",UK Sky Sports Golf
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1561.ts
-#EXTINF:-1 group-title="Sports",UK Sky Sports Premier League
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1562.ts
-#EXTINF:-1 group-title="Sports",UK Sky Sports Football
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1568.ts
 #EXTINF:-1 group-title="Sports",UK Sky Sports Arena
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1566.ts
+#EXTINF:-1 group-title="Sports",UK Sky Sports Cricket
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1559.ts
 #EXTINF:-1 group-title="Sports",UK Sky Sports F1
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1563.ts
+#EXTINF:-1 group-title="Sports",UK Sky Sports Football
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1568.ts
+#EXTINF:-1 group-title="Sports",UK Sky Sports Golf
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1561.ts
+#EXTINF:-1 group-title="Sports",UK Sky Sports Main Event
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1558.ts
 #EXTINF:-1 group-title="Sports",UK Sky Sports Mix
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1565.ts
 #EXTINF:-1 group-title="Sports",UK Sky Sports News
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1564.ts
+#EXTINF:-1 group-title="Sports",UK Sky Sports Premier League
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1562.ts
 #EXTINF:-1 group-title="Sports",UK Sky Sports Racing
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1567.ts
 #EXTINF:-1 group-title="Sports",UK TNT Sports 1
@@ -1355,9 +1219,141 @@ http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1554.ts
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1555.ts
 #EXTINF:-1 group-title="Sports",UK TNT Sports 3
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1556.ts
-#EXTINF:-1 group-title="Sports",UK Euro Sport 1
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1512.ts
-#EXTINF:-1 group-title="Sports",UK Euro Sport 2
-http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1511.ts
-
-# 统计: BB(79) + HK/TW/Sports(501) = 580
+#EXTINF:-1 group-title="Sports",US BTN
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1202.ts
+#EXTINF:-1 group-title="Sports",US Bein Sports
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1259.ts
+#EXTINF:-1 group-title="Sports",US Bein Sports ES
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1234.ts
+#EXTINF:-1 group-title="Sports",US Boxing ppv
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1252.ts
+#EXTINF:-1 group-title="Sports",US CBS Sports
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1168.ts
+#EXTINF:-1 group-title="Sports",US ESPN
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1218.ts
+#EXTINF:-1 group-title="Sports",US ESPN 2
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1237.ts
+#EXTINF:-1 group-title="Sports",US ESPN News
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1279.ts
+#EXTINF:-1 group-title="Sports",US ESPN U
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1196.ts
+#EXTINF:-1 group-title="Sports",US Fishing Network
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1255.ts
+#EXTINF:-1 group-title="Sports",US Fox Soccer Plus
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1187.ts
+#EXTINF:-1 group-title="Sports",US Fox Sports 1
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1227.ts
+#EXTINF:-1 group-title="Sports",US Fox Sports 2
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1226.ts
+#EXTINF:-1 group-title="Sports",US MLB Network
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1406.ts
+#EXTINF:-1 group-title="Sports",US MLB Strike Zone
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1484.ts
+#EXTINF:-1 group-title="Sports",US NBA TV
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1219.ts
+#EXTINF:-1 group-title="Sports",US NBC SP BAY
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1253.ts
+#EXTINF:-1 group-title="Sports",US NBC Sports
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1190.ts
+#EXTINF:-1 group-title="Sports",US NESN
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1171.ts
+#EXTINF:-1 group-title="Sports",US NFL Red Zone
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1299.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 1
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1692.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 10
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1701.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 11
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1702.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 12
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1703.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 2
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1693.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 3
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1694.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 4
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1695.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 5
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1696.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 6
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1697.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 7
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1698.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 8
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1699.ts
+#EXTINF:-1 group-title="Sports",US NFL Sunday Ticket 9
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1700.ts
+#EXTINF:-1 group-title="Sports",US NHL Network
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1232.ts
+#EXTINF:-1 group-title="Sports",US Outdoor
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1239.ts
+#EXTINF:-1 group-title="Sports",US Sec Network
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1240.ts
+#EXTINF:-1 group-title="Sports",US Sports Man
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1233.ts
+#EXTINF:-1 group-title="Sports",US TNT
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1220.ts
+#EXTINF:-1 group-title="Sports",US Tennis
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1266.ts
+#EXTINF:-1 group-title="Sports",US UFC Pass
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1170.ts
+#EXTINF:-1 group-title="Sports",US WWE Network
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1169.ts
+#EXTINF:-1 group-title="Sports",US Willow
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/1270.ts
+#EXTINF:-1 group-title="Sports",W Sport (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/696.ts
+#EXTINF:-1 group-title="Sports",WWE Network (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/700.ts
+#EXTINF:-1 group-title="Sports",bEIN Sports 3 (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/699.ts
+#EXTINF:-1 group-title="Sports",beIN SPORTS 1 CH638
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/104.ts
+#EXTINF:-1 group-title="Sports",beIN SPORTS 2 CH639
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/105.ts
+#EXTINF:-1 group-title="Sports",beIN SPORTS 3 CH643
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/106.ts
+#EXTINF:-1 group-title="Sports",beIN Sports 1 (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/697.ts
+#EXTINF:-1 group-title="Sports",beIN Sports 2 (MY)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/698.ts
+#EXTINF:-1 group-title="Sports",myTV SUPER直播足球2台 CH901
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/137.ts
+#EXTINF:-1 group-title="Sports",myTV SUPER直播足球3台 CH902
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/138.ts
+#EXTINF:-1 group-title="Sports",myTV SUPER直播足球4台 CH903
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/139.ts
+#EXTINF:-1 group-title="Sports",myTV SUPER直播足球5台 CH904
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/140.ts
+#EXTINF:-1 group-title="Sports",myTV SUPER直播足球6台 CH905
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/141.ts
+#EXTINF:-1 group-title="Sports",ゴルフネットワークGolf Network (JP)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/839.ts
+#EXTINF:-1 group-title="Sports",五星体育 (CN)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/526.ts
+#EXTINF:-1 group-title="Sports",博斯无限1台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/270.ts
+#EXTINF:-1 group-title="Sports",博斯无限2台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/271.ts
+#EXTINF:-1 group-title="Sports",博斯网球台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/272.ts
+#EXTINF:-1 group-title="Sports",博斯运动1台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/265.ts
+#EXTINF:-1 group-title="Sports",博斯运动2台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/266.ts
+#EXTINF:-1 group-title="Sports",博斯高球1台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/268.ts
+#EXTINF:-1 group-title="Sports",博斯高球2台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/269.ts
+#EXTINF:-1 group-title="Sports",博斯魅力台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/267.ts
+#EXTINF:-1 group-title="Sports",广东体育频道 (CN)
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/527.ts
+#EXTINF:-1 group-title="Sports",智林体育台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/337.ts
+#EXTINF:-1 group-title="Sports",曼聯電視 MUTV CH640
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/107.ts
+#EXTINF:-1 group-title="Sports",纬来体育台
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/226.ts
+#EXTINF:-1 group-title="Sports",纬来体育台 H265
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/424.ts
