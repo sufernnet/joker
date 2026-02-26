@@ -1,5 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
+# FF.m3u | 更新: 2026-02-26 07:31:24
+
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -350,7 +352,7 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 
 
-# HK频道 (79)
+# HK 频道 (81)
 #EXTINF:-1 group-title="HK",Now Golf 2 CH683
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/115.ts
 #EXTINF:-1 group-title="HK",Now Golf 3 CH684
@@ -505,12 +507,16 @@ http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/147.ts
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/87.ts
 #EXTINF:-1 group-title="HK",鳳凰衛視
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/18.ts
+#EXTINF:-1 group-title="HK",鳳凰資訊
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/17.ts
+#EXTINF:-1 group-title="HK",鳳凰資訊台 CH611
+http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/88.ts
 #EXTINF:-1 group-title="HK",鳳凰香港
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/19.ts
 #EXTINF:-1 group-title="HK",鳳凰香港台 CH612
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/86.ts
 
-# TW频道 (200)
+# TW 频道 (200)
 #EXTINF:-1 group-title="TW",Love Nature
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/296.ts
 #EXTINF:-1 group-title="TW",中天亚洲台
@@ -912,7 +918,7 @@ http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/235.ts
 #EXTINF:-1 group-title="TW",龙华日韩台
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/234.ts
 
-# Sports频道 (222)
+# Sports 频道 (222)
 #EXTINF:-1 group-title="Sports",Astro Arena 1 (MY)
 http://iptvpro.pw:35451/live/加QQ群995225115福利/678999999/690.ts
 #EXTINF:-1 group-title="Sports",Astro Arena 2 (MY)
