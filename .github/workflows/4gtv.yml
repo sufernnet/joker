@@ -2,7 +2,7 @@ name: 更新4GTV直播源
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # 每6小时运行一次
+    - cron: '0 */6 * * *'
   workflow_dispatch:
   push:
     branches: [ main, master ]
@@ -17,7 +17,6 @@ jobs:
     permissions:
       contents: write
       pages: write
-      id-token: write
     
     steps:
       - name: 检出仓库
@@ -31,63 +30,23 @@ jobs:
       - name: 安装依赖
         run: |
           python -m pip install --upgrade pip
-          pip install requests pycryptodome
-          pip list
-      
-      - name: 测试网络连接
-        run: |
-          curl -I https://api2.4gtv.tv/Channel/GetChannelFastTV
-          echo "网络测试完成"
+          pip install requests
       
       - name: 运行4GTV生成器
-        id: generate
         run: |
           python scripts/4gtv.py
-        continue-on-error: false
       
       - name: 检查生成的文件
-        id: check
         run: |
           if [ -f "output/4gtv.m3u" ]; then
             echo "✅ M3U文件生成成功"
-            FILE_SIZE=$(wc -c < output/4gtv.m3u)
             CHANNEL_COUNT=$(grep -c ^#EXTINF output/4gtv.m3u || echo "0")
-            echo "文件大小: $FILE_SIZE 字节"
             echo "频道数量: $CHANNEL_COUNT"
-            echo "FILE_SIZE=$FILE_SIZE" >> $GITHUB_ENV
             echo "CHANNEL_COUNT=$CHANNEL_COUNT" >> $GITHUB_ENV
-            echo "文件预览:"
-            head -n 10 output/4gtv.m3u
           else
             echo "❌ M3U文件不存在"
             exit 1
           fi
-      
-      - name: 创建README
-        run: |
-          CHANNEL_COUNT=${CHANNEL_COUNT:-0}
-          FILE_SIZE=${FILE_SIZE:-0}
-          UPDATE_TIME=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
-          
-          cat > output/README.md << EOF
-          # 4GTV 直播源
-          
-          ## 📺 M3U 地址
-          \`\`\`
-          https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/4gtv.m3u
-          \`\`\`
-          
-          ## ⏰ 更新信息
-          - 最后更新: ${UPDATE_TIME}
-          - 触发方式: ${{ github.event_name }}
-          
-          ## 📊 统计信息
-          - 总频道数: ${CHANNEL_COUNT}
-          - 文件大小: ${FILE_SIZE} 字节
-          
-          ## 🔧 使用方法
-          在支持M3U的播放器（TiviMate、VLC、PotPlayer等）中添加上述地址即可。
-          EOF
       
       - name: 部署到GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -99,5 +58,4 @@ jobs:
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: |
             update 4gtv.m3u
-            🕒 ${{ env.UPDATE_TIME }}
             📊 频道: ${{ env.CHANNEL_COUNT }}
