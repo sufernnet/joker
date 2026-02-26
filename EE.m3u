@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # EE.m3u
-# 生成时间: 2026-02-26 10:46:09
+# 生成时间: 2026-02-26 10:48:24
 # 更新频率: 每天 06:00 / 17:00
 # EPG: https://epg.zsdc.eu.org/t.xml.gz
 # GitHub Actions 自动生成
@@ -548,7 +548,7 @@ http://bxtv.3a.ink/api.php?id=qxjd
 #EXTINF:-1 group-title="HK",TVB无线千禧
 http://rihou.cc:555/tv/[Bx]无线千禧
 
-# TW频道 (55)
+# TW频道 (53)
 #EXTINF:-1 group-title="TW",镜新聞
 https://d36dgdk71xuzzg.cloudfront.net/v1/manifest/3a2ac8e6b6c76471996ebf627393d9c9417a60b6/linetv-6-627778910172-MediaTailor-production/c9b2313d-efdd-4777-9fae-573be8a86755/0.m3u8
 #EXTINF:-1 group-title="TW",镜新聞
@@ -571,10 +571,6 @@ https://stream1.freetv.fun/19ee45515520ddf60e585588407481e11751df85fcd5cbdb78204
 http://141.11.87.241:20013/4gtv-4gtv003/index.m3u8?proxy=true
 #EXTINF:-1 group-title="TW",民視第一台
 http://165.154.226.214:50007/li-4gtv-4gtv003/index.m3u8?proxy=true
-#EXTINF:-1 group-title="TW",民视综艺
-http://iptv.4666888.xyz/iptv2A.php?id=46
-#EXTINF:-1 group-title="TW",民视综艺
-https://stream1.freetv.fun/1b47ca26b5937e3c39bafc6969f66e1ef01d0ea00773163e5b7a9b7fccf082c5.m3u8
 #EXTINF:-1 group-title="TW",CTS華視新聞资讯
 http://74.91.26.218:82/live/ctsnews.m3u8
 #EXTINF:-1 group-title="TW",CTS華視新聞资讯
@@ -663,9 +659,9 @@ https://stream1.freetv.fun/541f6094f34e0290077cf0d55df31c49bc148118e6b030fa2165d
 # 统计信息
 # BB 频道数: 79
 # HK频道数: 95
-# TW频道数: 55
-# 关键词过滤数: 33
+# TW频道数: 53
+# 关键词过滤数: 35
 # URL过滤数: 0
 # 去重频道数: 2
-# 总频道数: 229
-# 更新时间: 2026-02-26 10:46:09
+# 总频道数: 227
+# 更新时间: 2026-02-26 10:48:24
