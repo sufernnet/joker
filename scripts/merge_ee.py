@@ -3,7 +3,7 @@
 EE.m3u 合并脚本（港台频道版 + 新聞频道）
 
 功能：
-1. 提取“港台频道”和“新聞频道”两个分组
+1. 从同一个源文件（港台大陆）中提取“港台频道”和“新聞频道”两个分组
 2. 合并后重命名为“港澳台”
 3. 过滤掉指定频道和指定URL
 4. 去除频道名称中的分辨率标记（如“HD 1080p”、“1080p”）
@@ -24,14 +24,12 @@ from datetime import datetime
 # ================== 配置 ==================
 
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
-# 主要源：港台大陆
+# 主要源：港台大陆（包含“港台频道”和“新聞频道”两个分组）
 GAT_URL = "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/FG/refs/heads/main/港台大陆"
-# 新增源：新聞频道
-NEWS_URL = "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/FG/refs/heads/main/新聞频道"
 OUTPUT_FILE = "EE.m3u"
 
-SOURCE_GROUP = "港台频道"
-NEWS_GROUP = "新聞频道"
+# 需要从同一个源文件中提取的两个分组名
+SOURCE_GROUPS = ["港台频道", "新聞频道"]
 TARGET_GROUP = "港澳台"
 
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
@@ -127,36 +125,46 @@ def download(url, desc):
         return None
 
 
-def extract_channels(content, group_name):
-    """从指定分组提取频道"""
+def extract_channels_from_file(content, target_groups):
+    """
+    从文件内容中提取指定分组列表中的所有频道。
+    返回一个包含所有找到的频道的列表。
+    """
     lines = content.splitlines()
-    channels = []
+    all_channels = []
     in_section = False
-    marker = f"{group_name},#genre#"
+    current_group_marker = None
 
-    log(f"开始提取分组：{group_name}")
+    log(f"开始从文件中提取分组: {target_groups}")
 
     for i, line in enumerate(lines):
         line = line.strip()
         if not line:
             continue
 
-        if marker in line:
-            in_section = True
-            log(f"✅ 在第 {i+1} 行找到目标分组")
-            continue
+        # 检查是否是目标分组的开始标记
+        for group in target_groups:
+            marker = f"{group},#genre#"
+            if marker in line:
+                in_section = True
+                current_group_marker = group
+                log(f"✅ 在第 {i+1} 行找到目标分组: {group}")
+                break
 
         if in_section:
-            if ",#genre#" in line:
-                log("到达下一个分组，停止提取")
-                break
+            # 如果遇到下一个分组的标记，则停止当前分组的提取
+            if ",#genre#" in line and current_group_marker not in line:
+                log(f"到达下一个分组 '{line.split(',')[0]}'，停止提取 '{current_group_marker}'")
+                in_section = False
+                current_group_marker = None
+                continue
 
             if "," in line and "://" in line:
                 name, url = line.split(",", 1)
-                channels.append((name.strip(), url.strip()))
+                all_channels.append((name.strip(), url.strip()))
 
-    log(f"从 {group_name} 提取到 {len(channels)} 个频道")
-    return channels
+    log(f"总共从文件中提取到 {len(all_channels)} 个频道")
+    return all_channels
 
 
 def clean_channel_name(name):
@@ -251,7 +259,7 @@ def deduplicate_channels(channels):
     return deduped
 
 
-# ================== 新的排序逻辑 ==================
+# ================== 排序逻辑 ==================
 
 def is_taiwan(name):
     """根据关键词判断是否为台湾频道"""
@@ -383,20 +391,13 @@ def main():
     if not bb:
         return
 
-    # 下载两个源
-    gat_content = download(GAT_URL, "港台频道源") or ""
-    news_content = download(NEWS_URL, "新聞频道源") or ""
+    # 下载包含多个分组的源文件
+    gat_content = download(GAT_URL, "港台大陆源文件 (包含港台频道和新聞频道)") or ""
     
-    # 从两个分组提取频道
+    # 从同一个文件中提取所有目标分组的频道
     all_channels = []
-    
     if gat_content:
-        gat_channels = extract_channels(gat_content, SOURCE_GROUP)
-        all_channels.extend(gat_channels)
-    
-    if news_content:
-        news_channels = extract_channels(news_content, NEWS_GROUP)
-        all_channels.extend(news_channels)
+        all_channels = extract_channels_from_file(gat_content, SOURCE_GROUPS)
     
     log(f"总共提取到 {len(all_channels)} 个频道")
     
