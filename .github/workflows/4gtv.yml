@@ -1,14 +1,9 @@
 name: 更新4GTV直播源
 
 on:
-  # 定时触发：每天凌晨2点运行
   schedule:
-    - cron: '0 2 * * *'
-  
-  # 手动触发：可以在GitHub Actions页面手动运行
+    - cron: '0 */6 * * *'  # 每6小时运行一次
   workflow_dispatch:
-  
-  # 代码推送时触发
   push:
     branches: [ main, master ]
     paths:
@@ -25,57 +20,55 @@ jobs:
       id-token: write
     
     steps:
-      # 1. 检出代码
       - name: 检出仓库
         uses: actions/checkout@v4
       
-      # 2. 设置Python环境（去掉cache配置）
       - name: 设置Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          # 移除 cache 配置
       
-      # 3. 安装依赖
       - name: 安装依赖
         run: |
           python -m pip install --upgrade pip
-          pip install requests pycryptodome
+          pip install requests
           pip list
-          
-      # 4. 测试网络连接
+      
       - name: 测试网络连接
         run: |
           curl -I https://api2.4gtv.tv/Channel/GetChannelFastTV
           echo "网络测试完成"
       
-      # 5. 运行生成脚本
       - name: 运行4GTV生成器
         id: generate
         run: |
           python scripts/4gtv.py
         continue-on-error: false
       
-      # 6. 检查生成的文件
       - name: 检查生成的文件
+        id: check
         run: |
           if [ -f "output/4gtv.m3u" ]; then
             echo "✅ M3U文件生成成功"
-            echo "文件大小: $(wc -c < output/4gtv.m3u) 字节"
+            FILE_SIZE=$(wc -c < output/4gtv.m3u)
             CHANNEL_COUNT=$(grep -c ^#EXTINF output/4gtv.m3u || echo "0")
+            echo "文件大小: $FILE_SIZE 字节"
             echo "频道数量: $CHANNEL_COUNT"
+            echo "FILE_SIZE=$FILE_SIZE" >> $GITHUB_ENV
+            echo "CHANNEL_COUNT=$CHANNEL_COUNT" >> $GITHUB_ENV
             echo "文件预览:"
             head -n 10 output/4gtv.m3u
-            echo "CHANNEL_COUNT=$CHANNEL_COUNT" >> $GITHUB_ENV
           else
             echo "❌ M3U文件不存在"
             exit 1
           fi
       
-      # 7. 创建README文件
       - name: 创建README
         run: |
           CHANNEL_COUNT=${CHANNEL_COUNT:-0}
+          FILE_SIZE=${FILE_SIZE:-0}
+          UPDATE_TIME=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
+          
           cat > output/README.md << EOF
           # 4GTV 直播源
           
@@ -85,13 +78,13 @@ jobs:
           \`\`\`
           
           ## ⏰ 更新信息
-          - 最后更新: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
+          - 最后更新: ${UPDATE_TIME}
           - 触发方式: ${{ github.event_name }}
           - 运行ID: ${{ github.run_id }}
           
           ## 📊 统计信息
           - 总频道数: ${CHANNEL_COUNT}
-          - 文件大小: $(wc -c < output/4gtv.m3u || echo "0") 字节
+          - 文件大小: ${FILE_SIZE} 字节
           
           ## 🔧 使用方法
           在支持M3U的播放器（TiviMate、VLC、PotPlayer等）中添加上述地址即可。
@@ -100,33 +93,27 @@ jobs:
           本仓库仅用于技术学习交流，所有内容均来自互联网，如有侵权请联系删除。
           EOF
       
-      # 8. 部署到GitHub Pages
       - name: 部署到GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./output
           publish_branch: gh-pages
-          destination_dir: ./
-          keep_files: false
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: |
             update 4gtv.m3u
-            
-            🕒 更新时间: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
-            📊 频道数量: ${CHANNEL_COUNT}
-            🔄 触发方式: ${{ github.event_name }}
+            🕒 ${{ env.UPDATE_TIME }}
+            📊 频道: ${{ env.CHANNEL_COUNT }}
       
-      # 9. 发送通知（可选）
-      - name: 发送成功通知
-        if: success()
+      - name: 发送通知
+        if: always()
         run: |
-          echo "✅ 更新成功！"
-          echo "M3U地址: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/4gtv.m3u"
-      
-      - name: 发送失败通知
-        if: failure()
-        run: |
-          echo "❌ 更新失败！"
-          echo "请检查Actions日志: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ 更新成功！"
+            echo "M3U地址: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/4gtv.m3u"
+            echo "频道数量: ${{ env.CHANNEL_COUNT }}"
+          else
+            echo "❌ 更新失败！"
+            echo "请检查Actions日志: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          fi
