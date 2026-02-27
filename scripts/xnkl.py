@@ -10,7 +10,9 @@ xnkl.m3u 直播源分类脚本
 5. 按分类和优先级排序
 6. 生成分类清晰的 M3U 文件
 
-北京时间每天 06:00 / 17:00 自动运行
+源地址：https://feer-cdn-bp.xpnb.qzz.io/xnkl.txt
+输出文件：xnkl.m3u (放在仓库根目录)
+定时运行：北京时间每天 06:00 / 17:00 (GitHub Actions)
 """
 
 import requests
@@ -18,22 +20,44 @@ import re
 import os
 from datetime import datetime
 
-# ================== 配置 ==================
+# ================== 配置区域 ==================
 
+# 原始直播源URL
 SOURCE_URL = "https://feer-cdn-bp.xpnb.qzz.io/xnkl.txt"
-OUTPUT_FILE = "xnkl.m3u"  # 输出到仓库根目录
 
-# EPG 配置
+# 输出文件名（将生成在仓库根目录）
+OUTPUT_FILE = "xnkl.m3u"
+
+# EPG 地址
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 
 # 分类规则 (关键词 => 类别标签)
+# 你可以根据需要添加或修改关键词
 CATEGORY_RULES = {
-    'HK': ['TVB', '明珠', '翡翠', '無線', '無綫', '互動新聞', 'J2', '星河', '鳳凰', '凤凰', 'Now', 'HOY', 'ViuTV'],
-    'TW': ['中視', '華視', '民視', '公視', '台視', 'TVBS', '緯來', '龍華', '八大', '東森', '三立'],
-    'SPORTS': ['體育', 'SPORTS', '運動', '緯來體育', 'ELTA', '博斯'],
-    'NATURE': ['探索', '國家地理', 'NATURE', 'DISCOVERY', '動物星球', '歷史頻道'],
-    'NEWS': ['新聞', '新闻', 'NEWS', '资讯', '財經', '天下'],
-    'ENT': ['娛樂', '综合', '電影', '影視', 'DRAMA', '戲劇', '綜藝'],
+    'HK': [
+        'TVB', '明珠', '翡翠', '無線', '無綫', '互動新聞', 'J2', '星河', 
+        '鳳凰', '凤凰', 'Now', 'HOY', 'ViuTV', '無線新聞', '無線財經'
+    ],
+    'TW': [
+        '中視', '華視', '民視', '公視', '台視', 'TVBS', '緯來', '龍華', 
+        '八大', '東森', '三立', '非凡', '年代', '壹電視', '中天'
+    ],
+    'SPORTS': [
+        '體育', 'SPORTS', '運動', '緯來體育', 'ELTA', '博斯', 'Eleven', 
+        '愛爾達', '福斯體育'
+    ],
+    'NATURE': [
+        '探索', '國家地理', 'NATURE', 'DISCOVERY', '動物星球', '歷史頻道',
+        '知識', '紀實'
+    ],
+    'NEWS': [
+        '新聞', '新闻', 'NEWS', '资讯', '財經', '天下', 'CNN', 'BBC',
+        'CNA', '寰宇新聞'
+    ],
+    'ENT': [
+        '娛樂', '综合', '電影', '影視', 'DRAMA', '戲劇', '綜藝', '星衛',
+        'HBO', 'CINEMAX', 'FOX'
+    ],
 }
 
 # 频道名称标准化映射（用于去重）
@@ -44,6 +68,8 @@ NAME_NORMALIZATION = {
     "now新闻台": "Now新闻",
     "NOW 新闻台": "Now新闻",
     "Now 新闻台": "Now新闻",
+    "TVB無線新聞台": "TVB無線新聞",
+    "TVB無線財經台": "TVB無線財經",
 }
 
 # 需要优先保留的名称模式（不区分大小写）
@@ -52,40 +78,56 @@ PREFERRED_NAMES = [
     "Now体育",
     "Now财经", 
     "Now直播",
+    "TVB無線新聞",
+    "TVB無線財經",
 ]
 
-# ================== 工具 ==================
+# ================== 工具函数 ==================
 
 def log(msg):
+    """日志输出函数"""
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
 
 
-def download(url, desc):
+def download_source(url, desc):
+    """下载源文件"""
     try:
-        log(f"下载 {desc}...")
-        r = requests.get(url, timeout=25, headers={"User-Agent": "Mozilla/5.0"})
+        log(f"📥 下载 {desc}...")
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
+        r = requests.get(url, timeout=30, headers=headers)
         r.encoding = 'utf-8'
         r.raise_for_status()
         log(f"✅ {desc} 下载成功 ({len(r.text)} 字符)")
         return r.text
-    except Exception as e:
+    except requests.exceptions.Timeout:
+        log(f"❌ {desc} 下载超时")
+        return None
+    except requests.exceptions.RequestException as e:
         log(f"❌ {desc} 下载失败: {e}")
+        return None
+    except Exception as e:
+        log(f"❌ {desc} 未知错误: {e}")
         return None
 
 
 def clean_channel_name(name):
-    """去除频道名称末尾的分辨率标记如 'HD 1080p', '1080p' 等"""
+    """去除频道名称末尾的分辨率标记"""
     original = name
-    # 去除末尾常见的分辨率标记
+    # 去除各种分辨率标记
     name = re.sub(r'\s*[Hh][Dd]\s*1080[pP]?\s*$', '', name)
     name = re.sub(r'\s*1080[pP]\s*$', '', name)
     name = re.sub(r'\s*[Hh][Dd]\s*$', '', name)
-    name = re.sub(r'\s*[0-9]+p\s*$', '', name)  # 如 720p, 480p 等
+    name = re.sub(r'\s*[0-9]+p\s*$', '', name)  # 如 720p, 480p
     name = re.sub(r'\s*[0-9]+P\s*$', '', name)
+    name = re.sub(r'\s*FHD\s*$', '', name, flags=re.IGNORECASE)
+    name = re.sub(r'\s*4K\s*$', '', name, flags=re.IGNORECASE)
+    name = re.sub(r'\s*UHD\s*$', '', name, flags=re.IGNORECASE)
     # 去除可能留下的空格
     name = name.strip()
     if name != original:
-        log(f"清洗名称: '{original}' -> '{name}'")
+        log(f"  清洗名称: '{original}' -> '{name}'")
     return name
 
 
@@ -95,7 +137,7 @@ def normalize_channel_name(name):
     
     for variant, standard in NAME_NORMALIZATION.items():
         if name_stripped == variant or name_stripped.lower() == variant.lower():
-            log(f"标准化名称: '{name}' -> '{standard}'")
+            log(f"  标准化: '{name}' -> '{standard}'")
             return standard
     
     return name_stripped
@@ -111,9 +153,7 @@ def is_preferred_name(name):
 
 
 def categorize_channel(channel_name):
-    """
-    根据频道名称，通过关键词匹配返回对应的分类标签
-    """
+    """根据频道名称分类"""
     for category, keywords in CATEGORY_RULES.items():
         for keyword in keywords:
             if re.search(keyword, channel_name, re.IGNORECASE):
@@ -123,8 +163,7 @@ def categorize_channel(channel_name):
 
 def deduplicate_channels(channels):
     """
-    去重处理
-    策略：对于相同内容的频道，优先保留标准名称，去掉带"台"字的变体
+    去重处理：相同URL的频道，优先保留标准名称
     """
     url_groups = {}
     for name, url in channels:
@@ -137,33 +176,32 @@ def deduplicate_channels(channels):
         if len(names) == 1:
             deduped.append((names[0], url))
         else:
-            log(f"发现重复URL: {url}")
+            log(f"  发现重复URL: {url[:50]}...")
             for name in names:
-                log(f"  - 名称变体: {name}")
+                log(f"    - 名称变体: {name}")
             
+            # 优先选择标准名称
             selected = None
             for name in names:
                 if is_preferred_name(name):
                     selected = name
-                    log(f"  ✅ 选择优先名称: {name}")
+                    log(f"    ✅ 选择优先名称: {name}")
                     break
             
+            # 如果没有标准名称，选择最短的（通常是不带"台"的版本）
             if not selected:
-                # 选择最短的名称（通常是不带"台"的标准名称）
                 sorted_names = sorted(names, key=len)
                 selected = sorted_names[0]
-                log(f"  ⚠️ 无优先名称，选择最短的: {selected}")
+                log(f"    ⚠️ 选择最短名称: {selected}")
             
             deduped.append((selected, url))
     
-    log(f"去重前频道数: {len(channels)}，去重后: {len(deduped)}")
+    log(f"  去重前: {len(channels)}，去重后: {len(deduped)}")
     return deduped
 
 
 def parse_m3u(content):
-    """
-    解析M3U内容，提取频道信息
-    """
+    """解析M3U内容，提取频道信息"""
     channels = []
     lines = content.splitlines()
     
@@ -190,14 +228,12 @@ def parse_m3u(content):
         else:
             i += 1
     
-    log(f"解析到 {len(channels)} 个频道")
+    log(f"📊 解析到 {len(channels)} 个频道")
     return channels
 
 
 def get_category_priority(category):
-    """
-    获取分类的显示优先级
-    """
+    """获取分类的显示优先级"""
     priority_order = ['HK', 'TW', 'SPORTS', 'NATURE', 'NEWS', 'ENT', 'OTHER']
     try:
         return priority_order.index(category)
@@ -205,99 +241,36 @@ def get_category_priority(category):
         return len(priority_order)
 
 
-def sort_channels_by_category(channels_with_cats):
-    """
-    按分类和名称排序频道
-    """
-    def sort_key(item):
-        channel, category = item
-        cat_priority = get_category_priority(category)
-        return (cat_priority, channel)
-    
-    return sorted(channels_with_cats, key=sort_key)
-
-
-# ================== 主流程 ==================
-
-def main():
-    log("开始生成 xnkl.m3u ...")
-    
-    # 获取脚本所在目录的上一级（仓库根目录）
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    repo_root = os.path.dirname(script_dir)  # joker 目录
-    output_path = os.path.join(repo_root, OUTPUT_FILE)
-    
-    log(f"脚本目录: {script_dir}")
-    log(f"仓库根目录: {repo_root}")
-    log(f"输出文件: {output_path}")
-
-    # 下载源文件
-    content = download(SOURCE_URL, "xnkl.txt")
-    if not content:
-        log("❌ 下载失败，程序退出")
-        return
-
-    # 解析频道
-    raw_channels = parse_m3u(content)
-    if not raw_channels:
-        log("❌ 没有解析到任何频道，程序退出")
-        return
-    
-    log(f"原始频道数: {len(raw_channels)}")
-    
-    # 清洗名称：去除分辨率标记
-    cleaned_channels = [(clean_channel_name(name), url) for name, url in raw_channels]
-    log(f"清洗后频道数: {len(cleaned_channels)}")
-    
-    # 标准化名称（用于去重）
-    normalized_channels = [(normalize_channel_name(name), url) for name, url in cleaned_channels]
-    
-    # 去重处理
-    deduped_channels = deduplicate_channels(normalized_channels)
-    
-    # 分类
-    channels_with_cats = [(name, categorize_channel(name), url) for name, url in deduped_channels]
-    
-    # 按分类分组
-    categorized = {}
-    for name, category, url in channels_with_cats:
-        if category not in categorized:
-            categorized[category] = []
-        categorized[category].append((name, url))
-    
-    # 对每个分类内的频道进行排序
-    for category in categorized:
-        categorized[category].sort(key=lambda x: x[0])  # 按名称排序
-    
-    # 全局排序（按分类优先级）
-    sorted_items = sort_channels_by_category([(name, cat) for name, cat, _ in channels_with_cats])
-    sorted_channels_dict = {name: url for name, url in deduped_channels}
-    
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    # 生成输出文件
-    output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
-    output += f"""# xnkl.m3u
+def write_output(categorized, output_path, timestamp):
+    """写入分类后的M3U文件"""
+    try:
+        with open(output_path, 'w', encoding='utf-8') as f:
+            # 文件头
+            f.write(f'#EXTM3U url-tvg="{EPG_URL}"\n\n')
+            f.write(f"""# xnkl.m3u
 # 生成时间: {timestamp}
 # 原始来源: {SOURCE_URL}
 # EPG: {EPG_URL}
 # GitHub Actions 自动生成
 
-"""
+""")
 
-    # 按分类写入频道
-    total_channels = 0
-    for category in sorted(categorized.keys(), key=get_category_priority):
-        channels = categorized[category]
-        if channels:
-            total_channels += len(channels)
-            output += f"\n# 分类: {category} (共 {len(channels)} 台)\n"
-            for name, url in channels:
-                output += f'#EXTINF:-1 group-title="{category}",{name}\n'
-                output += f"{url}\n"
+            # 按分类写入频道
+            total_channels = 0
+            for category in sorted(categorized.keys(), key=get_category_priority):
+                channels = categorized[category]
+                if channels:
+                    # 对分类内的频道按名称排序
+                    channels.sort(key=lambda x: x[0])
+                    total_channels += len(channels)
+                    
+                    f.write(f"\n# 分类: {category} (共 {len(channels)} 台)\n")
+                    for name, url in channels:
+                        f.write(f'#EXTINF:-1 group-title="{category}",{name}\n')
+                        f.write(f"{url}\n")
 
-    # 添加统计信息
-    output += f"""
+            # 统计信息
+            f.write(f"""
 # 统计信息
 # 香港(HK)频道数: {len(categorized.get('HK', []))}
 # 台湾(TW)频道数: {len(categorized.get('TW', []))}
@@ -308,25 +281,99 @@ def main():
 # 其他(OTHER)频道数: {len(categorized.get('OTHER', []))}
 # 总频道数: {total_channels}
 # 更新时间: {timestamp}
-"""
+""")
+        
+        return total_channels
+    except Exception as e:
+        log(f"❌ 写入文件失败: {e}")
+        return None
 
-    try:
-        with open(output_path, "w", encoding="utf-8") as f:
-            f.write(output)
-        log(f"🎉 {OUTPUT_FILE} 生成成功")
-        log(f"📺 总频道数: {total_channels}")
+
+# ================== 主函数 ==================
+
+def main():
+    """主函数"""
+    log("="*60)
+    log("🚀 开始生成 xnkl.m3u")
+    log("="*60)
+    
+    # 获取路径
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    repo_root = os.path.dirname(script_dir)  # joker 目录
+    output_path = os.path.join(repo_root, OUTPUT_FILE)
+    
+    log(f"📁 脚本目录: {script_dir}")
+    log(f"📁 仓库根目录: {repo_root}")
+    log(f"📄 输出文件: {output_path}")
+
+    # 下载源文件
+    content = download_source(SOURCE_URL, "xnkl.txt")
+    if not content:
+        log("❌ 下载失败，程序退出")
+        return 1
+
+    # 解析频道
+    raw_channels = parse_m3u(content)
+    if not raw_channels:
+        log("❌ 没有解析到任何频道，程序退出")
+        return 1
+    
+    log(f"📊 原始频道数: {len(raw_channels)}")
+    
+    # 清洗名称
+    log("🔄 清洗频道名称...")
+    cleaned_channels = [(clean_channel_name(name), url) for name, url in raw_channels]
+    
+    # 标准化名称
+    log("🔄 标准化频道名称...")
+    normalized_channels = [(normalize_channel_name(name), url) for name, url in cleaned_channels]
+    
+    # 去重处理
+    log("🔄 去重处理...")
+    deduped_channels = deduplicate_channels(normalized_channels)
+    
+    # 分类
+    log("🏷️ 分类频道...")
+    channels_with_cats = []
+    for name, url in deduped_channels:
+        category = categorize_channel(name)
+        channels_with_cats.append((name, category, url))
+        log(f"  {name} -> {category}")
+    
+    # 按分类分组
+    categorized = {}
+    for name, category, url in channels_with_cats:
+        if category not in categorized:
+            categorized[category] = []
+        categorized[category].append((name, url))
+    
+    # 生成时间戳
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    # 写入文件
+    total = write_output(categorized, output_path, timestamp)
+    
+    if total:
+        log("="*60)
+        log(f"🎉 成功！xnkl.m3u 生成成功")
+        log(f"📺 总频道数: {total}")
         for category in sorted(categorized.keys(), key=get_category_priority):
             count = len(categorized.get(category, []))
             if count > 0:
                 log(f"   {category}: {count} 个频道")
         
-        # 验证文件是否生成
+        # 验证文件
         if os.path.exists(output_path):
             file_size = os.path.getsize(output_path)
-            log(f"✅ 文件已保存，大小: {file_size} 字节")
-    except Exception as e:
-        log(f"❌ 保存失败: {e}")
+            log(f"💾 文件大小: {file_size} 字节")
+            log(f"📍 文件位置: {output_path}")
+        
+        log("="*60)
+        return 0
+    else:
+        log("❌ 生成失败")
+        return 1
 
 
 if __name__ == "__main__":
-    main()
+    exit(main())
