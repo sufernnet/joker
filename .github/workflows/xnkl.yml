@@ -1,131 +1,180 @@
-name: 自动生成xnkl.m3u（直播源分类）
+name: 自动生成 xnkl.m3u（直播源分类）
 
 on:
   # 手动触发
   workflow_dispatch:
   
   # 定时触发：北京时间 06:00 和 17:00
+  # UTC 22:00 = 北京时间 06:00（次日）
+  # UTC 09:00 = 北京时间 17:00
   schedule:
-    - cron: '0 22 * * *'  # UTC 22:00 = 北京时间 06:00（次日）
-    - cron: '0 9 * * *'   # UTC 09:00 = 北京时间 17:00
+    - cron: '0 22 * * *'  # 北京时间 06:00
+    - cron: '0 9 * * *'   # 北京时间 17:00
   
-  # 当脚本更新时也触发
+  # 当脚本更新时触发
   push:
     paths:
       - 'scripts/xnkl.py'
       - '.github/workflows/xnkl.yml'
+      - 'xnkl.m3u'  # 当文件被修改时也触发
 
 jobs:
   generate-xnkl:
+    name: 生成 xnkl.m3u
     runs-on: ubuntu-latest
-    
-    defaults:
-      run:
-        working-directory: ./  # 在仓库根目录运行
+    permissions:
+      contents: write  # 允许写入仓库
     
     steps:
-    - name: 📥 检出代码
-      uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
-    
-    - name: 🐍 设置Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-    
-    - name: 📦 安装依赖
-      run: pip install requests
-    
-    - name: 🚀 运行xnkl生成脚本
-      run: |
-        echo "开始生成xnkl.m3u..."
-        python scripts/xnkl.py
-        
-        echo -e "\n=== 检查生成的文件 ==="
-        if [ -f "xnkl.m3u" ]; then
-          echo "✅ xnkl.m3u 已生成在仓库根目录"
+      # 检出代码
+      - name: 📥 检出代码
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      
+      # 设置 Python
+      - name: 🐍 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      
+      # 安装依赖
+      - name: 📦 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+      
+      # 运行生成脚本
+      - name: 🚀 运行 xnkl.py
+        id: run_script
+        run: |
+          echo "🔨 开始运行生成脚本..."
+          python scripts/xnkl.py
+          EXIT_CODE=$?
+          
+          echo "status=$EXIT_CODE" >> $GITHUB_OUTPUT
+          
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "✅ 脚本运行成功"
+          else
+            echo "❌ 脚本运行失败"
+            exit $EXIT_CODE
+          fi
+      
+      # 检查生成的文件
+      - name: 🔍 检查生成的文件
+        run: |
+          echo "📄 检查 xnkl.m3u..."
+          
+          if [ ! -f "xnkl.m3u" ]; then
+            echo "❌ xnkl.m3u 未生成"
+            echo "当前目录内容:"
+            ls -la
+            exit 1
+          fi
+          
+          echo "✅ xnkl.m3u 已生成"
           echo "文件大小: $(wc -c < xnkl.m3u) 字节"
-          echo "行数: $(wc -l < xnkl.m3u)"
+          echo "文件行数: $(wc -l < xnkl.m3u)"
           
-          echo -e "\n=== 文件内容预览 ==="
-          echo "前10行:"
-          head -10 xnkl.m3u
-          echo "..."
+          # 统计频道数
+          CHANNEL_COUNT=$(grep -c "^#EXTINF" xnkl.m3u || echo 0)
+          echo "频道总数: $CHANNEL_COUNT"
           
-          echo -e "\n=== 分类统计 ==="
-          echo "各分类频道数:"
-          grep "group-title=" xnkl.m3u | sed 's/.*group-title="\([^"]*\)".*/\1/' | sort | uniq -c | sort -nr
-        else
-          echo "❌ xnkl.m3u 未生成"
-          echo "当前目录内容:"
-          ls -la
-          echo -e "\nscripts目录内容:"
-          ls -la scripts/ || echo "scripts目录不存在"
-          exit 1
-        fi
-    
-    - name: 🔄 同步远程更改
-      run: |
-        echo "同步远程仓库..."
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git config user.name "github-actions[bot]"
-        
-        git pull origin main --rebase --autostash || echo "拉取失败，继续"
-        echo "✅ 同步完成"
-    
-    - name: 📤 提交更新
-      run: |
-        echo "准备提交xnkl.m3u..."
-        
-        if [ ! -f "xnkl.m3u" ]; then
-          echo "❌ xnkl.m3u不存在"
-          exit 1
-        fi
-        
-        git add xnkl.m3u
-        
-        if git diff --cached --quiet; then
-          echo "📭 文件无变化，无需提交"
-        else
-          git commit -m "🤖 自动更新 xnkl.m3u [$(date +'%Y-%m-%d %H:%M')]"
-          echo "提交信息: $(git log -1 --oneline)"
-          
-          echo "推送更改..."
-          max_retries=3
-          for i in $(seq 1 $max_retries); do
-            echo "尝试推送 (第 $i 次)..."
-            if git push origin main; then
-              echo "✅ 推送成功"
-              break
-            else
-              echo "推送失败，等待重试..."
-              sleep 5
-              git pull origin main --rebase
-            fi
-          done
-        fi
-    
-    - name: 📊 输出结果
-      run: |
-        echo "=== 运行完成 ==="
-        echo "时间: $(date)"
-        echo "文件: xnkl.m3u"
-        echo "链接: https://raw.githubusercontent.com/${{ github.repository }}/main/xnkl.m3u"
-        echo "下次运行: 北京时间 06:00 和 17:00"
-        
-        # 显示最终文件信息
-        if [ -f "xnkl.m3u" ]; then
-          echo -e "\n=== 最终文件信息 ==="
-          echo "文件大小: $(wc -c < xnkl.m3u) 字节"
-          echo "总行数: $(wc -l < xnkl.m3u)"
-          CHANNEL_COUNT=$(grep -c "^#EXTINF" xnkl.m3u)
-          echo "频道数: $CHANNEL_COUNT"
-          
-          # 输出分类统计到日志
-          echo -e "\n=== 分类详情 ==="
-          grep "group-title=" xnkl.m3u | sed 's/.*group-title="\([^"]*\)".*/\1/' | sort | uniq -c | while read count cat; do
+          # 显示分类统计
+          echo -e "\n📊 分类统计:"
+          grep "group-title=" xnkl.m3u | sed 's/.*group-title="\([^"]*\)".*/\1/' | sort | uniq -c | sort -nr | while read count cat; do
             echo "  $cat: $count"
           done
-        fi
+          
+          # 预览文件
+          echo -e "\n📋 文件预览 (前10行):"
+          head -10 xnkl.m3u
+          echo "..."
+      
+      # 同步远程更改
+      - name: 🔄 同步远程更改
+        run: |
+          echo "同步远程仓库..."
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git pull origin main --rebase --autostash || echo "拉取失败，继续执行"
+          echo "✅ 同步完成"
+      
+      # 提交更新
+      - name: 📤 提交更新
+        run: |
+          echo "准备提交 xnkl.m3u..."
+          
+          if [ ! -f "xnkl.m3u" ]; then
+            echo "❌ xnkl.m3u 不存在"
+            exit 1
+          fi
+          
+          # 检查是否有变化
+          git add xnkl.m3u
+          
+          if git diff --cached --quiet; then
+            echo "📭 xnkl.m3u 无变化，无需提交"
+          else
+            # 显示变更内容
+            echo "📝 变更内容:"
+            git diff --cached xnkl.m3u | head -20
+            
+            # 提交
+            git commit -m "🤖 自动更新 xnkl.m3u [$(date +'%Y-%m-%d %H:%M')]"
+            
+            # 推送（带重试）
+            echo "推送更改..."
+            MAX_RETRIES=3
+            for i in $(seq 1 $MAX_RETRIES); do
+              echo "尝试推送 (第 $i 次)..."
+              if git push origin main; then
+                echo "✅ 推送成功"
+                break
+              else
+                if [ $i -lt $MAX_RETRIES ]; then
+                  echo "推送失败，等待重试..."
+                  sleep 5
+                  git pull origin main --rebase
+                else
+                  echo "❌ 推送失败，已达最大重试次数"
+                  exit 1
+                fi
+              fi
+            done
+          fi
+      
+      # 上传生成的文件作为工件
+      - name: 📎 上传工件
+        uses: actions/upload-artifact@v4
+        with:
+          name: xnkl-m3u
+          path: xnkl.m3u
+          retention-days: 7
+          if-no-files-found: error
+      
+      # 输出结果
+      - name: 📊 输出结果
+        run: |
+          echo "🎉 工作流执行完成！"
+          echo "⏰ 完成时间: $(date)"
+          echo "📁 仓库: ${{ github.repository }}"
+          echo "🔗 文件链接: https://raw.githubusercontent.com/${{ github.repository }}/main/xnkl.m3u"
+          echo "🕒 下次自动运行: 北京时间 06:00 和 17:00"
+          
+          # 显示最终文件统计
+          if [ -f "xnkl.m3u" ]; then
+            echo -e "\n📊 最终统计:"
+            echo "文件大小: $(wc -c < xnkl.m3u) 字节"
+            CHANNEL_COUNT=$(grep -c "^#EXTINF" xnkl.m3u)
+            echo "频道总数: $CHANNEL_COUNT"
+            
+            echo -e "\n分类详情:"
+            grep "group-title=" xnkl.m3u | sed 's/.*group-title="\([^"]*\)".*/\1/' | sort | uniq -c | sort -nr | while read count cat; do
+              echo "  $cat: $count"
+            done
+          fi
