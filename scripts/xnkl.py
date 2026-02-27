@@ -10,9 +10,8 @@ xnkl.m3u 直播源分类脚本
 5. 按分类和优先级排序
 6. 生成分类清晰的 M3U 文件
 
-源地址：https://feer-cdn-bp.xpnb.qzz.io/xnkl.txt
+源地址：https://xnkl.sufern001.workers.dev/
 输出文件：xnkl.m3u (放在仓库根目录)
-定时运行：北京时间每天 06:00 / 17:00 (GitHub Actions)
 """
 
 import requests
@@ -22,8 +21,8 @@ from datetime import datetime
 
 # ================== 配置区域 ==================
 
-# 原始直播源URL
-SOURCE_URL = "https://feer-cdn-bp.xpnb.qzz.io/xnkl.txt"
+# 原始直播源URL - 已更新为你指定的地址
+SOURCE_URL = "https://xnkl.sufern001.workers.dev/"
 
 # 输出文件名（将生成在仓库根目录）
 OUTPUT_FILE = "xnkl.m3u"
@@ -32,7 +31,6 @@ OUTPUT_FILE = "xnkl.m3u"
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 
 # 分类规则 (关键词 => 类别标签)
-# 你可以根据需要添加或修改关键词
 CATEGORY_RULES = {
     'HK': [
         'TVB', '明珠', '翡翠', '無線', '無綫', '互動新聞', 'J2', '星河', 
@@ -85,22 +83,35 @@ PREFERRED_NAMES = [
 # ================== 工具函数 ==================
 
 def log(msg):
-    """日志输出函数"""
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
 
 
 def download_source(url, desc):
-    """下载源文件"""
+    """下载源文件，增加对 workers.dev 的特殊处理"""
     try:
         log(f"📥 下载 {desc}...")
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/plain,text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
         }
+        # 对于 workers.dev 可能需要禁用 SSL 验证或增加超时
         r = requests.get(url, timeout=30, headers=headers)
         r.encoding = 'utf-8'
         r.raise_for_status()
-        log(f"✅ {desc} 下载成功 ({len(r.text)} 字符)")
-        return r.text
+        
+        # 检查返回内容是否有效
+        content = r.text
+        if len(content.strip()) == 0:
+            log(f"⚠️ {desc} 返回内容为空")
+            return None
+            
+        log(f"✅ {desc} 下载成功 ({len(content)} 字符)")
+        return content
+        
+    except requests.exceptions.SSLError as e:
+        log(f"❌ {desc} SSL错误: {e}")
+        return None
     except requests.exceptions.Timeout:
         log(f"❌ {desc} 下载超时")
         return None
@@ -119,12 +130,11 @@ def clean_channel_name(name):
     name = re.sub(r'\s*[Hh][Dd]\s*1080[pP]?\s*$', '', name)
     name = re.sub(r'\s*1080[pP]\s*$', '', name)
     name = re.sub(r'\s*[Hh][Dd]\s*$', '', name)
-    name = re.sub(r'\s*[0-9]+p\s*$', '', name)  # 如 720p, 480p
+    name = re.sub(r'\s*[0-9]+p\s*$', '', name)
     name = re.sub(r'\s*[0-9]+P\s*$', '', name)
     name = re.sub(r'\s*FHD\s*$', '', name, flags=re.IGNORECASE)
     name = re.sub(r'\s*4K\s*$', '', name, flags=re.IGNORECASE)
     name = re.sub(r'\s*UHD\s*$', '', name, flags=re.IGNORECASE)
-    # 去除可能留下的空格
     name = name.strip()
     if name != original:
         log(f"  清洗名称: '{original}' -> '{name}'")
@@ -162,9 +172,7 @@ def categorize_channel(channel_name):
 
 
 def deduplicate_channels(channels):
-    """
-    去重处理：相同URL的频道，优先保留标准名称
-    """
+    """去重处理：相同URL的频道，优先保留标准名称"""
     url_groups = {}
     for name, url in channels:
         if url not in url_groups:
@@ -180,7 +188,6 @@ def deduplicate_channels(channels):
             for name in names:
                 log(f"    - 名称变体: {name}")
             
-            # 优先选择标准名称
             selected = None
             for name in names:
                 if is_preferred_name(name):
@@ -188,7 +195,6 @@ def deduplicate_channels(channels):
                     log(f"    ✅ 选择优先名称: {name}")
                     break
             
-            # 如果没有标准名称，选择最短的（通常是不带"台"的版本）
             if not selected:
                 sorted_names = sorted(names, key=len)
                 selected = sorted_names[0]
@@ -209,24 +215,26 @@ def parse_m3u(content):
     while i < len(lines):
         line = lines[i].strip()
         
+        # 兼容处理：有些文件可能以 #EXTINF 开头，有些可能直接是 "频道名,URL" 格式
         if line.startswith('#EXTINF:'):
             info_line = line
             if i + 1 < len(lines):
                 url_line = lines[i + 1].strip()
-                
                 if url_line and (url_line.startswith('http://') or url_line.startswith('https://')):
-                    # 提取频道名称
                     channel_name_match = re.search(r',([^,]+)$', info_line)
                     if channel_name_match:
                         channel_name = channel_name_match.group(1).strip()
                     else:
                         channel_name = info_line
-                    
                     channels.append((channel_name, url_line))
-                    i += 1  # 跳过已处理的URL行
-            i += 1
-        else:
-            i += 1
+                    i += 1
+        elif ',' in line and '://' in line:
+            # 处理 "频道名,URL" 格式
+            parts = line.split(',', 1)
+            if len(parts) == 2 and (parts[1].startswith('http://') or parts[1].startswith('https://')):
+                channels.append((parts[0].strip(), parts[1].strip()))
+        
+        i += 1
     
     log(f"📊 解析到 {len(channels)} 个频道")
     return channels
@@ -245,7 +253,6 @@ def write_output(categorized, output_path, timestamp):
     """写入分类后的M3U文件"""
     try:
         with open(output_path, 'w', encoding='utf-8') as f:
-            # 文件头
             f.write(f'#EXTM3U url-tvg="{EPG_URL}"\n\n')
             f.write(f"""# xnkl.m3u
 # 生成时间: {timestamp}
@@ -255,21 +262,17 @@ def write_output(categorized, output_path, timestamp):
 
 """)
 
-            # 按分类写入频道
             total_channels = 0
             for category in sorted(categorized.keys(), key=get_category_priority):
                 channels = categorized[category]
                 if channels:
-                    # 对分类内的频道按名称排序
                     channels.sort(key=lambda x: x[0])
                     total_channels += len(channels)
-                    
                     f.write(f"\n# 分类: {category} (共 {len(channels)} 台)\n")
                     for name, url in channels:
                         f.write(f'#EXTINF:-1 group-title="{category}",{name}\n')
                         f.write(f"{url}\n")
 
-            # 统计信息
             f.write(f"""
 # 统计信息
 # 香港(HK)频道数: {len(categorized.get('HK', []))}
@@ -289,30 +292,26 @@ def write_output(categorized, output_path, timestamp):
         return None
 
 
-# ================== 主函数 ==================
-
 def main():
     """主函数"""
     log("="*60)
-    log("🚀 开始生成 xnkl.m3u")
+    log(f"🚀 开始生成 {OUTPUT_FILE}")
     log("="*60)
     
-    # 获取路径
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    repo_root = os.path.dirname(script_dir)  # joker 目录
+    repo_root = os.path.dirname(script_dir)
     output_path = os.path.join(repo_root, OUTPUT_FILE)
     
     log(f"📁 脚本目录: {script_dir}")
     log(f"📁 仓库根目录: {repo_root}")
     log(f"📄 输出文件: {output_path}")
+    log(f"🌐 源地址: {SOURCE_URL}")
 
-    # 下载源文件
     content = download_source(SOURCE_URL, "xnkl.txt")
     if not content:
         log("❌ 下载失败，程序退出")
         return 1
 
-    # 解析频道
     raw_channels = parse_m3u(content)
     if not raw_channels:
         log("❌ 没有解析到任何频道，程序退出")
@@ -320,19 +319,15 @@ def main():
     
     log(f"📊 原始频道数: {len(raw_channels)}")
     
-    # 清洗名称
     log("🔄 清洗频道名称...")
     cleaned_channels = [(clean_channel_name(name), url) for name, url in raw_channels]
     
-    # 标准化名称
     log("🔄 标准化频道名称...")
     normalized_channels = [(normalize_channel_name(name), url) for name, url in cleaned_channels]
     
-    # 去重处理
     log("🔄 去重处理...")
     deduped_channels = deduplicate_channels(normalized_channels)
     
-    # 分类
     log("🏷️ 分类频道...")
     channels_with_cats = []
     for name, url in deduped_channels:
@@ -340,29 +335,24 @@ def main():
         channels_with_cats.append((name, category, url))
         log(f"  {name} -> {category}")
     
-    # 按分类分组
     categorized = {}
     for name, category, url in channels_with_cats:
         if category not in categorized:
             categorized[category] = []
         categorized[category].append((name, url))
     
-    # 生成时间戳
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    # 写入文件
     total = write_output(categorized, output_path, timestamp)
     
     if total:
         log("="*60)
-        log(f"🎉 成功！xnkl.m3u 生成成功")
+        log(f"🎉 成功！{OUTPUT_FILE} 生成成功")
         log(f"📺 总频道数: {total}")
         for category in sorted(categorized.keys(), key=get_category_priority):
             count = len(categorized.get(category, []))
             if count > 0:
                 log(f"   {category}: {count} 个频道")
         
-        # 验证文件
         if os.path.exists(output_path):
             file_size = os.path.getsize(output_path)
             log(f"💾 文件大小: {file_size} 字节")
