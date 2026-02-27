@@ -12,12 +12,16 @@ on:
   # 当脚本更新时也触发
   push:
     paths:
-      - 'xnkl.py'
+      - 'scripts/xnkl.py'
       - '.github/workflows/xnkl.yml'
 
 jobs:
   generate-xnkl:
     runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./  # 在仓库根目录运行
     
     steps:
     - name: 📥 检出代码
@@ -37,11 +41,11 @@ jobs:
     - name: 🚀 运行xnkl生成脚本
       run: |
         echo "开始生成xnkl.m3u..."
-        python xnkl.py
+        python scripts/xnkl.py
         
         echo -e "\n=== 检查生成的文件 ==="
         if [ -f "xnkl.m3u" ]; then
-          echo "✅ xnkl.m3u 已生成"
+          echo "✅ xnkl.m3u 已生成在仓库根目录"
           echo "文件大小: $(wc -c < xnkl.m3u) 字节"
           echo "行数: $(wc -l < xnkl.m3u)"
           
@@ -51,12 +55,14 @@ jobs:
           echo "..."
           
           echo -e "\n=== 分类统计 ==="
-          grep -c "group-title=" xnkl.m3u || echo "未找到频道"
+          echo "各分类频道数:"
+          grep "group-title=" xnkl.m3u | sed 's/.*group-title="\([^"]*\)".*/\1/' | sort | uniq -c | sort -nr
         else
           echo "❌ xnkl.m3u 未生成"
-          echo "当前目录:"
-          pwd
+          echo "当前目录内容:"
           ls -la
+          echo -e "\nscripts目录内容:"
+          ls -la scripts/ || echo "scripts目录不存在"
           exit 1
         fi
     
@@ -114,5 +120,12 @@ jobs:
           echo -e "\n=== 最终文件信息 ==="
           echo "文件大小: $(wc -c < xnkl.m3u) 字节"
           echo "总行数: $(wc -l < xnkl.m3u)"
-          echo "频道数: $(grep -c "^#EXTINF" xnkl.m3u)"
+          CHANNEL_COUNT=$(grep -c "^#EXTINF" xnkl.m3u)
+          echo "频道数: $CHANNEL_COUNT"
+          
+          # 输出分类统计到日志
+          echo -e "\n=== 分类详情 ==="
+          grep "group-title=" xnkl.m3u | sed 's/.*group-title="\([^"]*\)".*/\1/' | sort | uniq -c | while read count cat; do
+            echo "  $cat: $count"
+          done
         fi
