@@ -15,12 +15,13 @@ xnkl.m3u 直播源分类脚本
 
 import requests
 import re
+import os
 from datetime import datetime
 
 # ================== 配置 ==================
 
 SOURCE_URL = "https://feer-cdn-bp.xpnb.qzz.io/xnkl.txt"
-OUTPUT_FILE = "xnkl.m3u"
+OUTPUT_FILE = "xnkl.m3u"  # 输出到仓库根目录
 
 # EPG 配置
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
@@ -220,6 +221,15 @@ def sort_channels_by_category(channels_with_cats):
 
 def main():
     log("开始生成 xnkl.m3u ...")
+    
+    # 获取脚本所在目录的上一级（仓库根目录）
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    repo_root = os.path.dirname(script_dir)  # joker 目录
+    output_path = os.path.join(repo_root, OUTPUT_FILE)
+    
+    log(f"脚本目录: {script_dir}")
+    log(f"仓库根目录: {repo_root}")
+    log(f"输出文件: {output_path}")
 
     # 下载源文件
     content = download(SOURCE_URL, "xnkl.txt")
@@ -301,14 +311,19 @@ def main():
 """
 
     try:
-        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        with open(output_path, "w", encoding="utf-8") as f:
             f.write(output)
-        log("🎉 xnkl.m3u 生成成功")
+        log(f"🎉 {OUTPUT_FILE} 生成成功")
         log(f"📺 总频道数: {total_channels}")
         for category in sorted(categorized.keys(), key=get_category_priority):
             count = len(categorized.get(category, []))
             if count > 0:
                 log(f"   {category}: {count} 个频道")
+        
+        # 验证文件是否生成
+        if os.path.exists(output_path):
+            file_size = os.path.getsize(output_path)
+            log(f"✅ 文件已保存，大小: {file_size} 字节")
     except Exception as e:
         log(f"❌ 保存失败: {e}")
 
