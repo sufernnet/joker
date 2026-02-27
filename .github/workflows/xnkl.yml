@@ -16,7 +16,6 @@ on:
     paths:
       - 'scripts/xnkl.py'
       - '.github/workflows/xnkl.yml'
-      - 'xnkl.m3u'  # 当文件被修改时也触发
 
 jobs:
   generate-xnkl:
@@ -33,12 +32,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
       
-      # 设置 Python
+      # 设置 Python（移除缓存配置）
       - name: 🐍 设置 Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
+          # 移除 cache 配置，因为我们没有 requirements.txt
       
       # 安装依赖
       - name: 📦 安装依赖
@@ -122,7 +121,7 @@ jobs:
           else
             # 显示变更内容
             echo "📝 变更内容:"
-            git diff --cached xnkl.m3u | head -20
+            git diff --cached xnkl.m3u | head -20 || echo "无法显示差异"
             
             # 提交
             git commit -m "🤖 自动更新 xnkl.m3u [$(date +'%Y-%m-%d %H:%M')]"
