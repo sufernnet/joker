@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Gather.m3u 合并脚本（可自定义分组标记格式）
+Gather.m3u 合并脚本（基于原始文件结构，增加调试输出）
 """
 
 import requests
@@ -12,13 +12,12 @@ BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
 GAT_URL = "https://yang.sufern001.workers.dev/"
 OUTPUT_FILE = "Gather.m3u"
 
-# 需要提取的两个分组名（原样）
+# 需要提取的两个分组名
 SOURCE_GROUPS = ["• Juli 「精選」", "•台湾「限制」"]
 
-# 分组标记的模式，用 {group_name} 作为占位符
-# 常见格式： "{group_name},#genre#"  (例如 "• Juli 「精選」,#genre#")
-# 如果分组标记是注释行，可能是 "# {group_name}" 或类似，请根据实际修改
-GROUP_MARKER_PATTERN = "{group_name},#genre#"
+# 分组标记的模式（请根据实际文件修改）
+# 常见格式： "{group_name},#genre#"  或  "# {group_name}"  或  "{group_name}"
+GROUP_MARKER_PATTERN = "{group_name},#genre#"  # 如果不同请修改
 
 # 输出分组名称
 HK_GROUP = "HK"
@@ -26,9 +25,15 @@ TW_GROUP = "TW"
 
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 
-# 台湾频道筛选条件（名称必须包含「4gTV」或 ofiii，且包含「龍華」）
+# 台湾频道筛选条件（必须包含「4gTV」或 ofiii，且包含「龍華」）
 TW_REQUIRE_KEYWORDS = ["4gtv", "ofiii"]
-TW_REQUIRE_LONGHUA = True  # 是否需要包含“龍華”
+TW_REQUIRE_LONGHUA = True
+
+# 所有过滤已禁用
+FILTER_KEYWORDS = []
+FILTER_URLS = []
+NAME_NORMALIZATION = {}
+PREFERRED_NAMES = []
 
 # ================== 工具 ==================
 def log(msg):
@@ -45,38 +50,42 @@ def download(url, desc):
         log(f"❌ {desc} 下载失败: {e}")
         return None
 
-def extract_channels_by_group(content, target_groups, marker_pattern):
+def extract_channels_from_file(content, target_groups):
     """
-    根据自定义的分组标记模式提取频道。
-    返回字典 {group_name: [(name, url), ...]}
+    增强版提取函数，会打印所有可能的分组标记行。
     """
     lines = content.splitlines()
     result = {group: [] for group in target_groups}
     current_group = None
 
-    log(f"使用标记模式 '{marker_pattern}' 查找分组...")
+    log(f"开始从文件中提取分组: {target_groups}")
+    log("正在扫描可能的分组标记行...")
 
     for i, line in enumerate(lines):
         line = line.strip()
         if not line:
             continue
 
-        # 检查是否是目标分组的开始标记
+        # 调试：打印包含目标分组名称的行（不限于特定格式）
         for group in target_groups:
-            # 替换占位符生成具体的标记行
-            expected_marker = marker_pattern.format(group_name=group)
+            if group in line:
+                log(f"发现包含分组名 '{group}' 的行 {i+1}: {line}")
+
+        # 使用配置的模式匹配分组开始
+        for group in target_groups:
+            expected_marker = GROUP_MARKER_PATTERN.format(group_name=group)
             if expected_marker in line:
                 current_group = group
-                log(f"✅ 在第 {i+1} 行找到目标分组: {group} (匹配行: {line})")
+                log(f"✅ 在第 {i+1} 行匹配到分组开始: {line}")
                 break
 
         if current_group:
-            # 如果遇到下一个分组的标记（根据模式判断），则停止当前分组
+            # 如果遇到下一个分组的标记，则停止当前分组
             next_group_found = False
             for other_group in target_groups:
                 if other_group == current_group:
                     continue
-                other_marker = marker_pattern.format(group_name=other_group)
+                other_marker = GROUP_MARKER_PATTERN.format(group_name=other_group)
                 if other_marker in line:
                     log(f"到达下一个分组 '{other_group}'，停止提取 '{current_group}'")
                     current_group = None
@@ -87,8 +96,10 @@ def extract_channels_by_group(content, target_groups, marker_pattern):
 
             # 提取频道行（假设格式为 "名称,URL"）
             if "," in line and "://" in line:
-                name, url = line.split(",", 1)
-                result[current_group].append((name.strip(), url.strip()))
+                parts = line.split(",", 1)
+                if len(parts) == 2:
+                    name, url = parts
+                    result[current_group].append((name.strip(), url.strip()))
 
     for group in target_groups:
         log(f"分组 '{group}' 提取到 {len(result[group])} 个频道")
@@ -115,7 +126,7 @@ def deduplicate_channels(channels):
             seen[url] = name
             deduped.append((name, url))
         else:
-            log(f"去重: 跳过重复URL {url}")
+            log(f"去重: 跳过重复URL {url} (已有名称: {seen[url]})")
     return deduped
 
 def is_tw_desired_channel(name):
@@ -137,13 +148,12 @@ def main():
         return
 
     gat_content = download(GAT_URL, "新源文件") or ""
-
     if not gat_content:
-        log("⚠️ 源文件为空，无法提取频道")
+        log("❌ 源文件为空，无法提取")
         return
 
     # 提取分组频道
-    extracted = extract_channels_by_group(gat_content, SOURCE_GROUPS, GROUP_MARKER_PATTERN)
+    extracted = extract_channels_from_file(gat_content, SOURCE_GROUPS)
 
     # 处理 HK 分组
     hk_raw = extracted.get("• Juli 「精選」", [])
