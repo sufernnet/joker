@@ -17,6 +17,8 @@ TW_GROUP = "TW"
 
 # 需要剔除的 TW 频道名（只要包含关键词就删除）
 REMOVE_TW_KEYWORDS = [
+
+    # 之前已有
     "大愛電視",
     "好消息",
     "國會頻道",
@@ -45,7 +47,38 @@ REMOVE_TW_KEYWORDS = [
     "MOMO親子",
     "Nick Jr",
     "尼克兒童",
-    "Pet Club"
+    "Pet Club",
+
+    # 🔥 新增剔除
+    "KMTV",
+    "Lifetime",
+    "fun探索",
+    "HITS",
+    "ROCK Action",
+    "ROCK Entertainment",
+    "ROCK Xstream",
+    "豬哥亮",
+    "采昌",
+    "CLASSICA",
+    "Mezzo",
+    "CMusic",
+    "TRACE Urban",
+    "FashionTV",
+    "倪珍播新聞",
+    "半島國際",
+    "DW德國之聲",
+    "FRANCE24",
+    "NHK 新聞",
+    "CNBC Asia",
+    "SBN 全球財經",
+    "Bloomberg",
+    "DayStar",
+    "第1商業",
+    "amc電影",
+    "MCE 我的歐洲電影",
+    "影迷數位電影",
+    "影迷數位紀實",
+    "CinemaWorld"
 ]
 
 
