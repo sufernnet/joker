@@ -1,14 +1,4 @@
 #!/usr/bin/env python3
-"""
-Gather.m3u 生成脚本
-
-提取：
-1. • Juli 「精選」 → HK
-2. •台湾「限制」 中包含 4gTV / ofiii / 龍華 → TW
-
-不做过滤、不去重、不排序
-"""
-
 import requests
 from datetime import datetime
 
@@ -22,67 +12,66 @@ HK_GROUP = "HK"
 TW_GROUP = "TW"
 
 
-def log(msg):
-    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
-
-
 def download(url):
-    try:
-        log("下载源文件...")
-        r = requests.get(url, timeout=30)
-        r.raise_for_status()
-        log("下载成功")
-        return r.text
-    except Exception as e:
-        log(f"下载失败: {e}")
-        return None
-
-
-def extract_groups(content):
-    lines = content.splitlines()
-    hk_channels = []
-    tw_channels = []
-
-    current_group = None
-
-    for line in lines:
-        line = line.strip()
-        if not line:
-            continue
-
-        # 识别分组
-        if ",#genre#" in line:
-            group_name = line.split(",")[0]
-            current_group = group_name
-            continue
-
-        if "," in line and "://" in line:
-            name, url = line.split(",", 1)
-
-            # HK 提取
-            if current_group == HK_SOURCE_GROUP:
-                hk_channels.append((name.strip(), url.strip()))
-
-            # TW 提取
-            elif current_group == TW_SOURCE_GROUP:
-                if (
-                    "4gTV" in name
-                    or "ofiii" in name
-                    or "龍華" in name
-                ):
-                    tw_channels.append((name.strip(), url.strip()))
-
-    return hk_channels, tw_channels
+    r = requests.get(url, timeout=30, headers={
+        "User-Agent": "Mozilla/5.0"
+    })
+    r.raise_for_status()
+    return r.text
 
 
 def main():
-    log("开始生成 Gather.m3u")
-
+    print("下载源文件...")
     content = download(SOURCE_URL)
-    if not content:
-        return
 
-    hk_channels, tw_channels = extract_groups(content)
+    lines = content.splitlines()
+
+    hk = []
+    tw = []
+
+    current_group = None
+    current_name = None
+
+    for line in lines:
+        line = line.strip()
+
+        if line.startswith("#EXTINF"):
+            # 提取 group-title
+            if 'group-title="' in line:
+                current_group = line.split('group-title="')[1].split('"')[0]
+            else:
+                current_group = None
+
+            # 提取频道名（逗号后）
+            if "," in line:
+                current_name = line.split(",")[-1].strip()
+            else:
+                current_name = None
+
+        elif line.startswith("http"):
+            url = line.strip()
+
+            if not current_group or not current_name:
+                continue
+
+            name_lower = current_name.lower()
+
+            # HK 组
+            if current_group == HK_SOURCE_GROUP:
+                hk.append((current_name, url))
+
+            # TW 组
+            elif current_group == TW_SOURCE_GROUP:
+                if (
+                    "4gtv" in name_lower
+                    or "ofiii" in name_lower
+                    or "龍華" in current_name
+                    or "龙华" in current_name
+                ):
+                    tw.append((current_name, url))
+
+    print("HK:", len(hk))
+    print("TW:", len(tw))
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -90,25 +79,23 @@ def main():
     output += f"# Gather.m3u\n# 生成时间: {timestamp}\n\n"
 
     # 写 HK
-    if hk_channels:
+    if hk:
         output += f"# {HK_GROUP}\n"
-        for name, url in hk_channels:
+        for name, url in hk:
             output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n'
             output += f"{url}\n"
 
     # 写 TW
-    if tw_channels:
+    if tw:
         output += f"\n# {TW_GROUP}\n"
-        for name, url in tw_channels:
+        for name, url in tw:
             output += f'#EXTINF:-1 group-title="{TW_GROUP}",{name}\n'
             output += f"{url}\n"
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
 
-    log("🎉 Gather.m3u 生成成功")
-    log(f"HK: {len(hk_channels)} 个")
-    log(f"TW: {len(tw_channels)} 个")
+    print("完成")
 
 
 if __name__ == "__main__":
