@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # Gather.m3u
-# 生成时间: 2026-03-01 14:10:21
+# 生成时间: 2026-03-01 14:16:56
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -416,82 +416,14 @@ https://ytb.178.indevs.in/?id=vr3XyVCR4T0
 https://ytb.178.indevs.in/?id=o_-hSMgpAzs
 
 # TW
+#EXTINF:-1 group-title="TW",Love Nature
+https://tv.iill.top/4gtv/4gtv-live208
+#EXTINF:-1 group-title="TW",History 歷史頻道
+https://tv.iill.top/4gtv/4gtv-live026
+#EXTINF:-1 group-title="TW",亞洲旅遊
+https://tv.iill.top/4gtv/4gtv-4gtv076
 #EXTINF:-1 group-title="TW",中天新聞
 https://tv.iill.top/4gtv/4gtv-4gtv009
-#EXTINF:-1 group-title="TW",中視
-https://tv.iill.top/4gtv/4gtv-4gtv040
-#EXTINF:-1 group-title="TW",中視新聞
-https://tv.iill.top/4gtv/4gtv-4gtv074
-#EXTINF:-1 group-title="TW",東森新聞
-https://tv.iill.top/4gtv/4gtv-4gtv152
-#EXTINF:-1 group-title="TW",東森財經
-https://tv.iill.top/4gtv/4gtv-4gtv153
-#EXTINF:-1 group-title="TW",TVBS
-https://tv.iill.top/4gtv/media-live073
-#EXTINF:-1 group-title="TW",TVBS 新聞
-https://tv.iill.top/4gtv/media-live072
-#EXTINF:-1 group-title="TW",TVBS 歡樂
-https://tv.iill.top/4gtv/4gtv-4gtv068
-#EXTINF:-1 group-title="TW",TVBS 精采
-https://tv.iill.top/4gtv/4gtv-4gtv067
-#EXTINF:-1 group-title="TW",靖天國際
-https://tv.iill.top/4gtv/4gtv-4gtv063
-#EXTINF:-1 group-title="TW",靖天歡樂
-https://tv.iill.top/4gtv/4gtv-4gtv054
-#EXTINF:-1 group-title="TW",靖天映畫
-https://tv.iill.top/4gtv/4gtv-4gtv055
-#EXTINF:-1 group-title="TW",靖天戲劇
-https://tv.iill.top/4gtv/4gtv-4gtv058
-#EXTINF:-1 group-title="TW",靖天日本
-https://tv.iill.top/4gtv/4gtv-4gtv047
-#EXTINF:-1 group-title="TW",靖天綜合
-https://tv.iill.top/4gtv/4gtv-4gtv046
-#EXTINF:-1 group-title="TW",靖天育樂
-https://tv.iill.top/4gtv/4gtv-4gtv062
-#EXTINF:-1 group-title="TW",靖天資訊
-https://tv.iill.top/4gtv/4gtv-4gtv065
-#EXTINF:-1 group-title="TW",靖天電影
-https://tv.iill.top/4gtv/4gtv-4gtv061
-#EXTINF:-1 group-title="TW",靖天卡通
-https://tv.iill.top/4gtv/4gtv-4gtv044
-#EXTINF:-1 group-title="TW",靖洋卡通
-https://tv.iill.top/4gtv/4gtv-4gtv057
-#EXTINF:-1 group-title="TW",靖洋戲劇
-https://tv.iill.top/4gtv/4gtv-4gtv045
-#EXTINF:-1 group-title="TW",龍華偶像
-https://tv.iill.top/ofiii/litv-xinchuang12
-#EXTINF:-1 group-title="TW",龍華卡通
-https://tv.iill.top/ofiii/litv-xinchuang01
-#EXTINF:-1 group-title="TW",龍華戲劇
-https://tv.iill.top/ofiii/litv-xinchuang18
-#EXTINF:-1 group-title="TW",龍華日韓
-https://tv.iill.top/ofiii/litv-xinchuang11
-#EXTINF:-1 group-title="TW",龍華洋片
-https://tv.iill.top/ofiii/litv-xinchuang02
-#EXTINF:-1 group-title="TW",龍華經典
-https://tv.iill.top/ofiii/litv-xinchuang21
-#EXTINF:-1 group-title="TW",龍華電影
-https://tv.iill.top/ofiii/litv-xinchuang03
-#EXTINF:-1 group-title="TW",八大精彩
-https://tv.iill.top/4gtv/4gtv-4gtv034
-#EXTINF:-1 group-title="TW",八大綜藝
-https://tv.iill.top/4gtv/4gtv-4gtv039
-#EXTINF:-1 group-title="TW",台視新聞
-https://tv.iill.top/ofiii/4gtv-4gtv051
-#EXTINF:-1 group-title="TW",公視戲劇
-https://tv.iill.top/4gtv/4gtv-4gtv042
-#EXTINF:-1 group-title="TW",台灣戲劇
-https://tv.iill.top/ofiii/litv-xinchuang22
-#EXTINF:-1 group-title="TW",寰宇新聞
-https://tv.iill.top/4gtv/litv-longturn14
-#EXTINF:-1 group-title="TW",寰宇新聞台灣
-https://tv.iill.top/4gtv/4gtv-4gtv156
-#EXTINF:-1 group-title="TW",寰宇財經
-https://tv.iill.top/ofiii/4gtv-4gtv158
-#EXTINF:-1 group-title="TW",華視
-https://tv.iill.top/4gtv/4gtv-4gtv041
-#EXTINF:-1 group-title="TW",華視新聞
-https://tv.iill.top/4gtv/4gtv-4gtv052
 #EXTINF:-1 group-title="TW",民視
 https://tv.iill.top/4gtv/4gtv-4gtv002
 #EXTINF:-1 group-title="TW",民視台灣
@@ -506,33 +438,101 @@ https://tv.iill.top/4gtv/litv-ftv07
 https://tv.iill.top/4gtv/4gtv-4gtv003
 #EXTINF:-1 group-title="TW",民視綜藝
 https://tv.iill.top/4gtv/4gtv-4gtv004
-#EXTINF:-1 group-title="TW",三立綜合
-https://tv.iill.top/4gtv/4gtv-live207
+#EXTINF:-1 group-title="TW",寰宇新聞
+https://tv.iill.top/4gtv/litv-longturn14
+#EXTINF:-1 group-title="TW",寰宇新聞台灣
+https://tv.iill.top/4gtv/4gtv-4gtv156
+#EXTINF:-1 group-title="TW",寰宇財經
+https://tv.iill.top/ofiii/4gtv-4gtv158
+#EXTINF:-1 group-title="TW",鏡電視新聞
+https://tv.iill.top/4gtv/4gtv-4gtv075
+#EXTINF:-1 group-title="TW",龍華偶像
+https://tv.iill.top/ofiii/litv-xinchuang12
+#EXTINF:-1 group-title="TW",龍華卡通
+https://tv.iill.top/ofiii/litv-xinchuang01
+#EXTINF:-1 group-title="TW",龍華戲劇
+https://tv.iill.top/ofiii/litv-xinchuang18
+#EXTINF:-1 group-title="TW",龍華日韓
+https://tv.iill.top/ofiii/litv-xinchuang11
+#EXTINF:-1 group-title="TW",龍華洋片
+https://tv.iill.top/ofiii/litv-xinchuang02
+#EXTINF:-1 group-title="TW",龍華經典
+https://tv.iill.top/ofiii/litv-xinchuang21
+#EXTINF:-1 group-title="TW",龍華電影
+https://tv.iill.top/ofiii/litv-xinchuang03
+#EXTINF:-1 group-title="TW",Arirang TV
+https://tv.iill.top/4gtv/4gtv-4gtv079
+#EXTINF:-1 group-title="TW",CI 罪案偵查頻道
+https://tv.iill.top/4gtv/4gtv-live027
+#EXTINF:-1 group-title="TW",MagellanTV (麥哲倫頻道)
+https://tv.iill.top/4gtv/4gtv-live123
+#EXTINF:-1 group-title="TW",TVBS
+https://tv.iill.top/4gtv/media-live073
+#EXTINF:-1 group-title="TW",TVBS 新聞
+https://tv.iill.top/4gtv/media-live072
+#EXTINF:-1 group-title="TW",TVBS 歡樂
+https://tv.iill.top/4gtv/4gtv-4gtv068
+#EXTINF:-1 group-title="TW",TVBS 精采
+https://tv.iill.top/4gtv/4gtv-4gtv067
 #EXTINF:-1 group-title="TW",三立新聞iNEWS
 https://tv.iill.top/4gtv/4gtv-live089
+#EXTINF:-1 group-title="TW",三立綜合
+https://tv.iill.top/4gtv/4gtv-live207
+#EXTINF:-1 group-title="TW",中視
+https://tv.iill.top/4gtv/4gtv-4gtv040
+#EXTINF:-1 group-title="TW",中視新聞
+https://tv.iill.top/4gtv/4gtv-4gtv074
+#EXTINF:-1 group-title="TW",八大精彩
+https://tv.iill.top/4gtv/4gtv-4gtv034
+#EXTINF:-1 group-title="TW",八大綜藝
+https://tv.iill.top/4gtv/4gtv-4gtv039
+#EXTINF:-1 group-title="TW",公視戲劇
+https://tv.iill.top/4gtv/4gtv-4gtv042
+#EXTINF:-1 group-title="TW",台灣戲劇
+https://tv.iill.top/ofiii/litv-xinchuang22
+#EXTINF:-1 group-title="TW",台視新聞
+https://tv.iill.top/ofiii/4gtv-4gtv051
 #EXTINF:-1 group-title="TW",愛爾達娛樂
 https://tv.iill.top/4gtv/4gtv-4gtv070
 #EXTINF:-1 group-title="TW",愛爾達生活旅遊
 https://tv.iill.top/4gtv/4gtv-live12
-#EXTINF:-1 group-title="TW",鏡電視新聞
-https://tv.iill.top/4gtv/4gtv-4gtv075
-#EXTINF:-1 group-title="TW",亞洲旅遊
-https://tv.iill.top/4gtv/4gtv-4gtv076
 #EXTINF:-1 group-title="TW",時尚運動X
 https://tv.iill.top/4gtv/4gtv-4gtv014
 #EXTINF:-1 group-title="TW",智林體育
 https://tv.iill.top/4gtv/4gtv-4gtv101
+#EXTINF:-1 group-title="TW",東森新聞
+https://tv.iill.top/4gtv/4gtv-4gtv152
+#EXTINF:-1 group-title="TW",東森財經
+https://tv.iill.top/4gtv/4gtv-4gtv153
 #EXTINF:-1 group-title="TW",經典電影
 https://tv.iill.top/4gtv/4gtv-live021
-#EXTINF:-1 group-title="TW",Love Nature
-https://tv.iill.top/4gtv/4gtv-live208
+#EXTINF:-1 group-title="TW",華視
+https://tv.iill.top/4gtv/4gtv-4gtv041
+#EXTINF:-1 group-title="TW",華視新聞
+https://tv.iill.top/4gtv/4gtv-4gtv052
 #EXTINF:-1 group-title="TW",視納華仁紀實頻道
 https://tv.iill.top/4gtv/4gtv-4gtv013
-#EXTINF:-1 group-title="TW",CI 罪案偵查頻道
-https://tv.iill.top/4gtv/4gtv-live027
-#EXTINF:-1 group-title="TW",History 歷史頻道
-https://tv.iill.top/4gtv/4gtv-live026
-#EXTINF:-1 group-title="TW",MagellanTV (麥哲倫頻道)
-https://tv.iill.top/4gtv/4gtv-live123
-#EXTINF:-1 group-title="TW",Arirang TV
-https://tv.iill.top/4gtv/4gtv-4gtv079
+#EXTINF:-1 group-title="TW",靖天卡通
+https://tv.iill.top/4gtv/4gtv-4gtv044
+#EXTINF:-1 group-title="TW",靖天國際
+https://tv.iill.top/4gtv/4gtv-4gtv063
+#EXTINF:-1 group-title="TW",靖天戲劇
+https://tv.iill.top/4gtv/4gtv-4gtv058
+#EXTINF:-1 group-title="TW",靖天日本
+https://tv.iill.top/4gtv/4gtv-4gtv047
+#EXTINF:-1 group-title="TW",靖天映畫
+https://tv.iill.top/4gtv/4gtv-4gtv055
+#EXTINF:-1 group-title="TW",靖天歡樂
+https://tv.iill.top/4gtv/4gtv-4gtv054
+#EXTINF:-1 group-title="TW",靖天綜合
+https://tv.iill.top/4gtv/4gtv-4gtv046
+#EXTINF:-1 group-title="TW",靖天育樂
+https://tv.iill.top/4gtv/4gtv-4gtv062
+#EXTINF:-1 group-title="TW",靖天資訊
+https://tv.iill.top/4gtv/4gtv-4gtv065
+#EXTINF:-1 group-title="TW",靖天電影
+https://tv.iill.top/4gtv/4gtv-4gtv061
+#EXTINF:-1 group-title="TW",靖洋卡通
+https://tv.iill.top/4gtv/4gtv-4gtv057
+#EXTINF:-1 group-title="TW",靖洋戲劇
+https://tv.iill.top/4gtv/4gtv-4gtv045
