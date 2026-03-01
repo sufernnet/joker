@@ -1,9 +1,8 @@
-#EXTM3U
+#EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # Gather.m3u
-# 生成时间: 2026-03-01 13:57:31
+# 生成时间: 2026-03-01 14:03:44
 
-#EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -242,7 +241,6 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=01
 
 #EXTINF:-1 tvg-id="杭州导视" tvg-name="杭州导视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州导视.png" group-title="浙江",杭州导视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
-
 
 
 
@@ -596,73 +594,3 @@ https://tv.iill.top/4gtv/4gtv-4gtv083
 https://tv.iill.top/4gtv/4gtv-live031
 #EXTINF:-1 group-title="TW",TRACE Urban
 https://tv.iill.top/4gtv/4gtv-4gtv082
-#EXTINF:-1 group-title="TW",TRACE Sport Stars
-https://tv.iill.top/4gtv/4gtv-4gtv077
-#EXTINF:-1 group-title="TW",GINX Esports TV
-https://tv.iill.top/4gtv/4gtv-4gtv053
-#EXTINF:-1 group-title="TW",DreamWorks 夢工廠動畫
-https://tv.iill.top/4gtv/4gtv-live017
-#EXTINF:-1 group-title="TW",精選動漫
-https://tv.iill.top/4gtv/4gtv-live024
-#EXTINF:-1 group-title="TW",經典卡通
-https://tv.iill.top/4gtv/4gtv-live022
-#EXTINF:-1 group-title="TW",MOMO親子
-https://tv.iill.top/4gtv/4gtv-live107
-#EXTINF:-1 group-title="TW",Nick Jr. 兒童頻道
-https://tv.iill.top/4gtv/4gtv-live032
-#EXTINF:-1 group-title="TW",尼克兒童頻道
-https://tv.iill.top/4gtv/4gtv-live105
-#EXTINF:-1 group-title="TW",Pet Club TV
-https://tv.iill.top/4gtv/4gtv-4gtv110
-#EXTINF:-1 group-title="TW",LiveABC互動英語頻道
-https://tv.iill.top/4gtv/4gtv-live030
-#EXTINF:-1 group-title="TW",ELTA生活英語
-https://tv.iill.top/4gtv/4gtv-live132
-#EXTINF:-1 group-title="TW",Smart知識
-https://tv.iill.top/ofiii/litv-xinchuang19
-#EXTINF:-1 group-title="TW",達文西頻道
-https://tv.iill.top/4gtv/4gtv-4gtv018
-#EXTINF:-1 group-title="TW",滾動力rollor
-https://tv.iill.top/4gtv/4gtv-live012
-#EXTINF:-1 group-title="TW",INULTRA
-https://tv.iill.top/4gtv/4gtv-live096
-#EXTINF:-1 group-title="TW",Global Trekker
-https://tv.iill.top/4gtv/4gtv-live112
-#EXTINF:-1 group-title="TW",LUXE TV Channel
-https://tv.iill.top/4gtv/4gtv-live121
-#EXTINF:-1 group-title="TW",TV5MONDE STYLE 生活時尚
-https://tv.iill.top/4gtv/4gtv-live122
-#EXTINF:-1 group-title="TW",幸福空間居家
-https://tv.iill.top/4gtv/4gtv-live206
-#EXTINF:-1 group-title="TW",車迷 TV
-https://tv.iill.top/4gtv/4gtv-live201
-#EXTINF:-1 group-title="TW",金光布袋戲
-https://tv.iill.top/4gtv/4gtv-live144
-#EXTINF:-1 group-title="TW",原住民族電視
-https://tv.iill.top/4gtv/4gtv-live014
-#EXTINF:-1 group-title="TW",客家電視
-https://tv.iill.top/4gtv/4gtv-4gtv043
-#EXTINF:-1 group-title="TW",人間衛視
-https://tv.iill.top/4gtv/4gtv-live008
-#EXTINF:-1 group-title="TW",大愛電視
-https://tv.iill.top/4gtv/4gtv-live007
-#EXTINF:-1 group-title="TW",大愛電視 2
-https://tv.iill.top/4gtv/4gtv-live106
-#EXTINF:-1 group-title="TW",好消息 1
-https://tv.iill.top/4gtv/litv-ftv16
-#EXTINF:-1 group-title="TW",好消息 2
-https://tv.iill.top/4gtv/litv-ftv17
-#EXTINF:-1 group-title="TW",國會頻道 1
-https://tv.iill.top/4gtv/4gtv-4gtv084
-#EXTINF:-1 group-title="TW",國會頻道 2
-https://tv.iill.top/4gtv/4gtv-4gtv085
-#EXTINF:-1 group-title="TW",東森購物 一
-https://tv.iill.top/4gtv/4gtv-live047
-#EXTINF:-1 group-title="TW",東森購物 二
-https://tv.iill.top/4gtv/4gtv-live046
-#EXTINF:-1 group-title="TW",東森購物 三
-https://tv.iill.top/4gtv/4gtv-live048
-#EXTINF:-1 group-title="TW",東森購物 四
-https://tv.iill.top/4gtv/4gtv-live0499
-#EXTINF:-1 group-title="TW",新唐人亞太
-https://tv.iill.top/4gtv/4gtv-live050
