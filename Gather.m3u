@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # Gather.m3u
-# 生成时间: 2026-03-01 14:29:48
+# 生成时间: 2026-03-01 14:33:16
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -402,18 +402,6 @@ http://cdn6.163189.xyz/163189/ch5
 http://cdn6.163189.xyz/163189/ch8
 #EXTINF:-1 group-title="HK",Channel U
 http://cdn6.163189.xyz/163189/ch
-#EXTINF:-1 group-title="HK",鳳凰衛視·資訊「YouTube」
-https://ytb.178.indevs.in/?id=fN9uYWCjQaw
-#EXTINF:-1 group-title="HK",CCTV4「YouTube」
-https://ytb.178.indevs.in/?id=7j92Myu2wzg
-#EXTINF:-1 group-title="HK",CCTV4 美洲「YouTube」
-https://ytb.178.indevs.in/?id=f6Kq93wnaZ8
-#EXTINF:-1 group-title="HK",CGTN「YouTube」
-https://ytb.178.indevs.in/?id=BOy2xDU1LC8
-#EXTINF:-1 group-title="HK",中天新聞「YouTube」
-https://ytb.178.indevs.in/?id=vr3XyVCR4T0
-#EXTINF:-1 group-title="HK",TVBS「YouTube」
-https://ytb.178.indevs.in/?id=o_-hSMgpAzs
 
 # TW
 #EXTINF:-1 group-title="TW",Love Nature
