@@ -20,10 +20,10 @@ TW_GROUP = "TW"
 
 REMOVE_TW_KEYWORDS = [
 
-    "大愛電視","好消息","國會頻道","東森購物","新唐人","人間衛視",
-    "幸福空間","車迷","金光布袋戲","原住民族電視","客家電視",
-    "LiveABC","ELTA生活英語","Smart知識","達文西","滾動力",
-    "INULTRA","Global Trekker","LUXE TV","TV5MONDE","TRACE",
+    "大愛電視","好消息","國會頻道","東森購物","新唐人","人間衛視","鳳凰衛視·資訊「YouTube」",
+    "幸福空間","車迷","金光布袋戲","原住民族電視","客家電視","CCTV4「YouTube」","中天新聞「YouTube」",
+    "LiveABC","ELTA生活英語","Smart知識","達文西","滾動力","CCTV4 美洲「YouTube」","TVBS「YouTube」",
+    "INULTRA","Global Trekker","LUXE TV","TV5MONDE","TRACE","CGTN「YouTube」",
     "GINX","DreamWorks","精選動漫","經典卡通","MOMO親子",
     "Nick Jr","尼克兒童","Pet Club",
 
