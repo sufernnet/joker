@@ -7,11 +7,46 @@ SOURCE_URL = "https://yang.sufern001.workers.dev/"
 BB_FILE = "BB.m3u"
 OUTPUT_FILE = "Gather.m3u"
 
+EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
+
 HK_SOURCE_GROUP = "• Juli 「精選」"
 TW_SOURCE_GROUP = "•台湾「限制」"
 
 HK_GROUP = "HK"
 TW_GROUP = "TW"
+
+# 需要剔除的 TW 频道名（只要包含关键词就删除）
+REMOVE_TW_KEYWORDS = [
+    "大愛電視",
+    "好消息",
+    "國會頻道",
+    "東森購物",
+    "新唐人",
+    "人間衛視",
+    "幸福空間",
+    "車迷",
+    "金光布袋戲",
+    "原住民族電視",
+    "客家電視",
+    "LiveABC",
+    "ELTA生活英語",
+    "Smart知識",
+    "達文西",
+    "滾動力",
+    "INULTRA",
+    "Global Trekker",
+    "LUXE TV",
+    "TV5MONDE",
+    "TRACE Sport",
+    "GINX",
+    "DreamWorks",
+    "精選動漫",
+    "經典卡通",
+    "MOMO親子",
+    "Nick Jr",
+    "尼克兒童",
+    "Pet Club"
+]
 
 
 def download(url):
@@ -23,10 +58,16 @@ def download(url):
 
 
 def clean_tw_name(name):
-    # 去掉「4gTV」和「ofiii」
     name = re.sub(r'「4gTV」', '', name, flags=re.IGNORECASE)
     name = re.sub(r'「ofiii」', '', name, flags=re.IGNORECASE)
     return name.strip()
+
+
+def should_remove_tw(name):
+    for keyword in REMOVE_TW_KEYWORDS:
+        if keyword.lower() in name.lower():
+            return True
+    return False
 
 
 def main():
@@ -75,21 +116,25 @@ def main():
                     or "龙华" in current_name
                 ):
                     clean_name = clean_tw_name(current_name)
-                    tw.append((clean_name, url))
+
+                    if not should_remove_tw(clean_name):
+                        tw.append((clean_name, url))
 
     print("HK:", len(hk))
     print("TW:", len(tw))
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    output = "#EXTM3U\n\n"
+    # 强制统一 EPG
+    output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
     output += f"# Gather.m3u\n# 生成时间: {timestamp}\n\n"
 
-    # 合并 BB.m3u
+    # 合并 BB.m3u（但去掉原有 #EXTM3U）
     try:
         with open(BB_FILE, "r", encoding="utf-8") as f:
-            bb_content = f.read()
-        output += bb_content + "\n"
+            for line in f:
+                if not line.startswith("#EXTM3U"):
+                    output += line
         print("BB.m3u 已合并")
     except:
         print("未找到 BB.m3u，跳过")
