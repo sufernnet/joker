@@ -1,14 +1,6 @@
 #!/usr/bin/env python3
 """
-Gather.m3u 合并脚本（基于新源）
-
-功能：
-1. 从新源 https://yang.sufern001.workers.dev/ 提取指定分组
-   - "• Juli 「精選」" → 全部提取，重命名为 HK
-   - "•台湾「限制」" → 提取包含「4gTV」或 ofiii 的龍華频道，重命名为 TW
-2. 合并 BB.m3u
-3. 输出 Gather.m3u
-4. 无过滤，仅做名称清洗和基于URL的去重
+Gather.m3u 合并脚本（可自定义分组标记格式）
 """
 
 import requests
@@ -16,14 +8,17 @@ import re
 from datetime import datetime
 
 # ================== 配置 ==================
-
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
-# 新主要源
 GAT_URL = "https://yang.sufern001.workers.dev/"
 OUTPUT_FILE = "Gather.m3u"
 
 # 需要提取的两个分组名（原样）
 SOURCE_GROUPS = ["• Juli 「精選」", "•台湾「限制」"]
+
+# 分组标记的模式，用 {group_name} 作为占位符
+# 常见格式： "{group_name},#genre#"  (例如 "• Juli 「精選」,#genre#")
+# 如果分组标记是注释行，可能是 "# {group_name}" 或类似，请根据实际修改
+GROUP_MARKER_PATTERN = "{group_name},#genre#"
 
 # 输出分组名称
 HK_GROUP = "HK"
@@ -31,16 +26,11 @@ TW_GROUP = "TW"
 
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 
-# 过滤功能已禁用，保留为空列表
-FILTER_KEYWORDS = []
-FILTER_URLS = []
-
-# 名称标准化映射（去重用）—— 暂不启用，设为空
-NAME_NORMALIZATION = {}
-PREFERRED_NAMES = []
+# 台湾频道筛选条件（名称必须包含「4gTV」或 ofiii，且包含「龍華」）
+TW_REQUIRE_KEYWORDS = ["4gtv", "ofiii"]
+TW_REQUIRE_LONGHUA = True  # 是否需要包含“龍華”
 
 # ================== 工具 ==================
-
 def log(msg):
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
 
@@ -55,16 +45,16 @@ def download(url, desc):
         log(f"❌ {desc} 下载失败: {e}")
         return None
 
-def extract_channels_from_file(content, target_groups):
+def extract_channels_by_group(content, target_groups, marker_pattern):
     """
-    从文件内容中提取指定分组列表中的所有频道。
-    返回字典：{group_name: [(name, url), ...]}
+    根据自定义的分组标记模式提取频道。
+    返回字典 {group_name: [(name, url), ...]}
     """
     lines = content.splitlines()
     result = {group: [] for group in target_groups}
     current_group = None
 
-    log(f"开始从文件中提取分组: {target_groups}")
+    log(f"使用标记模式 '{marker_pattern}' 查找分组...")
 
     for i, line in enumerate(lines):
         line = line.strip()
@@ -73,19 +63,29 @@ def extract_channels_from_file(content, target_groups):
 
         # 检查是否是目标分组的开始标记
         for group in target_groups:
-            marker = f"{group},#genre#"
-            if marker in line:
+            # 替换占位符生成具体的标记行
+            expected_marker = marker_pattern.format(group_name=group)
+            if expected_marker in line:
                 current_group = group
-                log(f"✅ 在第 {i+1} 行找到目标分组: {group}")
+                log(f"✅ 在第 {i+1} 行找到目标分组: {group} (匹配行: {line})")
                 break
 
         if current_group:
-            # 如果遇到下一个分组的标记，则停止当前分组的提取
-            if ",#genre#" in line and current_group not in line:
-                log(f"到达下一个分组 '{line.split(',')[0]}'，停止提取 '{current_group}'")
-                current_group = None
+            # 如果遇到下一个分组的标记（根据模式判断），则停止当前分组
+            next_group_found = False
+            for other_group in target_groups:
+                if other_group == current_group:
+                    continue
+                other_marker = marker_pattern.format(group_name=other_group)
+                if other_marker in line:
+                    log(f"到达下一个分组 '{other_group}'，停止提取 '{current_group}'")
+                    current_group = None
+                    next_group_found = True
+                    break
+            if next_group_found:
                 continue
 
+            # 提取频道行（假设格式为 "名称,URL"）
             if "," in line and "://" in line:
                 name, url = line.split(",", 1)
                 result[current_group].append((name.strip(), url.strip()))
@@ -95,7 +95,7 @@ def extract_channels_from_file(content, target_groups):
     return result
 
 def clean_channel_name(name):
-    """去除频道名称末尾的分辨率标记如 'HD 1080p', '1080p' 等"""
+    """去除频道名称末尾的分辨率标记"""
     original = name
     name = re.sub(r'\s*[Hh][Dd]\s*1080[pP]?\s*$', '', name)
     name = re.sub(r'\s*1080[pP]\s*$', '', name)
@@ -107,9 +107,7 @@ def clean_channel_name(name):
     return name
 
 def deduplicate_channels(channels):
-    """
-    简单去重：基于URL，相同URL只保留第一个名称
-    """
+    """简单去重：基于URL保留第一个"""
     seen = {}
     deduped = []
     for name, url in channels:
@@ -117,24 +115,20 @@ def deduplicate_channels(channels):
             seen[url] = name
             deduped.append((name, url))
         else:
-            log(f"去重: 跳过重复URL {url} (已有名称: {seen[url]}, 当前名称: {name})")
-    log(f"去重前频道数: {len(channels)}，去重后: {len(deduped)}")
+            log(f"去重: 跳过重复URL {url}")
     return deduped
 
-# ================== 提取特定频道的筛选函数 ==================
-
 def is_tw_desired_channel(name):
-    """
-    判断是否为台湾分组中需要的频道：
-    名称必须包含「4gTV」或 ofiii，且包含「龍華」
-    """
+    """判断是否为台湾分组中需要的频道"""
     name_lower = name.lower()
-    has_keyword = ("4gtv" in name_lower or "ofiii" in name_lower)
+    has_keyword = any(kw in name_lower for kw in TW_REQUIRE_KEYWORDS)
     has_longhua = "龍華" in name or "龙华" in name_lower
-    return has_keyword and has_longhua
+    if TW_REQUIRE_LONGHUA:
+        return has_keyword and has_longhua
+    else:
+        return has_keyword
 
 # ================== 主流程 ==================
-
 def main():
     log("开始生成 Gather.m3u ...")
 
@@ -144,26 +138,29 @@ def main():
 
     gat_content = download(GAT_URL, "新源文件") or ""
 
-    all_extracted = {}  # group -> [(name, url)]
-    if gat_content:
-        all_extracted = extract_channels_from_file(gat_content, SOURCE_GROUPS)
+    if not gat_content:
+        log("⚠️ 源文件为空，无法提取频道")
+        return
 
-    # 处理 HK 分组：提取「• Juli 「精選」」全部频道
-    hk_raw = all_extracted.get("• Juli 「精選」", [])
+    # 提取分组频道
+    extracted = extract_channels_by_group(gat_content, SOURCE_GROUPS, GROUP_MARKER_PATTERN)
+
+    # 处理 HK 分组
+    hk_raw = extracted.get("• Juli 「精選」", [])
     hk_cleaned = [(clean_channel_name(name), url) for name, url in hk_raw]
     hk_deduped = deduplicate_channels(hk_cleaned)
-    log(f"HK 频道数（处理后）: {len(hk_deduped)}")
+    log(f"HK 最终频道数: {len(hk_deduped)}")
 
-    # 处理 TW 分组：从「•台湾「限制」」中筛选包含「4gTV」或 ofiii 的龍華频道
-    tw_raw = all_extracted.get("•台湾「限制」", [])
+    # 处理 TW 分组（筛选）
+    tw_raw = extracted.get("•台湾「限制」", [])
     tw_filtered = [(name, url) for name, url in tw_raw if is_tw_desired_channel(name)]
     log(f"TW 筛选后保留 {len(tw_filtered)} 个频道（原始 {len(tw_raw)}）")
     tw_cleaned = [(clean_channel_name(name), url) for name, url in tw_filtered]
     tw_deduped = deduplicate_channels(tw_cleaned)
-    log(f"TW 频道数（处理后）: {len(tw_deduped)}")
+    log(f"TW 最终频道数: {len(tw_deduped)}")
 
+    # 构建输出文件（与之前相同）
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
     output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
     output += f"""# Gather.m3u
 # 生成时间: {timestamp}
@@ -181,19 +178,15 @@ def main():
         if line.startswith("#EXTINF"):
             bb_count += 1
 
-    # 写入 HK 分组
     if hk_deduped:
         output += f"\n# {HK_GROUP}频道 ({len(hk_deduped)})\n"
         for name, url in hk_deduped:
-            output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n'
-            output += f"{url}\n"
+            output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n{url}\n'
 
-    # 写入 TW 分组
     if tw_deduped:
         output += f"\n# {TW_GROUP}频道 ({len(tw_deduped)})\n"
         for name, url in tw_deduped:
-            output += f'#EXTINF:-1 group-title="{TW_GROUP}",{name}\n'
-            output += f"{url}\n"
+            output += f'#EXTINF:-1 group-title="{TW_GROUP}",{name}\n{url}\n'
 
     total = bb_count + len(hk_deduped) + len(tw_deduped)
 
@@ -206,13 +199,9 @@ def main():
 # 更新时间: {timestamp}
 """
 
-    try:
-        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-            f.write(output)
-        log("🎉 Gather.m3u 生成成功")
-        log(f"📺 BB({bb_count}) + HK({len(hk_deduped)}) + TW({len(tw_deduped)}) = {total}")
-    except Exception as e:
-        log(f"❌ 保存失败: {e}")
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(output)
+    log(f"🎉 Gather.m3u 生成成功，总频道数: {total}")
 
 if __name__ == "__main__":
     main()
