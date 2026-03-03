@@ -1,4 +1,4 @@
-#EXTM3U x-tvg-url="http://epg.51zmt.top:8000/e1.xml.gz;https://epg.136605.xyz/9days.xml.gz;https://epg.zsdc.eu.org/t.xml.gz;https://epg.pw/xmltv/epg_CN.xml.gz;https://epg.pw/xmltv/epg_TW.xml.gz;https://epg.pw/xmltv/epg_HK.xml.gz"
+#EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # EE.m3u
 # 生成时间: 2026-03-03 00:52:41
