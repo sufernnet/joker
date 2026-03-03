@@ -32,7 +32,7 @@ SOURCE_GROUPS = ["港台频道", "新聞频道"]
 HK_GROUP = "HK"
 TW_GROUP = "TW"
 
-EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
+EPG_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/epg.xml.gz"
 
 # 需要过滤掉的频道关键词（不区分大小写）
 FILTER_KEYWORDS = [
