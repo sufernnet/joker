@@ -94,7 +94,13 @@ def merge_epg_sources():
     
     # 创建ElementTree并写入压缩文件
     tree = ET.ElementTree(new_root)
-    output_file = 'epg.xml.gz'  # 这里改成了 epg.xml.gz
+    
+    # 获取脚本所在目录的上一级目录（根目录）
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    root_dir = os.path.dirname(script_dir)
+    output_file = os.path.join(root_dir, 'epg.xml.gz')
+    
+    print(f"文件将保存到: {output_file}")
     
     with gzip.open(output_file, 'wb') as f:
         tree.write(f, encoding='utf-8', xml_declaration=True)
