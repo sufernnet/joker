@@ -9,24 +9,23 @@ on:
   workflow_dispatch:  # 允许手动触发
   push:
     paths:
-      - 'scripts/merge_epg.py'  # 脚本更新时运行
-      - '.github/workflows/merge-epg.yml'  # 工作流更新时运行
+      - 'scripts/merge_epg.py'
+      - '.github/workflows/merge-epg.yml'
 
 jobs:
   merge-epg:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # 允许写入仓库
+      contents: write
     
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
       
-      - name: 设置Python环境
+      - name: 设置Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          # 移除了 cache: 'pip' 选项
       
       - name: 安装依赖
         run: |
@@ -35,35 +34,66 @@ jobs:
       
       - name: 运行合并脚本
         run: |
-          echo "开始合并EPG源..."
+          echo "========================================="
+          echo "开始运行EPG合并脚本"
+          echo "========================================="
+          echo "当前目录: $(pwd)"
+          echo "目录内容:"
+          ls -la
+          
+          echo -e "\n进入scripts目录"
           cd scripts
+          echo "当前目录: $(pwd)"
+          echo "scripts目录内容:"
+          ls -la
+          
+          echo -e "\n执行合并脚本..."
           python merge_epg.py
+          
+          echo -e "\n脚本执行完成，返回根目录"
           cd ..
-          echo "合并完成"
+          echo "当前目录: $(pwd)"
+          
+          echo -e "\n查找epg.xml.gz文件:"
+          find . -name "epg.xml.gz" -type f
+          echo "========================================="
       
-      - name: 检查文件变化
-        id: check_changes
+      - name: 检查文件是否存在
+        id: check_file
         run: |
           if [ -f epg.xml.gz ]; then
-            echo "epg.xml.gz 已生成"
-            git add epg.xml.gz -n
-            if git diff --cached --quiet; then
-              echo "文件无变化，跳过提交"
-              echo "has_changes=false" >> $GITHUB_OUTPUT
-            else
-              echo "文件有变化，准备提交"
-              echo "has_changes=true" >> $GITHUB_OUTPUT
-            fi
+            echo "文件已生成在根目录"
+            echo "文件大小: $(ls -lh epg.xml.gz | awk '{print $5}')"
+            echo "file_exists=true" >> $GITHUB_OUTPUT
           else
-            echo "文件未生成"
-            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "文件不存在于根目录"
+            echo "file_exists=false" >> $GITHUB_OUTPUT
           fi
       
       - name: 提交更新
-        if: steps.check_changes.outputs.has_changes == 'true'
+        if: steps.check_file.outputs.file_exists == 'true'
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 添加文件
           git add epg.xml.gz
-          git commit -m "自动更新EPG数据 - $(date '+%Y-%m-%d %H:%M:%S')"
-          git push
+          
+          # 检查是否有变化
+          if git diff --cached --quiet; then
+            echo "文件无变化，跳过提交"
+          else
+            echo "文件有变化，准备提交"
+            git commit -m "自动更新EPG数据 - $(date '+%Y-%m-%d %H:%M:%S')"
+            git push
+            echo "提交成功"
+          fi
+      
+      - name: 提交失败提示
+        if: steps.check_file.outputs.file_exists == 'false'
+        run: |
+          echo "========================================="
+          echo "错误: epg.xml.gz 文件未生成"
+          echo "请检查上面的日志，查看脚本执行是否有错误"
+          echo "========================================="
+          exit 1
