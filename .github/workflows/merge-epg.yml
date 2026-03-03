@@ -9,8 +9,8 @@ on:
   workflow_dispatch:  # 允许手动触发
   push:
     paths:
-      - 'scripts/merge_epg.py'  # 路径更新了
-      - '.github/workflows/merge-epg.yml'  # 工作流文件更新时也运行
+      - 'scripts/merge_epg.py'  # 脚本更新时运行
+      - '.github/workflows/merge-epg.yml'  # 工作流更新时运行
 
 jobs:
   merge-epg:
@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
+          # 移除了 cache: 'pip' 选项
       
       - name: 安装依赖
         run: |
@@ -36,9 +36,9 @@ jobs:
       - name: 运行合并脚本
         run: |
           echo "开始合并EPG源..."
-          cd scripts  # 进入scripts目录
+          cd scripts
           python merge_epg.py
-          cd ..  # 返回根目录
+          cd ..
           echo "合并完成"
       
       - name: 检查文件变化
@@ -46,7 +46,6 @@ jobs:
         run: |
           if [ -f epg.xml.gz ]; then
             echo "epg.xml.gz 已生成"
-            # 检查是否有变化
             git add epg.xml.gz -n
             if git diff --cached --quiet; then
               echo "文件无变化，跳过提交"
