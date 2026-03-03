@@ -2,12 +2,15 @@ name: 合并EPG节目源
 
 on:
   schedule:
-    # 每天凌晨2点运行 (UTC时间)，对应北京时间上午10点
-    - cron: '0 2 * * *'
+    # 每天凌晨5:00运行 (UTC时间)，对应北京时间13:00
+    - cron: '0 5 * * *'
+    # 每天下午16:00运行 (UTC时间)，对应北京时间次日0:00
+    - cron: '0 16 * * *'
   workflow_dispatch:  # 允许手动触发
   push:
     paths:
-      - 'merge_epg.py'  # 当脚本更新时也运行
+      - 'scripts/merge_epg.py'  # 路径更新了
+      - '.github/workflows/merge-epg.yml'  # 工作流文件更新时也运行
 
 jobs:
   merge-epg:
@@ -33,7 +36,9 @@ jobs:
       - name: 运行合并脚本
         run: |
           echo "开始合并EPG源..."
+          cd scripts  # 进入scripts目录
           python merge_epg.py
+          cd ..  # 返回根目录
           echo "合并完成"
       
       - name: 检查文件变化
