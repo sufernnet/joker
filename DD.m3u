@@ -1,8 +1,6 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
-# 生成时间: 2026-03-04 13:43:48
-
-#EXTM3U url-tvg="http://epg.51zmt.top:8000/e.xml"
+# 生成时间: 2026-03-04 13:46:22
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
