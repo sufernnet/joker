@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-DD.m3u 构建系统（BB优先顺序版）
+DD.m3u 构建系统（BB完全原样保留版）
 
-顺序：
-BB 原顺序
+结构：
+BB 原样复制
 → HK
 → TW
 → SPORTS
@@ -43,7 +43,7 @@ def download(url):
     except:
         return ""
 
-# ================= 名称标准化 =================
+# ================= 名称清洗（只用于新增部分） =================
 
 def normalize_name(name):
     name = name.strip()
@@ -62,24 +62,6 @@ def determine_group(name, default_group):
         if kw.lower() in name.lower():
             return GROUP_SPORTS
     return default_group
-
-# ================= 提取 BB =================
-
-def extract_bb(content):
-    lines = content.splitlines()
-    channels = []
-
-    for i in range(len(lines)):
-        if lines[i].startswith("#EXTINF"):
-            name = lines[i].split(",",1)[1].strip()
-            group_match = re.search(r'group-title="([^"]*)"', lines[i])
-            group = group_match.group(1) if group_match else ""
-
-            if i+1 < len(lines):
-                url = lines[i+1].strip()
-                if url.startswith("http"):
-                    channels.append((name,url,group))
-    return channels
 
 # ================= 提取 HK =================
 
@@ -102,9 +84,10 @@ def extract_hk(content):
             if "," in raw and "://" in raw:
                 name, url = raw.split(",",1)
                 channels.append((name.strip(),url.strip(),GROUP_HK))
+
     return channels
 
-# ================= 提取 TW =================
+# ================= 提取 TW + 体育 Relay =================
 
 def extract_tw(content):
     lines = content.splitlines()
@@ -127,11 +110,10 @@ def extract_tw(content):
 
     return channels
 
-# ================= 合并 =================
+# ================= 合并（只合并新增部分） =================
 
-def merge_channels(channel_list):
+def merge_new_channels(channel_list):
     merged = {}
-    order = []
 
     for name,url,group in channel_list:
 
@@ -146,12 +128,11 @@ def merge_channels(channel_list):
                 "group": final_group,
                 "urls": []
             }
-            order.append(key)
 
         if url not in merged[key]["urls"]:
             merged[key]["urls"].append(url)
 
-    return merged, order
+    return merged
 
 # ================= 主流程 =================
 
@@ -161,38 +142,26 @@ def main():
     hk_content = download(HK_SOURCE_URL)
     tw_content = download(TW_SOURCE_URL)
 
-    bb_channels = extract_bb(bb_content)
     hk_channels = extract_hk(hk_content)
     tw_channels = extract_tw(tw_content)
 
-    # 关键：BB 放最前面
-    all_channels = bb_channels + hk_channels + tw_channels
-
-    merged, order = merge_channels(all_channels)
+    merged_new = merge_new_channels(hk_channels + tw_channels)
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
     output += f"# 生成时间: {timestamp}\n\n"
 
-    # ====== 先输出 BB 原顺序 ======
-    output += "\n### BB ###\n"
-    for name,url,group in bb_channels:
-        key = normalize_name(name).lower()
-        if key in merged:
-            data = merged[key]
-            output += f'\n#EXTINF:-1 group-title="{group}",{data["name"]}\n'
-            for u in data["urls"]:
-                output += u+"\n"
-            merged.pop(key)
+    # ====== BB 原样复制 ======
+    output += bb_content.strip() + "\n"
 
-    # ====== 再输出 HK → TW → SPORTS ======
+    # ====== 新增部分 ======
 
     hk_list = []
     tw_list = []
     sports_list = []
 
-    for data in merged.values():
+    for data in merged_new.values():
         if data["group"] == GROUP_HK:
             hk_list.append(data)
         elif data["group"] == GROUP_TW:
@@ -200,19 +169,22 @@ def main():
         else:
             sports_list.append(data)
 
-    output += "\n### HK ###\n"
+    # HK
+    output += "\n\n### HK ###\n"
     for item in sorted(hk_list,key=lambda x:x["name"].lower()):
         output += f'\n#EXTINF:-1 group-title="HK",{item["name"]}\n'
         for u in item["urls"]:
             output += u+"\n"
 
-    output += "\n### TW ###\n"
+    # TW
+    output += "\n\n### TW ###\n"
     for item in sorted(tw_list,key=lambda x:x["name"].lower()):
         output += f'\n#EXTINF:-1 group-title="TW",{item["name"]}\n'
         for u in item["urls"]:
             output += u+"\n"
 
-    output += "\n### SPORTS ###\n"
+    # SPORTS
+    output += "\n\n### SPORTS ###\n"
     for item in sorted(sports_list,key=lambda x:x["name"].lower()):
         output += f'\n#EXTINF:-1 group-title="SPORTS",{item["name"]}\n'
         for u in item["urls"]:
@@ -221,7 +193,7 @@ def main():
     with open(OUTPUT_FILE,"w",encoding="utf-8") as f:
         f.write(output)
 
-    print("✅ DD.m3u 已按 BB→HK→TW→SPORTS 顺序生成")
+    print("✅ DD.m3u 已生成（BB完全保持原样）")
 
 if __name__ == "__main__":
     main()
