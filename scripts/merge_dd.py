@@ -5,8 +5,8 @@ DD.m3u 合并脚本（港台频道版）
 功能：
 1. 保留 BB.m3u 所有内容
 2. 从 https://yang.sufern001.workers.dev 提取 group-title="•台湾「限制」" 的频道作为 TW 分组
-3. ⚠️ 完整保留所有原始属性：tvg-id、tvg-name、tvg-logo、http-user-agent 等
-4. ⚠️ 清洗 TW 频道名称：去除末尾的「4gTV」、「ofiii」、「FainTV」、「Relay」等标记
+3. 完整保留所有原始属性：tvg-id、tvg-name、tvg-logo、http-user-agent 等
+4. 清洗 TW 频道名称：去除末尾的「4gTV」、「ofiii」、「FainTV」、「Relay」等标记
 5. 过滤掉名称全是英文的 TW 频道
 6. 过滤掉指定的特定频道（DW德國之聲、MCE 我的歐洲電影、SBN 全球財經、國會頻道 1-2、大愛電視等）
 7. TW 频道按指定分组排序：Love Nature→中天系列→民视系列→寰宇系列→中视系列→三立系列→其他
@@ -219,20 +219,21 @@ PREFERRED_NAMES = [
     "明珠台",
 ]
 
-# ⚠️ 需要从 TW 频道名称中去除的后缀标记（完整版：包含所有指定后缀）
-TW_NAME_SUFFIXES_TO_REMOVE = [
+# ⚠️ 需要从 TW 频道名称中去除的后缀标记（使用正则表达式匹配）
+TW_NAME_SUFFIX_PATTERNS = [
     # 中文方括号格式
-    "「4gTV」", "「ofiii」", "「FainTV」", "「Relay」", "「CatchPlay」",
-    # 中文方括号格式（繁体/简体变体）
-    "「4GTV」", "「Ofiii」", "「faintv」", "「relay」",
+    r'「4gTV」$', r'「ofiii」$', r'「FainTV」$', r'「Relay」$', r'「CatchPlay」$',
+    r'「4GTV」$', r'「Ofiii」$', r'「faintv」$', r'「relay」$',
     # 中文方括号格式（中文括号）
-    "【4gTV】", "【ofiii】", "【FainTV】", "【Relay】", "【CatchPlay】",
-    "【4GTV】", "【Ofiii】", "【faintv】", "【relay】",
+    r'【4gTV】$', r'【ofiii】$', r'【FainTV】$', r'【Relay】$', r'【CatchPlay】$',
+    r'【4GTV】$', r'【Ofiii】$', r'【faintv】$', r'【relay】$',
     # 英文括号格式
-    "(4gTV)", "(ofiii)", "(FainTV)", "(Relay)", "(CatchPlay)",
-    "(4GTV)", "(Ofiii)", "(faintv)", "(relay)",
+    r'\(4gTV\)$', r'\(ofiii\)$', r'\(FainTV\)$', r'\(Relay\)$', r'\(CatchPlay\)$',
+    r'\(4GTV\)$', r'\(Ofiii\)$', r'\(faintv\)$', r'\(relay\)$',
     # 空格+括号格式
-    " 4gTV", " ofiii", " FainTV", " Relay", " CatchPlay",
+    r'\s+4gTV$', r'\s+ofiii$', r'\s+FainTV$', r'\s+Relay$', r'\s+CatchPlay$',
+    # 通用模式：匹配任何以「」、【】、() 包围的常见后缀
+    r'[「【(](4gTV|ofiii|FainTV|Relay|CatchPlay|4GTV|Ofiii|faintv|relay)[」】)]$',
 ]
 
 # ================== HK频道指定顺序 ==================
@@ -441,20 +442,17 @@ def parse_m3u_for_group(content, target_group):
 
 
 def clean_tw_channel_name(name):
-    """清洗 TW 频道名称：去除指定的后缀标记"""
+    """清洗 TW 频道名称：去除末尾的「4gTV」、「ofiii」、「FainTV」、「Relay」等标记"""
     original = name
     cleaned = name
     
-    # 遍历所有后缀进行去除
-    for suffix in TW_NAME_SUFFIXES_TO_REMOVE:
-        if cleaned.endswith(suffix):
-            cleaned = cleaned[:-len(suffix)].strip()
-            break  # 只去除一个后缀
+    # 使用正则表达式匹配并去除所有指定的后缀模式
+    for pattern in TW_NAME_SUFFIX_PATTERNS:
+        cleaned = re.sub(pattern, '', cleaned)
     
-    # 额外处理：如果还有残留的括号，也去除
-    cleaned = re.sub(r'\s*[「【(][^」】)]*[」】)]\s*$', '', cleaned)
-    
+    # 额外清理：去除可能残留的空白字符
     cleaned = cleaned.strip()
+    
     if cleaned != original:
         log(f"清洗 TW 名称: '{original}' -> '{cleaned}'")
     return cleaned
