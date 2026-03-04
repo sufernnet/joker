@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 """
-DD.m3u 合并脚本（香港 + 台湾限制 双分组稳定版）
+DD.m3u 合并脚本
+结构：
+- BB 原样保留
+- 香港单独一组
+- 台湾「限制」单独一组
 """
 
 import requests
 from datetime import datetime
 
-# ================== 配置 ==================
+# ================= 配置 =================
 
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
 HK_SOURCE_URL = "https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1"
-TW_SOURCE_URL = "https://yang.sufern001.workers.dev/"
+TW_SOURCE_URL = "https://yang.sufern001.workers.dev"
 
 OUTPUT_FILE = "DD.m3u"
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
@@ -18,7 +24,7 @@ EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 HK_GROUP_NAME = "香港"
 TW_GROUP_NAME = "台湾限制"
 
-# ================== 工具 ==================
+# ================= 工具 =================
 
 def log(msg):
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
@@ -28,7 +34,7 @@ def download(url, desc):
         log(f"下载 {desc} ...")
         r = requests.get(
             url,
-            timeout=25,
+            timeout=30,
             headers={
                 "User-Agent": "Mozilla/5.0",
                 "Accept": "*/*"
@@ -41,43 +47,38 @@ def download(url, desc):
         log(f"❌ {desc} 下载失败: {e}")
         return ""
 
-# ================== 提取逻辑 ==================
+# ================= 香港提取（非标准源） =================
 
 def extract_hk_channels(content):
-    """
-    从港澳台源中提取香港频道
-    """
     lines = content.splitlines()
     channels = []
     in_section = False
-    marker_keyword = "港澳台直播"
+
+    log("开始提取香港频道")
 
     HK_KEYWORDS = [
         "香港", "凤凰", "Now", "TVB",
         "HOY", "RHK", "Viu", "有线"
     ]
 
-    log("开始提取香港频道")
-
     for line in lines:
-        raw = line
-        line = line.strip()
+        raw = line.strip()
 
-        if not line:
+        if not raw:
             continue
 
-        # 找到港澳台大分组
-        if not in_section and marker_keyword in line:
+        # 找到港澳台分组
+        if not in_section and "港澳台直播" in raw:
             in_section = True
             continue
 
         if in_section:
-            # 新分组出现就停止
-            if "#genre#" in line and marker_keyword not in line:
+            # 遇到下一个分组停止
+            if "#genre#" in raw and "港澳台直播" not in raw:
                 break
 
-            if "," in line and "://" in line:
-                name, url = line.split(",", 1)
+            if "," in raw and "://" in raw:
+                name, url = raw.split(",", 1)
                 name = name.strip()
                 url = url.strip()
 
@@ -87,43 +88,36 @@ def extract_hk_channels(content):
     log(f"香港频道数: {len(channels)}")
     return channels
 
+# ================= 台湾提取（标准M3U） =================
 
 def extract_tw_limited(content):
     """
-    提取台湾「限制」分组（增强匹配版）
+    从标准 M3U 中提取 group-title="•台湾「限制」"
     """
     lines = content.splitlines()
     channels = []
-    in_section = False
 
-    log("开始提取台湾「限制」频道")
+    log('开始提取 group-title="•台湾「限制」"')
 
-    for line in lines:
-        raw_line = line
-        line = line.strip()
+    for i in range(len(lines)):
+        line = lines[i].strip()
 
-        if not line:
-            continue
+        if line.startswith("#EXTINF") and 'group-title="•台湾「限制」"' in line:
+            try:
+                name = line.split(",", 1)[1].strip()
+            except:
+                continue
 
-        # 只要包含 台湾 + 限制 就认为是目标分组
-        if not in_section and ("台湾" in line and "限制" in line):
-            in_section = True
-            log(f"找到台湾限制分组: {raw_line}")
-            continue
-
-        if in_section:
-            # 遇到下一个分组停止
-            if "#genre#" in line and not ("台湾" in line and "限制" in line):
-                break
-
-            if "," in line and "://" in line:
-                name, url = line.split(",", 1)
-                channels.append((name.strip(), url.strip()))
+            # 下一行是URL
+            if i + 1 < len(lines):
+                url = lines[i + 1].strip()
+                if url.startswith("http"):
+                    channels.append((name, url))
 
     log(f"台湾限制频道数: {len(channels)}")
     return channels
 
-# ================== 去重 ==================
+# ================= 去重 =================
 
 def deduplicate(channels):
     seen = {}
@@ -135,12 +129,12 @@ def deduplicate(channels):
     log(f"去重后频道数: {len(result)}")
     return result
 
-# ================== 排序 ==================
+# ================= 排序 =================
 
 def sort_channels(channels):
     return sorted(channels, key=lambda x: x[0].lower())
 
-# ================== 主流程 ==================
+# ================= 主流程 =================
 
 def main():
     log("开始生成 DD.m3u")
@@ -149,17 +143,14 @@ def main():
     hk_source = download(HK_SOURCE_URL, "香港源")
     tw_source = download(TW_SOURCE_URL, "台湾源")
 
-    # 调试用（可保留）
-    log(f"台湾源前200字符预览: {tw_source[:200]}")
+    # 调试预览
+    log(f"台湾源预览前200字符:\n{tw_source[:200]}")
 
     hk_channels = extract_hk_channels(hk_source)
     tw_channels = extract_tw_limited(tw_source)
 
-    hk_channels = deduplicate(hk_channels)
-    tw_channels = deduplicate(tw_channels)
-
-    hk_channels = sort_channels(hk_channels)
-    tw_channels = sort_channels(tw_channels)
+    hk_channels = sort_channels(deduplicate(hk_channels))
+    tw_channels = sort_channels(deduplicate(tw_channels))
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
