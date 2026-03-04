@@ -2,12 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-DD.m3u 构建系统（增强版）
-功能：
-- HK / TW 分组
-- SPORTS 自动归类
-- 清洗频道名
-- 同名频道合并多链接
+DD.m3u 构建系统（最终排序版）
 """
 
 import requests
@@ -37,6 +32,19 @@ SPORTS_KEYWORDS = [
     "Now体育"
 ]
 
+HK_ORDER = [
+    "凤凰中文","凤凰资讯","凤凰香港台",
+    "Now新闻","Now体育","Now财经","Now直播",
+    "HOY76","HOY77","HOY78",
+    "翡翠台","翡翠台4K","明珠台",
+    "TVB plus","TVB1","TVBJ1","TVB功夫",
+    "TVB千禧经典","TVB娱乐新闻台","TVB星河",
+    "无线新闻台",
+    "ViuTV","ViuTV6",
+    "RHK31","RHK32",
+    "CH5综合","CH8综合","CHU综合"
+]
+
 # ================= 工具 =================
 
 def log(msg):
@@ -44,14 +52,11 @@ def log(msg):
 
 def download(url, desc):
     try:
-        log(f"下载 {desc} ...")
         r = requests.get(url, timeout=30,
                          headers={"User-Agent": "Mozilla/5.0"})
         r.raise_for_status()
-        log(f"✅ {desc} 下载成功")
         return r.text
-    except Exception as e:
-        log(f"❌ {desc} 下载失败: {e}")
+    except:
         return ""
 
 # ================= 名称清洗 =================
@@ -59,14 +64,10 @@ def download(url, desc):
 def clean_channel_name(name):
     name = name.strip()
 
-    # 删除 FainTV / ofiii / 4gTV
     for kw in REMOVE_KEYWORDS:
         name = re.sub(rf'「?\s*{kw}\s*」?', '', name, flags=re.IGNORECASE)
 
-    # 删除尾部数字（NOW体育1 → NOW体育）
     name = re.sub(r'\d+$', '', name)
-
-    # 删除多余空格
     name = re.sub(r'\s+', ' ', name)
 
     return name.strip()
@@ -74,14 +75,12 @@ def clean_channel_name(name):
 # ================= 分组判断 =================
 
 def determine_group(name, default_group):
-
     for kw in SPORTS_KEYWORDS:
         if kw.lower() in name.lower():
             return GROUP_SPORTS
-
     return default_group
 
-# ================= 提取函数 =================
+# ================= 提取 =================
 
 def extract_hk_channels(content):
     lines = content.splitlines()
@@ -90,7 +89,6 @@ def extract_hk_channels(content):
 
     for line in lines:
         raw = line.strip()
-
         if not raw:
             continue
 
@@ -114,13 +112,8 @@ def extract_tw_limited(content):
 
     for i in range(len(lines)):
         line = lines[i].strip()
-
         if line.startswith("#EXTINF") and 'group-title="•台湾「限制」"' in line:
-            try:
-                name = line.split(",", 1)[1].strip()
-            except:
-                continue
-
+            name = line.split(",", 1)[1].strip()
             if i + 1 < len(lines):
                 url = lines[i + 1].strip()
                 if url.startswith("http"):
@@ -128,12 +121,9 @@ def extract_tw_limited(content):
 
     return channels
 
-# ================= 合并频道 =================
+# ================= 合并 =================
 
 def merge_channels(channel_list):
-    """
-    同名频道合并多个链接
-    """
     merged = defaultdict(lambda: {"group": "", "urls": []})
 
     for name, url, group in channel_list:
@@ -148,40 +138,78 @@ def merge_channels(channel_list):
 
     return merged
 
+# ================= 排序 =================
+
+def sort_hk_channels(channels_dict):
+    def hk_weight(name):
+        for idx, key in enumerate(HK_ORDER):
+            if key.lower() in name.lower():
+                return idx
+        return 999  # 未匹配排最后
+
+    return sorted(channels_dict.items(),
+                  key=lambda x: (hk_weight(x[0]), x[0].lower()))
+
 # ================= 主流程 =================
 
 def main():
     log("开始生成 DD.m3u")
 
-    bb_content = download(BB_URL, "BB.m3u")
-    hk_source = download(HK_SOURCE_URL, "香港源")
-    tw_source = download(TW_SOURCE_URL, "台湾源")
+    bb_content = download(BB_URL, "BB")
+    hk_source = download(HK_SOURCE_URL, "HK")
+    tw_source = download(TW_SOURCE_URL, "TW")
 
-    hk_channels = extract_hk_channels(hk_source)
-    tw_channels = extract_tw_limited(tw_source)
-
-    all_channels = hk_channels + tw_channels
+    all_channels = (
+        extract_hk_channels(hk_source) +
+        extract_tw_limited(tw_source)
+    )
 
     merged = merge_channels(all_channels)
+
+    # 分组
+    hk = {}
+    tw = {}
+    sports = {}
+
+    for name, data in merged.items():
+        group = data["group"]
+        if group == GROUP_HK:
+            hk[name] = data
+        elif group == GROUP_TW:
+            tw[name] = data
+        else:
+            sports[name] = data
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
     output += f"# 生成时间: {timestamp}\n\n"
 
-    # ===== BB 原样 =====
+    # BB
     for line in bb_content.splitlines():
         if not line.startswith("#EXTM3U"):
             output += line + "\n"
 
-    # ===== 输出合并频道 =====
-    for name in sorted(merged.keys()):
-        group = merged[name]["group"]
-        urls = merged[name]["urls"]
+    # HK
+    output += "\n### HK ###\n"
+    for name, data in sort_hk_channels(hk):
+        output += f'\n#EXTINF:-1 group-title="{GROUP_HK}",{name}\n'
+        for u in data["urls"]:
+            output += u + "\n"
 
-        output += f'\n#EXTINF:-1 group-title="{group}",{name}\n'
-        for u in urls:
-            output += f"{u}\n"
+    # TW
+    output += "\n### TW ###\n"
+    for name in sorted(tw.keys()):
+        output += f'\n#EXTINF:-1 group-title="{GROUP_TW}",{name}\n'
+        for u in tw[name]["urls"]:
+            output += u + "\n"
+
+    # SPORTS
+    output += "\n### SPORTS ###\n"
+    for name in sorted(sports.keys()):
+        output += f'\n#EXTINF:-1 group-title="{GROUP_SPORTS}",{name}\n'
+        for u in sports[name]["urls"]:
+            output += u + "\n"
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
