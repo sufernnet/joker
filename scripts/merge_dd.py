@@ -158,6 +158,9 @@ def download(url, desc):
         r = requests.get(url, timeout=25, headers={"User-Agent": "Mozilla/5.0"})
         r.raise_for_status()
         log(f"✅ {desc} 下载成功 ({len(r.text)} 字符)")
+        
+        # 打印前500个字符以便调试
+        log(f"内容预览: {r.text[:500]}")
         return r.text
     except Exception as e:
         log(f"❌ {desc} 下载失败: {e}")
@@ -165,35 +168,79 @@ def download(url, desc):
 
 
 def extract_gather_channels(content):
+    """
+    更灵活地提取特定分组的频道
+    支持多种M3U格式：
+    1. 标准格式：#EXTINF:-1 group-title="分组名",频道名\nURL
+    2. 简单格式：频道名,URL
+    3. 带注释的格式
+    """
     lines = content.splitlines()
     channels = []
-    in_section = False
-    marker = f"{SOURCE_GROUP},#genre#"
-
-    log(f"开始提取分组：{SOURCE_GROUP}")
-
+    in_target_group = False
+    group_marker_found = False
+    
+    # 先尝试找到目标分组标记
     for i, line in enumerate(lines):
         line = line.strip()
         if not line:
             continue
-
-        if marker in line:
-            in_section = True
-            log(f"✅ 在第 {i+1} 行找到目标分组")
+            
+        # 检查是否是分组标记行
+        if (f"{SOURCE_GROUP},#genre#" in line or 
+            f'group-title="{SOURCE_GROUP}"' in line or
+            f"# {SOURCE_GROUP}" in line or
+            SOURCE_GROUP in line and "#genre#" in line):
+            group_marker_found = True
+            in_target_group = True
+            log(f"✅ 在第 {i+1} 行找到目标分组标记: {line}")
             continue
-
-        if in_section:
-            if ",#genre#" in line:
-                log("到达下一个分组，停止提取")
+        
+        # 如果已经在目标分组内
+        if in_target_group:
+            # 检查是否进入下一个分组（多种可能的分组标记）
+            if (",#genre#" in line or 
+                ('group-title="' in line and not f'group-title="{SOURCE_GROUP}"' in line) or
+                (line.startswith("# ") and "频道" in line)):
+                log(f"到达下一个分组: {line}")
                 break
-
-            if "," in line and "://" in line:
+            
+            # 提取频道信息
+            if "://" in line:  # 包含URL的行
+                # 检查前一行是否是EXTINF
+                prev_line = lines[i-1].strip() if i > 0 else ""
+                
+                if prev_line.startswith("#EXTINF"):
+                    # 标准M3U格式
+                    match = re.search(r'tvg-name="([^"]+)"|,([^,]+)$', prev_line)
+                    if match:
+                        name = match.group(1) or match.group(2)
+                        channels.append((name.strip(), line.strip()))
+                        log(f"提取频道(标准格式): {name} -> {line[:50]}...")
+                elif "," in line and not line.startswith("#"):
+                    # 简单格式：频道名,URL
+                    parts = line.split(",", 1)
+                    if len(parts) == 2:
+                        name, url = parts
+                        channels.append((name.strip(), url.strip()))
+                        log(f"提取频道(简单格式): {name} -> {url[:50]}...")
+    
+    # 如果没有找到分组标记，尝试直接搜索频道
+    if not group_marker_found:
+        log("未找到分组标记，尝试直接搜索频道...")
+        for line in lines:
+            line = line.strip()
+            if "://" in line and "," in line and not line.startswith("#"):
                 parts = line.split(",", 1)
                 if len(parts) == 2:
                     name, url = parts
-                    channels.append((name.strip(), url.strip()))
-
-    log(f"提取到 {len(channels)} 个频道")
+                    # 检查是否是台湾相关的频道（可以根据你的频道列表判断）
+                    taiwan_keywords = ["翡翠", "明珠", "TVB", "Viu", "凤凰", "Now", "RHK", "HOY"]
+                    if any(k in name for k in taiwan_keywords):
+                        channels.append((name.strip(), url.strip()))
+                        log(f"直接提取频道: {name} -> {url[:50]}...")
+    
+    log(f"总共提取到 {len(channels)} 个频道")
     return channels
 
 
@@ -391,6 +438,10 @@ def main():
     # 提取频道
     taiwan_channels = extract_gather_channels(gather) if gather else []
     log(f"提取后原始频道数: {len(taiwan_channels)}")
+    
+    # 打印前5个频道以便调试
+    for i, (name, url) in enumerate(taiwan_channels[:5]):
+        log(f"示例频道 {i+1}: {name} -> {url[:50]}...")
     
     # 过滤频道（关键词过滤）
     keyword_filtered = [(name, url) for name, url in taiwan_channels if not should_filter_by_keyword(name)]
