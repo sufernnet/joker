@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-DD.m3u 合并脚本（基于 EE.m3u 修改）
+DD.m3u 合并脚本（港台频道版）
 
 功能：
 1. 保留 BB.m3u 所有内容
 2. 从 https://yang.sufern001.workers.dev 提取 group-title="•台湾「限制」" 的频道作为 TW 分组
 3. 清洗 TW 频道名称：去除末尾的「Relay」、「FainTV」、「4gTV」等标记
 4. 过滤掉名称全是英文的 TW 频道
-5. HK 分组和排序规则完全保留（从原港台大陆源提取）
-6. 输出文件为 DD.m3u
+5. 过滤掉指定的特定频道（DW德國之聲、MCE 我的歐洲電影、SBN 全球財經、國會頻道 1-2等）
+6. HK 分组和排序规则完全保留（从原港台大陆源提取）
+7. 输出文件为 DD.m3u
 
 北京时间每天 06:00 / 17:00 自动运行
 """
@@ -99,11 +100,49 @@ FILTER_KEYWORDS = [
     "民视旅游",
     "民視旅遊台",
     "民视旅游台",
+    
+    # 新增特定过滤项（根据用户要求）
+    "DW德國之聲",
+    "MCE 我的歐洲電影",
+    "SBN 全球財經",
+    "國會頻道 1",
+    "國會頻道 2",
+    "國會頻道1",
+    "國會頻道2",
+    "大愛電視",
+    "好萊塢電影",
+    "尼克兒童頻道",
+    "幸福空間居家",
+    "影迷數位紀實",
+    "影迷數位電影",
+    "東森幼幼",
+    "東森購物 一",
+    "東森購物 二",
+    "東森購物 三",
+    "東森購物 四",
+    "歡樂兒童",
+    "韓國娛樂台 KMTV",
+    "韓國娛樂台",
+    "KMTV",
 ]
 
 # 需要过滤掉的特定URL（精确匹配）
 FILTER_URLS = [
     "http://iptv.4666888.xyz/iptv2A.php?id=27",  # 凤凰中文特定源
+    # 新增特定URL过滤
+    "https://tv.iill.top/4gtv/4gtv-live007",  # 大愛電視
+    "https://tv.iill.top/4gtv/4gtv-live106",  # 大愛電視 2
+    "https://tv.iill.top/4gtv/4gtv-live105",  # 尼克兒童頻道
+    "https://tv.iill.top/4gtv/4gtv-live206",  # 幸福空間居家
+    "https://tv.iill.top/4gtv/litv-ftv15",     # 影迷數位紀實
+    "https://tv.iill.top/4gtv/4gtv-4gtv011",   # 影迷數位電影
+    "https://hls.iill.top/api/YoYo-TV/index.m3u8",  # 東森幼幼
+    "https://tv.iill.top/4gtv/4gtv-live047",  # 東森購物 一
+    "https://tv.iill.top/4gtv/4gtv-live048",  # 東森購物 三
+    "https://tv.iill.top/4gtv/4gtv-live046",  # 東森購物 二
+    "https://tv.iill.top/4gtv/4gtv-live0499", # 東森購物 四
+    "https://tv.iill.top/FainTV/22768",        # 歡樂兒童
+    "https://tv.iill.top/4gtv/4gtv-4gtv016",   # 韓國娛樂台 KMTV
 ]
 
 # 频道名称标准化映射（用于去重）
