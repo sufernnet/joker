@@ -39,9 +39,6 @@ https://litv.goiptv.de5.net/litv.php?id=litv-longturn14
 #EXTINF:-1 tvg-id="半岛新闻" tvg-name="半岛国际新闻台" tvg-logo="https://iptv-pro.github.io/logo/半岛国际新闻台.png" group-title="新闻资讯",半岛国际新闻台
 https://litv.goiptv.de5.net/litv.php?id=litv-ftv10
 
-#EXTINF:-1 tvg-id="VOA" tvg-name="VOA美国之音" tvg-logo="https://iptv-pro.github.io/logo/VOA.png" group-title="新闻资讯",VOA美国之音
-https://litv.goiptv.de5.net/litv.php?id=litv-ftv03
-
 #EXTINF:-1 tvg-id="非凡商业" tvg-name="非凡商业台" tvg-logo="https://iptv-pro.github.io/logo/非凡商业台.png" group-title="财经商业",非凡商业台
 https://litv.goiptv.de5.net/litv.php?id=4gtv-4gtv048
 
@@ -259,4 +256,5 @@ https://litv.goiptv.de5.net/litv.php?id=4gtv-4gtv083
 https://litv.goiptv.de5.net/litv.php?id=litv-ftv16
 
 #EXTINF:-1 tvg-id="好消息2" tvg-name="好消息 2 台" tvg-logo="https://iptv-pro.github.io/logo/好消息.png" group-title="宗教频道",好消息 2 台
+
 https://litv.goiptv.de5.net/litv.php?id=litv-ftv17
