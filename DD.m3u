@@ -1,8 +1,8 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-04 12:45:39
-# 香港 + 台湾限制 双分组版
+# 生成时间: 2026-03-04 12:52:28
+# 香港 + 台湾限制 + SPORTS
 # EPG: https://epg.zsdc.eu.org/t.xml.gz
 
 
@@ -448,7 +448,7 @@ https://tv.iill.top/4gtv/4gtv-live017
 https://tv.iill.top/4gtv/4gtv-live071
 #EXTINF:-1 group-title="台湾限制",ELTA生活英語「4gTV」
 https://tv.iill.top/4gtv/litv-xinchuang20
-#EXTINF:-1 group-title="台湾限制",ETtoday綜合「FainTV」
+#EXTINF:-1 group-title="SPORTS",ETtoday綜合「FainTV」
 https://tv.iill.top/FainTV/146
 #EXTINF:-1 group-title="台湾限制",FashionTV 時尚頻道「4gTV」
 https://tv.iill.top/4gtv/4gtv-live085
@@ -482,7 +482,7 @@ https://tv.iill.top/4gtv/litv-ftv10
 https://tv.iill.top/4gtv/4gtv-4gtv083
 #EXTINF:-1 group-title="台湾限制",MOMO親子「4gTV」
 https://tv.iill.top/4gtv/4gtv-live107
-#EXTINF:-1 group-title="台湾限制",MOMO運動綜合「FainTV」
+#EXTINF:-1 group-title="SPORTS",MOMO運動綜合「FainTV」
 https://tv.iill.top/FainTV/14009
 #EXTINF:-1 group-title="台湾限制",MTV Live「Relay」
 https://hls.iill.top/api/MTV-Live/index.m3u8
@@ -520,7 +520,7 @@ https://tv.iill.top/4gtv/media-live073
 https://tv.iill.top/4gtv/4gtv-live089
 #EXTINF:-1 group-title="台湾限制",三立綜合「4gTV」
 https://tv.iill.top/4gtv/4gtv-live207
-#EXTINF:-1 group-title="台湾限制",中天亞洲「FainTV」
+#EXTINF:-1 group-title="SPORTS",中天亞洲「FainTV」
 https://tv.iill.top/FainTV/121
 #EXTINF:-1 group-title="台湾限制",中天娛樂「Relay」
 https://hls.iill.top/api/Cti-E/index.m3u8
@@ -548,25 +548,25 @@ https://tv.iill.top/4gtv/4gtv-4gtv042
 https://hls.iill.top/api/Animal-Planet/index.m3u8
 #EXTINF:-1 group-title="台湾限制",半島國際新聞「4gTV」
 https://tv.iill.top/4gtv/4gtv-live157
-#EXTINF:-1 group-title="台湾限制",博斯無限 一「FainTV」
+#EXTINF:-1 group-title="SPORTS",博斯無限 一「FainTV」
 https://tv.iill.top/FainTV/129
-#EXTINF:-1 group-title="台湾限制",博斯無限 二「FainTV」
+#EXTINF:-1 group-title="SPORTS",博斯無限 二「FainTV」
 https://tv.iill.top/FainTV/418
-#EXTINF:-1 group-title="台湾限制",博斯網球「FainTV」
+#EXTINF:-1 group-title="SPORTS",博斯網球「FainTV」
 https://tv.iill.top/FainTV/53
 #EXTINF:-1 group-title="台湾限制",博斯運動 一「CatchPlay」
 https://hls.iill.top/api/Sports-Network/index.m3u8
 #EXTINF:-1 group-title="台湾限制",博斯運動 二「CatchPlay」
 https://hls.iill.top/api/Football-Channel/index.m3u8
-#EXTINF:-1 group-title="台湾限制",博斯高球 一「FainTV」
+#EXTINF:-1 group-title="SPORTS",博斯高球 一「FainTV」
 https://tv.iill.top/FainTV/108
-#EXTINF:-1 group-title="台湾限制",博斯高球 二「FainTV」
+#EXTINF:-1 group-title="SPORTS",博斯高球 二「FainTV」
 https://tv.iill.top/FainTV/125
-#EXTINF:-1 group-title="台湾限制",博斯魅力「FainTV」
+#EXTINF:-1 group-title="SPORTS",博斯魅力「FainTV」
 https://tv.iill.top/FainTV/135
 #EXTINF:-1 group-title="台湾限制",原住民族電視「4gTV」
 https://tv.iill.top/4gtv/4gtv-live014
-#EXTINF:-1 group-title="台湾限制",台灣啟示錄「FainTV」
+#EXTINF:-1 group-title="SPORTS",台灣啟示錄「FainTV」
 https://tv.iill.top/FainTV/18254
 #EXTINF:-1 group-title="台湾限制",台灣戲劇「ofiii」
 https://tv.iill.top/ofiii/litv-xinchuang22
@@ -634,9 +634,9 @@ https://tv.iill.top/4gtv/4gtv-live046
 https://tv.iill.top/4gtv/4gtv-live0499
 #EXTINF:-1 group-title="台湾限制",東森電影「Relay」
 https://hls.iill.top/api/ET-Movie/index.m3u8
-#EXTINF:-1 group-title="台湾限制",歡樂兒童「FainTV」
+#EXTINF:-1 group-title="SPORTS",歡樂兒童「FainTV」
 https://tv.iill.top/FainTV/22768
-#EXTINF:-1 group-title="台湾限制",歡樂看新聞「FainTV」
+#EXTINF:-1 group-title="SPORTS",歡樂看新聞「FainTV」
 https://tv.iill.top/FainTV/19670
 #EXTINF:-1 group-title="台湾限制",民視「4gTV」
 https://tv.iill.top/4gtv/4gtv-4gtv002
@@ -743,4 +743,4 @@ https://tv.iill.top/ofiii/litv-xinchuang03
 # 香港频道数: 33
 # 台湾限制频道数: 156
 # 总频道数: 268
-# 更新时间: 2026-03-04 12:45:39
+# 更新时间: 2026-03-04 12:52:28
