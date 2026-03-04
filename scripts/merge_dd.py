@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-DD.m3u 构建系统（终极过滤版）
+DD.m3u 构建系统（结构终极版）
 """
 
 import requests
@@ -31,21 +31,20 @@ SPORTS_KEYWORDS = [
     "Now体育"
 ]
 
-# ===== 频道剔除列表 =====
+# ================= 频道剔除 =================
+
 REMOVE_CHANNELS = [
-    "東森購物",
-    "少儿频道",
-    "半島國際新聞",
-    "兒童頻道",
-    "MOMO運動綜合",
-    "LiveABC互動英語頻道",
-    "GINX Esports TV",
-    "DW德國之聲",
-    "DreamWorks 夢工廠動畫",
-    "CLASSICA 古典樂",
-    "Arirang TV",
-    "Bloomberg TV"
+    "東森購物","少儿频道","半島國際新聞","兒童頻道",
+    "MOMO運動綜合","LiveABC互動英語頻道",
+    "GINX Esports TV","DW德國之聲",
+    "DreamWorks 夢工廠動畫","CLASSICA 古典樂",
+    "Arirang TV","Bloomberg TV",
+    "ELTA生活英語","ETtoday綜合","Global Trekker",
+    "INULTRA","Pet Club TV","Smart知識",
+    "SBN 全球財經","大愛電視","好消息","新唐人亞太"
 ]
+
+# ================= HK 排序 =================
 
 HK_ORDER = [
     "凤凰中文","凤凰资讯","凤凰香港台",
@@ -60,7 +59,7 @@ HK_ORDER = [
     "CH5综合","CH8综合","CHU综合"
 ]
 
-# ================= 工具 =================
+# ================= 下载 =================
 
 def download(url):
     try:
@@ -71,7 +70,7 @@ def download(url):
     except:
         return ""
 
-# ================= 名称清洗 =================
+# ================= 名称标准化 =================
 
 def normalize_channel_name(name):
     name = name.strip()
@@ -85,15 +84,13 @@ def normalize_channel_name(name):
 
     return name.strip()
 
-# ================= 过滤判断 =================
-
-def should_remove_channel(name):
+def should_remove(name):
     for kw in REMOVE_CHANNELS:
         if kw.lower() in name.lower():
             return True
     return False
 
-# ================= 分组判断 =================
+# ================= 分组 =================
 
 def determine_group(name, default_group):
     for kw in SPORTS_KEYWORDS:
@@ -103,7 +100,7 @@ def determine_group(name, default_group):
 
 # ================= 提取 =================
 
-def extract_hk_channels(content):
+def extract_hk(content):
     lines = content.splitlines()
     channels = []
     in_section = False
@@ -127,7 +124,7 @@ def extract_hk_channels(content):
 
     return channels
 
-def extract_tw_limited(content):
+def extract_tw(content):
     lines = content.splitlines()
     channels = []
 
@@ -151,7 +148,7 @@ def merge_channels(channel_list):
 
         normalized = normalize_channel_name(name)
 
-        if should_remove_channel(normalized):
+        if should_remove(normalized):
             continue
 
         key = normalized.lower()
@@ -168,28 +165,38 @@ def merge_channels(channel_list):
 
     return merged
 
-# ================= 排序 =================
+# ================= 排序权重 =================
 
-def hk_sort_weight(name):
+def hk_weight(name):
     for idx, key in enumerate(HK_ORDER):
         if key.lower() in name.lower():
             return idx
     return 999
 
+def tw_weight(name):
+
+    if "Love Nature" in name:
+        return 0
+    if "中天" in name:
+        return 1
+    if "民视" in name:
+        return 2
+    if "寰宇" in name:
+        return 3
+    if "東森" in name or "东森" in name:
+        return 4
+    return 9
+
 # ================= 主流程 =================
 
 def main():
 
-    bb_content = download(BB_URL)
+    bb = download(BB_URL)
     hk_source = download(HK_SOURCE_URL)
     tw_source = download(TW_SOURCE_URL)
 
-    all_channels = (
-        extract_hk_channels(hk_source) +
-        extract_tw_limited(tw_source)
-    )
-
-    merged = merge_channels(all_channels)
+    channels = extract_hk(hk_source) + extract_tw(tw_source)
+    merged = merge_channels(channels)
 
     hk, tw, sports = [], [], []
 
@@ -208,29 +215,29 @@ def main():
 
     # HK
     output += "\n### HK ###\n"
-    for item in sorted(hk, key=lambda x: (hk_sort_weight(x["name"]), x["name"].lower())):
-        output += f'\n#EXTINF:-1 group-title="{GROUP_HK}",{item["name"]}\n'
+    for item in sorted(hk, key=lambda x: (hk_weight(x["name"]), x["name"].lower())):
+        output += f'\n#EXTINF:-1 group-title="HK",{item["name"]}\n'
         for u in sorted(item["urls"]):
             output += u + "\n"
 
     # TW
     output += "\n### TW ###\n"
-    for item in sorted(tw, key=lambda x: x["name"].lower()):
-        output += f'\n#EXTINF:-1 group-title="{GROUP_TW}",{item["name"]}\n'
+    for item in sorted(tw, key=lambda x: (tw_weight(x["name"]), x["name"].lower())):
+        output += f'\n#EXTINF:-1 group-title="TW",{item["name"]}\n'
         for u in sorted(item["urls"]):
             output += u + "\n"
 
     # SPORTS
     output += "\n### SPORTS ###\n"
     for item in sorted(sports, key=lambda x: x["name"].lower()):
-        output += f'\n#EXTINF:-1 group-title="{GROUP_SPORTS}",{item["name"]}\n'
+        output += f'\n#EXTINF:-1 group-title="SPORTS",{item["name"]}\n'
         for u in sorted(item["urls"]):
             output += u + "\n"
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
 
-    print("🎯 精简版 DD.m3u 生成完成")
+    print("🎯 结构终极版 DD.m3u 生成完成")
 
 if __name__ == "__main__":
     main()
