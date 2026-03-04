@@ -1,6 +1,6 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
-# 生成时间: 2026-03-04 14:07:54
+# 生成时间: 2026-03-04 14:11:43
 
 
 ### HK ###
@@ -173,18 +173,6 @@ https://hls.iill.top/api/ET-Variety-Channel/index.m3u8
 #EXTINF:-1 group-title="HK",梦工场动漫
 http://iptv.4666888.xyz/iptv2A.php?id=40
 
-#EXTINF:-1 group-title="HK",民視
-http://iptv.4666888.xyz/iptv2A.php?id=55
-https://tv.iill.top/4gtv/4gtv-4gtv002
-
-#EXTINF:-1 group-title="HK",民視影劇
-http://iptv.4666888.xyz/iptv2A.php?id=53
-https://tv.iill.top/4gtv/litv-ftv09
-
-#EXTINF:-1 group-title="HK",民視綜藝
-http://iptv.4666888.xyz/iptv2A.php?id=46
-https://tv.iill.top/4gtv/4gtv-4gtv004
-
 #EXTINF:-1 group-title="HK",澳視澳門
 http://iptv.4666888.xyz/iptv2A.php?id=41
 
@@ -242,29 +230,6 @@ https://stream1.freetv.fun/6130c4439e91813125415b749209467f8da4f3d09d09ac80d7848
 #EXTINF:-1 group-title="HK",鳳凰中文
 http://iptv.4666888.xyz/iptv2A.php?id=27
 
-#EXTINF:-1 group-title="HK",龍華洋片
-http://iptv.4666888.xyz/iptv2A.php?id=60
-https://tv.iill.top/ofiii/litv-xinchuang02
-
-#EXTINF:-1 group-title="HK",龍華電影
-http://iptv.4666888.xyz/iptv2A.php?id=45
-https://tv.iill.top/ofiii/litv-xinchuang03
-
-#EXTINF:-1 group-title="HK",龙华偶像
-https://cdn8.163189.xyz/163189/lhox
-
-#EXTINF:-1 group-title="HK",龙华戏剧
-https://cdn8.163189.xyz/163189/lhxj
-
-#EXTINF:-1 group-title="HK",龙华日韩
-https://cdn8.163189.xyz/163189/lhrh
-
-#EXTINF:-1 group-title="HK",龙华电影
-https://cdn8.163189.xyz/163189/lhdy
-
-#EXTINF:-1 group-title="HK",龙华经典
-https://cdn8.163189.xyz/163189/lhjd
-
 ### TW ###
 
 #EXTINF:-1 group-title="TW",中视
@@ -297,6 +262,9 @@ http://74.91.26.218:82/live/ttvnews.m3u8
 #EXTINF:-1 group-title="TW",台视财经
 http://74.91.26.218:82/live/ttvcj.m3u8
 
+#EXTINF:-1 group-title="TW",臺視綜合
+http://iptv.4666888.xyz/iptv2A.php?id=51
+
 #EXTINF:-1 group-title="TW",民视台湾
 http://74.91.26.218:82/live/ftvtw.m3u8
 
@@ -306,11 +274,58 @@ http://74.91.26.218:82/live/ftvnews.m3u8
 #EXTINF:-1 group-title="TW",民视第一
 http://74.91.26.218:82/live/ftvdy.m3u8
 
+#EXTINF:-1 group-title="TW",民視
+http://iptv.4666888.xyz/iptv2A.php?id=55
+https://tv.iill.top/4gtv/4gtv-4gtv002
+
+#EXTINF:-1 group-title="TW",民視台灣
+https://tv.iill.top/4gtv/4gtv-4gtv001
+
+#EXTINF:-1 group-title="TW",民視影劇
+http://iptv.4666888.xyz/iptv2A.php?id=53
+https://tv.iill.top/4gtv/litv-ftv09
+
+#EXTINF:-1 group-title="TW",民視新聞
+https://tv.iill.top/4gtv/litv-ftv13
+
+#EXTINF:-1 group-title="TW",民視旅遊
+https://tv.iill.top/4gtv/litv-ftv07
+
+#EXTINF:-1 group-title="TW",民視第一
+https://tv.iill.top/4gtv/4gtv-4gtv003
+
+#EXTINF:-1 group-title="TW",民視綜藝
+http://iptv.4666888.xyz/iptv2A.php?id=46
+https://tv.iill.top/4gtv/4gtv-4gtv004
+
 #EXTINF:-1 group-title="TW",公视
 http://74.91.26.218:82/live/pts.m3u8
 
 #EXTINF:-1 group-title="TW",公视台语
 http://74.91.26.218:82/live/ptsty.m3u8
+
+#EXTINF:-1 group-title="TW",龍華電影
+http://iptv.4666888.xyz/iptv2A.php?id=45
+https://tv.iill.top/ofiii/litv-xinchuang03
+
+#EXTINF:-1 group-title="TW",龙华偶像
+https://cdn8.163189.xyz/163189/lhox
+
+#EXTINF:-1 group-title="TW",龙华戏剧
+https://cdn8.163189.xyz/163189/lhxj
+
+#EXTINF:-1 group-title="TW",龙华日韩
+https://cdn8.163189.xyz/163189/lhrh
+
+#EXTINF:-1 group-title="TW",龙华电影
+https://cdn8.163189.xyz/163189/lhdy
+
+#EXTINF:-1 group-title="TW",龙华经典
+https://cdn8.163189.xyz/163189/lhjd
+
+#EXTINF:-1 group-title="TW",龍華洋片
+http://iptv.4666888.xyz/iptv2A.php?id=60
+https://tv.iill.top/ofiii/litv-xinchuang02
 
 #EXTINF:-1 group-title="TW",唐NTD
 https://ntd02.akamaized.net/HD-NY/tracks-v3a1/mono.m3u8
@@ -520,18 +535,6 @@ https://tv.iill.top/FainTV/22768
 #EXTINF:-1 group-title="TW",歡樂看新聞
 https://tv.iill.top/FainTV/19670
 
-#EXTINF:-1 group-title="TW",民視台灣
-https://tv.iill.top/4gtv/4gtv-4gtv001
-
-#EXTINF:-1 group-title="TW",民視新聞
-https://tv.iill.top/4gtv/litv-ftv13
-
-#EXTINF:-1 group-title="TW",民視旅遊
-https://tv.iill.top/4gtv/litv-ftv07
-
-#EXTINF:-1 group-title="TW",民視第一
-https://tv.iill.top/4gtv/4gtv-4gtv003
-
 #EXTINF:-1 group-title="TW",滾動力rollor
 https://tv.iill.top/4gtv/4gtv-live012
 
@@ -561,9 +564,6 @@ https://hls.iill.top/api/VL-E/index.m3u8
 
 #EXTINF:-1 group-title="TW",緯來電影
 https://hls.iill.top/api/VL-Movies/index.m3u8
-
-#EXTINF:-1 group-title="TW",臺視綜合
-http://iptv.4666888.xyz/iptv2A.php?id=51
 
 #EXTINF:-1 group-title="TW",華視
 https://tv.iill.top/4gtv/4gtv-4gtv041
