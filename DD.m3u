@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
+# 生成时间: 2026-03-04 14:22:51
 
-# 生成时间: 2026-03-04 14:19:26
-
+#EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -240,7 +240,6 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=01
 
 #EXTINF:-1 tvg-id="杭州导视" tvg-name="杭州导视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州导视.png" group-title="浙江",杭州导视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
-
 
 
 
@@ -764,7 +763,6 @@ https://litv.goiptv.de5.net/litv.php?id=4gtv-4gtv010
 
 #EXTINF:-1 group-title="HK",黑龙江卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000462?virtualDomain=010.live_hls.zte.com
-
 
 ### TW ###
 
@@ -1302,7 +1300,6 @@ https://tv.iill.top/ofiii/litv-xinchuang21
 
 #EXTINF:-1 group-title="TW",龙华洋片
 https://litv.goiptv.de5.net/litv.php?id=litv-longturn02
-
 
 ### SPORTS ###
 
