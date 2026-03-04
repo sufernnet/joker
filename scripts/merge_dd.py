@@ -4,9 +4,9 @@ DD.m3u 合并脚本（港台频道版）
 
 功能：
 1. 保留 BB.m3u 所有内容
-2. 从 https://raw.githubusercontent.com/sufernnet/joker/main/4TV.m3u 提取全部频道作为 TW 分组
-3. 保留 TW 频道的原始台标 (tvg-logo) 和节目单信息 (tvg-id, tvg-name)
-4. 清洗 TW 频道名称：去除末尾的「Relay」、「FainTV」、「4gTV」等标记
+2. 从 https://yang.sufern001.workers.dev 提取 group-title="•台湾「限制」" 的频道作为 TW 分组
+3. ⚠️ 完整保留所有原始属性：tvg-id、tvg-name、tvg-logo、http-user-agent 等
+4. 清洗 TW 频道名称：去除末尾的「4gTV」、「ofiii」等标记
 5. 过滤掉名称全是英文的 TW 频道
 6. 过滤掉指定的特定频道（DW德國之聲、MCE 我的歐洲電影、SBN 全球財經、國會頻道 1-2、大愛電視等）
 7. TW 频道按指定分组排序：Love Nature→中天系列→民视系列→寰宇系列→中视系列→三立系列→其他
@@ -20,18 +20,22 @@ import requests
 import re
 from datetime import datetime
 import sys
+import time
 
 # ================== 配置 ==================
 
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
 # 港台大陆源（用于提取HK频道）
 GAT_URL = "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/FG/refs/heads/main/港台大陆"
-# TW 源地址（完整的 4TV.m3u 文件）
-TW_SOURCE_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/4TV.m3u"
+# ⚠️ TW 源地址（恢复为 yang.sufern001.workers.dev）
+TW_SOURCE_URL = "https://yang.sufern001.workers.dev"
 OUTPUT_FILE = "DD.m3u"
 
 # 需要从港台大陆源文件中提取的两个分组名（用于HK）
 SOURCE_GROUPS = ["港台频道", "新聞频道"]
+
+# ⚠️ 要提取的目标分组名（从新源中）
+TARGET_TW_GROUP = "•台湾「限制」"
 
 # 输出分组名称
 HK_GROUP = "HK"
@@ -61,10 +65,22 @@ FILTER_KEYWORDS = [
     "華藝中文",
     "中旺电视",
     
-
+    # 中天系列全部保留，所以移除相关过滤项
+    # "中天娱乐",
+    # "中天新聞",
+    # "中天綜合",
+    # "中天亞洲",
     
+    "年代新聞",
+    "東森新聞台",
     
-
+    # 新增过滤项：三立台全部
+    "三立台湾台",
+    "三立戏剧台",
+    "三立都会台",
+    "三立综合台",
+    "三立新闻台",
+    "三立iNEWS",
     
     # 新增过滤项：澳门/澳视频道全部
     "澳门",
@@ -84,7 +100,10 @@ FILTER_KEYWORDS = [
     "民視影劇",
     "民视综艺",
     "民视影劇",
- 
+    "民視旅遊",
+    "民视旅游",
+    "民視旅遊台",
+    "民视旅游台",
     
     # 新增特定过滤项（根据用户要求）
     "DW德國之聲",
@@ -200,11 +219,11 @@ PREFERRED_NAMES = [
     "明珠台",
 ]
 
-# 需要从 TW 频道名称中去除的后缀标记
+# ⚠️ 需要从 TW 频道名称中去除的后缀标记（从你提供的示例中看到有「4gTV」和「ofiii」）
 TW_NAME_SUFFIXES_TO_REMOVE = [
-    "「Relay」", "「FainTV」", "「4gTV」", "「CatchPlay」",
-    "【Relay】", "【FainTV】", "【4gTV】", "【CatchPlay】",
-    "(Relay)", "(FainTV)", "(4gTV)", "(CatchPlay)",
+    "「Relay」", "「FainTV」", "「4gTV」", "「CatchPlay」", "「ofiii」",
+    "【Relay】", "【FainTV】", "【4gTV】", "【CatchPlay】", "【ofiii】",
+    "(Relay)", "(FainTV)", "(4gTV)", "(CatchPlay)", "(ofiii)",
 ]
 
 # ================== HK频道指定顺序 ==================
@@ -325,7 +344,6 @@ def download(url, desc, retries=3):
             if attempt < retries - 1:
                 wait_time = 5 * (attempt + 1)  # 递增等待时间
                 log(f"等待 {wait_time} 秒后重试...")
-                import time
                 time.sleep(wait_time)
             else:
                 log(f"❌ {desc} 最终下载失败")
@@ -378,10 +396,11 @@ def extract_channels_from_file(content, target_groups):
     return all_channels
 
 
-def parse_m3u(content):
+def parse_m3u_for_group(content, target_group):
     """
-    从完整的 M3U 格式内容中解析所有频道，保留完整的 #EXTINF 行。
+    ⚠️ 从 M3U 格式的内容中，提取指定 group-title 的频道。
     返回列表，每个元素为 (完整EXTINF行, 频道名称, 流URL)
+    完整保留所有原始属性：tvg-id、tvg-name、tvg-logo、http-user-agent 等
     """
     if not content:
         log("⚠️ M3U 内容为空")
@@ -394,18 +413,21 @@ def parse_m3u(content):
         line = lines[i].strip()
         if line.startswith('#EXTINF:'):
             try:
-                # 提取频道名称（最后一个逗号之后的部分）
-                name_part = line.split(',')[-1].strip()
-                # 下一行应该是 URL
-                if i + 1 < len(lines):
-                    url_line = lines[i + 1].strip()
-                    if url_line and not url_line.startswith('#'):
-                        channels.append((line, name_part, url_line))
-                        i += 1  # 跳过已处理的 URL 行
+                # 检查是否包含目标 group-title
+                if f'group-title="{target_group}"' in line:
+                    # 提取频道名称（最后一个逗号之后的部分）
+                    name_part = line.split(',')[-1].strip()
+                    # 下一行应该是 URL
+                    if i + 1 < len(lines):
+                        url_line = lines[i + 1].strip()
+                        if url_line and not url_line.startswith('#'):
+                            # ⚠️ 保存完整的 EXTINF 行（包含所有属性）
+                            channels.append((line, name_part, url_line))
+                            i += 1  # 跳过已处理的 URL 行
             except Exception as e:
                 log(f"⚠️ 解析 M3U 行失败: {line} - {e}")
         i += 1
-    log(f"从 M3U 文件中解析到 {len(channels)} 个频道")
+    log(f"从源中提取到 {len(channels)} 个属于 '{target_group}' 的频道")
     return channels
 
 
@@ -628,8 +650,8 @@ def main():
         # 2. 下载港台大陆源文件（用于提取 HK 频道）
         gat_content = download(GAT_URL, "港台大陆源文件 (用于提取HK)") or ""
         
-        # 3. 下载新的 TW 源文件（完整的 4TV.m3u）
-        tw_source_content = download(TW_SOURCE_URL, "4TV.m3u (用于提取TW)") or ""
+        # 3. ⚠️ 下载 TW 源文件（yang.sufern001.workers.dev）
+        tw_source_content = download(TW_SOURCE_URL, "台湾源文件 (用于提取TW)") or ""
 
         # ================== 处理 HK 频道 ==================
         hk_channels = []
@@ -638,7 +660,7 @@ def main():
                 # 从港台大陆源中提取所有频道
                 all_source_channels = extract_channels_from_file(gat_content, SOURCE_GROUPS)
                 
-                # HK 频道的处理保持不变（不涉及台标保留）
+                # HK 频道的处理保持不变
                 # 清洗名称
                 cleaned_channels = [(clean_channel_name(name), url) for name, url in all_source_channels]
                 
@@ -662,18 +684,18 @@ def main():
                 log(f"⚠️ HK 频道处理出错: {e}")
                 hk_channels = []
 
-        # ================== 处理 TW 频道（来自完整的 4TV.m3u，保留原始信息）==================
+        # ================== ⚠️ 处理 TW 频道（从 yang.sufern001.workers.dev 提取指定分组）==================
         tw_channels = []  # 每个元素格式：(完整EXTINF行, 频道名称, 流URL)
         if tw_source_content:
             try:
-                # 从完整的 M3U 文件中解析所有频道，保留完整 EXTINF 行
-                tw_raw = parse_m3u(tw_source_content)
+                # 从源中提取目标分组的频道，保留完整 EXTINF 行
+                tw_raw = parse_m3u_for_group(tw_source_content, TARGET_TW_GROUP)
                 
                 # 对每个频道进行处理
                 tw_processed = []
                 for extinf_line, original_name, url in tw_raw:
                     try:
-                        # 清洗名称
+                        # 清洗名称（去除「4gTV」、「ofiii」等后缀）
                         cleaned_name = clean_tw_channel_name(original_name)
                         
                         # 过滤英文名称
@@ -744,12 +766,12 @@ def main():
                 output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n'
                 output += f"{url}\n"
 
-        # 写入 TW 分组（使用原始 EXTINF 行，只修改 group-title）
+        # ⚠️ 写入 TW 分组（使用原始 EXTINF 行，只修改 group-title，保留所有其他属性）
         if sorted_tw:
             output += f"\n# {TW_GROUP}频道 ({len(sorted_tw)})\n"
             for extinf_line, name, url in sorted_tw:
                 try:
-                    # 安全地替换 group-title
+                    # ⚠️ 安全地替换 group-title，保留所有其他属性（tvg-id、tvg-name、tvg-logo、http-user-agent等）
                     if 'group-title="' in extinf_line:
                         # 如果存在 group-title，替换它
                         modified_extinf = re.sub(r'group-title="[^"]*"', f'group-title="{TW_GROUP}"', extinf_line)
@@ -763,7 +785,7 @@ def main():
                     output += f"{url}\n"
                 except Exception as e:
                     log(f"⚠️ 写入 TW 频道失败: {name} - {e}")
-                    # 降级处理：使用简单格式
+                    # 降级处理：使用简单格式，但保留名称
                     output += f'#EXTINF:-1 group-title="{TW_GROUP}",{name}\n'
                     output += f"{url}\n"
 
