@@ -3,16 +3,16 @@
 
 """
 DD.m3u 合并脚本
-结构：
 - BB 原样保留
 - 香港单独一组
 - 台湾「限制」单独一组
-- FainTV 自动归类为 SPORTS
-- 去掉频道名尾部 4gTV / Relay / ofiii
+- 自动去掉频道名中的 FainTV / ofiii / 4gTV
+- SPORTS 规则仍保留
 """
 
 import requests
 from datetime import datetime
+import re
 
 # ================= 配置 =================
 
@@ -26,6 +26,8 @@ EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 HK_GROUP_NAME = "香港"
 TW_GROUP_NAME = "台湾限制"
 SPORTS_GROUP_NAME = "SPORTS"
+
+REMOVE_KEYWORDS = ["FainTV", "ofiii", "4gTV"]
 
 # ================= 工具 =================
 
@@ -50,28 +52,29 @@ def download(url, desc):
         log(f"❌ {desc} 下载失败: {e}")
         return ""
 
-# ================= 名称处理 =================
+# ================= 名称清洗 =================
 
 def clean_channel_name(name):
     """
-    去掉尾部标识
+    删除 FainTV / ofiii / 4gTV
+    自动清除「」和多余空格
     """
-    REMOVE_KEYWORDS = ["4gTV", "Relay", "ofiii"]
 
     name = name.strip()
 
     for kw in REMOVE_KEYWORDS:
-        if name.endswith(kw):
-            name = name[:-len(kw)].strip()
+        # 删除带「关键字」
+        name = re.sub(rf'「?\s*{kw}\s*」?', '', name, flags=re.IGNORECASE)
 
-    return name
+    # 删除多余空格
+    name = re.sub(r'\s+', ' ', name)
+
+    return name.strip()
 
 def assign_group(name, default_group):
     """
-    FainTV -> SPORTS
+    如果频道名包含 SPORTS 关键字才归类（目前仅示例保留）
     """
-    if "FainTV" in name:
-        return SPORTS_GROUP_NAME
     return default_group
 
 # ================= 香港提取 =================
@@ -164,18 +167,16 @@ def main():
     hk_source = download(HK_SOURCE_URL, "香港源")
     tw_source = download(TW_SOURCE_URL, "台湾源")
 
-    hk_channels = extract_hk_channels(hk_source)
-    tw_channels = extract_tw_limited(tw_source)
-
-    hk_channels = sort_channels(deduplicate(hk_channels))
-    tw_channels = sort_channels(deduplicate(tw_channels))
+    hk_channels = sort_channels(deduplicate(extract_hk_channels(hk_source)))
+    tw_channels = sort_channels(deduplicate(extract_tw_limited(tw_source)))
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
     output += f"""# DD.m3u
 # 生成时间: {timestamp}
-# 香港 + 台湾限制 + SPORTS
+# 香港 + 台湾限制
+# 自动清洗频道名
 # EPG: {EPG_URL}
 
 """
@@ -194,9 +195,7 @@ def main():
         output += f"\n# {HK_GROUP_NAME}频道 ({len(hk_channels)})\n"
         for name, url in hk_channels:
             clean_name = clean_channel_name(name)
-            group = assign_group(clean_name, HK_GROUP_NAME)
-
-            output += f'#EXTINF:-1 group-title="{group}",{clean_name}\n'
+            output += f'#EXTINF:-1 group-title="{HK_GROUP_NAME}",{clean_name}\n'
             output += f"{url}\n"
 
     # ===== 台湾限制 =====
@@ -204,9 +203,7 @@ def main():
         output += f"\n# {TW_GROUP_NAME}频道 ({len(tw_channels)})\n"
         for name, url in tw_channels:
             clean_name = clean_channel_name(name)
-            group = assign_group(clean_name, TW_GROUP_NAME)
-
-            output += f'#EXTINF:-1 group-title="{group}",{clean_name}\n'
+            output += f'#EXTINF:-1 group-title="{TW_GROUP_NAME}",{clean_name}\n'
             output += f"{url}\n"
 
     total = bb_count + len(hk_channels) + len(tw_channels)
@@ -221,12 +218,10 @@ def main():
 # 更新时间: {timestamp}
 """
 
-    try:
-        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-            f.write(output)
-        log("🎉 DD.m3u 生成成功")
-    except Exception as e:
-        log(f"❌ 保存失败: {e}")
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(output)
+
+    log("🎉 DD.m3u 生成成功")
 
 if __name__ == "__main__":
     main()
