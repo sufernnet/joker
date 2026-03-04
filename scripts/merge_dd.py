@@ -2,13 +2,12 @@
 # -*- coding: utf-8 -*-
 
 """
-DD.m3u 构建系统（大小写合并终极版）
+DD.m3u 构建系统（终极去重版）
 """
 
 import requests
 from datetime import datetime
 import re
-from collections import defaultdict
 
 # ================= 配置 =================
 
@@ -58,13 +57,19 @@ def download(url):
 
 # ================= 名称清洗 =================
 
-def clean_channel_name(name):
+def normalize_channel_name(name):
     name = name.strip()
 
+    # 去推广字样
     for kw in REMOVE_KEYWORDS:
         name = re.sub(rf'「?\s*{kw}\s*」?', '', name, flags=re.IGNORECASE)
 
+    # 去结尾“台”
+    name = re.sub(r'台$', '', name)
+
+    # 去尾部数字
     name = re.sub(r'\d+$', '', name)
+
     name = re.sub(r'\s+', ' ', name)
 
     return name.strip()
@@ -118,44 +123,35 @@ def extract_tw_limited(content):
 
     return channels
 
-# ================= 合并（大小写不敏感） =================
+# ================= 合并逻辑 =================
 
 def merge_channels(channel_list):
     merged = {}
-    name_map = {}  # 小写key → 标准名
 
     for name, url, group in channel_list:
-        clean_name = clean_channel_name(name)
-        lower_key = clean_name.lower()
+        normalized = normalize_channel_name(name)
+        key = normalized.lower()
 
-        final_group = determine_group(clean_name, group)
+        final_group = determine_group(normalized, group)
 
-        if lower_key not in merged:
-            merged[lower_key] = {
-                "name": clean_name,  # 保留首次出现名称
+        if key not in merged:
+            merged[key] = {
+                "name": normalized,
                 "group": final_group,
-                "urls": []
+                "urls": set()
             }
 
-        if url not in merged[lower_key]["urls"]:
-            merged[lower_key]["urls"].append(url)
+        merged[key]["urls"].add(url)
 
     return merged
 
 # ================= 排序 =================
 
-def sort_hk_channels(channels_dict):
-
-    def hk_weight(name):
-        for idx, key in enumerate(HK_ORDER):
-            if key.lower() in name.lower():
-                return idx
-        return 999
-
-    return sorted(
-        channels_dict.values(),
-        key=lambda x: (hk_weight(x["name"]), x["name"].lower())
-    )
+def hk_sort_weight(name):
+    for idx, key in enumerate(HK_ORDER):
+        if key.lower() in name.lower():
+            return idx
+    return 999
 
 # ================= 主流程 =================
 
@@ -172,9 +168,7 @@ def main():
 
     merged = merge_channels(all_channels)
 
-    hk = []
-    tw = []
-    sports = []
+    hk, tw, sports = [], [], []
 
     for data in merged.values():
         if data["group"] == GROUP_HK:
@@ -196,23 +190,23 @@ def main():
 
     # HK
     output += "\n### HK ###\n"
-    for item in sort_hk_channels({i["name"]: i for i in hk}):
+    for item in sorted(hk, key=lambda x: (hk_sort_weight(x["name"]), x["name"].lower())):
         output += f'\n#EXTINF:-1 group-title="{GROUP_HK}",{item["name"]}\n'
-        for u in item["urls"]:
+        for u in sorted(item["urls"]):
             output += u + "\n"
 
     # TW
     output += "\n### TW ###\n"
     for item in sorted(tw, key=lambda x: x["name"].lower()):
         output += f'\n#EXTINF:-1 group-title="{GROUP_TW}",{item["name"]}\n'
-        for u in item["urls"]:
+        for u in sorted(item["urls"]):
             output += u + "\n"
 
     # SPORTS
     output += "\n### SPORTS ###\n"
     for item in sorted(sports, key=lambda x: x["name"].lower()):
         output += f'\n#EXTINF:-1 group-title="{GROUP_SPORTS}",{item["name"]}\n'
-        for u in item["urls"]:
+        for u in sorted(item["urls"]):
             output += u + "\n"
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
