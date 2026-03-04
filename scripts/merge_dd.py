@@ -4,10 +4,10 @@ DD.m3u 合并脚本（港台频道版）
 
 功能：
 1. 保留 BB.m3u 所有内容
-2. 从 https://yang.sufern001.workers.dev 提取 group-title="•台湾「限制」" 的频道作为 TW 分组
+2. 从 https://raw.githubusercontent.com/sufernnet/joker/main/4TV.m3u 提取全部频道作为 TW 分组
 3. 清洗 TW 频道名称：去除末尾的「Relay」、「FainTV」、「4gTV」等标记
 4. 过滤掉名称全是英文的 TW 频道
-5. 过滤掉指定的特定频道（DW德國之聲、MCE 我的歐洲電影、SBN 全球財經、國會頻道 1-2等）
+5. 过滤掉指定的特定频道（DW德國之聲、MCE 我的歐洲電影、SBN 全球財經、國會頻道 1-2、大愛電視等）
 6. TW 频道按指定分组排序：Love Nature→中天系列→民视系列→寰宇系列→中视系列→三立系列→其他
 7. HK 分组和排序规则完全保留（从原港台大陆源提取）
 8. 输出文件为 DD.m3u
@@ -24,15 +24,15 @@ from datetime import datetime
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
 # 港台大陆源（用于提取HK频道）
 GAT_URL = "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/FG/refs/heads/main/港台大陆"
-# 新的 TW 源地址
-TW_SOURCE_URL = "https://yang.sufern001.workers.dev"
+# ⚠️ 修改：新的 TW 源地址（直接使用整个 4TV.m3u 文件）
+TW_SOURCE_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/4TV.m3u"
 OUTPUT_FILE = "DD.m3u"
 
 # 需要从港台大陆源文件中提取的两个分组名（用于HK）
 SOURCE_GROUPS = ["港台频道", "新聞频道"]
 
-# 要提取的目标分组名（从新源中）
-TARGET_TW_GROUP = "•台湾「限制」"
+# ⚠️ 移除：不再需要按分组提取，因为我们要用整个 4TV.m3u 文件
+# TARGET_TW_GROUP = "•台湾「限制」"
 
 # 输出分组名称
 HK_GROUP = "HK"
@@ -61,14 +61,23 @@ FILTER_KEYWORDS = [
     "星空音乐",
     "華藝中文",
     "中旺电视",
-    "中天娱乐",
-    "中天新聞1080p(梯子)",
-    "中天新聞720p",
-    "中天综合",
-    "寰宇新聞台720p",
-  
     
-
+    # ⚠️ 中天系列全部保留，所以移除相关过滤项
+    # "中天娱乐",
+    # "中天新聞",
+    # "中天綜合",
+    # "中天亞洲",
+    
+    "年代新聞",
+    "東森新聞台",
+    
+    # 新增过滤项：三立台全部
+    "三立台湾台",
+    "三立戏剧台",
+    "三立都会台",
+    "三立综合台",
+    "三立新闻台",
+    "三立iNEWS",
     
     # 新增过滤项：澳门/澳视频道全部
     "澳门",
@@ -368,10 +377,11 @@ def extract_channels_from_file(content, target_groups):
     return all_channels
 
 
-def parse_m3u_for_group(content, target_group):
+def parse_m3u(content):
     """
-    从 M3U 格式的内容中，提取指定 group-title 的频道。
+    ⚠️ 新增/修改：从完整的 M3U 格式内容中解析所有频道。
     返回列表，每个元素为 (频道名称, 流URL)
+    这个函数会跳过 #EXTM3U 头，并处理所有 #EXTINF 行。
     """
     lines = content.splitlines()
     channels = []
@@ -379,19 +389,15 @@ def parse_m3u_for_group(content, target_group):
     while i < len(lines):
         line = lines[i].strip()
         if line.startswith('#EXTINF:'):
-            # 检查是否包含目标 group-title
-            if f'group-title="{target_group}"' in line:
-                # 提取频道名称（最后一个逗号之后的部分）
-                name_part = line.split(',')[-1].strip()
-                # 下一行应该是 URL
-                if i + 1 < len(lines) and not lines[i+1].startswith('#'):
-                    url = lines[i+1].strip()
-                    channels.append((name_part, url))
-                    i += 1  # 跳过已处理的 URL 行
-            i += 1
-        else:
-            i += 1
-    log(f"从源中提取到 {len(channels)} 个属于 '{target_group}' 的频道")
+            # 提取频道名称（最后一个逗号之后的部分）
+            name_part = line.split(',')[-1].strip()
+            # 下一行应该是 URL
+            if i + 1 < len(lines) and not lines[i+1].startswith('#'):
+                url = lines[i+1].strip()
+                channels.append((name_part, url))
+                i += 1  # 跳过已处理的 URL 行
+        i += 1
+    log(f"从 M3U 文件中解析到 {len(channels)} 个频道")
     return channels
 
 
@@ -620,8 +626,8 @@ def main():
     # 2. 下载港台大陆源文件（用于提取 HK 频道）
     gat_content = download(GAT_URL, "港台大陆源文件 (用于提取HK)") or ""
     
-    # 3. 下载新的 TW 源文件
-    tw_source_content = download(TW_SOURCE_URL, "台湾源文件 (用于提取TW)") or ""
+    # 3. ⚠️ 修改：下载新的 TW 源文件（完整的 4TV.m3u）
+    tw_source_content = download(TW_SOURCE_URL, "4TV.m3u (用于提取TW)") or ""
 
     # ================== 处理 HK 频道 ==================
     hk_channels = []
@@ -649,11 +655,11 @@ def main():
         
         log(f"HK 频道处理完成，共 {len(hk_channels)} 个")
 
-    # ================== 处理 TW 频道（来自新源）==================
+    # ================== ⚠️ 修改：处理 TW 频道（来自完整的 4TV.m3u）==================
     tw_channels = []
     if tw_source_content:
-        # 从新源中提取目标分组的频道
-        tw_raw = parse_m3u_for_group(tw_source_content, TARGET_TW_GROUP)
+        # 从完整的 M3U 文件中解析所有频道（不再按分组提取）
+        tw_raw = parse_m3u(tw_source_content)
         
         # 清洗名称（去除后缀）
         tw_cleaned = [(clean_tw_channel_name(name), url) for name, url in tw_raw]
@@ -711,7 +717,7 @@ def main():
             output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n'
             output += f"{url}\n"
 
-    # 写入 TW 分组（来自新源）
+    # 写入 TW 分组（来自 4TV.m3u）
     if sorted_tw:
         output += f"\n# {TW_GROUP}频道 ({len(sorted_tw)})\n"
         for name, url in sorted_tw:
