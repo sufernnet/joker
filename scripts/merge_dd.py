@@ -7,6 +7,8 @@ DD.m3u 合并脚本
 - BB 原样保留
 - 香港单独一组
 - 台湾「限制」单独一组
+- FainTV 自动归类为 SPORTS
+- 去掉频道名尾部 4gTV / Relay / ofiii
 """
 
 import requests
@@ -23,6 +25,7 @@ EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 
 HK_GROUP_NAME = "香港"
 TW_GROUP_NAME = "台湾限制"
+SPORTS_GROUP_NAME = "SPORTS"
 
 # ================= 工具 =================
 
@@ -47,7 +50,31 @@ def download(url, desc):
         log(f"❌ {desc} 下载失败: {e}")
         return ""
 
-# ================= 香港提取（非标准源） =================
+# ================= 名称处理 =================
+
+def clean_channel_name(name):
+    """
+    去掉尾部标识
+    """
+    REMOVE_KEYWORDS = ["4gTV", "Relay", "ofiii"]
+
+    name = name.strip()
+
+    for kw in REMOVE_KEYWORDS:
+        if name.endswith(kw):
+            name = name[:-len(kw)].strip()
+
+    return name
+
+def assign_group(name, default_group):
+    """
+    FainTV -> SPORTS
+    """
+    if "FainTV" in name:
+        return SPORTS_GROUP_NAME
+    return default_group
+
+# ================= 香港提取 =================
 
 def extract_hk_channels(content):
     lines = content.splitlines()
@@ -67,13 +94,11 @@ def extract_hk_channels(content):
         if not raw:
             continue
 
-        # 找到港澳台分组
         if not in_section and "港澳台直播" in raw:
             in_section = True
             continue
 
         if in_section:
-            # 遇到下一个分组停止
             if "#genre#" in raw and "港澳台直播" not in raw:
                 break
 
@@ -88,12 +113,9 @@ def extract_hk_channels(content):
     log(f"香港频道数: {len(channels)}")
     return channels
 
-# ================= 台湾提取（标准M3U） =================
+# ================= 台湾提取 =================
 
 def extract_tw_limited(content):
-    """
-    从标准 M3U 中提取 group-title="•台湾「限制」"
-    """
     lines = content.splitlines()
     channels = []
 
@@ -108,7 +130,6 @@ def extract_tw_limited(content):
             except:
                 continue
 
-            # 下一行是URL
             if i + 1 < len(lines):
                 url = lines[i + 1].strip()
                 if url.startswith("http"):
@@ -143,9 +164,6 @@ def main():
     hk_source = download(HK_SOURCE_URL, "香港源")
     tw_source = download(TW_SOURCE_URL, "台湾源")
 
-    # 调试预览
-    log(f"台湾源预览前200字符:\n{tw_source[:200]}")
-
     hk_channels = extract_hk_channels(hk_source)
     tw_channels = extract_tw_limited(tw_source)
 
@@ -157,7 +175,7 @@ def main():
     output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
     output += f"""# DD.m3u
 # 生成时间: {timestamp}
-# 香港 + 台湾限制 双分组版
+# 香港 + 台湾限制 + SPORTS
 # EPG: {EPG_URL}
 
 """
@@ -175,14 +193,20 @@ def main():
     if hk_channels:
         output += f"\n# {HK_GROUP_NAME}频道 ({len(hk_channels)})\n"
         for name, url in hk_channels:
-            output += f'#EXTINF:-1 group-title="{HK_GROUP_NAME}",{name}\n'
+            clean_name = clean_channel_name(name)
+            group = assign_group(clean_name, HK_GROUP_NAME)
+
+            output += f'#EXTINF:-1 group-title="{group}",{clean_name}\n'
             output += f"{url}\n"
 
     # ===== 台湾限制 =====
     if tw_channels:
         output += f"\n# {TW_GROUP_NAME}频道 ({len(tw_channels)})\n"
         for name, url in tw_channels:
-            output += f'#EXTINF:-1 group-title="{TW_GROUP_NAME}",{name}\n'
+            clean_name = clean_channel_name(name)
+            group = assign_group(clean_name, TW_GROUP_NAME)
+
+            output += f'#EXTINF:-1 group-title="{group}",{clean_name}\n'
             output += f"{url}\n"
 
     total = bb_count + len(hk_channels) + len(tw_channels)
