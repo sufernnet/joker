@@ -1,6 +1,6 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
-# 生成时间: 2026-03-04 13:28:09
+# 生成时间: 2026-03-04 13:33:16
 
 
 ### HK ###
@@ -210,6 +210,7 @@ https://tv.iill.top/4gtv/4gtv-4gtv101
 
 #EXTINF:-1 group-title="HK",東森綜合
 http://iptv.4666888.xyz/iptv2A.php?id=58
+https://hls.iill.top/api/ET-Variety-Channel/index.m3u8
 
 #EXTINF:-1 group-title="HK",梦工场动漫
 http://iptv.4666888.xyz/iptv2A.php?id=40
@@ -326,13 +327,13 @@ https://tv.iill.top/4gtv/4gtv-live208
 #EXTINF:-1 group-title="TW",中天亞洲
 https://tv.iill.top/FainTV/121
 
-#EXTINF:-1 group-title="TW",中天娛樂「Relay」
+#EXTINF:-1 group-title="TW",中天娛樂
 https://hls.iill.top/api/Cti-E/index.m3u8
 
 #EXTINF:-1 group-title="TW",中天新聞
 https://tv.iill.top/4gtv/4gtv-4gtv009
 
-#EXTINF:-1 group-title="TW",中天綜合「Relay」
+#EXTINF:-1 group-title="TW",中天綜合
 https://hls.iill.top/api/Cti-K/index.m3u8
 
 #EXTINF:-1 group-title="TW",寰宇新聞台灣
@@ -341,25 +342,22 @@ https://tv.iill.top/4gtv/4gtv-4gtv156
 #EXTINF:-1 group-title="TW",寰宇財經
 https://tv.iill.top/ofiii/4gtv-4gtv158
 
-#EXTINF:-1 group-title="TW",東森幼幼「Relay」
+#EXTINF:-1 group-title="TW",東森幼幼
 https://hls.iill.top/api/YoYo-TV/index.m3u8
 
-#EXTINF:-1 group-title="TW",東森戲劇「Relay」
+#EXTINF:-1 group-title="TW",東森戲劇
 https://hls.iill.top/api/ET-Drama-Channel/index.m3u8
 
 #EXTINF:-1 group-title="TW",東森新聞
 https://tv.iill.top/4gtv/4gtv-4gtv152
 
-#EXTINF:-1 group-title="TW",東森洋片「Relay」
+#EXTINF:-1 group-title="TW",東森洋片
 https://hls.iill.top/api/ET-Foreign-Movie-Channel/index.m3u8
-
-#EXTINF:-1 group-title="TW",東森綜合「Relay」
-https://hls.iill.top/api/ET-Variety-Channel/index.m3u8
 
 #EXTINF:-1 group-title="TW",東森財經
 https://tv.iill.top/4gtv/4gtv-4gtv153
 
-#EXTINF:-1 group-title="TW",東森電影「Relay」
+#EXTINF:-1 group-title="TW",東森電影
 https://hls.iill.top/api/ET-Movie/index.m3u8
 
 #EXTINF:-1 group-title="TW",amc電影
@@ -371,7 +369,7 @@ https://tv.iill.top/4gtv/4gtv-live027
 #EXTINF:-1 group-title="TW",CinemaWorld
 https://tv.iill.top/4gtv/4gtv-live069
 
-#EXTINF:-1 group-title="TW",CINEMAX「Relay」
+#EXTINF:-1 group-title="TW",CINEMAX
 https://hls.iill.top/api/Cinemax/index.m3u8
 
 #EXTINF:-1 group-title="TW",CNBC Asia 財經
@@ -410,7 +408,7 @@ https://tv.iill.top/4gtv/litv-ftv10
 #EXTINF:-1 group-title="TW",Mezzo Live
 https://tv.iill.top/4gtv/4gtv-4gtv083
 
-#EXTINF:-1 group-title="TW",MTV Live「Relay」
+#EXTINF:-1 group-title="TW",MTV Live
 https://hls.iill.top/api/MTV-Live/index.m3u8
 
 #EXTINF:-1 group-title="TW",NHK 新聞資訊
@@ -476,7 +474,7 @@ https://tv.iill.top/4gtv/4gtv-4gtv039
 #EXTINF:-1 group-title="TW",公視戲劇
 https://tv.iill.top/4gtv/4gtv-4gtv042
 
-#EXTINF:-1 group-title="TW",動物星球「Relay」
+#EXTINF:-1 group-title="TW",動物星球
 https://hls.iill.top/api/Animal-Planet/index.m3u8
 
 #EXTINF:-1 group-title="TW",原住民族電視
@@ -495,7 +493,7 @@ https://tv.iill.top/ofiii/4gtv-4gtv051
 https://tv.iill.top/4gtv/4gtv-4gtv084
 https://tv.iill.top/4gtv/4gtv-4gtv085
 
-#EXTINF:-1 group-title="TW",好萊塢電影「Relay」
+#EXTINF:-1 group-title="TW",好萊塢電影
 https://hls.iill.top/api/Hollywood-Movie/index.m3u8
 
 #EXTINF:-1 group-title="TW",客家電視
@@ -552,19 +550,19 @@ https://tv.iill.top/4gtv/4gtv-live022
 #EXTINF:-1 group-title="TW",經典電影
 https://tv.iill.top/4gtv/4gtv-live021
 
-#EXTINF:-1 group-title="TW",緯來戲劇「Relay」
+#EXTINF:-1 group-title="TW",緯來戲劇
 https://hls.iill.top/api/VL-Drama/index.m3u8
 
-#EXTINF:-1 group-title="TW",緯來日本「Relay」
+#EXTINF:-1 group-title="TW",緯來日本
 https://hls.iill.top/api/VL-Japan/index.m3u8
 
-#EXTINF:-1 group-title="TW",緯來綜合「Relay」
+#EXTINF:-1 group-title="TW",緯來綜合
 https://hls.iill.top/api/VL-ONTV/index.m3u8
 
-#EXTINF:-1 group-title="TW",緯來育樂「Relay」
+#EXTINF:-1 group-title="TW",緯來育樂
 https://hls.iill.top/api/VL-E/index.m3u8
 
-#EXTINF:-1 group-title="TW",緯來電影「Relay」
+#EXTINF:-1 group-title="TW",緯來電影
 https://hls.iill.top/api/VL-Movies/index.m3u8
 
 #EXTINF:-1 group-title="TW",華視
@@ -627,7 +625,7 @@ https://tv.iill.top/4gtv/4gtv-4gtv057
 #EXTINF:-1 group-title="TW",韓國娛樂台 KMTV
 https://tv.iill.top/4gtv/4gtv-4gtv016
 
-#EXTINF:-1 group-title="TW",龍祥時代「Relay」
+#EXTINF:-1 group-title="TW",龍祥時代
 https://hls.iill.top/api/LSTIME-Movie/index.m3u8
 
 #EXTINF:-1 group-title="TW",龍華偶像
@@ -647,6 +645,40 @@ https://tv.iill.top/ofiii/litv-xinchuang21
 
 ### SPORTS ###
 
+#EXTINF:-1 group-title="SPORTS",beIN Sports
+https://hls.iill.top/api/beIN-Sports-1/index.m3u8
+https://hls.iill.top/api/beIN-Sports-2/index.m3u8
+https://hls.iill.top/api/beIN-Sports-3/index.m3u8
+https://hls.iill.top/api/beIN-Sports-4/index.m3u8
+https://hls.iill.top/api/beIN-Sports-5/index.m3u8
+
+#EXTINF:-1 group-title="SPORTS",Eurosport
+https://hls.iill.top/api/Eurosport-1/index.m3u8
+https://hls.iill.top/api/Eurosport-2/index.m3u8
+
+#EXTINF:-1 group-title="SPORTS",Fight Sports
+https://hls.iill.top/api/Fight-Sports/index.m3u8
+
+#EXTINF:-1 group-title="SPORTS",Hub Premier
+https://hls.iill.top/api/Hub-Premier-1/index.m3u8
+https://hls.iill.top/api/Hub-Premier-2/index.m3u8
+https://hls.iill.top/api/Hub-Premier-3/index.m3u8
+https://hls.iill.top/api/Hub-Premier-4/index.m3u8
+https://hls.iill.top/api/Hub-Premier-5/index.m3u8
+https://hls.iill.top/api/Hub-Premier-6/index.m3u8
+https://hls.iill.top/api/Hub-Premier-7/index.m3u8
+https://hls.iill.top/api/Hub-Premier-8/index.m3u8
+
+#EXTINF:-1 group-title="SPORTS",Hub Sports
+https://hls.iill.top/api/Hub-Sports-1/index.m3u8
+https://hls.iill.top/api/Hub-Sports-2/index.m3u8
+https://hls.iill.top/api/Hub-Sports-3/index.m3u8
+https://hls.iill.top/api/Hub-Sports-4/index.m3u8
+https://hls.iill.top/api/Hub-Sports-5/index.m3u8
+https://hls.iill.top/api/Hub-Sports-6/index.m3u8
+https://hls.iill.top/api/Hub-Sports-7/index.m3u8
+https://hls.iill.top/api/Hub-Sports-8/index.m3u8
+
 #EXTINF:-1 group-title="SPORTS",NOW体育
 http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382834&extension=ts&play_token=JBOlpsgTKU
 http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382837&extension=ts&play_token=rRmhe1TsX7
@@ -659,6 +691,28 @@ http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382843&e
 
 #EXTINF:-1 group-title="SPORTS",NOW体育4K
 http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382836&extension=ts&play_token=jSAYXQsMoY
+
+#EXTINF:-1 group-title="SPORTS",Sky Sports Cricket
+https://hls.iill.top/api/Sky-Sports-Cricket/index.m3u8
+
+#EXTINF:-1 group-title="SPORTS",Sky Sports F
+https://hls.iill.top/api/Sky-Sports-F1/index.m3u8
+
+#EXTINF:-1 group-title="SPORTS",Sky Sports Mix
+https://hls.iill.top/api/Sky-Sports-Mix/index.m3u8
+
+#EXTINF:-1 group-title="SPORTS",Sky Sports Premier League
+https://hls.iill.top/api/Sky-Sports-EPL/index.m3u8
+
+#EXTINF:-1 group-title="SPORTS",Spotv
+https://hls.iill.top/api/Spotv-1/index.m3u8
+https://hls.iill.top/api/Spotv-2/index.m3u8
+
+#EXTINF:-1 group-title="SPORTS",TNT Sport
+https://hls.iill.top/api/TNT-Sports-1/index.m3u8
+https://hls.iill.top/api/TNT-Sports-2/index.m3u8
+https://hls.iill.top/api/TNT-Sports-3/index.m3u8
+https://hls.iill.top/api/TNT-Sports-4/index.m3u8
 
 #EXTINF:-1 group-title="SPORTS",博斯無限 一
 https://tv.iill.top/FainTV/129
@@ -684,5 +738,5 @@ https://tv.iill.top/FainTV/125
 #EXTINF:-1 group-title="SPORTS",博斯魅力
 https://tv.iill.top/FainTV/135
 
-#EXTINF:-1 group-title="SPORTS",緯來體育「Relay」
+#EXTINF:-1 group-title="SPORTS",緯來體育
 https://hls.iill.top/api/VL-Sports/index.m3u8
