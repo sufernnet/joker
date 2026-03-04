@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-DD.m3u 构建系统（终极去重版）
+DD.m3u 构建系统（终极过滤版）
 """
 
 import requests
@@ -29,6 +29,22 @@ SPORTS_KEYWORDS = [
     "緯來體育",
     "NOW体育",
     "Now体育"
+]
+
+# ===== 频道剔除列表 =====
+REMOVE_CHANNELS = [
+    "東森購物",
+    "少儿频道",
+    "半島國際新聞",
+    "兒童頻道",
+    "MOMO運動綜合",
+    "LiveABC互動英語頻道",
+    "GINX Esports TV",
+    "DW德國之聲",
+    "DreamWorks 夢工廠動畫",
+    "CLASSICA 古典樂",
+    "Arirang TV",
+    "Bloomberg TV"
 ]
 
 HK_ORDER = [
@@ -60,19 +76,22 @@ def download(url):
 def normalize_channel_name(name):
     name = name.strip()
 
-    # 去推广字样
     for kw in REMOVE_KEYWORDS:
         name = re.sub(rf'「?\s*{kw}\s*」?', '', name, flags=re.IGNORECASE)
 
-    # 去结尾“台”
     name = re.sub(r'台$', '', name)
-
-    # 去尾部数字
     name = re.sub(r'\d+$', '', name)
-
     name = re.sub(r'\s+', ' ', name)
 
     return name.strip()
+
+# ================= 过滤判断 =================
+
+def should_remove_channel(name):
+    for kw in REMOVE_CHANNELS:
+        if kw.lower() in name.lower():
+            return True
+    return False
 
 # ================= 分组判断 =================
 
@@ -123,15 +142,19 @@ def extract_tw_limited(content):
 
     return channels
 
-# ================= 合并逻辑 =================
+# ================= 合并 =================
 
 def merge_channels(channel_list):
     merged = {}
 
     for name, url, group in channel_list:
-        normalized = normalize_channel_name(name)
-        key = normalized.lower()
 
+        normalized = normalize_channel_name(name)
+
+        if should_remove_channel(normalized):
+            continue
+
+        key = normalized.lower()
         final_group = determine_group(normalized, group)
 
         if key not in merged:
@@ -183,11 +206,6 @@ def main():
     output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
     output += f"# 生成时间: {timestamp}\n\n"
 
-    # BB
-    for line in bb_content.splitlines():
-        if not line.startswith("#EXTM3U"):
-            output += line + "\n"
-
     # HK
     output += "\n### HK ###\n"
     for item in sorted(hk, key=lambda x: (hk_sort_weight(x["name"]), x["name"].lower())):
@@ -212,7 +230,7 @@ def main():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
 
-    print("🎉 DD.m3u 生成完成")
+    print("🎯 精简版 DD.m3u 生成完成")
 
 if __name__ == "__main__":
     main()
