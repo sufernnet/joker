@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-04 14:56:14
+# 生成时间: 2026-03-04 15:02:35
 # 更新频率: 每天 06:00 / 17:00
 # EPG: https://epg.zsdc.eu.org/t.xml.gz
 # GitHub Actions 自动生成
@@ -550,12 +550,30 @@ http://bxtv.3a.ink/api.php?id=qxjd
 http://rihou.cc:555/tv/[Bx]无线千禧
 
 # TW频道 (78)
+#EXTINF:-1 group-title="TW",中天亞洲
+https://tv.iill.top/FainTV/121
+#EXTINF:-1 group-title="TW",中天娛樂
+https://hls.iill.top/api/Cti-E/index.m3u8
+#EXTINF:-1 group-title="TW",中天綜合
+https://hls.iill.top/api/Cti-K/index.m3u8
+#EXTINF:-1 group-title="TW",民視
+https://tv.iill.top/4gtv/4gtv-4gtv002
+#EXTINF:-1 group-title="TW",民視台灣
+https://tv.iill.top/4gtv/4gtv-4gtv001
+#EXTINF:-1 group-title="TW",民視新聞
+https://tv.iill.top/4gtv/litv-ftv13
+#EXTINF:-1 group-title="TW",民視第一
+https://tv.iill.top/4gtv/4gtv-4gtv003
+#EXTINF:-1 group-title="TW",民視綜藝
+https://tv.iill.top/4gtv/4gtv-4gtv004
+#EXTINF:-1 group-title="TW",寰宇新聞
+https://tv.iill.top/4gtv/litv-longturn14
 #EXTINF:-1 group-title="TW",中視
 https://tv.iill.top/4gtv/4gtv-4gtv040
 #EXTINF:-1 group-title="TW",中視新聞
 https://tv.iill.top/4gtv/4gtv-4gtv074
-#EXTINF:-1 group-title="TW",公視戲劇
-https://tv.iill.top/4gtv/4gtv-4gtv042
+#EXTINF:-1 group-title="TW",三立綜合
+https://tv.iill.top/4gtv/4gtv-live207
 #EXTINF:-1 group-title="TW",CI 罪案偵查頻道
 https://tv.iill.top/4gtv/4gtv-live027
 #EXTINF:-1 group-title="TW",ELTA生活英語
@@ -568,14 +586,6 @@ https://tv.iill.top/4gtv/4gtv-live168
 https://tv.iill.top/4gtv/4gtv-4gtv017
 #EXTINF:-1 group-title="TW",fun探索娛樂
 https://tv.iill.top/4gtv/4gtv-live011
-#EXTINF:-1 group-title="TW",三立綜合
-https://tv.iill.top/4gtv/4gtv-live207
-#EXTINF:-1 group-title="TW",中天亞洲
-https://tv.iill.top/FainTV/121
-#EXTINF:-1 group-title="TW",中天娛樂
-https://hls.iill.top/api/Cti-E/index.m3u8
-#EXTINF:-1 group-title="TW",中天綜合
-https://hls.iill.top/api/Cti-K/index.m3u8
 #EXTINF:-1 group-title="TW",亞洲旅遊
 https://tv.iill.top/4gtv/4gtv-4gtv076
 #EXTINF:-1 group-title="TW",人間衛視
@@ -584,6 +594,8 @@ https://tv.iill.top/4gtv/4gtv-live008
 https://tv.iill.top/4gtv/4gtv-4gtv034
 #EXTINF:-1 group-title="TW",八大綜藝
 https://tv.iill.top/4gtv/4gtv-4gtv039
+#EXTINF:-1 group-title="TW",公視戲劇
+https://tv.iill.top/4gtv/4gtv-4gtv042
 #EXTINF:-1 group-title="TW",動物星球
 https://hls.iill.top/api/Animal-Planet/index.m3u8
 #EXTINF:-1 group-title="TW",半島國際新聞
@@ -610,8 +622,6 @@ https://tv.iill.top/4gtv/4gtv-live014
 https://tv.iill.top/FainTV/18254
 #EXTINF:-1 group-title="TW",客家電視
 https://tv.iill.top/4gtv/4gtv-4gtv043
-#EXTINF:-1 group-title="TW",寰宇新聞
-https://tv.iill.top/4gtv/litv-longturn14
 #EXTINF:-1 group-title="TW",愛爾達娛樂
 https://tv.iill.top/4gtv/4gtv-4gtv070
 #EXTINF:-1 group-title="TW",愛爾達生活旅遊
@@ -636,16 +646,6 @@ https://tv.iill.top/4gtv/4gtv-4gtv153
 https://hls.iill.top/api/ET-Movie/index.m3u8
 #EXTINF:-1 group-title="TW",歡樂看新聞
 https://tv.iill.top/FainTV/19670
-#EXTINF:-1 group-title="TW",民視
-https://tv.iill.top/4gtv/4gtv-4gtv002
-#EXTINF:-1 group-title="TW",民視台灣
-https://tv.iill.top/4gtv/4gtv-4gtv001
-#EXTINF:-1 group-title="TW",民視新聞
-https://tv.iill.top/4gtv/litv-ftv13
-#EXTINF:-1 group-title="TW",民視第一
-https://tv.iill.top/4gtv/4gtv-4gtv003
-#EXTINF:-1 group-title="TW",民視綜藝
-https://tv.iill.top/4gtv/4gtv-4gtv004
 #EXTINF:-1 group-title="TW",精選動漫
 https://tv.iill.top/4gtv/4gtv-live024
 #EXTINF:-1 group-title="TW",經典卡通
@@ -712,4 +712,4 @@ https://hls.iill.top/api/LSTIME-Movie/index.m3u8
 # HK频道数: 95
 # TW频道数: 78
 # 总频道数: 252
-# 更新时间: 2026-03-04 14:56:14
+# 更新时间: 2026-03-04 15:02:35
