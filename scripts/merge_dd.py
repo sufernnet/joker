@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 """
-DD.m3u 合并脚本（港澳台直提 + 精确过滤与排序）
+DD.m3u 合并脚本（台湾直提 + 精确过滤与排序）
 
 功能：
-1. 提取“🔮[三网]港澳台直播”分组
-2. 重命名为“港澳台”
+1. 从 https://tv.iill.top/m3u/Gather 提取“•台湾「限制」”分组
+2. 重命名为“台湾”
 3. 过滤掉指定频道和指定URL
-4. 去重处理：保留标准名称，去掉带"台"字的重复频道
-5. 港澳台分组内按新规则排序：
-   凤凰中文 → 凤凰资讯 → NOW新闻 → NOW体育 → NOW财经 → NOW直播 → POPC → HOY76~78 → RHK31~32 → TVB系列（TVB翡翠排前面）
+4. 去重处理：保留标准名称，去掉重复频道
+5. 台湾分组内按规则排序
 6. 合并 BB.m3u
 7. 使用固定 EPG
 
@@ -22,11 +21,12 @@ from datetime import datetime
 # ================== 配置 ==================
 
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
-GAT_URL = "https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1"
+# 更新为新的源地址
+GATHER_URL = "https://tv.iill.top/m3u/Gather"
 OUTPUT_FILE = "DD.m3u"
 
-SOURCE_GROUP = "🔮[三网]港澳台直播"
-TARGET_GROUP = "港澳台"
+SOURCE_GROUP = "•台湾「限制」"
+TARGET_GROUP = "台湾"
 
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 
@@ -53,9 +53,8 @@ FILTER_KEYWORDS = [
     "星空音乐",
     "澳门综艺",
     "華藝中文",
-    "公视",
-    "公视台语台",
-    "中旺电视"
+    "中旺电视",
+    "公视台语台",  # 保留公视的其他频道
 ]
 
 # 需要过滤掉的特定URL（精确匹配）
@@ -64,22 +63,87 @@ FILTER_URLS = [
 ]
 
 # 频道名称标准化映射（用于去重）
-# 格式：{"需要去掉的变体": "保留的标准名称"}
 NAME_NORMALIZATION = {
-    "NOW新闻台": "Now新闻",
-    "NOW新闻台 ": "Now新闻",  # 带空格的变体
-    "Now新闻台": "Now新闻",
-    "now新闻台": "Now新闻",
-    "NOW 新闻台": "Now新闻",
-    "Now 新闻台": "Now新闻",
+    "TVB J1": "TVBJ1",
+    "TVB J1 ": "TVBJ1",
+    "TVB J1 1080p": "TVBJ1",
+    "TVB J1 1080p ": "TVBJ1",
+    "TVB J1 HD": "TVBJ1",
+    "TVB J1 HD ": "TVBJ1",
+    "TVB Plus 1080p": "TVB plus",
+    "TVB Plus 1080p ": "TVB plus",
+    "TVB Plus HD": "TVB plus",
+    "TVB Plus": "TVB plus",
+    "TVB 星河": "TVB星河",
+    "TVB 星河 720p": "TVB星河",
+    "TVB星河 720p": "TVB星河",
+    "TVB星河 HD": "TVB星河",
+    "TVB 无线千禧": "TVB无线千禧",
+    "TVB 无线千禧 1080p": "TVB无线千禧",
+    "TVB千禧经典 1080p": "TVB千禧经典",
+    "TVB千禧经典 540p": "TVB千禧经典",
+    "TVB千禧经典 HD": "TVB千禧经典",
+    "TVB 功夫": "TVB功夫",
+    "TVB 功夫 720p": "TVB功夫",
+    "TVB功夫 HD": "TVB功夫",
+    "Now 财经": "Now财经",
+    "Now 财经 1080p": "Now财经",
+    "Now 财经 HD": "Now财经",
+    "Now 直播": "Now直播",
+    "Now 直播 1080p": "Now直播",
+    "Now 直播 HD": "Now直播",
+    "Now 体育": "Now体育",
+    "Now 体育 1080p": "Now体育",
+    "Now 体育 HD": "Now体育",
+    "RHK 31": "RHK31",
+    "RHK 31 1080p": "RHK31",
+    "RTHK 31": "RHK31",
+    "RHK 32": "RHK32",
+    "RHK 32 1080p": "RHK32",
+    "RTHK 32": "RHK32",
+    "HOY 76": "HOY76",
+    "HOY 76 1080p": "HOY76",
+    "HOY 77": "HOY77",
+    "HOY 77 1080p": "HOY77",
+    "HOY 78": "HOY78",
+    "HOY 78 1080p": "HOY78",
+    "凤凰中文 HD": "凤凰中文",
+    "凤凰中文 HD 1080p": "凤凰中文",
+    "凤凰中文 1080p": "凤凰中文",
+    "凤凰资讯 HD": "凤凰资讯",
+    "凤凰资讯 HD 1080p": "凤凰资讯",
+    "凤凰资讯 1080p": "凤凰资讯",
+    "凤凰香港台 HD": "凤凰香港台",
+    "凤凰香港台 1080p": "凤凰香港台",
+    "ViuTV 1080p": "ViuTV",
+    "ViuTV HD": "ViuTV",
+    "ViuTV6 1080p": "ViuTV6",
+    "ViuTV6 HD": "ViuTV6",
 }
 
 # 需要优先保留的名称模式（不区分大小写）
 PREFERRED_NAMES = [
-    "Now新闻",
-    "Now体育",
-    "Now财经", 
+    "翡翠台",
+    "明珠台",
+    "TVB plus",
+    "TVBJ1",
+    "TVB星河",
+    "TVB无线千禧",
+    "TVB千禧经典",
+    "TVB功夫",
+    "ViuTV",
+    "ViuTV6",
+    "凤凰中文",
+    "凤凰资讯",
+    "凤凰香港台",
+    "Now财经",
     "Now直播",
+    "Now体育",
+    "RHK31",
+    "RHK32",
+    "HOY76",
+    "HOY77",
+    "HOY78",
 ]
 
 # ================== 工具 ==================
@@ -100,7 +164,7 @@ def download(url, desc):
         return None
 
 
-def extract_gat_channels(content):
+def extract_gather_channels(content):
     lines = content.splitlines()
     channels = []
     in_section = False
@@ -124,8 +188,10 @@ def extract_gat_channels(content):
                 break
 
             if "," in line and "://" in line:
-                name, url = line.split(",", 1)
-                channels.append((name.strip(), url.strip()))
+                parts = line.split(",", 1)
+                if len(parts) == 2:
+                    name, url = parts
+                    channels.append((name.strip(), url.strip()))
 
     log(f"提取到 {len(channels)} 个频道")
     return channels
@@ -154,13 +220,17 @@ def normalize_channel_name(name):
     """标准化频道名称（用于去重）"""
     name_stripped = name.strip()
     
+    # 先去除常见的后缀
+    name_clean = re.sub(r'\s*(1080p|720p|540p|4K|HD|FHD|UHD|\([^)]*\)|\[[^\]]*\])\s*$', '', name_stripped, flags=re.IGNORECASE).strip()
+    
     # 检查是否需要标准化
     for variant, standard in NAME_NORMALIZATION.items():
-        if name_stripped == variant or name_stripped.lower() == variant.lower():
-            log(f"标准化名称: '{name}' -> '{standard}'")
+        if (name_clean == variant or name_clean.lower() == variant.lower() or
+            name_stripped == variant or name_stripped.lower() == variant.lower()):
+            log(f"标准化名称: '{name_stripped}' -> '{standard}'")
             return standard
     
-    return name_stripped
+    return name_clean
 
 
 def is_preferred_name(name):
@@ -175,7 +245,7 @@ def is_preferred_name(name):
 def deduplicate_channels(channels):
     """
     去重处理
-    策略：对于相同内容的频道，优先保留标准名称，去掉带"台"字的变体
+    策略：对于相同内容的频道，优先保留标准名称
     """
     # 按URL分组
     url_groups = {}
@@ -204,7 +274,7 @@ def deduplicate_channels(channels):
                     log(f"  ✅ 选择优先名称: {name}")
                     break
             
-            # 如果没有优先名称，选择最短的（通常是不带"台"字的）
+            # 如果没有优先名称，选择最短的
             if not selected:
                 # 按长度排序，选最短的
                 sorted_names = sorted(names, key=len)
@@ -217,70 +287,92 @@ def deduplicate_channels(channels):
     return deduped
 
 
-def sort_gat_channels(channels):
+def sort_taiwan_channels(channels):
     """
-    排序权重（越小越靠前）：
-    0: 凤凰中文
-    1: 凤凰资讯
-    2: NOW新闻
-    3: NOW体育
-    4: NOW财经
-    5: NOW直播
-    6: POPC
-    7: HOY 76-78
-    8: RHK 31-32
-    9: TVB系列（TVB翡翠最前）
-    10: 其他
+    台湾频道排序（越小越靠前）：
+    0: 翡翠台系列
+    1: 明珠台
+    2: TVB系列 (J1, plus, 星河, 千禧, 功夫等)
+    3: ViuTV
+    4: 凤凰系列
+    5: Now系列
+    6: RHK系列
+    7: HOY系列
+    8: 其他
     """
     def weight(name):
         name_lower = name.lower()
         
-        # 凤凰中文
-        if "凤凰中文" in name or ("凤凰卫视" in name and "中文" in name):
-            return (0, "00_凤凰中文")
+        # 翡翠台系列
+        if "翡翠台" in name:
+            if "4k" in name_lower:
+                return (0, "00_翡翠台4K")
+            return (0, "00_翡翠台1080p")
         
-        # 凤凰资讯
-        if "凤凰资讯" in name or ("凤凰卫视" in name and "资讯" in name):
-            return (1, "01_凤凰资讯")
-        
-        # NOW新闻
-        if "now新闻" in name_lower or "now 新闻" in name_lower:
-            return (2, "02_NOW新闻")
-        
-        # NOW体育
-        if "now体育" in name_lower or "now 体育" in name_lower:
-            return (3, "03_NOW体育")
-        
-        # NOW财经
-        if "now财经" in name_lower or "now 财经" in name_lower:
-            return (4, "04_NOW财经")
-        
-        # NOW直播
-        if "now直播" in name_lower or "now 直播" in name_lower:
-            return (5, "05_NOW直播")
-        
-        # POPC
-        if "popc" in name_lower:
-            return (6, "06_POPC")
-        
-        # HOY 76-78
-        if "hoy" in name_lower and any(x in name_lower for x in ["76", "77", "78"]):
-            return (7, f"07_HOY_{name}")
-        
-        # RHK 31-32
-        if "rhk" in name_lower and any(x in name_lower for x in ["31", "32"]):
-            return (8, f"08_RHK_{name}")
+        # 明珠台
+        if "明珠台" in name:
+            return (1, "01_明珠台")
         
         # TVB系列
         if "tvb" in name_lower:
-            # TVB翡翠台排在最前
-            if "翡翠" in name:
-                return (9, "09_TVB翡翠")
-            # 其他TVB
-            return (9, f"09_TVB_{name}")
+            if "j1" in name_lower or "tvbj1" in name_lower:
+                return (2, "02_TVBJ1")
+            if "plus" in name_lower:
+                return (2, "02_TVBplus")
+            if "星河" in name:
+                return (2, "02_TVB星河")
+            if "千禧" in name:
+                return (2, "02_TVB千禧")
+            if "功夫" in name:
+                return (2, "02_TVB功夫")
+            return (2, f"02_TVB_{name}")
+        
+        # ViuTV
+        if "viu" in name_lower:
+            if "viutv6" in name_lower:
+                return (3, "03_ViuTV6")
+            return (3, "03_ViuTV")
+        
+        # 凤凰系列
+        if "凤凰" in name:
+            if "中文" in name:
+                return (4, "04_凤凰中文")
+            if "资讯" in name:
+                return (4, "04_凤凰资讯")
+            if "香港" in name:
+                return (4, "04_凤凰香港")
+            return (4, f"04_凤凰_{name}")
+        
+        # Now系列
+        if "now" in name_lower:
+            if "财经" in name:
+                return (5, "05_Now财经")
+            if "直播" in name:
+                return (5, "05_Now直播")
+            if "体育" in name:
+                return (5, "05_Now体育")
+            return (5, f"05_Now_{name}")
+        
+        # RHK系列
+        if "rhk" in name_lower or "rthk" in name_lower:
+            if "31" in name:
+                return (6, "06_RHK31")
+            if "32" in name:
+                return (6, "06_RHK32")
+            return (6, f"06_RHK_{name}")
+        
+        # HOY系列
+        if "hoy" in name_lower:
+            if "76" in name:
+                return (7, "07_HOY76")
+            if "77" in name:
+                return (7, "07_HOY77")
+            if "78" in name:
+                return (7, "07_HOY78")
+            return (7, f"07_HOY_{name}")
         
         # 其他频道
-        return (10, name)
+        return (8, name)
 
     return sorted(channels, key=lambda x: weight(x[0]))
 
@@ -294,14 +386,14 @@ def main():
     if not bb:
         return
 
-    gat = download(GAT_URL, "港澳台直播源") or ""
+    gather = download(GATHER_URL, "Gather直播源") or ""
     
     # 提取频道
-    gat_channels = extract_gat_channels(gat) if gat else []
-    log(f"提取后原始频道数: {len(gat_channels)}")
+    taiwan_channels = extract_gather_channels(gather) if gather else []
+    log(f"提取后原始频道数: {len(taiwan_channels)}")
     
     # 过滤频道（关键词过滤）
-    keyword_filtered = [(name, url) for name, url in gat_channels if not should_filter_by_keyword(name)]
+    keyword_filtered = [(name, url) for name, url in taiwan_channels if not should_filter_by_keyword(name)]
     log(f"关键词过滤后剩余频道数: {len(keyword_filtered)}")
     
     # 过滤频道（URL过滤）
@@ -315,8 +407,8 @@ def main():
     deduped_channels = deduplicate_channels(normalized_channels)
     
     # 排序
-    sorted_channels = sort_gat_channels(deduped_channels)
-    log(f"排序完成")
+    sorted_channels = sort_taiwan_channels(deduped_channels)
+    log(f"排序完成，共 {len(sorted_channels)} 个频道")
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -339,7 +431,7 @@ def main():
         if line.startswith("#EXTINF"):
             bb_count += 1
 
-    # ===== 港澳台 =====
+    # ===== 台湾 =====
     if sorted_channels:
         output += f"\n# {TARGET_GROUP}频道 ({len(sorted_channels)})\n"
         for name, url in sorted_channels:
@@ -349,7 +441,7 @@ def main():
     total = bb_count + len(sorted_channels)
 
     # 统计过滤和去重数量
-    keyword_filtered_count = len(gat_channels) - len(keyword_filtered) if gat_channels else 0
+    keyword_filtered_count = len(taiwan_channels) - len(keyword_filtered) if taiwan_channels else 0
     url_filtered_count = len(keyword_filtered) - len(url_filtered)
     deduped_count = len(url_filtered) - len(sorted_channels)
 
@@ -368,7 +460,7 @@ def main():
         with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             f.write(output)
         log("🎉 DD.m3u 生成成功")
-        log(f"📺 BB({bb_count}) + 港澳台({len(sorted_channels)}) = {total}")
+        log(f"📺 BB({bb_count}) + 台湾({len(sorted_channels)}) = {total}")
         if keyword_filtered_count > 0:
             log(f"🗑️ 关键词过滤了 {keyword_filtered_count} 个频道")
         if url_filtered_count > 0:
