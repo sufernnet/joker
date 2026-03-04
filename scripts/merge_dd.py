@@ -4,7 +4,7 @@
 """
 DD.m3u 构建系统（终极融合版）
 包含：
-- BB.m3u 合并
+- BB.m3u 合并（原样保留在最前面）
 - HK 抓取（从EE.m3u）
 - TW 限制抓取
 - 體育 Relay 抓取
@@ -175,23 +175,11 @@ def determine_group(name, default_group):
     
     return default_group
 
-# ================= 提取 BB =================
+# ================= 提取 BB (原样保留) =================
 
-def extract_bb(content):
-    lines = content.splitlines()
-    channels = []
-
-    for i in range(len(lines)):
-        if lines[i].startswith("#EXTINF"):
-            name = lines[i].split(",",1)[1].strip()
-            if i+1 < len(lines):
-                url = lines[i+1].strip()
-                if url.startswith("http"):
-                    # 读取原分组
-                    m = re.search(r'group-title="([^"]*)"', lines[i])
-                    group = m.group(1) if m else ""
-                    channels.append((name,url,group))
-    return channels
+def extract_bb_raw(content):
+    """原样提取BB.m3u的内容，不做任何修改"""
+    return content
 
 # ================= 提取 HK (从EE.m3u) =================
 
@@ -240,7 +228,7 @@ def extract_tw(content):
 
     return channels
 
-# ================= 合并 =================
+# ================= 合并 HK/TW/SPORTS =================
 
 def merge_channels(channel_list):
     merged = {}
@@ -293,39 +281,53 @@ def tw_weight(name):
 def main():
     print("开始下载源文件...")
     
-    bb = download(BB_URL)
-    hk = download(HK_SOURCE_URL)
-    tw = download(TW_SOURCE_URL)
+    bb_content = download(BB_URL)
+    hk_content = download(HK_SOURCE_URL)
+    tw_content = download(TW_SOURCE_URL)
     
-    print("开始提取频道...")
+    print("开始处理频道...")
     
-    channels = []
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
-    # 提取BB源
-    if bb:
-        bb_channels = extract_bb(bb)
-        print(f"从BB源提取到 {len(bb_channels)} 个频道")
-        channels.extend(bb_channels)
+    # 构建输出文件
+    output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
+    output += f"# 生成时间: {timestamp}\n\n"
     
-    # 提取HK源（EE.m3u）
-    if hk:
-        hk_channels = extract_hk(hk)
+    # 1. 首先原样输出BB.m3u的内容（放在最前面）
+    if bb_content:
+        print("添加BB.m3u内容（原样保留）")
+        # 移除可能存在的重复#EXTM3U头
+        bb_lines = bb_content.splitlines()
+        for line in bb_lines:
+            if not line.startswith("#EXTM3U"):  # 跳过原有的EXTM3U头
+                output += line + "\n"
+    else:
+        print("警告: BB.m3u下载失败")
+    
+    output += "\n\n"
+    
+    # 2. 处理HK源（EE.m3u）
+    hk_channels = []
+    if hk_content:
+        hk_channels = extract_hk(hk_content)
         print(f"从HK源提取到 {len(hk_channels)} 个频道")
-        channels.extend(hk_channels)
+    else:
+        print("警告: HK源下载失败")
     
-    # 提取TW源
-    if tw:
-        tw_channels = extract_tw(tw)
+    # 3. 处理TW源
+    tw_channels = []
+    if tw_content:
+        tw_channels = extract_tw(tw_content)
         print(f"从TW源提取到 {len(tw_channels)} 个频道")
-        channels.extend(tw_channels)
+    else:
+        print("警告: TW源下载失败")
     
-    print(f"总共提取到 {len(channels)} 个频道")
-    print("开始合并去重...")
+    # 合并HK和TW的频道（BB已经原样输出，不参与合并）
+    all_channels = hk_channels + tw_channels
+    merged = merge_channels(all_channels)
     
-    merged = merge_channels(channels)
-    
+    # 分类
     hk_list, tw_list, sports_list = [],[],[]
-
     for data in merged.values():
         if data["group"] == GROUP_HK:
             hk_list.append(data)
@@ -335,38 +337,40 @@ def main():
             sports_list.append(data)
     
     print(f"合并后: HK {len(hk_list)}个, TW {len(tw_list)}个, SPORTS {len(sports_list)}个")
-
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
-    output += f"# 生成时间: {timestamp}\n"
-    output += f"# 总计: HK {len(hk_list)} | TW {len(tw_list)} | SPORTS {len(sports_list)}\n\n"
-
-    # HK
-    output += "\n### HK ###\n"
-    for item in sorted(hk_list,key=lambda x:(hk_weight(x["name"]),x["name"].lower())):
-        output += f'\n#EXTINF:-1 group-title="HK",{item["name"]}\n'
-        for u in sorted(item["urls"]):
-            output += u+"\n"
-
-    # TW
-    output += "\n### TW ###\n"
-    for item in sorted(tw_list,key=lambda x:(tw_weight(x["name"]),x["name"].lower())):
-        output += f'\n#EXTINF:-1 group-title="TW",{item["name"]}\n'
-        for u in sorted(item["urls"]):
-            output += u+"\n"
-
-    # SPORTS
-    output += "\n### SPORTS ###\n"
-    for item in sorted(sports_list,key=lambda x:x["name"].lower()):
-        output += f'\n#EXTINF:-1 group-title="SPORTS",{item["name"]}\n'
-        for u in sorted(item["urls"]):
-            output += u+"\n"
-
-    with open(OUTPUT_FILE,"w",encoding="utf-8") as f:
+    
+    # 添加HK分组
+    if hk_list:
+        output += "\n### HK ###\n"
+        for item in sorted(hk_list, key=lambda x: (hk_weight(x["name"]), x["name"].lower())):
+            output += f'\n#EXTINF:-1 group-title="HK",{item["name"]}\n'
+            for u in sorted(item["urls"]):
+                output += u + "\n"
+        output += "\n"
+    
+    # 添加TW分组
+    if tw_list:
+        output += "\n### TW ###\n"
+        for item in sorted(tw_list, key=lambda x: (tw_weight(x["name"]), x["name"].lower())):
+            output += f'\n#EXTINF:-1 group-title="TW",{item["name"]}\n'
+            for u in sorted(item["urls"]):
+                output += u + "\n"
+        output += "\n"
+    
+    # 添加SPORTS分组
+    if sports_list:
+        output += "\n### SPORTS ###\n"
+        for item in sorted(sports_list, key=lambda x: x["name"].lower()):
+            output += f'\n#EXTINF:-1 group-title="SPORTS",{item["name"]}\n'
+            for u in sorted(item["urls"]):
+                output += u + "\n"
+        output += "\n"
+    
+    # 写入文件
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
-
+    
     print(f"🚀 DD.m3u 终极融合完成，已保存到 {OUTPUT_FILE}")
+    print(f"文件顺序: BB (原样) → HK → TW → SPORTS")
 
 if __name__ == "__main__":
     main()
