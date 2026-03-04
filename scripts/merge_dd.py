@@ -4,8 +4,8 @@
 """
 DD.m3u 构建系统（终极融合版）
 包含：
-- BB.m3u 合并（原样保留在最前面，不做任何修改）
-- HK 抓取（从EE.m3u）
+- BB.m3u 合并（原样保留在最前面）
+- HK 抓取（从EE.m3u）- 修正了解析逻辑
 - TW 限制抓取
 - 體育 Relay 抓取
 - 自动去 Relay/FainTV/ofiii/4gTV
@@ -175,26 +175,39 @@ def determine_group(name, default_group):
     
     return default_group
 
-# ================= 提取 BB (原样保留，不做任何处理) =================
+# ================= 提取 BB (原样保留) =================
 
 def extract_bb_raw(content):
     """原样返回BB.m3u的内容，不做任何修改"""
     return content
 
-# ================= 提取 HK (从EE.m3u) =================
+# ================= 提取 HK (从EE.m3u) - 修正版 =================
 
 def extract_hk(content):
+    """
+    正确解析标准M3U格式的HK源
+    每两行一组：第一行是#EXTINF信息，第二行是URL
+    """
     lines = content.splitlines()
     channels = []
+    i = 0
     
-    for i in range(len(lines)):
+    while i < len(lines):
         line = lines[i].strip()
         
+        # 找到EXTINF行
         if line.startswith("#EXTINF"):
-            name = line.split(",", 1)[1].strip()
-            if i+1 < len(lines):
-                url = lines[i+1].strip()
-                if url.startswith("http"):
+            # 解析频道名称（逗号后面的部分）
+            if "," in line:
+                name = line.split(",", 1)[1].strip()
+            else:
+                name = ""
+            
+            # 获取下一行的URL
+            if i + 1 < len(lines):
+                url = lines[i + 1].strip()
+                # 确保URL是有效的
+                if url and not url.startswith("#") and url.startswith("http"):
                     # 读取原分组
                     m = re.search(r'group-title="([^"]*)"', line)
                     original_group = m.group(1) if m else ""
@@ -202,6 +215,9 @@ def extract_hk(content):
                     # 使用智能判断来决定分组
                     group = GROUP_TW if is_taiwan_channel(name) else GROUP_HK
                     channels.append((name, url, group))
+                    # 跳过已处理的URL行
+                    i += 1
+        i += 1
     
     return channels
 
@@ -218,13 +234,17 @@ def extract_tw(content):
 
             if 'group-title="•台湾「限制」"' in line:
                 name = line.split(",",1)[1].strip()
-                url = lines[i+1].strip()
-                channels.append((name,url,GROUP_TW))
+                if i+1 < len(lines):
+                    url = lines[i+1].strip()
+                    if url.startswith("http"):
+                        channels.append((name,url,GROUP_TW))
 
             if 'group-title="•體育「Relay」"' in line:
                 name = line.split(",",1)[1].strip()
-                url = lines[i+1].strip()
-                channels.append((name,url,GROUP_SPORTS))
+                if i+1 < len(lines):
+                    url = lines[i+1].strip()
+                    if url.startswith("http"):
+                        channels.append((name,url,GROUP_SPORTS))
 
     return channels
 
@@ -296,16 +316,18 @@ def main():
     # 1. 首先原样输出BB.m3u的完整内容（放在最前面，不做任何修改）
     if bb_content:
         print("添加BB.m3u内容（原样保留，不做任何修改）")
-        # 直接添加BB的完整内容，包括它自己的#EXTM3U头
         output += bb_content + "\n\n"
     else:
         print("警告: BB.m3u下载失败")
     
-    # 2. 处理HK源（EE.m3u）
+    # 2. 处理HK源（EE.m3u）- 使用修正后的解析函数
     hk_channels = []
     if hk_content:
         hk_channels = extract_hk(hk_content)
-        print(f"从HK源提取到 {len(hk_channels)} 个频道")
+        print(f"从HK源正确提取到 {len(hk_channels)} 个频道")
+        # 可选：打印前几个频道名以作验证
+        if hk_channels:
+            print(f"示例频道: {hk_channels[0][0]}, {hk_channels[1][0] if len(hk_channels)>1 else ''}")
     else:
         print("警告: HK源下载失败")
     
@@ -331,7 +353,7 @@ def main():
         elif data["group"] == GROUP_SPORTS:
             sports_list.append(data)
     
-    print(f"合并后: HK {len(hk_list)}个, TW {len(tw_list)}个, SPORTS {len(sports_list)}个")
+    print(f"合并去重后: HK {len(hk_list)}个, TW {len(tw_list)}个, SPORTS {len(sports_list)}个")
     
     # 添加HK分组
     if hk_list:
