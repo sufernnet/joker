@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-DD.m3u 构建系统（结构终极版）
+DD.m3u 构建系统（Relay增强终极版）
 """
 
 import requests
@@ -22,7 +22,7 @@ GROUP_HK = "HK"
 GROUP_TW = "TW"
 GROUP_SPORTS = "SPORTS"
 
-REMOVE_KEYWORDS = ["FainTV", "ofiii", "4gTV"]
+REMOVE_KEYWORDS = ["FainTV", "ofiii", "4gTV", "Relay"]
 
 SPORTS_KEYWORDS = [
     "博斯",
@@ -30,8 +30,6 @@ SPORTS_KEYWORDS = [
     "NOW体育",
     "Now体育"
 ]
-
-# ================= 频道剔除 =================
 
 REMOVE_CHANNELS = [
     "東森購物","少儿频道","半島國際新聞","兒童頻道",
@@ -43,8 +41,6 @@ REMOVE_CHANNELS = [
     "INULTRA","Pet Club TV","Smart知識",
     "SBN 全球財經","大愛電視","好消息","新唐人亞太"
 ]
-
-# ================= HK 排序 =================
 
 HK_ORDER = [
     "凤凰中文","凤凰资讯","凤凰香港台",
@@ -90,7 +86,7 @@ def should_remove(name):
             return True
     return False
 
-# ================= 分组 =================
+# ================= 分组判断 =================
 
 def determine_group(name, default_group):
     for kw in SPORTS_KEYWORDS:
@@ -130,12 +126,22 @@ def extract_tw(content):
 
     for i in range(len(lines)):
         line = lines[i].strip()
+
+        # 台湾限制
         if line.startswith("#EXTINF") and 'group-title="•台湾「限制」"' in line:
             name = line.split(",", 1)[1].strip()
             if i + 1 < len(lines):
                 url = lines[i + 1].strip()
                 if url.startswith("http"):
                     channels.append((name, url, GROUP_TW))
+
+        # 体育 Relay 分组
+        if line.startswith("#EXTINF") and 'group-title="•體育「Relay」"' in line:
+            name = line.split(",", 1)[1].strip()
+            if i + 1 < len(lines):
+                url = lines[i + 1].strip()
+                if url.startswith("http"):
+                    channels.append((name, url, GROUP_SPORTS))
 
     return channels
 
@@ -165,7 +171,7 @@ def merge_channels(channel_list):
 
     return merged
 
-# ================= 排序权重 =================
+# ================= 排序 =================
 
 def hk_weight(name):
     for idx, key in enumerate(HK_ORDER):
@@ -174,7 +180,6 @@ def hk_weight(name):
     return 999
 
 def tw_weight(name):
-
     if "Love Nature" in name:
         return 0
     if "中天" in name:
@@ -191,7 +196,6 @@ def tw_weight(name):
 
 def main():
 
-    bb = download(BB_URL)
     hk_source = download(HK_SOURCE_URL)
     tw_source = download(TW_SOURCE_URL)
 
@@ -237,7 +241,7 @@ def main():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
 
-    print("🎯 结构终极版 DD.m3u 生成完成")
+    print("🔥 Relay增强版 DD.m3u 生成完成")
 
 if __name__ == "__main__":
     main()
