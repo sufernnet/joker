@@ -1,247 +1,29 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
-# 生成时间: 2026-03-04 13:46:22
-
-#EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
-http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV2" tvg-name="CCTV2" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV2.png" group-title="央视",CCTV2
-http://124.90.44.40:6060/010/2/00000001000000060000000000000471?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV3" tvg-name="CCTV3" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV3.png" group-title="央视",CCTV3
-http://124.90.44.40:6060/010/2/00000001000000060000000000000642?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV4" tvg-name="CCTV4" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4.png" group-title="央视",CCTV4
-http://124.90.44.40:6060/010/2/00000009000000060000000000002077?AuthInfo=z65J6ZDNYqti%2F6F%2BPX%2BzfKPQRt%2FPjzMSkozGSNJ866M5ClWLEgr2w%2FyaoOVDLtcRIuYreqxL1izhEYmHsZHZ4tlsMiU76bF1Tbh0JdAOKAM%3D&version=v1.0&BreakPoint=0&virtualDomain=010.live_hls.zte.com&programid=ch00000000000000001392&boid=001&contentid=ch00000000000000001392&stbid=00000433002420502508E81711206E58&terminalflag=1&videoid=ch00000090990000001378&userid=057401350507&recommendtype=0
-
-#EXTINF:-1 tvg-id="CCTV5" tvg-name="CCTV5" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV5.png" group-title="央视",CCTV5
-http://124.90.44.40:6060/010/2/00000001000000060000000000000643?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV5+" tvg-name="CCTV5+" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV5+.png" group-title="央视",CCTV5+
-http://124.90.44.40:6060/010/2/00000001000000060000000000000788?AuthInfo=z65J6ZDNYqti%2F6F%2BPX%2BzfKPQRt%2FPjzMSkozGSNJ866M5ClWLEgr2w%2FyaoOVDLtcRHeaXnTVxdXKTwjEYXPsrMdlsMiU76bF1Tbh0JdAOKAM%3D&version=v1.0&BreakPoint=0&virtualDomain=010.live_hls.zte.com&programid=ch00000000000000001376&boid=001&contentid=ch00000000000000001376&stbid=00000433002420502508E81711206E58&terminalflag=1&videoid=ch00000090990000001366&userid=057401350507&recommendtype=0"
-
-#EXTINF:-1 tvg-id="CCTV6" tvg-name="CCTV6" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV6.png" group-title="央视",CCTV6
-http://124.90.44.40:6060/010/2/00000001000000060000000000000644?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV7" tvg-name="CCTV7" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV7.png" group-title="央视",CCTV7
-http://124.90.44.40:6060/010/2/00000001000000060000000000000472?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV8" tvg-name="CCTV8" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV8.png" group-title="央视",CCTV8
-http://124.90.44.40:6060/010/2/00000001000000060000000000000645?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV9" tvg-name="CCTV9" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV9.png" group-title="央视",CCTV9
-http://124.90.44.40:6060/010/2/00000001000000060000000000000473?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV10" tvg-name="CCTV10" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV10.png" group-title="央视",CCTV10
-http://124.90.44.40:6060/010/2/00000001000000060000000000000474?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV11" tvg-name="CCTV11" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV11.png" group-title="央视",CCTV11
-http://74.91.26.218:82/live/cctv11hd.m3u8
-
-#EXTINF:-1 tvg-id="CCTV12" tvg-name="CCTV12" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV12.png" group-title="央视",CCTV12
-http://124.90.44.40:6060/010/2/00000001000000060000000000000476?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV13" tvg-name="CCTV13" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV13.png" group-title="央视",CCTV13
-http://124.90.44.40:6060/010/2/00000001000000060000000000000793?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV14" tvg-name="CCTV14" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV14.png" group-title="央视",CCTV14
-http://124.90.44.40:6060/010/2/00000001000000060000000000000477?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV15" tvg-name="CCTV15" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV15.png" group-title="央视",CCTV15
-http://124.93.18.238:81/hls/15/index.m3u8
-
-#EXTINF:-1 tvg-id="CCTV16" tvg-name="CCTV16" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV16.png" group-title="央视",CCTV16
-http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="CCTV17" tvg-name="CCTV17" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV17.png" group-title="央视",CCTV17
-http://39.164.138.145:8899/hls/17/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv4k" tvg-name="cctv4k" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
-http://www.520345.xyz:8188/rtp/239.69.1.111:10304?
-
-#EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/BJ4K.png" group-title="4K",北京卫视
-http://124.90.44.40:6060/010/2/01000010000000060000000000002865?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="东方卫视" tvg-name="东方卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/DF4K.png" group-title="4K",东方卫视
-http://124.90.44.40:6060/010/2/00000009000000060000000000002067?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="湖南卫视" tvg-name="湖南卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/HN4K.png" group-title="4K",湖南卫视
-http://124.90.44.40:6060/010/2/00000009000000060000000000002069?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="江苏卫视" tvg-name="江苏卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/JS4K.png" group-title="4K",江苏卫视
-http://124.90.44.40:6060/010/2/00000009000000060000000000002071?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="深圳卫视" tvg-name="深圳卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/SZ4K.png" group-title="4K",深圳卫视
-http://124.90.44.40:6060/010/2/01000010000000060000000000002878?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="浙江卫视" tvg-name="浙江卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/ZJ4K.png" group-title="4K",浙江卫视
-http://124.90.44.40:6060/010/2/00000009000000060000000000002065?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="广东卫视" tvg-name="广东卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/GD4K.png" group-title="4K",广东卫视
-http://124.90.44.40:6060/010/2/01000010000000060000000000002877?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="四川卫视" tvg-name="四川卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/SC4K.png" group-title="4K",四川卫视
-http://124.90.44.40:6060/010/2/00000009000000060000000000002075?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="山东卫视" tvg-name="山东卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/SD4K.png" group-title="4K",山东卫视
-http://124.90.44.40:6060/010/2/00000009000000060000000000002073?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="浙江卫视" tvg-name="浙江卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/zhejiang.png" group-title="卫视",浙江卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000392?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="东方卫视" tvg-name="东方卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/dongfang.png" group-title="卫视",东方卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000478?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="湖南卫视" tvg-name="湖南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/hunan.png" group-title="卫视",湖南卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000394?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/beijing.png" group-title="卫视",北京卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000449?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="北京纪实" tvg-name="北京纪实" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/BJJS.png" group-title="卫视",北京纪实
-http://124.90.44.40:6060/010/2/01000010000000060000000000002855?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="江苏卫视" tvg-name="江苏卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/jiangsu.png" group-title="卫视",江苏卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000450?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="深圳卫视" tvg-name="深圳卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/shenzhen.png" group-title="卫视",深圳卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000393?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="天津卫视" tvg-name="天津卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/tianjin.png" group-title="卫视",天津卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000365?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="重庆卫视" tvg-name="重庆卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/chongqing.png" group-title="卫视",重庆卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000585?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="广东卫视" tvg-name="广东卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/guangdong.png" group-title="卫视",广东卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000395?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="江西卫视" tvg-name="江西卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/jiangxi.png" group-title="卫视",江西卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000587?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="东南卫视" tvg-name="东南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/dongnan.png" group-title="卫视",东南卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000588?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="湖北卫视" tvg-name="湖北卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/hubei.png" group-title="卫视",湖北卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000461?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="辽宁卫视" tvg-name="辽宁卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/liaoning.png" group-title="卫视",辽宁卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000583?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="山东卫视" tvg-name="山东卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/shandong.png" group-title="卫视",山东卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000436?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="黑龙江卫视" tvg-name="黑龙江卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/heilongjiang.png" group-title="卫视",黑龙江卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000462?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="河北卫视" tvg-name="河北卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/hebei.png" group-title="卫视",河北卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000582?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="四川卫视" tvg-name="四川卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/sichuan.png" group-title="卫视",四川卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000581?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="贵州卫视" tvg-name="贵州卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/guizhou.png" group-title="卫视",贵州卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000584?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="云南卫视" tvg-name="云南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/yunnan.png" group-title="卫视",云南卫视
-http://124.90.44.40:6060/010/2/20002000000000010000000002776036?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="安徽卫视" tvg-name="安徽卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/anhui.png" group-title="卫视",安徽卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000459?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="河南卫视" tvg-name="河南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/henan.png" group-title="卫视",河南卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000586?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="广西卫视" tvg-name="广西卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/guangxi.png" group-title="卫视",广西卫视
-http://124.90.44.40:6060/010/2/20002000000000010000000002776028?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="甘肃卫视" tvg-name="甘肃卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/gansu.png" group-title="卫视",甘肃卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000594?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="海南卫视" tvg-name="海南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/lvyou.png" group-title="卫视",海南卫视
-http://124.90.44.40:6060/010/2/20002000000000010000000002776012?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="青海卫视" tvg-name="青海卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/qinghai.png" group-title="卫视",青海卫视
-http://124.90.44.40:6060/010/2/20002000000000010000000002775980?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="吉林卫视" tvg-name="吉林卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/jilin.png" group-title="卫视",吉林卫视
-http://124.90.44.40:6060/010/2/20002000000000010000000002776032?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="山西卫视" tvg-name="山西卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/shanxi_.png" group-title="卫视",山西卫视
-http://124.90.44.40:6060/010/2/20002000000000010000000002776020?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="内蒙古卫视" tvg-name="内蒙古卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/neimeng.png" group-title="卫视",内蒙古卫视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000593?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="陕西卫视" tvg-name="陕西卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/shanxi.png" group-title="卫视",陕西卫视
-http://124.90.44.40:6060/010/2/20002000000000010000000002776000?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="新疆卫视" tvg-name="新疆卫视" tvg-logo="https://epg.112114.xyz/logo/xinjiang.png" group-title="卫视",新疆卫视
-http://124.90.44.40:6060/010/2/00000009000000060000000000002051?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="西藏卫视" tvg-name="西藏卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/xizang.png" group-title="卫视",西藏卫视
-http://124.90.44.40:6060/010/2/00000009000000060000000000002057?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="兵团卫视" tvg-name="兵团卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/bingtuan.png" group-title="卫视",兵团卫视
-http://124.90.44.40:6060/010/2/00000009000000060000000000002055?virtualDomain=010.live_hls.zte.com
-
-
-#EXTINF:-1 tvg-id="民生休闲" tvg-name="民生休闲" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/浙江民生.png" group-title="浙江",民生休闲
-http://124.90.44.40:6060/010/2/00000001000000060000000000000578?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="浙江少儿" tvg-name="浙江少儿" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/浙江少儿.png" group-title="浙江",浙江少儿
-http://124.90.44.40:6060/010/2/00000001000000060000000000000580?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="宁波综合" tvg-name="宁波综合" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/宁波新闻综合.png" group-title="浙江",宁波综合
-http://124.90.44.40:6060/010/2/00000001000000060000000000000600?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="宁波生活" tvg-name="宁波生活" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/宁波经济生活.png" group-title="浙江",宁波生活
-http://124.90.44.40:6060/010/2/00000001000000060000000000000789?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="宁波都市" tvg-name="宁波都市" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/宁波都市文体.png" group-title="浙江",宁波都市
-http://124.90.44.40:6060/010/2/00000001000000060000000000000790?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="宁波影视" tvg-name="宁波影视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/宁波影视剧.png" group-title="浙江",宁波影视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000791?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="衢州一套" tvg-name="衢州一套" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/衢州新闻综合.png" group-title="浙江",衢州一套
-http://124.90.44.40:6060/010/2/01000010000000060000000000002837?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="衢州二套" tvg-name="衢州二套" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/衢州公共.png" group-title="浙江",衢州二套
-http://124.90.44.40:6060/010/2/01000010000000060000000000002838?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="之江记录" tvg-name="之江记录" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/之江记录.png" group-title="浙江",之江记录
-http://124.90.44.40:6060/010/2/01000010000000060000000000002844?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="杭州综合" tvg-name="杭州综合" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州综合.png" group-title="浙江",杭州综合
-http://124.90.44.40:6060/010/2/00000001000000060000000000000782?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="杭州生活" tvg-name="杭州生活" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州生活.png" group-title="浙江",杭州生活
-http://124.90.44.40:6060/010/2/00000001000000060000000000000784?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="杭州影视" tvg-name="杭州影视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州影视.png" group-title="浙江",杭州影视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000785?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="浙江教影" tvg-name="浙江教影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/浙江教科影视.png" group-title="浙江",浙江教影
-http://124.90.44.40:6060/010/2/00000001000000060000000000000576?AuthInfo=z65J6ZDNYqti%2F6F%2BPX%2BzfKPQRt%2FPjzMSkozGSNJ866M5ClWLEgr2w%2FyaoOVDLtcRnz1WKm2SzJ4k357k9Z%2BUDNlsMiU76bF1Tbh0JdAOKAM%3D&version=v1.0&BreakPoint=0&virtualDomain=010.live_hls.zte.com&programid=ch00000000000000001328&boid=001&contentid=ch00000000000000001328&stbid=00000433002420502508E81711206E58&terminalflag=1&videoid=ch00000090990000001329&userid=057401350507&recommendtype=0"
-
-#EXTINF:-1 tvg-id="杭州青体" tvg-name="杭州青体" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州青少体育.png" group-title="浙江",杭州青体
-http://124.90.44.40:6060/010/2/00000001000000060000000000000786?AuthInfo=z65J6ZDNYqti%2F6F%2BPX%2BzfKPQRt%2FPjzMSkozGSNJ866M5ClWLEgr2w%2FyaoOVDLtcRJ092mXV7SGgr2MydjvFIz9lsMiU76bF1Tbh0JdAOKAM%3D&version=v1.0&BreakPoint=0&virtualDomain=010.live_hls.zte.com&programid=ch00000000000000001340&boid=001&contentid=ch00000000000000001340&stbid=00000433002420502508E81711206E58&terminalflag=1&videoid=ch00000090990000001338&userid=057401350507&recommendtype=0"
-
-#EXTINF:-1 tvg-id="钱江都市" tvg-name="钱江都市" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/浙江钱江都市.png" group-title="浙江",钱江都市
-http://124.90.44.40:6060/010/2/00000001000000060000000000000571?AuthInfo=z65J6ZDNYqti%2F6F%2BPX%2BzfKPQRt%2FPjzMSkozGSNJ866M5ClWLEgr2w%2FyaoOVDLtcR%2BpYIzq1HSA%2BEhAaSpzXBhtlsMiU76bF1Tbh0JdAOKAM%3D&version=v1.0&BreakPoint=0&virtualDomain=010.live_hls.zte.com&programid=ch00000000000000001324&boid=001&contentid=ch00000000000000001324&stbid=00000433002420502508E81711206E58&terminalflag=1&videoid=ch00000090990000001327&userid=057401350507&recommendtype=0"
-
-#EXTINF:-1 tvg-id="绍兴一套" tvg-name="绍兴一套" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/绍兴新闻综合.png" group-title="浙江",绍兴一套
-http://124.90.44.40:6060/010/2/00000001000000060000000000000496?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="温州一套" tvg-name="温州一套" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/温州新闻综合.png" group-title="浙江",温州一套
-http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=010.live_hls.zte.com
-
-#EXTINF:-1 tvg-id="杭州导视" tvg-name="杭州导视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州导视.png" group-title="浙江",杭州导视
-http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
+# 生成时间: 2026-03-04 13:54:55
 
 
 ### HK ###
+
+#EXTINF:-1 group-title="HK",凤凰中文
+http://61.184.46.85:85/tsfile/live/1029_1.m3u8?key=txiptv&playlive=1&authid=0
+
+#EXTINF:-1 group-title="HK",凤凰资讯
+https://cdn9.163189.xyz/smt3.1.1.php?id=phoenixinfo_hd
+
+#EXTINF:-1 group-title="HK",Now新闻
+http://cdn.163189.xyz/163189/now
+
+#EXTINF:-1 group-title="HK",TVB plus
+http://74.91.26.218:82/live/j2.m3u8
+https://o11.163189.xyz/stream/tvb/tvbp/
+
+#EXTINF:-1 group-title="HK",TVB星河
+http://r.jdshipin.com/Voac4
+https://o11.163189.xyz/stream/live/tvbxh/
+
+#EXTINF:-1 group-title="HK",ViuTV
+https://cdn.163189.xyz/163189/viu
 
 #EXTINF:-1 group-title="HK",Astro AEC
 https://o11.163189.xyz/stream/live/aec/
@@ -272,9 +54,6 @@ http://iptv.4666888.xyz/iptv2A.php?id=39
 #EXTINF:-1 group-title="HK",GOOD
 http://165.154.226.214:50007/of-litv-ftv17/index.m3u8?proxy=true
 
-#EXTINF:-1 group-title="HK",GOODTV好消息
-http://165.154.226.214:50007/of-litv-ftv16/index.m3u8?proxy=true
-
 #EXTINF:-1 group-title="HK",HOY
 http://iptv.4666888.xyz/iptv2A.php?id=35
 
@@ -290,9 +69,6 @@ https://tv.iill.top/4gtv/4gtv-live107
 
 #EXTINF:-1 group-title="HK",MYTV黃金翡翠
 http://iptv.4666888.xyz/iptv2A.php?id=32
-
-#EXTINF:-1 group-title="HK",Now新闻
-http://cdn.163189.xyz/163189/now
 
 #EXTINF:-1 group-title="HK",POPC
 http://tl.061833.xyz/tl/popc
@@ -314,10 +90,6 @@ http://iptv.4666888.xyz/iptv2A.php?id=3
 
 #EXTINF:-1 group-title="HK",TVB
 http://iptv.4666888.xyz/iptv2A.php?id=25
-
-#EXTINF:-1 group-title="HK",TVB plus
-https://o11.163189.xyz/stream/tvb/tvbp/
-http://74.91.26.218:82/live/j2.m3u8
 
 #EXTINF:-1 group-title="HK",TVB-獎門人
 http://iptv.4666888.xyz/iptv2A.php?id=31
@@ -341,10 +113,6 @@ http://iptv.4666888.xyz/iptv2A.php?id=36
 http://iptv.4666888.xyz/iptv2A.php?id=29
 https://mytv.cdn.loc.cc/o12.php?id=mzt
 
-#EXTINF:-1 group-title="HK",TVB星河
-http://r.jdshipin.com/Voac4
-https://o11.163189.xyz/stream/live/tvbxh/
-
 #EXTINF:-1 group-title="HK",TVB翡翠(馬來)
 http://iptv.4666888.xyz/iptv2A.php?id=28
 
@@ -353,9 +121,6 @@ http://iptv.4666888.xyz/iptv2A.php?id=33
 
 #EXTINF:-1 group-title="HK",TVB黃金華劇
 http://iptv.4666888.xyz/iptv2A.php?id=34
-
-#EXTINF:-1 group-title="HK",ViuTV
-https://cdn.163189.xyz/163189/viu
 
 #EXTINF:-1 group-title="HK",中國電影
 http://iptv.4666888.xyz/iptv2A.php?id=61
@@ -383,12 +148,6 @@ http://74.91.26.218:82/live/pts.m3u8
 
 #EXTINF:-1 group-title="HK",公视台语
 http://74.91.26.218:82/live/ptsty.m3u8
-
-#EXTINF:-1 group-title="HK",凤凰中文
-http://61.184.46.85:85/tsfile/live/1029_1.m3u8?key=txiptv&playlive=1&authid=0
-
-#EXTINF:-1 group-title="HK",凤凰资讯
-https://cdn9.163189.xyz/smt3.1.1.php?id=phoenixinfo_hd
 
 #EXTINF:-1 group-title="HK",千禧經典
 http://iptv.4666888.xyz/iptv2A.php?id=22
@@ -490,9 +249,9 @@ http://cdn6.163189.xyz/163189/amzy
 http://iptv.4666888.xyz/iptv2A.php?id=65
 
 #EXTINF:-1 group-title="HK",翡翠
-https://o11.163189.xyz/stream/tvb/fct4k/
 https://cdn6.163189.xyz/163189/fct4k
 https://mytv.cdn.loc.cc/o12.php?id=fct
+https://o11.163189.xyz/stream/tvb/fct4k/
 
 #EXTINF:-1 group-title="HK",臺視綜合
 http://iptv.4666888.xyz/iptv2A.php?id=51
@@ -531,8 +290,8 @@ http://iptv.4666888.xyz/iptv2A.php?id=63
 http://iptv.4666888.xyz/iptv2A.php?id=59
 
 #EXTINF:-1 group-title="HK",香港卫视
-https://stream1.freetv.fun/6130c4439e91813125415b749209467f8da4f3d09d09ac80d7848321fc5e709e.m3u8
 http://webcast.hkstv.tv/livestream/mutfysrq/playlist.m3u8
+https://stream1.freetv.fun/6130c4439e91813125415b749209467f8da4f3d09d09ac80d7848321fc5e709e.m3u8
 
 #EXTINF:-1 group-title="HK",鳳凰中文
 http://iptv.4666888.xyz/iptv2A.php?id=27
@@ -560,17 +319,49 @@ https://cdn8.163189.xyz/163189/lhdy
 #EXTINF:-1 group-title="HK",龙华经典
 https://cdn8.163189.xyz/163189/lhjd
 
-
 ### TW ###
+
+#EXTINF:-1 group-title="TW",Love Nature
+https://tv.iill.top/4gtv/4gtv-live208
+
+#EXTINF:-1 group-title="TW",中天亞洲
+https://tv.iill.top/FainTV/121
+
+#EXTINF:-1 group-title="TW",中天娛樂
+https://hls.iill.top/api/Cti-E/index.m3u8
+
+#EXTINF:-1 group-title="TW",中天新聞
+https://tv.iill.top/4gtv/4gtv-4gtv009
+
+#EXTINF:-1 group-title="TW",中天綜合
+https://hls.iill.top/api/Cti-K/index.m3u8
+
+#EXTINF:-1 group-title="TW",寰宇新聞台灣
+https://tv.iill.top/4gtv/4gtv-4gtv156
+
+#EXTINF:-1 group-title="TW",寰宇財經
+https://tv.iill.top/ofiii/4gtv-4gtv158
+
+#EXTINF:-1 group-title="TW",東森幼幼
+https://hls.iill.top/api/YoYo-TV/index.m3u8
+
+#EXTINF:-1 group-title="TW",東森戲劇
+https://hls.iill.top/api/ET-Drama-Channel/index.m3u8
+
+#EXTINF:-1 group-title="TW",東森新聞
+https://tv.iill.top/4gtv/4gtv-4gtv152
+
+#EXTINF:-1 group-title="TW",東森洋片
+https://hls.iill.top/api/ET-Foreign-Movie-Channel/index.m3u8
+
+#EXTINF:-1 group-title="TW",東森財經
+https://tv.iill.top/4gtv/4gtv-4gtv153
+
+#EXTINF:-1 group-title="TW",東森電影
+https://hls.iill.top/api/ET-Movie/index.m3u8
 
 #EXTINF:-1 group-title="TW",amc電影
 https://tv.iill.top/4gtv/4gtv-4gtv017
-
-#EXTINF:-1 group-title="TW",Arirang TV
-https://tv.iill.top/4gtv/4gtv-4gtv079
-
-#EXTINF:-1 group-title="TW",Bloomberg TV
-https://tv.iill.top/4gtv/4gtv-live059
 
 #EXTINF:-1 group-title="TW",CI 罪案偵查頻道
 https://tv.iill.top/4gtv/4gtv-live027
@@ -581,26 +372,11 @@ https://tv.iill.top/4gtv/4gtv-live069
 #EXTINF:-1 group-title="TW",CINEMAX
 https://hls.iill.top/api/Cinemax/index.m3u8
 
-#EXTINF:-1 group-title="TW",CLASSICA 古典樂
-https://tv.iill.top/4gtv/4gtv-4gtv059
-
 #EXTINF:-1 group-title="TW",CNBC Asia 財經
 https://tv.iill.top/4gtv/4gtv-live130
 
 #EXTINF:-1 group-title="TW",DayStar
 https://tv.iill.top/ofiii/daystar
-
-#EXTINF:-1 group-title="TW",DreamWorks 夢工廠動畫
-https://tv.iill.top/4gtv/4gtv-live017
-
-#EXTINF:-1 group-title="TW",DW德國之聲
-https://tv.iill.top/4gtv/4gtv-live071
-
-#EXTINF:-1 group-title="TW",ELTA生活英語
-https://tv.iill.top/4gtv/litv-xinchuang20
-
-#EXTINF:-1 group-title="TW",ETtoday綜合
-https://tv.iill.top/FainTV/146
 
 #EXTINF:-1 group-title="TW",FashionTV 時尚頻道
 https://tv.iill.top/4gtv/4gtv-live085
@@ -611,29 +387,14 @@ https://tv.iill.top/4gtv/4gtv-live146
 #EXTINF:-1 group-title="TW",fun探索娛樂
 https://tv.iill.top/4gtv/4gtv-live011
 
-#EXTINF:-1 group-title="TW",GINX Esports TV
-https://tv.iill.top/4gtv/4gtv-4gtv053
-
-#EXTINF:-1 group-title="TW",Global Trekker
-https://tv.iill.top/4gtv/4gtv-live112
-
 #EXTINF:-1 group-title="TW",History 歷史頻道
 https://tv.iill.top/4gtv/4gtv-live026
 
 #EXTINF:-1 group-title="TW",HITS頻道
 https://tv.iill.top/4gtv/4gtv-live620
 
-#EXTINF:-1 group-title="TW",INULTRA
-https://tv.iill.top/4gtv/4gtv-live096
-
 #EXTINF:-1 group-title="TW",Lifetime 娛樂頻道
 https://tv.iill.top/4gtv/4gtv-live029
-
-#EXTINF:-1 group-title="TW",LiveABC互動英語頻道
-https://tv.iill.top/4gtv/4gtv-live030
-
-#EXTINF:-1 group-title="TW",Love Nature
-https://tv.iill.top/4gtv/4gtv-live208
 
 #EXTINF:-1 group-title="TW",LUXE TV Channel
 https://tv.iill.top/4gtv/4gtv-live121
@@ -647,20 +408,11 @@ https://tv.iill.top/4gtv/litv-ftv10
 #EXTINF:-1 group-title="TW",Mezzo Live
 https://tv.iill.top/4gtv/4gtv-4gtv083
 
-#EXTINF:-1 group-title="TW",MOMO運動綜合
-https://tv.iill.top/FainTV/14009
-
 #EXTINF:-1 group-title="TW",MTV Live
 https://hls.iill.top/api/MTV-Live/index.m3u8
 
 #EXTINF:-1 group-title="TW",NHK 新聞資訊
 https://tv.iill.top/4gtv/4gtv-live168
-
-#EXTINF:-1 group-title="TW",Nick Jr. 兒童頻道
-https://tv.iill.top/4gtv/4gtv-live032
-
-#EXTINF:-1 group-title="TW",Pet Club TV
-https://tv.iill.top/4gtv/4gtv-4gtv110
 
 #EXTINF:-1 group-title="TW",ROCK Action
 https://tv.iill.top/4gtv/4gtv-live138
@@ -670,12 +422,6 @@ https://tv.iill.top/4gtv/4gtv-live080
 
 #EXTINF:-1 group-title="TW",ROCK Xstream
 https://tv.iill.top/4gtv/4gtv-live124
-
-#EXTINF:-1 group-title="TW",SBN 全球財經
-https://tv.iill.top/4gtv/4gtv-live060
-
-#EXTINF:-1 group-title="TW",Smart知識
-https://tv.iill.top/ofiii/litv-xinchuang19
 
 #EXTINF:-1 group-title="TW",TRACE Sport Stars
 https://tv.iill.top/4gtv/4gtv-4gtv077
@@ -704,18 +450,6 @@ https://tv.iill.top/4gtv/4gtv-live089
 #EXTINF:-1 group-title="TW",三立綜合
 https://tv.iill.top/4gtv/4gtv-live207
 
-#EXTINF:-1 group-title="TW",中天亞洲
-https://tv.iill.top/FainTV/121
-
-#EXTINF:-1 group-title="TW",中天娛樂
-https://hls.iill.top/api/Cti-E/index.m3u8
-
-#EXTINF:-1 group-title="TW",中天新聞
-https://tv.iill.top/4gtv/4gtv-4gtv009
-
-#EXTINF:-1 group-title="TW",中天綜合
-https://hls.iill.top/api/Cti-K/index.m3u8
-
 #EXTINF:-1 group-title="TW",中視
 https://tv.iill.top/4gtv/4gtv-4gtv040
 
@@ -743,9 +477,6 @@ https://tv.iill.top/4gtv/4gtv-4gtv042
 #EXTINF:-1 group-title="TW",動物星球
 https://hls.iill.top/api/Animal-Planet/index.m3u8
 
-#EXTINF:-1 group-title="TW",半島國際新聞
-https://tv.iill.top/4gtv/4gtv-live157
-
 #EXTINF:-1 group-title="TW",原住民族電視
 https://tv.iill.top/4gtv/4gtv-live014
 
@@ -762,28 +493,11 @@ https://tv.iill.top/ofiii/4gtv-4gtv051
 https://tv.iill.top/4gtv/4gtv-4gtv084
 https://tv.iill.top/4gtv/4gtv-4gtv085
 
-#EXTINF:-1 group-title="TW",大愛電視
-https://tv.iill.top/4gtv/4gtv-live007
-https://tv.iill.top/4gtv/4gtv-live106
-
-#EXTINF:-1 group-title="TW",好消息
-https://tv.iill.top/4gtv/litv-ftv16
-https://tv.iill.top/4gtv/litv-ftv17
-
 #EXTINF:-1 group-title="TW",好萊塢電影
 https://hls.iill.top/api/Hollywood-Movie/index.m3u8
 
 #EXTINF:-1 group-title="TW",客家電視
 https://tv.iill.top/4gtv/4gtv-4gtv043
-
-#EXTINF:-1 group-title="TW",寰宇新聞台灣
-https://tv.iill.top/4gtv/4gtv-4gtv156
-
-#EXTINF:-1 group-title="TW",寰宇財經
-https://tv.iill.top/ofiii/4gtv-4gtv158
-
-#EXTINF:-1 group-title="TW",尼克兒童頻道
-https://tv.iill.top/4gtv/4gtv-live105
 
 #EXTINF:-1 group-title="TW",幸福空間居家
 https://tv.iill.top/4gtv/4gtv-live206
@@ -800,41 +514,8 @@ https://tv.iill.top/4gtv/4gtv-4gtv070
 #EXTINF:-1 group-title="TW",愛爾達生活旅遊
 https://tv.iill.top/4gtv/4gtv-live120
 
-#EXTINF:-1 group-title="TW",新唐人亞太
-https://tv.iill.top/4gtv/4gtv-live050
-
 #EXTINF:-1 group-title="TW",時尚運動X
 https://tv.iill.top/4gtv/4gtv-4gtv014
-
-#EXTINF:-1 group-title="TW",東森幼幼
-https://hls.iill.top/api/YoYo-TV/index.m3u8
-
-#EXTINF:-1 group-title="TW",東森戲劇
-https://hls.iill.top/api/ET-Drama-Channel/index.m3u8
-
-#EXTINF:-1 group-title="TW",東森新聞
-https://tv.iill.top/4gtv/4gtv-4gtv152
-
-#EXTINF:-1 group-title="TW",東森洋片
-https://hls.iill.top/api/ET-Foreign-Movie-Channel/index.m3u8
-
-#EXTINF:-1 group-title="TW",東森財經
-https://tv.iill.top/4gtv/4gtv-4gtv153
-
-#EXTINF:-1 group-title="TW",東森購物 一
-https://tv.iill.top/4gtv/4gtv-live047
-
-#EXTINF:-1 group-title="TW",東森購物 三
-https://tv.iill.top/4gtv/4gtv-live048
-
-#EXTINF:-1 group-title="TW",東森購物 二
-https://tv.iill.top/4gtv/4gtv-live046
-
-#EXTINF:-1 group-title="TW",東森購物 四
-https://tv.iill.top/4gtv/4gtv-live0499
-
-#EXTINF:-1 group-title="TW",東森電影
-https://hls.iill.top/api/ET-Movie/index.m3u8
 
 #EXTINF:-1 group-title="TW",歡樂兒童
 https://tv.iill.top/FainTV/22768
@@ -962,7 +643,6 @@ https://tv.iill.top/ofiii/litv-xinchuang11
 #EXTINF:-1 group-title="TW",龍華經典
 https://tv.iill.top/ofiii/litv-xinchuang21
 
-
 ### SPORTS ###
 
 #EXTINF:-1 group-title="SPORTS",beIN Sports
@@ -1001,13 +681,13 @@ https://hls.iill.top/api/Hub-Sports-8/index.m3u8
 
 #EXTINF:-1 group-title="SPORTS",NOW体育
 http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382834&extension=ts&play_token=JBOlpsgTKU
-http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382843&extension=ts&play_token=KANAeecxcz
-http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382842&extension=ts&play_token=MCoDoR8s9G
-http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382841&extension=ts&play_token=5uiKCGTNCF
-http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382840&extension=ts&play_token=eoeYdjrkUg
-http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382839&extension=ts&play_token=lu0NOftGgg
-http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382838&extension=ts&play_token=WQ4pi5DTy3
 http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382837&extension=ts&play_token=rRmhe1TsX7
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382838&extension=ts&play_token=WQ4pi5DTy3
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382839&extension=ts&play_token=lu0NOftGgg
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382840&extension=ts&play_token=eoeYdjrkUg
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382841&extension=ts&play_token=5uiKCGTNCF
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382842&extension=ts&play_token=MCoDoR8s9G
+http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382843&extension=ts&play_token=KANAeecxcz
 
 #EXTINF:-1 group-title="SPORTS",NOW体育4K
 http://main.light-ott.net:80/play/live.php?mac=00:1A:79:3A:93:FD&stream=382836&extension=ts&play_token=jSAYXQsMoY
