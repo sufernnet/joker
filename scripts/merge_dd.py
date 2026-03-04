@@ -5,7 +5,7 @@
 DD.m3u 构建系统（终极融合版）
 包含：
 - BB.m3u 合并
-- HK 抓取
+- HK 抓取（从EE.m3u）
 - TW 限制抓取
 - 體育 Relay 抓取
 - 自动去 Relay/FainTV/ofiii/4gTV
@@ -20,7 +20,7 @@ import re
 # ================= 配置 =================
 
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
-HK_SOURCE_URL = "https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1"
+HK_SOURCE_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/EE.m3u"  # 使用EE.m3u作为HK源
 TW_SOURCE_URL = "https://yang.sufern001.workers.dev"
 
 OUTPUT_FILE = "DD.m3u"
@@ -34,49 +34,38 @@ REMOVE_KEYWORDS = ["FainTV", "ofiii", "4gTV", "Relay"]
 
 SPORTS_KEYWORDS = ["博斯", "緯來體育", "NOW体育", "Now体育"]
 
-# 需要从HK移到TW的台湾频道精确列表（完整版）
-TW_CHANNELS_IN_HK = [
-    # 中视系列
-    "中视",
-    "中视新闻",
-    "中视经典",
-    "中视菁采",
+# 台湾电视频道关键词（全面版）
+TW_CHANNEL_KEYWORDS = [
+    # 无线台
+    "台視", "台视", "ttv",
+    "中視", "中视", "ctv",
+    "華視", "华视", "cts",
+    "民視", "民视", "ftv",
+    "公視", "公视", "pts",
     
-    # 华视系列
-    "华视",
-    "华视教育体育文化",
-    "华视新闻",
+    # 新闻台
+    "新聞", "新闻", "news",
     
-    # 台视系列
-    "台视",
-    "台视新闻",
-    "台视财经",
-    "臺視綜合",
-    
-    # 民视系列
-    "民视",
-    "民視",
-    "民视台湾",
-    "民视新闻",
-    "民视第一",
-    "民視影劇",
-    "民視綜藝",
-    
-    # 公视系列
-    "公视台语",
+    # 综合/综艺
+    "綜合", "综合", "綜藝", "综艺", "影劇", "影剧", "第一",
     
     # 龙华系列
-    "龍華電影",
-    "龙华偶像",
-    "龙华戏剧",
-    "龙华日韩",
-    "龙华电影",
-    "龙华经典",
-    "龍華洋片",
+    "龍華", "龙华", "龍華電影", "龙华电影", "龍華洋片", "龙华日韩", 
+    "龙华戏剧", "龙华偶像", "龙华经典",
     
-    # 其他
-    "唐NTD",
-    "唐人卫视"
+    # 其他台湾频道
+    "唐NTD", "唐人卫视",
+    
+    # 常见的台湾频道名称
+    "東森", "东森", "中天", "TVBS", "三立", "非凡", "壹電視", "壹电视",
+    "寰宇", "愛爾達", "爱尔达", "緯來", "纬来"
+]
+
+# 香港频道关键词（用于确认哪些应该留在HK）
+HK_CHANNEL_KEYWORDS = [
+    "翡翠", "明珠", "J2", "TVB", "無線", "无线",
+    "ViuTV", "ViuTV6", "Now", "HOY", "有線", "有线",
+    "鳳凰", "凤凰", "港台電視", "RHK", "CH"
 ]
 
 REMOVE_CHANNELS = [
@@ -111,7 +100,8 @@ def download(url):
                          headers={"User-Agent": "Mozilla/5.0"})
         r.raise_for_status()
         return r.text
-    except:
+    except Exception as e:
+        print(f"下载失败 {url}: {e}")
         return ""
 
 # ================= 名称标准化 =================
@@ -134,11 +124,55 @@ def should_remove(name):
             return True
     return False
 
+def is_taiwan_channel(name):
+    """智能判断是否为台湾频道"""
+    name_lower = name.lower()
+    
+    # 检查是否包含台湾关键词
+    for kw in TW_CHANNEL_KEYWORDS:
+        if kw.lower() in name_lower:
+            # 特殊规则：如果同时包含香港关键词，可能不是台湾频道
+            is_hk = False
+            for hk_kw in HK_CHANNEL_KEYWORDS:
+                if hk_kw.lower() in name_lower:
+                    is_hk = True
+                    break
+            
+            # 如果是"民视新闻"这样的，虽然包含"新闻"（在TW关键词中），
+            # 但"民视"明确是台湾频道，所以返回True
+            if "民視" in name or "民视" in name:
+                return True
+            if "台視" in name or "台视" in name:
+                return True
+            if "中視" in name or "中视" in name:
+                return True
+            if "華視" in name or "华视" in name:
+                return True
+            if "龍華" in name or "龙华" in name:
+                return True
+            if "唐NTD" in name or "唐人卫视" in name:
+                return True
+            
+            # 如果只有"新闻"而没有其他台湾标识，可能是香港新闻台
+            if kw == "新聞" or kw == "新闻" or kw == "news":
+                return False
+            
+            # 其他情况，如果有台湾关键词且不是香港频道，则认为是台湾频道
+            if not is_hk:
+                return True
+    
+    return False
+
 def determine_group(name, default_group):
     # 先检查是否为体育频道
     for kw in SPORTS_KEYWORDS:
         if kw.lower() in name.lower():
             return GROUP_SPORTS
+    
+    # 如果是台湾频道，强制设为TW组
+    if is_taiwan_channel(name):
+        return GROUP_TW
+    
     return default_group
 
 # ================= 提取 BB =================
@@ -159,41 +193,28 @@ def extract_bb(content):
                     channels.append((name,url,group))
     return channels
 
-# ================= 提取 HK =================
+# ================= 提取 HK (从EE.m3u) =================
 
 def extract_hk(content):
     lines = content.splitlines()
     channels = []
-    in_section = False
-
-    for line in lines:
-        raw = line.strip()
-        if not raw:
-            continue
-
-        if not in_section and "港澳台直播" in raw:
-            in_section = True
-            continue
-
-        if in_section:
-            if "#genre#" in raw and "港澳台直播" not in raw:
-                break
-
-            if "," in raw and "://" in raw:
-                name, url = raw.split(",", 1)
-                name = name.strip()
-                url = url.strip()
-                
-                # 判断频道是否在台湾频道列表中
-                is_tw_channel = False
-                for tw_name in TW_CHANNELS_IN_HK:
-                    if tw_name.lower() in name.lower() or name.lower() in tw_name.lower():
-                        is_tw_channel = True
-                        break
-                
-                # 如果是台湾频道，分组为TW，否则为HK
-                group = GROUP_TW if is_tw_channel else GROUP_HK
-                channels.append((name, url, group))
+    
+    for i in range(len(lines)):
+        line = lines[i].strip()
+        
+        if line.startswith("#EXTINF"):
+            name = line.split(",", 1)[1].strip()
+            if i+1 < len(lines):
+                url = lines[i+1].strip()
+                if url.startswith("http"):
+                    # 读取原分组
+                    m = re.search(r'group-title="([^"]*)"', line)
+                    original_group = m.group(1) if m else ""
+                    
+                    # 使用智能判断来决定分组
+                    group = GROUP_TW if is_taiwan_channel(name) else GROUP_HK
+                    channels.append((name, url, group))
+    
     return channels
 
 # ================= 提取 TW + 体育 Relay =================
@@ -255,12 +276,10 @@ def hk_weight(name):
 def tw_weight(name):
     # 台湾频道排序
     tw_order = [
-        "中视", "中视新闻", "中视经典", "中视菁采",
-        "华视", "华视新闻", "华视教育体育文化",
-        "台视", "台视新闻", "台视财经", "臺視綜合",
-        "民视", "民視", "民视新闻", "民视第一", "民视台湾", "民視影劇", "民視綜藝",
-        "公视", "公视台语",
-        "龍華電影", "龙华偶像", "龙华戏剧", "龙华日韩", "龙华电影", "龙华经典", "龍華洋片",
+        "台視", "台视", "中視", "中视", "華視", "华视", "民視", "民视", "公視", "公视",
+        "台視新聞", "台视新闻", "中視新聞", "中视新闻", "華視新聞", "华视新闻", "民視新聞", "民视新闻",
+        "台視財經", "台视财经", "民視第一", "民视第一", "民視影劇", "民视影剧", "民視綜藝", "民视综艺",
+        "龍華電影", "龙华电影", "龍華洋片", "龙华日韩", "龙华戏剧", "龙华偶像", "龙华经典",
         "唐NTD", "唐人卫视"
     ]
     
@@ -272,19 +291,39 @@ def tw_weight(name):
 # ================= 主流程 =================
 
 def main():
-
+    print("开始下载源文件...")
+    
     bb = download(BB_URL)
     hk = download(HK_SOURCE_URL)
     tw = download(TW_SOURCE_URL)
-
-    channels = (
-        extract_bb(bb) +
-        extract_hk(hk) +
-        extract_tw(tw)
-    )
-
+    
+    print("开始提取频道...")
+    
+    channels = []
+    
+    # 提取BB源
+    if bb:
+        bb_channels = extract_bb(bb)
+        print(f"从BB源提取到 {len(bb_channels)} 个频道")
+        channels.extend(bb_channels)
+    
+    # 提取HK源（EE.m3u）
+    if hk:
+        hk_channels = extract_hk(hk)
+        print(f"从HK源提取到 {len(hk_channels)} 个频道")
+        channels.extend(hk_channels)
+    
+    # 提取TW源
+    if tw:
+        tw_channels = extract_tw(tw)
+        print(f"从TW源提取到 {len(tw_channels)} 个频道")
+        channels.extend(tw_channels)
+    
+    print(f"总共提取到 {len(channels)} 个频道")
+    print("开始合并去重...")
+    
     merged = merge_channels(channels)
-
+    
     hk_list, tw_list, sports_list = [],[],[]
 
     for data in merged.values():
@@ -294,11 +333,14 @@ def main():
             tw_list.append(data)
         elif data["group"] == GROUP_SPORTS:
             sports_list.append(data)
+    
+    print(f"合并后: HK {len(hk_list)}个, TW {len(tw_list)}个, SPORTS {len(sports_list)}个")
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
-    output += f"# 生成时间: {timestamp}\n\n"
+    output += f"# 生成时间: {timestamp}\n"
+    output += f"# 总计: HK {len(hk_list)} | TW {len(tw_list)} | SPORTS {len(sports_list)}\n\n"
 
     # HK
     output += "\n### HK ###\n"
@@ -324,7 +366,7 @@ def main():
     with open(OUTPUT_FILE,"w",encoding="utf-8") as f:
         f.write(output)
 
-    print("🚀 DD.m3u 终极融合完成")
+    print(f"🚀 DD.m3u 终极融合完成，已保存到 {OUTPUT_FILE}")
 
 if __name__ == "__main__":
     main()
