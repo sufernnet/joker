@@ -34,12 +34,25 @@ REMOVE_KEYWORDS = ["FainTV", "ofiii", "4gTV", "Relay"]
 
 SPORTS_KEYWORDS = ["博斯", "緯來體育", "NOW体育", "Now体育"]
 
-# 台湾频道关键词 - 用于识别HK源中的台湾频道
-TW_CHANNEL_KEYWORDS = [
-    "東森", "中天", "民視", "三立", "TVBS", "非凡", "壹電視",
-    "寰宇", "台視", "華視", "中視", "公視", "原住民族電視台",
-    "客家電視台", "Love Nature", "龍華", "采昌", "靖天",
-    "博斯", "緯來", "愛爾達", "ELEVEN", "DAZN"
+# 需要从HK移到TW的台湾频道精确列表
+TW_CHANNELS_IN_HK = [
+    "中视",
+    "中视新闻",
+    "中视经典",
+    "中视菁采",
+    "公视台语",
+    "华视",
+    "华视教育体育文化",
+    "华视新闻",
+    "台视",
+    "台视新闻",
+    "台视财经",
+    "唐NTD",
+    "唐人卫视",
+    "民视台湾",
+    "民视新闻",
+    "民视第一",
+    "臺視綜合"
 ]
 
 REMOVE_CHANNELS = [
@@ -102,10 +115,6 @@ def determine_group(name, default_group):
     for kw in SPORTS_KEYWORDS:
         if kw.lower() in name.lower():
             return GROUP_SPORTS
-    # 然后检查是否为台湾频道
-    for kw in TW_CHANNEL_KEYWORDS:
-        if kw.lower() in name.lower():
-            return GROUP_TW
     return default_group
 
 # ================= 提取 BB =================
@@ -151,14 +160,15 @@ def extract_hk(content):
                 name = name.strip()
                 url = url.strip()
                 
-                # 判断频道来源：如果包含台湾关键词，则分组为TW，否则为HK
-                is_tw = False
-                for kw in TW_CHANNEL_KEYWORDS:
-                    if kw.lower() in name.lower():
-                        is_tw = True
+                # 判断频道是否在台湾频道列表中
+                is_tw_channel = False
+                for tw_name in TW_CHANNELS_IN_HK:
+                    if tw_name.lower() in name.lower() or name.lower() in tw_name.lower():
+                        is_tw_channel = True
                         break
                 
-                group = GROUP_TW if is_tw else GROUP_HK
+                # 如果是台湾频道，分组为TW，否则为HK
+                group = GROUP_TW if is_tw_channel else GROUP_HK
                 channels.append((name, url, group))
     return channels
 
@@ -219,16 +229,20 @@ def hk_weight(name):
     return 999
 
 def tw_weight(name):
-    if "Love Nature" in name: return 0
-    if "中天" in name: return 1
-    if "民视" in name or "民視" in name: return 2
-    if "寰宇" in name: return 3
-    if "東森" in name or "东森" in name: return 4
-    if "TVBS" in name: return 5
-    if "三立" in name: return 6
-    if "非凡" in name: return 7
-    if "壹電視" in name: return 8
-    return 9
+    # 台湾频道排序
+    tw_order = [
+        "中视", "中视新闻", "中视经典", "中视菁采",
+        "华视", "华视新闻", "华视教育体育文化",
+        "台视", "台视新闻", "台视财经",
+        "民视", "民视新闻", "民视第一", "民视台湾",
+        "公视", "公视台语",
+        "唐NTD", "唐人卫视"
+    ]
+    
+    for idx, key in enumerate(tw_order):
+        if key in name:
+            return idx
+    return 999
 
 # ================= 主流程 =================
 
