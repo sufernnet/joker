@@ -8,8 +8,9 @@ DD.m3u 合并脚本（港台频道版）
 3. 清洗 TW 频道名称：去除末尾的「Relay」、「FainTV」、「4gTV」等标记
 4. 过滤掉名称全是英文的 TW 频道
 5. 过滤掉指定的特定频道（DW德國之聲、MCE 我的歐洲電影、SBN 全球財經、國會頻道 1-2等）
-6. HK 分组和排序规则完全保留（从原港台大陆源提取）
-7. 输出文件为 DD.m3u
+6. TW 频道按指定分组排序：Love Nature→中天系列→民视系列→寰宇系列→中视系列→三立系列→其他
+7. HK 分组和排序规则完全保留（从原港台大陆源提取）
+8. 输出文件为 DD.m3u
 
 北京时间每天 06:00 / 17:00 自动运行
 """
@@ -257,36 +258,64 @@ HK_ORDER = [
     "天映经典",
 ]
 
-# ================== TW频道指定顺序 ==================
+# ================== TW频道指定顺序（按分组排序）==================
 TW_ORDER = [
-    "镜新聞",
-    "民视",
-    "民视台湾台",
-    "民視新聞台",
+    # Love Nature 系列
+    "Love Nature",
+    "Love Nature 4K",
+    "Love Nature 野生",
+    "Love Nature 自然",
+    
+    # 中天系列
+    "中天新聞",
+    "中天綜合",
+    "中天娛樂",
+    "中天亞洲",
+    
+    # 民视系列
+    "民視",
+    "民視新聞",
     "民視第一台",
-    "民视综艺",
-    "CTS華視新聞资讯",
-    "龙华偶像",
-    "龙华戏剧",
-    "龙华日韩",
-    "龙华经典",
+    "民視台灣台",
+    "民視影劇",
+    "民視綜藝",
+    
+    # 寰宇系列
+    "寰宇新聞",
+    "寰宇新聞台灣",
+    "寰宇新聞2",
+    "寰宇綜合",
+    "寰宇財經",
+    
+    # 中视系列
     "中視",
     "中視新聞",
-    "公視",
-    "台視",
-    "緯來精彩",
-    "环球电视台",
-    "台视新闻",
-    "台视综合",
-    "TVBS精采台",
-    "中视经典",
-    "中视菁采",
-    "八大精彩台",
-    "八大綜藝台",
-    "华视",
-    "华视教育体育文化",
-    "非凡新聞",
+    "中視經典",
+    "中視菁采",
+    
+    # 三立系列
+    "三立台灣台",
+    "三立都會台",
+    "三立戲劇台",
+    "三立綜合台",
+    "三立新聞台",
+    "三立iNEWS",
+    
+    # 其他（按字母顺序自动排列）
 ]
+
+# 分组权重映射（用于排序）
+GROUP_WEIGHTS = {
+    "Love Nature": 1,
+    "中天": 2,
+    "民視": 3,
+    "民视": 3,
+    "寰宇": 4,
+    "中視": 5,
+    "中视": 5,
+    "三立": 6,
+    "其他": 7,
+}
 
 # ================== 工具函数 ==================
 
@@ -494,35 +523,46 @@ def deduplicate_channels(channels):
     return deduped
 
 
-# ================== 分组判断函数 ==================
-
-def is_hk_channel(name):
-    """判断是否为香港频道"""
-    hk_identifiers = [
-        "凤凰", "Now", "HOY", "翡翠", "明珠", "TVB", "无线", "Viu", "RHK",
-        "CH5", "CH8", "CHU", "CCTV13", "八度空间", "天映"
-    ]
+def get_tw_group_weight(name):
+    """获取 TW 频道的分组权重"""
     name_lower = name.lower()
-    for identifier in hk_identifiers:
-        if identifier.lower() in name_lower:
-            return True
-    return False
+    
+    # Love Nature 系列
+    if "love nature" in name_lower:
+        return 1
+    
+    # 中天系列
+    if "中天" in name:
+        return 2
+    
+    # 民视系列
+    if "民視" in name or "民视" in name:
+        return 3
+    
+    # 寰宇系列
+    if "寰宇" in name:
+        return 4
+    
+    # 中视系列
+    if "中視" in name or "中视" in name:
+        return 5
+    
+    # 三立系列
+    if "三立" in name:
+        return 6
+    
+    # 其他
+    return 7
 
 
-def is_tw_channel(name):
-    """判断是否为台湾频道"""
-    tw_identifiers = [
-        "镜新聞", "民视", "民視", "華視", "CTS", "龙华", "中視", "公視", 
-        "台視", "緯來", "环球", "TVBS", "八大", "华视", "非凡"
-    ]
-    name_lower = name.lower()
-    for identifier in tw_identifiers:
-        if identifier.lower() in name_lower:
-            return True
-    return False
+def sort_tw_by_groups(channels):
+    """
+    按分组对 TW 频道进行排序
+    同一分组内按名称字母顺序排序
+    """
+    # 按分组权重排序，同一分组内按名称排序
+    return sorted(channels, key=lambda x: (get_tw_group_weight(x[0]), x[0]))
 
-
-# ================== 自定义排序函数 ==================
 
 def sort_by_custom_order(channels, order_list):
     """
@@ -545,6 +585,35 @@ def sort_by_custom_order(channels, order_list):
         return (1, name)
     
     return sorted(channels, key=key_func)
+
+
+# ================== 分组判断函数 ==================
+
+def is_hk_channel(name):
+    """判断是否为香港频道"""
+    hk_identifiers = [
+        "凤凰", "Now", "HOY", "翡翠", "明珠", "TVB", "无线", "Viu", "RHK",
+        "CH5", "CH8", "CHU", "CCTV13", "八度空间", "天映"
+    ]
+    name_lower = name.lower()
+    for identifier in hk_identifiers:
+        if identifier.lower() in name_lower:
+            return True
+    return False
+
+
+def is_tw_channel(name):
+    """判断是否为台湾频道"""
+    tw_identifiers = [
+        "镜新聞", "民视", "民視", "華視", "CTS", "龙华", "中視", "公視", 
+        "台視", "緯來", "环球", "TVBS", "八大", "华视", "非凡", "中天",
+        "寰宇", "三立", "Love Nature"
+    ]
+    name_lower = name.lower()
+    for identifier in tw_identifiers:
+        if identifier.lower() in name_lower:
+            return True
+    return False
 
 
 # ================== 主流程 ==================
@@ -610,9 +679,18 @@ def main():
 
     # 分别排序
     sorted_hk = sort_by_custom_order(hk_channels, HK_ORDER)
-    sorted_tw = sort_by_custom_order(tw_channels, TW_ORDER)
+    # TW 频道使用新的分组排序
+    sorted_tw = sort_tw_by_groups(tw_channels)
 
     log(f"排序完成")
+    log(f"TW 频道分组统计：")
+    log(f"  - Love Nature 系列: {sum(1 for name,_ in sorted_tw if get_tw_group_weight(name) == 1)}")
+    log(f"  - 中天系列: {sum(1 for name,_ in sorted_tw if get_tw_group_weight(name) == 2)}")
+    log(f"  - 民视系列: {sum(1 for name,_ in sorted_tw if get_tw_group_weight(name) == 3)}")
+    log(f"  - 寰宇系列: {sum(1 for name,_ in sorted_tw if get_tw_group_weight(name) == 4)}")
+    log(f"  - 中视系列: {sum(1 for name,_ in sorted_tw if get_tw_group_weight(name) == 5)}")
+    log(f"  - 三立系列: {sum(1 for name,_ in sorted_tw if get_tw_group_weight(name) == 6)}")
+    log(f"  - 其他: {sum(1 for name,_ in sorted_tw if get_tw_group_weight(name) == 7)}")
 
     # ================== 生成输出文件 ==================
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
