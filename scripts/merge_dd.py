@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-DD.m3u 构建系统（最终排序版）
+DD.m3u 构建系统（大小写合并终极版）
 """
 
 import requests
@@ -47,10 +47,7 @@ HK_ORDER = [
 
 # ================= 工具 =================
 
-def log(msg):
-    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
-
-def download(url, desc):
+def download(url):
     try:
         r = requests.get(url, timeout=30,
                          headers={"User-Agent": "Mozilla/5.0"})
@@ -121,43 +118,52 @@ def extract_tw_limited(content):
 
     return channels
 
-# ================= 合并 =================
+# ================= 合并（大小写不敏感） =================
 
 def merge_channels(channel_list):
-    merged = defaultdict(lambda: {"group": "", "urls": []})
+    merged = {}
+    name_map = {}  # 小写key → 标准名
 
     for name, url, group in channel_list:
         clean_name = clean_channel_name(name)
+        lower_key = clean_name.lower()
+
         final_group = determine_group(clean_name, group)
 
-        if merged[clean_name]["group"] == "":
-            merged[clean_name]["group"] = final_group
+        if lower_key not in merged:
+            merged[lower_key] = {
+                "name": clean_name,  # 保留首次出现名称
+                "group": final_group,
+                "urls": []
+            }
 
-        if url not in merged[clean_name]["urls"]:
-            merged[clean_name]["urls"].append(url)
+        if url not in merged[lower_key]["urls"]:
+            merged[lower_key]["urls"].append(url)
 
     return merged
 
 # ================= 排序 =================
 
 def sort_hk_channels(channels_dict):
+
     def hk_weight(name):
         for idx, key in enumerate(HK_ORDER):
             if key.lower() in name.lower():
                 return idx
-        return 999  # 未匹配排最后
+        return 999
 
-    return sorted(channels_dict.items(),
-                  key=lambda x: (hk_weight(x[0]), x[0].lower()))
+    return sorted(
+        channels_dict.values(),
+        key=lambda x: (hk_weight(x["name"]), x["name"].lower())
+    )
 
 # ================= 主流程 =================
 
 def main():
-    log("开始生成 DD.m3u")
 
-    bb_content = download(BB_URL, "BB")
-    hk_source = download(HK_SOURCE_URL, "HK")
-    tw_source = download(TW_SOURCE_URL, "TW")
+    bb_content = download(BB_URL)
+    hk_source = download(HK_SOURCE_URL)
+    tw_source = download(TW_SOURCE_URL)
 
     all_channels = (
         extract_hk_channels(hk_source) +
@@ -166,19 +172,17 @@ def main():
 
     merged = merge_channels(all_channels)
 
-    # 分组
-    hk = {}
-    tw = {}
-    sports = {}
+    hk = []
+    tw = []
+    sports = []
 
-    for name, data in merged.items():
-        group = data["group"]
-        if group == GROUP_HK:
-            hk[name] = data
-        elif group == GROUP_TW:
-            tw[name] = data
+    for data in merged.values():
+        if data["group"] == GROUP_HK:
+            hk.append(data)
+        elif data["group"] == GROUP_TW:
+            tw.append(data)
         else:
-            sports[name] = data
+            sports.append(data)
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -192,29 +196,29 @@ def main():
 
     # HK
     output += "\n### HK ###\n"
-    for name, data in sort_hk_channels(hk):
-        output += f'\n#EXTINF:-1 group-title="{GROUP_HK}",{name}\n'
-        for u in data["urls"]:
+    for item in sort_hk_channels({i["name"]: i for i in hk}):
+        output += f'\n#EXTINF:-1 group-title="{GROUP_HK}",{item["name"]}\n'
+        for u in item["urls"]:
             output += u + "\n"
 
     # TW
     output += "\n### TW ###\n"
-    for name in sorted(tw.keys()):
-        output += f'\n#EXTINF:-1 group-title="{GROUP_TW}",{name}\n'
-        for u in tw[name]["urls"]:
+    for item in sorted(tw, key=lambda x: x["name"].lower()):
+        output += f'\n#EXTINF:-1 group-title="{GROUP_TW}",{item["name"]}\n'
+        for u in item["urls"]:
             output += u + "\n"
 
     # SPORTS
     output += "\n### SPORTS ###\n"
-    for name in sorted(sports.keys()):
-        output += f'\n#EXTINF:-1 group-title="{GROUP_SPORTS}",{name}\n'
-        for u in sports[name]["urls"]:
+    for item in sorted(sports, key=lambda x: x["name"].lower()):
+        output += f'\n#EXTINF:-1 group-title="{GROUP_SPORTS}",{item["name"]}\n'
+        for u in item["urls"]:
             output += u + "\n"
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
 
-    log("🎉 DD.m3u 生成成功")
+    print("🎉 DD.m3u 生成完成")
 
 if __name__ == "__main__":
     main()
