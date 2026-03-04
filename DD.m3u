@@ -1,6 +1,6 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
-# 生成时间: 2026-03-04 14:02:40
+# 生成时间: 2026-03-04 14:07:54
 
 
 ### HK ###
@@ -100,6 +100,12 @@ http://iptv.4666888.xyz/iptv2A.php?id=57
 #EXTINF:-1 group-title="HK",TVBJ
 http://iptv.4666888.xyz/iptv2A.php?id=26
 
+#EXTINF:-1 group-title="HK",TVBS新聞
+http://iptv.4666888.xyz/iptv2A.php?id=43
+
+#EXTINF:-1 group-title="HK",TVBS精采
+http://iptv.4666888.xyz/iptv2A.php?id=47
+
 #EXTINF:-1 group-title="HK",TVB娛樂新聞
 http://iptv.4666888.xyz/iptv2A.php?id=36
 
@@ -119,26 +125,11 @@ http://iptv.4666888.xyz/iptv2A.php?id=34
 #EXTINF:-1 group-title="HK",中國電影
 http://iptv.4666888.xyz/iptv2A.php?id=61
 
-#EXTINF:-1 group-title="HK",中视
-http://74.91.26.218:82/live/ctv.m3u8
-
-#EXTINF:-1 group-title="HK",中视新闻
-http://74.91.26.218:82/live/ctvnews.m3u8
-
-#EXTINF:-1 group-title="HK",中视经典
-http://74.91.26.218:82/live/ctvjd.m3u8
-
-#EXTINF:-1 group-title="HK",中视菁采
-http://74.91.26.218:82/live/ctvjc.m3u8
+#EXTINF:-1 group-title="HK",中天新闻
+https://stream1.freetv.fun/1b67bc523c86ffa05707cd3f9471cfe1ced1c17d0537471788e00679a1d6cde3.m3u8
 
 #EXTINF:-1 group-title="HK",八度空间
 http://cdn6.163189.xyz/163189/8tv
-
-#EXTINF:-1 group-title="HK",公视
-http://74.91.26.218:82/live/pts.m3u8
-
-#EXTINF:-1 group-title="HK",公视台语
-http://74.91.26.218:82/live/ptsty.m3u8
 
 #EXTINF:-1 group-title="HK",千禧經典
 http://iptv.4666888.xyz/iptv2A.php?id=22
@@ -149,35 +140,15 @@ https://o11.163189.xyz/stream/live/tvbc/
 #EXTINF:-1 group-title="HK",华丽翡翠
 https://o11.163189.xyz/stream/live/hlt/
 
-#EXTINF:-1 group-title="HK",华视
-http://74.91.26.218:82/live/cts.m3u8
-
-#EXTINF:-1 group-title="HK",华视教育体育文化
-http://74.91.26.218:82/live/ctsjy.m3u8
-
-#EXTINF:-1 group-title="HK",华视新闻
-http://74.91.26.218:82/live/ctsnews.m3u8
-
-#EXTINF:-1 group-title="HK",台视
-http://74.91.26.218:82/live/ttv.m3u8
-
-#EXTINF:-1 group-title="HK",台视新闻
-http://74.91.26.218:82/live/ttvnews.m3u8
-
-#EXTINF:-1 group-title="HK",台视财经
-http://74.91.26.218:82/live/ttvcj.m3u8
-
-#EXTINF:-1 group-title="HK",唐NTD
-https://ntd02.akamaized.net/HD-NY/tracks-v3a1/mono.m3u8
-
-#EXTINF:-1 group-title="HK",唐人卫视
-https://ntd02.akamaized.net/HD-NY/tracks-v3a1/mono.m3u8
-
 #EXTINF:-1 group-title="HK",天映经典
 https://cdn9.163189.xyz/smt1.1.php?id=Celestial2
 
 #EXTINF:-1 group-title="HK",娛樂百分百
 http://iptv.4666888.xyz/iptv2A.php?id=64
+
+#EXTINF:-1 group-title="HK",寰宇新聞
+https://stream1.freetv.fun/05d08ea65b8b2d697984abf19f4545c698308338fdf8aaeac86784ab6e6ef8b0.m3u8
+https://tv.iill.top/4gtv/litv-longturn14
 
 #EXTINF:-1 group-title="HK",愛奇藝
 http://iptv.4666888.xyz/iptv2A.php?id=21
@@ -195,17 +166,24 @@ http://iot-mqqt.111yao.cn:8080/live/diyp_channelv.m3u8
 http://iptv.4666888.xyz/iptv2A.php?id=5
 https://tv.iill.top/4gtv/4gtv-4gtv101
 
+#EXTINF:-1 group-title="HK",東森綜合
+http://iptv.4666888.xyz/iptv2A.php?id=58
+https://hls.iill.top/api/ET-Variety-Channel/index.m3u8
+
 #EXTINF:-1 group-title="HK",梦工场动漫
 http://iptv.4666888.xyz/iptv2A.php?id=40
 
-#EXTINF:-1 group-title="HK",民视台湾
-http://74.91.26.218:82/live/ftvtw.m3u8
+#EXTINF:-1 group-title="HK",民視
+http://iptv.4666888.xyz/iptv2A.php?id=55
+https://tv.iill.top/4gtv/4gtv-4gtv002
 
-#EXTINF:-1 group-title="HK",民视新闻
-http://74.91.26.218:82/live/ftvnews.m3u8
+#EXTINF:-1 group-title="HK",民視影劇
+http://iptv.4666888.xyz/iptv2A.php?id=53
+https://tv.iill.top/4gtv/litv-ftv09
 
-#EXTINF:-1 group-title="HK",民视第一
-http://74.91.26.218:82/live/ftvdy.m3u8
+#EXTINF:-1 group-title="HK",民視綜藝
+http://iptv.4666888.xyz/iptv2A.php?id=46
+https://tv.iill.top/4gtv/4gtv-4gtv004
 
 #EXTINF:-1 group-title="HK",澳視澳門
 http://iptv.4666888.xyz/iptv2A.php?id=41
@@ -223,9 +201,6 @@ http://iptv.4666888.xyz/iptv2A.php?id=65
 https://cdn6.163189.xyz/163189/fct4k
 https://mytv.cdn.loc.cc/o12.php?id=fct
 https://o11.163189.xyz/stream/tvb/fct4k/
-
-#EXTINF:-1 group-title="HK",臺視綜合
-http://iptv.4666888.xyz/iptv2A.php?id=51
 
 #EXTINF:-1 group-title="HK",邵氏动作
 http://feilong123.vip/409990236/tv.php?id=ssdz
@@ -246,6 +221,10 @@ http://8.138.7.223/tv/cwjd.php
 http://iptv.4666888.xyz/iptv2A.php?id=38
 https://tv.iill.top/4gtv/4gtv-live144
 
+#EXTINF:-1 group-title="HK",靖天電影
+http://iptv.4666888.xyz/iptv2A.php?id=56
+https://tv.iill.top/4gtv/4gtv-4gtv061
+
 #EXTINF:-1 group-title="HK",靖洋戲劇
 http://iptv.4666888.xyz/iptv2A.php?id=42
 https://tv.iill.top/4gtv/4gtv-4gtv045
@@ -262,6 +241,14 @@ https://stream1.freetv.fun/6130c4439e91813125415b749209467f8da4f3d09d09ac80d7848
 
 #EXTINF:-1 group-title="HK",鳳凰中文
 http://iptv.4666888.xyz/iptv2A.php?id=27
+
+#EXTINF:-1 group-title="HK",龍華洋片
+http://iptv.4666888.xyz/iptv2A.php?id=60
+https://tv.iill.top/ofiii/litv-xinchuang02
+
+#EXTINF:-1 group-title="HK",龍華電影
+http://iptv.4666888.xyz/iptv2A.php?id=45
+https://tv.iill.top/ofiii/litv-xinchuang03
 
 #EXTINF:-1 group-title="HK",龙华偶像
 https://cdn8.163189.xyz/163189/lhox
@@ -280,103 +267,56 @@ https://cdn8.163189.xyz/163189/lhjd
 
 ### TW ###
 
-#EXTINF:-1 group-title="TW",Love Nature
-https://tv.iill.top/4gtv/4gtv-live208
+#EXTINF:-1 group-title="TW",中视
+http://74.91.26.218:82/live/ctv.m3u8
 
-#EXTINF:-1 group-title="TW",中天亞洲
-https://tv.iill.top/FainTV/121
+#EXTINF:-1 group-title="TW",中视新闻
+http://74.91.26.218:82/live/ctvnews.m3u8
 
-#EXTINF:-1 group-title="TW",中天娛樂
-https://hls.iill.top/api/Cti-E/index.m3u8
+#EXTINF:-1 group-title="TW",中视经典
+http://74.91.26.218:82/live/ctvjd.m3u8
 
-#EXTINF:-1 group-title="TW",中天新聞
-https://tv.iill.top/4gtv/4gtv-4gtv009
+#EXTINF:-1 group-title="TW",中视菁采
+http://74.91.26.218:82/live/ctvjc.m3u8
 
-#EXTINF:-1 group-title="TW",中天新闻
-https://stream1.freetv.fun/1b67bc523c86ffa05707cd3f9471cfe1ced1c17d0537471788e00679a1d6cde3.m3u8
+#EXTINF:-1 group-title="TW",华视
+http://74.91.26.218:82/live/cts.m3u8
 
-#EXTINF:-1 group-title="TW",中天綜合
-https://hls.iill.top/api/Cti-K/index.m3u8
+#EXTINF:-1 group-title="TW",华视教育体育文化
+http://74.91.26.218:82/live/ctsjy.m3u8
 
-#EXTINF:-1 group-title="TW",民視
-http://iptv.4666888.xyz/iptv2A.php?id=55
-https://tv.iill.top/4gtv/4gtv-4gtv002
+#EXTINF:-1 group-title="TW",华视新闻
+http://74.91.26.218:82/live/ctsnews.m3u8
 
-#EXTINF:-1 group-title="TW",民視台灣
-https://tv.iill.top/4gtv/4gtv-4gtv001
+#EXTINF:-1 group-title="TW",台视
+http://74.91.26.218:82/live/ttv.m3u8
 
-#EXTINF:-1 group-title="TW",民視影劇
-http://iptv.4666888.xyz/iptv2A.php?id=53
-https://tv.iill.top/4gtv/litv-ftv09
+#EXTINF:-1 group-title="TW",台视新闻
+http://74.91.26.218:82/live/ttvnews.m3u8
 
-#EXTINF:-1 group-title="TW",民視新聞
-https://tv.iill.top/4gtv/litv-ftv13
+#EXTINF:-1 group-title="TW",台视财经
+http://74.91.26.218:82/live/ttvcj.m3u8
 
-#EXTINF:-1 group-title="TW",民視旅遊
-https://tv.iill.top/4gtv/litv-ftv07
+#EXTINF:-1 group-title="TW",民视台湾
+http://74.91.26.218:82/live/ftvtw.m3u8
 
-#EXTINF:-1 group-title="TW",民視第一
-https://tv.iill.top/4gtv/4gtv-4gtv003
+#EXTINF:-1 group-title="TW",民视新闻
+http://74.91.26.218:82/live/ftvnews.m3u8
 
-#EXTINF:-1 group-title="TW",民視綜藝
-http://iptv.4666888.xyz/iptv2A.php?id=46
-https://tv.iill.top/4gtv/4gtv-4gtv004
+#EXTINF:-1 group-title="TW",民视第一
+http://74.91.26.218:82/live/ftvdy.m3u8
 
-#EXTINF:-1 group-title="TW",寰宇新聞
-https://stream1.freetv.fun/05d08ea65b8b2d697984abf19f4545c698308338fdf8aaeac86784ab6e6ef8b0.m3u8
-https://tv.iill.top/4gtv/litv-longturn14
+#EXTINF:-1 group-title="TW",公视
+http://74.91.26.218:82/live/pts.m3u8
 
-#EXTINF:-1 group-title="TW",寰宇新聞台灣
-https://tv.iill.top/4gtv/4gtv-4gtv156
+#EXTINF:-1 group-title="TW",公视台语
+http://74.91.26.218:82/live/ptsty.m3u8
 
-#EXTINF:-1 group-title="TW",寰宇財經
-https://tv.iill.top/ofiii/4gtv-4gtv158
+#EXTINF:-1 group-title="TW",唐NTD
+https://ntd02.akamaized.net/HD-NY/tracks-v3a1/mono.m3u8
 
-#EXTINF:-1 group-title="TW",東森幼幼
-https://hls.iill.top/api/YoYo-TV/index.m3u8
-
-#EXTINF:-1 group-title="TW",東森戲劇
-https://hls.iill.top/api/ET-Drama-Channel/index.m3u8
-
-#EXTINF:-1 group-title="TW",東森新聞
-https://tv.iill.top/4gtv/4gtv-4gtv152
-
-#EXTINF:-1 group-title="TW",東森洋片
-https://hls.iill.top/api/ET-Foreign-Movie-Channel/index.m3u8
-
-#EXTINF:-1 group-title="TW",東森綜合
-http://iptv.4666888.xyz/iptv2A.php?id=58
-https://hls.iill.top/api/ET-Variety-Channel/index.m3u8
-
-#EXTINF:-1 group-title="TW",東森財經
-https://tv.iill.top/4gtv/4gtv-4gtv153
-
-#EXTINF:-1 group-title="TW",東森電影
-https://hls.iill.top/api/ET-Movie/index.m3u8
-
-#EXTINF:-1 group-title="TW",TVBS
-https://tv.iill.top/4gtv/media-live073
-
-#EXTINF:-1 group-title="TW",TVBS 新聞
-https://tv.iill.top/4gtv/media-live072
-
-#EXTINF:-1 group-title="TW",TVBS 歡樂
-https://tv.iill.top/4gtv/4gtv-4gtv068
-
-#EXTINF:-1 group-title="TW",TVBS 精采
-https://tv.iill.top/4gtv/4gtv-4gtv067
-
-#EXTINF:-1 group-title="TW",TVBS新聞
-http://iptv.4666888.xyz/iptv2A.php?id=43
-
-#EXTINF:-1 group-title="TW",TVBS精采
-http://iptv.4666888.xyz/iptv2A.php?id=47
-
-#EXTINF:-1 group-title="TW",三立新聞iNEWS
-https://tv.iill.top/4gtv/4gtv-live089
-
-#EXTINF:-1 group-title="TW",三立綜合
-https://tv.iill.top/4gtv/4gtv-live207
+#EXTINF:-1 group-title="TW",唐人卫视
+https://ntd02.akamaized.net/HD-NY/tracks-v3a1/mono.m3u8
 
 #EXTINF:-1 group-title="TW",amc電影
 https://tv.iill.top/4gtv/4gtv-4gtv017
@@ -414,6 +354,9 @@ https://tv.iill.top/4gtv/4gtv-live620
 #EXTINF:-1 group-title="TW",Lifetime 娛樂頻道
 https://tv.iill.top/4gtv/4gtv-live029
 
+#EXTINF:-1 group-title="TW",Love Nature
+https://tv.iill.top/4gtv/4gtv-live208
+
 #EXTINF:-1 group-title="TW",LUXE TV Channel
 https://tv.iill.top/4gtv/4gtv-live121
 
@@ -449,6 +392,36 @@ https://tv.iill.top/4gtv/4gtv-4gtv082
 
 #EXTINF:-1 group-title="TW",TV5MONDE STYLE 生活時尚
 https://tv.iill.top/4gtv/4gtv-live122
+
+#EXTINF:-1 group-title="TW",TVBS
+https://tv.iill.top/4gtv/media-live073
+
+#EXTINF:-1 group-title="TW",TVBS 新聞
+https://tv.iill.top/4gtv/media-live072
+
+#EXTINF:-1 group-title="TW",TVBS 歡樂
+https://tv.iill.top/4gtv/4gtv-4gtv068
+
+#EXTINF:-1 group-title="TW",TVBS 精采
+https://tv.iill.top/4gtv/4gtv-4gtv067
+
+#EXTINF:-1 group-title="TW",三立新聞iNEWS
+https://tv.iill.top/4gtv/4gtv-live089
+
+#EXTINF:-1 group-title="TW",三立綜合
+https://tv.iill.top/4gtv/4gtv-live207
+
+#EXTINF:-1 group-title="TW",中天亞洲
+https://tv.iill.top/FainTV/121
+
+#EXTINF:-1 group-title="TW",中天娛樂
+https://hls.iill.top/api/Cti-E/index.m3u8
+
+#EXTINF:-1 group-title="TW",中天新聞
+https://tv.iill.top/4gtv/4gtv-4gtv009
+
+#EXTINF:-1 group-title="TW",中天綜合
+https://hls.iill.top/api/Cti-K/index.m3u8
 
 #EXTINF:-1 group-title="TW",中視
 https://tv.iill.top/4gtv/4gtv-4gtv040
@@ -499,6 +472,12 @@ https://hls.iill.top/api/Hollywood-Movie/index.m3u8
 #EXTINF:-1 group-title="TW",客家電視
 https://tv.iill.top/4gtv/4gtv-4gtv043
 
+#EXTINF:-1 group-title="TW",寰宇新聞台灣
+https://tv.iill.top/4gtv/4gtv-4gtv156
+
+#EXTINF:-1 group-title="TW",寰宇財經
+https://tv.iill.top/ofiii/4gtv-4gtv158
+
 #EXTINF:-1 group-title="TW",幸福空間居家
 https://tv.iill.top/4gtv/4gtv-live206
 
@@ -517,11 +496,41 @@ https://tv.iill.top/4gtv/4gtv-live120
 #EXTINF:-1 group-title="TW",時尚運動X
 https://tv.iill.top/4gtv/4gtv-4gtv014
 
+#EXTINF:-1 group-title="TW",東森幼幼
+https://hls.iill.top/api/YoYo-TV/index.m3u8
+
+#EXTINF:-1 group-title="TW",東森戲劇
+https://hls.iill.top/api/ET-Drama-Channel/index.m3u8
+
+#EXTINF:-1 group-title="TW",東森新聞
+https://tv.iill.top/4gtv/4gtv-4gtv152
+
+#EXTINF:-1 group-title="TW",東森洋片
+https://hls.iill.top/api/ET-Foreign-Movie-Channel/index.m3u8
+
+#EXTINF:-1 group-title="TW",東森財經
+https://tv.iill.top/4gtv/4gtv-4gtv153
+
+#EXTINF:-1 group-title="TW",東森電影
+https://hls.iill.top/api/ET-Movie/index.m3u8
+
 #EXTINF:-1 group-title="TW",歡樂兒童
 https://tv.iill.top/FainTV/22768
 
 #EXTINF:-1 group-title="TW",歡樂看新聞
 https://tv.iill.top/FainTV/19670
+
+#EXTINF:-1 group-title="TW",民視台灣
+https://tv.iill.top/4gtv/4gtv-4gtv001
+
+#EXTINF:-1 group-title="TW",民視新聞
+https://tv.iill.top/4gtv/litv-ftv13
+
+#EXTINF:-1 group-title="TW",民視旅遊
+https://tv.iill.top/4gtv/litv-ftv07
+
+#EXTINF:-1 group-title="TW",民視第一
+https://tv.iill.top/4gtv/4gtv-4gtv003
 
 #EXTINF:-1 group-title="TW",滾動力rollor
 https://tv.iill.top/4gtv/4gtv-live012
@@ -552,6 +561,9 @@ https://hls.iill.top/api/VL-E/index.m3u8
 
 #EXTINF:-1 group-title="TW",緯來電影
 https://hls.iill.top/api/VL-Movies/index.m3u8
+
+#EXTINF:-1 group-title="TW",臺視綜合
+http://iptv.4666888.xyz/iptv2A.php?id=51
 
 #EXTINF:-1 group-title="TW",華視
 https://tv.iill.top/4gtv/4gtv-4gtv041
@@ -607,10 +619,6 @@ https://tv.iill.top/4gtv/4gtv-4gtv062
 #EXTINF:-1 group-title="TW",靖天資訊
 https://tv.iill.top/4gtv/4gtv-4gtv065
 
-#EXTINF:-1 group-title="TW",靖天電影
-http://iptv.4666888.xyz/iptv2A.php?id=56
-https://tv.iill.top/4gtv/4gtv-4gtv061
-
 #EXTINF:-1 group-title="TW",靖洋卡通
 https://tv.iill.top/4gtv/4gtv-4gtv057
 
@@ -632,16 +640,8 @@ https://tv.iill.top/ofiii/litv-xinchuang18
 #EXTINF:-1 group-title="TW",龍華日韓
 https://tv.iill.top/ofiii/litv-xinchuang11
 
-#EXTINF:-1 group-title="TW",龍華洋片
-http://iptv.4666888.xyz/iptv2A.php?id=60
-https://tv.iill.top/ofiii/litv-xinchuang02
-
 #EXTINF:-1 group-title="TW",龍華經典
 https://tv.iill.top/ofiii/litv-xinchuang21
-
-#EXTINF:-1 group-title="TW",龍華電影
-http://iptv.4666888.xyz/iptv2A.php?id=45
-https://tv.iill.top/ofiii/litv-xinchuang03
 
 ### SPORTS ###
 
