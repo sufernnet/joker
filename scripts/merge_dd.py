@@ -34,6 +34,14 @@ REMOVE_KEYWORDS = ["FainTV", "ofiii", "4gTV", "Relay"]
 
 SPORTS_KEYWORDS = ["博斯", "緯來體育", "NOW体育", "Now体育"]
 
+# 台湾频道关键词 - 用于识别HK源中的台湾频道
+TW_CHANNEL_KEYWORDS = [
+    "東森", "中天", "民視", "三立", "TVBS", "非凡", "壹電視",
+    "寰宇", "台視", "華視", "中視", "公視", "原住民族電視台",
+    "客家電視台", "Love Nature", "龍華", "采昌", "靖天",
+    "博斯", "緯來", "愛爾達", "ELEVEN", "DAZN"
+]
+
 REMOVE_CHANNELS = [
     "東森購物","少儿频道","半島國際新聞","兒童頻道",
     "MOMO運動綜合","LiveABC互動英語頻道",
@@ -90,9 +98,14 @@ def should_remove(name):
     return False
 
 def determine_group(name, default_group):
+    # 先检查是否为体育频道
     for kw in SPORTS_KEYWORDS:
         if kw.lower() in name.lower():
             return GROUP_SPORTS
+    # 然后检查是否为台湾频道
+    for kw in TW_CHANNEL_KEYWORDS:
+        if kw.lower() in name.lower():
+            return GROUP_TW
     return default_group
 
 # ================= 提取 BB =================
@@ -135,7 +148,18 @@ def extract_hk(content):
 
             if "," in raw and "://" in raw:
                 name, url = raw.split(",", 1)
-                channels.append((name.strip(), url.strip(), GROUP_HK))
+                name = name.strip()
+                url = url.strip()
+                
+                # 判断频道来源：如果包含台湾关键词，则分组为TW，否则为HK
+                is_tw = False
+                for kw in TW_CHANNEL_KEYWORDS:
+                    if kw.lower() in name.lower():
+                        is_tw = True
+                        break
+                
+                group = GROUP_TW if is_tw else GROUP_HK
+                channels.append((name, url, group))
     return channels
 
 # ================= 提取 TW + 体育 Relay =================
@@ -197,9 +221,13 @@ def hk_weight(name):
 def tw_weight(name):
     if "Love Nature" in name: return 0
     if "中天" in name: return 1
-    if "民视" in name: return 2
+    if "民视" in name or "民視" in name: return 2
     if "寰宇" in name: return 3
     if "東森" in name or "东森" in name: return 4
+    if "TVBS" in name: return 5
+    if "三立" in name: return 6
+    if "非凡" in name: return 7
+    if "壹電視" in name: return 8
     return 9
 
 # ================= 主流程 =================
