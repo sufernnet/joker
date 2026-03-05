@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-05 02:04:37
+# 生成时间: 2026-03-05 06:08:23
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -685,8 +685,6 @@ https://tv.iill.top/4gtv/4gtv-live120
 https://tv.iill.top/4gtv/4gtv-4gtv075
 #EXTINF:-1 tvg-id="倪珍播新聞" tvg-name="倪珍播新聞" tvg-logo="https://epg.iill.top/logo/倪珍播新聞.png" http-user-agent="okhttp/1.9.89" group-title="TW" ,倪珍播新聞
 https://tv.iill.top/ofiii/nnews-zh
-#EXTINF:-1 tvg-id="FRANCE24 英文台" tvg-name="FRANCE24 英文台" tvg-logo="https://epg.iill.top/logo/FRANCE24.png" http-user-agent="okhttp/1.9.89" group-title="TW",FRANCE24
-https://tv.iill.top/4gtv/4gtv-live146
 #EXTINF:-1 tvg-id="NHK WORLD-JAPAN" tvg-name="NHK WORLD-JAPAN" tvg-logo="https://epg.iill.top/logo/NHK-WORLD-JAPAN.png" http-user-agent="okhttp/1.9.89" group-title="TW",NHK 新聞資訊
 https://tv.iill.top/4gtv/4gtv-live168
 #EXTINF:-1 tvg-id="CNBC Asia 財經台" tvg-name="CNBC Asia 財經台" tvg-logo="https://epg.iill.top/logo/CNBC-Asia-財經台.png" http-user-agent="okhttp/1.9.89" group-title="TW",CNBC Asia 財經
@@ -733,8 +731,6 @@ https://tv.iill.top/4gtv/4gtv-live011
 https://tv.iill.top/4gtv/4gtv-live620
 #EXTINF:-1 tvg-id="采昌影劇台" tvg-name="采昌影劇台" tvg-logo="https://epg.iill.top/logo/采昌影劇台.png" http-user-agent="okhttp/1.9.89" group-title="TW",采昌影劇
 https://tv.iill.top/4gtv/4gtv-4gtv049
-#EXTINF:-1 tvg-id="CLASSICA 古典樂" tvg-name="CLASSICA 古典樂" tvg-logo="https://epg.iill.top/logo/CLASSICA-古典樂.png" http-user-agent="okhttp/1.9.89" group-title="TW",CLASSICA 古典樂
-https://tv.iill.top/4gtv/4gtv-4gtv059
 #EXTINF:-1 tvg-id="Mezzo Live HD" tvg-name="Mezzo Live HD" tvg-logo="https://epg.iill.top/logo/Mezzo-Live.png" http-user-agent="okhttp/1.9.89" group-title="TW",Mezzo Live
 https://tv.iill.top/4gtv/4gtv-4gtv083
 #EXTINF:-1 tvg-id="電影原聲台CMusic" tvg-name="電影原聲台CMusic" tvg-logo="https://epg.iill.top/logo/電影原聲台CMusic.png" http-user-agent="okhttp/1.9.89" group-title="TW",電影原聲 CMusic
@@ -745,16 +741,10 @@ https://tv.iill.top/4gtv/4gtv-4gtv082
 https://tv.iill.top/4gtv/4gtv-4gtv077
 #EXTINF:-1 tvg-id="GINX Esports TV" tvg-name="GINX Esports TV" tvg-logo="https://epg.iill.top/logo/GINX-Esports-TV.png" http-user-agent="okhttp/1.9.89" group-title="TW",GINX Esports TV
 https://tv.iill.top/4gtv/4gtv-4gtv053
-#EXTINF:-1 tvg-id="DreamWorks 夢工廠動畫" tvg-name="DreamWorks 夢工廠動畫" tvg-logo="https://epg.iill.top/logo/DreamWorks-夢工廠動畫.png" http-user-agent="okhttp/1.9.89" group-title="TW",DreamWorks 夢工廠動畫
-https://tv.iill.top/4gtv/4gtv-live017
 #EXTINF:-1 tvg-id="精選動漫台" tvg-name="精選動漫台" tvg-logo="https://epg.iill.top/logo/精選動漫台.png" http-user-agent="okhttp/1.9.89" group-title="TW",精選動漫
 https://tv.iill.top/4gtv/4gtv-live024
 #EXTINF:-1 tvg-id="經典卡通台" tvg-name="經典卡通台" tvg-logo="https://epg.iill.top/logo/經典卡通台.png" http-user-agent="okhttp/1.9.89" group-title="TW",經典卡通
 https://tv.iill.top/4gtv/4gtv-live022
-#EXTINF:-1 tvg-id="MOMO親子台" tvg-name="MOMO親子台" tvg-logo="https://epg.iill.top/logo/MOMO親子台.png" http-user-agent="okhttp/1.9.89" group-title="TW",MOMO親子
-https://tv.iill.top/4gtv/4gtv-live107
-#EXTINF:-1 tvg-id="Nick Jr. 兒童頻道" tvg-name="Nick Jr. 兒童頻道" tvg-logo="https://epg.iill.top/logo/Nick-Jr.兒童頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",Nick Jr. 兒童頻道
-https://tv.iill.top/4gtv/4gtv-live032
 #EXTINF:-1 tvg-id="Pet Club TV" tvg-name="Pet Club TV" tvg-logo="https://epg.iill.top/logo/Pet-Club-TV.png" http-user-agent="okhttp/1.9.89" group-title="TW",Pet Club TV
 https://tv.iill.top/4gtv/4gtv-4gtv110
 #EXTINF:-1 tvg-id="LiveABC互動英語頻道" tvg-name="LiveABC互動英語頻道" tvg-logo="https://epg.iill.top/logo/LiveABC互動英語頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",LiveABC互動英語頻道
@@ -872,4 +862,4 @@ https://hls.iill.top/api/Sky-Sports-Mix/index.m3u8
 #EXTINF:-1 tvg-id="FIGHT SPORTS HD" tvg-name="FIGHT SPORTS HD" tvg-logo="https://epg-1.iill.top/logo/Fight-Sports.png" group-title="SPORTS",Fight Sports
 https://hls.iill.top/api/Fight-Sports/index.m3u8
 
-# 统计: HK(95) + TW(119) + SPORTS(42) = 256
+# 统计: HK(95) + TW(114) + SPORTS(42) = 251
