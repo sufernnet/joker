@@ -85,6 +85,20 @@ def clean_channel_name(name):
     cleaned = re.sub(r'\s*[「【(][^」】)]*[」】)]\s*$', '', name)
     return cleaned.strip()
 
+def should_filter_channel(name, url):
+    """判断频道是否应该被过滤"""
+    # 检查URL黑名单
+    if url in FILTER_URLS:
+        return True
+    
+    # 检查关键词黑名单
+    for keyword in FILTER_KEYWORDS:
+        if keyword in name:
+            log(f"过滤频道: {name} (包含关键词: {keyword})")
+            return True
+    
+    return False
+
 # ================== 主流程 ==================
 
 def main():
@@ -111,24 +125,21 @@ def main():
             line = lines[i].strip()
             # 匹配EE.m3u的格式：group-title="HK"
             if line.startswith("#EXTINF:") and 'group-title="HK"' in line:
-                # 提取频道名（逗号后面的部分）
+                # 提取原始频道名（用于过滤）
                 raw_name = line.split(",")[-1].strip()
-                cleaned_name = clean_channel_name(raw_name)
                 # 确保有下一行（URL行）
                 if i+1 < len(lines):
                     url = lines[i+1].strip()
                     # 跳过空URL或注释行
                     if url and not url.startswith('#'):
-                        # 应用关键词过滤
-                        skip = False
-                        for keyword in FILTER_KEYWORDS:
-                            if keyword in raw_name:
-                                skip = True
-                                break
-                        
-                        if not skip and url not in FILTER_URLS:
+                        # 先基于原始名称进行过滤
+                        if not should_filter_channel(raw_name, url):
+                            # 过滤通过，再清洗名称用于存储
+                            cleaned_name = clean_channel_name(raw_name)
                             hk_channels.append((cleaned_name, url))
                             log(f"从EE.m3u添加HK频道: {raw_name} -> {cleaned_name}")
+                        else:
+                            log(f"从EE.m3u过滤频道: {raw_name}")
                     i += 1
             i += 1
         log(f"EE.m3u 解析完成，共添加 {len(hk_channels)} 个HK频道")
@@ -144,22 +155,14 @@ def main():
                 if any(f'group-title="{group}"' in line for group in SOURCE_GROUPS):
                     if i+1 < len(lines):
                         url = lines[i+1].strip()
-                        # 跳过过滤的URL
-                        if url in FILTER_URLS:
-                            i += 1
-                            continue
                         
                         raw_name = line.split(",")[-1].strip()
-                        cleaned_name = clean_channel_name(raw_name)
                         
-                        # 应用关键词过滤
-                        skip = False
-                        for keyword in FILTER_KEYWORDS:
-                            if keyword in raw_name:
-                                skip = True
-                                break
-                        
-                        if not skip:
+                        # 先基于原始名称进行过滤
+                        if not should_filter_channel(raw_name, url):
+                            # 过滤通过，再清洗名称
+                            cleaned_name = clean_channel_name(raw_name)
+                            
                             # 检查是否已存在相同URL的频道（去重）
                             url_exists = False
                             for existing_name, existing_url in hk_channels:
@@ -168,6 +171,9 @@ def main():
                                     break
                             if not url_exists:
                                 hk_channels.append((cleaned_name, url))
+                                log(f"从GAT源添加HK频道: {raw_name} -> {cleaned_name}")
+                        else:
+                            log(f"从GAT源过滤频道: {raw_name}")
                     i += 1
             i += 1
 
@@ -179,21 +185,34 @@ def main():
             line = lines[i].strip()
             if line.startswith("#EXTINF:") and f'group-title="{TARGET_TW_GROUP}"' in line:
                 raw_name = line.split(",")[-1].strip()
-                cleaned_name = clean_channel_name(raw_name)
                 if i+1 < len(lines):
                     url = lines[i+1].strip()
-                    if "博斯" in cleaned_name:
-                        sports_channels.append((line, cleaned_name, url))
+                    # 先基于原始名称进行过滤
+                    if not should_filter_channel(raw_name, url):
+                        # 过滤通过，再清洗名称
+                        cleaned_name = clean_channel_name(raw_name)
+                        if "博斯" in raw_name:  # 基于原始名称判断体育频道
+                            sports_channels.append((line, cleaned_name, url))
+                            log(f"添加博斯体育频道: {raw_name} -> {cleaned_name}")
+                        else:
+                            tw_channels.append((line, cleaned_name, url))
+                            log(f"添加TW频道: {raw_name} -> {cleaned_name}")
                     else:
-                        tw_channels.append((line, cleaned_name, url))
+                        log(f"过滤TW频道: {raw_name}")
                     i += 1
             # 提取 •體育「Relay」 分组
             elif line.startswith("#EXTINF:") and 'group-title="•體育「Relay」"' in line:
                 raw_name = line.split(",")[-1].strip()
-                cleaned_name = clean_channel_name(raw_name)
                 if i+1 < len(lines):
                     url = lines[i+1].strip()
-                    sports_channels.append((line, cleaned_name, url))
+                    # 先基于原始名称进行过滤
+                    if not should_filter_channel(raw_name, url):
+                        # 过滤通过，再清洗名称
+                        cleaned_name = clean_channel_name(raw_name)
+                        sports_channels.append((line, cleaned_name, url))
+                        log(f"添加体育Relay频道: {raw_name} -> {cleaned_name}")
+                    else:
+                        log(f"过滤体育Relay频道: {raw_name}")
                     i += 1
             i += 1
 
