@@ -79,7 +79,7 @@ def is_sports_channel(name):
     return "博斯" in name if name else False
 
 def clean_tw_channel_name(name):
-    """清洗台湾频道名称，去除末尾的垃圾后缀"""
+    """清洗台湾频道名称，去除末尾的各种后缀"""
     # 去除 " •台湾「限制」" 后缀
     name = re.sub(r'\s*•台湾「限制」$', '', name)
     # 去除 " •體育「Relay」" 后缀
@@ -87,16 +87,6 @@ def clean_tw_channel_name(name):
     # 去除其他常见垃圾后缀
     name = re.sub(r'\s*•\w+「[^」]+」$', '', name)
     return name.strip()
-
-def build_extinf_line(original_line, new_group, cleaned_name):
-    """根据原始行、新分组和清洗后的名称构建新的EXTINF行"""
-    # 替换group-title
-    modified = re.sub(r'group-title="[^"]*"', f'group-title="{new_group}"', original_line)
-    # 替换逗号后的频道名称
-    parts = modified.rsplit(",", 1)
-    if len(parts) == 2:
-        return parts[0] + "," + cleaned_name
-    return modified
 
 # ================== 主流程 ==================
 
@@ -160,15 +150,49 @@ def main():
     if tw_channels:
         output += f"\n# {TW_GROUP}频道\n"
         for extinf_line, cleaned_name, url in tw_channels:
-            new_extinf = build_extinf_line(extinf_line, TW_GROUP, cleaned_name)
-            output += new_extinf + "\n" + url + "\n"
+            try:
+                # 1️⃣ 替换 group-title
+                modified = re.sub(
+                    r'group-title="[^"]*"',
+                    f'group-title="{TW_GROUP}"',
+                    extinf_line
+                )
+
+                # 2️⃣ 替换逗号后面的频道名称
+                modified = re.sub(
+                    r',\s*[^,]*$',
+                    f',{cleaned_name}',
+                    modified
+                )
+
+                output += modified + "\n" + url + "\n"
+
+            except Exception:
+                output += f'#EXTINF:-1 group-title="{TW_GROUP}",{cleaned_name}\n{url}\n'
 
     # SPORTS
     if sports_channels:
         output += f"\n# {SPORTS_GROUP}频道\n"
         for extinf_line, cleaned_name, url in sports_channels:
-            new_extinf = build_extinf_line(extinf_line, SPORTS_GROUP, cleaned_name)
-            output += new_extinf + "\n" + url + "\n"
+            try:
+                # 1️⃣ 替换 group-title
+                modified = re.sub(
+                    r'group-title="[^"]*"',
+                    f'group-title="{SPORTS_GROUP}"',
+                    extinf_line
+                )
+
+                # 2️⃣ 替换逗号后面的频道名称
+                modified = re.sub(
+                    r',\s*[^,]*$',
+                    f',{cleaned_name}',
+                    modified
+                )
+
+                output += modified + "\n" + url + "\n"
+
+            except Exception:
+                output += f'#EXTINF:-1 group-title="{SPORTS_GROUP}",{cleaned_name}\n{url}\n'
 
     total = len(tw_channels) + len(sports_channels)
     output += f"\n# 统计: TW({len(tw_channels)}) + SPORTS({len(sports_channels)}) = {total}\n"
