@@ -219,21 +219,28 @@ PREFERRED_NAMES = [
     "明珠台",
 ]
 
-# ⚠️ 需要从 TW 频道名称中去除的后缀标记（使用正则表达式匹配）
-TW_NAME_SUFFIX_PATTERNS = [
-    # 中文方括号格式
-    r'「4gTV」$', r'「ofiii」$', r'「FainTV」$', r'「Relay」$', r'「CatchPlay」$',
-    r'「4GTV」$', r'「Ofiii」$', r'「faintv」$', r'「relay」$',
-    # 中文方括号格式（中文括号）
-    r'【4gTV】$', r'【ofiii】$', r'【FainTV】$', r'【Relay】$', r'【CatchPlay】$',
-    r'【4GTV】$', r'【Ofiii】$', r'【faintv】$', r'【relay】$',
-    # 英文括号格式
-    r'\(4gTV\)$', r'\(ofiii\)$', r'\(FainTV\)$', r'\(Relay\)$', r'\(CatchPlay\)$',
-    r'\(4GTV\)$', r'\(Ofiii\)$', r'\(faintv\)$', r'\(relay\)$',
-    # 空格+括号格式
-    r'\s+4gTV$', r'\s+ofiii$', r'\s+FainTV$', r'\s+Relay$', r'\s+CatchPlay$',
-    # 通用模式：匹配任何以「」、【】、() 包围的常见后缀
-    r'[「【(](4gTV|ofiii|FainTV|Relay|CatchPlay|4GTV|Ofiii|faintv|relay)[」】)]$',
+# ================== ⚠️ 修复：需要从 TW 频道名称中去除的后缀标记（硬编码，最可靠） ==================
+TW_NAME_SUFFIXES_TO_REMOVE = [
+    "「4gTV」",
+    "「ofiii」", 
+    "「FainTV」",
+    "「Relay」",
+    "「CatchPlay」",
+    "【4gTV】",
+    "【ofiii】",
+    "【FainTV】",
+    "【Relay】", 
+    "【CatchPlay】",
+    "(4gTV)",
+    "(ofiii)",
+    "(FainTV)",
+    "(Relay)",
+    "(CatchPlay)",
+    # 添加可能的变体
+    "「4GTV」",
+    "「Ofiii」",
+    "「faintv」",
+    "「relay」",
 ]
 
 # ================== HK频道指定顺序 ==================
@@ -441,20 +448,23 @@ def parse_m3u_for_group(content, target_group):
     return channels
 
 
+# ================== ⚠️ 修复后的清洗函数 ==================
 def clean_tw_channel_name(name):
     """清洗 TW 频道名称：去除末尾的「4gTV」、「ofiii」、「FainTV」、「Relay」等标记"""
     original = name
     cleaned = name
     
-    # 使用正则表达式匹配并去除所有指定的后缀模式
-    for pattern in TW_NAME_SUFFIX_PATTERNS:
-        cleaned = re.sub(pattern, '', cleaned)
+    # 直接使用硬编码的后缀列表，逐个检查并去除
+    for suffix in TW_NAME_SUFFIXES_TO_REMOVE:
+        if cleaned.endswith(suffix):
+            cleaned = cleaned[:-len(suffix)]
+            break
     
-    # 额外清理：去除可能残留的空白字符
     cleaned = cleaned.strip()
     
     if cleaned != original:
         log(f"清洗 TW 名称: '{original}' -> '{cleaned}'")
+    
     return cleaned
 
 
@@ -709,7 +719,7 @@ def main():
                 tw_processed = []
                 for extinf_line, original_name, url in tw_raw:
                     try:
-                        # ⚠️ 清洗名称（去除「4gTV」、「ofiii」、「FainTV」、「Relay」等后缀）
+                        # ⚠️ 使用修复后的清洗函数去除后缀
                         cleaned_name = clean_tw_channel_name(original_name)
                         
                         # 过滤英文名称
