@@ -79,14 +79,10 @@ def is_sports_channel(name):
     return "博斯" in name if name else False
 
 def clean_tw_channel_name(name):
-    """清洗台湾频道名称，去除末尾的各种后缀"""
-    # 去除 " •台湾「限制」" 后缀
-    name = re.sub(r'\s*•台湾「限制」$', '', name)
-    # 去除 " •體育「Relay」" 后缀
-    name = re.sub(r'\s*•體育「Relay」$', '', name)
-    # 去除其他常见垃圾后缀
-    name = re.sub(r'\s*•\w+「[^」]+」$', '', name)
-    return name.strip()
+    """清洗台湾频道名称，去除末尾的各种括号及其内容"""
+    # 使用您的正则：匹配末尾的各种括号（包括「」、【】、()）及其内容
+    cleaned = re.sub(r'\s*[「【(][^」】)]*[」】)]\s*$', '', name)
+    return cleaned.strip()
 
 # ================== 主流程 ==================
 
@@ -158,7 +154,7 @@ def main():
                     extinf_line
                 )
 
-                # 2️⃣ 替换逗号后面的频道名称
+                # 2️⃣ 替换逗号后面的频道名称（使用清洗后的名称）
                 modified = re.sub(
                     r',\s*[^,]*$',
                     f',{cleaned_name}',
@@ -182,7 +178,7 @@ def main():
                     extinf_line
                 )
 
-                # 2️⃣ 替换逗号后面的频道名称
+                # 2️⃣ 替换逗号后面的频道名称（使用清洗后的名称）
                 modified = re.sub(
                     r',\s*[^,]*$',
                     f',{cleaned_name}',
