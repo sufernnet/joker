@@ -101,7 +101,7 @@ def main():
     tw_channels = []
     sports_channels = []
 
-    # ===== 解析GAT源获取HK频道（从原文件恢复）=====
+    # ===== 从原文件恢复：解析GAT源获取HK频道 =====
     if gat_content:
         lines = gat_content.splitlines()
         i = 0
@@ -137,6 +137,7 @@ def main():
         i = 0
         while i < len(lines):
             line = lines[i].strip()
+            # 原有的台湾限制分组处理
             if line.startswith("#EXTINF:") and f'group-title="{TARGET_TW_GROUP}"' in line:
                 raw_name = line.split(",")[-1].strip()
                 cleaned_name = clean_tw_channel_name(raw_name)
@@ -167,7 +168,7 @@ def main():
         if not line.startswith("#EXTM3U"):
             output += line + "\n"
 
-    # HK（从原文件恢复）
+    # ===== 从原文件恢复：HK频道输出 =====
     if hk_channels:
         output += f"\n# {HK_GROUP}频道\n"
         for name, url in hk_channels:
@@ -221,13 +222,13 @@ def main():
             except Exception:
                 output += f'#EXTINF:-1 group-title="{SPORTS_GROUP}",{cleaned_name}\n{url}\n'
 
-    total = len(tw_channels) + len(sports_channels)
-    output += f"\n# 统计: TW({len(tw_channels)}) + SPORTS({len(sports_channels)}) = {total}\n"
+    total = len(hk_channels) + len(tw_channels) + len(sports_channels)
+    output += f"\n# 统计: HK({len(hk_channels)}) + TW({len(tw_channels)}) + SPORTS({len(sports_channels)}) = {total}\n"
 
     with open(OUTPUT_FILE,"w",encoding="utf-8") as f:
         f.write(output)
 
-    log("生成完成")
+    log(f"生成完成！HK: {len(hk_channels)}, TW: {len(tw_channels)}, SPORTS: {len(sports_channels)}")
 
 if __name__ == "__main__":
     main()
