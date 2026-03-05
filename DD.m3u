@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-05 06:08:23
+# 生成时间: 2026-03-05 06:10:13
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -773,8 +773,6 @@ https://tv.iill.top/4gtv/4gtv-4gtv043
 https://tv.iill.top/FainTV/146
 #EXTINF:-1 tvg-id="歡樂看新聞" tvg-name="歡樂看新聞" tvg-logo="https://epg-1.iill.top/logo/FainTV.png" http-user-agent="okhttp/1.9.89" group-title="TW",歡樂看新聞
 https://tv.iill.top/FainTV/19670
-#EXTINF:-1 tvg-id="新唐人亞太台" tvg-name="新唐人亞太台" tvg-logo="https://epg.iill.top/logo/新唐人亚太台.png" http-user-agent="okhttp/1.9.89" group-title="TW",新唐人亞太
-https://tv.iill.top/4gtv/4gtv-live050
 
 # SPORTS频道
 #EXTINF:-1 tvg-id="博斯運動一台" tvg-name="博斯運動一台" tvg-logo="https://epg-1.iill.top/logo/博斯運動一台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯運動 一
@@ -862,4 +860,4 @@ https://hls.iill.top/api/Sky-Sports-Mix/index.m3u8
 #EXTINF:-1 tvg-id="FIGHT SPORTS HD" tvg-name="FIGHT SPORTS HD" tvg-logo="https://epg-1.iill.top/logo/Fight-Sports.png" group-title="SPORTS",Fight Sports
 https://hls.iill.top/api/Fight-Sports/index.m3u8
 
-# 统计: HK(95) + TW(114) + SPORTS(42) = 251
+# 统计: HK(95) + TW(113) + SPORTS(42) = 250
