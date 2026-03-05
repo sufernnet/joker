@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 DD.m3u 合并脚本（港台频道版）- SPORTS增强完整版
-新增功能：从台湾源提取 •體育「Relay」 分组频道到 SPORTS
 """
 
 import requests
@@ -79,12 +78,6 @@ def download(url, desc, retries=3):
 def is_sports_channel(name):
     return "博斯" in name if name else False
 
-def clean_tw_channel_name(name):
-    """清洗台湾频道名称，去除末尾的各种括号及其内容"""
-    # 匹配末尾的各种括号（包括「」、【】、()）及其内容
-    cleaned = re.sub(r'\s*[「【(][^」】)]*[」】)]\s*$', '', name)
-    return cleaned.strip()
-
 # ================== 主流程 ==================
 
 def main():
@@ -101,61 +94,29 @@ def main():
     tw_channels = []
     sports_channels = []
 
-    # ===== 从原文件恢复：解析GAT源获取HK频道 =====
-    if gat_content:
-        lines = gat_content.splitlines()
-        i = 0
-        while i < len(lines):
-            line = lines[i].strip()
-            if line.startswith("#EXTINF:"):
-                # 检查是否属于目标分组
-                if any(f'group-title="{group}"' in line for group in SOURCE_GROUPS):
-                    if i+1 < len(lines):
-                        url = lines[i+1].strip()
-                        # 跳过过滤的URL
-                        if url in FILTER_URLS:
-                            i += 1
-                            continue
-                        
-                        name = line.split(",")[-1].strip()
-                        
-                        # 应用关键词过滤
-                        skip = False
-                        for keyword in FILTER_KEYWORDS:
-                            if keyword in name:
-                                skip = True
-                                break
-                        
-                        if not skip:
-                            hk_channels.append((name, url))
-                    i += 1
-            i += 1
-
-    # ===== TW 处理（增强版）=====
+    # ===== TW 处理 =====
     if tw_source_content:
         lines = tw_source_content.splitlines()
         i = 0
         while i < len(lines):
             line = lines[i].strip()
-            # 原有的台湾限制分组处理
             if line.startswith("#EXTINF:") and f'group-title="{TARGET_TW_GROUP}"' in line:
-                raw_name = line.split(",")[-1].strip()
-                cleaned_name = clean_tw_channel_name(raw_name)
+                name = line.split(",")[-1].strip()
                 if i+1 < len(lines):
                     url = lines[i+1].strip()
-                    if "博斯" in cleaned_name:
-                        sports_channels.append((line, cleaned_name, url))
+                    if "博斯" in name:
+                        sports_channels.append((line, name, url))
                     else:
-                        tw_channels.append((line, cleaned_name, url))
+                        tw_channels.append((line, name, url))
                     i += 1
-            # 新增：提取 •體育「Relay」 分组
+            # ===== 只添加这一行：提取 •體育「Relay」 分组 =====
             elif line.startswith("#EXTINF:") and 'group-title="•體育「Relay」"' in line:
-                raw_name = line.split(",")[-1].strip()
-                cleaned_name = clean_tw_channel_name(raw_name)
+                name = line.split(",")[-1].strip()
                 if i+1 < len(lines):
                     url = lines[i+1].strip()
-                    sports_channels.append((line, cleaned_name, url))
+                    sports_channels.append((line, name, url))
                     i += 1
+            # ===== 添加结束 =====
             i += 1
 
     # ===== 输出 =====
@@ -168,7 +129,7 @@ def main():
         if not line.startswith("#EXTM3U"):
             output += line + "\n"
 
-    # ===== 从原文件恢复：HK频道输出 =====
+    # HK（保持原逻辑简化）
     if hk_channels:
         output += f"\n# {HK_GROUP}频道\n"
         for name, url in hk_channels:
@@ -177,58 +138,30 @@ def main():
     # TW
     if tw_channels:
         output += f"\n# {TW_GROUP}频道\n"
-        for extinf_line, cleaned_name, url in tw_channels:
-            try:
-                # 1️⃣ 替换 group-title
-                modified = re.sub(
-                    r'group-title="[^"]*"',
-                    f'group-title="{TW_GROUP}"',
-                    extinf_line
-                )
-
-                # 2️⃣ 替换逗号后面的频道名称
-                modified = re.sub(
-                    r',\s*[^,]*$',
-                    f',{cleaned_name}',
-                    modified
-                )
-
-                output += modified + "\n" + url + "\n"
-
-            except Exception:
-                output += f'#EXTINF:-1 group-title="{TW_GROUP}",{cleaned_name}\n{url}\n'
+        for extinf_line, name, url in tw_channels:
+            modified = re.sub(r'group-title="[^"]*"', f'group-title="{TW_GROUP}"', extinf_line)
+            parts = modified.rsplit(",",1)
+            if len(parts)==2:
+                modified = parts[0] + "," + name
+            output += modified + "\n" + url + "\n"
 
     # SPORTS（博斯 + •體育「Relay」）
     if sports_channels:
         output += f"\n# {SPORTS_GROUP}频道\n"
-        for extinf_line, cleaned_name, url in sports_channels:
-            try:
-                # 1️⃣ 替换 group-title
-                modified = re.sub(
-                    r'group-title="[^"]*"',
-                    f'group-title="{SPORTS_GROUP}"',
-                    extinf_line
-                )
+        for extinf_line, name, url in sports_channels:
+            modified = re.sub(r'group-title="[^"]*"', f'group-title="{SPORTS_GROUP}"', extinf_line)
+            parts = modified.rsplit(",",1)
+            if len(parts)==2:
+                modified = parts[0] + "," + name
+            output += modified + "\n" + url + "\n"
 
-                # 2️⃣ 替换逗号后面的频道名称
-                modified = re.sub(
-                    r',\s*[^,]*$',
-                    f',{cleaned_name}',
-                    modified
-                )
-
-                output += modified + "\n" + url + "\n"
-
-            except Exception:
-                output += f'#EXTINF:-1 group-title="{SPORTS_GROUP}",{cleaned_name}\n{url}\n'
-
-    total = len(hk_channels) + len(tw_channels) + len(sports_channels)
-    output += f"\n# 统计: HK({len(hk_channels)}) + TW({len(tw_channels)}) + SPORTS({len(sports_channels)}) = {total}\n"
+    total = len(tw_channels) + len(sports_channels)
+    output += f"\n# 统计: TW({len(tw_channels)}) + SPORTS({len(sports_channels)}) = {total}\n"
 
     with open(OUTPUT_FILE,"w",encoding="utf-8") as f:
         f.write(output)
 
-    log(f"生成完成！HK: {len(hk_channels)}, TW: {len(tw_channels)}, SPORTS: {len(sports_channels)}")
+    log("生成完成")
 
 if __name__ == "__main__":
     main()
