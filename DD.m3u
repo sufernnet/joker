@@ -1,10 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-05 00:37:51
-# 更新频率: 每天 06:00 / 17:00
-# EPG: https://epg.zsdc.eu.org/t.xml.gz
-# GitHub Actions 自动生成
+# 生成时间: 2026-03-05 00:41:15
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -735,9 +732,4 @@ https://tv.iill.top/ofiii/litv-xinchuang21
 #EXTINF:-1 tvg-id="龍華電影台" tvg-name="龍華電影台" tvg-logo="https://epg.iill.top/logo/龍華電影台.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍華電影「ofiii」
 https://tv.iill.top/ofiii/litv-xinchuang03
 
-# 统计信息
-# BB 频道数: 79
-# HK频道数: 95
-# TW频道数: 92
-# 总频道数: 266
-# 更新时间: 2026-03-05 00:37:51
+# 统计: BB(79) + HK(95) + TW(92) = 266
