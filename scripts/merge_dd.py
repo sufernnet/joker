@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 DD.m3u 合并脚本（港台频道版）- SPORTS增强完整版
+新增功能：从台湾源提取 •體育「Relay」 分组频道到 SPORTS
 """
 
 import requests
@@ -100,7 +101,7 @@ def main():
     tw_channels = []
     sports_channels = []
 
-    # ===== 解析GAT源获取HK频道 =====
+    # ===== 解析GAT源获取HK频道（从原文件恢复）=====
     if gat_content:
         lines = gat_content.splitlines()
         i = 0
@@ -130,7 +131,7 @@ def main():
                     i += 1
             i += 1
 
-    # ===== TW 处理 =====
+    # ===== TW 处理（增强版）=====
     if tw_source_content:
         lines = tw_source_content.splitlines()
         i = 0
@@ -146,7 +147,7 @@ def main():
                     else:
                         tw_channels.append((line, cleaned_name, url))
                     i += 1
-            # 提取 •體育「Relay」 分组
+            # 新增：提取 •體育「Relay」 分组
             elif line.startswith("#EXTINF:") and 'group-title="•體育「Relay」"' in line:
                 raw_name = line.split(",")[-1].strip()
                 cleaned_name = clean_tw_channel_name(raw_name)
@@ -166,7 +167,7 @@ def main():
         if not line.startswith("#EXTM3U"):
             output += line + "\n"
 
-    # HK（恢复原有的HK处理）
+    # HK（从原文件恢复）
     if hk_channels:
         output += f"\n# {HK_GROUP}频道\n"
         for name, url in hk_channels:
@@ -196,7 +197,7 @@ def main():
             except Exception:
                 output += f'#EXTINF:-1 group-title="{TW_GROUP}",{cleaned_name}\n{url}\n'
 
-    # SPORTS
+    # SPORTS（博斯 + •體育「Relay」）
     if sports_channels:
         output += f"\n# {SPORTS_GROUP}频道\n"
         for extinf_line, cleaned_name, url in sports_channels:
