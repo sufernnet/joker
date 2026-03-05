@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-05 00:48:30
+# 生成时间: 2026-03-05 00:51:45
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -546,7 +546,7 @@ http://bxtv.3a.ink/api.php?id=qxjd
 #EXTINF:-1 group-title="HK",TVB无线千禧
 http://rihou.cc:555/tv/[Bx]无线千禧
 
-# TW频道 (92)
+# TW频道 (94)
 #EXTINF:-1 tvg-id="中天亞洲台" tvg-name="中天亞洲台" tvg-logo="https://epg-1.iill.top/logo/中天亞洲台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天亞洲
 https://tv.iill.top/FainTV/121
 #EXTINF:-1 tvg-id="中天娛樂台" tvg-name="中天娛樂台" tvg-logo="https://epg.iill.top/logo/中天娛樂台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天娛樂
@@ -559,8 +559,12 @@ https://hls.iill.top/api/Cti-K/index.m3u8
 https://tv.iill.top/4gtv/4gtv-4gtv002
 #EXTINF:-1 tvg-id="民視台灣台" tvg-name="民視台灣台" tvg-logo="https://epg.iill.top/logo/民視台灣台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視台灣
 https://tv.iill.top/4gtv/4gtv-4gtv001
+#EXTINF:-1 tvg-id="民視影劇台" tvg-name="民視影劇台" tvg-logo="https://epg.iill.top/logo/民視影劇台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視影劇
+https://tv.iill.top/4gtv/litv-ftv09
 #EXTINF:-1 tvg-id="民視新聞台" tvg-name="民視新聞台" tvg-logo="https://epg.iill.top/logo/民視新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視新聞
 https://tv.iill.top/4gtv/litv-ftv13
+#EXTINF:-1 tvg-id="民視旅遊台" tvg-name="民視旅遊台" tvg-logo="https://epg.iill.top/logo/民視旅遊台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視旅遊
+https://tv.iill.top/4gtv/litv-ftv07
 #EXTINF:-1 tvg-id="民視第一台" tvg-name="民視第一台" tvg-logo="https://epg.iill.top/logo/民視第一台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視第一
 https://tv.iill.top/4gtv/4gtv-4gtv003
 #EXTINF:-1 tvg-id="民視綜藝台" tvg-name="民視綜藝台" tvg-logo="https://epg.iill.top/logo/民視綜藝台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視綜藝
@@ -732,4 +736,4 @@ https://tv.iill.top/ofiii/litv-xinchuang21
 #EXTINF:-1 tvg-id="龍華電影台" tvg-name="龍華電影台" tvg-logo="https://epg.iill.top/logo/龍華電影台.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍華電影
 https://tv.iill.top/ofiii/litv-xinchuang03
 
-# 统计: BB(79) + HK(95) + TW(92) = 266
+# 统计: BB(79) + HK(95) + TW(94) = 268
