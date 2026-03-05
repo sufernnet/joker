@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-05 00:51:45
+# 生成时间: 2026-03-05 01:00:29
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -546,7 +546,7 @@ http://bxtv.3a.ink/api.php?id=qxjd
 #EXTINF:-1 group-title="HK",TVB无线千禧
 http://rihou.cc:555/tv/[Bx]无线千禧
 
-# TW频道 (94)
+# TW频道 (86)
 #EXTINF:-1 tvg-id="中天亞洲台" tvg-name="中天亞洲台" tvg-logo="https://epg-1.iill.top/logo/中天亞洲台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天亞洲
 https://tv.iill.top/FainTV/121
 #EXTINF:-1 tvg-id="中天娛樂台" tvg-name="中天娛樂台" tvg-logo="https://epg.iill.top/logo/中天娛樂台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天娛樂
@@ -583,10 +583,6 @@ https://tv.iill.top/4gtv/4gtv-4gtv074
 https://tv.iill.top/4gtv/4gtv-live207
 #EXTINF:-1 tvg-id="CI 罪案偵查頻道" tvg-name="CI 罪案偵查頻道" tvg-logo="https://epg.iill.top/logo/CI-罪案偵查頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",CI 罪案偵查頻道
 https://tv.iill.top/4gtv/4gtv-live027
-#EXTINF:-1 tvg-id="ELTV英語學習台" tvg-name="ELTV英語學習台" tvg-logo="https://epg.iill.top/logo/ELTA生活英語.png" http-user-agent="okhttp/1.9.89" group-title="TW",ELTA生活英語
-https://tv.iill.top/4gtv/litv-xinchuang20
-#EXTINF:-1 tvg-id="MOMO運動綜合台" tvg-name="MOMO運動綜合台" tvg-logo="https://epg-1.iill.top/logo/MOMO運動綜合台.png" http-user-agent="okhttp/1.9.89" group-title="TW",MOMO運動綜合
-https://tv.iill.top/FainTV/14009
 #EXTINF:-1 tvg-id="NHK WORLD-JAPAN" tvg-name="NHK WORLD-JAPAN" tvg-logo="https://epg.iill.top/logo/NHK-WORLD-JAPAN.png" http-user-agent="okhttp/1.9.89" group-title="TW",NHK 新聞資訊
 https://tv.iill.top/4gtv/4gtv-live168
 #EXTINF:-1 tvg-id="amc電影台" tvg-name="amc電影台" tvg-logo="https://epg.iill.top/logo/amc電影台.png" http-user-agent="okhttp/1.9.89" group-title="TW",amc電影台
@@ -595,8 +591,6 @@ https://tv.iill.top/4gtv/4gtv-4gtv017
 https://tv.iill.top/4gtv/4gtv-live011
 #EXTINF:-1 tvg-id="亞洲旅遊台" tvg-name="亞洲旅遊台" tvg-logo="https://epg.iill.top/logo/亞洲旅遊台.png" http-user-agent="okhttp/1.9.89" group-title="TW",亞洲旅遊
 https://tv.iill.top/4gtv/4gtv-4gtv076
-#EXTINF:-1 tvg-id="人間衛視" tvg-name="人間衛視" tvg-logo="https://epg.iill.top/logo/人間衛視.png" http-user-agent="okhttp/1.9.89" group-title="TW",人間衛視
-https://tv.iill.top/4gtv/4gtv-live008
 #EXTINF:-1 tvg-id="倪珍播新聞" tvg-name="倪珍播新聞" tvg-logo="https://epg.iill.top/logo/倪珍播新聞.png" http-user-agent="okhttp/1.9.89" group-title="TW" ,倪珍播新聞
 https://tv.iill.top/ofiii/nnews-zh
 #EXTINF:-1 tvg-id="八大精彩台" tvg-name="八大精彩台" tvg-logo="https://epg.iill.top/logo/八大精彩台.png" http-user-agent="okhttp/1.9.89" group-title="TW",八大精彩
@@ -607,8 +601,6 @@ https://tv.iill.top/4gtv/4gtv-4gtv039
 https://tv.iill.top/4gtv/4gtv-4gtv042
 #EXTINF:-1 tvg-id="動物星球" tvg-name="動物星球" tvg-logo="https://epg.iill.top/logo/動物星球.png" http-user-agent="okhttp/1.9.89" group-title="TW",動物星球
 https://hls.iill.top/api/Animal-Planet/index.m3u8
-#EXTINF:-1 tvg-id="半島國際新聞台" tvg-name="半島國際新聞台" tvg-logo="https://epg.iill.top/logo/半島國際新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",半島國際新聞
-https://tv.iill.top/4gtv/4gtv-live157
 #EXTINF:-1 tvg-id="博斯無限台" tvg-name="博斯無限台" tvg-logo="https://epg-1.iill.top/logo/博斯無限台.png" http-user-agent="okhttp/1.9.89" group-title="TW",博斯無限 一
 https://tv.iill.top/FainTV/129
 #EXTINF:-1 tvg-id="博斯無限二台" tvg-name="博斯無限二台" tvg-logo="https://epg-1.iill.top/logo/博斯無限二台.png" http-user-agent="okhttp/1.9.89" group-title="TW",博斯無限 二
@@ -627,8 +619,6 @@ https://tv.iill.top/FainTV/125
 https://tv.iill.top/FainTV/135
 #EXTINF:-1 tvg-id="原住民族電視台" tvg-name="原住民族電視台" tvg-logo="https://epg.iill.top/logo/原住民族電視台.png" http-user-agent="okhttp/1.9.89" group-title="TW",原住民族電視
 https://tv.iill.top/4gtv/4gtv-live014
-#EXTINF:-1 tvg-id="台灣啟示錄" tvg-name="台灣啟示錄" tvg-logo="https://epg-1.iill.top/logo/台灣啟示錄.jpg" http-user-agent="okhttp/1.9.89" group-title="TW",台灣啟示錄
-https://tv.iill.top/FainTV/18254
 #EXTINF:-1 tvg-id="台灣戲劇台" tvg-name="台灣戲劇台" tvg-logo="https://epg.iill.top/logo/台灣戲劇台.png" http-user-agent="okhttp/1.9.89" group-title="TW",台灣戲劇
 https://tv.iill.top/ofiii/litv-xinchuang22
 #EXTINF:-1 tvg-id="台視新聞" tvg-name="台視新聞" tvg-logo="https://epg.iill.top/logo/台視新聞.png" http-user-agent="okhttp/1.9.89" group-title="TW",台視新聞
@@ -659,8 +649,6 @@ https://tv.iill.top/4gtv/4gtv-4gtv153
 https://hls.iill.top/api/ET-Movie/index.m3u8
 #EXTINF:-1 tvg-id="歡樂看新聞" tvg-name="歡樂看新聞" tvg-logo="https://epg-1.iill.top/logo/FainTV.png" http-user-agent="okhttp/1.9.89" group-title="TW",歡樂看新聞
 https://tv.iill.top/FainTV/19670
-#EXTINF:-1 tvg-id="第1商業" tvg-name="第1商業" tvg-logo="https://epg.iill.top/logo/第1商業.png" http-user-agent="okhttp/1.9.89" group-title="TW",第1商業
-https://tv.iill.top/ofiii/4gtv-4gtv104
 #EXTINF:-1 tvg-id="精選動漫台" tvg-name="精選動漫台" tvg-logo="https://epg.iill.top/logo/精選動漫台.png" http-user-agent="okhttp/1.9.89" group-title="TW",精選動漫
 https://tv.iill.top/4gtv/4gtv-live024
 #EXTINF:-1 tvg-id="經典卡通台" tvg-name="經典卡通台" tvg-logo="https://epg.iill.top/logo/經典卡通台.png" http-user-agent="okhttp/1.9.89" group-title="TW",經典卡通
@@ -685,14 +673,10 @@ https://tv.iill.top/4gtv/4gtv-4gtv041
 https://tv.iill.top/4gtv/4gtv-4gtv052
 #EXTINF:-1 tvg-id="視納華仁紀實頻道" tvg-name="視納華仁紀實頻道" tvg-logo="https://epg.iill.top/logo/視納華仁紀實頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",視納華仁紀實頻道
 https://tv.iill.top/4gtv/4gtv-4gtv013
-#EXTINF:-1 tvg-id="豬哥亮歌廳秀" tvg-name="豬哥亮歌廳秀" tvg-logo="https://epg.iill.top/logo/豬哥亮歌廳秀.png" http-user-agent="okhttp/1.9.89" group-title="TW",豬哥亮歌廳秀
-https://tv.iill.top/4gtv/4gtv-4gtv006
 #EXTINF:-1 tvg-id="達文西頻道" tvg-name="達文西頻道" tvg-logo="https://epg.iill.top/logo/達文西頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",達文西頻道
 https://tv.iill.top/4gtv/4gtv-4gtv018
 #EXTINF:-1 tvg-id="采昌影劇台" tvg-name="采昌影劇台" tvg-logo="https://epg.iill.top/logo/采昌影劇台.png" http-user-agent="okhttp/1.9.89" group-title="TW",采昌影劇
 https://tv.iill.top/4gtv/4gtv-4gtv049
-#EXTINF:-1 tvg-id="金光布袋戲" tvg-name="金光布袋戲" tvg-logo="https://epg.iill.top/logo/金光布袋戲.png" http-user-agent="okhttp/1.9.89" group-title="TW",金光布袋戲
-https://tv.iill.top/4gtv/4gtv-live144
 #EXTINF:-1 tvg-id="鏡電視新聞台" tvg-name="鏡電視新聞台" tvg-logo="https://epg.iill.top/logo/鏡電視新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",鏡電視新聞
 https://tv.iill.top/4gtv/4gtv-4gtv075
 #EXTINF:-1 tvg-id="靖天卡通台" tvg-name="靖天卡通台" tvg-logo="https://epg.iill.top/logo/靖天卡通台.png" http-user-agent="okhttp/1.9.89" group-title="TW",靖天卡通
@@ -736,4 +720,4 @@ https://tv.iill.top/ofiii/litv-xinchuang21
 #EXTINF:-1 tvg-id="龍華電影台" tvg-name="龍華電影台" tvg-logo="https://epg.iill.top/logo/龍華電影台.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍華電影
 https://tv.iill.top/ofiii/litv-xinchuang03
 
-# 统计: BB(79) + HK(95) + TW(94) = 268
+# 统计: BB(79) + HK(95) + TW(86) = 260
