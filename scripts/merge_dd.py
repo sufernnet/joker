@@ -1,19 +1,6 @@
 #!/usr/bin/env python3
 """
-DD.m3u 合并脚本（港台频道版）
-
-功能：
-1. 保留 BB.m3u 所有内容
-2. 从 https://yang.sufern001.workers.dev 提取 group-title="•台湾「限制」" 的频道作为 TW 分组
-3. 完整保留所有原始属性：tvg-id、tvg-name、tvg-logo、http-user-agent 等
-4. 清洗 TW 频道名称：去除末尾的「4gTV」、「ofiii」、「FainTV」、「Relay」等标记
-5. 过滤掉名称全是英文的 TW 频道
-6. 过滤掉指定的特定频道（DW德國之聲、MCE 我的歐洲電影、SBN 全球財經、國會頻道 1-2、大愛電視等）
-7. TW 频道按指定分组排序：Love Nature→中天系列→民视系列→寰宇系列→中视系列→三立系列→其他
-8. HK 分组和排序规则完全保留（从原港台大陆源提取）
-9. 输出文件为 DD.m3u
-
-北京时间每天 06:00 / 17:00 自动运行
+DD.m3u 合并脚本（港台频道版）- 终极修复版
 """
 
 import requests
@@ -25,316 +12,113 @@ import time
 # ================== 配置 ==================
 
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
-# 港台大陆源（用于提取HK频道）
 GAT_URL = "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/FG/refs/heads/main/港台大陆"
-# TW 源地址（yang.sufern001.workers.dev）
 TW_SOURCE_URL = "https://yang.sufern001.workers.dev"
 OUTPUT_FILE = "DD.m3u"
 
-# 需要从港台大陆源文件中提取的两个分组名（用于HK）
 SOURCE_GROUPS = ["港台频道", "新聞频道"]
-
-# 要提取的目标分组名（从新源中）
 TARGET_TW_GROUP = "•台湾「限制」"
-
-# 输出分组名称
 HK_GROUP = "HK"
 TW_GROUP = "TW"
-
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 
-# 需要过滤掉的频道关键词（不区分大小写）
+# ================== 过滤关键词 ==================
 FILTER_KEYWORDS = [
-    # 原有过滤项
-    "凤凰电影",
-    "人间卫视",
-    "邵氏动作",
-    "邵氏武侠",
-    "邵氏电影",
-    "邵氏喜剧",
-    "生命电影",
-    "ASTV",
-    "亚洲卫视",
-    "GOODTV",
-    "好消息",
-    "唐NTD",
-    "唐人卫视",
-    "唯心电视",
-    "星空卫视",
-    "星空音乐",
-    "華藝中文",
-    "中旺电视",
-    
-    # 中天系列全部保留，所以移除相关过滤项
-    # "中天娱乐",
-    # "中天新聞",
-    # "中天綜合",
-    # "中天亞洲",
-    
-    "年代新聞",
-    "東森新聞台",
-    
-    # 新增过滤项：三立台全部
-    "三立台湾台",
-    "三立戏剧台",
-    "三立都会台",
-    "三立综合台",
-    "三立新闻台",
-    "三立iNEWS",
-    
-    # 新增过滤项：澳门/澳视频道全部
-    "澳门",
-    "澳视",
-    "澳视澳门",
-    "澳视Macau",
-    "澳门综艺",
-    "澳门体育",
-    "澳视高清",
-    "澳视生活",
-    "澳视中文",
-    "澳视体育",
-    "澳视新闻",
-    "澳视财经",
-    
-    # 新增过滤项：民視影劇、民視旅遊
-    "民視影劇",
-    "民视综艺",
-    "民视影劇",
-    "民視旅遊",
-    "民视旅游",
-    "民視旅遊台",
-    "民视旅游台",
-    
-    # 新增特定过滤项（根据用户要求）
-    "DW德國之聲",
-    "MCE 我的歐洲電影",
-    "SBN 全球財經",
-    "國會頻道 1",
-    "國會頻道 2",
-    "國會頻道1",
-    "國會頻道2",
-    "大愛電視",
-    "好萊塢電影",
-    "尼克兒童頻道",
-    "幸福空間居家",
-    "影迷數位紀實",
-    "影迷數位電影",
-    "東森幼幼",
-    "東森購物 一",
-    "東森購物 二",
-    "東森購物 三",
-    "東森購物 四",
-    "歡樂兒童",
-    "韓國娛樂台 KMTV",
-    "韓國娛樂台",
-    "KMTV",
+    "凤凰电影", "人间卫视", "邵氏动作", "邵氏武侠", "邵氏电影", "邵氏喜剧",
+    "生命电影", "ASTV", "亚洲卫视", "GOODTV", "好消息", "唐NTD", "唐人卫视",
+    "唯心电视", "星空卫视", "星空音乐", "華藝中文", "中旺电视",
+    "年代新聞", "東森新聞台",
+    "三立台湾台", "三立戏剧台", "三立都会台", "三立综合台", "三立新闻台", "三立iNEWS",
+    "澳门", "澳视", "澳视澳门", "澳视Macau", "澳门综艺", "澳门体育",
+    "澳视高清", "澳视生活", "澳视中文", "澳视体育", "澳视新闻", "澳视财经",
+    "民視影劇", "民视综艺", "民视影劇", "民視旅遊", "民视旅游", "民視旅遊台", "民视旅游台",
+    "DW德國之聲", "MCE 我的歐洲電影", "SBN 全球財經",
+    "國會頻道 1", "國會頻道 2", "國會頻道1", "國會頻道2",
+    "大愛電視", "好萊塢電影", "尼克兒童頻道", "幸福空間居家",
+    "影迷數位紀實", "影迷數位電影", "東森幼幼",
+    "東森購物 一", "東森購物 二", "東森購物 三", "東森購物 四",
+    "歡樂兒童", "韓國娛樂台 KMTV", "韓國娛樂台", "KMTV",
 ]
 
-# 需要过滤掉的特定URL（精确匹配）
 FILTER_URLS = [
-    "http://iptv.4666888.xyz/iptv2A.php?id=27",  # 凤凰中文特定源
-    # 新增特定URL过滤
-    "https://tv.iill.top/4gtv/4gtv-live007",  # 大愛電視
-    "https://tv.iill.top/4gtv/4gtv-live106",  # 大愛電視 2
-    "https://tv.iill.top/4gtv/4gtv-live105",  # 尼克兒童頻道
-    "https://tv.iill.top/4gtv/4gtv-live206",  # 幸福空間居家
-    "https://tv.iill.top/4gtv/litv-ftv15",     # 影迷數位紀實
-    "https://tv.iill.top/4gtv/4gtv-4gtv011",   # 影迷數位電影
-    "https://hls.iill.top/api/YoYo-TV/index.m3u8",  # 東森幼幼
-    "https://tv.iill.top/4gtv/4gtv-live047",  # 東森購物 一
-    "https://tv.iill.top/4gtv/4gtv-live048",  # 東森購物 三
-    "https://tv.iill.top/4gtv/4gtv-live046",  # 東森購物 二
-    "https://tv.iill.top/4gtv/4gtv-live0499", # 東森購物 四
-    "https://tv.iill.top/FainTV/22768",        # 歡樂兒童
-    "https://tv.iill.top/4gtv/4gtv-4gtv016",   # 韓國娛樂台 KMTV
+    "http://iptv.4666888.xyz/iptv2A.php?id=27",
+    "https://tv.iill.top/4gtv/4gtv-live007",
+    "https://tv.iill.top/4gtv/4gtv-live106",
+    "https://tv.iill.top/4gtv/4gtv-live105",
+    "https://tv.iill.top/4gtv/4gtv-live206",
+    "https://tv.iill.top/4gtv/litv-ftv15",
+    "https://tv.iill.top/4gtv/4gtv-4gtv011",
+    "https://hls.iill.top/api/YoYo-TV/index.m3u8",
+    "https://tv.iill.top/4gtv/4gtv-live047",
+    "https://tv.iill.top/4gtv/4gtv-live048",
+    "https://tv.iill.top/4gtv/4gtv-live046",
+    "https://tv.iill.top/4gtv/4gtv-live0499",
+    "https://tv.iill.top/FainTV/22768",
+    "https://tv.iill.top/4gtv/4gtv-4gtv016",
 ]
 
-# 频道名称标准化映射（用于去重）
+# ================== 名称标准化 ==================
 NAME_NORMALIZATION = {
-    "NOW新闻台": "Now新闻",
-    "NOW新闻台 ": "Now新闻",
-    "Now新闻台": "Now新闻",
-    "now新闻台": "Now新闻",
-    "NOW 新闻台": "Now新闻",
-    "Now 新闻台": "Now新闻",
-    "翡翠台4K": "翡翠台4K",
-    "翡翠台": "翡翠台",
-    "明珠台": "明珠台",
-    "TVB plus": "TVB plus",
-    "TVB1": "TVB1",
-    "TVBJ1": "TVBJ1",
-    "TVB功夫720p": "TVB功夫",
-    "TVB千禧经典": "TVB千禧经典",
-    "TVB娱乐新闻台720p": "TVB娱乐新闻台",
-    "TVB星河720p": "TVB星河",
-    "无线新闻台": "无线新闻台",
-    "ViuTV": "ViuTV",
-    "ViuTV6": "ViuTV6",
-    "RHK31": "RHK31",
-    "RHK32": "RHK32",
-    "CH5综合": "CH5综合",
-    "CH8综合": "CH8综合",
-    "CHU综合": "CHU综合",
-    "CCTV13新闻": "CCTV13新闻",
-    "八度空间": "八度空间",
-    "天映经典": "天映经典",
-    "镜新聞": "镜新聞",
-    "民视": "民视",
-    "民视台湾台": "民视台湾台",
-    "民視新聞台": "民視新聞台",
-    "民視第一台": "民視第一台",
-    "民视综艺": "民视综艺",
-    "CTS華視新聞资讯": "CTS華視新聞资讯",
-    "龙华偶像": "龙华偶像",
-    "龙华偶像1080": "龙华偶像",
-    "龙华戏剧": "龙华戏剧",
-    "龙华日韩": "龙华日韩",
-    "龙华经典": "龙华经典",
-    "中視": "中視",
-    "中視新聞": "中視新聞",
-    "公視": "公視",
-    "台視": "台視",
-    "緯來精彩720p": "緯來精彩",
-    "环球电视台720p": "环球电视台",
-    "台视新闻": "台视新闻",
-    "台视综合": "台视综合",
-    "TVBS精采台": "TVBS精采台",
-    "中视经典": "中视经典",
-    "中视菁采": "中视菁采",
-    "八大精彩台": "八大精彩台",
-    "八大綜藝台": "八大綜藝台",
-    "华视": "华视",
-    "华视教育体育文化": "华视教育体育文化",
+    "NOW新闻台": "Now新闻", "NOW新闻台 ": "Now新闻", "Now新闻台": "Now新闻",
+    "now新闻台": "Now新闻", "NOW 新闻台": "Now新闻", "Now 新闻台": "Now新闻",
+    "翡翠台4K": "翡翠台4K", "翡翠台": "翡翠台", "明珠台": "明珠台",
+    "TVB plus": "TVB plus", "TVB1": "TVB1", "TVBJ1": "TVBJ1",
+    "TVB功夫720p": "TVB功夫", "TVB千禧经典": "TVB千禧经典",
+    "TVB娱乐新闻台720p": "TVB娱乐新闻台", "TVB星河720p": "TVB星河",
+    "无线新闻台": "无线新闻台", "ViuTV": "ViuTV", "ViuTV6": "ViuTV6",
+    "RHK31": "RHK31", "RHK32": "RHK32", "CH5综合": "CH5综合",
+    "CH8综合": "CH8综合", "CHU综合": "CHU综合", "CCTV13新闻": "CCTV13新闻",
+    "八度空间": "八度空间", "天映经典": "天映经典", "镜新聞": "镜新聞",
+    "民视": "民视", "民视台湾台": "民视台湾台", "民視新聞台": "民視新聞台",
+    "民視第一台": "民視第一台", "民视综艺": "民视综艺",
+    "CTS華視新聞资讯": "CTS華視新聞资讯", "龙华偶像": "龙华偶像",
+    "龙华偶像1080": "龙华偶像", "龙华戏剧": "龙华戏剧", "龙华日韩": "龙华日韩",
+    "龙华经典": "龙华经典", "中視": "中視", "中視新聞": "中視新聞",
+    "公視": "公視", "台視": "台視", "緯來精彩720p": "緯來精彩",
+    "环球电视台720p": "环球电视台", "台视新闻": "台视新闻",
+    "台视综合": "台视综合", "TVBS精采台": "TVBS精采台",
+    "中视经典": "中视经典", "中视菁采": "中视菁采",
+    "八大精彩台": "八大精彩台", "八大綜藝台": "八大綜藝台",
+    "华视": "华视", "华视教育体育文化": "华视教育体育文化",
     "非凡新聞HD 720p": "非凡新聞",
 }
 
-# 需要优先保留的名称模式（不区分大小写）
 PREFERRED_NAMES = [
-    "Now新闻",
-    "Now体育",
-    "Now财经", 
-    "Now直播",
-    "翡翠台",
-    "翡翠台4K",
-    "明珠台",
+    "Now新闻", "Now体育", "Now财经", "Now直播",
+    "翡翠台", "翡翠台4K", "明珠台",
 ]
 
-# ================== ⚠️ 修复：需要从 TW 频道名称中去除的后缀标记（硬编码，最可靠） ==================
+# ================== ⚠️ 终极修复：直接在后缀列表中包含所有可能格式 ==================
 TW_NAME_SUFFIXES_TO_REMOVE = [
-    "「4gTV」",
-    "「ofiii」", 
-    "「FainTV」",
-    "「Relay」",
-    "「CatchPlay」",
-    "【4gTV】",
-    "【ofiii】",
-    "【FainTV】",
-    "【Relay】", 
-    "【CatchPlay】",
-    "(4gTV)",
-    "(ofiii)",
-    "(FainTV)",
-    "(Relay)",
-    "(CatchPlay)",
-    # 添加可能的变体
-    "「4GTV」",
-    "「Ofiii」",
-    "「faintv」",
-    "「relay」",
+    "「4gTV」", "「ofiii」", "「FainTV」", "「Relay」", "「CatchPlay」",
+    "【4gTV】", "【ofiii】", "【FainTV】", "【Relay】", "【CatchPlay】",
+    "(4gTV)", "(ofiii)", "(FainTV)", "(Relay)", "(CatchPlay)",
+    "「4GTV」", "「Ofiii」", "「faintv」", "「relay」",
+    "「4gtv」", "「OFIII」", "「FAINTV」", "「RELAY」",
 ]
 
-# ================== HK频道指定顺序 ==================
+# ================== HK频道顺序 ==================
 HK_ORDER = [
-    "凤凰中文",
-    "凤凰资讯",
-    "凤凰香港台",
-    "Now新闻",
-    "Now体育",
-    "Now财经",
-    "Now直播",
-    "HOY76",
-    "HOY77",
-    "HOY78",
-    "翡翠台",
-    "翡翠台4K",
-    "明珠台",
-    "TVB plus",
-    "TVB1",
-    "TVBJ1",
-    "TVB功夫",
-    "TVB千禧经典",
-    "TVB娱乐新闻台",
-    "TVB星河",
-    "无线新闻台",
-    "ViuTV",
-    "ViuTV6",
-    "RHK31",
-    "RHK32",
-    "CH5综合",
-    "CH8综合",
-    "CHU综合",
-    "CCTV13新闻",
-    "八度空间",
-    "天映经典",
+    "凤凰中文", "凤凰资讯", "凤凰香港台", "Now新闻", "Now体育", "Now财经",
+    "Now直播", "HOY76", "HOY77", "HOY78", "翡翠台", "翡翠台4K", "明珠台",
+    "TVB plus", "TVB1", "TVBJ1", "TVB功夫", "TVB千禧经典", "TVB娱乐新闻台",
+    "TVB星河", "无线新闻台", "ViuTV", "ViuTV6", "RHK31", "RHK32",
+    "CH5综合", "CH8综合", "CHU综合", "CCTV13新闻", "八度空间", "天映经典",
 ]
 
-# ================== TW频道指定顺序（按分组排序）==================
+# ================== TW频道顺序 ==================
 TW_ORDER = [
-    # Love Nature 系列
-    "Love Nature",
-    "Love Nature 4K",
-    "Love Nature 野生",
-    "Love Nature 自然",
-    
-    # 中天系列
-    "中天新聞",
-    "中天綜合",
-    "中天娛樂",
-    "中天亞洲",
-    
-    # 民视系列
-    "民視",
-    "民視新聞",
-    "民視第一台",
-    "民視台灣台",
-    "民視影劇",
-    "民視綜藝",
-    
-    # 寰宇系列
-    "寰宇新聞",
-    "寰宇新聞台灣",
-    "寰宇新聞2",
-    "寰宇綜合",
-    "寰宇財經",
-    
-    # 中视系列
-    "中視",
-    "中視新聞",
-    "中視經典",
-    "中視菁采",
-    
-    # 三立系列
-    "三立台灣台",
-    "三立都會台",
-    "三立戲劇台",
-    "三立綜合台",
-    "三立新聞台",
-    "三立iNEWS",
-    
-    # 其他（按字母顺序自动排列）
+    "Love Nature", "Love Nature 4K", "Love Nature 野生", "Love Nature 自然",
+    "中天新聞", "中天綜合", "中天娛樂", "中天亞洲",
+    "民視", "民視新聞", "民視第一台", "民視台灣台", "民視影劇", "民視綜藝",
+    "寰宇新聞", "寰宇新聞台灣", "寰宇新聞2", "寰宇綜合", "寰宇財經",
+    "中視", "中視新聞", "中視經典", "中視菁采",
+    "三立台灣台", "三立都會台", "三立戲劇台", "三立綜合台", "三立新聞台", "三立iNEWS",
 ]
 
-# 分组权重映射（用于排序）
 GROUP_WEIGHTS = {
-    "Love Nature": 1,
-    "中天": 2,
-    "民視": 3,
-    "民视": 3,
-    "寰宇": 4,
-    "中視": 5,
-    "中视": 5,
-    "三立": 6,
-    "其他": 7,
+    "Love Nature": 1, "中天": 2, "民視": 3, "民视": 3,
+    "寰宇": 4, "中視": 5, "中视": 5, "三立": 6, "其他": 7,
 }
 
 # ================== 工具函数 ==================
@@ -344,59 +128,44 @@ def log(msg):
 
 
 def download(url, desc, retries=3):
-    """增强版下载函数，支持重试"""
     for attempt in range(retries):
         try:
             log(f"下载 {desc}... (尝试 {attempt + 1}/{retries})")
             r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
             r.raise_for_status()
             content = r.text
-            if not content or len(content) < 10:  # 检查内容是否为空
+            if not content or len(content) < 10:
                 log(f"⚠️ {desc} 下载内容为空，重试...")
                 continue
             log(f"✅ {desc} 下载成功 ({len(content)} 字符)")
             return content
-        except requests.exceptions.RequestException as e:
+        except Exception as e:
             log(f"❌ {desc} 下载失败 (尝试 {attempt + 1}/{retries}): {e}")
             if attempt < retries - 1:
-                wait_time = 5 * (attempt + 1)  # 递增等待时间
-                log(f"等待 {wait_time} 秒后重试...")
-                time.sleep(wait_time)
-            else:
-                log(f"❌ {desc} 最终下载失败")
+                time.sleep(5 * (attempt + 1))
     return None
 
 
 def extract_channels_from_file(content, target_groups):
-    """
-    从文件内容中提取指定分组列表中的所有频道。
-    返回一个包含所有找到的频道的列表。
-    """
     lines = content.splitlines()
     all_channels = []
     in_section = False
     current_group_marker = None
-
-    log(f"开始从文件中提取分组: {target_groups}")
 
     for i, line in enumerate(lines):
         line = line.strip()
         if not line:
             continue
 
-        # 检查是否是目标分组的开始标记
         for group in target_groups:
-            marker = f"{group},#genre#"
-            if marker in line:
+            if f"{group},#genre#" in line:
                 in_section = True
                 current_group_marker = group
-                log(f"✅ 在第 {i+1} 行找到目标分组: {group}")
+                log(f"✅ 找到目标分组: {group}")
                 break
 
         if in_section:
-            # 如果遇到下一个分组的标记，则停止当前分组的提取
             if ",#genre#" in line and current_group_marker not in line:
-                log(f"到达下一个分组 '{line.split(',')[0]}'，停止提取 '{current_group_marker}'")
                 in_section = False
                 current_group_marker = None
                 continue
@@ -405,22 +174,15 @@ def extract_channels_from_file(content, target_groups):
                 try:
                     name, url = line.split(",", 1)
                     all_channels.append((name.strip(), url.strip()))
-                except Exception as e:
-                    log(f"⚠️ 解析行失败: {line} - {e}")
+                except:
                     continue
 
-    log(f"总共从文件中提取到 {len(all_channels)} 个频道")
+    log(f"提取到 {len(all_channels)} 个频道")
     return all_channels
 
 
 def parse_m3u_for_group(content, target_group):
-    """
-    从 M3U 格式的内容中，提取指定 group-title 的频道。
-    返回列表，每个元素为 (完整EXTINF行, 频道名称, 流URL)
-    完整保留所有原始属性：tvg-id、tvg-name、tvg-logo、http-user-agent 等
-    """
     if not content:
-        log("⚠️ M3U 内容为空")
         return []
     
     lines = content.splitlines()
@@ -430,233 +192,160 @@ def parse_m3u_for_group(content, target_group):
         line = lines[i].strip()
         if line.startswith('#EXTINF:'):
             try:
-                # 检查是否包含目标 group-title
                 if f'group-title="{target_group}"' in line:
-                    # 提取频道名称（最后一个逗号之后的部分）
                     name_part = line.split(',')[-1].strip()
-                    # 下一行应该是 URL
                     if i + 1 < len(lines):
                         url_line = lines[i + 1].strip()
                         if url_line and not url_line.startswith('#'):
-                            # 保存完整的 EXTINF 行（包含所有属性）
                             channels.append((line, name_part, url_line))
-                            i += 1  # 跳过已处理的 URL 行
-            except Exception as e:
-                log(f"⚠️ 解析 M3U 行失败: {line} - {e}")
+                            i += 1
+            except:
+                pass
         i += 1
-    log(f"从源中提取到 {len(channels)} 个属于 '{target_group}' 的频道")
+    log(f"提取到 {len(channels)} 个属于 '{target_group}' 的频道")
     return channels
 
 
-# ================== ⚠️ 修复后的清洗函数 ==================
+# ================== ⚠️ 终极修复：直接对原始名称进行字符串替换 ==================
 def clean_tw_channel_name(name):
-    """清洗 TW 频道名称：去除末尾的「4gTV」、「ofiii」、「FainTV」、「Relay」等标记"""
+    """终极修复版：直接去除所有可能的后缀"""
     original = name
-    cleaned = name
     
-    # 直接使用硬编码的后缀列表，逐个检查并去除
+    # 方法1：直接替换所有可能的后缀（最暴力但最有效）
     for suffix in TW_NAME_SUFFIXES_TO_REMOVE:
-        if cleaned.endswith(suffix):
-            cleaned = cleaned[:-len(suffix)]
+        if name.endswith(suffix):
+            name = name[:-len(suffix)]
             break
     
-    cleaned = cleaned.strip()
+    # 方法2：如果方法1没成功，尝试用正则去除末尾的「xxx」格式
+    if name == original:
+        # 匹配末尾的「任意内容」或【任意内容】或(任意内容)
+        name = re.sub(r'[「【(][^」】)]*[」】)]$', '', name)
     
-    if cleaned != original:
-        log(f"清洗 TW 名称: '{original}' -> '{cleaned}'")
+    # 方法3：如果还有残留的括号，也去除
+    name = re.sub(r'\s*[「【(][^」】)]*[」】)]\s*$', '', name)
     
-    return cleaned
+    name = name.strip()
+    
+    if name != original:
+        log(f"✅ 清洗成功: '{original}' -> '{name}'")
+    else:
+        log(f"⚠️ 未清洗: '{original}'")
+    
+    return name
 
 
 def should_filter_by_keyword(name):
-    """根据关键词检查频道名称是否应该被过滤"""
     if not name:
         return False
     name_lower = name.lower()
     for keyword in FILTER_KEYWORDS:
         if keyword.lower() in name_lower:
-            log(f"关键词过滤频道: {name} (匹配关键词: {keyword})")
+            log(f"关键词过滤: {name}")
             return True
     return False
 
 
 def should_filter_by_url(url):
-    """根据URL检查频道是否应该被过滤"""
     if not url:
         return False
     for filter_url in FILTER_URLS:
         if url == filter_url or url.startswith(filter_url):
-            log(f"URL过滤频道: {url}")
+            log(f"URL过滤: {url}")
             return True
     return False
 
 
 def is_mostly_english(name):
-    """判断频道名称是否主要是英文（用于过滤）"""
     if not name:
         return False
-    # 移除中文字符
     non_chinese = re.sub(r'[\u4e00-\u9fff]', '', name)
     non_chinese_stripped = non_chinese.replace(' ', '')
-    # 如果非中文字符数量超过总字符数的一半，认为是英文为主
     if len(non_chinese_stripped) > len(name) / 2:
         if re.search('[a-zA-Z]', non_chinese_stripped):
-            log(f"过滤全英文/多英文频道: {name}")
+            log(f"过滤英文频道: {name}")
             return True
     return False
 
 
 def get_tw_group_weight(name):
-    """获取 TW 频道的分组权重"""
     if not name:
         return 7
-    
     name_lower = name.lower()
-    
-    # Love Nature 系列
     if "love nature" in name_lower:
         return 1
-    
-    # 中天系列
     if "中天" in name:
         return 2
-    
-    # 民视系列
     if "民視" in name or "民视" in name:
         return 3
-    
-    # 寰宇系列
     if "寰宇" in name:
         return 4
-    
-    # 中视系列
     if "中視" in name or "中视" in name:
         return 5
-    
-    # 三立系列
     if "三立" in name:
         return 6
-    
-    # 其他
     return 7
 
 
 def sort_tw_by_groups(channels):
-    """
-    按分组对 TW 频道进行排序
-    输入格式：列表，每个元素为 (完整EXTINF行, 频道名称, 流URL)
-    排序后返回相同格式的列表
-    """
-    # 按分组权重排序，同一分组内按名称排序
     return sorted(channels, key=lambda x: (get_tw_group_weight(x[1]), x[1]))
 
 
 def sort_by_custom_order(channels, order_list):
-    """
-    根据指定的顺序列表对频道进行排序
-    不在列表中的频道按名称字母顺序排序，但放在列表内频道的后面
-    """
     order_map = {name: i for i, name in enumerate(order_list)}
-    
     def key_func(item):
         name, _ = item
-        base_name = re.sub(r'\s*(?:HD|1080p|720p|4K).*$', '', name).strip()
-        
-        if name in order_map:
-            return (0, order_map[name])
-        elif base_name in order_map:
-            return (0, order_map[base_name])
         for idx, order_name in enumerate(order_list):
             if order_name in name:
                 return (0, idx)
         return (1, name)
-    
     return sorted(channels, key=key_func)
 
 
 def deduplicate_channels(channels):
-    """
-    去重处理
-    策略：对于相同内容的频道，优先保留标准名称
-    """
     url_groups = {}
     for name, url in channels:
-        if url not in url_groups:
-            url_groups[url] = []
-        url_groups[url].append(name)
+        url_groups.setdefault(url, []).append(name)
     
     deduped = []
     for url, names in url_groups.items():
         if len(names) == 1:
             deduped.append((names[0], url))
         else:
-            log(f"发现重复URL: {url}")
+            log(f"重复URL: {url}")
+            selected = names[0]
             for name in names:
-                log(f"  - 名称变体: {name}")
-            
-            selected = None
-            for name in names:
-                if is_preferred_name(name):
+                if name in PREFERRED_NAMES:
                     selected = name
-                    log(f"  ✅ 选择优先名称: {name}")
                     break
-            
-            if not selected:
-                sorted_names = sorted(names, key=len)
-                selected = sorted_names[0]
-                log(f"  ⚠️ 无优先名称，选择最短的: {selected}")
-            
             deduped.append((selected, url))
-    
-    log(f"去重前频道数: {len(channels)}，去重后: {len(deduped)}")
     return deduped
 
 
 def is_preferred_name(name):
-    """检查是否为优先保留的名称"""
-    name_lower = name.lower()
-    for preferred in PREFERRED_NAMES:
-        if name_lower == preferred.lower():
-            return True
-    return False
+    return name.lower() in [p.lower() for p in PREFERRED_NAMES]
 
 
 def clean_channel_name(name):
-    """去除频道名称末尾的分辨率标记如 'HD 1080p', '1080p' 等"""
-    original = name
     name = re.sub(r'\s*[Hh][Dd]\s*1080[pP]?\s*$', '', name)
     name = re.sub(r'\s*1080[pP]\s*$', '', name)
     name = re.sub(r'\s*[Hh][Dd]\s*$', '', name)
     name = re.sub(r'\s*720[pP]\s*$', '', name)
-    name = name.strip()
-    if name != original:
-        log(f"清洗名称: '{original}' -> '{name}'")
-    return name
+    return name.strip()
 
 
 def normalize_channel_name(name):
-    """标准化频道名称（用于去重）"""
     name_stripped = name.strip()
-    
     for variant, standard in NAME_NORMALIZATION.items():
         if name_stripped == variant or name_stripped.lower() == variant.lower():
-            log(f"标准化名称: '{name}' -> '{standard}'")
             return standard
-    
     return name_stripped
 
 
 def is_hk_channel(name):
-    """判断是否为香港频道"""
-    hk_identifiers = [
-        "凤凰", "Now", "HOY", "翡翠", "明珠", "TVB", "无线", "Viu", "RHK",
-        "CH5", "CH8", "CHU", "CCTV13", "八度空间", "天映"
-    ]
+    hk_identifiers = ["凤凰", "Now", "HOY", "翡翠", "明珠", "TVB", "无线", "Viu", "RHK", "CH5", "CH8", "CHU", "CCTV13", "八度空间", "天映"]
     name_lower = name.lower()
-    for identifier in hk_identifiers:
-        if identifier.lower() in name_lower:
-            return True
-    return False
+    return any(identifier.lower() in name_lower for identifier in hk_identifiers)
 
 
 # ================== 主流程 ==================
@@ -665,188 +354,110 @@ def main():
     log("开始生成 DD.m3u ...")
     
     try:
-        # 1. 下载 BB.m3u
         bb = download(BB_URL, "BB.m3u")
         if not bb:
-            log("❌ BB.m3u 下载失败，退出")
             sys.exit(1)
 
-        # 2. 下载港台大陆源文件（用于提取 HK 频道）
-        gat_content = download(GAT_URL, "港台大陆源文件 (用于提取HK)") or ""
-        
-        # 3. 下载 TW 源文件（yang.sufern001.workers.dev）
-        tw_source_content = download(TW_SOURCE_URL, "台湾源文件 (用于提取TW)") or ""
+        gat_content = download(GAT_URL, "港台大陆源文件") or ""
+        tw_source_content = download(TW_SOURCE_URL, "台湾源文件") or ""
 
-        # ================== 处理 HK 频道 ==================
+        # ===== 处理 HK 频道 =====
         hk_channels = []
         if gat_content:
             try:
-                # 从港台大陆源中提取所有频道
-                all_source_channels = extract_channels_from_file(gat_content, SOURCE_GROUPS)
-                
-                # HK 频道的处理保持不变
-                # 清洗名称
-                cleaned_channels = [(clean_channel_name(name), url) for name, url in all_source_channels]
-                
-                # 过滤（关键词和URL）
-                keyword_filtered = [(name, url) for name, url in cleaned_channels if not should_filter_by_keyword(name)]
-                url_filtered = [(name, url) for name, url in keyword_filtered if not should_filter_by_url(url)]
-                
-                # 标准化名称
-                normalized = [(normalize_channel_name(name), url) for name, url in url_filtered]
-                
-                # 去重
+                all_source = extract_channels_from_file(gat_content, SOURCE_GROUPS)
+                cleaned = [(clean_channel_name(name), url) for name, url in all_source]
+                keyword_filtered = [(n, u) for n, u in cleaned if not should_filter_by_keyword(n)]
+                url_filtered = [(n, u) for n, u in keyword_filtered if not should_filter_by_url(u)]
+                normalized = [(normalize_channel_name(n), u) for n, u in url_filtered]
                 deduped = deduplicate_channels(normalized)
-                
-                # 识别并提取 HK 频道
-                for name, url in deduped:
-                    if is_hk_channel(name):
-                        hk_channels.append((name, url))
-                
-                log(f"HK 频道处理完成，共 {len(hk_channels)} 个")
+                hk_channels = [(n, u) for n, u in deduped if is_hk_channel(n)]
+                log(f"HK频道: {len(hk_channels)} 个")
             except Exception as e:
-                log(f"⚠️ HK 频道处理出错: {e}")
-                hk_channels = []
+                log(f"HK处理出错: {e}")
 
-        # ================== 处理 TW 频道（从 yang.sufern001.workers.dev 提取指定分组）==================
-        tw_channels = []  # 每个元素格式：(完整EXTINF行, 频道名称, 流URL)
+        # ===== 处理 TW 频道（终极修复版）=====
+        tw_channels = []
         if tw_source_content:
             try:
-                # 从源中提取目标分组的频道，保留完整 EXTINF 行
                 tw_raw = parse_m3u_for_group(tw_source_content, TARGET_TW_GROUP)
                 
-                # 对每个频道进行处理
+                # 调试：打印原始名称
+                log("=== 调试信息：原始频道名称 ===")
+                for i, (_, name, _) in enumerate(tw_raw[:5]):
+                    log(f"  原始 {i+1}: '{name}'")
+                
                 tw_processed = []
                 for extinf_line, original_name, url in tw_raw:
                     try:
-                        # ⚠️ 使用修复后的清洗函数去除后缀
+                        # ⚠️ 使用终极修复版清洗函数
                         cleaned_name = clean_tw_channel_name(original_name)
                         
-                        # 过滤英文名称
                         if is_mostly_english(cleaned_name):
                             continue
-                        
-                        # 关键词过滤
                         if should_filter_by_keyword(cleaned_name):
                             continue
-                        
-                        # URL过滤
                         if should_filter_by_url(url):
                             continue
                         
-                        # 通过所有过滤，保留
                         tw_processed.append((extinf_line, cleaned_name, url))
                     except Exception as e:
-                        log(f"⚠️ 处理单个 TW 频道失败: {original_name} - {e}")
                         continue
                 
+                # 调试：打印清洗后的名称
+                log("=== 调试信息：清洗后频道名称 ===")
+                for i, (_, name, _) in enumerate(tw_processed[:5]):
+                    log(f"  清洗后 {i+1}: '{name}'")
+                
                 tw_channels = tw_processed
-                log(f"TW 频道处理完成：原始 {len(tw_raw)} -> 最终 {len(tw_channels)} 个")
+                log(f"TW频道: {len(tw_channels)} 个")
             except Exception as e:
-                log(f"⚠️ TW 频道处理出错: {e}")
-                tw_channels = []
+                log(f"TW处理出错: {e}")
 
-        # 分别排序
+        # 排序
         sorted_hk = sort_by_custom_order(hk_channels, HK_ORDER)
-        # TW 频道使用新的分组排序（传入的是 (extinf_line, name, url) 元组）
         sorted_tw = sort_tw_by_groups(tw_channels)
 
-        log(f"排序完成")
-        if sorted_tw:
-            log(f"TW 频道分组统计：")
-            log(f"  - Love Nature 系列: {sum(1 for _,name,_ in sorted_tw if get_tw_group_weight(name) == 1)}")
-            log(f"  - 中天系列: {sum(1 for _,name,_ in sorted_tw if get_tw_group_weight(name) == 2)}")
-            log(f"  - 民视系列: {sum(1 for _,name,_ in sorted_tw if get_tw_group_weight(name) == 3)}")
-            log(f"  - 寰宇系列: {sum(1 for _,name,_ in sorted_tw if get_tw_group_weight(name) == 4)}")
-            log(f"  - 中视系列: {sum(1 for _,name,_ in sorted_tw if get_tw_group_weight(name) == 5)}")
-            log(f"  - 三立系列: {sum(1 for _,name,_ in sorted_tw if get_tw_group_weight(name) == 6)}")
-            log(f"  - 其他: {sum(1 for _,name,_ in sorted_tw if get_tw_group_weight(name) == 7)}")
-
-        # ================== 生成输出文件 ==================
+        # ===== 生成输出文件 =====
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
         output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
-        output += f"""# DD.m3u
-# 生成时间: {timestamp}
-# 更新频率: 每天 06:00 / 17:00
-# EPG: {EPG_URL}
-# GitHub Actions 自动生成
+        output += f"# DD.m3u\n# 生成时间: {timestamp}\n\n"
 
-"""
-
-        # 写入 BB 内容
+        # 写入 BB
         bb_count = 0
         for line in bb.splitlines():
-            if line.startswith("#EXTM3U"):
-                continue
-            output += line + "\n"
-            if line.startswith("#EXTINF"):
-                bb_count += 1
+            if not line.startswith("#EXTM3U"):
+                output += line + "\n"
+                if line.startswith("#EXTINF"):
+                    bb_count += 1
 
-        # 写入 HK 分组
+        # 写入 HK
         if sorted_hk:
             output += f"\n# {HK_GROUP}频道 ({len(sorted_hk)})\n"
             for name, url in sorted_hk:
-                output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n'
-                output += f"{url}\n"
+                output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n{url}\n'
 
-        # 写入 TW 分组（使用原始 EXTINF 行，只修改 group-title，保留所有其他属性）
+        # 写入 TW（保留所有属性，只改 group-title）
         if sorted_tw:
             output += f"\n# {TW_GROUP}频道 ({len(sorted_tw)})\n"
             for extinf_line, name, url in sorted_tw:
                 try:
-                    # 安全地替换 group-title，保留所有其他属性（tvg-id、tvg-name、tvg-logo、http-user-agent等）
-                    if 'group-title="' in extinf_line:
-                        # 如果存在 group-title，替换它
-                        modified_extinf = re.sub(r'group-title="[^"]*"', f'group-title="{TW_GROUP}"', extinf_line)
-                    else:
-                        # 如果不存在，在合适的位置添加
-                        if extinf_line.endswith(',' + name):
-                            modified_extinf = extinf_line.replace(',' + name, f' group-title="{TW_GROUP}",' + name)
-                        else:
-                            modified_extinf = extinf_line + f' group-title="{TW_GROUP}"'
-                    output += modified_extinf + "\n"
-                    output += f"{url}\n"
-                except Exception as e:
-                    log(f"⚠️ 写入 TW 频道失败: {name} - {e}")
-                    # 降级处理：使用简单格式，但保留名称
-                    output += f'#EXTINF:-1 group-title="{TW_GROUP}",{name}\n'
-                    output += f"{url}\n"
+                    # 替换 group-title，保留其他所有属性
+                    modified = re.sub(r'group-title="[^"]*"', f'group-title="{TW_GROUP}"', extinf_line)
+                    output += modified + "\n" + url + "\n"
+                except:
+                    output += f'#EXTINF:-1 group-title="{TW_GROUP}",{name}\n{url}\n'
 
-        # 统计信息
+        # 统计
         total = bb_count + len(sorted_hk) + len(sorted_tw)
+        output += f"\n# 统计: BB({bb_count}) + HK({len(sorted_hk)}) + TW({len(sorted_tw)}) = {total}\n"
 
-        output += f"""
-# 统计信息
-# BB 频道数: {bb_count}
-# {HK_GROUP}频道数: {len(sorted_hk)}
-# {TW_GROUP}频道数: {len(sorted_tw)}
-# 总频道数: {total}
-# 更新时间: {timestamp}
-"""
+        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+            f.write(output)
+        log(f"✅ 生成成功！总频道: {total}")
 
-        try:
-            with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-                f.write(output)
-            log("🎉 DD.m3u 生成成功")
-            log(f"📺 BB({bb_count}) + HK({len(sorted_hk)}) + TW({len(sorted_tw)}) = {total}")
-            
-            # 验证文件是否成功写入
-            import os
-            if os.path.exists(OUTPUT_FILE):
-                file_size = os.path.getsize(OUTPUT_FILE)
-                log(f"📁 文件大小: {file_size} 字节")
-            else:
-                log(f"❌ 文件未找到: {OUTPUT_FILE}")
-                
-        except Exception as e:
-            log(f"❌ 保存失败: {e}")
-            sys.exit(1)
-            
     except Exception as e:
-        log(f"❌ 主流程执行失败: {e}")
-        import traceback
-        traceback.print_exc()
+        log(f"❌ 失败: {e}")
         sys.exit(1)
 
 
