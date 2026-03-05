@@ -78,6 +78,26 @@ def download(url, desc, retries=3):
 def is_sports_channel(name):
     return "博斯" in name if name else False
 
+def clean_tw_channel_name(name):
+    """清洗台湾频道名称，去除末尾的垃圾后缀"""
+    # 去除 " •台湾「限制」" 后缀
+    name = re.sub(r'\s*•台湾「限制」$', '', name)
+    # 去除 " •體育「Relay」" 后缀
+    name = re.sub(r'\s*•體育「Relay」$', '', name)
+    # 去除其他常见垃圾后缀
+    name = re.sub(r'\s*•\w+「[^」]+」$', '', name)
+    return name.strip()
+
+def build_extinf_line(original_line, new_group, cleaned_name):
+    """根据原始行、新分组和清洗后的名称构建新的EXTINF行"""
+    # 替换group-title
+    modified = re.sub(r'group-title="[^"]*"', f'group-title="{new_group}"', original_line)
+    # 替换逗号后的频道名称
+    parts = modified.rsplit(",", 1)
+    if len(parts) == 2:
+        return parts[0] + "," + cleaned_name
+    return modified
+
 # ================== 主流程 ==================
 
 def main():
@@ -101,22 +121,23 @@ def main():
         while i < len(lines):
             line = lines[i].strip()
             if line.startswith("#EXTINF:") and f'group-title="{TARGET_TW_GROUP}"' in line:
-                name = line.split(",")[-1].strip()
+                raw_name = line.split(",")[-1].strip()
+                cleaned_name = clean_tw_channel_name(raw_name)
                 if i+1 < len(lines):
                     url = lines[i+1].strip()
-                    if "博斯" in name:
-                        sports_channels.append((line, name, url))
+                    if "博斯" in cleaned_name:
+                        sports_channels.append((line, cleaned_name, url))
                     else:
-                        tw_channels.append((line, name, url))
+                        tw_channels.append((line, cleaned_name, url))
                     i += 1
-            # ===== 新增：提取 •體育「Relay」 分组 =====
+            # 新增：提取 •體育「Relay」 分组
             elif line.startswith("#EXTINF:") and 'group-title="•體育「Relay」"' in line:
-                name = line.split(",")[-1].strip()
+                raw_name = line.split(",")[-1].strip()
+                cleaned_name = clean_tw_channel_name(raw_name)
                 if i+1 < len(lines):
                     url = lines[i+1].strip()
-                    sports_channels.append((line, name, url))
+                    sports_channels.append((line, cleaned_name, url))
                     i += 1
-            # ===== 新增结束 =====
             i += 1
 
     # ===== 输出 =====
@@ -129,7 +150,7 @@ def main():
         if not line.startswith("#EXTM3U"):
             output += line + "\n"
 
-    # HK（保持原逻辑简化）
+    # HK
     if hk_channels:
         output += f"\n# {HK_GROUP}频道\n"
         for name, url in hk_channels:
@@ -138,22 +159,16 @@ def main():
     # TW
     if tw_channels:
         output += f"\n# {TW_GROUP}频道\n"
-        for extinf_line, name, url in tw_channels:
-            modified = re.sub(r'group-title="[^"]*"', f'group-title="{TW_GROUP}"', extinf_line)
-            parts = modified.rsplit(",",1)
-            if len(parts)==2:
-                modified = parts[0] + "," + name
-            output += modified + "\n" + url + "\n"
+        for extinf_line, cleaned_name, url in tw_channels:
+            new_extinf = build_extinf_line(extinf_line, TW_GROUP, cleaned_name)
+            output += new_extinf + "\n" + url + "\n"
 
-    # SPORTS（博斯 + •體育「Relay」）
+    # SPORTS
     if sports_channels:
         output += f"\n# {SPORTS_GROUP}频道\n"
-        for extinf_line, name, url in sports_channels:
-            modified = re.sub(r'group-title="[^"]*"', f'group-title="{SPORTS_GROUP}"', extinf_line)
-            parts = modified.rsplit(",",1)
-            if len(parts)==2:
-                modified = parts[0] + "," + name
-            output += modified + "\n" + url + "\n"
+        for extinf_line, cleaned_name, url in sports_channels:
+            new_extinf = build_extinf_line(extinf_line, SPORTS_GROUP, cleaned_name)
+            output += new_extinf + "\n" + url + "\n"
 
     total = len(tw_channels) + len(sports_channels)
     output += f"\n# 统计: TW({len(tw_channels)}) + SPORTS({len(sports_channels)}) = {total}\n"
