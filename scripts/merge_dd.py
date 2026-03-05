@@ -109,14 +109,6 @@ def main():
                     else:
                         tw_channels.append((line, name, url))
                     i += 1
-            # ===== 只添加这一行：提取 •體育「Relay」 分组 =====
-            elif line.startswith("#EXTINF:") and 'group-title="•體育「Relay」"' in line:
-                name = line.split(",")[-1].strip()
-                if i+1 < len(lines):
-                    url = lines[i+1].strip()
-                    sports_channels.append((line, name, url))
-                    i += 1
-            # ===== 添加结束 =====
             i += 1
 
     # ===== 输出 =====
@@ -145,7 +137,7 @@ def main():
                 modified = parts[0] + "," + name
             output += modified + "\n" + url + "\n"
 
-    # SPORTS（博斯 + •體育「Relay」）
+    # SPORTS（博斯）
     if sports_channels:
         output += f"\n# {SPORTS_GROUP}频道\n"
         for extinf_line, name, url in sports_channels:
