@@ -59,6 +59,24 @@ FILTER_URLS = [
     "https://tv.iill.top/4gtv/4gtv-4gtv016",
 ]
 
+# ================== 排序配置 ==================
+
+TW_CHANNEL_ORDER = [
+    "Love Nature",
+    "中天",
+    "民視",
+    "寰宇",
+    "中視",
+    "三立",
+]
+
+def get_tw_channel_priority(name):
+    """获取TW频道的排序优先级"""
+    for i, keyword in enumerate(TW_CHANNEL_ORDER):
+        if keyword in name:
+            return i
+    return len(TW_CHANNEL_ORDER)  # 其他频道放在最后
+
 # ================== 工具函数 ==================
 
 def log(msg):
@@ -216,6 +234,12 @@ def main():
                     i += 1
             i += 1
 
+    # ===== 对TW频道进行排序 =====
+    if tw_channels:
+        # 按优先级排序
+        tw_channels.sort(key=lambda x: get_tw_channel_priority(x[1]))
+        log("TW频道排序完成")
+
     # ===== 输出 =====
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
@@ -232,7 +256,7 @@ def main():
         for name, url in hk_channels:
             output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n{url}\n'
 
-    # TW
+    # TW（已排序）
     if tw_channels:
         output += f"\n# {TW_GROUP}频道\n"
         for extinf_line, cleaned_name, url in tw_channels:
