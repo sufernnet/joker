@@ -80,7 +80,7 @@ def is_sports_channel(name):
 
 def clean_tw_channel_name(name):
     """清洗台湾频道名称，去除末尾的各种括号及其内容"""
-    # 使用您的正则：匹配末尾的各种括号（包括「」、【】、()）及其内容
+    # 匹配末尾的各种括号（包括「」、【】、()）及其内容
     cleaned = re.sub(r'\s*[「【(][^」】)]*[」】)]\s*$', '', name)
     return cleaned.strip()
 
@@ -100,6 +100,36 @@ def main():
     tw_channels = []
     sports_channels = []
 
+    # ===== 解析GAT源获取HK频道 =====
+    if gat_content:
+        lines = gat_content.splitlines()
+        i = 0
+        while i < len(lines):
+            line = lines[i].strip()
+            if line.startswith("#EXTINF:"):
+                # 检查是否属于目标分组
+                if any(f'group-title="{group}"' in line for group in SOURCE_GROUPS):
+                    if i+1 < len(lines):
+                        url = lines[i+1].strip()
+                        # 跳过过滤的URL
+                        if url in FILTER_URLS:
+                            i += 1
+                            continue
+                        
+                        name = line.split(",")[-1].strip()
+                        
+                        # 应用关键词过滤
+                        skip = False
+                        for keyword in FILTER_KEYWORDS:
+                            if keyword in name:
+                                skip = True
+                                break
+                        
+                        if not skip:
+                            hk_channels.append((name, url))
+                    i += 1
+            i += 1
+
     # ===== TW 处理 =====
     if tw_source_content:
         lines = tw_source_content.splitlines()
@@ -116,7 +146,7 @@ def main():
                     else:
                         tw_channels.append((line, cleaned_name, url))
                     i += 1
-            # 新增：提取 •體育「Relay」 分组
+            # 提取 •體育「Relay」 分组
             elif line.startswith("#EXTINF:") and 'group-title="•體育「Relay」"' in line:
                 raw_name = line.split(",")[-1].strip()
                 cleaned_name = clean_tw_channel_name(raw_name)
@@ -136,7 +166,7 @@ def main():
         if not line.startswith("#EXTM3U"):
             output += line + "\n"
 
-    # HK
+    # HK（恢复原有的HK处理）
     if hk_channels:
         output += f"\n# {HK_GROUP}频道\n"
         for name, url in hk_channels:
@@ -154,7 +184,7 @@ def main():
                     extinf_line
                 )
 
-                # 2️⃣ 替换逗号后面的频道名称（使用清洗后的名称）
+                # 2️⃣ 替换逗号后面的频道名称
                 modified = re.sub(
                     r',\s*[^,]*$',
                     f',{cleaned_name}',
@@ -178,7 +208,7 @@ def main():
                     extinf_line
                 )
 
-                # 2️⃣ 替换逗号后面的频道名称（使用清洗后的名称）
+                # 2️⃣ 替换逗号后面的频道名称
                 modified = re.sub(
                     r',\s*[^,]*$',
                     f',{cleaned_name}',
