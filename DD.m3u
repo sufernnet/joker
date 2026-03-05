@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-05 01:47:04
+# 生成时间: 2026-03-05 01:48:01
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -669,73 +669,5 @@ https://tv.iill.top/FainTV/125
 https://tv.iill.top/FainTV/53
 #EXTINF:-1 tvg-id="博斯魅力台" tvg-name="博斯魅力台" tvg-logo="https://epg-1.iill.top/logo/博斯魅力台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯魅力「FainTV」
 https://tv.iill.top/FainTV/135
-#EXTINF:-1 tvg-id="Eurosport 1" tvg-name="Eurosport 1" tvg-logo="https://epg-1.iill.top/logo/Eurosport-1.png"  group-title="SPORTS",Eurosport 1
-https://hls.iill.top/api/Eurosport-1/index.m3u8
-#EXTINF:-1 tvg-id="Eurosport 2" tvg-name="Eurosport 2" tvg-logo="https://epg-1.iill.top/logo/Eurosport-2.png"  group-title="SPORTS",Eurosport 2
-https://hls.iill.top/api/Eurosport-2/index.m3u8
-#EXTINF:-1 tvg-id="TNT Sports 1 HD" tvg-name="TNT Sports 1 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-1.png"  group-title="SPORTS",TNT Sport 1
-https://hls.iill.top/api/TNT-Sports-1/index.m3u8
-#EXTINF:-1 tvg-id="TNT Sports 2 HD" tvg-name="TNT Sports 2 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-2.png"  group-title="SPORTS",TNT Sport 2
-https://hls.iill.top/api/TNT-Sports-2/index.m3u8
-#EXTINF:-1 tvg-id="TNT Sports 3 HD" tvg-name="TNT Sports 3 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-3.png" group-title="SPORTS",TNT Sport 3
-https://hls.iill.top/api/TNT-Sports-3/index.m3u8
-#EXTINF:-1 tvg-id="TNT Sports 4 HD" tvg-name="TNT Sports 4 HD" tvg-logo="https://epg-1.iill.top/logo/TNT-Sports-4.png" group-title="SPORTS",TNT Sport 4
-https://hls.iill.top/api/TNT-Sports-4/index.m3u8
-#EXTINF:-1 tvg-id="beIN Sports HD" tvg-name="beIN Sports HD" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-1.png" group-title="SPORTS",beIN Sports 1
-https://hls.iill.top/api/beIN-Sports-1/index.m3u8
-#EXTINF:-1 tvg-id="beIN Sports 2 HD" tvg-name="beIN Sports 2 HD" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-2.png" group-title="SPORTS",beIN Sports 2
-https://hls.iill.top/api/beIN-Sports-2/index.m3u8
-#EXTINF:-1 tvg-id="beIN Sports 3" tvg-name="beIN Sports 3" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-3.png" group-title="SPORTS",beIN Sports 3
-https://hls.iill.top/api/beIN-Sports-3/index.m3u8
-#EXTINF:-1 tvg-id="beIN Sports 4" tvg-name="beIN Sports 4" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-4.png" group-title="SPORTS",beIN Sports 4
-https://hls.iill.top/api/beIN-Sports-4/index.m3u8
-#EXTINF:-1 tvg-id="beIN Sports 5" tvg-name="beIN Sports 5" tvg-logo="https://epg-1.iill.top/logo/beIN-Sports-5.png" group-title="SPORTS",beIN Sports 5
-https://hls.iill.top/api/beIN-Sports-5/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 1" tvg-name="Hub Premier 1" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-1.png" group-title="SPORTS",Hub Premier 1
-https://hls.iill.top/api/Hub-Premier-1/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 2 (HD)" tvg-name="Hub Premier 2 (HD)" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-2.png" group-title="SPORTS",Hub Premier 2
-https://hls.iill.top/api/Hub-Premier-2/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 3" tvg-name="Hub Premier 3" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-3.png" group-title="SPORTS",Hub Premier 3
-https://hls.iill.top/api/Hub-Premier-3/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 4" tvg-name="Hub Premier 4" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-4.png" group-title="SPORTS",Hub Premier 4
-https://hls.iill.top/api/Hub-Premier-4/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 5" tvg-name="Hub Premier 5" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-5.png" group-title="SPORTS",Hub Premier 5
-https://hls.iill.top/api/Hub-Premier-5/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 6" tvg-name="Hub Premier 6" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-6.png" group-title="SPORTS",Hub Premier 6
-https://hls.iill.top/api/Hub-Premier-6/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 7" tvg-name="Hub Premier 7" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-7.png" group-title="SPORTS",Hub Premier 7
-https://hls.iill.top/api/Hub-Premier-7/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 8" tvg-name="Hub Premier 8" tvg-logo="https://epg-1.iill.top/logo/Hub-Premier-8.png" group-title="SPORTS",Hub Premier 8
-https://hls.iill.top/api/Hub-Premier-8/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 1 HD" tvg-name="Hub Sports 1 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-1.png" group-title="SPORTS",Hub Sports 1
-https://hls.iill.top/api/Hub-Sports-1/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 2 HD" tvg-name="Hub Sports 2 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-2.png" group-title="SPORTS",Hub Sports 2
-https://hls.iill.top/api/Hub-Sports-2/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 3 HD" tvg-name="Hub Sports 3 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-3.png" group-title="SPORTS",Hub Sports 3
-https://hls.iill.top/api/Hub-Sports-3/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 4 HD" tvg-name="Hub Sports 4 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-4.png" group-title="SPORTS",Hub Sports 4
-https://hls.iill.top/api/Hub-Sports-4/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 5 HD" tvg-name="Hub Sports 5 HD" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-5.png" group-title="SPORTS",Hub Sports 5
-https://hls.iill.top/api/Hub-Sports-5/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 6" tvg-name="Hub Sports 6" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-6.png" group-title="SPORTS",Hub Sports 6
-https://hls.iill.top/api/Hub-Sports-6/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 7" tvg-name="Hub Sports 7" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-7.png" group-title="SPORTS",Hub Sports 7
-https://hls.iill.top/api/Hub-Sports-7/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 8" tvg-name="Hub Sports 8" tvg-logo="https://epg-1.iill.top/logo/Hub-Sports-8.png" group-title="SPORTS",Hub Sports 8
-https://hls.iill.top/api/Hub-Sports-8/index.m3u8
-#EXTINF:-1 tvg-id="SPOTV" tvg-name="SPOTV" tvg-logo="https://epg-1.iill.top/logo/Spotv-1.png" group-title="SPORTS",Spotv 1
-https://hls.iill.top/api/Spotv-1/index.m3u8
-#EXTINF:-1 tvg-id="SPOTV2" tvg-name="SPOTV2" tvg-logo="https://epg-1.iill.top/logo/Spotv-2.png" group-title="SPORTS",Spotv 2
-https://hls.iill.top/api/Spotv-2/index.m3u8
-#EXTINF:-1 tvg-id="SkySp Cricket" tvg-name="SkySp Cricket" tvg-logo="https://epg-1.iill.top/logo/Sky-Sports-Cricket.png" group-title="SPORTS",Sky Sports Cricket
-https://hls.iill.top/api/Sky-Sports-Cricket/index.m3u8
-#EXTINF:-1 tvg-id="SkySp PL HD" tvg-name="SkySp PL HD" tvg-logo="https://epg-1.iill.top/logo/Sky-Sports-Premier-League.png" group-title="SPORTS",Sky Sports Premier League
-https://hls.iill.top/api/Sky-Sports-EPL/index.m3u8
-#EXTINF:-1 tvg-id="SkySp F1" tvg-name="SkySp F1" tvg-logo="https://epg-1.iill.top/logo/Sky-Sports-F1.png" group-title="SPORTS",Sky Sports F1
-https://hls.iill.top/api/Sky-Sports-F1/index.m3u8
-#EXTINF:-1 tvg-id="SkySp Mix HD" tvg-name="SkySp Mix HD" tvg-logo="https://epg-1.iill.top/logo/Sky-Sports-Mix.png" group-title="SPORTS",Sky Sports Mix
-https://hls.iill.top/api/Sky-Sports-Mix/index.m3u8
-#EXTINF:-1 tvg-id="FIGHT SPORTS HD" tvg-name="FIGHT SPORTS HD" tvg-logo="https://epg-1.iill.top/logo/Fight-Sports.png" group-title="SPORTS",Fight Sports
-https://hls.iill.top/api/Fight-Sports/index.m3u8
 
-# 统计: TW(148) + SPORTS(42) = 190
+# 统计: TW(148) + SPORTS(8) = 156
