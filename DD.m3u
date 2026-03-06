@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-06 09:36:17
+# 生成时间: 2026-03-06 22:37:25
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -857,7 +857,9 @@ https://hls.iill.top/api/Sky-Sports-EPL/index.m3u8
 https://hls.iill.top/api/Sky-Sports-F1/index.m3u8
 #EXTINF:-1 tvg-id="SkySp Mix HD" tvg-name="SkySp Mix HD" tvg-logo="https://epg-1.iill.top/logo/Sky-Sports-Mix.png" group-title="SPORTS",Sky Sports Mix
 https://hls.iill.top/api/Sky-Sports-Mix/index.m3u8
+#EXTINF:-1 tvg-id="SkySp Racing HD" tvg-name="SkySp Racing HD" tvg-logo="https://epg-1.iill.top/logo/Sky-Sports-Racing.png" group-title="SPORTS",Sky Sports Racing
+https://hls.iill.top/api/Sky-Sports-Racing/index.m3u8
 #EXTINF:-1 tvg-id="FIGHT SPORTS HD" tvg-name="FIGHT SPORTS HD" tvg-logo="https://epg-1.iill.top/logo/Fight-Sports.png" group-title="SPORTS",Fight Sports
 https://hls.iill.top/api/Fight-Sports/index.m3u8
 
-# 统计: HK(95) + TW(113) + SPORTS(42) = 250
+# 统计: HK(95) + TW(113) + SPORTS(43) = 251
