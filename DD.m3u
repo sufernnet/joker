@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-09 09:50:17
+# 生成时间: 2026-03-09 22:37:35
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -597,6 +597,8 @@ https://hls.iill.top/api/VL-ONTV/index.m3u8
 https://hls.iill.top/api/VL-Drama/index.m3u8
 #EXTINF:-1 tvg-id="緯來育樂台" tvg-name="緯來育樂台" tvg-logo="https://epg.iill.top/logo/緯來育樂.png" http-user-agent="okhttp/1.9.89" group-title="TW",緯來育樂
 https://hls.iill.top/api/VL-E/index.m3u8
+#EXTINF:-1 tvg-id="年代新聞台" tvg-name="年代新聞台" tvg-logo="https://epg.iill.top/logo/年代新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",年代新聞
+https://hls.iill.top/api/Era-News/index.m3u8
 #EXTINF:-1 tvg-id="東森新聞台" tvg-name="東森新聞台" tvg-logo="https://epg.iill.top/logo/東森新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",東森新聞
 https://tv.iill.top/4gtv/4gtv-4gtv152
 #EXTINF:-1 tvg-id="東森財經新聞台" tvg-name="東森財經新聞台" tvg-logo="https://epg.iill.top/logo/東森財經新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",東森財經
@@ -862,4 +864,4 @@ https://hls.iill.top/api/Sky-Sports-Racing/index.m3u8
 #EXTINF:-1 tvg-id="FIGHT SPORTS HD" tvg-name="FIGHT SPORTS HD" tvg-logo="https://epg-1.iill.top/logo/Fight-Sports.png" group-title="SPORTS",Fight Sports
 https://hls.iill.top/api/Fight-Sports/index.m3u8
 
-# 统计: HK(95) + TW(113) + SPORTS(43) = 251
+# 统计: HK(95) + TW(114) + SPORTS(43) = 252
