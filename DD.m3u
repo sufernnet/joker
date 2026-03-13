@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-13 09:37:31
+# 生成时间: 2026-03-13 22:35:59
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -616,9 +616,9 @@ https://hls.iill.top/api/ET-Variety-Channel/index.m3u8
 #EXTINF:-1 tvg-id="東森戲劇台" tvg-name="東森戲劇台" tvg-logo="https://epg.iill.top/logo/東森戲劇台.png" http-user-agent="okhttp/1.9.89" group-title="TW",東森戲劇
 https://hls.iill.top/api/ET-Drama-Channel/index.m3u8
 #EXTINF:-1 tvg-id="TVBS" tvg-name="TVBS" tvg-logo="https://epg.iill.top/logo/TVBS.png" http-user-agent="okhttp/1.9.89" group-title="TW",TVBS
-https://tv.iill.top/4gtv/4gtv-4gtv073
+https://tv.iill.top/4gtv/media-live073
 #EXTINF:-1 tvg-id="TVBS新聞" tvg-name="TVBS新聞" tvg-logo="https://epg.iill.top/logo/TVBS新聞.png" http-user-agent="okhttp/1.9.89" group-title="TW",TVBS 新聞
-https://tv.iill.top/4gtv/4gtv-4gtv072
+https://tv.iill.top/4gtv/media-live072
 #EXTINF:-1 tvg-id="TVBS歡樂台" tvg-name="TVBS歡樂台" tvg-logo="https://epg.iill.top/logo/TVBS歡樂台.png" http-user-agent="okhttp/1.9.89" group-title="TW",TVBS 歡樂
 https://tv.iill.top/4gtv/4gtv-4gtv068
 #EXTINF:-1 tvg-id="TVBS精采台" tvg-name="TVBS精采台" tvg-logo="https://epg.iill.top/logo/TVBS精采台.png" http-user-agent="okhttp/1.9.89" group-title="TW",TVBS 精采
