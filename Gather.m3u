@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://raw.githubusercontent.com/sufernnet/joker/main/epg.xml.gz"
 
 # Gather.m3u
-# 生成时间: 2026-03-13 09:34:51
+# 生成时间: 2026-03-13 22:26:47
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -460,9 +460,9 @@ https://tv.iill.top/4gtv/4gtv-live027
 #EXTINF:-1 group-title="TW",MagellanTV (麥哲倫頻道)
 https://tv.iill.top/4gtv/4gtv-live123
 #EXTINF:-1 group-title="TW",TVBS
-https://tv.iill.top/4gtv/4gtv-4gtv073
+https://tv.iill.top/4gtv/media-live073
 #EXTINF:-1 group-title="TW",TVBS 新聞
-https://tv.iill.top/4gtv/4gtv-4gtv072
+https://tv.iill.top/4gtv/media-live072
 #EXTINF:-1 group-title="TW",TVBS 歡樂
 https://tv.iill.top/4gtv/4gtv-4gtv068
 #EXTINF:-1 group-title="TW",TVBS 精采
