@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://raw.githubusercontent.com/sufernnet/joker/main/epg.xml.gz"
 
 # Gather.m3u
-# 生成时间: 2026-03-13 22:26:47
+# 生成时间: 2026-03-14 09:28:14
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
