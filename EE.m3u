@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # EE.m3u
-# 生成时间: 2026-03-14 09:41:10
+# 生成时间: 2026-03-14 22:20:05
 # 更新频率: 每天 06:00 / 17:00
 # EPG: https://epg.zsdc.eu.org/t.xml.gz
 # GitHub Actions 自动生成
@@ -669,4 +669,4 @@ https://stream1.freetv.fun/541f6094f34e0290077cf0d55df31c49bc148118e6b030fa2165d
 # URL过滤数: 0
 # 去重频道数: 2
 # 总频道数: 227
-# 更新时间: 2026-03-14 09:41:10
+# 更新时间: 2026-03-14 22:20:05
