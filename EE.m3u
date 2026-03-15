@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # EE.m3u
-# 生成时间: 2026-03-15 09:42:25
+# 生成时间: 2026-03-15 22:21:48
 # 更新频率: 每天 06:00 / 17:00
 # EPG: https://epg.zsdc.eu.org/t.xml.gz
 # GitHub Actions 自动生成
@@ -61,7 +61,7 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 #EXTINF:-1 tvg-id="CCTV17" tvg-name="CCTV17" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV17.png" group-title="央视",CCTV17
 http://39.164.138.145:8899/hls/17/index.m3u8
 
-#EXTINF:-1 tvg-id="cctv4k" tvg-name="cctv4k" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
+#EXTINF:-1 tvg-id="CCTV-4K" tvg-name="CCTV-4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV-4K
 http://106.116.127.10:4022/rtp/239.254.201.67:6000
 http://60.4.29.183:8077/rtp/239.253.92.219:6228
 
@@ -669,4 +669,4 @@ https://stream1.freetv.fun/541f6094f34e0290077cf0d55df31c49bc148118e6b030fa2165d
 # URL过滤数: 0
 # 去重频道数: 2
 # 总频道数: 227
-# 更新时间: 2026-03-15 09:42:25
+# 更新时间: 2026-03-15 22:21:48
