@@ -1,4 +1,4 @@
-把下面的按这个模板修改：比如https://litv.goiptv.de5.net/litv.php?id=4gtv-4gtv001改为https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv001&token=pixman；https://litv.goiptv.de5.net/litv.php?id=4gtv-4gtv156对应改为https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv156&token=pixman。#EXTINF后面的的不要动，只改动链接。#EXTM3U x-tvg-url="https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
+#EXTM3U x-tvg-url="https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 #EXTINF:-1 tvg-id="民视频道" tvg-name="民视台湾台" tvg-logo="https://iptv-pro.github.io/logo/民视台湾台.png" group-title="新闻资讯",民视台湾台
 https://litv.goiptv.de5.net/litv.php?id=4gtv-4gtv001
