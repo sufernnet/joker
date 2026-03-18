@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-18 07:16:33
+# 生成时间: 2026-03-18 07:22:37
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -551,6 +551,14 @@ http://bxtv.3a.ink/api.php?id=qxjd
 http://rihou.cc:555/tv/[Bx]无线千禧
 
 # TW频道
+#EXTINF:-1 tvg-id="動物星球" tvg-name="動物星球" tvg-logo="https://epg.iill.top/logo/動物星球.png" http-user-agent="okhttp/1.9.89" group-title="TW",動物星球
+https://tv.iill.top/api/Animal-Planet/index.m3u8
+#EXTINF:-1 tvg-id="CI 罪案偵查頻道" tvg-name="CI 罪案偵查頻道" tvg-logo="https://epg.iill.top/logo/CI-罪案偵查頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",CI 罪案偵查頻道
+https://tv.iill.top/4gtv/4gtv-live027
+#EXTINF:-1 tvg-id="Love Nature" tvg-name="Love Nature" tvg-logo="https://epg.iill.top/logo/Love-Nature.png" http-user-agent="okhttp/1.9.89" group-title="TW",Love Nature
+https://tv.iill.top/4gtv/4gtv-live208
+#EXTINF:-1 tvg-id="LS Time電影台" tvg-name="LS Time電影台" tvg-logo="https://epg.iill.top/logo/龍祥時代.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍祥時代
+https://tv.iill.top/api/LSTIME-Movie/index.m3u8
 #EXTINF:-1 tvg-id="民視" tvg-name="民視" tvg-logo="https://epg.iill.top/logo/民視.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視
 https://tv.iill.top/4gtv/4gtv-4gtv002
 #EXTINF:-1 tvg-id="民視台灣台" tvg-name="民視台灣台" tvg-logo="https://epg.iill.top/logo/民視台灣台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視台灣
@@ -571,8 +579,6 @@ https://tv.iill.top/4gtv/litv-longturn14
 https://tv.iill.top/4gtv/4gtv-4gtv156
 #EXTINF:-1 tvg-id="寰宇財經台" tvg-name="寰宇財經台" tvg-logo="https://epg.iill.top/logo/寰宇財經台.png" http-user-agent="okhttp/1.9.89" group-title="TW",寰宇財經
 https://tv.iill.top/ofiii/4gtv-4gtv158
-#EXTINF:-1 tvg-id="Love Nature" tvg-name="Love Nature" tvg-logo="https://epg.iill.top/logo/Love-Nature.png" http-user-agent="okhttp/1.9.89" group-title="TW",Love Nature
-https://tv.iill.top/4gtv/4gtv-live208
 #EXTINF:-1 tvg-id="中天亞洲台" tvg-name="中天亞洲台" tvg-logo="https://epg-1.iill.top/logo/中天亞洲台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天亞洲
 https://tv.iill.top/FainTV/121
 #EXTINF:-1 tvg-id="中天綜合台" tvg-name="中天綜合台" tvg-logo="https://epg.iill.top/logo/中天綜合台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天綜合
@@ -675,10 +681,6 @@ https://tv.iill.top/ofiii/litv-xinchuang22
 https://tv.iill.top/4gtv/4gtv-4gtv041
 #EXTINF:-1 tvg-id="華視新聞" tvg-name="華視新聞" tvg-logo="https://epg.iill.top/logo/華視新聞.png" http-user-agent="okhttp/1.9.89" group-title="TW",華視新聞
 https://tv.iill.top/4gtv/4gtv-4gtv052
-#EXTINF:-1 tvg-id="動物星球" tvg-name="動物星球" tvg-logo="https://epg.iill.top/logo/動物星球.png" http-user-agent="okhttp/1.9.89" group-title="TW",動物星球
-https://tv.iill.top/api/Animal-Planet/index.m3u8
-#EXTINF:-1 tvg-id="LS Time電影台" tvg-name="LS Time電影台" tvg-logo="https://epg.iill.top/logo/龍祥時代.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍祥時代
-https://tv.iill.top/api/LSTIME-Movie/index.m3u8
 #EXTINF:-1 tvg-id="CINEMAX" tvg-name="CINEMAX" tvg-logo="https://epg.iill.top/logo/CINEMAX.png" http-user-agent="okhttp/1.9.89" group-title="TW",CINEMAX
 https://tv.iill.top/api/Cinemax/index.m3u8
 #EXTINF:-1 tvg-id="MTV" tvg-name="MTV" tvg-logo="https://epg.iill.top/logo/MTV.png" http-user-agent="okhttp/1.9.89" group-title="TW",MTV Live
@@ -715,8 +717,6 @@ https://tv.iill.top/4gtv/4gtv-live069
 https://tv.iill.top/4gtv/4gtv-live021
 #EXTINF:-1 tvg-id="視納華仁紀實頻道" tvg-name="視納華仁紀實頻道" tvg-logo="https://epg.iill.top/logo/視納華仁紀實頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",視納華仁紀實頻道
 https://tv.iill.top/4gtv/4gtv-4gtv013
-#EXTINF:-1 tvg-id="CI 罪案偵查頻道" tvg-name="CI 罪案偵查頻道" tvg-logo="https://epg.iill.top/logo/CI-罪案偵查頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",CI 罪案偵查頻道
-https://tv.iill.top/4gtv/4gtv-live027
 #EXTINF:-1 tvg-id="History 歷史頻道" tvg-name="History 歷史頻道" tvg-logo="https://epg.iill.top/logo/History-歷史頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",History 歷史頻道
 https://tv.iill.top/4gtv/4gtv-live026
 #EXTINF:-1 tvg-id="MagellanTV頻道 (麥哲倫頻道)" tvg-name="MagellanTV頻道 (麥哲倫頻道)" tvg-logo="https://epg.iill.top/logo/MagellanTV.png" http-user-agent="okhttp/1.9.89" group-title="TW",MagellanTV (麥哲倫頻道)
