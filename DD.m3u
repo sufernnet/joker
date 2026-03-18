@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-18 07:22:37
+# 生成时间: 2026-03-18 07:24:40
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -559,6 +559,12 @@ https://tv.iill.top/4gtv/4gtv-live027
 https://tv.iill.top/4gtv/4gtv-live208
 #EXTINF:-1 tvg-id="LS Time電影台" tvg-name="LS Time電影台" tvg-logo="https://epg.iill.top/logo/龍祥時代.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍祥時代
 https://tv.iill.top/api/LSTIME-Movie/index.m3u8
+#EXTINF:-1 tvg-id="寰宇新聞台" tvg-name="寰宇新聞台" tvg-logo="https://epg.iill.top/logo/寰宇新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",寰宇新聞
+https://tv.iill.top/4gtv/litv-longturn14
+#EXTINF:-1 tvg-id="寰宇新聞台灣台" tvg-name="寰宇新聞台灣台" tvg-logo="https://epg.iill.top/logo/寰宇新聞台灣台.png" http-user-agent="okhttp/1.9.89" group-title="TW",寰宇新聞台灣
+https://tv.iill.top/4gtv/4gtv-4gtv156
+#EXTINF:-1 tvg-id="寰宇財經台" tvg-name="寰宇財經台" tvg-logo="https://epg.iill.top/logo/寰宇財經台.png" http-user-agent="okhttp/1.9.89" group-title="TW",寰宇財經
+https://tv.iill.top/ofiii/4gtv-4gtv158
 #EXTINF:-1 tvg-id="民視" tvg-name="民視" tvg-logo="https://epg.iill.top/logo/民視.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視
 https://tv.iill.top/4gtv/4gtv-4gtv002
 #EXTINF:-1 tvg-id="民視台灣台" tvg-name="民視台灣台" tvg-logo="https://epg.iill.top/logo/民視台灣台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視台灣
@@ -573,12 +579,6 @@ https://tv.iill.top/4gtv/litv-ftv07
 https://tv.iill.top/4gtv/4gtv-4gtv003
 #EXTINF:-1 tvg-id="民視綜藝台" tvg-name="民視綜藝台" tvg-logo="https://epg.iill.top/logo/民視綜藝台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視綜藝
 https://tv.iill.top/4gtv/4gtv-4gtv004
-#EXTINF:-1 tvg-id="寰宇新聞台" tvg-name="寰宇新聞台" tvg-logo="https://epg.iill.top/logo/寰宇新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",寰宇新聞
-https://tv.iill.top/4gtv/litv-longturn14
-#EXTINF:-1 tvg-id="寰宇新聞台灣台" tvg-name="寰宇新聞台灣台" tvg-logo="https://epg.iill.top/logo/寰宇新聞台灣台.png" http-user-agent="okhttp/1.9.89" group-title="TW",寰宇新聞台灣
-https://tv.iill.top/4gtv/4gtv-4gtv156
-#EXTINF:-1 tvg-id="寰宇財經台" tvg-name="寰宇財經台" tvg-logo="https://epg.iill.top/logo/寰宇財經台.png" http-user-agent="okhttp/1.9.89" group-title="TW",寰宇財經
-https://tv.iill.top/ofiii/4gtv-4gtv158
 #EXTINF:-1 tvg-id="中天亞洲台" tvg-name="中天亞洲台" tvg-logo="https://epg-1.iill.top/logo/中天亞洲台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天亞洲
 https://tv.iill.top/FainTV/121
 #EXTINF:-1 tvg-id="中天綜合台" tvg-name="中天綜合台" tvg-logo="https://epg.iill.top/logo/中天綜合台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天綜合
