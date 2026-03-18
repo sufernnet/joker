@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-17 22:42:21
+# 生成时间: 2026-03-18 07:16:33
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -551,16 +551,6 @@ http://bxtv.3a.ink/api.php?id=qxjd
 http://rihou.cc:555/tv/[Bx]无线千禧
 
 # TW频道
-#EXTINF:-1 tvg-id="Love Nature" tvg-name="Love Nature" tvg-logo="https://epg.iill.top/logo/Love-Nature.png" http-user-agent="okhttp/1.9.89" group-title="TW",Love Nature
-https://tv.iill.top/4gtv/4gtv-live208
-#EXTINF:-1 tvg-id="中天亞洲台" tvg-name="中天亞洲台" tvg-logo="https://epg-1.iill.top/logo/中天亞洲台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天亞洲
-https://tv.iill.top/FainTV/121
-#EXTINF:-1 tvg-id="中天綜合台" tvg-name="中天綜合台" tvg-logo="https://epg.iill.top/logo/中天綜合台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天綜合
-https://tv.iill.top/api/Cti-K/index.m3u8
-#EXTINF:-1 tvg-id="中天娛樂台" tvg-name="中天娛樂台" tvg-logo="https://epg.iill.top/logo/中天娛樂台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天娛樂
-https://tv.iill.top/api/Cti-E/index.m3u8
-#EXTINF:-1 tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://epg.iill.top/logo/中天新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天新聞
-https://tv.iill.top/4gtv/4gtv-4gtv009
 #EXTINF:-1 tvg-id="民視" tvg-name="民視" tvg-logo="https://epg.iill.top/logo/民視.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視
 https://tv.iill.top/4gtv/4gtv-4gtv002
 #EXTINF:-1 tvg-id="民視台灣台" tvg-name="民視台灣台" tvg-logo="https://epg.iill.top/logo/民視台灣台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視台灣
@@ -581,6 +571,16 @@ https://tv.iill.top/4gtv/litv-longturn14
 https://tv.iill.top/4gtv/4gtv-4gtv156
 #EXTINF:-1 tvg-id="寰宇財經台" tvg-name="寰宇財經台" tvg-logo="https://epg.iill.top/logo/寰宇財經台.png" http-user-agent="okhttp/1.9.89" group-title="TW",寰宇財經
 https://tv.iill.top/ofiii/4gtv-4gtv158
+#EXTINF:-1 tvg-id="Love Nature" tvg-name="Love Nature" tvg-logo="https://epg.iill.top/logo/Love-Nature.png" http-user-agent="okhttp/1.9.89" group-title="TW",Love Nature
+https://tv.iill.top/4gtv/4gtv-live208
+#EXTINF:-1 tvg-id="中天亞洲台" tvg-name="中天亞洲台" tvg-logo="https://epg-1.iill.top/logo/中天亞洲台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天亞洲
+https://tv.iill.top/FainTV/121
+#EXTINF:-1 tvg-id="中天綜合台" tvg-name="中天綜合台" tvg-logo="https://epg.iill.top/logo/中天綜合台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天綜合
+https://tv.iill.top/api/Cti-K/index.m3u8
+#EXTINF:-1 tvg-id="中天娛樂台" tvg-name="中天娛樂台" tvg-logo="https://epg.iill.top/logo/中天娛樂台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天娛樂
+https://tv.iill.top/api/Cti-E/index.m3u8
+#EXTINF:-1 tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://epg.iill.top/logo/中天新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天新聞
+https://tv.iill.top/4gtv/4gtv-4gtv009
 #EXTINF:-1 tvg-id="中視" tvg-name="中視" tvg-logo="https://epg.iill.top/logo/中視.png" http-user-agent="okhttp/1.9.89" group-title="TW",中視
 https://tv.iill.top/4gtv/4gtv-4gtv040
 #EXTINF:-1 tvg-id="中視新聞" tvg-name="中視新聞" tvg-logo="https://epg.iill.top/logo/中視新聞.png" http-user-agent="okhttp/1.9.89" group-title="TW",中視新聞
