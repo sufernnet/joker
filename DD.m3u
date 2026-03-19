@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
 # DD.m3u
-# 生成时间: 2026-03-19 09:41:16
+# 生成时间: 2026-03-19 22:37:14
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -580,7 +580,7 @@ https://tv.iill.top/4gtv/4gtv-4gtv003
 #EXTINF:-1 tvg-id="民視綜藝台" tvg-name="民視綜藝台" tvg-logo="https://epg.iill.top/logo/民視綜藝台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視綜藝
 https://tv.iill.top/4gtv/4gtv-4gtv004
 #EXTINF:-1 tvg-id="中天亞洲台" tvg-name="中天亞洲台" tvg-logo="https://epg-1.iill.top/logo/中天亞洲台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天亞洲
-https://tv.iill.top/FainTV/121
+https://live.iill.top/FainTV/121
 #EXTINF:-1 tvg-id="中天綜合台" tvg-name="中天綜合台" tvg-logo="https://epg.iill.top/logo/中天綜合台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天綜合
 https://tv.iill.top/api/Cti-K/index.m3u8
 #EXTINF:-1 tvg-id="中天娛樂台" tvg-name="中天娛樂台" tvg-logo="https://epg.iill.top/logo/中天娛樂台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天娛樂
@@ -776,9 +776,9 @@ https://tv.iill.top/4gtv/4gtv-live014
 #EXTINF:-1 tvg-id="客家電視台" tvg-name="客家電視台" tvg-logo="https://epg.iill.top/logo/客家電視台.png" http-user-agent="okhttp/1.9.89" group-title="TW",客家電視
 https://tv.iill.top/4gtv/4gtv-4gtv043
 #EXTINF:-1 tvg-id="ETtoday綜合台" tvg-name="ETtoday綜合台" tvg-logo="https://epg-1.iill.top/logo/ETtoday綜合台.png" http-user-agent="okhttp/1.9.89" group-title="TW",ETtoday綜合
-https://tv.iill.top/FainTV/146
+https://live.iill.top/FainTV/146
 #EXTINF:-1 tvg-id="歡樂看新聞" tvg-name="歡樂看新聞" tvg-logo="https://epg-1.iill.top/logo/FainTV.png" http-user-agent="okhttp/1.9.89" group-title="TW",歡樂看新聞
-https://tv.iill.top/FainTV/19670
+https://live.iill.top/FainTV/19670
 
 # SPORTS频道
 #EXTINF:-1 tvg-id="博斯運動一台" tvg-name="博斯運動一台" tvg-logo="https://epg-1.iill.top/logo/博斯運動一台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯運動 一
@@ -786,17 +786,17 @@ https://hls.iill.top/api/Sports-Network/index.m3u8
 #EXTINF:-1 tvg-id="博斯運動二台" tvg-name="博斯運動二台" tvg-logo="https://epg-1.iill.top/logo/博斯運動二台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯運動 二
 https://hls.iill.top/api/Football-Channel/index.m3u8
 #EXTINF:-1 tvg-id="博斯無限台" tvg-name="博斯無限台" tvg-logo="https://epg-1.iill.top/logo/博斯無限台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯無限 一
-https://tv.iill.top/FainTV/129
+https://live.iill.top/FainTV/129
 #EXTINF:-1 tvg-id="博斯無限二台" tvg-name="博斯無限二台" tvg-logo="https://epg-1.iill.top/logo/博斯無限二台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯無限 二
-https://tv.iill.top/FainTV/418
+https://live.iill.top/FainTV/418
 #EXTINF:-1 tvg-id="博斯高球台" tvg-name="博斯高球台" tvg-logo="https://epg-1.iill.top/logo/博斯高球台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯高球 一
-https://tv.iill.top/FainTV/108
+https://live.iill.top/FainTV/108
 #EXTINF:-1 tvg-id="博斯高球二台" tvg-name="博斯高球二台" tvg-logo="https://epg-1.iill.top/logo/博斯高球二台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯高球 二
-https://tv.iill.top/FainTV/125
+https://live.iill.top/FainTV/125
 #EXTINF:-1 tvg-id="博斯網球台" tvg-name="博斯網球台" tvg-logo="https://epg-1.iill.top/logo/博斯網球台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯網球
-https://tv.iill.top/FainTV/53
+https://live.iill.top/FainTV/53
 #EXTINF:-1 tvg-id="博斯魅力台" tvg-name="博斯魅力台" tvg-logo="https://epg-1.iill.top/logo/博斯魅力台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯魅力
-https://tv.iill.top/FainTV/135
+https://live.iill.top/FainTV/135
 #EXTINF:-1 tvg-id="Eurosport 1" tvg-name="Eurosport 1" tvg-logo="https://epg-1.iill.top/logo/Eurosport-1.png"  group-title="SPORTS",Eurosport 1
 https://hls.iill.top/api/Eurosport-1/index.m3u8
 #EXTINF:-1 tvg-id="Eurosport 2" tvg-name="Eurosport 2" tvg-logo="https://epg-1.iill.top/logo/Eurosport-2.png"  group-title="SPORTS",Eurosport 2
