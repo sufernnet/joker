@@ -11,6 +11,7 @@ Gather IPTV Generator
 - 去重
 - 合并 BB.m3u
 - 输出 Gather.m3u
+- 保留 tvg-id / tvg-name / tvg-logo 以便节目单匹配
 """
 
 import requests
@@ -23,7 +24,7 @@ SOURCE_URL = "https://yang.sufern001.workers.dev/"
 TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
 OUTPUT_FILE = "Gather.m3u"
 BB_FILE = "BB.m3u"
-EPG_URL = "https://epg.136605.xyz/9days.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
+EPG_URL = "https://epg.136605.xyz/9days.xml.gz,https://epg.iill.top/epg.xml.gz,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg"
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
@@ -58,33 +59,67 @@ def is_bad_youtube(url):
 
 
 def deduplicate(channels):
+    """
+    channels: [(name, extinf, url), ...]
+    按 url 去重
+    """
     seen = set()
     result = []
-    for name, url in channels:
+    for name, extinf, url in channels:
         if url not in seen:
             seen.add(url)
-            result.append((name, url))
+            result.append((name, extinf, url))
     return result
 
 
-def parse_m3u_channels(content):
+def normalize_group(extinf_line, new_group):
+    """
+    把 #EXTINF 行里的 group-title 改成指定分组
+    若没有 group-title，则补上
+    """
+    if 'group-title="' in extinf_line:
+        extinf_line = re.sub(r'group-title="[^"]*"', f'group-title="{new_group}"', extinf_line)
+    else:
+        if extinf_line.startswith("#EXTINF:-1 "):
+            extinf_line = extinf_line.replace("#EXTINF:-1 ", f'#EXTINF:-1 group-title="{new_group}" ', 1)
+        elif extinf_line.startswith("#EXTINF:-1"):
+            extinf_line = extinf_line.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{new_group}"', 1)
+    return extinf_line
+
+
+def parse_name_from_extinf(extinf_line):
+    if "," in extinf_line:
+        return extinf_line.split(",", 1)[1].strip()
+    return ""
+
+
+def parse_m3u_full(content):
+    """
+    返回:
+    [
+        (name, extinf, url),
+        ...
+    ]
+    """
     lines = content.splitlines()
     channels = []
+
+    current_extinf = None
     current_name = None
 
     for line in lines:
         line = line.strip()
 
+        if not line:
+            continue
+
         if line.startswith("#EXTINF"):
-            if "," in line:
-                current_name = line.split(",")[-1].strip()
-            else:
-                current_name = None
+            current_extinf = line
+            current_name = parse_name_from_extinf(line)
 
         elif line.startswith("http"):
-            url = line.strip()
-            if current_name:
-                channels.append((current_name, url))
+            if current_extinf and current_name:
+                channels.append((current_name, current_extinf, line))
 
     return channels
 
@@ -97,40 +132,44 @@ def main():
     lines = content.splitlines()
 
     hk_channels = []
-    tw_channels = []
-
     current_group = None
     current_name = None
+    current_extinf = None
 
+    # 解析 HK
     for line in lines:
         line = line.strip()
 
+        if not line:
+            continue
+
         if line.startswith("#EXTINF"):
+            current_extinf = line
+
             if 'group-title="' in line:
                 current_group = line.split('group-title="')[1].split('"')[0]
             else:
                 current_group = None
 
-            if "," in line:
-                current_name = line.split(",")[-1].strip()
-            else:
-                current_name = None
+            current_name = parse_name_from_extinf(line)
 
         elif line.startswith("http"):
             url = line.strip()
 
-            if not current_group or not current_name:
+            if not current_group or not current_name or not current_extinf:
                 continue
 
             if current_group == HK_SOURCE_GROUP:
                 if is_bad_youtube(url):
                     continue
-                hk_channels.append((current_name, url))
+                hk_channels.append((current_name, current_extinf, url))
 
+    # 解析 TW
     print("下载 TW.m3u...")
     tw_content = download(TW_M3U_URL)
-    tw_channels = parse_m3u_channels(tw_content)
+    tw_channels = parse_m3u_full(tw_content)
 
+    # 去重
     hk_channels = deduplicate(hk_channels)
     tw_channels = deduplicate(tw_channels)
 
@@ -139,9 +178,11 @@ def main():
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    output = f'#EXTM3U url-tvg="{EPG_URL}"\n\n'
+    # 这里建议用 x-tvg-url，兼容性通常更好
+    output = f'#EXTM3U x-tvg-url="{EPG_URL}"\n\n'
     output += f"# Gather.m3u\n# 生成时间: {timestamp}\n\n"
 
+    # 合并 BB
     try:
         with open(BB_FILE, "r", encoding="utf-8") as f:
             for line in f:
@@ -152,17 +193,19 @@ def main():
     except:
         print("未找到 BB.m3u，跳过")
 
+    # HK
     if hk_channels:
         output += "# HK\n"
-        for name, url in hk_channels:
-            output += f'#EXTINF:-1 group-title="HK",{name}\n'
-            output += f"{url}\n"
+        for name, extinf, url in hk_channels:
+            output += normalize_group(extinf, "HK") + "\n"
+            output += url + "\n"
 
+    # TW
     if tw_channels:
         output += "\n# TW\n"
-        for name, url in tw_channels:
-            output += f'#EXTINF:-1 group-title="TW",{name}\n'
-            output += f"{url}\n"
+        for name, extinf, url in tw_channels:
+            output += normalize_group(extinf, "TW") + "\n"
+            output += url + "\n"
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
