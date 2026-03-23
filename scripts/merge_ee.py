@@ -3,15 +3,6 @@
 
 """
 Gather IPTV Generator
-功能：
-- 下载源 M3U
-- 提取 HK
-- 合并远程 TW.m3u
-- 剔除指定 YouTube 源
-- 去重
-- 合并 BB.m3u
-- 输出 Gather.m3u
-- 保留 tvg-id / tvg-name / tvg-logo
 """
 
 import requests
@@ -22,84 +13,54 @@ from datetime import datetime
 
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
 TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
-OUTPUT_FILE = "Gather.m3u"
+OUTPUT_FILE = "EE.m3u"   # ✅ 已改这里
 BB_FILE = "BB.m3u"
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
-# ===================== HK 排序 =====================
+# ===================== HK 强制前三 =====================
 
-HK_ORDER = [
+HK_TOP3 = [
     "鳳凰衛視中文",
     "鳳凰衛視資訊",
     "鳳凰衛視香港",
-    "Now新闻",
-    "Now体育",
-    "Now财经",
-    "Now直播",
-    "HOY76",
-    "HOY77",
-    "HOY78",
-    "翡翠台",
-    "翡翠台4K",
-    "明珠台",
-    "TVB plus",
-    "TVB1",
-    "TVBJ1",
-    "TVB功夫",
-    "TVB千禧经典",
-    "TVB娱乐新闻台",
-    "TVB星河",
-    "无线新闻台",
-    "ViuTV",
-    "ViuTV6",
-    "RHK31",
-    "RHK32",
-    "CH5综合",
-    "CH8综合",
-    "CHU综合",
-    "CCTV13新闻",
-    "八度空间",
-    "天映经典",
 ]
 
-# ===================== 精准剔除 YouTube ID =====================
+# ===================== HK 排序 =====================
+
+HK_ORDER = [
+    "Now新闻","Now体育","Now财经","Now直播",
+    "HOY76","HOY77","HOY78",
+    "翡翠台","翡翠台4K","明珠台",
+    "TVB plus","TVB1","TVBJ1","TVB功夫","TVB千禧经典",
+    "TVB娱乐新闻台","TVB星河","无线新闻台",
+    "ViuTV","ViuTV6",
+    "RHK31","RHK32",
+    "CH5综合","CH8综合","CHU综合",
+    "CCTV13新闻","八度空间","天映经典",
+]
+
+# ===================== 过滤 =====================
 
 REMOVE_YT_IDS = [
-    "fN9uYWCjQaw",
-    "7j92Myu2wzg",
-    "f6Kq93wnaZ8",
-    "BOy2xDU1LC8",
-    "vr3XyVCR4T0",
-    "o_-hSMgpAzs",
+    "fN9uYWCjQaw","7j92Myu2wzg","f6Kq93wnaZ8",
+    "BOy2xDU1LC8","vr3XyVCR4T0","o_-hSMgpAzs",
 ]
 
 # ===================== 工具函数 =====================
 
 def download(url):
-    r = requests.get(
-        url,
-        timeout=30,
-        headers={"User-Agent": "Mozilla/5.0"}
-    )
+    r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
     r.raise_for_status()
     return r.text
 
 
 def is_bad_youtube(url):
-    for yt_id in REMOVE_YT_IDS:
-        if yt_id in url:
-            return True
-    return False
+    return any(i in url for i in REMOVE_YT_IDS)
 
 
 def deduplicate(channels):
-    """
-    channels: [(name, extinf, url), ...]
-    按 url 去重
-    """
-    seen = set()
-    result = []
+    seen, result = set(), []
     for name, extinf, url in channels:
         if url not in seen:
             seen.add(url)
@@ -107,97 +68,69 @@ def deduplicate(channels):
     return result
 
 
-def normalize_group(extinf_line, new_group):
-    """
-    把 #EXTINF 行里的 group-title 改成指定分组
-    若没有 group-title，则补上
-    """
-    if 'group-title="' in extinf_line:
-        extinf_line = re.sub(r'group-title="[^"]*"', f'group-title="{new_group}"', extinf_line)
-    else:
-        if extinf_line.startswith("#EXTINF:-1 "):
-            extinf_line = extinf_line.replace("#EXTINF:-1 ", f'#EXTINF:-1 group-title="{new_group}" ', 1)
-        elif extinf_line.startswith("#EXTINF:-1"):
-            extinf_line = extinf_line.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{new_group}"', 1)
-    return extinf_line
+def normalize_group(extinf, group):
+    if 'group-title="' in extinf:
+        return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
+    return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"', 1)
 
 
-def parse_name_from_extinf(extinf_line):
-    if "," in extinf_line:
-        return extinf_line.split(",", 1)[1].strip()
-    return ""
+def parse_name(extinf):
+    return extinf.split(",", 1)[1].strip() if "," in extinf else ""
 
 
-def parse_m3u_full(content):
-    """
-    返回:
-    [
-        (name, extinf, url),
-        ...
-    ]
-    """
+def parse_m3u(content):
     lines = content.splitlines()
-    channels = []
-
-    current_extinf = None
-    current_name = None
+    res, extinf, name = [], None, None
 
     for line in lines:
         line = line.strip()
-
         if not line:
             continue
 
         if line.startswith("#EXTINF"):
-            current_extinf = line
-            current_name = parse_name_from_extinf(line)
+            extinf = line
+            name = parse_name(line)
 
-        elif line.startswith("http"):
-            if current_extinf and current_name:
-                channels.append((current_name, current_extinf, line))
+        elif line.startswith("http") and extinf and name:
+            res.append((name, extinf, line))
 
-    return channels
+    return res
 
 
-def sort_hk_channels(channels):
-    """
-    HK 专用排序
-    """
-    def hk_priority(name):
-        n = name.strip().lower()
+# ===================== HK 排序 =====================
 
-        if any(k.lower() in n for k in ["鳳凰衛視中文", "凤凰卫视中文", "鳳凰中文", "凤凰中文"]):
-            return 0
-        if any(k.lower() in n for k in ["鳳凰衛視資訊", "凤凰卫视资讯", "鳳凰資訊", "凤凰资讯"]):
-            return 1
-        if any(k.lower() in n for k in ["鳳凰衛視香港", "凤凰卫视香港", "鳳凰香港", "凤凰香港", "鳳凰香港台", "凤凰香港台"]):
-            return 2
+def sort_hk(channels):
 
-        return None
+    order_map = {n: i for i, n in enumerate(HK_ORDER)}
 
-    order_map = {name: i for i, name in enumerate(HK_ORDER)}
+    def clean(n):
+        return re.sub(r'\s*(HD|1080p|720p|4K).*$', '', n).strip()
 
-    def key_func(item):
-        name = item[0]
-        base_name = re.sub(r'\s*(?:HD|1080p|720p|4K).*$', '', name).strip()
+    def match(a, b):
+        return a in b or b in a
 
-        p = hk_priority(name)
-        if p is not None:
-            return (0, p)
+    def key(x):
+        name = x[0]
+        base = clean(name)
 
+        # 🔥 强制前三
+        for i, t in enumerate(HK_TOP3):
+            if match(t, name):
+                return (0, i)
+
+        # 正常排序
         if name in order_map:
             return (1, order_map[name])
+        if base in order_map:
+            return (1, order_map[base])
 
-        if base_name in order_map:
-            return (1, order_map[base_name])
-
-        for idx, order_name in enumerate(HK_ORDER):
-            if order_name in name:
-                return (1, idx)
+        for i, o in enumerate(HK_ORDER):
+            if o in name:
+                return (1, i)
 
         return (2, name)
 
-    return sorted(channels, key=key_func)
+    return sorted(channels, key=key)
 
 
 # ===================== 主程序 =====================
@@ -205,91 +138,59 @@ def sort_hk_channels(channels):
 def main():
     print("下载源...")
     content = download(SOURCE_URL)
-    lines = content.splitlines()
 
-    hk_channels = []
-    current_group = None
-    current_name = None
-    current_extinf = None
+    hk = []
+    group = name = extinf = None
 
-    # 解析 HK
-    for line in lines:
+    for line in content.splitlines():
         line = line.strip()
-
         if not line:
             continue
 
         if line.startswith("#EXTINF"):
-            current_extinf = line
+            extinf = line
+            name = parse_name(line)
+            group = line.split('group-title="')[1].split('"')[0] if 'group-title="' in line else None
 
-            if 'group-title="' in line:
-                current_group = line.split('group-title="')[1].split('"')[0]
-            else:
-                current_group = None
+        elif line.startswith("http") and group == HK_SOURCE_GROUP:
+            if name and extinf and not is_bad_youtube(line):
+                hk.append((name, extinf, line))
 
-            current_name = parse_name_from_extinf(line)
+    print("下载 TW...")
+    tw = parse_m3u(download(TW_M3U_URL))
 
-        elif line.startswith("http"):
-            url = line.strip()
+    hk = sort_hk(deduplicate(hk))
+    tw = deduplicate(tw)
 
-            if not current_group or not current_name or not current_extinf:
-                continue
+    print("HK:", len(hk), "TW:", len(tw))
 
-            if current_group == HK_SOURCE_GROUP:
-                if is_bad_youtube(url):
-                    continue
-                hk_channels.append((current_name, current_extinf, url))
+    out = '#EXTM3U\n\n'
+    out += f"# Generated: {datetime.now()}\n\n"
 
-    # 解析 TW
-    print("下载 TW.m3u...")
-    tw_content = download(TW_M3U_URL)
-    tw_channels = parse_m3u_full(tw_content)
-
-    # 去重
-    hk_channels = deduplicate(hk_channels)
-    tw_channels = deduplicate(tw_channels)
-
-    # HK 排序
-    hk_channels = sort_hk_channels(hk_channels)
-
-    print("HK:", len(hk_channels))
-    print("TW:", len(tw_channels))
-
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    output = '#EXTM3U\n\n'
-    output += f"# Gather.m3u\n# 生成时间: {timestamp}\n\n"
-
-    # 合并 BB
+    # BB
     try:
         with open(BB_FILE, "r", encoding="utf-8") as f:
-            for line in f:
-                if not line.startswith("#EXTM3U"):
-                    output += line
-        output = output.rstrip() + "\n\n"
-        print("已合并 BB.m3u")
+            for l in f:
+                if not l.startswith("#EXTM3U"):
+                    out += l
+        out += "\n"
     except:
-        print("未找到 BB.m3u，跳过")
+        print("跳过 BB")
 
     # HK
-    if hk_channels:
-        output += "# HK\n"
-        for name, extinf, url in hk_channels:
-            output += normalize_group(extinf, "HK") + "\n"
-            output += url + "\n"
+    out += "\n# HK\n"
+    for n, e, u in hk:
+        out += normalize_group(e, "HK") + "\n" + u + "\n"
 
     # TW
-    if tw_channels:
-        output = output.rstrip() + "\n\n"
-        output += "# TW\n"
-        for name, extinf, url in tw_channels:
-            output += normalize_group(extinf, "TW") + "\n"
-            output += url + "\n"
+    out += "\n# TW\n"
+    for n, e, u in tw:
+        out += normalize_group(e, "TW") + "\n" + u + "\n"
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(output)
+        f.write(out)
 
-    print("✅ Gather.m3u 生成完成")
+    print("✅ 已生成:", OUTPUT_FILE)
 
 
 if __name__ == "__main__":
