@@ -23,7 +23,7 @@ from datetime import datetime
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
 OUTPUT_FILE = "Gather.m3u"
 BB_FILE = "BB.m3u"
-EPG_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/epg.xml.gz"
+EPG_URL = "https://epg.136605.xyz/9days.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 TW_SOURCE_GROUP = "•台湾「限制」"
