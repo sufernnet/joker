@@ -5,9 +5,9 @@
 Gather IPTV Generator
 功能：
 - 下载源 M3U
-- 提取 HK / TW
+- 提取 HK
+- 合并远程 TW.m3u
 - 剔除指定 YouTube 源
-- 剔除 TW 娱乐类频道
 - 去重
 - 排序
 - 合并 BB.m3u
@@ -21,6 +21,7 @@ from datetime import datetime
 # ===================== 基础配置 =====================
 
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
+TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
 OUTPUT_FILE = "Gather.m3u"
 BB_FILE = "BB.m3u"
 EPG_URL = "https://epg.136605.xyz/9days.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
@@ -123,6 +124,29 @@ def sort_tw_channels(channels):
     return sorted(channels, key=key_func)
 
 
+def parse_m3u_channels(content):
+    lines = content.splitlines()
+    channels = []
+
+    current_name = None
+
+    for line in lines:
+        line = line.strip()
+
+        if line.startswith("#EXTINF"):
+            if "," in line:
+                current_name = line.split(",")[-1].strip()
+            else:
+                current_name = None
+
+        elif line.startswith("http"):
+            url = line.strip()
+            if current_name:
+                channels.append((current_name, url))
+
+    return channels
+
+
 # ===================== 主程序 =====================
 
 def main():
@@ -166,21 +190,10 @@ def main():
 
                 hk_channels.append((current_name, url))
 
-            # TW
-            elif current_group == TW_SOURCE_GROUP:
-
-                name_lower = current_name.lower()
-
-                if (
-                    "4gtv" in name_lower
-                    or "ofiii" in name_lower
-                    or "龍華" in current_name
-                    or "龙华" in current_name
-                ):
-                    clean_name = clean_tw_name(current_name)
-
-                    if not should_remove_tw(clean_name):
-                        tw_channels.append((clean_name, url))
+    # 改为合并远程 TW.m3u
+    print("下载 TW.m3u...")
+    tw_content = download(TW_M3U_URL)
+    tw_channels = parse_m3u_channels(tw_content)
 
     # 去重
     hk_channels = deduplicate(hk_channels)
