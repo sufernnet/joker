@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.136605.xyz/9days.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 # Gather.m3u
-# 生成时间: 2026-03-23 11:22:29
+# 生成时间: 2026-03-23 11:58:18
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -408,223 +408,123 @@ http://cdn6.163189.xyz/163189/ch8
 http://cdn6.163189.xyz/163189/ch
 
 # TW
-#EXTINF:-1 group-title="TW",民視第一台
-http://tv123.vvvv.ee/live.php/?ch=ba5b96a6754
-#EXTINF:-1 group-title="TW",民視台灣台
-http://tv123.vvvv.ee/live.php/?ch=f3fcde25755
-#EXTINF:-1 group-title="TW",民視
-http://tv123.vvvv.ee/live.php/?ch=cbdfc8dd756
-#EXTINF:-1 group-title="TW",大愛電視
-http://tv123.vvvv.ee/live.php/?ch=5b3aa676757
-#EXTINF:-1 group-title="TW",中視
-http://tv123.vvvv.ee/live.php/?ch=6f6ddf2d758
-#EXTINF:-1 group-title="TW",華視
-http://tv123.vvvv.ee/live.php/?ch=c2a32766759
-#EXTINF:-1 group-title="TW",三立綜合台
-http://tv123.vvvv.ee/live.php/?ch=9ff0b764760
-#EXTINF:-1 group-title="TW",客家電視台
-http://tv123.vvvv.ee/live.php/?ch=5eeaa83d761
-#EXTINF:-1 group-title="TW",八大綜藝台
-http://tv123.vvvv.ee/live.php/?ch=f7bcab3f762
-#EXTINF:-1 group-title="TW",TVBS精采台
-http://tv123.vvvv.ee/live.php/?ch=fdbc147d763
-#EXTINF:-1 group-title="TW",愛爾達娛樂台
-http://tv123.vvvv.ee/live.php/?ch=5ad8824a764
-#EXTINF:-1 group-title="TW",靖天綜合台
-http://tv123.vvvv.ee/live.php/?ch=a94e5dca765
-#EXTINF:-1 group-title="TW",靖天日本台
-http://tv123.vvvv.ee/live.php/?ch=f0879aa7766
-#EXTINF:-1 group-title="TW",新唐人亞太台
-http://tv123.vvvv.ee/live.php/?ch=7c864df8767
-#EXTINF:-1 group-title="TW",ARIRANG阿里郎頻道
-http://tv123.vvvv.ee/live.php/?ch=5f2578b5768
-#EXTINF:-1 group-title="TW",Global Trekker
-http://tv123.vvvv.ee/live.php/?ch=c246b74b769
-#EXTINF:-1 group-title="TW",原住民族電視台
-http://tv123.vvvv.ee/live.php/?ch=05b17b0d770
-#EXTINF:-1 group-title="TW",東森購物四台
-http://tv123.vvvv.ee/live.php/?ch=98b8b2f5771
-#EXTINF:-1 group-title="TW",LiveABC互動英語頻道
-http://tv123.vvvv.ee/live.php/?ch=4d650f91772
-#EXTINF:-1 group-title="TW",達文西頻道
-http://tv123.vvvv.ee/live.php/?ch=95b5977f773
-#EXTINF:-1 group-title="TW",ELTV生活英語台
-http://tv123.vvvv.ee/live.php/?ch=46a2ce15774
-#EXTINF:-1 group-title="TW",Nick Jr. 兒童頻道
-http://tv123.vvvv.ee/live.php/?ch=75991ea8775
-#EXTINF:-1 group-title="TW",尼克兒童頻道
-http://tv123.vvvv.ee/live.php/?ch=3634c3b7776
-#EXTINF:-1 group-title="TW",DreamWorks 夢工廠動畫
-http://tv123.vvvv.ee/live.php/?ch=2b755946777
-#EXTINF:-1 group-title="TW",靖天卡通台
-http://tv123.vvvv.ee/live.php/?ch=06ebe695778
-#EXTINF:-1 group-title="TW",靖洋卡通Nice Bingo
-http://tv123.vvvv.ee/live.php/?ch=cbf62ff9779
-#EXTINF:-1 group-title="TW",MOMO親子台
-http://tv123.vvvv.ee/live.php/?ch=c883cab5780
-#EXTINF:-1 group-title="TW",東森購物一台
-http://tv123.vvvv.ee/live.php/?ch=5165a2da781
-#EXTINF:-1 group-title="TW",鏡電視新聞台
-http://tv123.vvvv.ee/live.php/?ch=9b001bc9782
-#EXTINF:-1 group-title="TW",東森新聞台
-http://tv123.vvvv.ee/live.php/?ch=5ac8a178783
-#EXTINF:-1 group-title="TW",華視新聞
-http://tv123.vvvv.ee/live.php/?ch=6b823639784
-#EXTINF:-1 group-title="TW",民視新聞台
-http://tv123.vvvv.ee/live.php/?ch=dc19ebda785
-#EXTINF:-1 group-title="TW",三立新聞iNEWS
-http://tv123.vvvv.ee/live.php/?ch=773ac6dd786
-#EXTINF:-1 group-title="TW",TVBS新聞
-http://tv123.vvvv.ee/live.php/?ch=b351904f787
-#EXTINF:-1 group-title="TW",東森財經新聞台
-http://tv123.vvvv.ee/live.php/?ch=c7ee889b788
-#EXTINF:-1 group-title="TW",中視新聞
-http://tv123.vvvv.ee/live.php/?ch=8c33d787789
-#EXTINF:-1 group-title="TW",中天新聞台
-http://tv123.vvvv.ee/live.php/?ch=114f30f0790
-#EXTINF:-1 group-title="TW",Bloomberg TV
-http://tv123.vvvv.ee/live.php/?ch=ca41a63c791
-#EXTINF:-1 group-title="TW",寰宇新聞台
-http://tv123.vvvv.ee/live.php/?ch=9ff2a826792
-#EXTINF:-1 group-title="TW",寰宇新聞台灣台
-http://tv123.vvvv.ee/live.php/?ch=22b6575e793
-#EXTINF:-1 group-title="TW",SBN全球財經台
-http://tv123.vvvv.ee/live.php/?ch=5b17c270794
-#EXTINF:-1 group-title="TW",TVBS
-http://tv123.vvvv.ee/live.php/?ch=2747f346795
-#EXTINF:-1 group-title="TW",東森購物二台
-http://tv123.vvvv.ee/live.php/?ch=b44e68d6796
-#EXTINF:-1 group-title="TW",民視綜藝台
-http://tv123.vvvv.ee/live.php/?ch=ec26c2b0797
-#EXTINF:-1 group-title="TW",豬哥亮歌廳秀
-http://tv123.vvvv.ee/live.php/?ch=23d951b4798
-#EXTINF:-1 group-title="TW",靖天育樂台
-http://tv123.vvvv.ee/live.php/?ch=20350ffb799
-#EXTINF:-1 group-title="TW",KLT-靖天國際台
-http://tv123.vvvv.ee/live.php/?ch=3043713a800
-#EXTINF:-1 group-title="TW",Nice TV 靖天歡樂台
-http://tv123.vvvv.ee/live.php/?ch=c553ff1c801
-#EXTINF:-1 group-title="TW",靖天資訊台
-http://tv123.vvvv.ee/live.php/?ch=8095cb1f802
-#EXTINF:-1 group-title="TW",TVBS歡樂台
-http://tv123.vvvv.ee/live.php/?ch=5a1905a0803
-#EXTINF:-1 group-title="TW",韓國娛樂台 KMTV
-http://tv123.vvvv.ee/live.php/?ch=58ad7a82804
-#EXTINF:-1 group-title="TW",ROCK Entertainment
-http://tv123.vvvv.ee/live.php/?ch=1bf57778805
-#EXTINF:-1 group-title="TW",Lifetime 娛樂頻道
-http://tv123.vvvv.ee/live.php/?ch=cb60fab9806
-#EXTINF:-1 group-title="TW",電影原聲台CMusic
-http://tv123.vvvv.ee/live.php/?ch=8ef94166807
-#EXTINF:-1 group-title="TW",TRACE Urban
-http://tv123.vvvv.ee/live.php/?ch=ae251563808
-#EXTINF:-1 group-title="TW",FashionTV 時尚頻道
-http://tv123.vvvv.ee/live.php/?ch=de8e51de809
-#EXTINF:-1 group-title="TW",Mezzo Live HD
-http://tv123.vvvv.ee/live.php/?ch=23cc28e6810
-#EXTINF:-1 group-title="TW",CLASSICA 古典樂
-http://tv123.vvvv.ee/live.php/?ch=47bb8fb2811
-#EXTINF:-1 group-title="TW",東森購物三台
-http://tv123.vvvv.ee/live.php/?ch=23029f88812
-#EXTINF:-1 group-title="TW",INULTRA
-http://tv123.vvvv.ee/live.php/?ch=86851c64813
-#EXTINF:-1 group-title="TW",TRACE Sport Stars
-http://tv123.vvvv.ee/live.php/?ch=2f9790c4814
-#EXTINF:-1 group-title="TW",智林體育台
-http://tv123.vvvv.ee/live.php/?ch=58683a9d815
-#EXTINF:-1 group-title="TW",時尚運動X
-http://tv123.vvvv.ee/live.php/?ch=9125ebe7816
-#EXTINF:-1 group-title="TW",車迷TV
-http://tv123.vvvv.ee/live.php/?ch=d9b4290c817
-#EXTINF:-1 group-title="TW",GINX Esports TV
-http://tv123.vvvv.ee/live.php/?ch=8692472b818
-#EXTINF:-1 group-title="TW",Pet Club TV
-http://tv123.vvvv.ee/live.php/?ch=ee6ac4be819
-#EXTINF:-1 group-title="TW",民視旅遊台
-http://tv123.vvvv.ee/live.php/?ch=91a0ea9a820
-#EXTINF:-1 group-title="TW",滾動力rollor
-http://tv123.vvvv.ee/live.php/?ch=dd655514821
-#EXTINF:-1 group-title="TW",亞洲旅遊台
-http://tv123.vvvv.ee/live.php/?ch=d3c345d6822
-#EXTINF:-1 group-title="TW",fun探索娛樂台
-http://tv123.vvvv.ee/live.php/?ch=e8267108823
-#EXTINF:-1 group-title="TW",幸福空間居家台
-http://tv123.vvvv.ee/live.php/?ch=be78ee64824
 #EXTINF:-1 group-title="TW",Love Nature
-http://tv123.vvvv.ee/live.php/?ch=4ccaf56a825
+https://tv.iill.top/4gtv/4gtv-live208
 #EXTINF:-1 group-title="TW",History 歷史頻道
-http://tv123.vvvv.ee/live.php/?ch=2280d4bd826
-#EXTINF:-1 group-title="TW",愛爾達生活旅遊台
-http://tv123.vvvv.ee/live.php/?ch=5a1223ed827
-#EXTINF:-1 group-title="TW",LUXE TV Channel
-http://tv123.vvvv.ee/live.php/?ch=c3033f19828
-#EXTINF:-1 group-title="TW",TV5MONDE STYLE HD 生活時尚
-http://tv123.vvvv.ee/live.php/?ch=54cd20ff829
-#EXTINF:-1 group-title="TW",MagellanTV頻道 (麥哲倫頻道)
-http://tv123.vvvv.ee/live.php/?ch=5f561b05830
-#EXTINF:-1 group-title="TW",ROCK Xstream搖滾極限頻道
-http://tv123.vvvv.ee/live.php/?ch=5b26a896831
-#EXTINF:-1 group-title="TW",公視戲劇
-http://tv123.vvvv.ee/live.php/?ch=f77de7d6832
-#EXTINF:-1 group-title="TW",民視影劇台
-http://tv123.vvvv.ee/live.php/?ch=76f9cb22833
-#EXTINF:-1 group-title="TW",HITS頻道
-http://tv123.vvvv.ee/live.php/?ch=99b179bc834
-#EXTINF:-1 group-title="TW",八大精彩台
-http://tv123.vvvv.ee/live.php/?ch=14dc71b5835
-#EXTINF:-1 group-title="TW",靖天戲劇台
-http://tv123.vvvv.ee/live.php/?ch=73ab3af8836
-#EXTINF:-1 group-title="TW",靖洋戲劇台
-http://tv123.vvvv.ee/live.php/?ch=27757cdd837
+https://tv.iill.top/4gtv/4gtv-live026
+#EXTINF:-1 group-title="TW",亞洲旅遊
+https://tv.iill.top/4gtv/4gtv-4gtv076
+#EXTINF:-1 group-title="TW",中天新聞
+https://tv.iill.top/4gtv/4gtv-4gtv009
+#EXTINF:-1 group-title="TW",民視
+https://tv.iill.top/4gtv/4gtv-4gtv002
+#EXTINF:-1 group-title="TW",民視台灣
+https://tv.iill.top/4gtv/4gtv-4gtv001
+#EXTINF:-1 group-title="TW",民視影劇
+https://tv.iill.top/4gtv/litv-ftv09
+#EXTINF:-1 group-title="TW",民視新聞
+https://tv.iill.top/4gtv/litv-ftv13
+#EXTINF:-1 group-title="TW",民視旅遊
+https://tv.iill.top/4gtv/litv-ftv07
+#EXTINF:-1 group-title="TW",民視第一
+https://tv.iill.top/4gtv/4gtv-4gtv003
+#EXTINF:-1 group-title="TW",民視綜藝
+https://tv.iill.top/4gtv/4gtv-4gtv004
+#EXTINF:-1 group-title="TW",寰宇新聞
+https://tv.iill.top/4gtv/litv-longturn14
+#EXTINF:-1 group-title="TW",寰宇新聞台灣
+https://tv.iill.top/4gtv/4gtv-4gtv156
+#EXTINF:-1 group-title="TW",寰宇財經
+https://tv.iill.top/ofiii/4gtv-4gtv158
+#EXTINF:-1 group-title="TW",鏡電視新聞
+https://tv.iill.top/4gtv/4gtv-4gtv075
+#EXTINF:-1 group-title="TW",龍華偶像
+https://tv.iill.top/ofiii/litv-xinchuang12
+#EXTINF:-1 group-title="TW",龍華卡通
+https://tv.iill.top/ofiii/litv-xinchuang01
+#EXTINF:-1 group-title="TW",龍華戲劇
+https://tv.iill.top/ofiii/litv-xinchuang18
+#EXTINF:-1 group-title="TW",龍華日韓
+https://tv.iill.top/ofiii/litv-xinchuang11
+#EXTINF:-1 group-title="TW",龍華洋片
+https://tv.iill.top/ofiii/litv-xinchuang02
+#EXTINF:-1 group-title="TW",龍華經典
+https://tv.iill.top/ofiii/litv-xinchuang21
+#EXTINF:-1 group-title="TW",龍華電影
+https://tv.iill.top/ofiii/litv-xinchuang03
+#EXTINF:-1 group-title="TW",Arirang TV
+https://tv.iill.top/4gtv/4gtv-4gtv079
 #EXTINF:-1 group-title="TW",CI 罪案偵查頻道
-http://tv123.vvvv.ee/live.php/?ch=c4125bbb838
+https://tv.iill.top/4gtv/4gtv-live027
+#EXTINF:-1 group-title="TW",MagellanTV (麥哲倫頻道)
+https://tv.iill.top/4gtv/4gtv-live123
+#EXTINF:-1 group-title="TW",TVBS
+https://tv.iill.top/4gtv/media-live073
+#EXTINF:-1 group-title="TW",TVBS 新聞
+https://tv.iill.top/4gtv/media-live072
+#EXTINF:-1 group-title="TW",TVBS 歡樂
+https://tv.iill.top/4gtv/4gtv-4gtv068
+#EXTINF:-1 group-title="TW",TVBS 精采
+https://tv.iill.top/4gtv/4gtv-4gtv067
+#EXTINF:-1 group-title="TW",三立新聞iNEWS
+https://tv.iill.top/4gtv/4gtv-live089
+#EXTINF:-1 group-title="TW",三立綜合
+https://tv.iill.top/4gtv/4gtv-live207
+#EXTINF:-1 group-title="TW",中視
+https://tv.iill.top/4gtv/4gtv-4gtv040
+#EXTINF:-1 group-title="TW",中視新聞
+https://tv.iill.top/4gtv/4gtv-4gtv074
+#EXTINF:-1 group-title="TW",八大精彩
+https://tv.iill.top/4gtv/4gtv-4gtv034
+#EXTINF:-1 group-title="TW",八大綜藝
+https://tv.iill.top/4gtv/4gtv-4gtv039
+#EXTINF:-1 group-title="TW",公視戲劇
+https://tv.iill.top/4gtv/4gtv-4gtv042
+#EXTINF:-1 group-title="TW",台灣戲劇
+https://tv.iill.top/ofiii/litv-xinchuang22
+#EXTINF:-1 group-title="TW",台視新聞
+https://tv.iill.top/ofiii/4gtv-4gtv051
+#EXTINF:-1 group-title="TW",愛爾達娛樂
+https://tv.iill.top/4gtv/4gtv-4gtv070
+#EXTINF:-1 group-title="TW",愛爾達生活旅遊
+https://tv.iill.top/4gtv/4gtv-live120
+#EXTINF:-1 group-title="TW",時尚運動X
+https://tv.iill.top/4gtv/4gtv-4gtv014
+#EXTINF:-1 group-title="TW",智林體育
+https://tv.iill.top/4gtv/4gtv-4gtv101
+#EXTINF:-1 group-title="TW",東森新聞
+https://tv.iill.top/4gtv/4gtv-4gtv152
+#EXTINF:-1 group-title="TW",東森財經
+https://tv.iill.top/4gtv/4gtv-4gtv153
+#EXTINF:-1 group-title="TW",經典電影
+https://tv.iill.top/4gtv/4gtv-live021
+#EXTINF:-1 group-title="TW",華視
+https://tv.iill.top/4gtv/4gtv-4gtv041
+#EXTINF:-1 group-title="TW",華視新聞
+https://tv.iill.top/4gtv/4gtv-4gtv052
 #EXTINF:-1 group-title="TW",視納華仁紀實頻道
-http://tv123.vvvv.ee/live.php/?ch=ab2d2e80839
-#EXTINF:-1 group-title="TW",影迷數位紀實台
-http://tv123.vvvv.ee/live.php/?ch=e1f4344e840
-#EXTINF:-1 group-title="TW",金光布袋戲
-http://tv123.vvvv.ee/live.php/?ch=270f9dab841
-#EXTINF:-1 group-title="TW",ROCK Action
-http://tv123.vvvv.ee/live.php/?ch=8f9caeec842
-#EXTINF:-1 group-title="TW",采昌影劇台
-http://tv123.vvvv.ee/live.php/?ch=7016d029843
+https://tv.iill.top/4gtv/4gtv-4gtv013
+#EXTINF:-1 group-title="TW",靖天卡通
+https://tv.iill.top/4gtv/4gtv-4gtv044
+#EXTINF:-1 group-title="TW",靖天國際
+https://tv.iill.top/4gtv/4gtv-4gtv063
+#EXTINF:-1 group-title="TW",靖天戲劇
+https://tv.iill.top/4gtv/4gtv-4gtv058
+#EXTINF:-1 group-title="TW",靖天日本
+https://tv.iill.top/4gtv/4gtv-4gtv047
 #EXTINF:-1 group-title="TW",靖天映畫
-http://tv123.vvvv.ee/live.php/?ch=058ebfa0844
-#EXTINF:-1 group-title="TW",靖天電影台
-http://tv123.vvvv.ee/live.php/?ch=d6f0ee81845
-#EXTINF:-1 group-title="TW",影迷數位電影台
-http://tv123.vvvv.ee/live.php/?ch=08106a8e846
-#EXTINF:-1 group-title="TW",amc電影台
-http://tv123.vvvv.ee/live.php/?ch=14b9c7b7847
-#EXTINF:-1 group-title="TW",CinemaWorld
-http://tv123.vvvv.ee/live.php/?ch=cf8411b6848
-#EXTINF:-1 group-title="TW",My Cinema Europe HD 我的歐洲電影
-http://tv123.vvvv.ee/live.php/?ch=b9385c59849
-#EXTINF:-1 group-title="TW",好消息
-http://tv123.vvvv.ee/live.php/?ch=3565d6f8850
-#EXTINF:-1 group-title="TW",好消息2台
-http://tv123.vvvv.ee/live.php/?ch=2d620f9d851
-#EXTINF:-1 group-title="TW",大愛二台
-http://tv123.vvvv.ee/live.php/?ch=0eb63940852
-#EXTINF:-1 group-title="TW",人間衛視
-http://tv123.vvvv.ee/live.php/?ch=51f638c8853
-#EXTINF:-1 group-title="TW",NHK WORLD-JAPAN
-http://tv123.vvvv.ee/live.php/?ch=9edfa379854
-#EXTINF:-1 group-title="TW",FRANCE24 英文台
-http://tv123.vvvv.ee/live.php/?ch=773e2264855
-#EXTINF:-1 group-title="TW",半島國際新聞台
-http://tv123.vvvv.ee/live.php/?ch=b0a1ae49856
-#EXTINF:-1 group-title="TW",CNBC Asia 財經台
-http://tv123.vvvv.ee/live.php/?ch=8122b43b857
-#EXTINF:-1 group-title="TW",DW德國之聲
-http://tv123.vvvv.ee/live.php/?ch=d8a33988858
-#EXTINF:-1 group-title="TW",國會頻道1
-http://tv123.vvvv.ee/live.php/?ch=ab90ee8f859
-#EXTINF:-1 group-title="TW",國會頻道2
-http://tv123.vvvv.ee/live.php/?ch=c46a8ac0860
-#EXTINF:-1 group-title="TW",經典電影台
-http://tv123.vvvv.ee/live.php/?ch=8c0438ae861
-#EXTINF:-1 group-title="TW",經典卡通台
-http://tv123.vvvv.ee/live.php/?ch=6a9d5786862
-#EXTINF:-1 group-title="TW",精選動漫台
-http://tv123.vvvv.ee/live.php/?ch=38827afe863
+https://tv.iill.top/4gtv/4gtv-4gtv055
+#EXTINF:-1 group-title="TW",靖天歡樂
+https://tv.iill.top/4gtv/4gtv-4gtv054
+#EXTINF:-1 group-title="TW",靖天綜合
+https://tv.iill.top/4gtv/4gtv-4gtv046
+#EXTINF:-1 group-title="TW",靖天育樂
+https://tv.iill.top/4gtv/4gtv-4gtv062
+#EXTINF:-1 group-title="TW",靖天資訊
+https://tv.iill.top/4gtv/4gtv-4gtv065
+#EXTINF:-1 group-title="TW",靖天電影
+https://tv.iill.top/4gtv/4gtv-4gtv061
+#EXTINF:-1 group-title="TW",靖洋卡通
+https://tv.iill.top/4gtv/4gtv-4gtv057
+#EXTINF:-1 group-title="TW",靖洋戲劇
+https://tv.iill.top/4gtv/4gtv-4gtv045
