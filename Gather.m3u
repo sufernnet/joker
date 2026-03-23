@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.136605.xyz/9days.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 # Gather.m3u
-# 生成时间: 2026-03-23 11:58:18
+# 生成时间: 2026-03-23 12:48:50
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -409,122 +409,170 @@ http://cdn6.163189.xyz/163189/ch
 
 # TW
 #EXTINF:-1 group-title="TW",Love Nature
-https://tv.iill.top/4gtv/4gtv-live208
-#EXTINF:-1 group-title="TW",History 歷史頻道
-https://tv.iill.top/4gtv/4gtv-live026
+http://192.168.100.1:50008/4gtv-live208/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",亞洲旅遊
-https://tv.iill.top/4gtv/4gtv-4gtv076
-#EXTINF:-1 group-title="TW",中天新聞
-https://tv.iill.top/4gtv/4gtv-4gtv009
+http://192.168.100.1:50008/4gtv-4gtv076/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",中天新聞台
+http://192.168.100.1:50008/4gtv-4gtv009/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",民視
-https://tv.iill.top/4gtv/4gtv-4gtv002
-#EXTINF:-1 group-title="TW",民視台灣
-https://tv.iill.top/4gtv/4gtv-4gtv001
+http://192.168.100.1:50008/4gtv-live215/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",民視台灣台
+http://192.168.100.1:50008/4gtv-live401/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",民視影劇
-https://tv.iill.top/4gtv/litv-ftv09
+http://192.168.100.1:50008/litv-ftv09/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",民視新聞
-https://tv.iill.top/4gtv/litv-ftv13
+http://192.168.100.1:50008/4gtv-live413/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",民視旅遊
-https://tv.iill.top/4gtv/litv-ftv07
-#EXTINF:-1 group-title="TW",民視第一
-https://tv.iill.top/4gtv/4gtv-4gtv003
+http://192.168.100.1:50008/litv-ftv07/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",民視第一台
+http://192.168.100.1:50008/4gtv-live403/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",民視綜藝
-https://tv.iill.top/4gtv/4gtv-4gtv004
+http://192.168.100.1:50008/4gtv-4gtv004/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",寰宇新聞
-https://tv.iill.top/4gtv/litv-longturn14
-#EXTINF:-1 group-title="TW",寰宇新聞台灣
-https://tv.iill.top/4gtv/4gtv-4gtv156
+http://192.168.100.1:50008/4gtv-live408/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",寰宇新聞台灣台
+http://192.168.100.1:50008/4gtv-4gtv156/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",寰宇財經
-https://tv.iill.top/ofiii/4gtv-4gtv158
-#EXTINF:-1 group-title="TW",鏡電視新聞
-https://tv.iill.top/4gtv/4gtv-4gtv075
+http://192.168.100.1:50008/of-4gtv-4gtv158/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",鏡電視新聞台
+http://192.168.100.1:50008/4gtv-4gtv075/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",龍華偶像
-https://tv.iill.top/ofiii/litv-xinchuang12
+http://192.168.100.1:50008/litv-xinchuang12/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",龍華卡通
-https://tv.iill.top/ofiii/litv-xinchuang01
+http://192.168.100.1:50008/litv-xinchuang01/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",龍華戲劇
-https://tv.iill.top/ofiii/litv-xinchuang18
+http://192.168.100.1:50008/litv-xinchuang18/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",龍華日韓
-https://tv.iill.top/ofiii/litv-xinchuang11
+http://192.168.100.1:50008/litv-xinchuang11/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",龍華洋片
-https://tv.iill.top/ofiii/litv-xinchuang02
+http://192.168.100.1:50008/litv-xinchuang02/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",龍華經典
-https://tv.iill.top/ofiii/litv-xinchuang21
+http://192.168.100.1:50008/litv-xinchuang21/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",龍華電影
-https://tv.iill.top/ofiii/litv-xinchuang03
-#EXTINF:-1 group-title="TW",Arirang TV
-https://tv.iill.top/4gtv/4gtv-4gtv079
+http://192.168.100.1:50008/litv-xinchuang03/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",ARIRANG阿里郎頻道
+http://192.168.100.1:50008/4gtv-4gtv079/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",CI 罪案偵查頻道
-https://tv.iill.top/4gtv/4gtv-live027
-#EXTINF:-1 group-title="TW",MagellanTV (麥哲倫頻道)
-https://tv.iill.top/4gtv/4gtv-live123
+http://192.168.100.1:50008/4gtv-live027/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",CNBC Asia 財經台
+http://192.168.100.1:50008/4gtv-live130/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",Cinema World
+http://192.168.100.1:50008/4gtv-live069/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",DayStar
+http://192.168.100.1:50008/daystar/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",ELTATW
+http://192.168.100.1:50008/4gtv-live120/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",ELTA娛樂
+http://192.168.100.1:50008/4gtv-4gtv070/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",ELTV生活英語台
+http://192.168.100.1:50008/of-litv-xinchuang20/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",FashionTV 時尚頻道
+http://192.168.100.1:50008/4gtv-live085/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",GINX Esports TV
+http://192.168.100.1:50008/4gtv-4gtv053/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",Global Trekker
+http://192.168.100.1:50008/4gtv-live112/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",HITS頻道
+http://192.168.100.1:50008/4gtv-live620/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",INULTRA
+http://192.168.100.1:50008/4gtv-live096/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",KLT-靖天國際台
+http://192.168.100.1:50008/4gtv-4gtv063/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",Lifetime 娛樂頻道
+http://192.168.100.1:50008/4gtv-live029/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",MagellanTV頻道
+http://192.168.100.1:50008/4gtv-live123/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",Mezzo Live HD
+http://192.168.100.1:50008/4gtv-4gtv083/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",My Cinema Europe HD 我的歐洲電影
+http://192.168.100.1:50008/litv-ftv10/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",NICE TV 靖天歡樂台
+http://192.168.100.1:50008/4gtv-4gtv054/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",ROCK Action
+http://192.168.100.1:50008/4gtv-live138/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",ROCK Entertainment
+http://192.168.100.1:50008/4gtv-live080/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",Smart知識台
+http://192.168.100.1:50008/litv-xinchuang19/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",TRACE Sport Stars
+http://192.168.100.1:50008/4gtv-4gtv077/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",TRACE Urban
+http://192.168.100.1:50008/4gtv-4gtv082/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",TVBS
-https://tv.iill.top/4gtv/media-live073
-#EXTINF:-1 group-title="TW",TVBS 新聞
-https://tv.iill.top/4gtv/media-live072
-#EXTINF:-1 group-title="TW",TVBS 歡樂
-https://tv.iill.top/4gtv/4gtv-4gtv068
-#EXTINF:-1 group-title="TW",TVBS 精采
-https://tv.iill.top/4gtv/4gtv-4gtv067
+http://192.168.100.1:50008/media-live073/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",TVBS新聞台
+http://192.168.100.1:50008/media-live072/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",TVBS歡樂台
+http://192.168.100.1:50008/4gtv-4gtv068/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",amc 電影台
+http://192.168.100.1:50008/4gtv-4gtv017/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",fun探索娛樂台
+http://192.168.100.1:50008/4gtv-live011/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",三立iNEWS
+http://192.168.100.1:50008/4gtv-live089/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",三立新聞iNEWS
-https://tv.iill.top/4gtv/4gtv-live089
-#EXTINF:-1 group-title="TW",三立綜合
-https://tv.iill.top/4gtv/4gtv-live207
+http://192.168.100.1:50008/iNEWS/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",三立綜合台
+http://192.168.100.1:50008/4gtv-live207/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",中視
-https://tv.iill.top/4gtv/4gtv-4gtv040
+http://192.168.100.1:50008/of-4gtv-4gtv040/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",中視新聞
-https://tv.iill.top/4gtv/4gtv-4gtv074
+http://192.168.100.1:50008/4gtv-live474/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",中視新聞
+http://192.168.100.1:50008/of-4gtv-4gtv074/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",八大精彩
-https://tv.iill.top/4gtv/4gtv-4gtv034
-#EXTINF:-1 group-title="TW",八大綜藝
-https://tv.iill.top/4gtv/4gtv-4gtv039
-#EXTINF:-1 group-title="TW",公視戲劇
-https://tv.iill.top/4gtv/4gtv-4gtv042
-#EXTINF:-1 group-title="TW",台灣戲劇
-https://tv.iill.top/ofiii/litv-xinchuang22
-#EXTINF:-1 group-title="TW",台視新聞
-https://tv.iill.top/ofiii/4gtv-4gtv051
-#EXTINF:-1 group-title="TW",愛爾達娛樂
-https://tv.iill.top/4gtv/4gtv-4gtv070
-#EXTINF:-1 group-title="TW",愛爾達生活旅遊
-https://tv.iill.top/4gtv/4gtv-live120
+http://192.168.100.1:50008/4gtv-4gtv034/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",八大精彩
+http://192.168.100.1:50008/4gtv-live124/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",台灣戲劇台
+http://192.168.100.1:50008/litv-xinchuang22/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",好消息
+http://192.168.100.1:50008/of-litv-ftv16/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",影迷數位紀實台
+http://192.168.100.1:50008/litv-ftv15/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",影迷數位電影台
+http://192.168.100.1:50008/4gtv-4gtv011/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",時尚運動X
-https://tv.iill.top/4gtv/4gtv-4gtv014
+http://192.168.100.1:50008/4gtv-live411/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",智林體育
-https://tv.iill.top/4gtv/4gtv-4gtv101
+http://192.168.100.1:50008/4gtv-4gtv101/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",東森新聞
-https://tv.iill.top/4gtv/4gtv-4gtv152
-#EXTINF:-1 group-title="TW",東森財經
-https://tv.iill.top/4gtv/4gtv-4gtv153
-#EXTINF:-1 group-title="TW",經典電影
-https://tv.iill.top/4gtv/4gtv-live021
+http://192.168.100.1:50008/4gtv-4gtv152/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",東森財經新聞
+http://192.168.100.1:50008/4gtv-4gtv153/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",滾動力 Rollor
+http://192.168.100.1:50008/4gtv-live012/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",第1商業台
+http://192.168.100.1:50008/4gtv-4gtv104/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",經典電影台
+http://192.168.100.1:50008/4gtv-live021/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",華視
-https://tv.iill.top/4gtv/4gtv-4gtv041
+http://192.168.100.1:50008/4gtv-4gtv041/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",華視新聞
-https://tv.iill.top/4gtv/4gtv-4gtv052
+http://192.168.100.1:50008/4gtv-live452/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",華視新聞
+http://192.168.100.1:50008/of-4gtv-4gtv052/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",視納華仁紀實頻道
-https://tv.iill.top/4gtv/4gtv-4gtv013
-#EXTINF:-1 group-title="TW",靖天卡通
-https://tv.iill.top/4gtv/4gtv-4gtv044
-#EXTINF:-1 group-title="TW",靖天國際
-https://tv.iill.top/4gtv/4gtv-4gtv063
-#EXTINF:-1 group-title="TW",靖天戲劇
-https://tv.iill.top/4gtv/4gtv-4gtv058
-#EXTINF:-1 group-title="TW",靖天日本
-https://tv.iill.top/4gtv/4gtv-4gtv047
+http://192.168.100.1:50008/4gtv-4gtv013/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",豬哥亮歌廳秀
+http://192.168.100.1:50008/4gtv-4gtv006/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",車迷 TV
+http://192.168.100.1:50008/4gtv-live201/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",采昌影劇
+http://192.168.100.1:50008/4gtv-4gtv049/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",金光布袋戲
+http://192.168.100.1:50008/4gtv-live144/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",電影原聲台CMusic
+http://192.168.100.1:50008/4gtv-live031/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",靖天映畫
-https://tv.iill.top/4gtv/4gtv-4gtv055
-#EXTINF:-1 group-title="TW",靖天歡樂
-https://tv.iill.top/4gtv/4gtv-4gtv054
+http://192.168.100.1:50008/4gtv-4gtv055/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",靖天綜合
-https://tv.iill.top/4gtv/4gtv-4gtv046
+http://192.168.100.1:50008/4gtv-4gtv046/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",靖天育樂
-https://tv.iill.top/4gtv/4gtv-4gtv062
+http://192.168.100.1:50008/4gtv-4gtv062/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",靖天資訊
-https://tv.iill.top/4gtv/4gtv-4gtv065
+http://192.168.100.1:50008/4gtv-4gtv065/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 group-title="TW",靖天電影
-https://tv.iill.top/4gtv/4gtv-4gtv061
-#EXTINF:-1 group-title="TW",靖洋卡通
-https://tv.iill.top/4gtv/4gtv-4gtv057
-#EXTINF:-1 group-title="TW",靖洋戲劇
-https://tv.iill.top/4gtv/4gtv-4gtv045
+http://192.168.100.1:50008/4gtv-4gtv061/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
+#EXTINF:-1 group-title="TW",韓國娛樂台
+http://192.168.100.1:50008/4gtv-4gtv016/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
