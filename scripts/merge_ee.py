@@ -11,8 +11,6 @@ EE.m3u 合并脚本（港台频道版 + 新聞频道）
 6. 按指定顺序对 HK 和 TW 分组分别排序
 7. 合并 BB.m3u
 8. 使用固定 EPG
-
-北京时间每天 06:00 / 17:00 自动运行
 """
 
 import requests
@@ -38,75 +36,22 @@ TW_GROUP = "TW"
 
 EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
 
-# 需要过滤掉的频道关键词（不区分大小写）
 FILTER_KEYWORDS = [
-    # 原有过滤项
-    "凤凰电影",
-    "人间卫视",
-    "邵氏动作",
-    "邵氏武侠",
-    "邵氏电影",
-    "邵氏喜剧",
-    "生命电影",
-    "ASTV",
-    "亚洲卫视",
-    "GOODTV",
-    "好消息",
-    "唐NTD",
-    "唐人卫视",
-    "唯心电视",
-    "星空卫视",
-    "星空音乐",
-    "華藝中文",
-    "中旺电视",
-    "中天娱乐",
-    "中天新聞",
-    "中天新聞1080p(梯子)",
-    "中天新聞720p",
-    "中天综合",
-    "寰宇新聞台",
-    "寰宇新聞台720p",
-    "年代新聞",
-    "東森新聞台",
-
-    # 新增过滤项：三立台全部
-    "三立台湾台",
-    "三立戏剧台",
-    "三立都会台",
-    "三立综合台",
-    "三立新闻台",
-    "三立iNEWS",
-
-    # 新增过滤项：澳门/澳视频道全部
-    "澳门",
-    "澳视",
-    "澳视澳门",
-    "澳视Macau",
-    "澳门综艺",
-    "澳门体育",
-    "澳视高清",
-    "澳视生活",
-    "澳视中文",
-    "澳视体育",
-    "澳视新闻",
-    "澳视财经",
-
-    # 新增过滤项：民視影劇、民視旅遊
-    "民視影劇",
-    "民视综艺",
-    "民视影劇",
-    "民視旅遊",
-    "民视旅游",
-    "民視旅遊台",
-    "民视旅游台",
+    "凤凰电影", "人间卫视", "邵氏动作", "邵氏武侠", "邵氏电影", "邵氏喜剧",
+    "生命电影", "ASTV", "亚洲卫视", "GOODTV", "好消息", "唐NTD", "唐人卫视",
+    "唯心电视", "星空卫视", "星空音乐", "華藝中文", "中旺电视", "中天娱乐",
+    "中天新聞", "中天新聞1080p(梯子)", "中天新聞720p", "中天综合", "寰宇新聞台",
+    "寰宇新聞台720p", "年代新聞", "東森新聞台",
+    "三立台湾台", "三立戏剧台", "三立都会台", "三立综合台", "三立新闻台", "三立iNEWS",
+    "澳门", "澳视", "澳视澳门", "澳视Macau", "澳门综艺", "澳门体育", "澳视高清",
+    "澳视生活", "澳视中文", "澳视体育", "澳视新闻", "澳视财经",
+    "民視影劇", "民视综艺", "民视影劇", "民視旅遊", "民视旅游", "民視旅遊台", "民视旅游台",
 ]
 
-# 需要过滤掉的特定URL（精确匹配）
 FILTER_URLS = [
-    "http://iptv.4666888.xyz/iptv2A.php?id=27",  # 凤凰中文特定源
+    "http://iptv.4666888.xyz/iptv2A.php?id=27",
 ]
 
-# 频道名称标准化映射（用于去重）
 NAME_NORMALIZATION = {
     "NOW新闻台": "Now新闻",
     "NOW新闻台 ": "Now新闻",
@@ -116,14 +61,19 @@ NAME_NORMALIZATION = {
     "Now 新闻台": "Now新闻",
 
     "鳳凰衛視中文": "鳳凰衛視中文",
-    "凤凰中文": "鳳凰衛視中文",
+    "凤凰卫视中文": "鳳凰衛視中文",
     "鳳凰中文": "鳳凰衛視中文",
+    "凤凰中文": "鳳凰衛視中文",
 
     "鳳凰衛視資訊": "鳳凰衛視資訊",
-    "凤凰资讯": "鳳凰衛視資訊",
+    "凤凰卫视资讯": "鳳凰衛視資訊",
     "鳳凰資訊": "鳳凰衛視資訊",
+    "凤凰资讯": "鳳凰衛視資訊",
 
     "鳳凰衛視香港": "鳳凰衛視香港",
+    "凤凰卫视香港": "鳳凰衛視香港",
+    "鳳凰香港": "鳳凰衛視香港",
+    "凤凰香港": "鳳凰衛視香港",
     "凤凰香港台": "鳳凰衛視香港",
     "鳳凰香港台": "鳳凰衛視香港",
 
@@ -178,21 +128,12 @@ NAME_NORMALIZATION = {
     "非凡新聞HD 720p": "非凡新聞",
 }
 
-# 需要优先保留的名称模式（不区分大小写）
 PREFERRED_NAMES = [
-    "鳳凰衛視中文",
-    "鳳凰衛視資訊",
-    "鳳凰衛視香港",
-    "Now新闻",
-    "Now体育",
-    "Now财经",
-    "Now直播",
-    "翡翠台",
-    "翡翠台4K",
-    "明珠台",
+    "鳳凰衛視中文", "鳳凰衛視資訊", "鳳凰衛視香港",
+    "Now新闻", "Now体育", "Now财经", "Now直播",
+    "翡翠台", "翡翠台4K", "明珠台",
 ]
 
-# ================== HK频道指定顺序 ==================
 HK_ORDER = [
     "鳳凰衛視中文",
     "鳳凰衛視資訊",
@@ -227,42 +168,16 @@ HK_ORDER = [
     "天映经典",
 ]
 
-# ================== TW频道指定顺序 ==================
 TW_ORDER = [
-    "镜新聞",
-    "民视",
-    "民视台湾台",
-    "民視新聞台",
-    "民視第一台",
-    "民视综艺",
-    "CTS華視新聞资讯",
-    "龙华偶像",
-    "龙华戏剧",
-    "龙华日韩",
-    "龙华经典",
-    "中視",
-    "中視新聞",
-    "公視",
-    "台視",
-    "緯來精彩",
-    "环球电视台",
-    "台视新闻",
-    "台视综合",
-    "TVBS精采台",
-    "中视经典",
-    "中视菁采",
-    "八大精彩台",
-    "八大綜藝台",
-    "华视",
-    "华视教育体育文化",
-    "非凡新聞",
+    "镜新聞", "民视", "民视台湾台", "民視新聞台", "民視第一台", "民视综艺",
+    "CTS華視新聞资讯", "龙华偶像", "龙华戏剧", "龙华日韩", "龙华经典",
+    "中視", "中視新聞", "公視", "台視", "緯來精彩", "环球电视台", "台视新闻",
+    "台视综合", "TVBS精采台", "中视经典", "中视菁采", "八大精彩台",
+    "八大綜藝台", "华视", "华视教育体育文化", "非凡新聞",
 ]
-
-# ================== 工具 ==================
 
 def log(msg):
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
-
 
 def download(url, desc):
     try:
@@ -275,12 +190,7 @@ def download(url, desc):
         log(f"❌ {desc} 下载失败: {e}")
         return None
 
-
 def extract_channels_from_m3u_group(content, target_group):
-    """
-    从标准 M3U 中提取指定 group-title 的频道
-    返回 [(name, url), ...]
-    """
     lines = content.splitlines()
     channels = []
     current_group = None
@@ -314,12 +224,7 @@ def extract_channels_from_m3u_group(content, target_group):
     log(f"总共从分组 '{target_group}' 提取到 {len(channels)} 个频道")
     return channels
 
-
 def extract_channels_from_m3u_all(content):
-    """
-    从标准 M3U 提取全部频道
-    返回 [(name, url), ...]
-    """
     lines = content.splitlines()
     channels = []
     current_name = None
@@ -344,9 +249,7 @@ def extract_channels_from_m3u_all(content):
     log(f"总共从 TW M3U 提取到 {len(channels)} 个频道")
     return channels
 
-
 def clean_channel_name(name):
-    """去除频道名称末尾的分辨率标记如 'HD 1080p', '1080p' 等"""
     original = name
     name = re.sub(r'\s*[Hh][Dd]\s*1080[pP]?\s*$', '', name)
     name = re.sub(r'\s*1080[pP]\s*$', '', name)
@@ -357,9 +260,7 @@ def clean_channel_name(name):
         log(f"清洗名称: '{original}' -> '{name}'")
     return name
 
-
 def should_filter_by_keyword(name):
-    """根据关键词检查频道名称是否应该被过滤"""
     name_lower = name.lower()
     for keyword in FILTER_KEYWORDS:
         if keyword.lower() in name_lower:
@@ -367,47 +268,32 @@ def should_filter_by_keyword(name):
             return True
     return False
 
-
 def should_filter_by_url(url):
-    """根据URL检查频道是否应该被过滤"""
     for filter_url in FILTER_URLS:
         if url == filter_url or url.startswith(filter_url):
             log(f"URL过滤频道: {url}")
             return True
     return False
 
-
 def normalize_channel_name(name):
-    """标准化频道名称（用于去重）"""
     name_stripped = name.strip()
-
     for variant, standard in NAME_NORMALIZATION.items():
         if name_stripped == variant or name_stripped.lower() == variant.lower():
             log(f"标准化名称: '{name}' -> '{standard}'")
             return standard
-
     return name_stripped
 
-
 def is_preferred_name(name):
-    """检查是否为优先保留的名称"""
     name_lower = name.lower()
     for preferred in PREFERRED_NAMES:
         if name_lower == preferred.lower():
             return True
     return False
 
-
 def deduplicate_channels(channels):
-    """
-    去重处理
-    策略：对于相同内容的频道，优先保留标准名称
-    """
     url_groups = {}
     for name, url in channels:
-        if url not in url_groups:
-            url_groups[url] = []
-        url_groups[url].append(name)
+        url_groups.setdefault(url, []).append(name)
 
     deduped = []
     for url, names in url_groups.items():
@@ -426,8 +312,7 @@ def deduplicate_channels(channels):
                     break
 
             if not selected:
-                sorted_names = sorted(names, key=len)
-                selected = sorted_names[0]
+                selected = sorted(names, key=len)[0]
                 log(f"  ⚠️ 无优先名称，选择最短的: {selected}")
 
             deduped.append((selected, url))
@@ -435,42 +320,23 @@ def deduplicate_channels(channels):
     log(f"去重前频道数: {len(channels)}，去重后: {len(deduped)}")
     return deduped
 
-
-# ================== 分组判断函数 ==================
-
 def is_hk_channel(name):
-    """判断是否为香港频道"""
     hk_identifiers = [
         "鳳凰", "凤凰", "Now", "HOY", "翡翠", "明珠", "TVB", "无线", "Viu", "RHK",
         "CH5", "CH8", "CHU", "CCTV13", "八度空间", "天映"
     ]
     name_lower = name.lower()
-    for identifier in hk_identifiers:
-        if identifier.lower() in name_lower:
-            return True
-    return False
-
+    return any(identifier.lower() in name_lower for identifier in hk_identifiers)
 
 def is_tw_channel(name):
-    """判断是否为台湾频道"""
     tw_identifiers = [
         "镜新聞", "民视", "民視", "華視", "CTS", "龙华", "中視", "公視",
         "台視", "緯來", "环球", "TVBS", "八大", "华视", "非凡"
     ]
     name_lower = name.lower()
-    for identifier in tw_identifiers:
-        if identifier.lower() in name_lower:
-            return True
-    return False
-
-
-# ================== 自定义排序函数 ==================
+    return any(identifier.lower() in name_lower for identifier in tw_identifiers)
 
 def sort_by_custom_order(channels, order_list):
-    """
-    根据指定的顺序列表对频道进行排序
-    不在列表中的频道按名称字母顺序排序，但放在列表内频道的后面
-    """
     order_map = {name: i for i, name in enumerate(order_list)}
 
     def key_func(item):
@@ -488,8 +354,45 @@ def sort_by_custom_order(channels, order_list):
 
     return sorted(channels, key=key_func)
 
+def sort_hk_channels(channels):
+    """
+    HK 专用排序：
+    强制把 鳳凰衛視中文 / 鳳凰衛視資訊 / 鳳凰衛視香港 放最前
+    """
+    def phoenix_priority(name):
+        n = name.strip().lower()
 
-# ================== 主流程 ==================
+        if any(k.lower() in n for k in ["鳳凰衛視中文", "凤凰卫视中文", "鳳凰中文", "凤凰中文"]):
+            return 0
+        if any(k.lower() in n for k in ["鳳凰衛視資訊", "凤凰卫视资讯", "鳳凰資訊", "凤凰资讯"]):
+            return 1
+        if any(k.lower() in n for k in ["鳳凰衛視香港", "凤凰卫视香港", "鳳凰香港", "凤凰香港", "凤凰香港台", "鳳凰香港台"]):
+            return 2
+
+        return 999
+
+    order_map = {name: i for i, name in enumerate(HK_ORDER)}
+
+    def key_func(item):
+        name, _ = item
+        base_name = re.sub(r'\s*(?:HD|1080p|720p|4K).*$', '', name).strip()
+
+        p = phoenix_priority(name)
+        if p != 999:
+            return (0, p)
+
+        if name in order_map:
+            return (1, order_map[name])
+        if base_name in order_map:
+            return (1, order_map[base_name])
+
+        for idx, order_name in enumerate(HK_ORDER):
+            if order_name in name:
+                return (1, idx)
+
+        return (2, name)
+
+    return sorted(channels, key=key_func)
 
 def main():
     log("开始生成 EE.m3u ...")
@@ -498,40 +401,34 @@ def main():
     if not bb:
         return
 
-    # HK：从 SOURCE_URL 提取指定分组
     hk_content = download(SOURCE_URL, "HK源文件") or ""
     hk_raw_channels = extract_channels_from_m3u_group(hk_content, HK_SOURCE_GROUP) if hk_content else []
 
-    # TW：从 4TV.m3u 提取全部频道
     tw_content = download(TW_URL, "TW 4TV.m3u") or ""
     tw_raw_channels = extract_channels_from_m3u_all(tw_content) if tw_content else []
 
     log(f"HK 原始频道数: {len(hk_raw_channels)}")
     log(f"TW 原始频道数: {len(tw_raw_channels)}")
 
-    # HK 处理
     hk_cleaned = [(clean_channel_name(name), url) for name, url in hk_raw_channels]
     hk_keyword_filtered = [(name, url) for name, url in hk_cleaned if not should_filter_by_keyword(name)]
     hk_url_filtered = [(name, url) for name, url in hk_keyword_filtered if not should_filter_by_url(url)]
     hk_normalized = [(normalize_channel_name(name), url) for name, url in hk_url_filtered]
     hk_deduped = deduplicate_channels(hk_normalized)
 
-    # TW 处理
     tw_cleaned = [(clean_channel_name(name), url) for name, url in tw_raw_channels]
     tw_keyword_filtered = [(name, url) for name, url in tw_cleaned if not should_filter_by_keyword(name)]
     tw_url_filtered = [(name, url) for name, url in tw_keyword_filtered if not should_filter_by_url(url)]
     tw_normalized = [(normalize_channel_name(name), url) for name, url in tw_url_filtered]
     tw_deduped = deduplicate_channels(tw_normalized)
 
-    # 为保持原逻辑风格，HK 只保留识别为 HK 的；TW 放全部 TW 源
     hk_channels = [(name, url) for name, url in hk_deduped if is_hk_channel(name) or not is_tw_channel(name)]
     tw_channels = tw_deduped
 
     log(f"HK频道数: {len(hk_channels)}")
     log(f"TW频道数: {len(tw_channels)}")
 
-    # 分别排序
-    sorted_hk = sort_by_custom_order(hk_channels, HK_ORDER)
+    sorted_hk = sort_hk_channels(hk_channels)
     sorted_tw = sort_by_custom_order(tw_channels, TW_ORDER)
 
     log("排序完成")
@@ -555,14 +452,12 @@ def main():
         if line.startswith("#EXTINF"):
             bb_count += 1
 
-    # 写入 HK 分组
     if sorted_hk:
         output += f"\n# {HK_GROUP}频道 ({len(sorted_hk)})\n"
         for name, url in sorted_hk:
             output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n'
             output += f"{url}\n"
 
-    # 写入 TW 分组
     if sorted_tw:
         output += f"\n# {TW_GROUP}频道 ({len(sorted_tw)})\n"
         for name, url in sorted_tw:
@@ -599,21 +494,8 @@ def main():
             f.write(output)
         log("🎉 EE.m3u 生成成功")
         log(f"📺 BB({bb_count}) + HK({len(sorted_hk)}) + TW({len(sorted_tw)}) = {total}")
-        if hk_keyword_filtered_count > 0:
-            log(f"🗑️ HK 关键词过滤了 {hk_keyword_filtered_count} 个频道")
-        if hk_url_filtered_count > 0:
-            log(f"🔗 HK URL过滤了 {hk_url_filtered_count} 个频道")
-        if hk_deduped_count > 0:
-            log(f"🔄 HK 去重了 {hk_deduped_count} 个重复频道")
-        if tw_keyword_filtered_count > 0:
-            log(f"🗑️ TW 关键词过滤了 {tw_keyword_filtered_count} 个频道")
-        if tw_url_filtered_count > 0:
-            log(f"🔗 TW URL过滤了 {tw_url_filtered_count} 个频道")
-        if tw_deduped_count > 0:
-            log(f"🔄 TW 去重了 {tw_deduped_count} 个重复频道")
     except Exception as e:
         log(f"❌ 保存失败: {e}")
-
 
 if __name__ == "__main__":
     main()
