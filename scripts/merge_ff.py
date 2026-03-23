@@ -24,7 +24,7 @@ SOURCE_URL = "https://yang.sufern001.workers.dev/"
 TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
 OUTPUT_FILE = "Gather.m3u"
 BB_FILE = "BB.m3u"
-EPG_URL = "https://epg.136605.xyz/9days.xml.gz,https://epg.iill.top/epg.xml.gz,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg"
+
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
