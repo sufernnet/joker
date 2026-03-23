@@ -24,7 +24,7 @@ HK_GROUP = "HK"
 TW_GROUP = "TW"
 SPORTS_GROUP = "SPORTS"
 
-EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz"
+EPG_URL = "https://epg.zsdc.eu.org/t.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 # ================== 过滤关键词 ==================
 
