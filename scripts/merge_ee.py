@@ -3,13 +3,14 @@
 EE.m3u 合并脚本（港台频道版 + 新聞频道）
 
 功能：
-1. 从同一个源文件（港台大陆）中提取“港台频道”和“新聞频道”两个分组
-2. 将频道分为 HK 和 TW 两个独立分组，无法识别的频道全部归入 TW
-3. 过滤掉指定频道（包括三立台、澳门/澳视频道、民視影劇、民視旅遊等）
-4. 去除频道名称中的分辨率标记（如“HD 1080p”、“1080p”）
-5. 按指定顺序对 HK 和 TW 分组分别排序
-6. 合并 BB.m3u
-7. 使用固定 EPG
+1. HK 从 SOURCE_URL 中提取指定分组
+2. TW 从远程 4TV.m3u 提取
+3. 将频道分为 HK 和 TW 两个独立分组，无法识别的频道全部归入 TW
+4. 过滤掉指定频道（包括三立台、澳门/澳视频道、民視影劇、民視旅遊等）
+5. 去除频道名称中的分辨率标记（如“HD 1080p”、“1080p”）
+6. 按指定顺序对 HK 和 TW 分组分别排序
+7. 合并 BB.m3u
+8. 使用固定 EPG
 
 北京时间每天 06:00 / 17:00 自动运行
 """
@@ -21,12 +22,15 @@ from datetime import datetime
 # ================== 配置 ==================
 
 BB_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/BB.m3u"
-# 主要源：港台大陆（包含“港台频道”和“新聞频道”两个分组）
-GAT_URL = "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/FG/refs/heads/main/港台大陆"
-OUTPUT_FILE = "EE.m3u"
 
-# 需要从同一个源文件中提取的两个分组名
-SOURCE_GROUPS = ["港台频道", "新聞频道"]
+# HK 来源
+SOURCE_URL = "https://yang.sufern001.workers.dev/"
+HK_SOURCE_GROUP = "• Juli 「精選」"
+
+# TW 来源
+TW_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/4TV.m3u"
+
+OUTPUT_FILE = "EE.m3u"
 
 # 输出分组名称
 HK_GROUP = "HK"
@@ -256,57 +260,82 @@ def download(url, desc):
         return None
 
 
-def extract_channels_from_file(content, target_groups):
+def extract_channels_from_m3u_group(content, target_group):
     """
-    从文件内容中提取指定分组列表中的所有频道。
-    返回一个包含所有找到的频道的列表。
+    从标准 M3U 中提取指定 group-title 的频道
+    返回 [(name, url), ...]
     """
     lines = content.splitlines()
-    all_channels = []
-    in_section = False
-    current_group_marker = None
+    channels = []
+    current_group = None
+    current_name = None
 
-    log(f"开始从文件中提取分组: {target_groups}")
+    log(f"开始从 M3U 中提取分组: {target_group}")
 
     for i, line in enumerate(lines):
         line = line.strip()
         if not line:
             continue
 
-        # 检查是否是目标分组的开始标记
-        for group in target_groups:
-            marker = f"{group},#genre#"
-            if marker in line:
-                in_section = True
-                current_group_marker = group
-                log(f"✅ 在第 {i+1} 行找到目标分组: {group}")
-                break
+        if line.startswith("#EXTINF"):
+            if 'group-title="' in line:
+                try:
+                    current_group = line.split('group-title="')[1].split('"')[0]
+                except Exception:
+                    current_group = None
+            else:
+                current_group = None
 
-        if in_section:
-            # 如果遇到下一个分组的标记，则停止当前分组的提取
-            if ",#genre#" in line and current_group_marker not in line:
-                log(f"到达下一个分组 '{line.split(',')[0]}'，停止提取 '{current_group_marker}'")
-                in_section = False
-                current_group_marker = None
-                continue
+            if "," in line:
+                current_name = line.split(",", 1)[1].strip()
+            else:
+                current_name = None
 
-            if "," in line and "://" in line:
-                name, url = line.split(",", 1)
-                all_channels.append((name.strip(), url.strip()))
+        elif line.startswith("http"):
+            if current_group == target_group and current_name:
+                channels.append((current_name, line))
+    
+    log(f"总共从分组 '{target_group}' 提取到 {len(channels)} 个频道")
+    return channels
 
-    log(f"总共从文件中提取到 {len(all_channels)} 个频道")
-    return all_channels
+
+def extract_channels_from_m3u_all(content):
+    """
+    从标准 M3U 提取全部频道
+    返回 [(name, url), ...]
+    """
+    lines = content.splitlines()
+    channels = []
+    current_name = None
+
+    log("开始从 TW M3U 提取全部频道")
+
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+
+        if line.startswith("#EXTINF"):
+            if "," in line:
+                current_name = line.split(",", 1)[1].strip()
+            else:
+                current_name = None
+
+        elif line.startswith("http"):
+            if current_name:
+                channels.append((current_name, line))
+
+    log(f"总共从 TW M3U 提取到 {len(channels)} 个频道")
+    return channels
 
 
 def clean_channel_name(name):
     """去除频道名称末尾的分辨率标记如 'HD 1080p', '1080p' 等"""
     original = name
-    # 去除末尾常见的分辨率标记
     name = re.sub(r'\s*[Hh][Dd]\s*1080[pP]?\s*$', '', name)
     name = re.sub(r'\s*1080[pP]\s*$', '', name)
     name = re.sub(r'\s*[Hh][Dd]\s*$', '', name)
     name = re.sub(r'\s*720[pP]\s*$', '', name)
-    # 去除可能留下的空格
     name = name.strip()
     if name != original:
         log(f"清洗名称: '{original}' -> '{name}'")
@@ -426,25 +455,19 @@ def sort_by_custom_order(channels, order_list):
     根据指定的顺序列表对频道进行排序
     不在列表中的频道按名称字母顺序排序，但放在列表内频道的后面
     """
-    # 创建顺序映射
     order_map = {name: i for i, name in enumerate(order_list)}
     
     def key_func(item):
         name, _ = item
-        # 获取基础名称（去除可能的分辨率后缀）
         base_name = re.sub(r'\s*(?:HD|1080p|720p|4K).*$', '', name).strip()
         
-        # 尝试匹配完整名称
         if name in order_map:
             return (0, order_map[name])
-        # 尝试匹配基础名称
         elif base_name in order_map:
             return (0, order_map[base_name])
-        # 尝试部分匹配
         for idx, order_name in enumerate(order_list):
             if order_name in name:
                 return (0, idx)
-        # 不在列表中，按字母顺序排序但放在后面
         return (1, name)
     
     return sorted(channels, key=key_func)
@@ -459,53 +482,43 @@ def main():
     if not bb:
         return
 
-    # 下载包含多个分组的源文件
-    gat_content = download(GAT_URL, "港台大陆源文件 (包含港台频道和新聞频道)") or ""
-    
-    # 从同一个文件中提取所有目标分组的频道
-    all_channels = []
-    if gat_content:
-        all_channels = extract_channels_from_file(gat_content, SOURCE_GROUPS)
-    
-    log(f"总共提取到 {len(all_channels)} 个频道")
-    
-    # 清洗名称：去除分辨率标记
-    cleaned_channels = [(clean_channel_name(name), url) for name, url in all_channels]
-    log(f"清洗后频道数: {len(cleaned_channels)}")
-    
-    # 过滤频道（关键词过滤）
-    keyword_filtered = [(name, url) for name, url in cleaned_channels if not should_filter_by_keyword(name)]
-    log(f"关键词过滤后剩余频道数: {len(keyword_filtered)}")
-    
-    # 过滤频道（URL过滤）
-    url_filtered = [(name, url) for name, url in keyword_filtered if not should_filter_by_url(url)]
-    log(f"URL过滤后剩余频道数: {len(url_filtered)}")
-    
-    # 标准化名称（用于去重）
-    normalized_channels = [(normalize_channel_name(name), url) for name, url in url_filtered]
-    
-    # 去重处理
-    deduped_channels = deduplicate_channels(normalized_channels)
-    
-    # 分离 HK 频道，其余全部归入 TW
-    hk_channels = []
-    tw_channels = []
-    
-    for name, url in deduped_channels:
-        if is_hk_channel(name):
-            hk_channels.append((name, url))
-        else:
-            # 所有非 HK 频道（包括无法识别的）都归入 TW
-            tw_channels.append((name, url))
-    
+    # HK：从 SOURCE_URL 提取指定分组
+    hk_content = download(SOURCE_URL, "HK源文件") or ""
+    hk_raw_channels = extract_channels_from_m3u_group(hk_content, HK_SOURCE_GROUP) if hk_content else []
+
+    # TW：从 4TV.m3u 提取全部频道
+    tw_content = download(TW_URL, "TW 4TV.m3u") or ""
+    tw_raw_channels = extract_channels_from_m3u_all(tw_content) if tw_content else []
+
+    log(f"HK 原始频道数: {len(hk_raw_channels)}")
+    log(f"TW 原始频道数: {len(tw_raw_channels)}")
+
+    # HK 处理
+    hk_cleaned = [(clean_channel_name(name), url) for name, url in hk_raw_channels]
+    hk_keyword_filtered = [(name, url) for name, url in hk_cleaned if not should_filter_by_keyword(name)]
+    hk_url_filtered = [(name, url) for name, url in hk_keyword_filtered if not should_filter_by_url(url)]
+    hk_normalized = [(normalize_channel_name(name), url) for name, url in hk_url_filtered]
+    hk_deduped = deduplicate_channels(hk_normalized)
+
+    # TW 处理
+    tw_cleaned = [(clean_channel_name(name), url) for name, url in tw_raw_channels]
+    tw_keyword_filtered = [(name, url) for name, url in tw_cleaned if not should_filter_by_keyword(name)]
+    tw_url_filtered = [(name, url) for name, url in tw_keyword_filtered if not should_filter_by_url(url)]
+    tw_normalized = [(normalize_channel_name(name), url) for name, url in tw_url_filtered]
+    tw_deduped = deduplicate_channels(tw_normalized)
+
+    # 为保持原逻辑风格，HK 只保留识别为 HK 的；TW 放全部 TW 源
+    hk_channels = [(name, url) for name, url in hk_deduped if is_hk_channel(name) or not is_tw_channel(name)]
+    tw_channels = tw_deduped
+
     log(f"HK频道数: {len(hk_channels)}")
     log(f"TW频道数: {len(tw_channels)}")
-    
+
     # 分别排序
     sorted_hk = sort_by_custom_order(hk_channels, HK_ORDER)
     sorted_tw = sort_by_custom_order(tw_channels, TW_ORDER)
-    
-    log(f"排序完成")
+
+    log("排序完成")
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -533,7 +546,7 @@ def main():
             output += f'#EXTINF:-1 group-title="{HK_GROUP}",{name}\n'
             output += f"{url}\n"
 
-    # 写入 TW 分组（包含所有非 HK 频道）
+    # 写入 TW 分组
     if sorted_tw:
         output += f"\n# {TW_GROUP}频道 ({len(sorted_tw)})\n"
         for name, url in sorted_tw:
@@ -542,18 +555,25 @@ def main():
 
     total = bb_count + len(sorted_hk) + len(sorted_tw)
 
-    keyword_filtered_count = len(cleaned_channels) - len(keyword_filtered) if cleaned_channels else 0
-    url_filtered_count = len(keyword_filtered) - len(url_filtered)
-    deduped_count = len(url_filtered) - len(deduped_channels)
+    hk_keyword_filtered_count = len(hk_cleaned) - len(hk_keyword_filtered) if hk_cleaned else 0
+    hk_url_filtered_count = len(hk_keyword_filtered) - len(hk_url_filtered) if hk_keyword_filtered else 0
+    hk_deduped_count = len(hk_url_filtered) - len(hk_deduped) if hk_url_filtered else 0
+
+    tw_keyword_filtered_count = len(tw_cleaned) - len(tw_keyword_filtered) if tw_cleaned else 0
+    tw_url_filtered_count = len(tw_keyword_filtered) - len(tw_url_filtered) if tw_keyword_filtered else 0
+    tw_deduped_count = len(tw_url_filtered) - len(tw_deduped) if tw_url_filtered else 0
 
     output += f"""
 # 统计信息
 # BB 频道数: {bb_count}
 # {HK_GROUP}频道数: {len(sorted_hk)}
 # {TW_GROUP}频道数: {len(sorted_tw)}
-# 关键词过滤数: {keyword_filtered_count}
-# URL过滤数: {url_filtered_count}
-# 去重频道数: {deduped_count}
+# HK关键词过滤数: {hk_keyword_filtered_count}
+# HK URL过滤数: {hk_url_filtered_count}
+# HK去重频道数: {hk_deduped_count}
+# TW关键词过滤数: {tw_keyword_filtered_count}
+# TW URL过滤数: {tw_url_filtered_count}
+# TW去重频道数: {tw_deduped_count}
 # 总频道数: {total}
 # 更新时间: {timestamp}
 """
@@ -563,12 +583,18 @@ def main():
             f.write(output)
         log("🎉 EE.m3u 生成成功")
         log(f"📺 BB({bb_count}) + HK({len(sorted_hk)}) + TW({len(sorted_tw)}) = {total}")
-        if keyword_filtered_count > 0:
-            log(f"🗑️ 关键词过滤了 {keyword_filtered_count} 个频道")
-        if url_filtered_count > 0:
-            log(f"🔗 URL过滤了 {url_filtered_count} 个频道")
-        if deduped_count > 0:
-            log(f"🔄 去重了 {deduped_count} 个重复频道")
+        if hk_keyword_filtered_count > 0:
+            log(f"🗑️ HK 关键词过滤了 {hk_keyword_filtered_count} 个频道")
+        if hk_url_filtered_count > 0:
+            log(f"🔗 HK URL过滤了 {hk_url_filtered_count} 个频道")
+        if hk_deduped_count > 0:
+            log(f"🔄 HK 去重了 {hk_deduped_count} 个重复频道")
+        if tw_keyword_filtered_count > 0:
+            log(f"🗑️ TW 关键词过滤了 {tw_keyword_filtered_count} 个频道")
+        if tw_url_filtered_count > 0:
+            log(f"🔗 TW URL过滤了 {tw_url_filtered_count} 个频道")
+        if tw_deduped_count > 0:
+            log(f"🔄 TW 去重了 {tw_deduped_count} 个重复频道")
     except Exception as e:
         log(f"❌ 保存失败: {e}")
 
