@@ -1,4 +1,4 @@
-#EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
+#EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz,https://epg.pw/xmltv/epg_HK.xml.gz,https://epg.pw/xmltv/epg_TW.xml.gz"
 
 # DD.m3u
 # 生成时间: 2026-03-23 10:01:29
