@@ -68,7 +68,7 @@ FILTER_KEYWORDS = [
     "寰宇新聞台720p",
     "年代新聞",
     "東森新聞台",
-    
+
     # 新增过滤项：三立台全部
     "三立台湾台",
     "三立戏剧台",
@@ -76,7 +76,7 @@ FILTER_KEYWORDS = [
     "三立综合台",
     "三立新闻台",
     "三立iNEWS",
-    
+
     # 新增过滤项：澳门/澳视频道全部
     "澳门",
     "澳视",
@@ -90,7 +90,7 @@ FILTER_KEYWORDS = [
     "澳视体育",
     "澳视新闻",
     "澳视财经",
-    
+
     # 新增过滤项：民視影劇、民視旅遊
     "民視影劇",
     "民视综艺",
@@ -114,6 +114,19 @@ NAME_NORMALIZATION = {
     "now新闻台": "Now新闻",
     "NOW 新闻台": "Now新闻",
     "Now 新闻台": "Now新闻",
+
+    "鳳凰衛視中文": "鳳凰衛視中文",
+    "凤凰中文": "鳳凰衛視中文",
+    "鳳凰中文": "鳳凰衛視中文",
+
+    "鳳凰衛視資訊": "鳳凰衛視資訊",
+    "凤凰资讯": "鳳凰衛視資訊",
+    "鳳凰資訊": "鳳凰衛視資訊",
+
+    "鳳凰衛視香港": "鳳凰衛視香港",
+    "凤凰香港台": "鳳凰衛視香港",
+    "鳳凰香港台": "鳳凰衛視香港",
+
     "翡翠台4K": "翡翠台4K",
     "翡翠台": "翡翠台",
     "明珠台": "明珠台",
@@ -167,9 +180,12 @@ NAME_NORMALIZATION = {
 
 # 需要优先保留的名称模式（不区分大小写）
 PREFERRED_NAMES = [
+    "鳳凰衛視中文",
+    "鳳凰衛視資訊",
+    "鳳凰衛視香港",
     "Now新闻",
     "Now体育",
-    "Now财经", 
+    "Now财经",
     "Now直播",
     "翡翠台",
     "翡翠台4K",
@@ -178,9 +194,9 @@ PREFERRED_NAMES = [
 
 # ================== HK频道指定顺序 ==================
 HK_ORDER = [
-    "凤凰中文",
-    "凤凰资讯",
-    "凤凰香港台",
+    "鳳凰衛視中文",
+    "鳳凰衛視資訊",
+    "鳳凰衛視香港",
     "Now新闻",
     "Now体育",
     "Now财经",
@@ -294,7 +310,7 @@ def extract_channels_from_m3u_group(content, target_group):
         elif line.startswith("http"):
             if current_group == target_group and current_name:
                 channels.append((current_name, line))
-    
+
     log(f"总共从分组 '{target_group}' 提取到 {len(channels)} 个频道")
     return channels
 
@@ -364,12 +380,12 @@ def should_filter_by_url(url):
 def normalize_channel_name(name):
     """标准化频道名称（用于去重）"""
     name_stripped = name.strip()
-    
+
     for variant, standard in NAME_NORMALIZATION.items():
         if name_stripped == variant or name_stripped.lower() == variant.lower():
             log(f"标准化名称: '{name}' -> '{standard}'")
             return standard
-    
+
     return name_stripped
 
 
@@ -392,7 +408,7 @@ def deduplicate_channels(channels):
         if url not in url_groups:
             url_groups[url] = []
         url_groups[url].append(name)
-    
+
     deduped = []
     for url, names in url_groups.items():
         if len(names) == 1:
@@ -401,21 +417,21 @@ def deduplicate_channels(channels):
             log(f"发现重复URL: {url}")
             for name in names:
                 log(f"  - 名称变体: {name}")
-            
+
             selected = None
             for name in names:
                 if is_preferred_name(name):
                     selected = name
                     log(f"  ✅ 选择优先名称: {name}")
                     break
-            
+
             if not selected:
                 sorted_names = sorted(names, key=len)
                 selected = sorted_names[0]
                 log(f"  ⚠️ 无优先名称，选择最短的: {selected}")
-            
+
             deduped.append((selected, url))
-    
+
     log(f"去重前频道数: {len(channels)}，去重后: {len(deduped)}")
     return deduped
 
@@ -425,7 +441,7 @@ def deduplicate_channels(channels):
 def is_hk_channel(name):
     """判断是否为香港频道"""
     hk_identifiers = [
-        "凤凰", "Now", "HOY", "翡翠", "明珠", "TVB", "无线", "Viu", "RHK",
+        "鳳凰", "凤凰", "Now", "HOY", "翡翠", "明珠", "TVB", "无线", "Viu", "RHK",
         "CH5", "CH8", "CHU", "CCTV13", "八度空间", "天映"
     ]
     name_lower = name.lower()
@@ -438,7 +454,7 @@ def is_hk_channel(name):
 def is_tw_channel(name):
     """判断是否为台湾频道"""
     tw_identifiers = [
-        "镜新聞", "民视", "民視", "華視", "CTS", "龙华", "中視", "公視", 
+        "镜新聞", "民视", "民視", "華視", "CTS", "龙华", "中視", "公視",
         "台視", "緯來", "环球", "TVBS", "八大", "华视", "非凡"
     ]
     name_lower = name.lower()
@@ -456,11 +472,11 @@ def sort_by_custom_order(channels, order_list):
     不在列表中的频道按名称字母顺序排序，但放在列表内频道的后面
     """
     order_map = {name: i for i, name in enumerate(order_list)}
-    
+
     def key_func(item):
         name, _ = item
         base_name = re.sub(r'\s*(?:HD|1080p|720p|4K).*$', '', name).strip()
-        
+
         if name in order_map:
             return (0, order_map[name])
         elif base_name in order_map:
@@ -469,7 +485,7 @@ def sort_by_custom_order(channels, order_list):
             if order_name in name:
                 return (0, idx)
         return (1, name)
-    
+
     return sorted(channels, key=key_func)
 
 
