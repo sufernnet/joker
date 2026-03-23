@@ -11,7 +11,7 @@ Gather IPTV Generator
 - 去重
 - 合并 BB.m3u
 - 输出 Gather.m3u
-- 保留 tvg-id / tvg-name / tvg-logo 以便节目单匹配
+- 保留 tvg-id / tvg-name / tvg-logo
 """
 
 import requests
@@ -24,7 +24,6 @@ SOURCE_URL = "https://yang.sufern001.workers.dev/"
 TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
 OUTPUT_FILE = "Gather.m3u"
 BB_FILE = "BB.m3u"
-
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
@@ -178,8 +177,7 @@ def main():
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # 这里建议用 x-tvg-url，兼容性通常更好
-    output = f'#EXTM3U x-tvg-url="{EPG_URL}"\n\n'
+    output = '#EXTM3U\n\n'
     output += f"# Gather.m3u\n# 生成时间: {timestamp}\n\n"
 
     # 合并 BB
