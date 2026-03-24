@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 # DD.m3u
-# 生成时间: 2026-03-23 22:41:08
+# 生成时间: 2026-03-24 09:54:33
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -358,12 +358,28 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 
 # HK频道
+#EXTINF:-1 group-title="HK",鳳凰衛視·中文
+https://cdn6.163189.xyz/163189/fhzw
+#EXTINF:-1 group-title="HK",鳳凰衛視·資訊
+https://cdn6.163189.xyz/163189/fhzx
+#EXTINF:-1 group-title="HK",鳳凰衛視·香港
+https://cdn6.163189.xyz/163189/fhhk
 #EXTINF:-1 group-title="HK",翡翠台 4K
 https://o11.163189.xyz/stream/tvb/fct4k/
 #EXTINF:-1 group-title="HK",翡翠台
 https://o11.163189.xyz/stream/tvb/fct/
+#EXTINF:-1 group-title="HK",Now新聞台
+https://cdn.163189.xyz/163189/now
 #EXTINF:-1 group-title="HK",明珠台
 https://o11.163189.xyz/stream/tvb/mzt/
+#EXTINF:-1 group-title="HK",天映频道
+https://o11.163189.xyz/stream/live/typd/
+#EXTINF:-1 group-title="HK",天映經典
+https://o11.163189.xyz/stream/live/ccm/
+#EXTINF:-1 group-title="HK",TVB Plus
+https://o11.163189.xyz/stream/tvb/tvbp/
+#EXTINF:-1 group-title="HK",TVB 星河
+https://o11.163189.xyz/stream/live/tvbxh/
 #EXTINF:-1 group-title="HK",Astro AEC
 https://o11.163189.xyz/stream/live/aec/
 #EXTINF:-1 group-title="HK",Astro AOD
@@ -378,12 +394,6 @@ http://cdn6.163189.xyz/163189/ch5
 http://cdn6.163189.xyz/163189/ch8
 #EXTINF:-1 group-title="HK",Channel U
 http://cdn6.163189.xyz/163189/ch
-#EXTINF:-1 group-title="HK",Now新聞台
-https://cdn.163189.xyz/163189/now
-#EXTINF:-1 group-title="HK",TVB Plus
-https://o11.163189.xyz/stream/tvb/tvbp/
-#EXTINF:-1 group-title="HK",TVB 星河
-https://o11.163189.xyz/stream/live/tvbxh/
 #EXTINF:-1 group-title="HK",iQIYI
 https://o11.163189.xyz/stream/live/iqiyi/
 #EXTINF:-1 group-title="HK",亞洲武俠
@@ -392,20 +402,10 @@ https://cdn6.163189.xyz/163189/yzwx
 http://cdn6.163189.xyz/163189/8tv
 #EXTINF:-1 group-title="HK",千禧經典台
 https://o11.163189.xyz/stream/live/tvbc/
-#EXTINF:-1 group-title="HK",天映經典
-https://o11.163189.xyz/stream/live/ccm/
-#EXTINF:-1 group-title="HK",天映频道
-https://o11.163189.xyz/stream/live/typd/
 #EXTINF:-1 group-title="HK",娛樂新聞台
 https://cdn6.163189.xyz/163189/ylxw
 #EXTINF:-1 group-title="HK",無綫新聞台
 https://cdn6.163189.xyz/163189/wxxw
-#EXTINF:-1 group-title="HK",鳳凰衛視·中文
-https://cdn6.163189.xyz/163189/fhzw
-#EXTINF:-1 group-title="HK",鳳凰衛視·資訊
-https://cdn6.163189.xyz/163189/fhzx
-#EXTINF:-1 group-title="HK",鳳凰衛視·香港
-https://cdn6.163189.xyz/163189/fhhk
 
 # TW频道
 #EXTINF:-1 tvg-id="動物星球" tvg-name="動物星球" tvg-logo="https://epg.iill.top/logo/動物星球.png" http-user-agent="okhttp/1.9.89" group-title="TW",動物星球
