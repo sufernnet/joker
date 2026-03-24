@@ -1,53 +1,32 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-EE IPTV Generator（HK + TW + BB）
-"""
-
 import requests
 import re
 from datetime import datetime
 
-# ===================== 基础配置 =====================
+# ===================== 配置 =====================
 
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
 TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/4TV.m3u"
 OUTPUT_FILE = "EE.m3u"
-BB_FILE = "BB.m3u"   # ✅ 恢复
+BB_FILE = "BB.m3u"
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
-# ===================== HK 强制前三 =====================
+# ===================== HK 关键词优先级 =====================
 
-HK_TOP3 = [
-    "鳳凰衛視中文",
-    "鳳凰衛視資訊",
-    "鳳凰衛視香港",
+HK_PRIORITY = [
+    ["凤凰", "中文"],
+    ["凤凰", "资讯"],
+    ["凤凰", "香港"],
+
+    ["now"],
+    ["viu"],
+    ["tvb"],
 ]
 
-# ===================== HK 排序 =====================
-
-HK_ORDER = [
-    "Now新闻","Now体育","Now财经","Now直播",
-    "HOY76","HOY77","HOY78",
-    "翡翠台","翡翠台4K","明珠台",
-    "TVB plus","TVB1","TVBJ1","TVB功夫","TVB千禧经典",
-    "TVB娱乐新闻台","TVB星河","无线新闻台",
-    "ViuTV","ViuTV6",
-    "RHK31","RHK32",
-    "CH5综合","CH8综合","CHU综合",
-    "CCTV13新闻","八度空间","天映经典",
-]
-
-# ===================== 过滤 =====================
-
-REMOVE_YT_IDS = [
-    "fN9uYWCjQaw","7j92Myu2wzg","f6Kq93wnaZ8",
-    "BOy2xDU1LC8","vr3XyVCR4T0","o_-hSMgpAzs",
-]
-
-# ===================== 工具函数 =====================
+# ===================== 工具 =====================
 
 def download(url):
     r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
@@ -55,8 +34,17 @@ def download(url):
     return r.text
 
 
-def is_bad_youtube(url):
-    return any(i in url for i in REMOVE_YT_IDS)
+def normalize(text):
+    return text.lower().replace("鳳", "凤").replace("臺", "台")
+
+
+def contains_keywords(name, keys):
+    name = normalize(name)
+    return all(k in name for k in keys)
+
+
+def clean_name(name):
+    return re.sub(r'\s*(HD|1080p|720p|4K).*$', '', name, flags=re.I).strip()
 
 
 def deduplicate(channels):
@@ -69,6 +57,7 @@ def deduplicate(channels):
 
 
 def normalize_group(extinf, group):
+    extinf = extinf.strip()
     if 'group-title="' in extinf:
         return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
     return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"', 1)
@@ -97,46 +86,44 @@ def parse_m3u(content):
     return res
 
 
+def append_channel(out, extinf, url, group):
+    return out + normalize_group(extinf, group) + "\n" + url.strip() + "\n"
+
+
 # ===================== HK 排序 =====================
 
 def sort_hk(channels):
 
-    order_map = {n: i for i, n in enumerate(HK_ORDER)}
-
-    def clean(n):
-        return re.sub(r'\s*(HD|1080p|720p|4K).*$', '', n).strip()
-
-    def match(a, b):
-        return a in b or b in a
-
     def key(x):
-        name = x[0]
-        base = clean(name)
+        name = clean_name(x[0])
 
-        # 🔥 强制前三
-        for i, t in enumerate(HK_TOP3):
-            if match(t, name):
+        for i, keys in enumerate(HK_PRIORITY):
+            if contains_keywords(name, keys):
                 return (0, i)
 
-        # 正常排序
-        if name in order_map:
-            return (1, order_map[name])
-        if base in order_map:
-            return (1, order_map[base])
-
-        for i, o in enumerate(HK_ORDER):
-            if o in name:
-                return (1, i)
-
-        return (2, name)
+        return (1, name)
 
     return sorted(channels, key=key)
+
+
+# ===================== TW 分类 =====================
+
+def classify_tw(name):
+    name = normalize(name)
+
+    if any(k in name for k in ["新闻", "news"]):
+        return "TW-新闻"
+    if any(k in name for k in ["体育", "sport"]):
+        return "TW-体育"
+    if any(k in name for k in ["电影", "影", "movie"]):
+        return "TW-电影"
+    return "TW-其他"
 
 
 # ===================== 主程序 =====================
 
 def main():
-    print("下载 HK 源...")
+    print("下载 HK...")
     content = download(SOURCE_URL)
 
     hk = []
@@ -153,10 +140,9 @@ def main():
             group = line.split('group-title="')[1].split('"')[0] if 'group-title="' in line else None
 
         elif line.startswith("http") and group == HK_SOURCE_GROUP:
-            if name and extinf and not is_bad_youtube(line):
-                hk.append((name, extinf, line))
+            hk.append((name, extinf, line))
 
-    print("下载 TW (4TV)...")
+    print("下载 TW...")
     tw = parse_m3u(download(TW_M3U_URL))
 
     hk = sort_hk(deduplicate(hk))
@@ -164,33 +150,43 @@ def main():
 
     print("HK:", len(hk), "TW:", len(tw))
 
-    out = '#EXTM3U\n\n'
+    out = "#EXTM3U\n\n"
     out += f"# Generated: {datetime.now()}\n\n"
 
-    # ✅ BB 拼接（恢复）
+    # ================= BB =================
     try:
         with open(BB_FILE, "r", encoding="utf-8") as f:
             for l in f:
                 if not l.startswith("#EXTM3U"):
-                    out += l
+                    out += l.strip() + "\n"
         out += "\n"
     except:
-        print("⚠️ 未找到 BB.m3u，已跳过")
+        print("⚠️ BB.m3u 不存在")
 
-    # HK
+    # ================= HK =================
     out += "# HK\n"
     for n, e, u in hk:
-        out += normalize_group(e, "HK") + "\n" + u + "\n"
+        out = append_channel(out, e, u, "HK")
 
-    # TW
-    out += "\n# TW\n"
+    # ================= TW（分类） =================
+    tw_groups = {}
+
     for n, e, u in tw:
-        out += normalize_group(e, "TW") + "\n" + u + "\n"
+        g = classify_tw(n)
+        tw_groups.setdefault(g, []).append((n, e, u))
+
+    for g, items in tw_groups.items():
+        out += f"\n# {g}\n"
+        for n, e, u in items:
+            out = append_channel(out, e, u, g)
+
+    # 清理多余空行
+    out = re.sub(r'\n{3,}', '\n\n', out)
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(out)
 
-    print("✅ 已生成:", OUTPUT_FILE)
+    print("✅ 完成:", OUTPUT_FILE)
 
 
 if __name__ == "__main__":
