@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Gather IPTV Generator
+EE IPTV Generator（HK + TW + BB）
 """
 
 import requests
@@ -12,9 +12,9 @@ from datetime import datetime
 # ===================== 基础配置 =====================
 
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
-TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
-OUTPUT_FILE = "EE.m3u"   # ✅ 已改这里
-BB_FILE = "BB.m3u"
+TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/4TV.m3u"
+OUTPUT_FILE = "EE.m3u"
+BB_FILE = "BB.m3u"   # ✅ 恢复
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
@@ -136,7 +136,7 @@ def sort_hk(channels):
 # ===================== 主程序 =====================
 
 def main():
-    print("下载源...")
+    print("下载 HK 源...")
     content = download(SOURCE_URL)
 
     hk = []
@@ -156,7 +156,7 @@ def main():
             if name and extinf and not is_bad_youtube(line):
                 hk.append((name, extinf, line))
 
-    print("下载 TW...")
+    print("下载 TW (4TV)...")
     tw = parse_m3u(download(TW_M3U_URL))
 
     hk = sort_hk(deduplicate(hk))
@@ -167,7 +167,7 @@ def main():
     out = '#EXTM3U\n\n'
     out += f"# Generated: {datetime.now()}\n\n"
 
-    # BB
+    # ✅ BB 拼接（恢复）
     try:
         with open(BB_FILE, "r", encoding="utf-8") as f:
             for l in f:
@@ -175,10 +175,10 @@ def main():
                     out += l
         out += "\n"
     except:
-        print("跳过 BB")
+        print("⚠️ 未找到 BB.m3u，已跳过")
 
     # HK
-    out += "\n# HK\n"
+    out += "# HK\n"
     for n, e, u in hk:
         out += normalize_group(e, "HK") + "\n" + u + "\n"
 
