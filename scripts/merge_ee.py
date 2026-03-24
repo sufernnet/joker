@@ -14,30 +14,41 @@ BB_FILE = "BB.m3u"
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
-# ===================== HK 排序优先级 =====================
+# ===================== HK 排序（关键修正版） =====================
 
 HK_PRIORITY = [
+    # 凤凰（必须最前）
     ["凤凰", "中文"],
     ["凤凰", "资讯"],
     ["凤凰", "香港"],
 
-    ["now", "news"],   # Now新闻
+    ["phoenix", "chinese"],
+    ["phoenix", "info"],
+
+    # Now新闻（提前）
     ["now", "新闻"],
+    ["now", "news"],
 
-    ["翡翠"],          # 翡翠台
+    # 翡翠台
+    ["翡翠"],
 
-    ["tvb"],           # TVB其它
+    # 无线新闻（必须在 TVB 前）
+    ["无线", "新闻"],
 
-    ["无线", "新闻"],  # 无线新闻
-
+    # 明珠
     ["明珠"],
 
+    # 娱乐新闻
     ["娱乐", "新闻"],
 
+    # 天映
     ["天映"],
+
+    # TVB（兜底，必须靠后）
+    ["tvb"],
 ]
 
-# ===================== 工具函数 =====================
+# ===================== 工具 =====================
 
 def download(url):
     r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
@@ -51,6 +62,7 @@ def normalize(text):
         .replace("鳳", "凤")
         .replace("臺", "台")
         .replace("資訊", "资讯")
+        .replace("綫", "线")
     )
 
 
@@ -60,7 +72,7 @@ def contains_keywords(name, keys):
 
 
 def clean_name(name):
-    return re.sub(r'\s*(HD|1080p|720p|4K).*$', '', name, flags=re.I).strip()
+    return re.sub(r'\s*(HD|1080p|720p|4K|「.*?」).*$', '', name, flags=re.I).strip()
 
 
 def deduplicate(channels):
@@ -145,7 +157,7 @@ def main():
             if name and extinf:
                 hk.append((name, extinf, line))
 
-    print("下载 TW (4TV)...")
+    print("下载 TW...")
     tw = parse_m3u(download(TW_M3U_URL))
 
     hk = sort_hk(deduplicate(hk))
@@ -156,7 +168,7 @@ def main():
     out = "#EXTM3U\n\n"
     out += f"# Generated: {datetime.now()}\n\n"
 
-    # ================= BB =================
+    # BB
     try:
         with open(BB_FILE, "r", encoding="utf-8") as f:
             for l in f:
@@ -164,19 +176,18 @@ def main():
                     out += l.strip() + "\n"
         out += "\n"
     except:
-        print("⚠️ BB.m3u 不存在，已跳过")
+        print("⚠️ BB.m3u 不存在")
 
-    # ================= HK =================
+    # HK
     out += "# HK\n"
     for n, e, u in hk:
         out = append_channel(out, e, u, "HK")
 
-    # ================= TW =================
+    # TW（原样）
     out += "\n# TW\n"
     for n, e, u in tw:
         out = append_channel(out, e, u, "TW")
 
-    # 清理空行
     out = re.sub(r'\n{3,}', '\n\n', out)
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
