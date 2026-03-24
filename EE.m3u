@@ -1,6 +1,6 @@
 #EXTM3U
 
-# Generated: 2026-03-24 04:01:54.855782
+# Generated: 2026-03-24 04:37:12.922450
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -250,16 +250,16 @@ https://cdn6.163189.xyz/163189/fhhk
 https://o11.163189.xyz/stream/tvb/fct4k/
 #EXTINF:-1 tvg-id="翡翠台" tvg-name="翡翠台" tvg-logo="https://epg.iill.top/logo/翡翠台.png" group-title="HK", 翡翠台「多音轨字幕」
 https://o11.163189.xyz/stream/tvb/fct/
-#EXTINF:-1 tvg-id="TVB Plus" tvg-name="TVB Plus" tvg-logo="https://epg.iill.top/logo/TVBPlus.png" group-title="HK",TVB Plus「多音轨字幕」
-https://o11.163189.xyz/stream/tvb/tvbp/
-#EXTINF:-1 tvg-id="TVB XING HE" tvg-name="TVB XING HE" tvg-logo="https://epg.iill.top/logo/星河台.png" group-title="HK",TVB 星河「多音轨字幕」
-https://o11.163189.xyz/stream/live/tvbxh/
 #EXTINF:-1 tvg-id="明珠台" tvg-name="明珠台" tvg-logo="https://epg.iill.top/logo/明珠台.png" group-title="HK", 明珠台「多音轨字幕」
 https://o11.163189.xyz/stream/tvb/mzt/
 #EXTINF:-1 tvg-id="天映马来西亚" tvg-name="天映马来西亚" tvg-logo="https://epg.iill.top/logo/天映频道.png" group-title="HK",天映频道
 https://o11.163189.xyz/stream/live/typd/
 #EXTINF:-1 tvg-id="天映經典頻道" tvg-name="天映經典頻道" tvg-logo="https://epg.iill.top/logo/天映经典.png" group-title="HK",天映經典
 https://o11.163189.xyz/stream/live/ccm/
+#EXTINF:-1 tvg-id="TVB Plus" tvg-name="TVB Plus" tvg-logo="https://epg.iill.top/logo/TVBPlus.png" group-title="HK",TVB Plus「多音轨字幕」
+https://o11.163189.xyz/stream/tvb/tvbp/
+#EXTINF:-1 tvg-id="TVB XING HE" tvg-name="TVB XING HE" tvg-logo="https://epg.iill.top/logo/星河台.png" group-title="HK",TVB 星河「多音轨字幕」
+https://o11.163189.xyz/stream/live/tvbxh/
 #EXTINF:-1 tvg-id="AEC" tvg-name="AEC" tvg-logo="https://epg.iill.top/logo/AEC.png" group-title="HK",Astro AEC「多音轨字幕」
 https://o11.163189.xyz/stream/live/aec/
 #EXTINF:-1 tvg-id="AOD" tvg-name="AOD" tvg-logo="https://epg.iill.top/logo/AOD.png" group-title="HK",Astro AOD「多音轨字幕」
