@@ -1,6 +1,6 @@
 #EXTM3U
 
-# Generated: 2026-03-24 04:37:12.922450
+# Generated: 2026-03-24 04:43:16.426411
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -250,6 +250,8 @@ https://cdn6.163189.xyz/163189/fhhk
 https://o11.163189.xyz/stream/tvb/fct4k/
 #EXTINF:-1 tvg-id="翡翠台" tvg-name="翡翠台" tvg-logo="https://epg.iill.top/logo/翡翠台.png" group-title="HK", 翡翠台「多音轨字幕」
 https://o11.163189.xyz/stream/tvb/fct/
+#EXTINF:-1 tvg-id="Now新聞台" tvg-name="Now新聞台" tvg-logo="https://epg.iill.top/logo/Now新聞台.png" group-title="HK",Now新聞台
+https://cdn.163189.xyz/163189/now
 #EXTINF:-1 tvg-id="明珠台" tvg-name="明珠台" tvg-logo="https://epg.iill.top/logo/明珠台.png" group-title="HK", 明珠台「多音轨字幕」
 https://o11.163189.xyz/stream/tvb/mzt/
 #EXTINF:-1 tvg-id="天映马来西亚" tvg-name="天映马来西亚" tvg-logo="https://epg.iill.top/logo/天映频道.png" group-title="HK",天映频道
@@ -276,8 +278,6 @@ http://cdn6.163189.xyz/163189/ch8
 http://cdn6.163189.xyz/163189/ch
 #EXTINF:-1 tvg-id="iQIYI" tvg-name="iQIYI" tvg-logo="https://epg.iill.top/logo/爱奇艺.png" group-title="HK",iQIYI
 https://o11.163189.xyz/stream/live/iqiyi/
-#EXTINF:-1 tvg-id="Now新聞台" tvg-name="Now新聞台" tvg-logo="https://epg.iill.top/logo/Now新聞台.png" group-title="HK",Now新聞台
-https://cdn.163189.xyz/163189/now
 #EXTINF:-1 tvg-id="功夫台" tvg-name="功夫台" tvg-logo="https://epg.iill.top/logo/亞洲武俠.png" group-title="HK",亞洲武俠
 https://cdn6.163189.xyz/163189/yzwx
 #EXTINF:-1 tvg-id="8tv" tvg-name="8TV" tvg-logo="https://epg.iill.top/logo/八度空間.png" group-title="HK",八度空間
