@@ -14,19 +14,27 @@ BB_FILE = "BB.m3u"
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
-# ===================== HK 优先级 =====================
+# ===================== HK 排序优先级 =====================
 
 HK_PRIORITY = [
     ["凤凰", "中文"],
     ["凤凰", "资讯"],
     ["凤凰", "香港"],
 
-    ["phoenix", "chinese"],
-    ["phoenix", "info"],
+    ["now", "news"],   # Now新闻
+    ["now", "新闻"],
 
-    ["now"],
-    ["viu"],
-    ["tvb"],
+    ["翡翠"],          # 翡翠台
+
+    ["tvb"],           # TVB其它
+
+    ["无线", "新闻"],  # 无线新闻
+
+    ["明珠"],
+
+    ["娱乐", "新闻"],
+
+    ["天映"],
 ]
 
 # ===================== 工具函数 =====================
@@ -163,12 +171,12 @@ def main():
     for n, e, u in hk:
         out = append_channel(out, e, u, "HK")
 
-    # ================= TW（不分组、不排序） =================
+    # ================= TW =================
     out += "\n# TW\n"
     for n, e, u in tw:
         out = append_channel(out, e, u, "TW")
 
-    # 清理多余空行
+    # 清理空行
     out = re.sub(r'\n{3,}', '\n\n', out)
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
