@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 # DD.m3u
-# 生成时间: 2026-03-24 22:40:36
+# 生成时间: 2026-03-25 09:52:46
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -538,7 +538,7 @@ https://tv.iill.top/ofiii/litv-xinchuang22
 https://tv.iill.top/4gtv/4gtv-4gtv041
 #EXTINF:-1 tvg-id="華視新聞" tvg-name="華視新聞" tvg-logo="https://epg.iill.top/logo/華視新聞.png" http-user-agent="okhttp/1.9.89" group-title="TW",華視新聞
 https://tv.iill.top/4gtv/4gtv-4gtv052
-#EXTINF:-1 tvg-id="CATCHPLAY電影台" tvg-name="CATCHPLAY電影台" tvg-logo="https://epg.iill.top/logo/CATCHPLAY電影台" http-user-agent="okhttp/1.9.89" group-title="TW",Catchplay
+#EXTINF:-1 tvg-id="CATCHPLAY電影台" tvg-name="CATCHPLAY電影台" tvg-logo="https://epg.iill.top/logo/CATCHPLAY電影台.png" http-user-agent="okhttp/1.9.89" group-title="TW",CatchPlay 電影
 https://tv.iill.top/api/Catchplay/index.m3u8
 #EXTINF:-1 tvg-id="CINEMAX" tvg-name="CINEMAX" tvg-logo="https://epg.iill.top/logo/CINEMAX.png" http-user-agent="okhttp/1.9.89" group-title="TW",CINEMAX
 https://tv.iill.top/api/Cinemax/index.m3u8
