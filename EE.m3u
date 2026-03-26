@@ -1,6 +1,6 @@
 #EXTM3U
 
-# Generated: 2026-03-26 09:56:06.724937
+# Generated: 2026-03-26 22:16:10.020708
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
