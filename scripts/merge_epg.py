@@ -10,7 +10,9 @@ import time
 import copy
 import re
 
+# =========================
 # EPG源列表
+# =========================
 EPG_URLS = [
     "https://epg.pw/xmltv/epg.xml",
     "http://epg.51zmt.top:8000/e1.xml.gz",
@@ -25,7 +27,10 @@ EPG_URLS = [
     "https://7pal.short.gy/alex-epg",
 ]
 
-# 手工映射表：重点频道优先统一
+# =========================
+# 手工映射表：重点频道统一ID
+# 可持续补充
+# =========================
 MANUAL_ID_MAP = {
     # CCTV
     "cctv1": "cctv1",
@@ -129,6 +134,7 @@ MANUAL_ID_MAP = {
     "明珠台": "tvbpearl",
     "tvbpearl": "tvbpearl",
     "无线新闻台": "tvbnewschannel",
+    "无线新闻": "tvbnewschannel",
     "tvbnewschannel": "tvbnewschannel",
 
     # now
@@ -149,9 +155,12 @@ MANUAL_ID_MAP = {
     "公视": "pts",
 }
 
+# 输出映射日志
+OUTPUT_MAP_FILE = "channel_map.txt"
+
 
 def download_epg(url, retry=3):
-    """下载EPG，自动识别是否gzip压缩，返回XML字符串"""
+    """下载EPG，自动识别gzip"""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
     }
@@ -210,20 +219,41 @@ def normalize_text(s):
     if not s:
         return ""
     s = s.strip().lower()
-    s = s.replace("臺", "台").replace("鳳", "凤").replace("資訊", "资讯")
-    s = s.replace("＋", "+").replace("plus", "plus")
+
+    # 常见繁简
+    s = (
+        s.replace("臺", "台")
+         .replace("鳳", "凤")
+         .replace("資訊", "资讯")
+         .replace("綫", "线")
+         .replace("＋", "+")
+    )
+
+    # 去掉常见修饰
     s = s.replace(" ", "").replace("_", "").replace("-", "")
-    s = s.replace("频道", "").replace("頻道", "").replace("高清", "").replace("超清", "")
-    s = s.replace("标清", "").replace("hd", "").replace("uhd", "").replace("4k", "")
-    s = s.replace("频道台", "台")
+    s = s.replace("频道", "").replace("頻道", "")
+    s = s.replace("高清", "").replace("超清", "").replace("标清", "")
+    s = s.replace("hd", "").replace("uhd", "").replace("4k", "")
+    s = s.replace("电视台", "台")
+
     return s
+
+
+def get_display_names(channel_elem):
+    names = []
+    for dn in channel_elem.findall("display-name"):
+        if dn.text and dn.text.strip():
+            names.append(dn.text.strip())
+    return names
 
 
 def guess_channel_id(raw_id, display_names):
     """
     统一频道ID：
-    1. 优先手工映射
-    2. 再按规则自动归一
+    1. 手工映射
+    2. CCTV自动归一
+    3. 常见港台频道归一
+    4. 最后兜底
     """
     candidates = []
 
@@ -234,13 +264,13 @@ def guess_channel_id(raw_id, display_names):
         if n:
             candidates.append(n)
 
-    # 先走手工映射
+    # 1) 手工映射优先
     for item in candidates:
         key = normalize_text(item)
         if key in MANUAL_ID_MAP:
             return MANUAL_ID_MAP[key]
 
-    # CCTV 自动识别
+    # 2) CCTV自动归一
     for item in candidates:
         key = normalize_text(item)
 
@@ -258,7 +288,7 @@ def guess_channel_id(raw_id, display_names):
                 return f"cctv{num}plus"
             return f"cctv{num}"
 
-    # 常见关键词自动归一
+    # 3) 常见频道自动归一
     for item in candidates:
         key = normalize_text(item)
 
@@ -281,27 +311,16 @@ def guess_channel_id(raw_id, display_names):
         if "now财经" in key:
             return "nowbusiness"
 
-    # 最后兜底：用原始 id，否则用第一个 display-name
+    # 4) 兜底
     base = raw_id if raw_id else (display_names[0] if display_names else "")
     base = normalize_text(base)
-
-    # 保留字母数字加号
     base = re.sub(r"[^a-z0-9+一-龥]", "", base)
-
     return base if base else "unknown"
 
 
 def has_icon(channel_elem):
     icon = channel_elem.find("icon")
     return icon is not None and bool(icon.get("src"))
-
-
-def get_display_names(channel_elem):
-    names = []
-    for dn in channel_elem.findall("display-name"):
-        if dn.text and dn.text.strip():
-            names.append(dn.text.strip())
-    return names
 
 
 def merge_channel(existing, new_one):
@@ -332,7 +351,7 @@ def build_normalized_channel(ch, new_id):
     """复制并重建 channel，替换为统一后的 id"""
     new_ch = ET.Element("channel", {"id": new_id})
 
-    # display-name 保留
+    # 保留 display-name
     names = get_display_names(ch)
     if names:
         seen = set()
@@ -345,7 +364,7 @@ def build_normalized_channel(ch, new_id):
         node = ET.SubElement(new_ch, "display-name")
         node.text = new_id
 
-    # icon 保留
+    # 保留 icon
     icon = ch.find("icon")
     if icon is not None and icon.get("src"):
         ET.SubElement(new_ch, "icon", src=icon.get("src"))
@@ -353,17 +372,32 @@ def build_normalized_channel(ch, new_id):
     return new_ch
 
 
+def indent_xml(elem, level=0):
+    """美化XML输出"""
+    i = "\n" + level * "  "
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = i + "  "
+        for child in elem:
+            indent_xml(child, level + 1)
+        if not child.tail or not child.tail.strip():
+            child.tail = i
+    if level and (not elem.tail or not elem.tail.strip()):
+        elem.tail = i
+
+
 def merge_epg_sources():
-    """合并所有EPG源，统一频道ID，保留channel/icon，输出epg.xml"""
+    """合并所有EPG源，统一频道ID，保留台标，输出 joker/epg.xml"""
     all_programmes = []
     programme_seen = set()
     channels = {}
     tv_attrib = {}
     source_count = 0
+    mapping_logs = []
 
-    print("=" * 60)
-    print("开始合并EPG源（统一频道ID版）")
-    print("=" * 60)
+    print("=" * 70)
+    print("开始合并EPG源（统一频道ID + 保留台标）")
+    print("=" * 70)
 
     for idx, url in enumerate(EPG_URLS, 1):
         print(f"\n处理源 #{idx}:")
@@ -380,7 +414,7 @@ def merge_epg_sources():
                 if tv_attrib:
                     print(f"  使用tv属性: {tv_attrib}")
 
-            # 记录：原始 channel id -> 统一后 id
+            # 原始 channel id -> 统一后 id
             id_mapping = {}
 
             # 先处理 channel
@@ -394,6 +428,10 @@ def merge_epg_sources():
 
                 if raw_id:
                     id_mapping[raw_id] = unified_id
+
+                mapping_logs.append(
+                    f"{raw_id or '[NO_ID]'} => {unified_id} | {' / '.join(display_names[:3])}"
+                )
 
                 normalized_channel = build_normalized_channel(ch, unified_id)
 
@@ -412,10 +450,8 @@ def merge_epg_sources():
             for prog in source_programmes:
                 raw_channel = prog.get("channel", "").strip()
 
-                # 按映射表替换 programme 的 channel
                 new_channel = id_mapping.get(raw_channel)
                 if not new_channel:
-                    # 某些源可能有 programme 对应不到 channel，尝试直接标准化
                     new_channel = guess_channel_id(raw_channel, [])
 
                 new_prog = copy.deepcopy(prog)
@@ -423,6 +459,7 @@ def merge_epg_sources():
 
                 start = new_prog.get("start", "").strip()
                 stop = new_prog.get("stop", "").strip()
+
                 title_elem = new_prog.find("title")
                 title = title_elem.text.strip() if title_elem is not None and title_elem.text else ""
 
@@ -444,7 +481,7 @@ def merge_epg_sources():
         except Exception as e:
             print(f"  处理出错: {e}")
 
-    print("\n" + "=" * 60)
+    print("\n" + "=" * 70)
     print(f"合并完成: 共处理 {source_count} 个源")
     print(f"统一后频道总数: {len(channels)}")
     print(f"节目总数: {len(all_programmes)}")
@@ -457,11 +494,11 @@ def merge_epg_sources():
 
     new_root = ET.Element("tv", tv_attrib)
 
-    # 先 channel
+    # 先channel
     for cid in sorted(channels.keys()):
         new_root.append(channels[cid])
 
-    # 再 programme
+    # 再programme，按 channel + start 排序
     all_programmes.sort(key=lambda x: (
         x.get("channel", ""),
         x.get("start", ""),
@@ -470,18 +507,29 @@ def merge_epg_sources():
     for prog in all_programmes:
         new_root.append(prog)
 
+    indent_xml(new_root)
     tree = ET.ElementTree(new_root)
 
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    root_dir = os.path.dirname(script_dir)
+    # 输出到仓库根目录 joker/epg.xml
+    script_dir = os.path.dirname(os.path.abspath(__file__))   # joker/scripts
+    root_dir = os.path.dirname(script_dir)                    # joker
     output_file = os.path.join(root_dir, "epg.xml")
+    map_file = os.path.join(root_dir, OUTPUT_MAP_FILE)
 
-    print(f"文件将保存到: {output_file}")
+    print(f"当前工作目录: {os.getcwd()}")
+    print(f"脚本目录: {script_dir}")
+    print(f"输出文件路径: {output_file}")
+
     tree.write(output_file, encoding="utf-8", xml_declaration=True)
+
+    with open(map_file, "w", encoding="utf-8") as f:
+        for line in sorted(set(mapping_logs)):
+            f.write(line + "\n")
 
     file_size = os.path.getsize(output_file)
     print(f"合并文件已保存: {output_file} ({file_size} 字节)")
-    print("=" * 60)
+    print(f"映射日志已保存: {map_file}")
+    print("=" * 70)
 
     return output_file
 
