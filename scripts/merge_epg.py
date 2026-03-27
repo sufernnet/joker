@@ -27,9 +27,13 @@ EPG_URLS = [
     "https://7pal.short.gy/alex-epg",
 ]
 
+# 映射日志文件名
+OUTPUT_MAP_FILE = "channel_map.txt"
+
 # =========================
 # 手工映射表：重点频道统一ID
 # 可持续补充
+# key 会先经过 normalize_text() 再匹配
 # =========================
 MANUAL_ID_MAP = {
     # CCTV
@@ -128,7 +132,7 @@ MANUAL_ID_MAP = {
     "凤凰香港": "phoenixhongkong",
     "phoenixhongkong": "phoenixhongkong",
 
-    # TVB
+    # TVB / 香港常见
     "翡翠台": "tvbjade",
     "tvbjade": "tvbjade",
     "明珠台": "tvbpearl",
@@ -155,12 +159,9 @@ MANUAL_ID_MAP = {
     "公视": "pts",
 }
 
-# 输出映射日志
-OUTPUT_MAP_FILE = "channel_map.txt"
-
 
 def download_epg(url, retry=3):
-    """下载EPG，自动识别gzip"""
+    """下载EPG，自动识别gzip / xml"""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
     }
@@ -207,7 +208,7 @@ def download_epg(url, retry=3):
             return text
 
         except Exception as e:
-            print(f"  第{i+1}次尝试失败: {e}")
+            print(f"  第{i + 1}次尝试失败: {e}")
             time.sleep(2)
 
     print(f"  × 下载失败: {url}")
@@ -215,12 +216,11 @@ def download_epg(url, retry=3):
 
 
 def normalize_text(s):
-    """基础标准化"""
+    """基础标准化，便于统一频道ID"""
     if not s:
         return ""
-    s = s.strip().lower()
 
-    # 常见繁简
+    s = s.strip().lower()
     s = (
         s.replace("臺", "台")
          .replace("鳳", "凤")
@@ -229,7 +229,6 @@ def normalize_text(s):
          .replace("＋", "+")
     )
 
-    # 去掉常见修饰
     s = s.replace(" ", "").replace("_", "").replace("-", "")
     s = s.replace("频道", "").replace("頻道", "")
     s = s.replace("高清", "").replace("超清", "").replace("标清", "")
@@ -252,7 +251,7 @@ def guess_channel_id(raw_id, display_names):
     统一频道ID：
     1. 手工映射
     2. CCTV自动归一
-    3. 常见港台频道归一
+    3. 常见频道自动归一
     4. 最后兜底
     """
     candidates = []
@@ -264,13 +263,13 @@ def guess_channel_id(raw_id, display_names):
         if n:
             candidates.append(n)
 
-    # 1) 手工映射优先
+    # 手工映射优先
     for item in candidates:
         key = normalize_text(item)
         if key in MANUAL_ID_MAP:
             return MANUAL_ID_MAP[key]
 
-    # 2) CCTV自动归一
+    # CCTV 自动归一
     for item in candidates:
         key = normalize_text(item)
 
@@ -288,7 +287,7 @@ def guess_channel_id(raw_id, display_names):
                 return f"cctv{num}plus"
             return f"cctv{num}"
 
-    # 3) 常见频道自动归一
+    # 常见港台频道自动归一
     for item in candidates:
         key = normalize_text(item)
 
@@ -311,10 +310,11 @@ def guess_channel_id(raw_id, display_names):
         if "now财经" in key:
             return "nowbusiness"
 
-    # 4) 兜底
+    # 兜底
     base = raw_id if raw_id else (display_names[0] if display_names else "")
     base = normalize_text(base)
     base = re.sub(r"[^a-z0-9+一-龥]", "", base)
+
     return base if base else "unknown"
 
 
@@ -325,14 +325,14 @@ def has_icon(channel_elem):
 
 def merge_channel(existing, new_one):
     """
-    合并channel:
+    合并channel：
     - 优先保留带 icon 的
     - display-name 去重补充
     """
     existing_has_icon = has_icon(existing)
     new_has_icon = has_icon(new_one)
 
-    if not existing_has_icon and new_has_icon:
+    if (not existing_has_icon) and new_has_icon:
         icon = new_one.find("icon")
         if icon is not None:
             existing.append(copy.deepcopy(icon))
@@ -351,7 +351,6 @@ def build_normalized_channel(ch, new_id):
     """复制并重建 channel，替换为统一后的 id"""
     new_ch = ET.Element("channel", {"id": new_id})
 
-    # 保留 display-name
     names = get_display_names(ch)
     if names:
         seen = set()
@@ -364,7 +363,6 @@ def build_normalized_channel(ch, new_id):
         node = ET.SubElement(new_ch, "display-name")
         node.text = new_id
 
-    # 保留 icon
     icon = ch.find("icon")
     if icon is not None and icon.get("src"):
         ET.SubElement(new_ch, "icon", src=icon.get("src"))
@@ -414,13 +412,11 @@ def merge_epg_sources():
                 if tv_attrib:
                     print(f"  使用tv属性: {tv_attrib}")
 
-            # 原始 channel id -> 统一后 id
             id_mapping = {}
-
-            # 先处理 channel
             source_channels = root.findall("channel")
             normalized_count = 0
 
+            # 处理 channel
             for ch in source_channels:
                 raw_id = ch.get("id", "").strip()
                 display_names = get_display_names(ch)
@@ -443,14 +439,14 @@ def merge_epg_sources():
                 if raw_id and raw_id != unified_id:
                     normalized_count += 1
 
-            # 再处理 programme
+            # 处理 programme
             source_programmes = root.findall("programme")
             added_count = 0
 
             for prog in source_programmes:
                 raw_channel = prog.get("channel", "").strip()
-
                 new_channel = id_mapping.get(raw_channel)
+
                 if not new_channel:
                     new_channel = guess_channel_id(raw_channel, [])
 
@@ -494,11 +490,11 @@ def merge_epg_sources():
 
     new_root = ET.Element("tv", tv_attrib)
 
-    # 先channel
+    # 先 channel
     for cid in sorted(channels.keys()):
         new_root.append(channels[cid])
 
-    # 再programme，按 channel + start 排序
+    # 再 programme
     all_programmes.sort(key=lambda x: (
         x.get("channel", ""),
         x.get("start", ""),
@@ -518,7 +514,9 @@ def merge_epg_sources():
 
     print(f"当前工作目录: {os.getcwd()}")
     print(f"脚本目录: {script_dir}")
+    print(f"仓库根目录: {root_dir}")
     print(f"输出文件路径: {output_file}")
+    print(f"映射文件路径: {map_file}")
 
     tree.write(output_file, encoding="utf-8", xml_declaration=True)
 
@@ -526,11 +524,15 @@ def merge_epg_sources():
         for line in sorted(set(mapping_logs)):
             f.write(line + "\n")
 
-    file_size = os.path.getsize(output_file)
-    print(f"合并文件已保存: {output_file} ({file_size} 字节)")
-    print(f"映射日志已保存: {map_file}")
-    print("=" * 70)
+    print(f"epg.xml exists? {os.path.exists(output_file)}")
+    print(f"channel_map.txt exists? {os.path.exists(map_file)}")
 
+    if os.path.exists(output_file):
+        print(f"epg.xml size: {os.path.getsize(output_file)} bytes")
+    if os.path.exists(map_file):
+        print(f"channel_map.txt size: {os.path.getsize(map_file)} bytes")
+
+    print("=" * 70)
     return output_file
 
 
