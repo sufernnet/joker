@@ -54,36 +54,35 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 #EXTINF:-1 tvg-id="CCTV17" tvg-name="CCTV17" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV17.png" group-title="央视",CCTV17
 http://39.164.138.145:8899/hls/17/index.m3u8
 
-#EXTINF:-1 tvg-name="CCTV怀旧剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/怀旧剧场.png" group-title="央视",CCTV怀旧剧场
+#EXTINF:-1 tvg-name="怀旧剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/怀旧剧场.png" group-title="央视",怀旧剧场
 http://119.91.7.169:1777/216.75.129.13.php?id=22 
 
-#EXTINF:-1 tvg-name="CCTV第一剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/第一剧场.png" group-title="央视",CCTV第一剧场
-http://171.122.42.95:8082/rtp/226.0.2.221:9680
+#EXTINF:-1 tvg-name="第一剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/第一剧场.png" group-title="央视",第一剧场
+http://119.91.7.169:1777/216.75.129.13.php?id=23
 
-#EXTINF:-1 tvg-name="CCTV风云剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云剧场.png" group-title="央视",CCTV风云剧场
+#EXTINF:-1 tvg-name="风云剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云剧场.png" group-title="央视",风云剧场
 http://119.91.7.169:1777/216.75.129.13.php?id=24
 
-#EXTINF:-1 tvg-name="CCTV风云音乐" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云音乐.png" group-title="央视",CCTV风云音乐
-http://171.122.42.95:8082/rtp/226.0.2.220:9672
+#EXTINF:-1 tvg-name="风云音乐" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云音乐.png" group-title="央视",风云音乐
+http://119.91.7.169:1777/216.75.129.13.php?id=25
 
-#EXTINF:-1 tvg-name="CCTV风云足球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云足球.png" group-title="央视",CCTV风云足球
-http://171.122.42.95:8082/rtp/226.0.2.225:9712
+#EXTINF:-1 tvg-name="CCTV风云足球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云足球.png" group-title="央视",风云足球
+http://119.91.7.169:1777/216.75.129.13.php?id=26
 
-#EXTINF:-1 tvg-name="CCTV兵器科技" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/兵器科技.png" group-title="央视",CCTV兵器科技
-http://171.122.42.95:8082/rtp/226.0.2.223:9696
+#EXTINF:-1 tvg-name="兵器科技" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/兵器科技.png" group-title="央视",兵器科技
+http://119.91.7.169:1777/216.75.129.13.php?id=27
 
-#EXTINF:-1 tvg-name="CCTV世界地理" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/世界地理.png" group-title="央视",CCTV世界地理
+#EXTINF:-1 tvg-name="世界地理" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/世界地理.png" group-title="央视",世界地理
 http://119.91.7.169:1777/216.75.129.13.php?id=28
 
-#EXTINF:-1 tvg-name="CCTV女性时尚" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/女性时尚.png" group-title="央视",CCTV女性时尚
+#EXTINF:-1 tvg-name="女性时尚" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/女性时尚.png" group-title="央视",女性时尚
 http://119.91.7.169:1777/216.75.129.13.php?id=29
 
-#EXTINF:-1 tvg-name="CCTV央视台球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/央视台球.png" group-title="央视",CCTV央视台球
+#EXTINF:-1 tvg-name="央视台球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/央视台球.png" group-title="央视",央视台球
 http://119.91.7.169:1777/216.75.129.13.php?id=30
 
-#EXTINF:-1 tvg-name="CCTV电视指南" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/电视指南.png" group-title="央视",CCTV电视指南
+#EXTINF:-1 tvg-name="电视指南" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/电视指南.png" group-title="央视",电视指南
 http://119.91.7.169:1777/216.75.129.13.php?id=31
-
 
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
 http://119.91.7.169:1777/216.75.129.13.php?id=20
