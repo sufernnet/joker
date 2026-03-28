@@ -58,7 +58,7 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 #EXTINF:-1 tvg-id="CCTV17" tvg-name="CCTV17" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV17.png" group-title="央视",CCTV17
 http://39.164.138.145:8899/hls/17/index.m3u8
 
-#EXTINF:-1 tvg-name="CCTV怀旧剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/怀旧剧场.png" group-title="央视",CCTV怀旧剧场
+#EXTINF:-1 tvg-name="怀旧剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/怀旧剧场.png" group-title="央视",怀旧剧场
 http://119.91.7.169:1777/216.75.129.13.php?id=22 
 
 #EXTINF:-1 tvg-name="第一剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/第一剧场.png" group-title="央视",第一剧场
