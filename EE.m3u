@@ -1,6 +1,6 @@
 #EXTM3U
 
-# Generated: 2026-03-28 09:31:01.007517
+# Generated: 2026-03-28 22:15:45.111022
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -68,7 +68,7 @@ http://119.91.7.169:1777/216.75.129.13.php?id=24
 #EXTINF:-1 tvg-name="风云音乐" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云音乐.png" group-title="央视",风云音乐
 http://119.91.7.169:1777/216.75.129.13.php?id=25
 
-#EXTINF:-1 tvg-name="风云足球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云足球.png" group-title="央视",风云足球
+#EXTINF:-1 tvg-name="CCTV风云足球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云足球.png" group-title="央视",风云足球
 http://119.91.7.169:1777/216.75.129.13.php?id=26
 
 #EXTINF:-1 tvg-name="兵器科技" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/兵器科技.png" group-title="央视",兵器科技
@@ -89,7 +89,7 @@ http://119.91.7.169:1777/216.75.129.13.php?id=31
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
 http://119.91.7.169:1777/216.75.129.13.php?id=20
 
-#EXTINF:-1 tvg-id="CCTV8K" tvg-name="CCTV8K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV8K.png" group-title="4K",CCTV8K
+#EXTINF:-1 tvg-id="CCTV8K" tvg-name="CCTV-8K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV8K.png" group-title="4K",CCTV-8K
 http://119.91.7.169:1777/216.75.129.13.php?id=21
 
 #EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/BJ4K.png" group-title="4K",北京卫视
