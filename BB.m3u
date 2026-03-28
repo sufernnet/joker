@@ -58,19 +58,19 @@ http://39.164.138.145:8899/hls/17/index.m3u8
 http://119.91.7.169:1777/216.75.129.13.php?id=22 
 
 #EXTINF:-1 tvg-name="CCTV第一剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/第一剧场.png" group-title="央视",CCTV第一剧场
-http://119.91.7.169:1777/216.75.129.13.php?id=23
+http://171.122.42.95:8082/rtp/226.0.2.221:9680
 
 #EXTINF:-1 tvg-name="CCTV风云剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云剧场.png" group-title="央视",CCTV风云剧场
 http://119.91.7.169:1777/216.75.129.13.php?id=24
 
 #EXTINF:-1 tvg-name="CCTV风云音乐" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云音乐.png" group-title="央视",CCTV风云音乐
-http://119.91.7.169:1777/216.75.129.13.php?id=25
+http://171.122.42.95:8082/rtp/226.0.2.220:9672
 
 #EXTINF:-1 tvg-name="CCTV风云足球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云足球.png" group-title="央视",CCTV风云足球
-http://119.91.7.169:1777/216.75.129.13.php?id=26
+http://171.122.42.95:8082/rtp/226.0.2.225:9712
 
 #EXTINF:-1 tvg-name="CCTV兵器科技" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/兵器科技.png" group-title="央视",CCTV兵器科技
-http://119.91.7.169:1777/216.75.129.13.php?id=27
+http://171.122.42.95:8082/rtp/226.0.2.223:9696
 
 #EXTINF:-1 tvg-name="CCTV世界地理" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/世界地理.png" group-title="央视",CCTV世界地理
 http://119.91.7.169:1777/216.75.129.13.php?id=28
