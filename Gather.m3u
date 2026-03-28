@@ -1,7 +1,7 @@
 #EXTM3U
 
 # Gather.m3u
-# 生成时间: 2026-03-28 09:32:27
+# 生成时间: 2026-03-28 22:28:13
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -91,7 +91,7 @@ http://119.91.7.169:1777/216.75.129.13.php?id=31
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
 http://119.91.7.169:1777/216.75.129.13.php?id=20
 
-#EXTINF:-1 tvg-id="CCTV-8K" tvg-name="CCTV8K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV8K.png" group-title="4K",CCTV-8K
+#EXTINF:-1 tvg-id="CCTV8K" tvg-name="CCTV-8K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV8K.png" group-title="4K",CCTV-8K
 http://119.91.7.169:1777/216.75.129.13.php?id=21
 
 #EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/BJ4K.png" group-title="4K",北京卫视
