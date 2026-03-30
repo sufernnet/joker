@@ -92,7 +92,7 @@ http://119.91.7.169:1777/216.75.129.13.php?id=31
 http://107.150.60.122/live/cctv4k.m3u8
 
 #EXTINF:-1 tvg-id="CCTV8K" tvg-name="CCTV-8K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV8K.png" group-title="4K",CCTV-8K
-http://119.91.7.169:1777/216.75.129.13.php?id=21
+http://107.150.60.122/live/cctv8k.m3u8
 
 #EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/BJ4K.png" group-title="4K",北京卫视
 http://124.90.44.40:6060/010/2/01000010000000060000000000002865?virtualDomain=010.live_hls.zte.com
