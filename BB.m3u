@@ -54,36 +54,6 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 #EXTINF:-1 tvg-id="CCTV17" tvg-name="CCTV17" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV17.png" group-title="央视",CCTV17
 http://39.164.138.145:8899/hls/17/index.m3u8
 
-#EXTINF:-1 tvg-name="怀旧剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/怀旧剧场.png" group-title="央视",怀旧剧场
-https://t.freetv.fun/live/huai-jiu-ju-chang-1.m3u8
-
-#EXTINF:-1 tvg-name="第一剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/第一剧场.png" group-title="央视",第一剧场
-https://t.freetv.fun/live/cctvdi-yi-ju-chang-2.m3u8
-
-#EXTINF:-1 tvg-name="风云剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云剧场.png" group-title="央视",风云剧场
-https://t.freetv.fun/live/feng-yun-ju-chang.m3u8
-
-#EXTINF:-1 tvg-name="风云音乐" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云音乐.png" group-title="央视",风云音乐
-https://t.freetv.fun/live/feng-yun-yin-le-1.m3u8
-
-#EXTINF:-1 tvg-name="风云足球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云足球.png" group-title="央视",风云足球
-https://t.freetv.fun/live/cctvfeng-yun-zu-qiu-2.m3u8
-
-#EXTINF:-1 tvg-name="兵器科技" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/兵器科技.png" group-title="央视",兵器科技
-https://t.freetv.fun/live/bing-qi-ke-ji-1.m3u8
-
-#EXTINF:-1 tvg-name="世界地理" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/世界地理.png" group-title="央视",世界地理
-https://t.freetv.fun/live/shi-jie-di-li-1.m3u8
-
-#EXTINF:-1 tvg-name="女性时尚" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/女性时尚.png" group-title="央视",女性时尚
-https://t.freetv.fun/live/nu-xing-shi-shang-1.m3u8
-
-#EXTINF:-1 tvg-name="央视台球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/央视台球.png" group-title="央视",央视台球
-https://t.freetv.fun/live/yang-shi-tai-qiu-1.m3u8
-
-#EXTINF:-1 tvg-name="电视指南" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/电视指南.png" group-title="央视",电视指南
-https://t.freetv.fun/live/cctv-dian-shi-zhi-nan.m3u8
-
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
 http://107.150.60.122/live/cctv4k.m3u8
 
