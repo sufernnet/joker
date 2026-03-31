@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 # DD.m3u
-# 生成时间: 2026-03-31 11:40:38
+# 生成时间: 2026-03-31 22:41:58
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -57,36 +57,6 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 
 #EXTINF:-1 tvg-id="CCTV17" tvg-name="CCTV17" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV17.png" group-title="央视",CCTV17
 http://39.164.138.145:8899/hls/17/index.m3u8
-
-#EXTINF:-1 tvg-name="怀旧剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/怀旧剧场.png" group-title="央视",怀旧剧场
-https://t.freetv.fun/live/huai-jiu-ju-chang-1.m3u8
-
-#EXTINF:-1 tvg-name="第一剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/第一剧场.png" group-title="央视",第一剧场
-https://t.freetv.fun/live/cctvdi-yi-ju-chang-2.m3u8
-
-#EXTINF:-1 tvg-name="风云剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云剧场.png" group-title="央视",风云剧场
-https://t.freetv.fun/live/feng-yun-ju-chang.m3u8
-
-#EXTINF:-1 tvg-name="风云音乐" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云音乐.png" group-title="央视",风云音乐
-https://t.freetv.fun/live/feng-yun-yin-le-1.m3u8
-
-#EXTINF:-1 tvg-name="CCTV风云足球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云足球.png" group-title="央视",风云足球
-https://t.freetv.fun/live/cctvfeng-yun-zu-qiu-2.m3u8
-
-#EXTINF:-1 tvg-name="兵器科技" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/兵器科技.png" group-title="央视",兵器科技
-https://t.freetv.fun/live/bing-qi-ke-ji-1.m3u8
-
-#EXTINF:-1 tvg-name="世界地理" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/世界地理.png" group-title="央视",世界地理
-https://t.freetv.fun/live/shi-jie-di-li-1.m3u8
-
-#EXTINF:-1 tvg-name="女性时尚" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/女性时尚.png" group-title="央视",女性时尚
-https://t.freetv.fun/live/nu-xing-shi-shang-1.m3u8
-
-#EXTINF:-1 tvg-name="央视台球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/央视台球.png" group-title="央视",央视台球
-https://t.freetv.fun/live/yang-shi-tai-qiu-1.m3u8
-
-#EXTINF:-1 tvg-name="电视指南" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/电视指南.png" group-title="央视",电视指南
-https://t.freetv.fun/live/cctv-dian-shi-zhi-nan.m3u8
 
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
 http://107.150.60.122/live/cctv4k.m3u8
@@ -470,7 +440,7 @@ https://tv.iill.top/4gtv/4gtv-4gtv003
 #EXTINF:-1 tvg-id="民視綜藝台" tvg-name="民視綜藝台" tvg-logo="https://epg.iill.top/logo/民視綜藝台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視綜藝
 https://tv.iill.top/4gtv/4gtv-4gtv004
 #EXTINF:-1 tvg-id="中天亞洲台" tvg-name="中天亞洲台" tvg-logo="https://epg-1.iill.top/logo/中天亞洲台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天亞洲
-https://tv.iill.top/FainTV/121
+https://tv.iill.top/api/Cti-I/index.m3u8
 #EXTINF:-1 tvg-id="中天綜合台" tvg-name="中天綜合台" tvg-logo="https://epg.iill.top/logo/中天綜合台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天綜合
 https://tv.iill.top/api/Cti-K/index.m3u8
 #EXTINF:-1 tvg-id="中天娛樂台" tvg-name="中天娛樂台" tvg-logo="https://epg.iill.top/logo/中天娛樂台.png" http-user-agent="okhttp/1.9.89" group-title="TW",中天娛樂
