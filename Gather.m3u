@@ -59,7 +59,7 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 http://39.164.138.145:8899/hls/17/index.m3u8
 
 #EXTINF:-1 tvg-name="怀旧剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/怀旧剧场.png" group-title="央视",怀旧剧场
-https://t.freetv.fun/live/huai-jiu-ju-chang.m3u8
+https://t.freetv.fun/live/cctv-huai-jiu-ju-chang.m3u8
 
 #EXTINF:-1 tvg-name="第一剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/第一剧场.png" group-title="央视",第一剧场
 https://t.freetv.fun/live/cctvdi-yi-ju-chang-2.m3u8
