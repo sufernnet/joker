@@ -1,6 +1,6 @@
 #EXTM3U
 
-# Generated: 2026-04-01 10:02:41.613424
+# Generated: 2026-04-01 22:24:40.202752
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -57,7 +57,7 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 http://39.164.138.145:8899/hls/17/index.m3u8
 
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
-http://107.150.60.122/live/cctv4k.m3u8
+https://t.freetv.fun/live/cctv4k-5.m3u8
 
 #EXTINF:-1 tvg-id="CCTV8K" tvg-name="CCTV-8K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV8K.png" group-title="4K",CCTV-8K
 http://107.150.60.122/live/cctv8k.m3u8
