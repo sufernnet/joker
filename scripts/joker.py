@@ -11,6 +11,8 @@ Gather IPTV Generator
 - 去重
 - 合并 BB.m3u
 - 额外抓取 8 个央视频道，插入到 BB.m3u 的央视分组最后面
+- 8个频道按标准格式写入：
+  #EXTINF:-1 tvg-id="世界地理" tvg-name="世界地理" tvg-logo="..." group-title="央视",世界地理
 - 输出 joker.m3u（输出到仓库根目录）
 - 保留 tvg-id / tvg-name / tvg-logo
 """
@@ -60,7 +62,6 @@ TARGET_CCTV = {
     "CCTV兵器科技"
 }
 
-# 固定顺序
 TARGET_CCTV_ORDER = [
     "CCTV世界地理",
     "CCTV央视台球",
@@ -215,6 +216,38 @@ def is_cctv_group(group_name):
     return any(x in g for x in ["央视", "cctv", "央视频道"])
 
 
+def normalize_cctv_display_name(name):
+    """
+    把抓取到的频道名转换成标准输出名
+    """
+    mapping = {
+        "CCTV世界地理": "世界地理",
+        "CCTV央视台球": "央视台球",
+        "CCTV女性时尚": "女性时尚",
+        "CCTV怀旧剧场": "怀旧剧场",
+        "CCTV文化精品": "文化精品",
+        "CCTV第一剧场": "第一剧场",
+        "CCTV风云足球": "风云足球",
+        "CCTV兵器科技": "兵器科技",
+    }
+    return mapping.get(name, name.replace("CCTV", "").strip())
+
+
+def build_cctv_extinf(name, group_name="央视"):
+    """
+    生成标准 EXTINF 行
+    """
+    std_name = normalize_cctv_display_name(name)
+    logo_url = f"https://raw.githubusercontent.com/xiasufern/AA/main/icon/{std_name}.png"
+    return (
+        f'#EXTINF:-1 '
+        f'tvg-id="{std_name}" '
+        f'tvg-name="{std_name}" '
+        f'tvg-logo="{logo_url}" '
+        f'group-title="{group_name}",{std_name}'
+    )
+
+
 # ===================== 8 个央视频道抓取逻辑 =====================
 
 async def test_stream(session, url):
@@ -299,7 +332,6 @@ def append_cctv_channels_to_bb(bb_content, extra_channels):
 
     current_group = None
     last_cctv_insert_pos = None
-    detected_cctv_group_name = "央视频道"
     existing_names = set()
 
     for line in lines:
@@ -311,19 +343,26 @@ def append_cctv_channels_to_bb(bb_content, extra_channels):
             current_group = parse_group_from_extinf(s)
             name = parse_name_from_extinf(s)
             if name:
-                existing_names.add(name)
+                existing_names.add(name.strip())
 
         elif s.startswith("http"):
             if is_cctv_group(current_group):
                 last_cctv_insert_pos = len(output_lines)
-                if current_group:
-                    detected_cctv_group_name = current_group
 
     insert_lines = []
+    existing_std_names = set()
+
+    for n in existing_names:
+        existing_std_names.add(n.strip())
+        existing_std_names.add(normalize_cctv_display_name(n))
+
     for name, url in extra_channels:
-        if name in existing_names:
+        std_name = normalize_cctv_display_name(name)
+
+        if name in existing_names or std_name in existing_std_names:
             continue
-        insert_lines.append(f'#EXTINF:-1 group-title="{detected_cctv_group_name}",{name}')
+
+        insert_lines.append(build_cctv_extinf(name, "央视"))
         insert_lines.append(url)
 
     if not insert_lines:
