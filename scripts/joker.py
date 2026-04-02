@@ -10,9 +10,11 @@ Gather IPTV Generator
 - 剔除指定 YouTube 源
 - 去重
 - 合并 BB.m3u
-- 额外抓取 8 个央视频道，插入到 BB.m3u 的央视分组最后面
-- 8个频道按标准格式写入：
-  #EXTINF:-1 tvg-id="世界地理" tvg-name="世界地理" tvg-logo="..." group-title="央视",世界地理
+- 额外抓取：
+  1) 8 个央视频道
+  2) CHC 频道：动作电影、高清电影、家庭电影、家庭影院、影迷电影
+- 插入到 BB.m3u 的央视分组最后面
+- 抓取频道统一按标准格式写入
 - 输出 joker.m3u（输出到仓库根目录）
 - 保留 tvg-id / tvg-name / tvg-logo
 """
@@ -49,7 +51,7 @@ REMOVE_YT_IDS = [
     "o_-hSMgpAzs",
 ]
 
-# ===================== 仅保留的 8 个 CCTV 频道 =====================
+# ===================== 央视频道与 CHC 目标频道 =====================
 
 TARGET_CCTV = {
     "CCTV世界地理",
@@ -71,6 +73,22 @@ TARGET_CCTV_ORDER = [
     "CCTV第一剧场",
     "CCTV风云足球",
     "CCTV兵器科技"
+]
+
+TARGET_CHC = {
+    "CHC动作电影",
+    "CHC高清电影",
+    "CHC家庭电影",
+    "CHC家庭影院",
+    "CHC影迷电影"
+}
+
+TARGET_CHC_ORDER = [
+    "CHC动作电影",
+    "CHC高清电影",
+    "CHC家庭电影",
+    "CHC家庭影院",
+    "CHC影迷电影"
 ]
 
 CCTV_SOURCES = [
@@ -205,9 +223,31 @@ def extract_urls_from_m3u(content):
 
 
 def match_target(name):
+    n = (name or "").strip()
+
+    # 原有8个频道逻辑
     for k in TARGET_CCTV:
-        if k in name:
+        if k in n:
             return k
+
+    # 仅补充兵器科技别名
+    if "兵器科技" in n or "央视兵器科技" in n or "CCTV兵器" in n or "兵器" == n.strip():
+        return "CCTV兵器科技"
+
+    # 新增 CHC 频道匹配
+    chc_alias_map = {
+        "CHC动作电影": ["CHC动作电影", "动作电影", "CHC动作"],
+        "CHC高清电影": ["CHC高清电影", "高清电影", "CHC高清"],
+        "CHC家庭电影": ["CHC家庭电影", "家庭电影"],
+        "CHC家庭影院": ["CHC家庭影院", "家庭影院"],
+        "CHC影迷电影": ["CHC影迷电影", "影迷电影"],
+    }
+
+    for std_name, aliases in chc_alias_map.items():
+        for alias in aliases:
+            if alias in n:
+                return std_name
+
     return None
 
 
@@ -229,8 +269,14 @@ def normalize_cctv_display_name(name):
         "CCTV第一剧场": "第一剧场",
         "CCTV风云足球": "风云足球",
         "CCTV兵器科技": "兵器科技",
+
+        "CHC动作电影": "动作电影",
+        "CHC高清电影": "高清电影",
+        "CHC家庭电影": "家庭电影",
+        "CHC家庭影院": "家庭影院",
+        "CHC影迷电影": "影迷电影",
     }
-    return mapping.get(name, name.replace("CCTV", "").strip())
+    return mapping.get(name, name.replace("CCTV", "").replace("CHC", "").strip())
 
 
 def build_cctv_extinf(name, group_name="央视"):
@@ -248,7 +294,7 @@ def build_cctv_extinf(name, group_name="央视"):
     )
 
 
-# ===================== 8 个央视频道抓取逻辑 =====================
+# ===================== 抓取与测速逻辑 =====================
 
 async def test_stream(session, url):
     start = time.time()
@@ -291,7 +337,7 @@ async def fetch_best_cctv_channels():
 
     for s in CCTV_SOURCES:
         is_m3u = s.endswith((".m3u", ".m3u8"))
-        print(f"抓取8个央视频道源: {s}")
+        print(f"抓取目标频道源: {s}")
         data = await read_and_test_file(s, is_m3u)
         all_valid.extend(data)
 
@@ -309,15 +355,22 @@ async def fetch_best_cctv_channels():
             best_map[key] = (url, latency)
 
     result = []
+
+    # 先原8个频道
     for name in TARGET_CCTV_ORDER:
         if name in best_map:
             result.append((name, best_map[name][0]))
 
-    print("已获取到的8个央视频道数量:", len(result))
+    # 再 CHC 频道
+    for name in TARGET_CHC_ORDER:
+        if name in best_map:
+            result.append((name, best_map[name][0]))
+
+    print("已获取到的目标频道数量:", len(result))
     return result
 
 
-# ===================== 把 8 个频道插入 BB 的央视分组最后 =====================
+# ===================== 把抓取频道插入 BB 的央视分组最后 =====================
 
 def append_cctv_channels_to_bb(bb_content, extra_channels):
     """
@@ -440,7 +493,7 @@ def main():
     print("HK:", len(hk_channels))
     print("TW:", len(tw_channels))
 
-    # 抓取 8 个央视频道
+    # 抓取目标频道
     extra_cctv_channels = asyncio.run(fetch_best_cctv_channels())
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -448,7 +501,7 @@ def main():
     output = '#EXTM3U\n\n'
     output += f"# joker.m3u\n# 生成时间: {timestamp}\n\n"
 
-    # 合并 BB，并把 8 个央视频道插入 BB 的央视分组最后
+    # 合并 BB，并把抓取频道插入 BB 的央视分组最后
     try:
         with open(BB_FILE, "r", encoding="utf-8") as f:
             bb_content = f.read()
@@ -457,7 +510,7 @@ def main():
         bb_content = append_cctv_channels_to_bb(bb_content, extra_cctv_channels)
 
         output += bb_content.rstrip() + "\n\n"
-        print("已合并 BB.m3u，并插入8个央视频道")
+        print("已合并 BB.m3u，并插入目标频道")
     except Exception as e:
         print("未找到或无法读取 BB.m3u，跳过：", e)
 
