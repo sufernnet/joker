@@ -9,8 +9,8 @@ on:
 
   push:
     paths:
-      - 'scripts/merge_ff.py'
-      - '.github/workflows/merge-ff.yml'
+      - 'scripts/joker.py'
+      - '.github/workflows/joker.yml'
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -38,19 +38,37 @@ jobs:
 
       - name: 🚀 运行脚本
         run: |
-          python scripts/merge_ff.py
+          python scripts/joker.py
 
       - name: 🔍 检查输出文件
         run: |
+          echo "===== 当前目录 ====="
           pwd
+          echo "===== 仓库根目录文件 ====="
           ls -la
-          ls -la joker.m3u || true
+          echo "===== scripts 目录 ====="
+          ls -la scripts || true
+          echo "===== 查找 joker.m3u ====="
+          find . -name "joker.m3u" -type f || true
+          echo "===== 文件预览 ====="
           head -n 20 joker.m3u || true
+
+      - name: 📦 上传产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: joker-m3u
+          path: joker.m3u
+          if-no-files-found: warn
 
       - name: 📤 提交更新
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
+
+          if [ ! -f joker.m3u ]; then
+            echo "未找到 joker.m3u，退出"
+            exit 1
+          fi
 
           git add joker.m3u
 
