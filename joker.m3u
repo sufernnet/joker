@@ -1,7 +1,7 @@
 #EXTM3U
 
 # joker.m3u
-# 生成时间: 2026-04-02 07:25:23
+# 生成时间: 2026-04-02 07:45:18
 
 url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
@@ -58,19 +58,19 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 
 #EXTINF:-1 tvg-id="CCTV17" tvg-name="CCTV17" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV17.png" group-title="央视",CCTV17
 http://39.164.138.145:8899/hls/17/index.m3u8
-#EXTINF:-1 group-title="央视",CCTV世界地理
+#EXTINF:-1 tvg-id="世界地理" tvg-name="世界地理" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/世界地理.png" group-title="央视",世界地理
 http://38.75.136.137:98/gslb/dsdqpub/sjdl.m3u8?auth=testpub
-#EXTINF:-1 group-title="央视",CCTV央视台球
+#EXTINF:-1 tvg-id="央视台球" tvg-name="央视台球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/央视台球.png" group-title="央视",央视台球
 https://epg.pw/stream/ca9c1cd4b97fb824cedd7fedfd0c7a950afdd7f00751cfbb7c2d89831d7746a5.m3u8
-#EXTINF:-1 group-title="央视",CCTV女性时尚
+#EXTINF:-1 tvg-id="女性时尚" tvg-name="女性时尚" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/女性时尚.png" group-title="央视",女性时尚
 http://38.75.136.137:98/gslb/dsdqpub/nxss.m3u8?auth=testpub
-#EXTINF:-1 group-title="央视",CCTV怀旧剧场
+#EXTINF:-1 tvg-id="怀旧剧场" tvg-name="怀旧剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/怀旧剧场.png" group-title="央视",怀旧剧场
 http://38.75.136.137:98/gslb/dsdqpub/hjjc.m3u8?auth=testpub
-#EXTINF:-1 group-title="央视",CCTV文化精品
+#EXTINF:-1 tvg-id="文化精品" tvg-name="文化精品" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/文化精品.png" group-title="央视",文化精品
 http://107.150.60.122/live/ysjp.m3u8
-#EXTINF:-1 group-title="央视",CCTV第一剧场
+#EXTINF:-1 tvg-id="第一剧场" tvg-name="第一剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/第一剧场.png" group-title="央视",第一剧场
 https://epg.pw/stream/6d7bf281e3d739806a73f5373acaa6e01988ec9739f5ac1355ce54b47a928472.m3u8
-#EXTINF:-1 group-title="央视",CCTV风云足球
+#EXTINF:-1 tvg-id="风云足球" tvg-name="风云足球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云足球.png" group-title="央视",风云足球
 https://epg.pw/stream/ac8062ec9484078061d3bef507c15a423ac57ae4144e3fcc4b0a198dd420f911.m3u8
 
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
