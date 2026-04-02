@@ -11,23 +11,28 @@ Gather IPTV Generator
 - 去重
 - 合并 BB.m3u
 - 额外抓取 8 个央视频道，插入到 BB.m3u 的央视分组最后面
-- 输出 joker.m3u
+- 输出 joker.m3u（输出到仓库根目录）
 - 保留 tvg-id / tvg-name / tvg-logo
 """
 
-import requests
+import os
 import re
+import time
 import asyncio
 import aiohttp
-import time
+import requests
 from datetime import datetime
 
-# ===================== 基础配置 =====================
+# ===================== 路径配置 =====================
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))   # jokerone/scripts
+ROOT_DIR = os.path.dirname(SCRIPT_DIR)                    # jokerone
 
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
 TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
-OUTPUT_FILE = "joker.m3u"
-BB_FILE = "BB.m3u"
+
+OUTPUT_FILE = os.path.join(ROOT_DIR, "joker.m3u")
+BB_FILE = os.path.join(ROOT_DIR, "BB.m3u")
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
@@ -54,6 +59,18 @@ TARGET_CCTV = {
     "CCTV风云足球",
     "CCTV兵器科技"
 }
+
+# 固定顺序
+TARGET_CCTV_ORDER = [
+    "CCTV世界地理",
+    "CCTV央视台球",
+    "CCTV女性时尚",
+    "CCTV怀旧剧场",
+    "CCTV文化精品",
+    "CCTV第一剧场",
+    "CCTV风云足球",
+    "CCTV兵器科技"
+]
 
 CCTV_SOURCES = [
     "https://tzdr.com/iptv.txt",
@@ -258,20 +275,8 @@ async def fetch_best_cctv_channels():
         if key not in best_map or latency < best_map[key][1]:
             best_map[key] = (url, latency)
 
-    # 固定顺序输出
-    order = [
-        "CCTV世界地理",
-        "CCTV央视台球",
-        "CCTV女性时尚",
-        "CCTV怀旧剧场",
-        "CCTV文化精品",
-        "CCTV第一剧场",
-        "CCTV风云足球",
-        "CCTV兵器科技"
-    ]
-
     result = []
-    for name in order:
+    for name in TARGET_CCTV_ORDER:
         if name in best_map:
             result.append((name, best_map[name][0]))
 
@@ -292,34 +297,28 @@ def append_cctv_channels_to_bb(bb_content, extra_channels):
     lines = bb_content.splitlines()
     output_lines = []
 
-    current_extinf = None
     current_group = None
     last_cctv_insert_pos = None
     detected_cctv_group_name = "央视频道"
-
     existing_names = set()
 
-    i = 0
-    while i < len(lines):
-        line = lines[i].rstrip("\n")
-        output_lines.append(line)
+    for line in lines:
+        raw = line.rstrip("\n")
+        output_lines.append(raw)
 
-        if line.strip().startswith("#EXTINF"):
-            current_extinf = line.strip()
-            current_group = parse_group_from_extinf(current_extinf)
-            name = parse_name_from_extinf(current_extinf)
+        s = raw.strip()
+        if s.startswith("#EXTINF"):
+            current_group = parse_group_from_extinf(s)
+            name = parse_name_from_extinf(s)
             if name:
                 existing_names.add(name)
 
-        elif line.strip().startswith("http"):
+        elif s.startswith("http"):
             if is_cctv_group(current_group):
                 last_cctv_insert_pos = len(output_lines)
                 if current_group:
                     detected_cctv_group_name = current_group
 
-        i += 1
-
-    # 构造要插入的频道
     insert_lines = []
     for name, url in extra_channels:
         if name in existing_names:
@@ -330,7 +329,6 @@ def append_cctv_channels_to_bb(bb_content, extra_channels):
     if not insert_lines:
         return "\n".join(output_lines) + "\n"
 
-    # 如果找到了央视分组最后一个频道，就插入那里后面
     if last_cctv_insert_pos is not None:
         new_lines = (
             output_lines[:last_cctv_insert_pos] +
@@ -339,7 +337,6 @@ def append_cctv_channels_to_bb(bb_content, extra_channels):
         )
         return "\n".join(new_lines) + "\n"
 
-    # 如果 BB.m3u 里压根没找到央视分组，就追加到末尾
     if output_lines and output_lines[-1].strip():
         output_lines.append("")
     output_lines.extend(insert_lines)
@@ -349,6 +346,12 @@ def append_cctv_channels_to_bb(bb_content, extra_channels):
 # ===================== 主程序 =====================
 
 def main():
+    print("当前工作目录:", os.getcwd())
+    print("脚本目录:", SCRIPT_DIR)
+    print("仓库根目录:", ROOT_DIR)
+    print("输出文件:", OUTPUT_FILE)
+    print("BB文件:", BB_FILE)
+
     print("下载源...")
     content = download(SOURCE_URL)
     lines = content.splitlines()
@@ -416,8 +419,8 @@ def main():
 
         output += bb_content.rstrip() + "\n\n"
         print("已合并 BB.m3u，并插入8个央视频道")
-    except:
-        print("未找到 BB.m3u，跳过")
+    except Exception as e:
+        print("未找到或无法读取 BB.m3u，跳过：", e)
 
     # HK
     if hk_channels:
@@ -435,6 +438,11 @@ def main():
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
+
+    print("文件已写出:", OUTPUT_FILE)
+    print("文件是否存在:", os.path.exists(OUTPUT_FILE))
+    if os.path.exists(OUTPUT_FILE):
+        print("文件大小:", os.path.getsize(OUTPUT_FILE), "bytes")
 
     print("✅ joker.m3u 生成完成")
 
