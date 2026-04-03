@@ -1,42 +1,44 @@
 #EXTM3U
 
 # new.m3u
-# 生成时间: 2026-04-03 01:00:14
+# 生成时间: 2026-04-03 01:11:13
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
-https://iptv.catvod.com/live.php?id=CCTV1&line=16
+https://iptv.catvod.com/live.php?id=CCTV1&line=6
 #EXTINF:-1 tvg-id="CCTV2" tvg-name="CCTV2" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV2.png" group-title="央视",CCTV2
 http://38.75.136.137:98/gslb/dsdqbv/cctv2hd.m3u8?auth=test20251009
 #EXTINF:-1 tvg-id="CCTV3" tvg-name="CCTV3" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV3.png" group-title="央视",CCTV3
-https://iptv.catvod.com/live.php?id=CCTV3&line=5
+https://iptv.catvod.com/live.php?id=CCTV3&line=6
 #EXTINF:-1 tvg-id="CCTV4" tvg-name="CCTV4" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4.png" group-title="央视",CCTV4
 http://38.75.136.137:98/gslb/dsdqbv/cctv4hd.m3u8?auth=test20251009
 #EXTINF:-1 tvg-id="CCTV5" tvg-name="CCTV5" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV5.png" group-title="央视",CCTV5
+https://iptv.catvod.com/live.php?id=CCTV5&line=1
+#EXTINF:-1 tvg-id="CCTV5+" tvg-name="CCTV5+" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV5+.png" group-title="央视",CCTV5+
 http://38.75.136.137:98/gslb/dsdqbv/cctv5p.m3u8?auth=test20251009
 #EXTINF:-1 tvg-id="CCTV6" tvg-name="CCTV6" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV6.png" group-title="央视",CCTV6
-https://iptv.catvod.com/live.php?id=CCTV6&line=7
+https://iptv.catvod.com/live.php?id=CCTV6&line=13
 #EXTINF:-1 tvg-id="CCTV7" tvg-name="CCTV7" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV7.png" group-title="央视",CCTV7
 http://38.75.136.137:98/gslb/dsdqbv/cctv7hd.m3u8?auth=test20251009
 #EXTINF:-1 tvg-id="CCTV8" tvg-name="CCTV8" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV8.png" group-title="央视",CCTV8
-https://iptv.catvod.com/live.php?id=CCTV8&line=4
+https://iptv.catvod.com/live.php?id=CCTV8&line=14
 #EXTINF:-1 tvg-id="CCTV9" tvg-name="CCTV9" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV9.png" group-title="央视",CCTV9
-http://38.75.136.137:98/gslb/dsdqpub/cctv9hd.m3u8?auth=testpub
+https://iptv.catvod.com/live.php?id=CCTV9&line=3
 #EXTINF:-1 tvg-id="CCTV10" tvg-name="CCTV10" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV10.png" group-title="央视",CCTV10
-https://iptv.catvod.com/live.php?id=CCTV10&line=10
+https://iptv.catvod.com/live.php?id=CCTV10&line=6
 #EXTINF:-1 tvg-id="CCTV11" tvg-name="CCTV11" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV11.png" group-title="央视",CCTV11
-https://iptv.catvod.com/live.php?id=CCTV11&line=5
+https://iptv.catvod.com/live.php?id=CCTV11&line=7
 #EXTINF:-1 tvg-id="CCTV12" tvg-name="CCTV12" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV12.png" group-title="央视",CCTV12
 http://23.237.228.134/live3/CCTV12.m3u8
 #EXTINF:-1 tvg-id="CCTV13" tvg-name="CCTV13" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV13.png" group-title="央视",CCTV13
-https://iptv.catvod.com/live.php?id=CCTV13&line=4
+https://iptv.catvod.com/live.php?id=CCTV13&line=2
 #EXTINF:-1 tvg-id="CCTV14" tvg-name="CCTV14" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV14.png" group-title="央视",CCTV14
 http://38.75.136.137:98/gslb/dsdqbv/cctv14hd.m3u8?auth=test20251009
 #EXTINF:-1 tvg-id="CCTV15" tvg-name="CCTV15" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV15.png" group-title="央视",CCTV15
-http://38.75.136.137:98/gslb/dsdqpub/cctv15hd.m3u8?auth=testpub
+https://iptv.catvod.com/live.php?id=CCTV15&line=5
 #EXTINF:-1 tvg-id="CCTV16" tvg-name="CCTV16" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV16.png" group-title="央视",CCTV16
 http://74.91.26.218:82/live/cctv16hd.m3u8
 #EXTINF:-1 tvg-id="CCTV17" tvg-name="CCTV17" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV17.png" group-title="央视",CCTV17
-https://iptv.catvod.com/live.php?id=CCTV17&line=3
+https://iptv.catvod.com/live.php?id=CCTV17&line=2
 #EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/北京卫视.png" group-title="卫视",北京卫视
 http://111.56.90.5/000000000000/1000000005000265027/1.m3u8
 #EXTINF:-1 tvg-id="天津卫视" tvg-name="天津卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/天津卫视.png" group-title="卫视",天津卫视
@@ -54,13 +56,13 @@ http://58.57.40.22:9901/tsfile/live/1050_1.m3u8
 #EXTINF:-1 tvg-id="黑龙江卫视" tvg-name="黑龙江卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/黑龙江卫视.png" group-title="卫视",黑龙江卫视
 https://iptv.catvod.com/live.php?id=%E9%BB%91%E9%BE%99%E6%B1%9F%E5%8D%AB%E8%A7%86&line=1
 #EXTINF:-1 tvg-id="东方卫视" tvg-name="东方卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/东方卫视.png" group-title="卫视",东方卫视
-http://58.57.40.22:9901/tsfile/live/1030_1.m3u8
+https://iptv.catvod.com/live.php?id=%E4%B8%9C%E6%96%B9%E5%8D%AB%E8%A7%86&line=5
 #EXTINF:-1 tvg-id="江苏卫视" tvg-name="江苏卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/江苏卫视.png" group-title="卫视",江苏卫视
 http://58.57.40.22:9901/tsfile/live/1031_1.m3u8
 #EXTINF:-1 tvg-id="浙江卫视" tvg-name="浙江卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/浙江卫视.png" group-title="卫视",浙江卫视
 https://iptv.catvod.com/live.php?id=%E6%B5%99%E6%B1%9F%E5%8D%AB%E8%A7%86&line=7
 #EXTINF:-1 tvg-id="安徽卫视" tvg-name="安徽卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/安徽卫视.png" group-title="卫视",安徽卫视
-http://58.57.40.22:9901/tsfile/live/1033_1.m3u8
+https://iptv.catvod.com/live.php?id=%E5%AE%89%E5%BE%BD%E5%8D%AB%E8%A7%86&line=2
 #EXTINF:-1 tvg-id="东南卫视" tvg-name="东南卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/东南卫视.png" group-title="卫视",东南卫视
 http://58.57.40.22:9901/tsfile/live/1037_1.m3u8
 #EXTINF:-1 tvg-id="江西卫视" tvg-name="江西卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/江西卫视.png" group-title="卫视",江西卫视
@@ -68,13 +70,13 @@ http://58.57.40.22:9901/tsfile/live/1043_1.m3u8
 #EXTINF:-1 tvg-id="山东卫视" tvg-name="山东卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/山东卫视.png" group-title="卫视",山东卫视
 http://120.76.248.139/live/bfgd/4200000099.m3u8
 #EXTINF:-1 tvg-id="河南卫视" tvg-name="河南卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/河南卫视.png" group-title="卫视",河南卫视
-https://iptv.catvod.com/live.php?id=%E6%B2%B3%E5%8D%97%E5%8D%AB%E8%A7%86&line=4
+http://58.57.40.22:9901/tsfile/live/1048_1.m3u8
 #EXTINF:-1 tvg-id="湖北卫视" tvg-name="湖北卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/湖北卫视.png" group-title="卫视",湖北卫视
-http://58.57.40.22:9901/tsfile/live/1038_1.m3u8
+http://107.150.60.122/live/hbwshd.m3u8
 #EXTINF:-1 tvg-id="湖南卫视" tvg-name="湖南卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/湖南卫视.png" group-title="卫视",湖南卫视
-http://38.75.136.137:98/gslb/dsdqbv/hnwshd.m3u8?auth=test20251009
+https://iptv.catvod.com/live.php?id=%E6%B9%96%E5%8D%97%E5%8D%AB%E8%A7%86
 #EXTINF:-1 tvg-id="广东卫视" tvg-name="广东卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/广东卫视.png" group-title="卫视",广东卫视
-https://iptv.catvod.com/live.php?id=%E5%B9%BF%E4%B8%9C%E5%8D%AB%E8%A7%86&line=1
+https://iptv.catvod.com/live.php?id=%E5%B9%BF%E4%B8%9C%E5%8D%AB%E8%A7%86&line=2
 #EXTINF:-1 tvg-id="深圳卫视" tvg-name="深圳卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/深圳卫视.png" group-title="卫视",深圳卫视
 http://58.57.40.22:9901/tsfile/live/1036_1.m3u8
 #EXTINF:-1 tvg-id="广西卫视" tvg-name="广西卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/广西卫视.png" group-title="卫视",广西卫视
@@ -84,7 +86,7 @@ http://58.57.40.22:9901/tsfile/live/1000_1.m3u8
 #EXTINF:-1 tvg-id="重庆卫视" tvg-name="重庆卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/重庆卫视.png" group-title="卫视",重庆卫视
 http://107.150.60.122/live/cqwshd.m3u8
 #EXTINF:-1 tvg-id="四川卫视" tvg-name="四川卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/四川卫视.png" group-title="卫视",四川卫视
-http://58.57.40.22:9901/tsfile/live/1046_1.m3u8
+http://38.75.136.137:98/gslb/dsdqpub/scwshd.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="贵州卫视" tvg-name="贵州卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/贵州卫视.png" group-title="卫视",贵州卫视
 http://111.56.90.5/000000000000/1000000002000003169/1.m3u8
 #EXTINF:-1 tvg-id="云南卫视" tvg-name="云南卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/云南卫视.png" group-title="卫视",云南卫视
@@ -124,7 +126,7 @@ http://38.75.136.137:98/gslb/dsdqpub/fyyy.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="风云剧场" tvg-name="风云剧场" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/风云剧场.png" group-title="数字",风云剧场
 http://38.75.136.137:98/gslb/dsdqpub/fyjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="央视台球" tvg-name="央视台球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/央视台球.png" group-title="数字",央视台球
-http://38.75.136.137:98/gslb/dsdqpub/ystq.m3u8?auth=testpub
+https://epg.pw/stream/ca9c1cd4b97fb824cedd7fedfd0c7a950afdd7f00751cfbb7c2d89831d7746a5.m3u8
 #EXTINF:-1 tvg-id="女性时尚" tvg-name="女性时尚" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/女性时尚.png" group-title="数字",女性时尚
 http://38.75.136.137:98/gslb/dsdqpub/nxss.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="文化精品" tvg-name="文化精品" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/文化精品.png" group-title="数字",文化精品
