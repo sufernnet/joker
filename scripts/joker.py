@@ -29,8 +29,8 @@ from datetime import datetime
 
 # ===================== 路径配置 =====================
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))   # jokerone/scripts
-ROOT_DIR = os.path.dirname(SCRIPT_DIR)                    # jokerone
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
 TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
@@ -103,7 +103,7 @@ CCTV_SOURCES = [
     "https://live.45678888.xyz/sub?kbQyhXwA=m3u"
 ]
 
-TEST_TIMEOUT = 10
+TEST_TIMEOUT = 12
 
 # ===================== 工具函数 =====================
 
@@ -125,10 +125,6 @@ def is_bad_youtube(url):
 
 
 def deduplicate(channels):
-    """
-    channels: [(name, extinf, url), ...]
-    按 url 去重
-    """
     seen = set()
     result = []
     for name, extinf, url in channels:
@@ -139,10 +135,6 @@ def deduplicate(channels):
 
 
 def normalize_group(extinf_line, new_group):
-    """
-    把 #EXTINF 行里的 group-title 改成指定分组
-    若没有 group-title，则补上
-    """
     if 'group-title="' in extinf_line:
         extinf_line = re.sub(r'group-title="[^"]*"', f'group-title="{new_group}"', extinf_line)
     else:
@@ -165,22 +157,13 @@ def parse_group_from_extinf(extinf_line):
 
 
 def parse_m3u_full(content):
-    """
-    返回:
-    [
-        (name, extinf, url),
-        ...
-    ]
-    """
     lines = content.splitlines()
     channels = []
-
     current_extinf = None
     current_name = None
 
     for line in lines:
         line = line.strip()
-
         if not line:
             continue
 
@@ -188,7 +171,7 @@ def parse_m3u_full(content):
             current_extinf = line
             current_name = parse_name_from_extinf(line)
 
-        elif line.startswith("http"):
+        elif line.startswith(("http://", "https://")):
             if current_extinf and current_name:
                 channels.append((current_name, current_extinf, line))
 
@@ -226,9 +209,6 @@ def extract_urls_from_m3u(content):
 
 
 def normalize_name_for_match(name):
-    """
-    统一标准化频道名，增强 CHC 识别能力
-    """
     n = (name or "").strip().lower()
     n = n.replace(" ", "").replace("-", "").replace("_", "")
     n = n.replace("（", "(").replace("）", ")")
@@ -240,7 +220,6 @@ def normalize_name_for_match(name):
 def match_target(name):
     n = normalize_name_for_match(name)
 
-    # 央视数字频道匹配
     cctv_alias_map = {
         "CCTV世界地理": ["cctv世界地理", "世界地理", "央视世界地理"],
         "CCTV兵器科技": ["cctv兵器科技", "央视兵器科技", "兵器科技", "cctv兵器", "兵器"],
@@ -258,7 +237,7 @@ def match_target(name):
             if normalize_name_for_match(alias) in n:
                 return std_name
 
-    # CHC 频道匹配（这里重点增强）
+    # 这里只加强 CHC
     chc_alias_map = {
         "CHC动作电影": [
             "chc动作电影", "动作电影", "chc动作", "chc动作电影hd", "动作电影hd"
@@ -291,9 +270,6 @@ def is_cctv_group(group_name):
 
 
 def normalize_cctv_display_name(name):
-    """
-    把抓取到的频道名转换成标准输出名
-    """
     mapping = {
         "CCTV世界地理": "世界地理",
         "CCTV央视台球": "央视台球",
@@ -315,9 +291,6 @@ def normalize_cctv_display_name(name):
 
 
 def build_cctv_extinf(name, group_name="央视"):
-    """
-    生成标准 EXTINF 行
-    """
     std_name = normalize_cctv_display_name(name)
     logo_url = f"https://raw.githubusercontent.com/xiasufern/AA/main/icon/{std_name}.png"
     return (
@@ -329,13 +302,23 @@ def build_cctv_extinf(name, group_name="央视"):
     )
 
 
+def is_m3u_source(url):
+    u = (url or "").lower()
+    return (
+        u.endswith(".m3u")
+        or u.endswith(".m3u8")
+        or "m3u" in u
+    )
+
 # ===================== 抓取与测速逻辑 =====================
 
 async def test_stream(session, url):
     start = time.time()
     try:
-        async with session.get(url, timeout=TEST_TIMEOUT) as r:
-            if r.status == 200:
+        # 对 rtp 代理流放宽一点
+        timeout = TEST_TIMEOUT + 5 if "/rtp/" in url else TEST_TIMEOUT
+        async with session.get(url, timeout=timeout) as r:
+            if r.status in (200, 206):
                 return True, time.time() - start
     except:
         pass
@@ -344,7 +327,7 @@ async def test_stream(session, url):
 
 async def read_and_test_file(url, is_m3u):
     try:
-        timeout = aiohttp.ClientTimeout(total=30)
+        timeout = aiohttp.ClientTimeout(total=40)
         async with aiohttp.ClientSession(timeout=timeout) as session:
             async with session.get(url) as r:
                 content = await r.text()
@@ -371,8 +354,8 @@ async def fetch_best_cctv_channels():
     all_valid = []
 
     for s in CCTV_SOURCES:
-        is_m3u = s.endswith((".m3u", ".m3u8"))
-        print(f"抓取目标频道源: {s}")
+        is_m3u = is_m3u_source(s)
+        print(f"抓取目标频道源: {s} | is_m3u={is_m3u}")
         data = await read_and_test_file(s, is_m3u)
         all_valid.extend(data)
 
@@ -391,12 +374,10 @@ async def fetch_best_cctv_channels():
 
     result = []
 
-    # 先央视数字频道
     for name in TARGET_CCTV_ORDER:
         if name in best_map:
             result.append((name, best_map[name][0]))
 
-    # 再 CHC 频道
     for name in TARGET_CHC_ORDER:
         if name in best_map:
             result.append((name, best_map[name][0]))
@@ -408,10 +389,6 @@ async def fetch_best_cctv_channels():
 # ===================== 把抓取频道插入 BB 的央视分组最后 =====================
 
 def append_cctv_channels_to_bb(bb_content, extra_channels):
-    """
-    extra_channels: [(name, url), ...]
-    插入到 BB.m3u 里央视分组的最后面
-    """
     if not extra_channels:
         return bb_content
 
@@ -521,14 +498,12 @@ def main():
     tw_content = download(TW_M3U_URL)
     tw_channels = parse_m3u_full(tw_content)
 
-    # 去重
     hk_channels = deduplicate(hk_channels)
     tw_channels = deduplicate(tw_channels)
 
     print("HK:", len(hk_channels))
     print("TW:", len(tw_channels))
 
-    # 抓取目标频道
     extra_cctv_channels = asyncio.run(fetch_best_cctv_channels())
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -536,7 +511,6 @@ def main():
     output = '#EXTM3U\n\n'
     output += f"# joker.m3u\n# 生成时间: {timestamp}\n\n"
 
-    # 合并 BB，并把抓取频道插入 BB 的央视分组最后
     try:
         with open(BB_FILE, "r", encoding="utf-8") as f:
             bb_content = f.read()
@@ -549,14 +523,12 @@ def main():
     except Exception as e:
         print("未找到或无法读取 BB.m3u，跳过：", e)
 
-    # HK
     if hk_channels:
         output += "# HK\n"
         for name, extinf, url in hk_channels:
             output += normalize_group(extinf, "HK") + "\n"
             output += url + "\n"
 
-    # TW
     if tw_channels:
         output += "\n# TW\n"
         for name, extinf, url in tw_channels:
