@@ -5,154 +5,193 @@ import requests
 import re
 import time
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# ===================== 基础配置 =====================
+# ===================== 配置 =====================
 
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
 TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
-EXTRA_M3U_URL = "https://live.45678888.xyz/sub?kbQyhXwA=m3u"
+
+EXTRA_URLS = [
+    "https://tzdr.com/iptv.txt",
+    "https://live.kilvn.com/iptv.m3u",
+    "https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.m3u",
+    "https://gh-proxy.com/raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u",
+    "http://175.178.251.183:6689/live.m3u",
+    "https://m3u.ibert.me/ycl_iptv.m3u",
+    "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg1.m3u",
+    "https://2026.xymm.ccwu.cc"
+]
 
 OUTPUT_FILE = "Gather.m3u"
 BB_FILE = "BB.m3u"
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
-# ===================== 频道定义 =====================
-
 CCTV_TARGET = [
-    "世界地理", "兵器科技", "怀旧剧场", "第一剧场",
-    "女性时尚", "风云足球", "风云音乐", "央视台球"
+    "世界地理","兵器科技","怀旧剧场","第一剧场",
+    "女性时尚","风云足球","风云音乐","央视台球"
 ]
 
 CHC_TARGET = [
-    "CHC影迷电影", "CHC家庭影院", "CHC动作电影",
-    "HC家庭影院", "淘电影", "萌宠TV"
+    "CHC影迷电影","CHC家庭影院","CHC动作电影",
+    "HC家庭影院","淘电影","萌宠TV"
 ]
 
-# ===================== 工具函数 =====================
+BAD_KEYWORDS = ["测试", "购物", "广告"]
 
-def download(url):
-    return requests.get(url, timeout=30).text
+# ===================== 下载 =====================
 
+def download(url, retry=2):
+    headers = {"User-Agent": "Mozilla/5.0"}
+    for i in range(retry):
+        try:
+            r = requests.get(url, headers=headers, timeout=15)
+            if r.status_code == 200:
+                return r.text
+        except:
+            print(f"重试 {i+1} 失败: {url}")
+    print(f"跳过: {url}")
+    return ""
+
+# ===================== 解析 =====================
 
 def parse_name(extinf):
     return extinf.split(",", 1)[-1].strip()
 
-
 def parse_m3u(content):
     lines = content.splitlines()
-    data = []
-    ext = None
+    data, ext = [], None
 
-    for line in lines:
-        line = line.strip()
-        if line.startswith("#EXTINF"):
-            ext = line
-        elif line.startswith("http") and ext:
+    for l in lines:
+        l = l.strip()
+        if l.startswith("#EXTINF"):
+            ext = l
+        elif l.startswith("http") and ext:
             name = parse_name(ext)
-            data.append((name, ext, line))
+            if not any(x in name for x in BAD_KEYWORDS):
+                data.append((name, ext, l))
     return data
 
+def parse_txt(content):
+    data = []
+    for l in content.splitlines():
+        if "," in l and "http" in l:
+            name, url = l.split(",", 1)
+            if not any(x in name for x in BAD_KEYWORDS):
+                ext = f'#EXTINF:-1 group-title="未知",{name.strip()}'
+                data.append((name.strip(), ext, url.strip()))
+    return data
 
-def deduplicate(channels):
-    seen = set()
-    out = []
-    for n, e, u in channels:
+def load_extra():
+    all_data = []
+    for url in EXTRA_URLS:
+        print("抓取:", url)
+        raw = download(url)
+        if not raw:
+            continue
+        try:
+            if "#EXTINF" in raw:
+                all_data += parse_m3u(raw)
+            else:
+                all_data += parse_txt(raw)
+        except:
+            print("解析失败:", url)
+    return all_data
+
+# ===================== 工具 =====================
+
+def dedup(data):
+    seen, out = set(), []
+    for n, e, u in data:
         if u not in seen:
             seen.add(u)
             out.append((n, e, u))
     return out
 
-
-def normalize_group(extinf, group):
+def set_group(extinf, group):
     if 'group-title="' in extinf:
         return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
     return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"')
 
+# ===================== 并发测速 =====================
 
-# ===================== 嗅探测速 =====================
-
-def check_speed(url):
+def check(url):
     try:
         start = time.time()
-        r = requests.get(url, timeout=5, stream=True)
+        r = requests.get(url, timeout=5, stream=True, headers={"User-Agent": "Mozilla/5.0"})
         if r.status_code == 200:
-            return time.time() - start
+            return url, time.time() - start
     except:
         pass
-    return 999
-
+    return url, 999
 
 def pick_best(urls):
-    best = None
+    best_url = None
     best_time = 999
 
-    for u in urls:
-        t = check_speed(u)
-        if t < best_time:
-            best_time = t
-            best = u
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futures = [executor.submit(check, u) for u in urls]
 
-    return best
+        for f in as_completed(futures):
+            url, t = f.result()
+            if t < best_time:
+                best_time = t
+                best_url = url
 
+    return best_url
 
 # ===================== 主程序 =====================
 
 def main():
-    print("下载主源...")
+    print("主源...")
     main_data = parse_m3u(download(SOURCE_URL))
 
-    print("下载 TW...")
+    print("TW...")
     tw_data = parse_m3u(download(TW_M3U_URL))
 
-    print("下载扩展源...")
-    extra_data = parse_m3u(download(EXTRA_M3U_URL))
+    print("扩展源...")
+    extra_data = load_extra()
 
-    # ================= HK =================
-    hk = []
-    for n, e, u in main_data:
-        if HK_SOURCE_GROUP in e:
-            hk.append((n, e, u))
+    # HK
+    hk = [x for x in main_data if HK_SOURCE_GROUP in x[1]]
+    hk = dedup(hk)
 
-    hk = deduplicate(hk)
+    # TW
+    tw = dedup(tw_data)
 
-    # ================= TW =================
-    tw = deduplicate(tw_data)
-
-    # ================= 央视 =================
-    cctv_dict = {}
-
+    # 央视
+    cctv_map = {}
     for n, e, u in extra_data:
         if n in CCTV_TARGET:
-            cctv_dict.setdefault(n, []).append((e, u))
+            cctv_map.setdefault(n, []).append((e, u))
 
-    cctv_final = []
+    cctv = []
     for name in CCTV_TARGET:
-        if name in cctv_dict:
-            best = pick_best([u for _, u in cctv_dict[name]])
-            ext = cctv_dict[name][0][0]
-            cctv_final.append((name, ext, best))
+        if name in cctv_map:
+            best = pick_best([u for _, u in cctv_map[name]])
+            ext = cctv_map[name][0][0]
+            cctv.append((name, ext, best))
 
-    # ================= CHC =================
-    chc_dict = {}
-
+    # CHC
+    chc_map = {}
     for n, e, u in extra_data:
         if n in CHC_TARGET:
-            chc_dict.setdefault(n, []).append((e, u))
+            chc_map.setdefault(n, []).append((e, u))
 
-    chc_final = []
+    chc = []
     for name in CHC_TARGET:
-        if name in chc_dict:
-            best = pick_best([u for _, u in chc_dict[name]])
-            ext = chc_dict[name][0][0]
-            chc_final.append((name, ext, best))
+        if name in chc_map:
+            best = pick_best([u for _, u in chc_map[name]])
+            ext = chc_map[name][0][0]
+            chc.append((name, ext, best))
 
     # ================= 输出 =================
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     out = "#EXTM3U\n\n"
-    out += f"# 生成时间 {now}\n\n"
+    out += f"# 更新时间 {now}\n\n"
 
     # BB
     try:
@@ -167,28 +206,27 @@ def main():
     # HK
     out += "# HK\n"
     for n, e, u in hk:
-        out += normalize_group(e, "HK") + "\n" + u + "\n"
+        out += set_group(e, "HK") + "\n" + u + "\n"
 
     # TW
     out += "\n# TW\n"
     for n, e, u in tw:
-        out += normalize_group(e, "TW") + "\n" + u + "\n"
+        out += set_group(e, "TW") + "\n" + u + "\n"
 
-    # 浙江后插入 CHC（简单策略：直接插入新组）
+    # CHC
     out += "\n# CHC\n"
-    for n, e, u in chc_final:
-        out += normalize_group(e, "CHC") + "\n" + u + "\n"
+    for n, e, u in chc:
+        out += set_group(e, "CHC") + "\n" + u + "\n"
 
     # 央视（最后）
-    out += "\n# 央视补充\n"
-    for n, e, u in cctv_final:
-        out += normalize_group(e, "央视") + "\n" + u + "\n"
+    out += "\n# 央视\n"
+    for n, e, u in cctv:
+        out += set_group(e, "央视") + "\n" + u + "\n"
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(out)
 
-    print("✅ 完成：Gather.m3u")
-
+    print("✅ 完成")
 
 if __name__ == "__main__":
     main()
