@@ -197,6 +197,7 @@ def main():
     out = "#EXTM3U\n\n"
     out += f"# 更新时间 {now}\n\n"
 
+    # 先添加 BB.m3u 的内容
     try:
         with open(BB_FILE, encoding="utf-8") as f:
             for l in f:
@@ -206,8 +207,14 @@ def main():
     except:
         pass
 
+    # CHC（修复台标）- 放在 BB.m3u 后面
+    out += "# CHC\n"
+    for n, e, u in chc:
+        e = fix_logo(n, e)
+        out += set_group(e, "CHC") + "\n" + u + "\n"
+
     # HK
-    out += "# HK\n"
+    out += "\n# HK\n"
     for n, e, u in hk:
         out += set_group(e, "HK") + "\n" + u + "\n"
 
@@ -215,12 +222,6 @@ def main():
     out += "\n# TW\n"
     for n, e, u in tw:
         out += set_group(e, "TW") + "\n" + u + "\n"
-
-    # CHC（修复台标）
-    out += "\n# CHC\n"
-    for n, e, u in chc:
-        e = fix_logo(n, e)
-        out += set_group(e, "CHC") + "\n" + u + "\n"
 
     # 央视
     out += "\n# 央视\n"
