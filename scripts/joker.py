@@ -1,106 +1,189 @@
-# 🔥 终极秒开版（核心改造：RTP优先 + HTTP测速 + 强制保底）
+# -*- coding: utf-8 -*-
+# 🔥 Joker IPTV 毕业版
+# 特性：
+# - 双解析（M3U + TXT）
+# - RTP 秒开优先
+# - CHC 强制补全
+# - CCTV / CHC 最优选路
+# - 去重 + 抗脏数据
+# - 适配 GitHub Actions
+
+import re
+import time
+import asyncio
+import aiohttp
+import requests
+
+TEST_TIMEOUT = 10
+
+# ================== 名称标准化 ==================
+
+def normalize_name(name):
+    n = (name or "").lower().strip()
+    n = re.sub(r"[\s\-_.·]", "", n)
+    n = re.sub(r"(hd|sd|fhd|uhd|4k|标清|高清|超清|频道)", "", n)
+    return n
+
+# ================== CHC / CCTV 识别 ==================
+
+def match_target(name):
+    n = normalize_name(name)
+
+    # 🔥 CHC 强制匹配（终极版）
+    if "影迷电影" in n:
+        return "CHC影迷电影"
+    if "家庭影院" in n:
+        return "CHC家庭影院"
+    if "家庭电影" in n:
+        return "CHC家庭电影"
+    if "动作电影" in n:
+        return "CHC动作电影"
+    if "高清电影" in n:
+        return "CHC高清电影"
+
+    # CCTV 精准
+    if "世界地理" in n:
+        return "CCTV世界地理"
+    if "兵器" in n:
+        return "CCTV兵器科技"
+    if "女性" in n:
+        return "CCTV女性时尚"
+    if "怀旧" in n:
+        return "CCTV怀旧剧场"
+    if "文化" in n:
+        return "CCTV文化精品"
+    if "第一剧场" in n:
+        return "CCTV第一剧场"
+    if "风云足球" in n:
+        return "CCTV风云足球"
+    if "风云音乐" in n:
+        return "CCTV风云音乐"
+    if "台球" in n:
+        return "CCTV央视台球"
+
+    return None
+
+# ================== 双解析 ==================
+
+def parse_m3u(content):
+    result = []
+    name = ""
+    for line in content.splitlines():
+        line = line.strip()
+        if line.startswith("#EXTINF"):
+            if "," in line:
+                name = line.split(",", 1)[1]
+        elif line.startswith("http"):
+            result.append((name, line))
+    return result
+
+
+def parse_txt(content):
+    result = []
+    for line in content.splitlines():
+        if "," in line:
+            a, b = line.split(",", 1)
+            if b.startswith("http"):
+                result.append((a.strip(), b.strip()))
+    return result
+
+# ================== 测速 ==================
 
 async def test_stream(session, url):
-    start = time.time()
-
-    # ✅ 1. RTP 直接秒过（绝对关键）
     if "/rtp/" in url:
-        return True, 0.05
+        return True, 0.01
 
+    start = time.time()
     try:
         async with session.get(url, timeout=TEST_TIMEOUT) as r:
             if r.status in (200, 206):
                 return True, time.time() - start
     except:
         pass
-
     return False, None
 
+# ================== 主抓取 ==================
 
-async def fetch_best_cctv_channels():
+async def fetch(urls):
     all_valid = []
-    raw_candidates = []  # ✅ 用于保底
+    raw = []
 
-    for s in CCTV_SOURCES:
-        is_m3u = is_m3u_source(s)
-        print(f"抓取目标频道源: {s} | is_m3u={is_m3u}")
+    timeout = aiohttp.ClientTimeout(total=30)
+    async with aiohttp.ClientSession(timeout=timeout) as session:
 
-        try:
-            timeout = aiohttp.ClientTimeout(total=40)
-            async with aiohttp.ClientSession(timeout=timeout) as session:
-                async with session.get(s) as r:
+        for url in urls:
+            try:
+                async with session.get(url) as r:
                     content = await r.text()
 
-                entries = extract_urls_from_m3u(content) if is_m3u else extract_urls_from_txt(content)
+                m3u = parse_m3u(content)
+                txt = parse_txt(content)
+                entries = m3u + txt
 
-                # ✅ 记录原始候选（用于保底）
-                raw_candidates.extend(entries)
+                # 去重
+                seen = set()
+                entries = [(c, u) for c, u in entries if not (u in seen or seen.add(u))]
+
+                raw.extend(entries)
 
                 tasks = [test_stream(session, u) for _, u in entries]
                 results = await asyncio.gather(*tasks, return_exceptions=True)
 
-                for result, (ch, u) in zip(results, entries):
-                    if isinstance(result, Exception):
+                for (ch, u), res in zip(entries, results):
+                    if isinstance(res, Exception):
                         continue
-                    ok, t = result
+                    ok, t = res
                     if ok:
                         all_valid.append((ch, u, t))
-        except:
-            continue
 
-    best_map = {}
+            except:
+                continue
 
-    # ✅ 2. 优先选最快
-    for ch, url, latency in all_valid:
-        if contains_date(ch) or contains_date(url):
-            continue
+    return all_valid, raw
 
+# ================== 选择策略 ==================
+
+def select_best(all_valid, raw):
+    best = {}
+
+    # 优先测速
+    for ch, url, t in all_valid:
         key = match_target(ch)
         if not key:
             continue
 
-        # RTP 优先级最高
         priority = 0 if "/rtp/" in url else 1
 
-        if key not in best_map:
-            best_map[key] = (url, latency, priority)
-        else:
-            old_url, old_latency, old_priority = best_map[key]
+        if key not in best or priority < best[key][2] or t < best[key][1]:
+            best[key] = (url, t, priority)
 
-            if priority < old_priority or (priority == old_priority and latency < old_latency):
-                best_map[key] = (url, latency, priority)
-
-    # ✅ 3. 保底机制（防止一个都没有）
-    for ch, url in raw_candidates:
+    # 🔥 CHC 强制补全
+    for ch, url in raw:
         key = match_target(ch)
         if not key:
             continue
 
-        if key not in best_map:
-            best_map[key] = (url, 999, 2)  # 最低优先级
+        if key.startswith("CHC") and key not in best:
+            best[key] = (url, 999, 0)
 
-    result = []
+    return best
 
-    # ✅ 4. 按顺序输出
-    for name in TARGET_CCTV_ORDER:
-        if name in best_map:
-            result.append((name, best_map[name][0]))
+# ================== 运行 ==================
 
-    for name in TARGET_CHC_ORDER:
-        if name in best_map:
-            result.append((name, best_map[name][0]))
+async def main():
+    sources = [
+        "https://live.45678888.xyz/sub?kbQyhXwA=m3u",
+        "https://tzdr.com/iptv.txt",
+        "https://live.kilvn.com/iptv.m3u"
+    ]
 
-    print("最终命中频道数:", len(result))
-    return result
+    valid, raw = await fetch(sources)
+    best = select_best(valid, raw)
+
+    print("\n===== 结果 =====")
+    for k, v in best.items():
+        print(k, "->", v[0])
 
 
-# ✅ 额外增强（推荐）
-def normalize_name_for_match(name):
-    n = (name or "").strip().lower()
-    n = re.sub(r"[\s\-_·]", "", n)
-
-    # 🚨 去掉所有画质标记
-    n = re.sub(r"(hd|sd|fhd|uhd|4k|标清|高清|超清|频道)", "", n)
-
-    n = n.replace("（", "(").replace("）", ")")
-    return n
+if __name__ == "__main__":
+    asyncio.run(main())
