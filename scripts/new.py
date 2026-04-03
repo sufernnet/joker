@@ -7,7 +7,7 @@
 1. 不合并 BB.m3u
 2. 不合并 TW.m3u
 3. 不从指定 workers 源提取频道
-4. 抓取 CCTV1~CCTV17，分组为：央视
+4. 抓取 CCTV1~CCTV17 + CCTV5+，分组为：央视
 5. 抓取各省卫视，分组为：卫视
 6. 抓取 9 个 4K 卫视频道，分组为：4K
 7. 抓取 CHC 频道，分组为：电影频道
@@ -16,7 +16,6 @@
 10. 输出文件为：new.m3u
 """
 
-import os
 import re
 import time
 import asyncio
@@ -29,6 +28,11 @@ from datetime import datetime
 OUTPUT_FILE = "new.m3u"
 TEST_TIMEOUT = 10
 LOGO_BASE = "https://raw.githubusercontent.com/xiasufern/AA/main/icon/"
+
+# 明确排除的来源关键字
+BLOCKED_SOURCE_KEYWORDS = [
+    "iptv.catvod.com",
+]
 
 SOURCES = [
     "https://tzdr.com/iptv.txt",
@@ -43,7 +47,7 @@ SOURCES = [
 
 # 输出顺序
 CCTV_ORDER = [
-    "CCTV1", "CCTV2", "CCTV3", "CCTV4", "CCTV5", "CCTV6", "CCTV7",
+    "CCTV1", "CCTV2", "CCTV3", "CCTV4", "CCTV5", "CCTV5+", "CCTV6", "CCTV7",
     "CCTV8", "CCTV9", "CCTV10", "CCTV11", "CCTV12", "CCTV13",
     "CCTV14", "CCTV15", "CCTV16", "CCTV17"
 ]
@@ -100,11 +104,12 @@ HK_ORDER = [
 OUTPUT_ORDER = CCTV_ORDER + SAT_ORDER + FOURK_ORDER + CHC_ORDER + DIGITAL_ORDER + HK_ORDER
 
 # 匹配优先级
-# 注意：4K 要在普通卫视前面匹配，否则“浙江卫视4K”会先匹配成“浙江卫视”
+# 4K 在普通卫视前
+# CCTV17..1 反向匹配，避免 CCTV1 误吃 CCTV10/CCTV11
 MATCH_ORDER = FOURK_ORDER + CCTV_ORDER[::-1] + CHC_ORDER + DIGITAL_ORDER + HK_ORDER + SAT_ORDER
 
 CHANNEL_SPECS = {
-    # ===================== CCTV1~17 =====================
+    # ===================== CCTV1~17 + CCTV5+ =====================
     "CCTV1": {
         "group": "央视",
         "aliases": ["cctv1", "cctv-1", "cctv01", "央视1", "中央1", "中央一台", "央视综合", "cctv1综合"]
@@ -124,6 +129,10 @@ CHANNEL_SPECS = {
     "CCTV5": {
         "group": "央视",
         "aliases": ["cctv5", "cctv-5", "cctv05", "央视5", "中央5", "央视体育", "cctv5体育"]
+    },
+    "CCTV5+": {
+        "group": "央视",
+        "aliases": ["cctv5+", "cctv-5+", "cctv5plus", "央视5+", "体育赛事", "央视体育赛事", "cctv体育赛事"]
     },
     "CCTV6": {
         "group": "央视",
@@ -240,58 +249,15 @@ CHANNEL_SPECS = {
     "兵器科技": {"group": "数字", "aliases": ["cctv兵器科技", "央视兵器科技", "兵器科技", "cctv兵器"]},
 
     # ===================== HK =====================
-    "凤凰中文": {"group": "HK", "aliases": ["凤凰中文", "凤凰中文台", "phoenix chinese"]},
-    "凤凰资讯": {"group": "HK", "aliases": ["凤凰资讯", "凤凰资讯台", "phoenix info"]},
-    "凤凰香港": {"group": "HK", "aliases": ["凤凰香港", "phoenix hongkong", "phoenix hong kong"]},
+    "凤凰中文": {"group": "HK", "aliases": ["凤凰中文", "凤凰中文台", "phoenixchinese", "phoenix chinese"]},
+    "凤凰资讯": {"group": "HK", "aliases": ["凤凰资讯", "凤凰资讯台", "phoenixinfo", "phoenix info"]},
+    "凤凰香港": {"group": "HK", "aliases": ["凤凰香港", "phoenixhongkong", "phoenix hongkong", "phoenix hong kong"]},
 }
 
 # ===================== 工具函数 =====================
 
-def download(url):
-    r = requests.get(
-        url,
-        timeout=30,
-        headers={"User-Agent": "Mozilla/5.0"}
-    )
-    r.raise_for_status()
-    return r.text
-
-
-def parse_name_from_extinf(extinf_line):
-    if "," in extinf_line:
-        return extinf_line.split(",", 1)[1].strip()
-    return ""
-
-
-def parse_m3u_full(content):
-    """
-    返回:
-    [
-        (name, extinf, url),
-        ...
-    ]
-    """
-    lines = content.splitlines()
-    channels = []
-
-    current_extinf = None
-    current_name = None
-
-    for line in lines:
-        line = line.strip()
-
-        if not line:
-            continue
-
-        if line.startswith("#EXTINF"):
-            current_extinf = line
-            current_name = parse_name_from_extinf(line)
-
-        elif line.startswith(("http://", "https://")):
-            if current_extinf and current_name:
-                channels.append((current_name, current_extinf, line))
-
-    return channels
+def contains_date(text):
+    return re.search(r"\d{4}-\d{2}-\d{2}", text or "") is not None
 
 
 def extract_urls_from_txt(content):
@@ -320,10 +286,6 @@ def extract_urls_from_m3u(content):
     return urls
 
 
-def contains_date(text):
-    return re.search(r"\d{4}-\d{2}-\d{2}", text or "") is not None
-
-
 def normalize_text(text):
     if not text:
         return ""
@@ -345,7 +307,7 @@ def normalize_text(text):
 def is_alias_match(norm_name, alias):
     a = normalize_text(alias)
 
-    # 对 CCTV 数字编号做防误匹配，避免 CCTV1 匹配到 CCTV10
+    # 避免 CCTV1 错配 CCTV10/CCTV11...
     if re.fullmatch(r"cctv\d+", a):
         return re.search(rf"{re.escape(a)}(?!\d)", norm_name) is not None
 
@@ -355,7 +317,6 @@ def is_alias_match(norm_name, alias):
 def match_target(name):
     norm_name = normalize_text(name)
 
-    # 先按优先级顺序匹配
     for std_name in MATCH_ORDER:
         spec = CHANNEL_SPECS.get(std_name, {})
         for alias in spec.get("aliases", []):
@@ -377,6 +338,10 @@ def build_extinf(std_name):
     )
 
 
+def is_blocked_source(url):
+    u = (url or "").lower()
+    return any(k.lower() in u for k in BLOCKED_SOURCE_KEYWORDS)
+
 # ===================== 异步测速 =====================
 
 async def test_stream(session, url):
@@ -392,6 +357,10 @@ async def test_stream(session, url):
 
 async def read_and_test_file(url, is_m3u):
     try:
+        if is_blocked_source(url):
+            print(f"跳过屏蔽源: {url}")
+            return []
+
         timeout = aiohttp.ClientTimeout(total=30)
         async with aiohttp.ClientSession(timeout=timeout) as session:
             async with session.get(url) as r:
@@ -399,7 +368,6 @@ async def read_and_test_file(url, is_m3u):
 
             entries = extract_urls_from_m3u(content) if is_m3u else extract_urls_from_txt(content)
 
-            # 先按目标频道名过滤，再测速
             filtered = []
             for ch, u in entries:
                 if contains_date(ch) or contains_date(u):
@@ -431,6 +399,10 @@ async def fetch_best_channels():
     all_valid = []
 
     for s in SOURCES:
+        if is_blocked_source(s):
+            print(f"跳过屏蔽源: {s}")
+            continue
+
         is_m3u = s.endswith((".m3u", ".m3u8"))
         print(f"抓取频道源: {s}")
         data = await read_and_test_file(s, is_m3u)
@@ -450,7 +422,6 @@ async def fetch_best_channels():
     print("已获取到的目标频道数量:", len(result))
     return result
 
-
 # ===================== 输出 =====================
 
 def generate_output(channels, filename):
@@ -466,12 +437,12 @@ def generate_output(channels, filename):
 
     print(f"✅ {filename} 生成完成")
 
-
 # ===================== 主程序 =====================
 
 def main():
     print("开始抓取目标频道...")
     print("输出文件:", OUTPUT_FILE)
+    print("屏蔽源关键字:", BLOCKED_SOURCE_KEYWORDS)
 
     channels = asyncio.run(fetch_best_channels())
     generate_output(channels, OUTPUT_FILE)
