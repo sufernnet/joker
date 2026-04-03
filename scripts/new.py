@@ -131,8 +131,8 @@ CHANNEL_SPECS = {
     "文化精品":{"group":"数字","aliases":["cctv文化精品","文化精品","央视文化精品"]},
     "兵器科技":{"group":"数字","aliases":["cctv兵器科技","央视兵器科技","兵器科技","cctv兵器"]},
 
-    "凤凰中文":{"group":"HK","aliases":["凤凰中文"]},
-    "凤凰资讯":{"group":"HK","aliases":["凤凰资讯"]},
+    "凤凰中文":{"group":"HK","aliases":["凤凰中文","凤凰卫视中文"]},
+    "凤凰资讯":{"group":"HK","aliases":["凤凰资讯","凤凰卫视资讯"]},
     "凤凰香港":{"group":"HK","aliases":["凤凰香港"]},
 }
 
