@@ -84,6 +84,7 @@ TARGET_CCTV_ORDER = [
 TARGET_DIRECT_CHC_ORDER = [
     "CHC动作电影",
     "CHC高清电影",
+    "CHC家庭电影",
     "CHC家庭影院",
     "CHC影迷电影",
     "淘电影",
@@ -204,6 +205,46 @@ def parse_m3u_full(content):
     return channels
 
 
+def parse_txt_full(content):
+    """
+    解析 name,url 风格
+    返回 [(name, extinf, url)]
+    """
+    channels = []
+    for line in content.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        if "," in line and not line.startswith("#"):
+            parts = line.split(",", 1)
+            if len(parts) == 2:
+                name = parts[0].strip()
+                url = parts[1].strip()
+                if url.startswith(("http://", "https://")):
+                    extinf = f'#EXTINF:-1,{name}'
+                    channels.append((name, extinf, url))
+    return channels
+
+
+def parse_any_playlist(content):
+    """
+    同时兼容 m3u / txt
+    """
+    m3u_channels = parse_m3u_full(content)
+    txt_channels = parse_txt_full(content)
+
+    all_channels = m3u_channels + txt_channels
+
+    # 按 url 去重
+    seen = set()
+    result = []
+    for name, extinf, url in all_channels:
+        if url not in seen:
+            seen.add(url)
+            result.append((name, extinf, url))
+    return result
+
+
 def contains_date(text):
     return re.search(r"\d{4}-\d{2}-\d{2}", text or "") is not None
 
@@ -276,14 +317,33 @@ def match_direct_chc(name):
     n = normalize_name_for_match(name)
 
     alias_map = {
-        "CHC动作电影": ["chc动作电影", "动作电影", "chc动作", "动作电影hd", "chc动作电影hd"],
-        "CHC高清电影": ["chc高清电影", "高清电影", "chc高清", "高清电影hd", "chc高清电影hd"],
-        "CHC家庭影院": ["chc家庭影院", "家庭影院", "家庭影院hd", "chc家庭影院hd"],
-        "CHC影迷电影": ["chc影迷电影", "影迷电影", "影迷电影hd", "chc影迷电影hd"],
-        "淘电影": ["淘电影"],
-        "淘剧场": ["淘剧场"],
-        "淘娱乐": ["淘娱乐"],
-        "萌宠TV": ["萌宠tv", "萌宠tvhd", "萌宠"],
+        "CHC动作电影": [
+            "chc动作电影", "动作电影", "chc动作", "动作电影hd", "chc动作电影hd"
+        ],
+        "CHC高清电影": [
+            "chc高清电影", "高清电影", "chc高清", "高清电影hd", "chc高清电影hd"
+        ],
+        "CHC家庭电影": [
+            "chc家庭电影", "家庭电影", "家庭电影hd", "chc家庭电影hd"
+        ],
+        "CHC家庭影院": [
+            "chc家庭影院", "家庭影院", "家庭影院hd", "chc家庭影院hd"
+        ],
+        "CHC影迷电影": [
+            "chc影迷电影", "影迷电影", "影迷电影hd", "chc影迷电影hd"
+        ],
+        "淘电影": [
+            "淘电影", "淘电影hd", "淘电影频道"
+        ],
+        "淘剧场": [
+            "淘剧场", "淘剧场hd", "淘剧场频道"
+        ],
+        "淘娱乐": [
+            "淘娱乐", "淘娱乐hd", "淘娱乐频道"
+        ],
+        "萌宠TV": [
+            "萌宠tv", "萌宠tvhd", "萌宠", "萌宠频道"
+        ],
     }
 
     for std_name, aliases in alias_map.items():
@@ -300,6 +360,9 @@ def is_cctv_group(group_name):
 
 
 def normalize_cctv_display_name(name):
+    """
+    把抓取到的央视数字频道名转换成标准输出名
+    """
     mapping = {
         "CCTV世界地理": "世界地理",
         "CCTV央视台球": "央视台球",
@@ -318,6 +381,7 @@ def normalize_direct_chc_display_name(name):
     mapping = {
         "CHC动作电影": "动作电影",
         "CHC高清电影": "高清电影",
+        "CHC家庭电影": "家庭电影",
         "CHC家庭影院": "家庭影院",
         "CHC影迷电影": "影迷电影",
         "淘电影": "淘电影",
@@ -459,10 +523,10 @@ async def fetch_best_cctv_channels():
 def fetch_direct_chc_channels():
     """
     直接从 CHC_DIRECT_SOURCE 解析目标频道，不测速，不改原央视逻辑
+    同时兼容 m3u / txt 风格
     """
     print("直接提取 CHC 分组源:", CHC_DIRECT_SOURCE)
 
-    # 优先用缓存，避免第二次访问同一链接失败
     content = CONTENT_CACHE.get(CHC_DIRECT_SOURCE)
     if not content:
         content = download(CHC_DIRECT_SOURCE)
@@ -471,7 +535,7 @@ def fetch_direct_chc_channels():
         print("CHC 直提源获取失败，跳过 CHC 分组")
         return []
 
-    channels = parse_m3u_full(content)
+    channels = parse_any_playlist(content)
     best_map = {}
 
     for name, extinf, url in channels:
@@ -488,6 +552,8 @@ def fetch_direct_chc_channels():
             result.append(best_map[name])
 
     print("已直接提取到的 CHC 分组频道数量:", len(result))
+    if result:
+        print("CHC 分组提取结果:", [x[0] for x in result])
     return result
 
 
