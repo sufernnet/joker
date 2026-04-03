@@ -11,20 +11,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: 📥 Checkout
+      uses: actions/checkout@v3
 
-    - uses: actions/setup-python@v4
+    - name: 🐍 Python
+      uses: actions/setup-python@v4
       with:
         python-version: '3.9'
 
-    - run: pip install requests
+    - name: 📦 安装依赖
+      run: pip install requests
 
-    - run: python scripts/merge_ff.py
+    - name: 🚀 运行脚本
+      run: python scripts/merge_ff.py
 
-    - name: 提交
+    - name: 📤 提交更新（防冲突版）
       run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git config user.name "github-actions[bot]"
+
         git add Gather.m3u
-        git commit -m "update" || echo "no change"
-        git push
+
+        git diff --cached --quiet && echo "无变化" && exit 0
+
+        git commit -m "🤖 自动更新 Gather.m3u"
+
+        git pull --rebase origin main || exit 0
+
+        git push || exit 0
