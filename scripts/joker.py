@@ -28,8 +28,8 @@ from datetime import datetime
 
 # ===================== 路径配置 =====================
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))   # jokerone/scripts
-ROOT_DIR = os.path.dirname(SCRIPT_DIR)                    # jokerone
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
 TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
@@ -105,16 +105,36 @@ CCTV_SOURCES = [
 
 TEST_TIMEOUT = 10
 
+# 全局缓存，避免重复下载同一个源
+CONTENT_CACHE = {}
+
 # ===================== 工具函数 =====================
 
-def download(url):
-    r = requests.get(
-        url,
-        timeout=30,
-        headers={"User-Agent": "Mozilla/5.0"}
-    )
-    r.raise_for_status()
-    return r.text
+def download(url, retry=3):
+    """
+    同步下载，带简单重试与缓存
+    """
+    if url in CONTENT_CACHE:
+        return CONTENT_CACHE[url]
+
+    last_err = None
+    for i in range(retry):
+        try:
+            r = requests.get(
+                url,
+                timeout=30,
+                headers={"User-Agent": "Mozilla/5.0"}
+            )
+            r.raise_for_status()
+            CONTENT_CACHE[url] = r.text
+            return r.text
+        except Exception as e:
+            last_err = e
+            print(f"下载失败({i+1}/{retry}): {url} -> {e}")
+            time.sleep(1)
+
+    print(f"最终下载失败: {url} -> {last_err}")
+    return None
 
 
 def is_bad_youtube(url):
@@ -125,10 +145,6 @@ def is_bad_youtube(url):
 
 
 def deduplicate(channels):
-    """
-    channels: [(name, extinf, url), ...]
-    按 url 去重
-    """
     seen = set()
     result = []
     for name, extinf, url in channels:
@@ -139,10 +155,6 @@ def deduplicate(channels):
 
 
 def normalize_group(extinf_line, new_group):
-    """
-    把 #EXTINF 行里的 group-title 改成指定分组
-    若没有 group-title，则补上
-    """
     if 'group-title="' in extinf_line:
         extinf_line = re.sub(r'group-title="[^"]*"', f'group-title="{new_group}"', extinf_line)
     else:
@@ -154,9 +166,6 @@ def normalize_group(extinf_line, new_group):
 
 
 def replace_name_in_extinf(extinf_line, new_name):
-    """
-    替换 #EXTINF 行逗号后的显示名称
-    """
     if "," in extinf_line:
         return extinf_line.split(",", 1)[0] + "," + new_name
     return extinf_line
@@ -174,22 +183,13 @@ def parse_group_from_extinf(extinf_line):
 
 
 def parse_m3u_full(content):
-    """
-    返回:
-    [
-        (name, extinf, url),
-        ...
-    ]
-    """
     lines = content.splitlines()
     channels = []
-
     current_extinf = None
     current_name = None
 
     for line in lines:
         line = line.strip()
-
         if not line:
             continue
 
@@ -235,9 +235,6 @@ def extract_urls_from_m3u(content):
 
 
 def normalize_name_for_match(name):
-    """
-    标准化名称，方便匹配
-    """
     n = (name or "").strip().lower()
     n = n.replace(" ", "").replace("-", "").replace("_", "")
     n = n.replace("（", "(").replace("）", ")")
@@ -303,9 +300,6 @@ def is_cctv_group(group_name):
 
 
 def normalize_cctv_display_name(name):
-    """
-    把抓取到的央视数字频道名转换成标准输出名
-    """
     mapping = {
         "CCTV世界地理": "世界地理",
         "CCTV央视台球": "央视台球",
@@ -347,9 +341,6 @@ def build_cctv_extinf(name, group_name="央视"):
 
 
 def build_direct_chc_extinf(name, old_extinf=None):
-    """
-    CHC 分组统一标准化输出
-    """
     std_name = normalize_direct_chc_display_name(name)
     logo_url = f"https://raw.githubusercontent.com/xiasufern/AA/main/icon/{std_name}.png"
 
@@ -398,26 +389,33 @@ async def test_stream(session, url):
 
 async def read_and_test_file(url, is_m3u):
     try:
+        if url in CONTENT_CACHE:
+            content = CONTENT_CACHE[url]
+        else:
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.get(url) as r:
+                    content = await r.text()
+                    CONTENT_CACHE[url] = content
+
+        entries = extract_urls_from_m3u(content) if is_m3u else extract_urls_from_txt(content)
+
         timeout = aiohttp.ClientTimeout(total=30)
         async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.get(url) as r:
-                content = await r.text()
-
-            entries = extract_urls_from_m3u(content) if is_m3u else extract_urls_from_txt(content)
-
             tasks = [test_stream(session, u) for _, u in entries]
             results = await asyncio.gather(*tasks, return_exceptions=True)
 
-            valid = []
-            for result, (ch, u) in zip(results, entries):
-                if isinstance(result, Exception):
-                    continue
-                ok, t = result
-                if ok:
-                    valid.append((ch, u, t))
+        valid = []
+        for result, (ch, u) in zip(results, entries):
+            if isinstance(result, Exception):
+                continue
+            ok, t = result
+            if ok:
+                valid.append((ch, u, t))
 
-            return valid
-    except:
+        return valid
+    except Exception as e:
+        print(f"读取并测速失败: {url} -> {e}")
         return []
 
 
@@ -461,16 +459,19 @@ async def fetch_best_cctv_channels():
 def fetch_direct_chc_channels():
     """
     直接从 CHC_DIRECT_SOURCE 解析目标频道，不测速，不改原央视逻辑
-    返回：
-    [
-      (std_name, extinf, url),
-      ...
-    ]
     """
     print("直接提取 CHC 分组源:", CHC_DIRECT_SOURCE)
-    content = download(CHC_DIRECT_SOURCE)
-    channels = parse_m3u_full(content)
 
+    # 优先用缓存，避免第二次访问同一链接失败
+    content = CONTENT_CACHE.get(CHC_DIRECT_SOURCE)
+    if not content:
+        content = download(CHC_DIRECT_SOURCE)
+
+    if not content:
+        print("CHC 直提源获取失败，跳过 CHC 分组")
+        return []
+
+    channels = parse_m3u_full(content)
     best_map = {}
 
     for name, extinf, url in channels:
@@ -493,10 +494,6 @@ def fetch_direct_chc_channels():
 # ===================== 把央视数字频道插入 BB 的央视分组最后 =====================
 
 def append_cctv_channels_to_bb(bb_content, extra_channels):
-    """
-    extra_channels: [(name, url), ...]
-    插入到 BB.m3u 里央视分组的最后面
-    """
     if not extra_channels:
         return bb_content
 
@@ -566,6 +563,10 @@ def main():
 
     print("下载源...")
     content = download(SOURCE_URL)
+    if not content:
+        print("主源下载失败，终止")
+        return
+
     lines = content.splitlines()
 
     hk_channels = []
@@ -604,9 +605,8 @@ def main():
     # 解析 TW
     print("下载 TW.m3u...")
     tw_content = download(TW_M3U_URL)
-    tw_channels = parse_m3u_full(tw_content)
+    tw_channels = parse_m3u_full(tw_content) if tw_content else []
 
-    # 去重
     hk_channels = deduplicate(hk_channels)
     tw_channels = deduplicate(tw_channels)
 
