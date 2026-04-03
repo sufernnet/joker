@@ -11,10 +11,9 @@ Gather IPTV Generator
 - 去重
 - 合并 BB.m3u
 - 额外抓取：
-  1) 8 个央视频道
-  2) CHC 频道：动作电影、高清电影、家庭电影、家庭影院、影迷电影
-- 插入到 BB.m3u 的央视分组最后面
-- 抓取频道统一按标准格式写入
+  1) 央视频道（世界地理~央视台球，原逻辑不动）
+  2) 从指定源直接提取 CHC/淘系/萌宠TV 频道，放入新建 CHC 分组
+- 插入到 BB.m3u 的央视分组最后面（仅央视数字频道）
 - 输出 joker.m3u（输出到仓库根目录）
 - 保留 tvg-id / tvg-name / tvg-logo
 """
@@ -40,6 +39,9 @@ BB_FILE = os.path.join(ROOT_DIR, "BB.m3u")
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
+# 单独提取 CHC 的源
+CHC_DIRECT_SOURCE = "https://live.45678888.xyz/sub?kbQyhXwA=m3u"
+
 # ===================== 精准剔除 YouTube ID =====================
 
 REMOVE_YT_IDS = [
@@ -51,7 +53,7 @@ REMOVE_YT_IDS = [
     "o_-hSMgpAzs",
 ]
 
-# ===================== 央视频道与 CHC 目标频道 =====================
+# ===================== 央视频道目标 =====================
 
 TARGET_CCTV = {
     "CCTV世界地理",
@@ -77,30 +79,17 @@ TARGET_CCTV_ORDER = [
     "CCTV央视台球"
 ]
 
-TARGET_CHC = {
+# ===================== CHC 分组直提目标 =====================
+
+TARGET_DIRECT_CHC_ORDER = [
     "CHC动作电影",
     "CHC高清电影",
-    "CHC家庭电影",
     "CHC家庭影院",
-    "CHC影迷电影"
-}
-
-TARGET_CHC_ORDER = [
-    "CHC动作电影",
-    "CHC高清电影",
-    "CHC家庭电影",
-    "CHC家庭影院",
-    "CHC影迷电影"
-]
-
-CCTV_SOURCES = [
-    "https://tzdr.com/iptv.txt",
-    "https://live.kilvn.com/iptv.m3u",
-    "https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.m3u",
-    "https://gh-proxy.com/raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u",
-    "http://175.178.251.183:6689/live.m3u",
-    "https://m3u.ibert.me/ycl_iptv.m3u",
-    "https://live.45678888.xyz/sub?kbQyhXwA=m3u"
+    "CHC影迷电影",
+    "淘电影",
+    "淘剧场",
+    "淘娱乐",
+    "萌宠TV",
 ]
 
 TEST_TIMEOUT = 10
@@ -153,6 +142,15 @@ def normalize_group(extinf_line, new_group):
     return extinf_line
 
 
+def replace_name_in_extinf(extinf_line, new_name):
+    """
+    替换 #EXTINF 行逗号后的显示名称
+    """
+    if "," in extinf_line:
+        return extinf_line.split(",", 1)[0] + "," + new_name
+    return extinf_line
+
+
 def parse_name_from_extinf(extinf_line):
     if "," in extinf_line:
         return extinf_line.split(",", 1)[1].strip()
@@ -188,7 +186,7 @@ def parse_m3u_full(content):
             current_extinf = line
             current_name = parse_name_from_extinf(line)
 
-        elif line.startswith("http"):
+        elif line.startswith(("http://", "https://")):
             if current_extinf and current_name:
                 channels.append((current_name, current_extinf, line))
 
@@ -225,30 +223,61 @@ def extract_urls_from_m3u(content):
     return urls
 
 
+def normalize_name_for_match(name):
+    n = (name or "").strip().lower()
+    n = n.replace(" ", "").replace("-", "").replace("_", "")
+    n = n.replace("（", "(").replace("）", ")")
+    n = n.replace("高清", "").replace("标清", "").replace("频道", "")
+    n = n.replace("hd", "").replace("sd", "")
+    return n
+
+
 def match_target(name):
-    n = (name or "").strip()
+    """
+    仅用于央视数字频道匹配（原逻辑保留）
+    """
+    n = normalize_name_for_match(name)
 
-    # 原有8个频道逻辑
-    for k in TARGET_CCTV:
-        if k in n:
-            return k
-
-    # 仅补充兵器科技别名
-    if "兵器科技" in n or "央视兵器科技" in n or "CCTV兵器" in n or "兵器" == n.strip():
-        return "CCTV兵器科技"
-
-    # 新增 CHC 频道匹配
-    chc_alias_map = {
-        "CHC动作电影": ["CHC动作电影", "动作电影", "CHC动作"],
-        "CHC高清电影": ["CHC高清电影", "高清电影", "CHC高清"],
-        "CHC家庭电影": ["CHC家庭电影", "家庭电影"],
-        "CHC家庭影院": ["CHC家庭影院", "家庭影院"],
-        "CHC影迷电影": ["CHC影迷电影", "影迷电影"],
+    cctv_alias_map = {
+        "CCTV世界地理": ["cctv世界地理", "世界地理", "央视世界地理"],
+        "CCTV兵器科技": ["cctv兵器科技", "央视兵器科技", "兵器科技", "cctv兵器", "兵器"],
+        "CCTV女性时尚": ["cctv女性时尚", "女性时尚", "央视女性时尚"],
+        "CCTV怀旧剧场": ["cctv怀旧剧场", "怀旧剧场", "央视怀旧剧场"],
+        "CCTV文化精品": ["cctv文化精品", "文化精品", "央视文化精品"],
+        "CCTV第一剧场": ["cctv第一剧场", "第一剧场", "央视第一剧场"],
+        "CCTV风云足球": ["cctv风云足球", "风云足球", "央视风云足球"],
+        "CCTV风云音乐": ["cctv风云音乐", "风云音乐", "央视风云音乐"],
+        "CCTV央视台球": ["cctv央视台球", "央视台球", "台球"],
     }
 
-    for std_name, aliases in chc_alias_map.items():
+    for std_name, aliases in cctv_alias_map.items():
         for alias in aliases:
-            if alias in n:
+            if normalize_name_for_match(alias) in n:
+                return std_name
+
+    return None
+
+
+def match_direct_chc(name):
+    """
+    单独用于从 CHC_DIRECT_SOURCE 直接提取 CHC / 淘系 / 萌宠TV
+    """
+    n = normalize_name_for_match(name)
+
+    alias_map = {
+        "CHC动作电影": ["chc动作电影", "动作电影", "chc动作", "动作电影hd", "chc动作电影hd"],
+        "CHC高清电影": ["chc高清电影", "高清电影", "chc高清", "高清电影hd", "chc高清电影hd"],
+        "CHC家庭影院": ["chc家庭影院", "家庭影院", "家庭影院hd", "chc家庭影院hd"],
+        "CHC影迷电影": ["chc影迷电影", "影迷电影", "影迷电影hd", "chc影迷电影hd"],
+        "淘电影": ["淘电影"],
+        "淘剧场": ["淘剧场"],
+        "淘娱乐": ["淘娱乐"],
+        "萌宠TV": ["萌宠tv", "萌宠tvhd", "萌宠"],
+    }
+
+    for std_name, aliases in alias_map.items():
+        for alias in aliases:
+            if normalize_name_for_match(alias) in n:
                 return std_name
 
     return None
@@ -271,21 +300,27 @@ def normalize_cctv_display_name(name):
         "CCTV文化精品": "文化精品",
         "CCTV第一剧场": "第一剧场",
         "CCTV风云足球": "风云足球",
+        "CCTV风云音乐": "风云音乐",
         "CCTV兵器科技": "兵器科技",
+    }
+    return mapping.get(name, name.replace("CCTV", "").strip())
 
+
+def normalize_direct_chc_display_name(name):
+    mapping = {
         "CHC动作电影": "动作电影",
         "CHC高清电影": "高清电影",
-        "CHC家庭电影": "家庭电影",
         "CHC家庭影院": "家庭影院",
         "CHC影迷电影": "影迷电影",
+        "淘电影": "淘电影",
+        "淘剧场": "淘剧场",
+        "淘娱乐": "淘娱乐",
+        "萌宠TV": "萌宠TV",
     }
-    return mapping.get(name, name.replace("CCTV", "").replace("CHC", "").strip())
+    return mapping.get(name, name)
 
 
 def build_cctv_extinf(name, group_name="央视"):
-    """
-    生成标准 EXTINF 行
-    """
     std_name = normalize_cctv_display_name(name)
     logo_url = f"https://raw.githubusercontent.com/xiasufern/AA/main/icon/{std_name}.png"
     return (
@@ -297,13 +332,51 @@ def build_cctv_extinf(name, group_name="央视"):
     )
 
 
-# ===================== 抓取与测速逻辑 =====================
+def build_direct_chc_extinf(name, old_extinf=None):
+    """
+    CHC 分组统一标准化输出
+    """
+    std_name = normalize_direct_chc_display_name(name)
+    logo_url = f"https://raw.githubusercontent.com/xiasufern/AA/main/icon/{std_name}.png"
+
+    if old_extinf:
+        extinf = normalize_group(old_extinf, "CHC")
+        extinf = replace_name_in_extinf(extinf, std_name)
+
+        # 替换或补充 tvg-id / tvg-name / tvg-logo
+        if 'tvg-id="' in extinf:
+            extinf = re.sub(r'tvg-id="[^"]*"', f'tvg-id="{std_name}"', extinf)
+        else:
+            extinf = extinf.replace("#EXTINF:-1", f'#EXTINF:-1 tvg-id="{std_name}"', 1)
+
+        if 'tvg-name="' in extinf:
+            extinf = re.sub(r'tvg-name="[^"]*"', f'tvg-name="{std_name}"', extinf)
+        else:
+            extinf = extinf.replace("#EXTINF:-1", f'#EXTINF:-1 tvg-name="{std_name}"', 1)
+
+        if 'tvg-logo="' in extinf:
+            extinf = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{logo_url}"', extinf)
+        else:
+            extinf = extinf.replace("#EXTINF:-1", f'#EXTINF:-1 tvg-logo="{logo_url}"', 1)
+
+        return extinf
+
+    return (
+        f'#EXTINF:-1 '
+        f'tvg-id="{std_name}" '
+        f'tvg-name="{std_name}" '
+        f'tvg-logo="{logo_url}" '
+        f'group-title="CHC",{std_name}'
+    )
+
+
+# ===================== 抓取与测速逻辑（央视数字频道） =====================
 
 async def test_stream(session, url):
     start = time.time()
     try:
         async with session.get(url, timeout=TEST_TIMEOUT) as r:
-            if r.status == 200:
+            if r.status in (200, 206):
                 return True, time.time() - start
     except:
         pass
@@ -336,10 +409,13 @@ async def read_and_test_file(url, is_m3u):
 
 
 async def fetch_best_cctv_channels():
+    """
+    原有 CCTV 世界地理~央视台球 抓取逻辑，不动
+    """
     all_valid = []
 
     for s in CCTV_SOURCES:
-        is_m3u = s.endswith((".m3u", ".m3u8"))
+        is_m3u = s.endswith((".m3u", ".m3u8")) or "m3u" in s.lower()
         print(f"抓取目标频道源: {s}")
         data = await read_and_test_file(s, is_m3u)
         all_valid.extend(data)
@@ -359,21 +435,49 @@ async def fetch_best_cctv_channels():
 
     result = []
 
-    # 先原8个频道
     for name in TARGET_CCTV_ORDER:
         if name in best_map:
             result.append((name, best_map[name][0]))
 
-    # 再 CHC 频道
-    for name in TARGET_CHC_ORDER:
-        if name in best_map:
-            result.append((name, best_map[name][0]))
-
-    print("已获取到的目标频道数量:", len(result))
+    print("已获取到的央视数字频道数量:", len(result))
     return result
 
 
-# ===================== 把抓取频道插入 BB 的央视分组最后 =====================
+# ===================== 直接提取 CHC 分组 =====================
+
+def fetch_direct_chc_channels():
+    """
+    直接从 CHC_DIRECT_SOURCE 解析目标频道，不测速，不改原央视逻辑
+    返回：
+    [
+      (std_name, extinf, url),
+      ...
+    ]
+    """
+    print("直接提取 CHC 分组源:", CHC_DIRECT_SOURCE)
+    content = download(CHC_DIRECT_SOURCE)
+    channels = parse_m3u_full(content)
+
+    best_map = {}
+
+    for name, extinf, url in channels:
+        key = match_direct_chc(name)
+        if not key:
+            continue
+
+        if key not in best_map:
+            best_map[key] = (key, extinf, url)
+
+    result = []
+    for name in TARGET_DIRECT_CHC_ORDER:
+        if name in best_map:
+            result.append(best_map[name])
+
+    print("已直接提取到的 CHC 分组频道数量:", len(result))
+    return result
+
+
+# ===================== 把央视数字频道插入 BB 的央视分组最后 =====================
 
 def append_cctv_channels_to_bb(bb_content, extra_channels):
     """
@@ -496,15 +600,18 @@ def main():
     print("HK:", len(hk_channels))
     print("TW:", len(tw_channels))
 
-    # 抓取目标频道
+    # 抓取央视数字频道（原逻辑）
     extra_cctv_channels = asyncio.run(fetch_best_cctv_channels())
+
+    # 直接提取 CHC 分组
+    direct_chc_channels = fetch_direct_chc_channels()
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     output = '#EXTM3U\n\n'
     output += f"# joker.m3u\n# 生成时间: {timestamp}\n\n"
 
-    # 合并 BB，并把抓取频道插入 BB 的央视分组最后
+    # 合并 BB，并把央视数字频道插入 BB 的央视分组最后
     try:
         with open(BB_FILE, "r", encoding="utf-8") as f:
             bb_content = f.read()
@@ -513,9 +620,17 @@ def main():
         bb_content = append_cctv_channels_to_bb(bb_content, extra_cctv_channels)
 
         output += bb_content.rstrip() + "\n\n"
-        print("已合并 BB.m3u，并插入目标频道")
+        print("已合并 BB.m3u，并插入央视数字频道")
     except Exception as e:
         print("未找到或无法读取 BB.m3u，跳过：", e)
+
+    # 新建 CHC 分组
+    if direct_chc_channels:
+        output += "# CHC\n"
+        for name, extinf, url in direct_chc_channels:
+            output += build_direct_chc_extinf(name, extinf) + "\n"
+            output += url + "\n"
+        output += "\n"
 
     # HK
     if hk_channels:
