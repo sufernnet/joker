@@ -24,7 +24,8 @@ SOURCES = [
     "http://175.178.251.183:6689/live.m3u",
     "https://m3u.ibert.me/ycl_iptv.m3u",
     "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg1.m3u",
-    "https://2026.xymm.ccwu.cc"
+    "https://2026.xymm.ccwu.cc",
+    "http://wangziduoqing.com/yuan/zb.txt"
 ]
 
 CCTV_ORDER = [
