@@ -11,8 +11,8 @@ Gather IPTV Generator
 - 去重
 - 合并 BB.m3u
 - 额外抓取：
-  1) 央视频道（世界地理~央视台球，原逻辑不动）
-  2) 从指定源直接提取 CHC/淘系/萌宠TV 频道，放入新建 CHC 分组
+  1) 央视数字频道（世界地理~央视台球）
+  2) 从指定源直接提取 CHC / 淘系 / 萌宠TV，放入新建 CHC 分组
 - 插入到 BB.m3u 的央视分组最后面（仅央视数字频道）
 - 输出 joker.m3u（输出到仓库根目录）
 - 保留 tvg-id / tvg-name / tvg-logo
@@ -53,7 +53,7 @@ REMOVE_YT_IDS = [
     "o_-hSMgpAzs",
 ]
 
-# ===================== 央视频道目标 =====================
+# ===================== 央视数字频道目标 =====================
 
 TARGET_CCTV = {
     "CCTV世界地理",
@@ -90,6 +90,17 @@ TARGET_DIRECT_CHC_ORDER = [
     "淘剧场",
     "淘娱乐",
     "萌宠TV",
+]
+
+# 央视数字频道测速抓取源
+CCTV_SOURCES = [
+    "https://tzdr.com/iptv.txt",
+    "https://live.kilvn.com/iptv.m3u",
+    "https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.m3u",
+    "https://gh-proxy.com/raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u",
+    "http://175.178.251.183:6689/live.m3u",
+    "https://m3u.ibert.me/ycl_iptv.m3u",
+    "https://live.45678888.xyz/sub?kbQyhXwA=m3u"
 ]
 
 TEST_TIMEOUT = 10
@@ -224,6 +235,9 @@ def extract_urls_from_m3u(content):
 
 
 def normalize_name_for_match(name):
+    """
+    标准化名称，方便匹配
+    """
     n = (name or "").strip().lower()
     n = n.replace(" ", "").replace("-", "").replace("_", "")
     n = n.replace("（", "(").replace("）", ")")
@@ -290,7 +304,7 @@ def is_cctv_group(group_name):
 
 def normalize_cctv_display_name(name):
     """
-    把抓取到的频道名转换成标准输出名
+    把抓取到的央视数字频道名转换成标准输出名
     """
     mapping = {
         "CCTV世界地理": "世界地理",
@@ -343,7 +357,6 @@ def build_direct_chc_extinf(name, old_extinf=None):
         extinf = normalize_group(old_extinf, "CHC")
         extinf = replace_name_in_extinf(extinf, std_name)
 
-        # 替换或补充 tvg-id / tvg-name / tvg-logo
         if 'tvg-id="' in extinf:
             extinf = re.sub(r'tvg-id="[^"]*"', f'tvg-id="{std_name}"', extinf)
         else:
