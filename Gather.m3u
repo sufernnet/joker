@@ -1,6 +1,6 @@
 #EXTM3U
 
-# 更新时间 2026-04-03 11:11:10
+# 更新时间 2026-04-03 11:24:00
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -580,14 +580,14 @@ http://192.168.100.1:50008/litv-xinchuang21/index.m3u8?token=iawXxRTd4cKZioJfMdb
 http://192.168.100.1:50008/daystar/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 
 # CHC
-#EXTINF:-1 group-title="CHC" tvg-name="CHC影迷电影" tvg-logo="https://epg.112114.xyz/logo/CHC影迷电影.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",CHC影迷电影
+#EXTINF:-1 group-title="CHC" tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",CHC影迷电影
 http://38.75.136.137:98/gslb/dsdqpub/chchd.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="CHC家庭影院" tvg-name="CHC家庭影院" tvg-logo="https://www.xn--rgv465a.top/tvlogo/CHC家庭影院.png" group-title="CHC",CHC家庭影院
 http://38.75.136.137:98/gslb/dsdqpub/chcjt.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="CHC动作电影" tvg-name="CHC动作电影" tvg-logo="https://www.xn--rgv465a.top/tvlogo/CHC动作电影.png" group-title="CHC",CHC动作电影
 http://38.75.136.137:98/gslb/dsdqpub/chcdz.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="淘电影" tvg-name="淘电影" tvg-logo="https://www.xn--rgv465a.top/tvlogo/淘电影.png" group-title="CHC",淘电影
-https://stream1.freetv.fun/tao-dian-ying-7.ctv
+https://stream1.freetv.fun/tao-dian-ying-8.ctv
 
 # 央视
 #EXTINF:-1 tvg-id="世界地理" tvg-name="世界地理" tvg-logo="https://www.xn--rgv465a.top/tvlogo/世界地理.png" group-title="央视",世界地理
