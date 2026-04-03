@@ -15,6 +15,7 @@
 9. 抓取凤凰中文 / 凤凰资讯 / 凤凰香港，分组为：HK
 10. 输出文件为：new.m3u
 11. 增强嗅探：链接必须“基本可播放”才会保留
+12. 彻底屏蔽 iptv.catvod.com（源地址和频道播放地址都屏蔽）
 """
 
 import re
@@ -454,6 +455,8 @@ async def read_and_test_file(url, is_m3u):
             for ch, u in entries:
                 if contains_date(ch) or contains_date(u):
                     continue
+                if is_blocked_source(u):
+                    continue
                 std_name = match_target(ch)
                 if std_name:
                     filtered.append((std_name, u))
@@ -525,6 +528,7 @@ def main():
     print("输出文件:", OUTPUT_FILE)
     print("屏蔽源关键字:", BLOCKED_SOURCE_KEYWORDS)
     print("已启用：播放嗅探校验（不可播放链接将被丢弃）")
+    print("已启用：彻底屏蔽 iptv.catvod.com（源与播放链接）")
 
     channels = asyncio.run(fetch_best_channels())
     generate_output(channels, OUTPUT_FILE)
