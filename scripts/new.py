@@ -28,6 +28,7 @@ from datetime import datetime
 OUTPUT_FILE = "new.m3u"
 TEST_TIMEOUT = 10
 LOGO_BASE = "https://raw.githubusercontent.com/xiasufern/AA/main/icon/"
+SAT_LOGO_BASE = "http://epg.51zmt.top:8000/tb1/ws/"
 
 # 明确排除的来源关键字
 BLOCKED_SOURCE_KEYWORDS = [
@@ -45,7 +46,6 @@ SOURCES = [
 
 # ===================== 目标频道定义 =====================
 
-# 输出顺序
 CCTV_ORDER = [
     "CCTV1", "CCTV2", "CCTV3", "CCTV4", "CCTV5", "CCTV5+", "CCTV6", "CCTV7",
     "CCTV8", "CCTV9", "CCTV10", "CCTV11", "CCTV12", "CCTV13",
@@ -103,9 +103,6 @@ HK_ORDER = [
 
 OUTPUT_ORDER = CCTV_ORDER + SAT_ORDER + FOURK_ORDER + CHC_ORDER + DIGITAL_ORDER + HK_ORDER
 
-# 匹配优先级
-# 4K 在普通卫视前
-# CCTV17..1 反向匹配，避免 CCTV1 误吃 CCTV10/CCTV11
 MATCH_ORDER = FOURK_ORDER + CCTV_ORDER[::-1] + CHC_ORDER + DIGITAL_ORDER + HK_ORDER + SAT_ORDER
 
 CHANNEL_SPECS = {
@@ -254,6 +251,42 @@ CHANNEL_SPECS = {
     "凤凰香港": {"group": "HK", "aliases": ["凤凰香港", "phoenixhongkong", "phoenix hongkong", "phoenix hong kong"]},
 }
 
+SAT_LOGO_MAP = {
+    "北京卫视": "beijing.png",
+    "天津卫视": "tianjin.png",
+    "河北卫视": "hebei.png",
+    "山西卫视": "shanxi.png",
+    "内蒙古卫视": "neimenggu.png",
+    "辽宁卫视": "liaoning.png",
+    "吉林卫视": "jilin.png",
+    "黑龙江卫视": "heilongjiang.png",
+    "东方卫视": "dongfang.png",
+    "江苏卫视": "jiangsu.png",
+    "浙江卫视": "zhejiang.png",
+    "安徽卫视": "anhui.png",
+    "东南卫视": "dongnan.png",
+    "江西卫视": "jiangxi.png",
+    "山东卫视": "shandong.png",
+    "河南卫视": "henan.png",
+    "湖北卫视": "hubei.png",
+    "湖南卫视": "hunan.png",
+    "广东卫视": "guangdong.png",
+    "深圳卫视": "shenzhen.png",
+    "广西卫视": "guangxi.png",
+    "海南卫视": "hainan.png",
+    "重庆卫视": "chongqing.png",
+    "四川卫视": "sichuan.png",
+    "贵州卫视": "guizhou.png",
+    "云南卫视": "yunnan.png",
+    "西藏卫视": "xizang.png",
+    "陕西卫视": "shaanxi.png",
+    "甘肃卫视": "gansu.png",
+    "青海卫视": "qinghai.png",
+    "宁夏卫视": "ningxia.png",
+    "新疆卫视": "xinjiang.png",
+    "兵团卫视": "bingtuan.png",
+}
+
 # ===================== 工具函数 =====================
 
 def contains_date(text):
@@ -307,7 +340,6 @@ def normalize_text(text):
 def is_alias_match(norm_name, alias):
     a = normalize_text(alias)
 
-    # 避免 CCTV1 错配 CCTV10/CCTV11...
     if re.fullmatch(r"cctv\d+", a):
         return re.search(rf"{re.escape(a)}(?!\d)", norm_name) is not None
 
@@ -326,9 +358,20 @@ def match_target(name):
     return None
 
 
+def get_logo_url(std_name):
+    group = CHANNEL_SPECS[std_name]["group"]
+
+    if group == "卫视":
+        filename = SAT_LOGO_MAP.get(std_name)
+        if filename:
+            return SAT_LOGO_BASE + filename
+
+    return f"{LOGO_BASE}{std_name}.png"
+
+
 def build_extinf(std_name):
     group = CHANNEL_SPECS[std_name]["group"]
-    logo_url = f"{LOGO_BASE}{std_name}.png"
+    logo_url = get_logo_url(std_name)
     return (
         f'#EXTINF:-1 '
         f'tvg-id="{std_name}" '
