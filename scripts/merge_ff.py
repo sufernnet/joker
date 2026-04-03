@@ -4,6 +4,7 @@
 import requests
 import re
 import time
+import hashlib
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -114,7 +115,7 @@ def set_group(extinf, group):
         return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
     return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"')
 
-# ===================== 并发测速 =====================
+# ===================== 嗅探 =====================
 
 def check(url):
     try:
@@ -127,18 +128,13 @@ def check(url):
     return url, 999
 
 def pick_best(urls):
-    best_url = None
-    best_time = 999
-
+    best_url, best_time = None, 999
     with ThreadPoolExecutor(max_workers=5) as executor:
         futures = [executor.submit(check, u) for u in urls]
-
         for f in as_completed(futures):
             url, t = f.result()
             if t < best_time:
-                best_time = t
-                best_url = url
-
+                best_time, best_url = t, url
     return best_url
 
 # ===================== 主程序 =====================
@@ -153,11 +149,7 @@ def main():
     print("扩展源...")
     extra_data = load_extra()
 
-    # HK
-    hk = [x for x in main_data if HK_SOURCE_GROUP in x[1]]
-    hk = dedup(hk)
-
-    # TW
+    hk = dedup([x for x in main_data if HK_SOURCE_GROUP in x[1]])
     tw = dedup(tw_data)
 
     # 央视
@@ -186,14 +178,11 @@ def main():
             ext = chc_map[name][0][0]
             chc.append((name, ext, best))
 
-    # ================= 输出 =================
-
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     out = "#EXTM3U\n\n"
     out += f"# 更新时间 {now}\n\n"
 
-    # BB
     try:
         with open(BB_FILE, encoding="utf-8") as f:
             for l in f:
@@ -203,22 +192,18 @@ def main():
     except:
         pass
 
-    # HK
     out += "# HK\n"
     for n, e, u in hk:
         out += set_group(e, "HK") + "\n" + u + "\n"
 
-    # TW
     out += "\n# TW\n"
     for n, e, u in tw:
         out += set_group(e, "TW") + "\n" + u + "\n"
 
-    # CHC
     out += "\n# CHC\n"
     for n, e, u in chc:
         out += set_group(e, "CHC") + "\n" + u + "\n"
 
-    # 央视（最后）
     out += "\n# 央视\n"
     for n, e, u in cctv:
         out += set_group(e, "央视") + "\n" + u + "\n"
