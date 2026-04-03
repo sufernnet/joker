@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-频道抓取生成器（增强嗅探版）
+频道抓取生成器（增强兜底版）
 功能：
 1. 不合并 BB.m3u
 2. 不合并 TW.m3u
@@ -14,15 +14,14 @@
 8. 抓取 CCTV 数字频道，分组为：数字
 9. 抓取凤凰中文 / 凤凰资讯 / 凤凰香港，分组为：HK
 10. 输出文件为：new.m3u
-11. 增强嗅探：链接必须“基本可播放”才会保留
-12. 彻底屏蔽 iptv.catvod.com（源地址和频道播放地址都屏蔽）
+11. 屏蔽 iptv.catvod.com（源地址和播放地址都屏蔽）
+12. 优先保留真正可播放链接；若无，则兜底保留一个可访问候选
 """
 
 import re
 import time
 import asyncio
 import aiohttp
-import requests
 from urllib.parse import urljoin
 from datetime import datetime
 
@@ -30,10 +29,12 @@ from datetime import datetime
 
 OUTPUT_FILE = "new.m3u"
 TEST_TIMEOUT = 10
+PLAYLIST_TIMEOUT = 8
+SEGMENT_TIMEOUT = 8
+
 LOGO_BASE = "https://raw.githubusercontent.com/xiasufern/AA/main/icon/"
 SAT_LOGO_BASE = "http://epg.51zmt.top:8000/tb1/ws/"
 
-# 明确排除的来源关键字
 BLOCKED_SOURCE_KEYWORDS = [
     "iptv.catvod.com",
 ]
@@ -46,9 +47,6 @@ SOURCES = [
     "http://175.178.251.183:6689/live.m3u",
     "https://m3u.ibert.me/ycl_iptv.m3u"
 ]
-
-PLAYLIST_TIMEOUT = 8
-SEGMENT_TIMEOUT = 8
 
 # ===================== 目标频道定义 =====================
 
@@ -244,37 +242,7 @@ FOURK_LOGO_MAP = {
     "山东卫视4K": "SD4K.png",
 }
 
-# ===================== 工具函数 =====================
-
-def contains_date(text):
-    return re.search(r"\d{4}-\d{2}-\d{2}", text or "") is not None
-
-
-def extract_urls_from_txt(content):
-    urls = []
-    for line in content.splitlines():
-        line = line.strip()
-        if line and ',' in line:
-            parts = line.split(',', 1)
-            if len(parts) == 2:
-                urls.append((parts[0].strip(), parts[1].strip()))
-    return urls
-
-
-def extract_urls_from_m3u(content):
-    urls = []
-    lines = content.splitlines()
-    channel = "Unknown"
-
-    for line in lines:
-        line = line.strip()
-        if line.startswith("#EXTINF:"):
-            parts = line.split(',', 1)
-            channel = parts[1].strip() if len(parts) > 1 else "Unknown"
-        elif line.startswith(("http://", "https://")):
-            urls.append((channel, line))
-    return urls
-
+# ===================== 通用工具 =====================
 
 def normalize_text(text):
     if not text:
@@ -296,10 +264,8 @@ def normalize_text(text):
 
 def is_alias_match(norm_name, alias):
     a = normalize_text(alias)
-
     if re.fullmatch(r"cctv\d+", a):
         return re.search(rf"{re.escape(a)}(?!\d)", norm_name) is not None
-
     return a in norm_name
 
 
@@ -345,6 +311,35 @@ def is_blocked_source(url):
     u = (url or "").lower()
     return any(k.lower() in u for k in BLOCKED_SOURCE_KEYWORDS)
 
+
+def contains_date(text):
+    return re.search(r"\d{4}-\d{2}-\d{2}", text or "") is not None
+
+
+def extract_urls_from_txt(content):
+    urls = []
+    for line in content.splitlines():
+        line = line.strip()
+        if line and ',' in line:
+            parts = line.split(',', 1)
+            if len(parts) == 2:
+                urls.append((parts[0].strip(), parts[1].strip()))
+    return urls
+
+
+def extract_urls_from_m3u(content):
+    urls = []
+    lines = content.splitlines()
+    channel = "Unknown"
+    for line in lines:
+        line = line.strip()
+        if line.startswith("#EXTINF:"):
+            parts = line.split(",", 1)
+            channel = parts[1].strip() if len(parts) > 1 else "Unknown"
+        elif line.startswith(("http://", "https://")):
+            urls.append((channel, line))
+    return urls
+
 # ===================== 嗅探逻辑 =====================
 
 async def fetch_text(session, url, timeout=PLAYLIST_TIMEOUT):
@@ -362,6 +357,22 @@ async def fetch_text(session, url, timeout=PLAYLIST_TIMEOUT):
 async def fetch_head_bytes(session, url, timeout=SEGMENT_TIMEOUT):
     try:
         headers = {"Range": "bytes=0-1023"}
+        async with session.get(url, timeout=timeout, headers=headers, allow_redirects=True) as r:
+            if r.status not in (200, 206):
+                return False
+            data = await r.read()
+            return len(data) > 0
+    except:
+        return False
+
+
+async def probe_http_alive(session, url, timeout=SEGMENT_TIMEOUT):
+    """
+    较宽松的兜底探测：
+    只要能连通并返回 200/206 且读到一点内容，就算 fallback 可用
+    """
+    try:
+        headers = {"Range": "bytes=0-255"}
         async with session.get(url, timeout=timeout, headers=headers, allow_redirects=True) as r:
             if r.status not in (200, 206):
                 return False
@@ -391,6 +402,7 @@ async def sniff_m3u8_playable(session, url):
 
     lines = parse_m3u8_lines(text)
 
+    # 主清单
     if any("#EXT-X-STREAM-INF" in line for line in lines):
         child = first_non_comment_uri(lines)
         if not child:
@@ -409,6 +421,7 @@ async def sniff_m3u8_playable(session, url):
         seg_url = urljoin(child_url, seg)
         return await fetch_head_bytes(session, seg_url, timeout=SEGMENT_TIMEOUT)
 
+    # 媒体清单
     seg = first_non_comment_uri(lines)
     if not seg:
         return False
@@ -417,26 +430,46 @@ async def sniff_m3u8_playable(session, url):
     return await fetch_head_bytes(session, seg_url, timeout=SEGMENT_TIMEOUT)
 
 
-async def sniff_stream_playable(session, url):
+async def sniff_stream_strict(session, url):
     low = url.lower()
-
     if ".m3u8" in low:
         return await sniff_m3u8_playable(session, url)
-
     return await fetch_head_bytes(session, url, timeout=SEGMENT_TIMEOUT)
 
-# ===================== 异步测速 + 嗅探 =====================
+
+async def sniff_stream_fallback(session, url):
+    """
+    宽松兜底：
+    如果 strict 失败，就尝试至少确认这个 URL 不是完全死链
+    """
+    return await probe_http_alive(session, url, timeout=SEGMENT_TIMEOUT)
+
+# ===================== 测试单个流 =====================
 
 async def test_stream(session, url):
+    """
+    返回：
+    strict_ok, fallback_ok, latency
+    """
     start = time.time()
+
     try:
-        ok = await sniff_stream_playable(session, url)
-        if ok:
-            return True, time.time() - start
+        strict_ok = await sniff_stream_strict(session, url)
+        if strict_ok:
+            return True, True, time.time() - start
     except:
         pass
-    return False, None
 
+    try:
+        fallback_ok = await sniff_stream_fallback(session, url)
+        if fallback_ok:
+            return False, True, time.time() - start
+    except:
+        pass
+
+    return False, False, None
+
+# ===================== 读取源并测试 =====================
 
 async def read_and_test_file(url, is_m3u):
     try:
@@ -444,7 +477,7 @@ async def read_and_test_file(url, is_m3u):
             print(f"跳过屏蔽源: {url}")
             return []
 
-        timeout = aiohttp.ClientTimeout(total=40)
+        timeout = aiohttp.ClientTimeout(total=45)
         async with aiohttp.ClientSession(timeout=timeout) as session:
             async with session.get(url) as r:
                 content = await r.text()
@@ -457,6 +490,7 @@ async def read_and_test_file(url, is_m3u):
                     continue
                 if is_blocked_source(u):
                     continue
+
                 std_name = match_target(ch)
                 if std_name:
                     filtered.append((std_name, u))
@@ -471,14 +505,17 @@ async def read_and_test_file(url, is_m3u):
             for result, (std_name, u) in zip(results, filtered):
                 if isinstance(result, Exception):
                     continue
-                ok, t = result
-                if ok:
-                    valid.append((std_name, u, t))
+
+                strict_ok, fallback_ok, latency = result
+                if fallback_ok:
+                    valid.append((std_name, u, latency, strict_ok))
 
             return valid
+
     except:
         return []
 
+# ===================== 汇总最佳链接 =====================
 
 async def fetch_best_channels():
     all_valid = []
@@ -493,17 +530,38 @@ async def fetch_best_channels():
         data = await read_and_test_file(s, is_m3u)
         all_valid.extend(data)
 
-    best_map = {}
-    for std_name, url, latency in all_valid:
-        if std_name not in best_map or latency < best_map[std_name][1]:
-            best_map[std_name] = (url, latency)
+    # best_strict: 真正嗅探通过
+    # best_fallback: 宽松兜底可访问
+    best_strict = {}
+    best_fallback = {}
+
+    for std_name, url, latency, strict_ok in all_valid:
+        if latency is None:
+            continue
+
+        if strict_ok:
+            if std_name not in best_strict or latency < best_strict[std_name][1]:
+                best_strict[std_name] = (url, latency)
+
+        if std_name not in best_fallback or latency < best_fallback[std_name][1]:
+            best_fallback[std_name] = (url, latency)
 
     result = []
-    for std_name in OUTPUT_ORDER:
-        if std_name in best_map:
-            result.append((std_name, best_map[std_name][0]))
+    strict_count = 0
+    fallback_count = 0
 
-    print("已获取到的可播放目标频道数量:", len(result))
+    for std_name in OUTPUT_ORDER:
+        if std_name in best_strict:
+            result.append((std_name, best_strict[std_name][0]))
+            strict_count += 1
+        elif std_name in best_fallback:
+            result.append((std_name, best_fallback[std_name][0]))
+            fallback_count += 1
+
+    print("已获取频道总数:", len(result))
+    print("其中严格可播:", strict_count)
+    print("其中兜底保留:", fallback_count)
+
     return result
 
 # ===================== 输出 =====================
@@ -527,8 +585,8 @@ def main():
     print("开始抓取目标频道...")
     print("输出文件:", OUTPUT_FILE)
     print("屏蔽源关键字:", BLOCKED_SOURCE_KEYWORDS)
-    print("已启用：播放嗅探校验（不可播放链接将被丢弃）")
-    print("已启用：彻底屏蔽 iptv.catvod.com（源与播放链接）")
+    print("策略：优先严格可播，若无则兜底保留一个可访问链接")
+    print("说明：若某频道所有源都不存在，则仍无法生成该频道")
 
     channels = asyncio.run(fetch_best_channels())
     generate_output(channels, OUTPUT_FILE)
