@@ -23,11 +23,12 @@ SOURCES = [
     "https://gh-proxy.com/raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u",
     "http://175.178.251.183:6689/live.m3u",
     "https://m3u.ibert.me/ycl_iptv.m3u",
-    "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg1.m3u"
+    "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg1.m3u",
+    "https://2026.xymm.ccwu.cc"
 ]
 
 CCTV_ORDER = [
-    "CCTV1", "CCTV2", "CCTV3", "CCTV4", "CCTV5", "CCTV5+", "CCTV6", "CCTV7",
+    "CCTV1", "CCTV2", "CCTV3", "CCTV4", "CCTV4-欧洲","CCTV4-美洲","CCTV5", "CCTV5+", "CCTV6", "CCTV7",
     "CCTV8", "CCTV9", "CCTV10", "CCTV11", "CCTV12", "CCTV13",
     "CCTV14", "CCTV15", "CCTV16", "CCTV17"
 ]
@@ -51,6 +52,8 @@ CHANNEL_SPECS = {
     "CCTV2":{"group":"央视","aliases":["cctv2","cctv-2","央视2","中央2","央视财经"]},
     "CCTV3":{"group":"央视","aliases":["cctv3","cctv-3","央视3","中央3","央视综艺"]},
     "CCTV4":{"group":"央视","aliases":["cctv4","cctv-4","央视4","中央4","中文国际"]},
+    "CCTV4-欧洲":{"group":"央视","aliases":["CCTV-4欧洲","cctv-4欧洲","央视4欧洲","中央4欧洲","欧洲"]},
+    "CCTV4-美洲":{"group":"央视","aliases":["CCTV-4美洲","cctv-4美洲","央视4美洲","中央4美洲","美洲"]},
     "CCTV5":{"group":"央视","aliases":["cctv5","cctv-5","央视5","中央5","央视体育"]},
     "CCTV5+":{"group":"央视","aliases":["cctv5+","cctv-5+","cctv5plus","央视5+","体育赛事","央视体育赛事"]},
     "CCTV6":{"group":"央视","aliases":["cctv6","cctv-6","央视6","中央6","央视电影","电影频道"]},
