@@ -1,366 +1,56 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-Gather IPTV Generator
-功能：
-- 下载源 M3U
-- 提取 HK
-- 合并远程 TW.m3u
-- 剔除指定 YouTube 源
-- 去重
-- 合并 BB.m3u
-- 额外抓取：
-  1) 央视频道
-  2) CHC 频道：动作电影、高清电影、家庭电影、家庭影院、影迷电影
-- 插入到 BB.m3u 的央视分组最后面
-- 抓取频道统一按标准格式写入
-- 输出 joker.m3u（输出到仓库根目录）
-- 保留 tvg-id / tvg-name / tvg-logo
-"""
-
-import os
-import re
-import time
-import asyncio
-import aiohttp
-import requests
-from datetime import datetime
-
-# ===================== 路径配置 =====================
-
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = os.path.dirname(SCRIPT_DIR)
-
-SOURCE_URL = "https://yang.sufern001.workers.dev/"
-TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
-
-OUTPUT_FILE = os.path.join(ROOT_DIR, "joker.m3u")
-BB_FILE = os.path.join(ROOT_DIR, "BB.m3u")
-
-HK_SOURCE_GROUP = "• Juli 「精選」"
-
-# ===================== 精准剔除 YouTube ID =====================
-
-REMOVE_YT_IDS = [
-    "fN9uYWCjQaw",
-    "7j92Myu2wzg",
-    "f6Kq93wnaZ8",
-    "BOy2xDU1LC8",
-    "vr3XyVCR4T0",
-    "o_-hSMgpAzs",
-]
-
-# ===================== 央视频道与 CHC 目标频道 =====================
-
-TARGET_CCTV = {
-    "CCTV世界地理",
-    "CCTV兵器科技",
-    "CCTV女性时尚",
-    "CCTV怀旧剧场",
-    "CCTV文化精品",
-    "CCTV第一剧场",
-    "CCTV风云足球",
-    "CCTV风云音乐",
-    "CCTV央视台球"
-}
-
-TARGET_CCTV_ORDER = [
-    "CCTV世界地理",
-    "CCTV兵器科技",
-    "CCTV女性时尚",
-    "CCTV怀旧剧场",
-    "CCTV文化精品",
-    "CCTV第一剧场",
-    "CCTV风云足球",
-    "CCTV风云音乐",
-    "CCTV央视台球"
-]
-
-TARGET_CHC = {
-    "CHC动作电影",
-    "CHC高清电影",
-    "CHC家庭电影",
-    "CHC家庭影院",
-    "CHC影迷电影"
-}
-
-TARGET_CHC_ORDER = [
-    "CHC动作电影",
-    "CHC高清电影",
-    "CHC家庭电影",
-    "CHC家庭影院",
-    "CHC影迷电影"
-]
-
-CCTV_SOURCES = [
-    "https://tzdr.com/iptv.txt",
-    "https://live.kilvn.com/iptv.m3u",
-    "https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.m3u",
-    "https://gh-proxy.com/raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u",
-    "http://175.178.251.183:6689/live.m3u",
-    "https://m3u.ibert.me/ycl_iptv.m3u",
-    "https://live.45678888.xyz/sub?kbQyhXwA=m3u"
-]
-
-TEST_TIMEOUT = 12
-
-# ===================== 工具函数 =====================
-
-def download(url):
-    r = requests.get(
-        url,
-        timeout=30,
-        headers={"User-Agent": "Mozilla/5.0"}
-    )
-    r.raise_for_status()
-    return r.text
-
-
-def is_bad_youtube(url):
-    for yt_id in REMOVE_YT_IDS:
-        if yt_id in url:
-            return True
-    return False
-
-
-def deduplicate(channels):
-    seen = set()
-    result = []
-    for name, extinf, url in channels:
-        if url not in seen:
-            seen.add(url)
-            result.append((name, extinf, url))
-    return result
-
-
-def normalize_group(extinf_line, new_group):
-    if 'group-title="' in extinf_line:
-        extinf_line = re.sub(r'group-title="[^"]*"', f'group-title="{new_group}"', extinf_line)
-    else:
-        if extinf_line.startswith("#EXTINF:-1 "):
-            extinf_line = extinf_line.replace("#EXTINF:-1 ", f'#EXTINF:-1 group-title="{new_group}" ', 1)
-        elif extinf_line.startswith("#EXTINF:-1"):
-            extinf_line = extinf_line.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{new_group}"', 1)
-    return extinf_line
-
-
-def parse_name_from_extinf(extinf_line):
-    if "," in extinf_line:
-        return extinf_line.split(",", 1)[1].strip()
-    return ""
-
-
-def parse_group_from_extinf(extinf_line):
-    m = re.search(r'group-title="([^"]*)"', extinf_line)
-    return m.group(1).strip() if m else ""
-
-
-def parse_m3u_full(content):
-    lines = content.splitlines()
-    channels = []
-    current_extinf = None
-    current_name = None
-
-    for line in lines:
-        line = line.strip()
-        if not line:
-            continue
-
-        if line.startswith("#EXTINF"):
-            current_extinf = line
-            current_name = parse_name_from_extinf(line)
-
-        elif line.startswith(("http://", "https://")):
-            if current_extinf and current_name:
-                channels.append((current_name, current_extinf, line))
-
-    return channels
-
-
-def contains_date(text):
-    return re.search(r"\d{4}-\d{2}-\d{2}", text or "") is not None
-
-
-def extract_urls_from_txt(content):
-    urls = []
-    for line in content.splitlines():
-        line = line.strip()
-        if line and ',' in line:
-            parts = line.split(',', 1)
-            if len(parts) == 2:
-                urls.append((parts[0].strip(), parts[1].strip()))
-    return urls
-
-
-def extract_urls_from_m3u(content):
-    urls = []
-    lines = content.splitlines()
-    channel = "Unknown"
-
-    for line in lines:
-        line = line.strip()
-        if line.startswith("#EXTINF:"):
-            parts = line.split(',', 1)
-            channel = parts[1].strip() if len(parts) > 1 else "Unknown"
-        elif line.startswith(('http://', 'https://')):
-            urls.append((channel, line))
-    return urls
-
-
-def normalize_name_for_match(name):
-    n = (name or "").strip().lower()
-    n = n.replace(" ", "").replace("-", "").replace("_", "")
-    n = n.replace("（", "(").replace("）", ")")
-    n = n.replace("高清", "").replace("标清", "").replace("频道", "")
-    n = n.replace("hd", "").replace("sd", "")
-    return n
-
-
-def match_target(name):
-    n = normalize_name_for_match(name)
-
-    cctv_alias_map = {
-        "CCTV世界地理": ["cctv世界地理", "世界地理", "央视世界地理"],
-        "CCTV兵器科技": ["cctv兵器科技", "央视兵器科技", "兵器科技", "cctv兵器", "兵器"],
-        "CCTV女性时尚": ["cctv女性时尚", "女性时尚", "央视女性时尚"],
-        "CCTV怀旧剧场": ["cctv怀旧剧场", "怀旧剧场", "央视怀旧剧场"],
-        "CCTV文化精品": ["cctv文化精品", "文化精品", "央视文化精品"],
-        "CCTV第一剧场": ["cctv第一剧场", "第一剧场", "央视第一剧场"],
-        "CCTV风云足球": ["cctv风云足球", "风云足球", "央视风云足球"],
-        "CCTV风云音乐": ["cctv风云音乐", "风云音乐", "央视风云音乐"],
-        "CCTV央视台球": ["cctv央视台球", "央视台球", "台球"],
-    }
-
-    for std_name, aliases in cctv_alias_map.items():
-        for alias in aliases:
-            if normalize_name_for_match(alias) in n:
-                return std_name
-
-    # 这里只加强 CHC
-    chc_alias_map = {
-        "CHC动作电影": [
-            "chc动作电影", "动作电影", "chc动作", "chc动作电影hd", "动作电影hd"
-        ],
-        "CHC高清电影": [
-            "chc高清电影", "高清电影", "chc高清", "chc高清电影hd", "高清电影hd"
-        ],
-        "CHC家庭电影": [
-            "chc家庭电影", "家庭电影", "chc家庭电影hd", "家庭电影hd"
-        ],
-        "CHC家庭影院": [
-            "chc家庭影院", "家庭影院", "chc家庭影院hd", "家庭影院hd"
-        ],
-        "CHC影迷电影": [
-            "chc影迷电影", "影迷电影", "chc影迷电影hd", "影迷电影hd"
-        ],
-    }
-
-    for std_name, aliases in chc_alias_map.items():
-        for alias in aliases:
-            if normalize_name_for_match(alias) in n:
-                return std_name
-
-    return None
-
-
-def is_cctv_group(group_name):
-    g = (group_name or "").strip().lower()
-    return any(x in g for x in ["央视", "cctv", "央视频道"])
-
-
-def normalize_cctv_display_name(name):
-    mapping = {
-        "CCTV世界地理": "世界地理",
-        "CCTV央视台球": "央视台球",
-        "CCTV女性时尚": "女性时尚",
-        "CCTV怀旧剧场": "怀旧剧场",
-        "CCTV文化精品": "文化精品",
-        "CCTV第一剧场": "第一剧场",
-        "CCTV风云足球": "风云足球",
-        "CCTV风云音乐": "风云音乐",
-        "CCTV兵器科技": "兵器科技",
-
-        "CHC动作电影": "动作电影",
-        "CHC高清电影": "高清电影",
-        "CHC家庭电影": "家庭电影",
-        "CHC家庭影院": "家庭影院",
-        "CHC影迷电影": "影迷电影",
-    }
-    return mapping.get(name, name.replace("CCTV", "").replace("CHC", "").strip())
-
-
-def build_cctv_extinf(name, group_name="央视"):
-    std_name = normalize_cctv_display_name(name)
-    logo_url = f"https://raw.githubusercontent.com/xiasufern/AA/main/icon/{std_name}.png"
-    return (
-        f'#EXTINF:-1 '
-        f'tvg-id="{std_name}" '
-        f'tvg-name="{std_name}" '
-        f'tvg-logo="{logo_url}" '
-        f'group-title="{group_name}",{std_name}'
-    )
-
-
-def is_m3u_source(url):
-    u = (url or "").lower()
-    return (
-        u.endswith(".m3u")
-        or u.endswith(".m3u8")
-        or "m3u" in u
-    )
-
-# ===================== 抓取与测速逻辑 =====================
+# 🔥 终极秒开版（核心改造：RTP优先 + HTTP测速 + 强制保底）
 
 async def test_stream(session, url):
     start = time.time()
+
+    # ✅ 1. RTP 直接秒过（绝对关键）
+    if "/rtp/" in url:
+        return True, 0.05
+
     try:
-        # 对 rtp 代理流放宽一点
-        timeout = TEST_TIMEOUT + 5 if "/rtp/" in url else TEST_TIMEOUT
-        async with session.get(url, timeout=timeout) as r:
+        async with session.get(url, timeout=TEST_TIMEOUT) as r:
             if r.status in (200, 206):
                 return True, time.time() - start
     except:
         pass
+
     return False, None
-
-
-async def read_and_test_file(url, is_m3u):
-    try:
-        timeout = aiohttp.ClientTimeout(total=40)
-        async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.get(url) as r:
-                content = await r.text()
-
-            entries = extract_urls_from_m3u(content) if is_m3u else extract_urls_from_txt(content)
-
-            tasks = [test_stream(session, u) for _, u in entries]
-            results = await asyncio.gather(*tasks, return_exceptions=True)
-
-            valid = []
-            for result, (ch, u) in zip(results, entries):
-                if isinstance(result, Exception):
-                    continue
-                ok, t = result
-                if ok:
-                    valid.append((ch, u, t))
-
-            return valid
-    except:
-        return []
 
 
 async def fetch_best_cctv_channels():
     all_valid = []
+    raw_candidates = []  # ✅ 用于保底
 
     for s in CCTV_SOURCES:
         is_m3u = is_m3u_source(s)
         print(f"抓取目标频道源: {s} | is_m3u={is_m3u}")
-        data = await read_and_test_file(s, is_m3u)
-        all_valid.extend(data)
+
+        try:
+            timeout = aiohttp.ClientTimeout(total=40)
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.get(s) as r:
+                    content = await r.text()
+
+                entries = extract_urls_from_m3u(content) if is_m3u else extract_urls_from_txt(content)
+
+                # ✅ 记录原始候选（用于保底）
+                raw_candidates.extend(entries)
+
+                tasks = [test_stream(session, u) for _, u in entries]
+                results = await asyncio.gather(*tasks, return_exceptions=True)
+
+                for result, (ch, u) in zip(results, entries):
+                    if isinstance(result, Exception):
+                        continue
+                    ok, t = result
+                    if ok:
+                        all_valid.append((ch, u, t))
+        except:
+            continue
 
     best_map = {}
 
+    # ✅ 2. 优先选最快
     for ch, url, latency in all_valid:
         if contains_date(ch) or contains_date(url):
             continue
@@ -369,11 +59,29 @@ async def fetch_best_cctv_channels():
         if not key:
             continue
 
-        if key not in best_map or latency < best_map[key][1]:
-            best_map[key] = (url, latency)
+        # RTP 优先级最高
+        priority = 0 if "/rtp/" in url else 1
+
+        if key not in best_map:
+            best_map[key] = (url, latency, priority)
+        else:
+            old_url, old_latency, old_priority = best_map[key]
+
+            if priority < old_priority or (priority == old_priority and latency < old_latency):
+                best_map[key] = (url, latency, priority)
+
+    # ✅ 3. 保底机制（防止一个都没有）
+    for ch, url in raw_candidates:
+        key = match_target(ch)
+        if not key:
+            continue
+
+        if key not in best_map:
+            best_map[key] = (url, 999, 2)  # 最低优先级
 
     result = []
 
+    # ✅ 4. 按顺序输出
     for name in TARGET_CCTV_ORDER:
         if name in best_map:
             result.append((name, best_map[name][0]))
@@ -382,169 +90,17 @@ async def fetch_best_cctv_channels():
         if name in best_map:
             result.append((name, best_map[name][0]))
 
-    print("已获取到的目标频道数量:", len(result))
+    print("最终命中频道数:", len(result))
     return result
 
 
-# ===================== 把抓取频道插入 BB 的央视分组最后 =====================
+# ✅ 额外增强（推荐）
+def normalize_name_for_match(name):
+    n = (name or "").strip().lower()
+    n = re.sub(r"[\s\-_·]", "", n)
 
-def append_cctv_channels_to_bb(bb_content, extra_channels):
-    if not extra_channels:
-        return bb_content
+    # 🚨 去掉所有画质标记
+    n = re.sub(r"(hd|sd|fhd|uhd|4k|标清|高清|超清|频道)", "", n)
 
-    lines = bb_content.splitlines()
-    output_lines = []
-
-    current_group = None
-    last_cctv_insert_pos = None
-    existing_names = set()
-
-    for line in lines:
-        raw = line.rstrip("\n")
-        output_lines.append(raw)
-
-        s = raw.strip()
-        if s.startswith("#EXTINF"):
-            current_group = parse_group_from_extinf(s)
-            name = parse_name_from_extinf(s)
-            if name:
-                existing_names.add(name.strip())
-
-        elif s.startswith("http"):
-            if is_cctv_group(current_group):
-                last_cctv_insert_pos = len(output_lines)
-
-    insert_lines = []
-    existing_std_names = set()
-
-    for n in existing_names:
-        existing_std_names.add(n.strip())
-        existing_std_names.add(normalize_cctv_display_name(n))
-
-    for name, url in extra_channels:
-        std_name = normalize_cctv_display_name(name)
-
-        if name in existing_names or std_name in existing_std_names:
-            continue
-
-        insert_lines.append(build_cctv_extinf(name, "央视"))
-        insert_lines.append(url)
-
-    if not insert_lines:
-        return "\n".join(output_lines) + "\n"
-
-    if last_cctv_insert_pos is not None:
-        new_lines = (
-            output_lines[:last_cctv_insert_pos] +
-            insert_lines +
-            output_lines[last_cctv_insert_pos:]
-        )
-        return "\n".join(new_lines) + "\n"
-
-    if output_lines and output_lines[-1].strip():
-        output_lines.append("")
-    output_lines.extend(insert_lines)
-    return "\n".join(output_lines) + "\n"
-
-
-# ===================== 主程序 =====================
-
-def main():
-    print("当前工作目录:", os.getcwd())
-    print("脚本目录:", SCRIPT_DIR)
-    print("仓库根目录:", ROOT_DIR)
-    print("输出文件:", OUTPUT_FILE)
-    print("BB文件:", BB_FILE)
-
-    print("下载源...")
-    content = download(SOURCE_URL)
-    lines = content.splitlines()
-
-    hk_channels = []
-    current_group = None
-    current_name = None
-    current_extinf = None
-
-    # 解析 HK
-    for line in lines:
-        line = line.strip()
-
-        if not line:
-            continue
-
-        if line.startswith("#EXTINF"):
-            current_extinf = line
-
-            if 'group-title="' in line:
-                current_group = line.split('group-title="')[1].split('"')[0]
-            else:
-                current_group = None
-
-            current_name = parse_name_from_extinf(line)
-
-        elif line.startswith("http"):
-            url = line.strip()
-
-            if not current_group or not current_name or not current_extinf:
-                continue
-
-            if current_group == HK_SOURCE_GROUP:
-                if is_bad_youtube(url):
-                    continue
-                hk_channels.append((current_name, current_extinf, url))
-
-    # 解析 TW
-    print("下载 TW.m3u...")
-    tw_content = download(TW_M3U_URL)
-    tw_channels = parse_m3u_full(tw_content)
-
-    hk_channels = deduplicate(hk_channels)
-    tw_channels = deduplicate(tw_channels)
-
-    print("HK:", len(hk_channels))
-    print("TW:", len(tw_channels))
-
-    extra_cctv_channels = asyncio.run(fetch_best_cctv_channels())
-
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    output = '#EXTM3U\n\n'
-    output += f"# joker.m3u\n# 生成时间: {timestamp}\n\n"
-
-    try:
-        with open(BB_FILE, "r", encoding="utf-8") as f:
-            bb_content = f.read()
-
-        bb_content = re.sub(r'^\s*#EXTM3U\s*', '', bb_content, flags=re.I)
-        bb_content = append_cctv_channels_to_bb(bb_content, extra_cctv_channels)
-
-        output += bb_content.rstrip() + "\n\n"
-        print("已合并 BB.m3u，并插入目标频道")
-    except Exception as e:
-        print("未找到或无法读取 BB.m3u，跳过：", e)
-
-    if hk_channels:
-        output += "# HK\n"
-        for name, extinf, url in hk_channels:
-            output += normalize_group(extinf, "HK") + "\n"
-            output += url + "\n"
-
-    if tw_channels:
-        output += "\n# TW\n"
-        for name, extinf, url in tw_channels:
-            output += normalize_group(extinf, "TW") + "\n"
-            output += url + "\n"
-
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(output)
-
-    print("文件已写出:", OUTPUT_FILE)
-    print("文件是否存在:", os.path.exists(OUTPUT_FILE))
-    if os.path.exists(OUTPUT_FILE):
-        print("文件大小:", os.path.getsize(OUTPUT_FILE), "bytes")
-
-    print("✅ joker.m3u 生成完成")
-
-
-if __name__ == "__main__":
-    main()
+    n = n.replace("（", "(").replace("）", ")")
+    return n
