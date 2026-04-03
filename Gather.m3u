@@ -1,6 +1,6 @@
 #EXTM3U
 
-# 更新时间 2026-04-03 13:27:35
+# 更新时间 2026-04-03 22:26:16
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -375,7 +375,7 @@ http://38.75.136.137:98/gslb/dsdqpub/fyzq.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="风云音乐" tvg-name="风云音乐" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云音乐.png" group-title="数字",风云音乐
 http://38.75.136.137:98/gslb/dsdqpub/fyyy.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="央视台球" tvg-name="央视台球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/央视台球.png" group-title="数字",央视台球
-https://epg.pw/stream/25677ac2e8c1f7c3dd6359c43eb5f0f54efb3f5c11f9dda18d01b3e0308ed017.m3u8
+http://38.75.136.137:98/gslb/dsdqpub/ystq.m3u8?auth=testpub
 
 # CHC
 #EXTINF:-1 group-title="CHC" tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",CHC影迷电影
