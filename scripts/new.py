@@ -46,7 +46,6 @@ SOURCES = [
     "https://m3u.ibert.me/ycl_iptv.m3u"
 ]
 
-# 嗅探时一些额外超时
 PLAYLIST_TIMEOUT = 8
 SEGMENT_TIMEOUT = 8
 
@@ -232,6 +231,18 @@ SAT_LOGO_MAP = {
     "兵团卫视": "bingtuan.png",
 }
 
+FOURK_LOGO_MAP = {
+    "北京卫视4K": "BJ4K.png",
+    "湖南卫视4K": "HN4K.png",
+    "江苏卫视4K": "JS4K.png",
+    "浙江卫视4K": "ZJ4K.png",
+    "深圳卫视4K": "SZ4K.png",
+    "东方卫视4K": "DF4K.png",
+    "四川卫视4K": "SC4K.png",
+    "广东卫视4K": "GD4K.png",
+    "山东卫视4K": "SD4K.png",
+}
+
 # ===================== 工具函数 =====================
 
 def contains_date(text):
@@ -303,10 +314,17 @@ def match_target(name):
 
 def get_logo_url(std_name):
     group = CHANNEL_SPECS[std_name]["group"]
+
     if group == "卫视":
         filename = SAT_LOGO_MAP.get(std_name)
         if filename:
             return SAT_LOGO_BASE + filename
+
+    if group == "4K":
+        filename = FOURK_LOGO_MAP.get(std_name)
+        if filename:
+            return LOGO_BASE + filename
+
     return f"{LOGO_BASE}{std_name}.png"
 
 
@@ -366,14 +384,12 @@ def first_non_comment_uri(lines):
 
 
 async def sniff_m3u8_playable(session, url):
-    # 第1层 playlist
     text, _ = await fetch_text(session, url, timeout=PLAYLIST_TIMEOUT)
     if not text or "#EXTM3U" not in text:
         return False
 
     lines = parse_m3u8_lines(text)
 
-    # 主清单：找子播放列表
     if any("#EXT-X-STREAM-INF" in line for line in lines):
         child = first_non_comment_uri(lines)
         if not child:
@@ -392,7 +408,6 @@ async def sniff_m3u8_playable(session, url):
         seg_url = urljoin(child_url, seg)
         return await fetch_head_bytes(session, seg_url, timeout=SEGMENT_TIMEOUT)
 
-    # 媒体清单：直接找分片
     seg = first_non_comment_uri(lines)
     if not seg:
         return False
@@ -404,11 +419,9 @@ async def sniff_m3u8_playable(session, url):
 async def sniff_stream_playable(session, url):
     low = url.lower()
 
-    # HLS
     if ".m3u8" in low:
         return await sniff_m3u8_playable(session, url)
 
-    # 其他直播流，读一点数据确认不是假链接
     return await fetch_head_bytes(session, url, timeout=SEGMENT_TIMEOUT)
 
 # ===================== 异步测速 + 嗅探 =====================
@@ -479,7 +492,6 @@ async def fetch_best_channels():
 
     best_map = {}
     for std_name, url, latency in all_valid:
-        # 每个频道只保留一个“可播放且最快”的
         if std_name not in best_map or latency < best_map[std_name][1]:
             best_map[std_name] = (url, latency)
 
