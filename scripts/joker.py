@@ -1,25 +1,21 @@
 # -*- coding: utf-8 -*-
-# 🔥 Joker IPTV 定制版（CHC独立提取版）
+# 🔥 Joker IPTV CHC 双保险版（主备源 + 重试 + 不崩）
 
 import os
 import re
 import time
-import asyncio
-import aiohttp
 import requests
 from datetime import datetime
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 
-SOURCE_URL = "https://yang.sufern001.workers.dev/"
-TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
-CHC_SOURCE = "https://live.45678888.xyz/sub?kbQyhXwA=m3u"
+# 主备源（主：45678888，备：ibert）
+CHC_PRIMARY = "https://live.45678888.xyz/sub?kbQyhXwA=m3u"
+CHC_BACKUP  = "https://m3u.ibert.me/ycl_iptv.m3u"
 
 OUTPUT_FILE = os.path.join(ROOT_DIR, "joker.m3u")
 BB_FILE = os.path.join(ROOT_DIR, "BB.m3u")
-
-# ================= CHC目标 =================
 
 TARGET_CHC_KEYWORDS = {
     "动作电影": "动作电影",
@@ -32,11 +28,27 @@ TARGET_CHC_KEYWORDS = {
     "萌宠tv": "萌宠TV"
 }
 
-# ================= 工具 =================
+# ============== 网络下载（带UA + 重试） ==============
 
-def download(url):
-    return requests.get(url, timeout=30).text
+def download(url, retries=3):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Accept": "*/*",
+        "Connection": "keep-alive"
+    }
 
+    for i in range(retries):
+        try:
+            r = requests.get(url, headers=headers, timeout=20)
+            r.raise_for_status()
+            return r.text
+        except Exception as e:
+            print(f"[{url}] 重试 {i+1}/{retries} 失败:", e)
+            time.sleep(2)
+
+    return ""
+
+# ============== 名称归一化 ==============
 
 def normalize(s):
     s = (s or "").lower()
@@ -44,53 +56,51 @@ def normalize(s):
     s = re.sub(r"(hd|4k|标清|高清|频道)", "", s)
     return s
 
-# ================= CHC提取 =================
+# ============== 双解析提取 CHC ==============
 
-def extract_chc_channels(content):
-    result = []
+def extract_chc(content):
+    res = []
     name = ""
 
     for line in content.splitlines():
         line = line.strip()
 
-        if line.startswith("#EXTINF"):
-            if "," in line:
-                name = line.split(",", 1)[1]
+        if line.startswith("#EXTINF") and "," in line:
+            name = line.split(",", 1)[1]
 
         elif line.startswith("http"):
             n = normalize(name)
-
             for k, std in TARGET_CHC_KEYWORDS.items():
                 if normalize(k) in n:
-                    result.append((std, line))
+                    res.append((std, line))
                     break
 
-        # 兼容 txt
         elif "," in line:
             a, b = line.split(",", 1)
             if b.startswith("http"):
                 n = normalize(a)
                 for k, std in TARGET_CHC_KEYWORDS.items():
                     if normalize(k) in n:
-                        result.append((std, b.strip()))
+                        res.append((std, b.strip()))
                         break
 
     # 去重
     seen = set()
-    final = []
-    for n, u in result:
+    out = []
+    for n, u in res:
         if u not in seen:
             seen.add(u)
-            final.append((n, u))
+            out.append((n, u))
 
-    return final
+    return out
 
-# ================= CHC写入 =================
+# ============== EXTINF 构建 ==============
 
 def build_extinf(name):
     logo = f"https://raw.githubusercontent.com/xiasufern/AA/main/icon/{name}.png"
     return f'#EXTINF:-1 tvg-id="{name}" tvg-name="{name}" tvg-logo="{logo}" group-title="CHC",{name}'
 
+# ============== 注入 CHC 分组 ==============
 
 def append_chc(bb_content, chc_list):
     if not chc_list:
@@ -99,7 +109,6 @@ def append_chc(bb_content, chc_list):
     lines = bb_content.splitlines()
     out = lines[:]
 
-    # 插入到最后
     out.append("")
     out.append("# CHC")
 
@@ -109,18 +118,25 @@ def append_chc(bb_content, chc_list):
 
     return "\n".join(out) + "\n"
 
-# ================= 主程序 =================
+# ============== 主流程 ==============
 
 def main():
-    print("抓取 CHC 专用源...")
-    content = download(CHC_SOURCE)
-    chc_list = extract_chc_channels(content)
+    print("抓取 CHC 主源...")
+    content = download(CHC_PRIMARY)
 
-    print("CHC抓取数量:", len(chc_list))
+    chc_list = extract_chc(content) if content else []
+
+    # 🔥 主源失败或数量太少 → 切备源
+    if len(chc_list) < 5:
+        print("主源不足，切换备用源...")
+        backup = download(CHC_BACKUP)
+        if backup:
+            chc_list = extract_chc(backup)
+
+    print("最终 CHC 数量:", len(chc_list))
 
     output = '#EXTM3U\n\n'
 
-    # 保留原 BB
     try:
         with open(BB_FILE, "r", encoding="utf-8") as f:
             bb = f.read()
@@ -136,7 +152,7 @@ def main():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
 
-    print("✅ CHC 已独立注入完成")
+    print("✅ CHC 双保险注入完成")
 
 
 if __name__ == "__main__":
