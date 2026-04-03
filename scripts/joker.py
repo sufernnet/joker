@@ -11,7 +11,7 @@ Gather IPTV Generator
 - 去重
 - 合并 BB.m3u
 - 额外抓取：
-  1) 8 个央视频道
+  1) 央视频道
   2) CHC 频道：动作电影、高清电影、家庭电影、家庭影院、影迷电影
 - 插入到 BB.m3u 的央视分组最后面
 - 抓取频道统一按标准格式写入
@@ -225,30 +225,61 @@ def extract_urls_from_m3u(content):
     return urls
 
 
+def normalize_name_for_match(name):
+    """
+    统一标准化频道名，增强 CHC 识别能力
+    """
+    n = (name or "").strip().lower()
+    n = n.replace(" ", "").replace("-", "").replace("_", "")
+    n = n.replace("（", "(").replace("）", ")")
+    n = n.replace("高清", "").replace("标清", "").replace("频道", "")
+    n = n.replace("hd", "").replace("sd", "")
+    return n
+
+
 def match_target(name):
-    n = (name or "").strip()
+    n = normalize_name_for_match(name)
 
-    # 原有8个频道逻辑
-    for k in TARGET_CCTV:
-        if k in n:
-            return k
+    # 央视数字频道匹配
+    cctv_alias_map = {
+        "CCTV世界地理": ["cctv世界地理", "世界地理", "央视世界地理"],
+        "CCTV兵器科技": ["cctv兵器科技", "央视兵器科技", "兵器科技", "cctv兵器", "兵器"],
+        "CCTV女性时尚": ["cctv女性时尚", "女性时尚", "央视女性时尚"],
+        "CCTV怀旧剧场": ["cctv怀旧剧场", "怀旧剧场", "央视怀旧剧场"],
+        "CCTV文化精品": ["cctv文化精品", "文化精品", "央视文化精品"],
+        "CCTV第一剧场": ["cctv第一剧场", "第一剧场", "央视第一剧场"],
+        "CCTV风云足球": ["cctv风云足球", "风云足球", "央视风云足球"],
+        "CCTV风云音乐": ["cctv风云音乐", "风云音乐", "央视风云音乐"],
+        "CCTV央视台球": ["cctv央视台球", "央视台球", "台球"],
+    }
 
-    # 仅补充兵器科技别名
-    if "兵器科技" in n or "央视兵器科技" in n or "CCTV兵器" in n or "兵器" == n.strip():
-        return "CCTV兵器科技"
+    for std_name, aliases in cctv_alias_map.items():
+        for alias in aliases:
+            if normalize_name_for_match(alias) in n:
+                return std_name
 
-    # 新增 CHC 频道匹配
+    # CHC 频道匹配（这里重点增强）
     chc_alias_map = {
-        "CHC动作电影": ["CHC动作电影", "动作电影", "CHC动作"],
-        "CHC高清电影": ["CHC高清电影", "高清电影", "CHC高清"],
-        "CHC家庭电影": ["CHC家庭电影", "家庭电影"],
-        "CHC家庭影院": ["CHC家庭影院", "家庭影院"],
-        "CHC影迷电影": ["CHC影迷电影", "影迷电影"],
+        "CHC动作电影": [
+            "chc动作电影", "动作电影", "chc动作", "chc动作电影hd", "动作电影hd"
+        ],
+        "CHC高清电影": [
+            "chc高清电影", "高清电影", "chc高清", "chc高清电影hd", "高清电影hd"
+        ],
+        "CHC家庭电影": [
+            "chc家庭电影", "家庭电影", "chc家庭电影hd", "家庭电影hd"
+        ],
+        "CHC家庭影院": [
+            "chc家庭影院", "家庭影院", "chc家庭影院hd", "家庭影院hd"
+        ],
+        "CHC影迷电影": [
+            "chc影迷电影", "影迷电影", "chc影迷电影hd", "影迷电影hd"
+        ],
     }
 
     for std_name, aliases in chc_alias_map.items():
         for alias in aliases:
-            if alias in n:
+            if normalize_name_for_match(alias) in n:
                 return std_name
 
     return None
@@ -271,6 +302,7 @@ def normalize_cctv_display_name(name):
         "CCTV文化精品": "文化精品",
         "CCTV第一剧场": "第一剧场",
         "CCTV风云足球": "风云足球",
+        "CCTV风云音乐": "风云音乐",
         "CCTV兵器科技": "兵器科技",
 
         "CHC动作电影": "动作电影",
@@ -359,7 +391,7 @@ async def fetch_best_cctv_channels():
 
     result = []
 
-    # 先原8个频道
+    # 先央视数字频道
     for name in TARGET_CCTV_ORDER:
         if name in best_map:
             result.append((name, best_map[name][0]))
