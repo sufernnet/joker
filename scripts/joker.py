@@ -55,24 +55,26 @@ REMOVE_YT_IDS = [
 
 TARGET_CCTV = {
     "CCTV世界地理",
-    "CCTV央视台球",
+    "CCTV兵器科技",
     "CCTV女性时尚",
     "CCTV怀旧剧场",
     "CCTV文化精品",
     "CCTV第一剧场",
     "CCTV风云足球",
-    "CCTV兵器科技"
+    "CCTV风云音乐",
+    "CCTV央视台球"
 }
 
 TARGET_CCTV_ORDER = [
     "CCTV世界地理",
-    "CCTV央视台球",
+    "CCTV兵器科技",
     "CCTV女性时尚",
     "CCTV怀旧剧场",
     "CCTV文化精品",
     "CCTV第一剧场",
     "CCTV风云足球",
-    "CCTV兵器科技"
+    "CCTV风云音乐",
+    "CCTV央视台球"
 ]
 
 TARGET_CHC = {
@@ -97,7 +99,8 @@ CCTV_SOURCES = [
     "https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.m3u",
     "https://gh-proxy.com/raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u",
     "http://175.178.251.183:6689/live.m3u",
-    "https://m3u.ibert.me/ycl_iptv.m3u"
+    "https://m3u.ibert.me/ycl_iptv.m3u",
+    "https://live.45678888.xyz/sub?kbQyhXwA=m3u"
 ]
 
 TEST_TIMEOUT = 10
