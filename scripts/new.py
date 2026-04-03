@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-频道抓取生成器
+频道抓取生成器（增强嗅探版）
 功能：
 1. 不合并 BB.m3u
 2. 不合并 TW.m3u
@@ -14,6 +14,7 @@
 8. 抓取 CCTV 数字频道，分组为：数字
 9. 抓取凤凰中文 / 凤凰资讯 / 凤凰香港，分组为：HK
 10. 输出文件为：new.m3u
+11. 增强嗅探：链接必须“基本可播放”才会保留
 """
 
 import re
@@ -21,6 +22,7 @@ import time
 import asyncio
 import aiohttp
 import requests
+from urllib.parse import urljoin
 from datetime import datetime
 
 # ===================== 基础配置 =====================
@@ -43,6 +45,10 @@ SOURCES = [
     "http://175.178.251.183:6689/live.m3u",
     "https://m3u.ibert.me/ycl_iptv.m3u"
 ]
+
+# 嗅探时一些额外超时
+PLAYLIST_TIMEOUT = 8
+SEGMENT_TIMEOUT = 8
 
 # ===================== 目标频道定义 =====================
 
@@ -102,85 +108,28 @@ HK_ORDER = [
 ]
 
 OUTPUT_ORDER = CCTV_ORDER + SAT_ORDER + FOURK_ORDER + CHC_ORDER + DIGITAL_ORDER + HK_ORDER
-
 MATCH_ORDER = FOURK_ORDER + CCTV_ORDER[::-1] + CHC_ORDER + DIGITAL_ORDER + HK_ORDER + SAT_ORDER
 
 CHANNEL_SPECS = {
-    # ===================== CCTV1~17 + CCTV5+ =====================
-    "CCTV1": {
-        "group": "央视",
-        "aliases": ["cctv1", "cctv-1", "cctv01", "央视1", "中央1", "中央一台", "央视综合", "cctv1综合"]
-    },
-    "CCTV2": {
-        "group": "央视",
-        "aliases": ["cctv2", "cctv-2", "cctv02", "央视2", "中央2", "央视财经", "cctv2财经"]
-    },
-    "CCTV3": {
-        "group": "央视",
-        "aliases": ["cctv3", "cctv-3", "cctv03", "央视3", "中央3", "央视综艺", "cctv3综艺"]
-    },
-    "CCTV4": {
-        "group": "央视",
-        "aliases": ["cctv4", "cctv-4", "cctv04", "央视4", "中央4", "中文国际", "cctv4中文国际"]
-    },
-    "CCTV5": {
-        "group": "央视",
-        "aliases": ["cctv5", "cctv-5", "cctv05", "央视5", "中央5", "央视体育", "cctv5体育"]
-    },
-    "CCTV5+": {
-        "group": "央视",
-        "aliases": ["cctv5+", "cctv-5+", "cctv5plus", "央视5+", "体育赛事", "央视体育赛事", "cctv体育赛事"]
-    },
-    "CCTV6": {
-        "group": "央视",
-        "aliases": ["cctv6", "cctv-6", "cctv06", "央视6", "中央6", "央视电影", "cctv6电影", "电影频道"]
-    },
-    "CCTV7": {
-        "group": "央视",
-        "aliases": ["cctv7", "cctv-7", "cctv07", "央视7", "中央7", "国防军事", "军事农业", "cctv7国防军事"]
-    },
-    "CCTV8": {
-        "group": "央视",
-        "aliases": ["cctv8", "cctv-8", "cctv08", "央视8", "中央8", "央视电视剧", "cctv8电视剧"]
-    },
-    "CCTV9": {
-        "group": "央视",
-        "aliases": ["cctv9", "cctv-9", "cctv09", "央视9", "中央9", "纪录频道", "cctv9纪录"]
-    },
-    "CCTV10": {
-        "group": "央视",
-        "aliases": ["cctv10", "cctv-10", "央视10", "中央10", "科教频道", "cctv10科教"]
-    },
-    "CCTV11": {
-        "group": "央视",
-        "aliases": ["cctv11", "cctv-11", "央视11", "中央11", "戏曲频道", "cctv11戏曲"]
-    },
-    "CCTV12": {
-        "group": "央视",
-        "aliases": ["cctv12", "cctv-12", "央视12", "中央12", "社会与法", "cctv12社会与法"]
-    },
-    "CCTV13": {
-        "group": "央视",
-        "aliases": ["cctv13", "cctv-13", "央视13", "中央13", "央视新闻", "新闻频道", "cctv13新闻"]
-    },
-    "CCTV14": {
-        "group": "央视",
-        "aliases": ["cctv14", "cctv-14", "央视14", "中央14", "少儿频道", "cctv14少儿"]
-    },
-    "CCTV15": {
-        "group": "央视",
-        "aliases": ["cctv15", "cctv-15", "央视15", "中央15", "音乐频道", "cctv15音乐"]
-    },
-    "CCTV16": {
-        "group": "央视",
-        "aliases": ["cctv16", "cctv-16", "央视16", "中央16", "奥林匹克", "cctv16奥林匹克"]
-    },
-    "CCTV17": {
-        "group": "央视",
-        "aliases": ["cctv17", "cctv-17", "央视17", "中央17", "农业农村", "cctv17农业农村"]
-    },
+    "CCTV1": {"group": "央视", "aliases": ["cctv1", "cctv-1", "cctv01", "央视1", "中央1", "中央一台", "央视综合", "cctv1综合"]},
+    "CCTV2": {"group": "央视", "aliases": ["cctv2", "cctv-2", "cctv02", "央视2", "中央2", "央视财经", "cctv2财经"]},
+    "CCTV3": {"group": "央视", "aliases": ["cctv3", "cctv-3", "cctv03", "央视3", "中央3", "央视综艺", "cctv3综艺"]},
+    "CCTV4": {"group": "央视", "aliases": ["cctv4", "cctv-4", "cctv04", "央视4", "中央4", "中文国际", "cctv4中文国际"]},
+    "CCTV5": {"group": "央视", "aliases": ["cctv5", "cctv-5", "cctv05", "央视5", "中央5", "央视体育", "cctv5体育"]},
+    "CCTV5+": {"group": "央视", "aliases": ["cctv5+", "cctv-5+", "cctv5plus", "央视5+", "体育赛事", "央视体育赛事", "cctv体育赛事"]},
+    "CCTV6": {"group": "央视", "aliases": ["cctv6", "cctv-6", "cctv06", "央视6", "中央6", "央视电影", "cctv6电影", "电影频道"]},
+    "CCTV7": {"group": "央视", "aliases": ["cctv7", "cctv-7", "cctv07", "央视7", "中央7", "国防军事", "军事农业", "cctv7国防军事"]},
+    "CCTV8": {"group": "央视", "aliases": ["cctv8", "cctv-8", "cctv08", "央视8", "中央8", "央视电视剧", "cctv8电视剧"]},
+    "CCTV9": {"group": "央视", "aliases": ["cctv9", "cctv-9", "cctv09", "央视9", "中央9", "纪录频道", "cctv9纪录"]},
+    "CCTV10": {"group": "央视", "aliases": ["cctv10", "cctv-10", "央视10", "中央10", "科教频道", "cctv10科教"]},
+    "CCTV11": {"group": "央视", "aliases": ["cctv11", "cctv-11", "央视11", "中央11", "戏曲频道", "cctv11戏曲"]},
+    "CCTV12": {"group": "央视", "aliases": ["cctv12", "cctv-12", "央视12", "中央12", "社会与法", "cctv12社会与法"]},
+    "CCTV13": {"group": "央视", "aliases": ["cctv13", "cctv-13", "央视13", "中央13", "央视新闻", "新闻频道", "cctv13新闻"]},
+    "CCTV14": {"group": "央视", "aliases": ["cctv14", "cctv-14", "央视14", "中央14", "少儿频道", "cctv14少儿"]},
+    "CCTV15": {"group": "央视", "aliases": ["cctv15", "cctv-15", "央视15", "中央15", "音乐频道", "cctv15音乐"]},
+    "CCTV16": {"group": "央视", "aliases": ["cctv16", "cctv-16", "央视16", "中央16", "奥林匹克", "cctv16奥林匹克"]},
+    "CCTV17": {"group": "央视", "aliases": ["cctv17", "cctv-17", "央视17", "中央17", "农业农村", "cctv17农业农村"]},
 
-    # ===================== 卫视 =====================
     "北京卫视": {"group": "卫视", "aliases": ["北京卫视"]},
     "天津卫视": {"group": "卫视", "aliases": ["天津卫视"]},
     "河北卫视": {"group": "卫视", "aliases": ["河北卫视"]},
@@ -215,7 +164,6 @@ CHANNEL_SPECS = {
     "新疆卫视": {"group": "卫视", "aliases": ["新疆卫视"]},
     "兵团卫视": {"group": "卫视", "aliases": ["兵团卫视"]},
 
-    # ===================== 4K =====================
     "浙江卫视4K": {"group": "4K", "aliases": ["浙江卫视4k", "浙江4k", "浙江4Ｋ"]},
     "江苏卫视4K": {"group": "4K", "aliases": ["江苏卫视4k", "江苏4k", "江苏4Ｋ"]},
     "深圳卫视4K": {"group": "4K", "aliases": ["深圳卫视4k", "深圳4k", "深圳4Ｋ"]},
@@ -226,14 +174,12 @@ CHANNEL_SPECS = {
     "山东卫视4K": {"group": "4K", "aliases": ["山东卫视4k", "山东4k", "山东4Ｋ"]},
     "北京卫视4K": {"group": "4K", "aliases": ["北京卫视4k", "北京4k", "北京4Ｋ"]},
 
-    # ===================== CHC / 电影频道 =====================
     "动作电影": {"group": "电影频道", "aliases": ["chc动作电影", "动作电影", "chc动作"]},
     "高清电影": {"group": "电影频道", "aliases": ["chc高清电影", "高清电影", "chc高清"]},
     "家庭电影": {"group": "电影频道", "aliases": ["chc家庭电影", "家庭电影"]},
     "家庭影院": {"group": "电影频道", "aliases": ["chc家庭影院", "家庭影院"]},
     "影迷电影": {"group": "电影频道", "aliases": ["chc影迷电影", "影迷电影"]},
 
-    # ===================== 数字频道 =====================
     "世界地理": {"group": "数字", "aliases": ["cctv世界地理", "世界地理", "央视世界地理"]},
     "第一剧场": {"group": "数字", "aliases": ["cctv第一剧场", "第一剧场", "央视第一剧场"]},
     "怀旧剧场": {"group": "数字", "aliases": ["cctv怀旧剧场", "怀旧剧场", "央视怀旧剧场"]},
@@ -245,7 +191,6 @@ CHANNEL_SPECS = {
     "文化精品": {"group": "数字", "aliases": ["cctv文化精品", "文化精品", "央视文化精品"]},
     "兵器科技": {"group": "数字", "aliases": ["cctv兵器科技", "央视兵器科技", "兵器科技", "cctv兵器"]},
 
-    # ===================== HK =====================
     "凤凰中文": {"group": "HK", "aliases": ["凤凰中文", "凤凰中文台", "phoenixchinese", "phoenix chinese"]},
     "凤凰资讯": {"group": "HK", "aliases": ["凤凰资讯", "凤凰资讯台", "phoenixinfo", "phoenix info"]},
     "凤凰香港": {"group": "HK", "aliases": ["凤凰香港", "phoenixhongkong", "phoenix hongkong", "phoenix hong kong"]},
@@ -348,24 +293,20 @@ def is_alias_match(norm_name, alias):
 
 def match_target(name):
     norm_name = normalize_text(name)
-
     for std_name in MATCH_ORDER:
         spec = CHANNEL_SPECS.get(std_name, {})
         for alias in spec.get("aliases", []):
             if is_alias_match(norm_name, alias):
                 return std_name
-
     return None
 
 
 def get_logo_url(std_name):
     group = CHANNEL_SPECS[std_name]["group"]
-
     if group == "卫视":
         filename = SAT_LOGO_MAP.get(std_name)
         if filename:
             return SAT_LOGO_BASE + filename
-
     return f"{LOGO_BASE}{std_name}.png"
 
 
@@ -385,14 +326,99 @@ def is_blocked_source(url):
     u = (url or "").lower()
     return any(k.lower() in u for k in BLOCKED_SOURCE_KEYWORDS)
 
-# ===================== 异步测速 =====================
+# ===================== 嗅探逻辑 =====================
+
+async def fetch_text(session, url, timeout=PLAYLIST_TIMEOUT):
+    try:
+        async with session.get(url, timeout=timeout, allow_redirects=True) as r:
+            if r.status != 200:
+                return None, None
+            text = await r.text(errors="ignore")
+            content_type = r.headers.get("Content-Type", "")
+            return text, content_type
+    except:
+        return None, None
+
+
+async def fetch_head_bytes(session, url, timeout=SEGMENT_TIMEOUT):
+    try:
+        headers = {"Range": "bytes=0-1023"}
+        async with session.get(url, timeout=timeout, headers=headers, allow_redirects=True) as r:
+            if r.status not in (200, 206):
+                return False
+            data = await r.read()
+            return len(data) > 0
+    except:
+        return False
+
+
+def parse_m3u8_lines(text):
+    if not text:
+        return []
+    return [x.strip() for x in text.splitlines() if x.strip()]
+
+
+def first_non_comment_uri(lines):
+    for line in lines:
+        if not line.startswith("#"):
+            return line
+    return None
+
+
+async def sniff_m3u8_playable(session, url):
+    # 第1层 playlist
+    text, _ = await fetch_text(session, url, timeout=PLAYLIST_TIMEOUT)
+    if not text or "#EXTM3U" not in text:
+        return False
+
+    lines = parse_m3u8_lines(text)
+
+    # 主清单：找子播放列表
+    if any("#EXT-X-STREAM-INF" in line for line in lines):
+        child = first_non_comment_uri(lines)
+        if not child:
+            return False
+        child_url = urljoin(url, child)
+
+        text2, _ = await fetch_text(session, child_url, timeout=PLAYLIST_TIMEOUT)
+        if not text2 or "#EXTM3U" not in text2:
+            return False
+        lines2 = parse_m3u8_lines(text2)
+
+        seg = first_non_comment_uri(lines2)
+        if not seg:
+            return False
+
+        seg_url = urljoin(child_url, seg)
+        return await fetch_head_bytes(session, seg_url, timeout=SEGMENT_TIMEOUT)
+
+    # 媒体清单：直接找分片
+    seg = first_non_comment_uri(lines)
+    if not seg:
+        return False
+
+    seg_url = urljoin(url, seg)
+    return await fetch_head_bytes(session, seg_url, timeout=SEGMENT_TIMEOUT)
+
+
+async def sniff_stream_playable(session, url):
+    low = url.lower()
+
+    # HLS
+    if ".m3u8" in low:
+        return await sniff_m3u8_playable(session, url)
+
+    # 其他直播流，读一点数据确认不是假链接
+    return await fetch_head_bytes(session, url, timeout=SEGMENT_TIMEOUT)
+
+# ===================== 异步测速 + 嗅探 =====================
 
 async def test_stream(session, url):
     start = time.time()
     try:
-        async with session.get(url, timeout=TEST_TIMEOUT) as r:
-            if r.status == 200:
-                return True, time.time() - start
+        ok = await sniff_stream_playable(session, url)
+        if ok:
+            return True, time.time() - start
     except:
         pass
     return False, None
@@ -404,7 +430,7 @@ async def read_and_test_file(url, is_m3u):
             print(f"跳过屏蔽源: {url}")
             return []
 
-        timeout = aiohttp.ClientTimeout(total=30)
+        timeout = aiohttp.ClientTimeout(total=40)
         async with aiohttp.ClientSession(timeout=timeout) as session:
             async with session.get(url) as r:
                 content = await r.text()
@@ -452,8 +478,8 @@ async def fetch_best_channels():
         all_valid.extend(data)
 
     best_map = {}
-
     for std_name, url, latency in all_valid:
+        # 每个频道只保留一个“可播放且最快”的
         if std_name not in best_map or latency < best_map[std_name][1]:
             best_map[std_name] = (url, latency)
 
@@ -462,7 +488,7 @@ async def fetch_best_channels():
         if std_name in best_map:
             result.append((std_name, best_map[std_name][0]))
 
-    print("已获取到的目标频道数量:", len(result))
+    print("已获取到的可播放目标频道数量:", len(result))
     return result
 
 # ===================== 输出 =====================
@@ -486,6 +512,7 @@ def main():
     print("开始抓取目标频道...")
     print("输出文件:", OUTPUT_FILE)
     print("屏蔽源关键字:", BLOCKED_SOURCE_KEYWORDS)
+    print("已启用：播放嗅探校验（不可播放链接将被丢弃）")
 
     channels = asyncio.run(fetch_best_channels())
     generate_output(channels, OUTPUT_FILE)
