@@ -207,8 +207,13 @@ def main():
     except:
         pass
 
-    # CHC（修复台标）- 放在 BB.m3u 后面
-    out += "# CHC\n"
+    # 央视（数字分组）- 放在 CHC 前面
+    out += "# 数字\n"
+    for n, e, u in cctv:
+        out += set_group(e, "数字") + "\n" + u + "\n"
+
+    # CHC（修复台标）- 放在央视后面
+    out += "\n# CHC\n"
     for n, e, u in chc:
         e = fix_logo(n, e)
         out += set_group(e, "CHC") + "\n" + u + "\n"
@@ -222,11 +227,6 @@ def main():
     out += "\n# TW\n"
     for n, e, u in tw:
         out += set_group(e, "TW") + "\n" + u + "\n"
-
-    # 央视
-    out += "\n# 央视\n"
-    for n, e, u in cctv:
-        out += set_group(e, "央视") + "\n" + u + "\n"
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(out)
