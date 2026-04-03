@@ -4,7 +4,6 @@
 import requests
 import re
 import time
-import hashlib
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -40,6 +39,21 @@ CHC_TARGET = [
 ]
 
 BAD_KEYWORDS = ["测试", "购物", "广告"]
+
+# ===================== 台标修复 =====================
+
+LOGO_MAP = {
+    "CHC影迷电影": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png"
+}
+
+def fix_logo(name, extinf):
+    if name in LOGO_MAP:
+        logo = LOGO_MAP[name]
+        if 'tvg-logo="' in extinf:
+            extinf = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{logo}"', extinf)
+        else:
+            extinf = extinf.replace("#EXTINF:-1", f'#EXTINF:-1 tvg-logo="{logo}"')
+    return extinf
 
 # ===================== 下载 =====================
 
@@ -115,7 +129,7 @@ def set_group(extinf, group):
         return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
     return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"')
 
-# ===================== 嗅探 =====================
+# ===================== 并发测速 =====================
 
 def check(url):
     try:
@@ -192,18 +206,23 @@ def main():
     except:
         pass
 
+    # HK
     out += "# HK\n"
     for n, e, u in hk:
         out += set_group(e, "HK") + "\n" + u + "\n"
 
+    # TW
     out += "\n# TW\n"
     for n, e, u in tw:
         out += set_group(e, "TW") + "\n" + u + "\n"
 
+    # CHC（修复台标）
     out += "\n# CHC\n"
     for n, e, u in chc:
+        e = fix_logo(n, e)
         out += set_group(e, "CHC") + "\n" + u + "\n"
 
+    # 央视
     out += "\n# 央视\n"
     for n, e, u in cctv:
         out += set_group(e, "央视") + "\n" + u + "\n"
