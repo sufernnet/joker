@@ -22,7 +22,8 @@ SOURCES = [
     "https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.m3u",
     "https://gh-proxy.com/raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u",
     "http://175.178.251.183:6689/live.m3u",
-    "https://m3u.ibert.me/ycl_iptv.m3u"
+    "https://m3u.ibert.me/ycl_iptv.m3u",
+    "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg1.m3u"
 ]
 
 CCTV_ORDER = [
