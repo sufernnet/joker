@@ -35,7 +35,7 @@ CCTV_TARGET = [
 
 CHC_TARGET = [
     "CHC影迷电影","CHC家庭影院","CHC动作电影",
-    "HC家庭影院","淘电影","萌宠TV"
+    "HC家庭影院"
 ]
 
 BAD_KEYWORDS = ["测试", "购物", "广告"]
