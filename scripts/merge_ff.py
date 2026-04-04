@@ -20,7 +20,8 @@ EXTRA_URLS = [
     "http://175.178.251.183:6689/live.m3u",
     "https://m3u.ibert.me/ycl_iptv.m3u",
     "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg1.m3u",
-    "https://2026.xymm.ccwu.cc"
+    "https://2026.xymm.ccwu.cc",
+    "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u"
 ]
 
 OUTPUT_FILE = "Gather.m3u"
