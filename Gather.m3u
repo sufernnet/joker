@@ -1,6 +1,6 @@
 #EXTM3U
 
-# 更新时间 2026-04-06 10:11:04
+# 更新时间 2026-04-06 22:29:11
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -376,7 +376,7 @@ http://38.75.136.137:98/gslb/dsdqpub/ystq.m3u8?auth=testpub
 
 # CHC
 #EXTINF:-1 group-title="CHC" tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",CHC影迷电影
-https://iptv.catvod.com/live.php?token=e222e4d00c9d1945c3387a6c63b434577afbefd92f01f3fa39da76f154997133&id=CHC%E5%BD%B1%E8%BF%B7%E7%94%B5%E5%BD%B1&line=4
+http://38.75.136.137:98/gslb/dsdqpub/chchd.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="CHC家庭影院" tvg-name="CHC家庭影院" tvg-logo="https://www.xn--rgv465a.top/tvlogo/CHC家庭影院.png" group-title="CHC",CHC家庭影院
 http://38.75.136.137:98/gslb/dsdqpub/chcjt.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="CHC动作电影" tvg-name="CHC动作电影" tvg-logo="https://www.xn--rgv465a.top/tvlogo/CHC动作电影.png" group-title="CHC",CHC动作电影
