@@ -21,7 +21,8 @@ EXTRA_URLS = [
     "https://m3u.ibert.me/ycl_iptv.m3u",
     "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg1.m3u",
     "https://2026.xymm.ccwu.cc",
-    "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u"
+    "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u",
+    "https://iptv.catvod.com/list.php?token=e222e4d00c9d1945c3387a6c63b434577afbefd92f01f3fa39da76f154997133"
 ]
 
 OUTPUT_FILE = "Gather.m3u"
