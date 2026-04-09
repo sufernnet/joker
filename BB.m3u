@@ -55,7 +55,7 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 http://39.164.138.145:8899/hls/17/index.m3u8
 
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
-http://vip1.xinketongxun.fun:8082/tsfile/live/1026_1.m3u8
+https://t.freetv.fun/live/cctv4k-7.php
 
 #EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/BJ4K.png" group-title="4K",北京卫视
 http://124.90.44.40:6060/010/2/01000010000000060000000000002865?virtualDomain=010.live_hls.zte.com
