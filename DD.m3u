@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 # DD.m3u
-# 生成时间: 2026-04-09 10:11:54
+# 生成时间: 2026-04-09 22:52:18
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -59,7 +59,7 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 http://39.164.138.145:8899/hls/17/index.m3u8
 
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
-https://t.freetv.fun/live/cctv4k-5.m3u8
+http://38.75.136.137:98/gslb/dsdqpub/cctv4k.m3u8?auth=testpub
 
 #EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/BJ4K.png" group-title="4K",北京卫视
 http://124.90.44.40:6060/010/2/01000010000000060000000000002865?virtualDomain=010.live_hls.zte.com
@@ -632,10 +632,6 @@ https://tv.iill.top/4gtv/4gtv-live201
 https://tv.iill.top/4gtv/4gtv-live014
 #EXTINF:-1 tvg-id="客家電視台" tvg-name="客家電視台" tvg-logo="https://epg.iill.top/logo/客家電視台.png" http-user-agent="okhttp/1.9.89" group-title="TW",客家電視
 https://tv.iill.top/4gtv/4gtv-4gtv043
-#EXTINF:-1 tvg-id="ETtoday綜合台" tvg-name="ETtoday綜合台" tvg-logo="https://epg-1.iill.top/logo/ETtoday綜合台.png" http-user-agent="okhttp/1.9.89" group-title="TW",ETtoday綜合
-https://tv.iill.top/FainTV/146
-#EXTINF:-1 tvg-id="歡樂看新聞" tvg-name="歡樂看新聞" tvg-logo="https://epg-1.iill.top/logo/FainTV.png" http-user-agent="okhttp/1.9.89" group-title="TW",歡樂看新聞
-https://tv.iill.top/FainTV/19670
 
 # SPORTS频道
 #EXTINF:-1 tvg-id="博斯運動一台" tvg-name="博斯運動一台" tvg-logo="https://epg-1.iill.top/logo/博斯運動一台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯運動 一
@@ -723,4 +719,4 @@ https://tv.iill.top/api/Sky-Sports-Mix/index.m3u8
 #EXTINF:-1 tvg-id="FIGHT SPORTS HD" tvg-name="FIGHT SPORTS HD" tvg-logo="https://epg-1.iill.top/logo/Fight-Sports.png" group-title="SPORTS",Fight Sports
 https://tv.iill.top/api/Fight-Sports/index.m3u8
 
-# 统计: HK(24) + TW(114) + SPORTS(42) = 180
+# 统计: HK(24) + TW(112) + SPORTS(42) = 178
