@@ -1,7 +1,7 @@
 #EXTM3U
 
 # joker.m3u
-# 生成时间: 2026-04-12 22:39:58
+# 生成时间: 2026-04-13 10:54:13
 
 url-tvg="https://epg.zsdc.eu.org/t.xml.gz"
 
@@ -75,7 +75,7 @@ https://epg.pw/stream/ac8062ec9484078061d3bef507c15a423ac57ae4144e3fcc4b0a198dd4
 #EXTINF:-1 tvg-id="央视台球" tvg-name="央视台球" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/央视台球.png" group-title="央视",央视台球
 https://epg.pw/stream/ca9c1cd4b97fb824cedd7fedfd0c7a950afdd7f00751cfbb7c2d89831d7746a5.m3u8
 #EXTINF:-1 tvg-id="家庭影院" tvg-name="家庭影院" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/家庭影院.png" group-title="央视",家庭影院
-http://38.75.136.137:98/gslb/dsdqpub/chcjt.m3u8?auth=testpub
+http://61.162.52.6:8088/newlive/live/hls/60/live.m3u8
 
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
 http://38.75.136.137:98/gslb/dsdqpub/cctv4k.m3u8?auth=testpub
