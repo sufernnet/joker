@@ -1,6 +1,6 @@
 #EXTM3U
 
-# 更新时间 2026-04-13 10:48:36
+# 更新时间 2026-04-13 22:38:38
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -380,7 +380,7 @@ http://38.75.136.137:98/gslb/dsdqpub/chchd.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="CHC家庭影院" tvg-name="CHC家庭影院" tvg-logo="https://www.xn--rgv465a.top/tvlogo/CHC家庭影院.png" group-title="CHC",CHC家庭影院
 http://38.75.136.137:98/gslb/dsdqpub/chcjt.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="CHC动作电影" tvg-name="CHC动作电影" tvg-logo="https://www.xn--rgv465a.top/tvlogo/CHC动作电影.png" group-title="CHC",CHC动作电影
-https://cdn13.178.indevs.in/163189/32a810b251717bd0
+http://38.75.136.137:98/gslb/dsdqpub/chcdz.m3u8?auth=testpub
 
 # HK
 #EXTINF:-1 tvg-id="鳳凰衛視中文台" tvg-name="鳳凰衛視中文台" tvg-logo="https://epg.iill.top/logo/凤凰中文.png" group-title="HK",鳳凰衛視·中文
