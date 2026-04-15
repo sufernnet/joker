@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 # DD.m3u
-# 生成时间: 2026-04-15 10:15:29
+# 生成时间: 2026-04-15 22:50:37
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -637,7 +637,7 @@ https://v.iill.top/4gtv/4gtv-4gtv043/index.m3u8
 #EXTINF:-1 tvg-id="博斯運動一台" tvg-name="博斯運動一台" tvg-logo="https://epg-1.iill.top/logo/博斯運動一台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯運動 一
 https://hls.iill.top/api/Sports-Network/index.m3u8
 #EXTINF:-1 tvg-id="博斯運動二台" tvg-name="博斯運動二台" tvg-logo="https://epg-1.iill.top/logo/博斯運動二台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯運動 二
-https://hls.iill.top/api/Football-Channel/index.m3u8
+https://v.iill.top/api/Football-Channel/index.m3u8
 #EXTINF:-1 tvg-id="博斯無限台" tvg-name="博斯無限台" tvg-logo="https://epg-1.iill.top/logo/博斯無限台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯無限 一
 https://v.iill.top/tw/Unlimited-Channel/index.m3u8
 #EXTINF:-1 tvg-id="博斯無限二台" tvg-name="博斯無限二台" tvg-logo="https://epg-1.iill.top/logo/博斯無限二台.png" http-user-agent="okhttp/1.9.89" group-title="SPORTS",博斯無限 二
