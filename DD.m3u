@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 # DD.m3u
-# 生成时间: 2026-04-14 22:53:22
+# 生成时间: 2026-04-15 10:15:29
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -708,6 +708,8 @@ https://hls.iill.top/api/Hub-Sports-8/index.m3u8
 https://hls.iill.top/api/Spotv-1/index.m3u8
 #EXTINF:-1 tvg-id="SPOTV2" tvg-name="SPOTV2" tvg-logo="https://epg-1.iill.top/logo/Spotv-2.png" group-title="SPORTS",Spotv 2
 https://hls.iill.top/api/Spotv-2/index.m3u8
+#EXTINF:-1 tvg-id="FIGHT SPORTS HD" tvg-name="FIGHT SPORTS HD" tvg-logo="https://epg-1.iill.top/logo/Fight-Sports.png" group-title="SPORTS",Fight Sports
+https://hls.iill.top/api/Fight-Sports/index.m3u8
 #EXTINF:-1 tvg-id="SkySp Cricket" tvg-name="SkySp Cricket" tvg-logo="https://epg-1.iill.top/logo/Sky-Sports-Cricket.png" group-title="SPORTS",Sky Sports Cricket
 https://v.iill.top/api/Sky-Sports-Cricket/index.m3u8
 #EXTINF:-1 tvg-id="SkySp PL HD" tvg-name="SkySp PL HD" tvg-logo="https://epg-1.iill.top/logo/Sky-Sports-Premier-League.png" group-title="SPORTS",Sky Sports Premier League
@@ -717,4 +719,4 @@ https://v.iill.top/api/Sky-Sports-F1/index.m3u8
 #EXTINF:-1 tvg-id="SkySp Mix HD" tvg-name="SkySp Mix HD" tvg-logo="https://epg-1.iill.top/logo/Sky-Sports-Mix.png" group-title="SPORTS",Sky Sports Mix
 https://v.iill.top/api/Sky-Sports-Mix/index.m3u8
 
-# 统计: HK(24) + TW(112) + SPORTS(41) = 177
+# 统计: HK(24) + TW(112) + SPORTS(42) = 178
