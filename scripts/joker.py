@@ -53,10 +53,10 @@ REMOVE_YT_IDS = [
     "BOy2xDU1LC8","vr3XyVCR4T0","o_-hSMgpAzs",
 ]
 
-# ===================== TW 白名单（已更新） =====================
+# ===================== TW 白名单（已调整顺序） =====================
 
 TW_TARGET_ORDER = [
-    "Love Nature","亞洲旅遊","民視第一台","民視台灣台","中天新聞台","民視","華視",
+    "Love Nature","亞洲旅遊","民視第一台","民視台灣台","民視","中天新聞台","華視",
     "寰宇新聞","寰宇新聞台灣台","寰宇財經","三立綜合台",
     "ELTA娛樂","靖天綜合","Global Trekker","鏡電視新聞台","東森新聞",
     "華視新聞","民視新聞","TVBS新聞台","三立iNEWS","東森財經新聞",
@@ -195,7 +195,9 @@ def fetch_tw(lines):
     for target in TW_TARGET_ORDER:
         for n,e,u in temp:
             if target in n and n not in used:
-                result.append((n,e,u))
+                # 替换 extinf 行中的频道名为已清洗的名称（去掉后缀）
+                new_e = e.rsplit(',', 1)[0] + ',' + n
+                result.append((n, new_e, u))
                 used.add(n)
                 break
     return result
