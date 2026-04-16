@@ -477,6 +477,8 @@ https://v.iill.top/4gtv/4gtv-4gtv082/index.m3u8
 https://v.iill.top/4gtv/4gtv-live096/index.m3u8
 #EXTINF:-1 tvg-id="TRACE Sport Stars" tvg-name="TRACE Sport Stars" tvg-logo="https://epg.iill.top/logo/TRACE-Sport-Stars.png" http-user-agent="okhttp/1.9.89" group-title="TW",TRACE Sport Stars「4gTV」
 https://v.iill.top/4gtv/4gtv-4gtv077/index.m3u8
+#EXTINF:-1 tvg-id="車迷TV" tvg-name="車迷TV" tvg-logo="https://epg.iill.top/logo/車迷TV.png" http-user-agent="okhttp/1.9.89" group-title="TW",車迷「4gTV」 TV
+https://v.iill.top/4gtv/4gtv-live201/index.m3u8
 #EXTINF:-1 tvg-id="GINX Esports TV" tvg-name="GINX Esports TV" tvg-logo="https://epg.iill.top/logo/GINX-Esports-TV.png" http-user-agent="okhttp/1.9.89" group-title="TW",GINX Esports TV「4gTV」
 https://v.iill.top/4gtv/4gtv-4gtv053/index.m3u8
 #EXTINF:-1 tvg-id="民視旅遊台" tvg-name="民視旅遊台" tvg-logo="https://epg.iill.top/logo/民視旅遊台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視旅遊「4gTV」
