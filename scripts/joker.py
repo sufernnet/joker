@@ -4,8 +4,6 @@
 import os
 import re
 import time
-import asyncio
-import aiohttp
 import requests
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -23,7 +21,7 @@ BB_FILE = os.path.join(ROOT_DIR, "BB.m3u")
 HK_SOURCE_GROUP = "• Juli 「精選」"
 TW_SOURCE_GROUP = "•台湾「限制」"
 
-# ===================== ⭐ 新增：扩展源 =====================
+# ===================== EXTRA 源 =====================
 
 EXTRA_URLS = [
     "https://tzdr.com/iptv.txt",
@@ -79,236 +77,202 @@ REMOVE_YT_IDS = [
     "BOy2xDU1LC8","vr3XyVCR4T0","o_-hSMgpAzs",
 ]
 
-# ===================== 工具函数（原样） =====================
+# ===================== 下载（已修复） =====================
 
-def download(url):
-    r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
-    r.raise_for_status()
-    return r.text
+def download(url, retry=2):
+    headers = {"User-Agent": "Mozilla/5.0"}
+    for i in range(retry):
+        try:
+            r = requests.get(url, headers=headers, timeout=15)
+            if r.status_code == 200:
+                return r.text
+        except Exception as e:
+            print(f"❌ 失败 {i+1}/{retry}: {url}")
+            time.sleep(1)
+    print(f"⚠️ 跳过源: {url}")
+    return ""
 
-def is_bad_youtube(url):
-    return any(i in url for i in REMOVE_YT_IDS)
+# ===================== 基础工具 =====================
 
-def deduplicate(channels):
-    seen = set()
-    result = []
-    for name, extinf, url in channels:
-        if url not in seen:
-            seen.add(url)
-            result.append((name, extinf, url))
-    return result
+def parse_name(extinf):
+    return extinf.split(",", 1)[-1].strip()
 
-def normalize_group(extinf_line, new_group):
-    if 'group-title="' in extinf_line:
-        extinf_line = re.sub(r'group-title="[^"]*"', f'group-title="{new_group}"', extinf_line)
-    else:
-        extinf_line = extinf_line.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{new_group}"', 1)
-    return extinf_line
-
-def parse_name_from_extinf(extinf_line):
-    return extinf_line.split(",",1)[1].strip() if "," in extinf_line else ""
-
-def parse_group_from_extinf(extinf_line):
-    m = re.search(r'group-title="([^"]*)"', extinf_line)
+def parse_group(extinf):
+    m = re.search(r'group-title="([^"]*)"', extinf)
     return m.group(1).strip() if m else ""
 
-def parse_m3u_full(content):
-    lines = content.splitlines()
-    res = []
-    extinf=None
-    for line in lines:
-        line=line.strip()
-        if line.startswith("#EXTINF"):
-            extinf=line
-        elif line.startswith("http") and extinf:
-            res.append((parse_name_from_extinf(extinf),extinf,line))
-    return res
+def normalize_group(extinf, group):
+    if 'group-title="' in extinf:
+        return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
+    return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"')
 
-# ===================== ⭐ TW =====================
+def deduplicate(data):
+    seen, out = set(), []
+    for n,e,u in data:
+        if u not in seen:
+            seen.add(u)
+            out.append((n,e,u))
+    return out
 
-def fetch_tw_from_source(lines):
-    parsed = parse_m3u_full("\n".join(lines))
-
-    temp = []
-    for name, extinf, url in parsed:
-        group = parse_group_from_extinf(extinf)
-        if group == TW_SOURCE_GROUP:
-            temp.append((name.strip(), extinf, url))
-
-    temp = deduplicate(temp)
-
-    channel_map = {}
-    for name, extinf, url in temp:
-        channel_map.setdefault(name, []).append((extinf, url))
-
-    result = []
-    used = set()
-
-    for target in TW_TARGET_ORDER:
-        for name in channel_map:
-            if target in name and name not in used:
-                extinf, url = channel_map[name][0]
-                result.append((name, extinf, url))
-                used.add(name)
-                break
-
-    return result
-
-# ===================== ⭐ 新增功能 =====================
+# ===================== 解析 =====================
 
 def parse_m3u(content):
     lines = content.splitlines()
     data, ext = [], None
     for l in lines:
-        l = l.strip()
+        l=l.strip()
         if l.startswith("#EXTINF"):
-            ext = l
+            ext=l
         elif l.startswith("http") and ext:
-            name = parse_name_from_extinf(ext)
+            name=parse_name(ext)
             if not any(x in name for x in BAD_KEYWORDS):
-                data.append((name, ext, l))
+                data.append((name,ext,l))
     return data
 
 def parse_txt(content):
-    data = []
+    data=[]
     for l in content.splitlines():
         if "," in l and "http" in l:
-            name, url = l.split(",", 1)
-            if not any(x in name for x in BAD_KEYWORDS):
-                ext = f'#EXTINF:-1 group-title="未知",{name.strip()}'
-                data.append((name.strip(), ext, url.strip()))
+            name,url=l.split(",",1)
+            ext=f'#EXTINF:-1 group-title="未知",{name.strip()}'
+            data.append((name.strip(),ext,url.strip()))
     return data
 
+# ===================== EXTRA =====================
+
 def load_extra():
-    all_data = []
+    all_data=[]
     for url in EXTRA_URLS:
-        raw = download(url)
+        print("抓取:",url)
+        raw=download(url)
         if not raw:
             continue
-        if "#EXTINF" in raw:
-            all_data += parse_m3u(raw)
-        else:
-            all_data += parse_txt(raw)
+        try:
+            if "#EXTINF" in raw:
+                all_data+=parse_m3u(raw)
+            else:
+                all_data+=parse_txt(raw)
+        except:
+            print("解析失败:",url)
     return all_data
+
+# ===================== 测速 =====================
 
 def check(url):
     try:
-        start = time.time()
-        r = requests.get(url, timeout=5, stream=True)
-        if r.status_code == 200:
-            return url, time.time() - start
+        start=time.time()
+        r=requests.get(url,timeout=5,stream=True)
+        if r.status_code==200:
+            return url,time.time()-start
     except:
         pass
-    return url, 999
+    return url,999
 
 def pick_best(urls):
-    best_url, best_time = None, 999
-    with ThreadPoolExecutor(max_workers=5) as executor:
-        futures = [executor.submit(check, u) for u in urls]
+    best_url,best_time=None,999
+    with ThreadPoolExecutor(max_workers=5) as ex:
+        futures=[ex.submit(check,u) for u in urls]
         for f in as_completed(futures):
-            url, t = f.result()
-            if t < best_time:
-                best_time, best_url = t, url
+            url,t=f.result()
+            if t<best_time:
+                best_time,best_url=t,url
     return best_url
 
-def fix_logo(name, extinf):
-    if name in LOGO_MAP:
-        logo = LOGO_MAP[name]
-        if 'tvg-logo="' in extinf:
-            extinf = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{logo}"', extinf)
-        else:
-            extinf = extinf.replace("#EXTINF:-1", f'#EXTINF:-1 tvg-logo="{logo}"')
-    return extinf
+# ===================== TW =====================
+
+def fetch_tw(lines):
+    parsed=parse_m3u("\n".join(lines))
+    temp=[x for x in parsed if parse_group(x[1])==TW_SOURCE_GROUP]
+    temp=deduplicate(temp)
+
+    result=[]
+    used=set()
+
+    for target in TW_TARGET_ORDER:
+        for n,e,u in temp:
+            if target in n and n not in used:
+                result.append((n,e,u))
+                used.add(n)
+                break
+    return result
 
 # ===================== 主程序 =====================
 
 def main():
-    content = download(SOURCE_URL)
-    lines = content.splitlines()
+    content=download(SOURCE_URL)
+    lines=content.splitlines()
+
+    main_data=parse_m3u(content)
 
     # HK
-    hk_channels = []
-    current_group = None
-    current_name = None
-    current_extinf = None
-
-    for line in lines:
-        line=line.strip()
-        if line.startswith("#EXTINF"):
-            current_extinf=line
-            current_group=parse_group_from_extinf(line)
-            current_name=parse_name_from_extinf(line)
-        elif line.startswith("http"):
-            if current_group==HK_SOURCE_GROUP and not is_bad_youtube(line):
-                hk_channels.append((current_name,current_extinf,line))
-
-    hk_channels = deduplicate(hk_channels)
+    hk=[x for x in main_data if HK_SOURCE_GROUP in x[1]]
+    hk=deduplicate(hk)
 
     # TW
-    tw_channels = fetch_tw_from_source(lines)
+    tw=fetch_tw(lines)
 
-    # ⭐ 新增：数字 + CHC
-    extra_data = load_extra()
+    # EXTRA
+    extra=load_extra()
 
-    cctv_map = {}
-    for n,e,u in extra_data:
+    # CCTV
+    cctv_map={}
+    for n,e,u in extra:
         if n in CCTV_TARGET:
-            cctv_map.setdefault(n, []).append((e,u))
+            cctv_map.setdefault(n,[]).append((e,u))
 
-    cctv = []
+    cctv=[]
     for name in CCTV_TARGET:
         if name in cctv_map:
-            best = pick_best([u for _,u in cctv_map[name]])
-            ext = cctv_map[name][0][0]
-            cctv.append((name, ext, best))
+            best=pick_best([u for _,u in cctv_map[name]])
+            ext=cctv_map[name][0][0]
+            cctv.append((name,ext,best))
 
-    chc_map = {}
-    for n,e,u in extra_data:
+    # CHC
+    chc_map={}
+    for n,e,u in extra:
         if n in CHC_TARGET:
-            chc_map.setdefault(n, []).append((e,u))
+            chc_map.setdefault(n,[]).append((e,u))
 
-    chc = []
+    chc=[]
     for name in CHC_TARGET:
         if name in chc_map:
-            best = pick_best([u for _,u in chc_map[name]])
-            ext = chc_map[name][0][0]
-            chc.append((name, ext, best))
+            best=pick_best([u for _,u in chc_map[name]])
+            ext=chc_map[name][0][0]
+            if name in LOGO_MAP:
+                ext=re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{LOGO_MAP[name]}"', ext)
+            chc.append((name,ext,best))
 
-    # ===================== 输出 =====================
-
-    output = "#EXTM3U\n\n"
+    # 输出
+    out="#EXTM3U\n\n"
 
     try:
-        with open(BB_FILE,"r",encoding="utf-8") as f:
-            output += re.sub(r'^#EXTM3U','',f.read())+"\n"
+        with open(BB_FILE,encoding="utf-8") as f:
+            for l in f:
+                if not l.startswith("#EXTM3U"):
+                    out+=l
     except:
         pass
 
-    # 数字
-    output += "\n# 数字\n"
+    out+="\n# 数字\n"
     for n,e,u in cctv:
-        output += normalize_group(e,"数字")+"\n"+u+"\n"
+        out+=normalize_group(e,"数字")+"\n"+u+"\n"
 
-    # CHC
-    output += "\n# CHC\n"
+    out+="\n# CHC\n"
     for n,e,u in chc:
-        e = fix_logo(n,e)
-        output += normalize_group(e,"CHC")+"\n"+u+"\n"
+        out+=normalize_group(e,"CHC")+"\n"+u+"\n"
 
-    # HK
-    output += "\n# HK\n"
-    for n,e,u in hk_channels:
-        output += normalize_group(e,"HK")+"\n"+u+"\n"
+    out+="\n# HK\n"
+    for n,e,u in hk:
+        out+=normalize_group(e,"HK")+"\n"+u+"\n"
 
-    # TW
-    output += "\n# TW\n"
-    for n,e,u in tw_channels:
-        output += normalize_group(e,"TW")+"\n"+u+"\n"
+    out+="\n# TW\n"
+    for n,e,u in tw:
+        out+=normalize_group(e,"TW")+"\n"+u+"\n"
 
     with open(OUTPUT_FILE,"w",encoding="utf-8") as f:
-        f.write(output)
+        f.write(out)
 
-    print("✅ 完成:", OUTPUT_FILE)
+    print("✅ 完成")
 
-if __name__ == "__main__":
+if __name__=="__main__":
     main()
