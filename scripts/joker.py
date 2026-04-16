@@ -53,10 +53,10 @@ REMOVE_YT_IDS = [
     "BOy2xDU1LC8","vr3XyVCR4T0","o_-hSMgpAzs",
 ]
 
-# ===================== TW 白名单（中天新聞台已移至民視第一台之后） =====================
+# ===================== TW 白名单（顺序不变，但中天会手动插入） =====================
 
 TW_TARGET_ORDER = [
-    "Love Nature","亞洲旅遊","民視第一台","中天新聞台","民視台灣台","民視","華視",
+    "Love Nature","亞洲旅遊","民視第一台","民視台灣台","民視","華視",
     "寰宇新聞","寰宇新聞台灣台","寰宇財經","三立綜合台",
     "ELTA娛樂","靖天綜合","Global Trekker","鏡電視新聞台","東森新聞",
     "華視新聞","民視新聞","TVBS新聞台","三立iNEWS","東森財經新聞",
@@ -215,6 +215,23 @@ def main():
     hk=dedup(hk)
 
     tw=fetch_tw(lines)
+
+    # 手动插入中天新闻台（放在民视之后）
+    custom_extinf = '#EXTINF:-1 tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://epg.iill.top/logo/中天新聞台.png" http-user-agent="okhttp/1.9.89",中天新聞台'
+    custom_url = "https://v.iill.top/4gtv/4gtv-4gtv009/index.m3u8"
+    custom_item = ("中天新聞台", custom_extinf, custom_url)
+
+    # 找到民视的位置
+    insert_index = -1
+    for i, (name, _, _) in enumerate(tw):
+        if name == "民視":
+            insert_index = i + 1
+            break
+    if insert_index != -1:
+        tw.insert(insert_index, custom_item)
+    else:
+        # 如果没找到民视（理论上不会），就追加到末尾
+        tw.append(custom_item)
 
     extra=load_extra()
 
