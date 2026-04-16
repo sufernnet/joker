@@ -8,6 +8,7 @@ import asyncio
 import aiohttp
 import requests
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ===================== 路径配置 =====================
 
@@ -22,7 +23,37 @@ BB_FILE = os.path.join(ROOT_DIR, "BB.m3u")
 HK_SOURCE_GROUP = "• Juli 「精選」"
 TW_SOURCE_GROUP = "•台湾「限制」"
 
-# ===================== TW 白名单（顺序即输出顺序） =====================
+# ===================== ⭐ 新增：扩展源 =====================
+
+EXTRA_URLS = [
+    "https://tzdr.com/iptv.txt",
+    "https://live.kilvn.com/iptv.m3u",
+    "https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.m3u",
+    "https://gh-proxy.com/raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u",
+    "http://175.178.251.183:6689/live.m3u",
+    "https://m3u.ibert.me/ycl_iptv.m3u",
+    "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg1.m3u",
+    "https://2026.xymm.ccwu.cc",
+    "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u",
+    "https://iptv.catvod.com/list.php?token=e222e4d00c9d1945c3387a6c63b434577afbefd92f01f3fa39da76f154997133"
+]
+
+CCTV_TARGET = [
+    "世界地理","兵器科技","怀旧剧场","第一剧场",
+    "女性时尚","风云足球","风云音乐","央视台球"
+]
+
+CHC_TARGET = [
+    "CHC影迷电影","CHC家庭影院","CHC动作电影","HC家庭影院"
+]
+
+BAD_KEYWORDS = ["测试","购物","广告"]
+
+LOGO_MAP = {
+    "CHC影迷电影": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png"
+}
+
+# ===================== TW 白名单 =====================
 
 TW_TARGET_ORDER = [
     "Love Nature","亞洲旅遊","民視第一台","民視台灣台","民視","華視",
@@ -43,16 +74,12 @@ TW_TARGET_ORDER = [
     "龍華電影","龍華日韓","龍華偶像","龍華戲劇","龍華經典","DayStar"
 ]
 
-# ===================== 原有变量 =====================
-
-TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
-
 REMOVE_YT_IDS = [
     "fN9uYWCjQaw","7j92Myu2wzg","f6Kq93wnaZ8",
     "BOy2xDU1LC8","vr3XyVCR4T0","o_-hSMgpAzs",
 ]
 
-# ===================== 工具函数（原样保留） =====================
+# ===================== 工具函数（原样） =====================
 
 def download(url):
     r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
@@ -97,12 +124,11 @@ def parse_m3u_full(content):
             res.append((parse_name_from_extinf(extinf),extinf,line))
     return res
 
-# ===================== ⭐ TW核心（唯一新增逻辑） =====================
+# ===================== ⭐ TW =====================
 
 def fetch_tw_from_source(lines):
     parsed = parse_m3u_full("\n".join(lines))
 
-    # 先筛选台湾限制分组
     temp = []
     for name, extinf, url in parsed:
         group = parse_group_from_extinf(extinf)
@@ -111,7 +137,6 @@ def fetch_tw_from_source(lines):
 
     temp = deduplicate(temp)
 
-    # 建立频道映射
     channel_map = {}
     for name, extinf, url in temp:
         channel_map.setdefault(name, []).append((extinf, url))
@@ -119,7 +144,6 @@ def fetch_tw_from_source(lines):
     result = []
     used = set()
 
-    # 按顺序筛选
     for target in TW_TARGET_ORDER:
         for name in channel_map:
             if target in name and name not in used:
@@ -128,17 +152,81 @@ def fetch_tw_from_source(lines):
                 used.add(name)
                 break
 
-    print("TW(筛选后):", len(result))
     return result
+
+# ===================== ⭐ 新增功能 =====================
+
+def parse_m3u(content):
+    lines = content.splitlines()
+    data, ext = [], None
+    for l in lines:
+        l = l.strip()
+        if l.startswith("#EXTINF"):
+            ext = l
+        elif l.startswith("http") and ext:
+            name = parse_name_from_extinf(ext)
+            if not any(x in name for x in BAD_KEYWORDS):
+                data.append((name, ext, l))
+    return data
+
+def parse_txt(content):
+    data = []
+    for l in content.splitlines():
+        if "," in l and "http" in l:
+            name, url = l.split(",", 1)
+            if not any(x in name for x in BAD_KEYWORDS):
+                ext = f'#EXTINF:-1 group-title="未知",{name.strip()}'
+                data.append((name.strip(), ext, url.strip()))
+    return data
+
+def load_extra():
+    all_data = []
+    for url in EXTRA_URLS:
+        raw = download(url)
+        if not raw:
+            continue
+        if "#EXTINF" in raw:
+            all_data += parse_m3u(raw)
+        else:
+            all_data += parse_txt(raw)
+    return all_data
+
+def check(url):
+    try:
+        start = time.time()
+        r = requests.get(url, timeout=5, stream=True)
+        if r.status_code == 200:
+            return url, time.time() - start
+    except:
+        pass
+    return url, 999
+
+def pick_best(urls):
+    best_url, best_time = None, 999
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futures = [executor.submit(check, u) for u in urls]
+        for f in as_completed(futures):
+            url, t = f.result()
+            if t < best_time:
+                best_time, best_url = t, url
+    return best_url
+
+def fix_logo(name, extinf):
+    if name in LOGO_MAP:
+        logo = LOGO_MAP[name]
+        if 'tvg-logo="' in extinf:
+            extinf = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{logo}"', extinf)
+        else:
+            extinf = extinf.replace("#EXTINF:-1", f'#EXTINF:-1 tvg-logo="{logo}"')
+    return extinf
 
 # ===================== 主程序 =====================
 
 def main():
-    print("下载源...")
     content = download(SOURCE_URL)
     lines = content.splitlines()
 
-    # HK（完全不动）
+    # HK
     hk_channels = []
     current_group = None
     current_name = None
@@ -156,27 +244,63 @@ def main():
 
     hk_channels = deduplicate(hk_channels)
 
-    # ⭐ TW（唯一修改点）
-    print("提取 TW（台湾限制白名单）...")
+    # TW
     tw_channels = fetch_tw_from_source(lines)
+
+    # ⭐ 新增：数字 + CHC
+    extra_data = load_extra()
+
+    cctv_map = {}
+    for n,e,u in extra_data:
+        if n in CCTV_TARGET:
+            cctv_map.setdefault(n, []).append((e,u))
+
+    cctv = []
+    for name in CCTV_TARGET:
+        if name in cctv_map:
+            best = pick_best([u for _,u in cctv_map[name]])
+            ext = cctv_map[name][0][0]
+            cctv.append((name, ext, best))
+
+    chc_map = {}
+    for n,e,u in extra_data:
+        if n in CHC_TARGET:
+            chc_map.setdefault(n, []).append((e,u))
+
+    chc = []
+    for name in CHC_TARGET:
+        if name in chc_map:
+            best = pick_best([u for _,u in chc_map[name]])
+            ext = chc_map[name][0][0]
+            chc.append((name, ext, best))
 
     # ===================== 输出 =====================
 
     output = "#EXTM3U\n\n"
 
-    # BB（不动）
     try:
         with open(BB_FILE,"r",encoding="utf-8") as f:
             output += re.sub(r'^#EXTM3U','',f.read())+"\n"
     except:
         pass
 
-    # HK（不动）
+    # 数字
+    output += "\n# 数字\n"
+    for n,e,u in cctv:
+        output += normalize_group(e,"数字")+"\n"+u+"\n"
+
+    # CHC
+    output += "\n# CHC\n"
+    for n,e,u in chc:
+        e = fix_logo(n,e)
+        output += normalize_group(e,"CHC")+"\n"+u+"\n"
+
+    # HK
     output += "\n# HK\n"
     for n,e,u in hk_channels:
         output += normalize_group(e,"HK")+"\n"+u+"\n"
 
-    # TW（输出）
+    # TW
     output += "\n# TW\n"
     for n,e,u in tw_channels:
         output += normalize_group(e,"TW")+"\n"+u+"\n"
