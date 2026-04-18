@@ -35,9 +35,9 @@ CCTV_TARGET = [
     "女性时尚","风云足球","风云音乐","央视台球"
 ]
 
+# ✅ 修复 HC
 CHC_TARGET = [
-    "CHC影迷电影","CHC家庭影院","CHC动作电影",
-    "HC家庭影院"
+    "CHC影迷电影","CHC家庭影院","CHC动作电影"
 ]
 
 BAD_KEYWORDS = ["测试", "购物", "广告"]
@@ -75,6 +75,10 @@ def download(url, retry=2):
 
 def parse_name(extinf):
     return extinf.split(",", 1)[-1].strip()
+
+def parse_group(extinf):
+    m = re.search(r'group-title="([^"]*)"', extinf)
+    return m.group(1) if m else ""
 
 def parse_m3u(content):
     lines = content.splitlines()
@@ -115,6 +119,30 @@ def load_extra():
         except:
             print("解析失败:", url)
     return all_data
+
+# ===================== ⭐ CHC 专用（新增） =====================
+
+def load_chc_from_shanghai():
+    url = "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u"
+    raw = download(url)
+    data = parse_m3u(raw)
+
+    result = []
+
+    for n, e, u in data:
+        if parse_group(e) != "上海":
+            continue
+
+        m = re.search(r'tvg-name="([^"]+)"', e)
+        if not m:
+            continue
+
+        tvg_name = m.group(1).strip()
+
+        if tvg_name in CHC_TARGET:
+            result.append((tvg_name, e, u))
+
+    return result
 
 # ===================== 工具 =====================
 
@@ -181,11 +209,12 @@ def main():
             ext = cctv_map[name][0][0]
             cctv.append((name, ext, best))
 
-    # CHC
+    # ⭐ CHC（只从上海源）
+    chc_raw = load_chc_from_shanghai()
+
     chc_map = {}
-    for n, e, u in extra_data:
-        if n in CHC_TARGET:
-            chc_map.setdefault(n, []).append((e, u))
+    for n, e, u in chc_raw:
+        chc_map.setdefault(n, []).append((e, u))
 
     chc = []
     for name in CHC_TARGET:
@@ -199,7 +228,6 @@ def main():
     out = "#EXTM3U\n\n"
     out += f"# 更新时间 {now}\n\n"
 
-    # 先添加 BB.m3u 的内容
     try:
         with open(BB_FILE, encoding="utf-8") as f:
             for l in f:
@@ -209,23 +237,19 @@ def main():
     except:
         pass
 
-    # 央视（数字分组）- 放在 CHC 前面
     out += "# 数字\n"
     for n, e, u in cctv:
         out += set_group(e, "数字") + "\n" + u + "\n"
 
-    # CHC（修复台标）- 放在央视后面
     out += "\n# CHC\n"
     for n, e, u in chc:
         e = fix_logo(n, e)
         out += set_group(e, "CHC") + "\n" + u + "\n"
 
-    # HK
     out += "\n# HK\n"
     for n, e, u in hk:
         out += set_group(e, "HK") + "\n" + u + "\n"
 
-    # TW
     out += "\n# TW\n"
     for n, e, u in tw:
         out += set_group(e, "TW") + "\n" + u + "\n"
