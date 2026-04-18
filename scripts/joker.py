@@ -53,7 +53,7 @@ REMOVE_YT_IDS = [
     "BOy2xDU1LC8","vr3XyVCR4T0","o_-hSMgpAzs",
 ]
 
-# ===================== TW 白名单（顺序不变，但中天会手动插入） =====================
+# ===================== TW 白名单 =====================
 
 TW_TARGET_ORDER = [
     "Love Nature","亞洲旅遊","民視第一台","民視台灣台","民視","華視",
@@ -90,7 +90,6 @@ def download(url, retry=2):
 # ===================== 工具 =====================
 
 def clean_name(name):
-    # ⭐ 去后缀： 「xxx」 / (xxx) / 【xxx】
     name = re.sub(r'[\(\[\{（【].*?[\)\]\}）】]', '', name)
     name = re.sub(r'「.*?」', '', name)
     return name.strip()
@@ -141,6 +140,20 @@ def parse_txt(content):
             out.append((name,ext,url))
     return out
 
+# ===================== ⭐ CHC 专用（新增） =====================
+
+def load_chc_from_shanghai():
+    url = "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u"
+    raw = download(url)
+    data = parse_m3u(raw)
+
+    result = []
+    for n,e,u in data:
+        if parse_group(e) == "上海" and n in CHC_TARGET:
+            result.append((n,e,u))
+
+    return result
+
 # ===================== EXTRA =====================
 
 def load_extra():
@@ -181,21 +194,17 @@ def pick_best(urls):
 
 def fetch_tw(lines):
     parsed=parse_m3u("\n".join(lines))
-
     temp=[]
     for n,e,u in parsed:
         if parse_group(e)==TW_SOURCE_GROUP:
             temp.append((clean_name(n),e,u))
-
     temp=dedup(temp)
 
     result=[]
     used=set()
-
     for target in TW_TARGET_ORDER:
         for n,e,u in temp:
             if target in n and n not in used:
-                # 替换 extinf 行中的频道名为已清洗的名称（去掉后缀）
                 new_e = e.rsplit(',', 1)[0] + ',' + n
                 result.append((n, new_e, u))
                 used.add(n)
@@ -216,12 +225,10 @@ def main():
 
     tw=fetch_tw(lines)
 
-    # 手动插入中天新闻台（放在民视之后）
     custom_extinf = '#EXTINF:-1 tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://epg.iill.top/logo/中天新聞台.png" http-user-agent="okhttp/1.9.89",中天新聞台'
     custom_url = "https://v.iill.top/4gtv/4gtv-4gtv009/index.m3u8"
     custom_item = ("中天新聞台", custom_extinf, custom_url)
 
-    # 找到民视的位置
     insert_index = -1
     for i, (name, _, _) in enumerate(tw):
         if name == "民視":
@@ -230,12 +237,11 @@ def main():
     if insert_index != -1:
         tw.insert(insert_index, custom_item)
     else:
-        # 如果没找到民视（理论上不会），就追加到末尾
         tw.append(custom_item)
 
     extra=load_extra()
 
-    # CCTV
+    # CCTV（不动）
     cctv_map={}
     for n,e,u in extra:
         if n in CCTV_TARGET:
@@ -247,17 +253,18 @@ def main():
             best=pick_best([u for _,u in cctv_map[name]])
             cctv.append((name,cctv_map[name][0][0],best))
 
-    # CHC
+    # ⭐ CHC（已替换为上海来源）
+    chc_raw = load_chc_from_shanghai()
+
     chc_map={}
-    for n,e,u in extra:
-        if n in CHC_TARGET:
-            chc_map.setdefault(n,[]).append((e,u))
+    for n,e,u in chc_raw:
+        chc_map.setdefault(n,[]).append((e,u))
 
     chc=[]
     for name in CHC_TARGET:
         if name in chc_map:
             best=pick_best([u for _,u in chc_map[name]])
-            ext=cctv_map[name][0][0] if name in cctv_map else chc_map[name][0][0]
+            ext=chc_map[name][0][0]
             if name in LOGO_MAP:
                 ext=re.sub(r'tvg-logo="[^"]*"',f'tvg-logo="{LOGO_MAP[name]}"',ext)
             chc.append((name,ext,best))
