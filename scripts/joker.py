@@ -40,8 +40,9 @@ CCTV_TARGET = [
     "女性时尚","风云足球","风云音乐","央视台球"
 ]
 
+# ✅ 修复这里（删除 HC家庭影院）
 CHC_TARGET = [
-    "CHC影迷电影","CHC家庭影院","CHC动作电影","HC家庭影院"
+    "CHC影迷电影","CHC家庭影院","CHC动作电影"
 ]
 
 LOGO_MAP = {
@@ -140,7 +141,7 @@ def parse_txt(content):
             out.append((name,ext,url))
     return out
 
-# ===================== ⭐ CHC 专用（新增） =====================
+# ===================== ⭐ CHC（只从上海提取） =====================
 
 def load_chc_from_shanghai():
     url = "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u"
@@ -148,9 +149,19 @@ def load_chc_from_shanghai():
     data = parse_m3u(raw)
 
     result = []
-    for n,e,u in data:
-        if parse_group(e) == "上海" and n in CHC_TARGET:
-            result.append((n,e,u))
+
+    for n, e, u in data:
+        if parse_group(e) != "上海":
+            continue
+
+        m = re.search(r'tvg-name="([^"]+)"', e)
+        if not m:
+            continue
+
+        tvg_name = m.group(1).strip()
+
+        if tvg_name in CHC_TARGET:
+            result.append((tvg_name, e, u))
 
     return result
 
@@ -194,14 +205,17 @@ def pick_best(urls):
 
 def fetch_tw(lines):
     parsed=parse_m3u("\n".join(lines))
+
     temp=[]
     for n,e,u in parsed:
         if parse_group(e)==TW_SOURCE_GROUP:
             temp.append((clean_name(n),e,u))
+
     temp=dedup(temp)
 
     result=[]
     used=set()
+
     for target in TW_TARGET_ORDER:
         for n,e,u in temp:
             if target in n and n not in used:
@@ -241,7 +255,7 @@ def main():
 
     extra=load_extra()
 
-    # CCTV（不动）
+    # CCTV
     cctv_map={}
     for n,e,u in extra:
         if n in CCTV_TARGET:
@@ -253,7 +267,7 @@ def main():
             best=pick_best([u for _,u in cctv_map[name]])
             cctv.append((name,cctv_map[name][0][0],best))
 
-    # ⭐ CHC（已替换为上海来源）
+    # ⭐ CHC（只用上海源）
     chc_raw = load_chc_from_shanghai()
 
     chc_map={}
