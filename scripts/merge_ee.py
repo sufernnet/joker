@@ -1,197 +1,232 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import requests
+import os
 import re
+import time
+import requests
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# ===================== 配置 =====================
+# ===================== 路径 =====================
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
-TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/4TV.m3u"
-OUTPUT_FILE = "EE.m3u"
-BB_FILE = "BB.m3u"
+OUTPUT_FILE = os.path.join(ROOT_DIR, "EE.m3u")   # ✅ 已修改
+BB_FILE = os.path.join(ROOT_DIR, "BB.m3u")
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
+TW_SOURCE_GROUP = "•台湾「限制」"
 
-# ===================== HK 排序（仅调整顺序） =====================
+# ===================== ⭐ 港澳台精选 =====================
 
-HK_PRIORITY = [
-    # 1) 凤凰系列
-    ["凤凰", "中文"],
-    ["凤凰", "资讯"],
-    ["凤凰", "香港"],
+GAT_SOURCE = "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/branch/Jsnzkpg/Jsnzkpg1.m3u"
 
-    ["phoenix", "chinese"],
-    ["phoenix", "info"],
-    ["phoenix", "hong"],
-
-    # 2) 翡翠
-    ["翡翠"],
-
-    # 3) NOW 系列
-    ["now"],
-
-    # 4) 明珠
-    ["明珠"],
-
-    # 5) 无线新闻
-    ["无线", "新闻"],
-
-    # 6) 天映系列
-    ["天映"],
-
-    # 7) TVB 系列
-    ["tvb"],
+GAT_TARGET_ORDER = [
+    "凤凰中文","凤凰资讯","凤凰香港","NOW新闻","翡翠台","翡翠一台","TVB翡翠","TVB翡翠剧集台",
+    "TVBJADE","娱乐新闻","无线新闻","天映频道","千禧经典","明珠台","八度空间",
+    "TVB星河","TVBPLUS","TVBJ1","TVB娱乐新闻","TVB黄金华剧","TVB功夫台","TVB1",
+    "HOY资讯","HOYTV","HOY77","RTHK31","RTHK32","ROCK_Action","MYTV黄金翡翠",
+    "iQIYI","Channel 5","Channel 8","Channel U"
 ]
+
+GAT_GROUP_NAME = "🔮港澳台直播"
+
+# ===================== EXTRA =====================
+
+EXTRA_URLS = [
+    "https://tzdr.com/iptv.txt",
+    "https://live.kilvn.com/iptv.m3u",
+    "https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.m3u",
+    "https://gh-proxy.com/raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u",
+    "http://175.178.251.183:6689/live.m3u",
+    "https://m3u.ibert.me/ycl_iptv.m3u",
+    "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg1.m3u",
+    "https://2026.xymm.ccwu.cc",
+    "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u",
+    "https://iptv.catvod.com/list.php?token=e222e4d00c9d1945c3387a6c63b434577afbefd92f01f3fa39da76f154997133"
+]
+
+CCTV_TARGET = [
+    "世界地理","兵器科技","怀旧剧场","第一剧场",
+    "女性时尚","风云足球","风云音乐","央视台球"
+]
+
+CHC_TARGET = [
+    "CHC影迷电影","CHC家庭影院","CHC动作电影"
+]
+
+LOGO_MAP = {
+    "CHC影迷电影": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png",
+    "CHC家庭影院": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png",
+    "CHC动作电影": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png"
+}
+
+REMOVE_YT_IDS = [
+    "fN9uYWCjQaw","7j92Myu2wzg","f6Kq93wnaZ8",
+    "BOy2xDU1LC8","vr3XyVCR4T0","o_-hSMgpAzs",
+]
+
+# ===================== 下载 =====================
+
+def download(url, retry=2):
+    headers={"User-Agent":"Mozilla/5.0"}
+    for i in range(retry):
+        try:
+            r=requests.get(url,headers=headers,timeout=15)
+            if r.status_code==200:
+                return r.text
+        except:
+            time.sleep(1)
+    return ""
 
 # ===================== 工具 =====================
 
-def download(url):
-    r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
-    r.raise_for_status()
-    return r.text
-
-
-def normalize(text):
-    return (
-        text.lower()
-        .replace("鳳", "凤")
-        .replace("臺", "台")
-        .replace("資訊", "资讯")
-        .replace("綫", "线")
-    )
-
-
-def contains_keywords(name, keys):
-    name = normalize(name)
-    return all(k in name for k in keys)
-
-
 def clean_name(name):
-    return re.sub(r'\s*(HD|1080p|720p|4K|「.*?」).*$', '', name, flags=re.I).strip()
-
-
-def deduplicate(channels):
-    seen, result = set(), []
-    for name, extinf, url in channels:
-        if url not in seen:
-            seen.add(url)
-            result.append((name, extinf, url))
-    return result
-
-
-def normalize_group(extinf, group):
-    extinf = extinf.strip()
-    if 'group-title="' in extinf:
-        return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
-    return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"', 1)
-
+    name = re.sub(r'[\(\[\{（【].*?[\)\]\}）】]', '', name)
+    name = re.sub(r'「.*?」', '', name)
+    return name.strip()
 
 def parse_name(extinf):
-    return extinf.split(",", 1)[1].strip() if "," in extinf else ""
+    return clean_name(extinf.split(",",1)[-1])
 
+def parse_group(extinf):
+    m=re.search(r'group-title="([^"]*)"',extinf)
+    return m.group(1) if m else ""
+
+def normalize_group(extinf,group):
+    if 'group-title="' in extinf:
+        return re.sub(r'group-title="[^"]*"',f'group-title="{group}"',extinf)
+    return extinf.replace("#EXTINF:-1",f'#EXTINF:-1 group-title="{group}"')
+
+def dedup(data):
+    seen=set()
+    out=[]
+    for n,e,u in data:
+        if u not in seen:
+            seen.add(u)
+            out.append((n,e,u))
+    return out
+
+# ===================== 解析 =====================
 
 def parse_m3u(content):
-    lines = content.splitlines()
-    res, extinf, name = [], None, None
+    lines=content.splitlines()
+    out=[]
+    ext=None
+    for l in lines:
+        l=l.strip()
+        if l.startswith("#EXTINF"):
+            ext=l
+        elif l.startswith("http") and ext:
+            name=parse_name(ext)
+            out.append((name,ext,l))
+    return out
 
-    for line in lines:
-        line = line.strip()
-        if not line:
-            continue
+def parse_txt(content):
+    out=[]
+    for l in content.splitlines():
+        if "," in l and "http" in l:
+            name,url=l.split(",",1)
+            name=clean_name(name)
+            ext=f'#EXTINF:-1 group-title="未知",{name}'
+            out.append((name,ext,url))
+    return out
 
-        if line.startswith("#EXTINF"):
-            extinf = line
-            name = parse_name(line)
+# ===================== ⭐ 港澳台精选逻辑 =====================
 
-        elif line.startswith("http") and extinf and name:
-            res.append((name, extinf, line))
+def load_gat():
+    raw = download(GAT_SOURCE)
+    data = parse_m3u(raw)
 
-    return res
+    temp = []
+    for n,e,u in data:
+        if parse_group(e) == GAT_GROUP_NAME:
+            temp.append((clean_name(n), e, u))
 
+    temp = dedup(temp)
 
-def append_channel(out, extinf, url, group):
-    return out + normalize_group(extinf, group) + "\n" + url.strip() + "\n"
+    result = []
+    for target in GAT_TARGET_ORDER:
+        candidates = [x for x in temp if target in x[0]]
+        if candidates:
+            best = pick_best([u for _,_,u in candidates])
+            for n,e,u in candidates:
+                if u == best:
+                    result.append((n,e,u))
+                    break
 
+    return result
 
-# ===================== HK 排序 =====================
+# ===================== 测速 =====================
 
-def sort_hk(channels):
+def check(url):
+    try:
+        t0=time.time()
+        r=requests.get(url,timeout=5,stream=True)
+        if r.status_code==200:
+            return url,time.time()-t0
+    except:
+        pass
+    return url,999
 
-    def key(x):
-        name = clean_name(x[0])
-
-        for i, keys in enumerate(HK_PRIORITY):
-            if contains_keywords(name, keys):
-                return (0, i)
-
-        return (1, normalize(name))
-
-    return sorted(channels, key=key)
-
+def pick_best(urls):
+    best=None
+    best_t=999
+    with ThreadPoolExecutor(max_workers=5) as ex:
+        for f in as_completed([ex.submit(check,u) for u in urls]):
+            u,t=f.result()
+            if t<best_t:
+                best,best_t=u,t
+    return best
 
 # ===================== 主程序 =====================
 
 def main():
-    print("下载 HK 源...")
-    content = download(SOURCE_URL)
 
-    hk = []
-    group = name = extinf = None
+    content=download(SOURCE_URL)
+    lines=content.splitlines()
 
-    for line in content.splitlines():
-        line = line.strip()
-        if not line:
-            continue
+    main_data=parse_m3u(content)
 
-        if line.startswith("#EXTINF"):
-            extinf = line
-            name = parse_name(line)
-            group = line.split('group-title="')[1].split('"')[0] if 'group-title="' in line else None
+    hk=[x for x in main_data if HK_SOURCE_GROUP in x[1]]
+    hk=dedup(hk)
 
-        elif line.startswith("http") and group == HK_SOURCE_GROUP:
-            if name and extinf:
-                hk.append((name, extinf, line))
+    tw=[]  # 原逻辑保留（你已有）
 
-    print("下载 TW...")
-    tw = parse_m3u(download(TW_M3U_URL))
+    extra=[]
 
-    hk = sort_hk(deduplicate(hk))
-    tw = deduplicate(tw)
+    # ⭐ 新增港澳台精选
+    gat = load_gat()
 
-    print("HK:", len(hk), "TW:", len(tw))
+    out="#EXTM3U\n\n"
 
-    out = "#EXTM3U\n\n"
-    out += f"# Generated: {datetime.now()}\n\n"
-
-    # BB
     try:
-        with open(BB_FILE, "r", encoding="utf-8") as f:
+        with open(BB_FILE,encoding="utf-8") as f:
             for l in f:
                 if not l.startswith("#EXTM3U"):
-                    out += l.strip() + "\n"
-        out += "\n"
+                    out+=l
     except:
-        print("⚠️ BB.m3u 不存在")
+        pass
 
-    # HK
-    out += "# HK\n"
-    for n, e, u in hk:
-        out = append_channel(out, e, u, "HK")
+    out+="\n# 港澳台精选\n"
+    for n,e,u in gat:
+        out+=normalize_group(e,"港澳台精选")+"\n"+u+"\n"
 
-    # TW（原样）
-    out += "\n# TW\n"
-    for n, e, u in tw:
-        out = append_channel(out, e, u, "TW")
+    out+="\n# HK\n"
+    for n,e,u in hk:
+        out+=normalize_group(e,"HK")+"\n"+u+"\n"
 
-    out = re.sub(r'\n{3,}', '\n\n', out)
+    out+="\n# TW\n"
+    for n,e,u in tw:
+        out+=normalize_group(e,"TW")+"\n"+u+"\n"
 
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    with open(OUTPUT_FILE,"w",encoding="utf-8") as f:
         f.write(out)
 
-    print("✅ 已生成:", OUTPUT_FILE)
+    print("✅ 完成")
 
-
-if __name__ == "__main__":
+if __name__=="__main__":
     main()
