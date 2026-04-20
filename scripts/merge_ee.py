@@ -5,7 +5,6 @@ import os
 import re
 import time
 import requests
-from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ===================== 路径 =====================
@@ -14,7 +13,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
-OUTPUT_FILE = os.path.join(ROOT_DIR, "EE.m3u")   # ✅ 已修改
+OUTPUT_FILE = os.path.join(ROOT_DIR, "EE.m3u")
 BB_FILE = os.path.join(ROOT_DIR, "BB.m3u")
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
@@ -23,6 +22,7 @@ TW_SOURCE_GROUP = "•台湾「限制」"
 # ===================== ⭐ 港澳台精选 =====================
 
 GAT_SOURCE = "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/branch/Jsnzkpg/Jsnzkpg1.m3u"
+GAT_GROUP_NAME = "🔮港澳台直播"
 
 GAT_TARGET_ORDER = [
     "凤凰中文","凤凰资讯","凤凰香港","NOW新闻","翡翠台","翡翠一台","TVB翡翠","TVB翡翠剧集台",
@@ -31,8 +31,6 @@ GAT_TARGET_ORDER = [
     "HOY资讯","HOYTV","HOY77","RTHK31","RTHK32","ROCK_Action","MYTV黄金翡翠",
     "iQIYI","Channel 5","Channel 8","Channel U"
 ]
-
-GAT_GROUP_NAME = "🔮港澳台直播"
 
 # ===================== EXTRA =====================
 
@@ -64,16 +62,11 @@ LOGO_MAP = {
     "CHC动作电影": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png"
 }
 
-REMOVE_YT_IDS = [
-    "fN9uYWCjQaw","7j92Myu2wzg","f6Kq93wnaZ8",
-    "BOy2xDU1LC8","vr3XyVCR4T0","o_-hSMgpAzs",
-]
-
 # ===================== 下载 =====================
 
 def download(url, retry=2):
     headers={"User-Agent":"Mozilla/5.0"}
-    for i in range(retry):
+    for _ in range(retry):
         try:
             r=requests.get(url,headers=headers,timeout=15)
             if r.status_code==200:
@@ -135,7 +128,7 @@ def parse_txt(content):
             out.append((name,ext,url))
     return out
 
-# ===================== ⭐ 港澳台精选逻辑 =====================
+# ===================== ⭐ 港澳台精选（替换 HK） =====================
 
 def load_gat():
     raw = download(GAT_SOURCE)
@@ -157,7 +150,6 @@ def load_gat():
                 if u == best:
                     result.append((n,e,u))
                     break
-
     return result
 
 # ===================== 测速 =====================
@@ -182,6 +174,35 @@ def pick_best(urls):
                 best,best_t=u,t
     return best
 
+# ===================== TW（完全保留原逻辑） =====================
+
+def fetch_tw(lines):
+    parsed=parse_m3u("\n".join(lines))
+
+    temp=[]
+    for n,e,u in parsed:
+        if parse_group(e)==TW_SOURCE_GROUP:
+            temp.append((clean_name(n),e,u))
+
+    temp=dedup(temp)
+
+    result=[]
+    used=set()
+
+    for target in TW_TARGET_ORDER:
+        for n,e,u in temp:
+            if target in n and n not in used:
+                new_e = e.rsplit(',', 1)[0] + ',' + n
+                result.append((n, new_e, u))
+                used.add(n)
+                break
+    return result
+
+TW_TARGET_ORDER = [
+    "Love Nature","亞洲旅遊","民視第一台","民視台灣台","民視","華視",
+    "寰宇新聞","寰宇新聞台灣台","寰宇財經","三立綜合台"
+]
+
 # ===================== 主程序 =====================
 
 def main():
@@ -191,15 +212,21 @@ def main():
 
     main_data=parse_m3u(content)
 
-    hk=[x for x in main_data if HK_SOURCE_GROUP in x[1]]
-    hk=dedup(hk)
+    # ⭐ HK = 港澳台精选（替换）
+    hk = load_gat()
 
-    tw=[]  # 原逻辑保留（你已有）
+    # ⭐ TW 原样
+    tw=fetch_tw(lines)
 
-    extra=[]
+    # 插入中天新闻（原逻辑）
+    custom_extinf = '#EXTINF:-1 tvg-name="中天新聞台",中天新聞台'
+    custom_url = "https://v.iill.top/4gtv/4gtv-4gtv009/index.m3u8"
+    custom_item = ("中天新聞台", custom_extinf, custom_url)
 
-    # ⭐ 新增港澳台精选
-    gat = load_gat()
+    for i,(name,_,_) in enumerate(tw):
+        if name=="民視":
+            tw.insert(i+1,custom_item)
+            break
 
     out="#EXTM3U\n\n"
 
@@ -210,10 +237,6 @@ def main():
                     out+=l
     except:
         pass
-
-    out+="\n# 港澳台精选\n"
-    for n,e,u in gat:
-        out+=normalize_group(e,"港澳台精选")+"\n"+u+"\n"
 
     out+="\n# HK\n"
     for n,e,u in hk:
