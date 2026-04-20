@@ -1,6 +1,5 @@
 #EXTM3U
 
-# Generated: 2026-04-20 10:29:58.470659
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -185,6 +184,7 @@ http://124.90.44.40:6060/010/2/00000009000000060000000000002057?virtualDomain=01
 #EXTINF:-1 tvg-id="兵团卫视" tvg-name="兵团卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/bingtuan.png" group-title="卫视",兵团卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002055?virtualDomain=010.live_hls.zte.com
 
+
 #EXTINF:-1 tvg-id="民生休闲" tvg-name="民生休闲" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/浙江民生.png" group-title="浙江",民生休闲
 http://124.90.44.40:6060/010/2/00000001000000060000000000000578?virtualDomain=010.live_hls.zte.com
 
@@ -239,6 +239,187 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=01
 #EXTINF:-1 tvg-id="杭州导视" tvg-name="杭州导视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/zjicon/杭州导视.png" group-title="浙江",杭州导视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 港澳台精选
+#EXTINF:-1 group-title="港澳台精选" tvg-name="凤凰中文" tvg-logo="https://epg.112114.xyz/logo/凤凰中文.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",凤凰中文
+http://cdn6.163189.xyz/163189/fhzw
+#EXTINF:-1 group-title="港澳台精选" tvg-name="凤凰资讯" tvg-logo="https://epg.112114.xyz/logo/凤凰资讯.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",凤凰资讯
+http://cdn6.163189.xyz/163189/fhzx
+#EXTINF:-1 group-title="港澳台精选" tvg-name="凤凰香港" tvg-logo="https://epg.112114.xyz/logo/凤凰香港.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",凤凰香港
+http://cdn6.163189.xyz/163189/fhhk
+#EXTINF:-1 group-title="港澳台精选" tvg-name="NOW新闻" tvg-logo="https://epg.112114.xyz/logo/NOW新闻.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",NOW新闻
+http://cdn.163189.xyz/163189/now
+#EXTINF:-1 group-title="港澳台精选" tvg-name="翡翠台" tvg-logo="https://epg.112114.xyz/logo/翡翠台.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",翡翠台
+http://cdn6.163189.xyz/163189/fct
+#EXTINF:-1 group-title="港澳台精选" tvg-name="翡翠一台(TVB1)" tvg-logo="https://epg.112114.xyz/logo/翡翠一台(TVB1).png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",翡翠一台(TVB1)
+http://cdn6.163189.xyz/163189/tvb1
+#EXTINF:-1 group-title="港澳台精选" tvg-name="TVB翡翠剧集台(TVBDRAMA)" tvg-logo="https://epg.112114.xyz/logo/TVB翡翠剧集台(TVBDRAMA).png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB翡翠剧集台(TVBDRAMA)
+http://cdn6.163189.xyz/163189/tvbd
+#EXTINF:-1 group-title="港澳台精选" tvg-name="TVB翡翠剧集台(TVBDRAMA)" tvg-logo="https://epg.112114.xyz/logo/TVB翡翠剧集台(TVBDRAMA).png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB翡翠剧集台(TVBDRAMA)
+http://cdn6.163189.xyz/163189/tvbd
+#EXTINF:-1 group-title="港澳台精选" tvg-name="TVBJADE(HD)" tvg-logo="https://epg.112114.xyz/logo/TVBJADE(HD).png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVBJADE(HD)
+http://cdn6.163189.xyz/163189/jade
+#EXTINF:-1 group-title="港澳台精选" tvg-name="娱乐新闻" tvg-logo="https://epg.112114.xyz/logo/娱乐新闻.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",娱乐新闻
+http://cdn6.163189.xyz/163189/ylxw
+#EXTINF:-1 group-title="港澳台精选" tvg-name="无线新闻" tvg-logo="https://epg.112114.xyz/logo/无线新闻.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",无线新闻
+http://cdn6.163189.xyz/163189/wxxw
+#EXTINF:-1 group-title="港澳台精选" tvg-name="天映频道马来西亚" tvg-logo="https://epg.112114.xyz/logo/天映频道马来西亚.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",天映频道马来西亚
+http://o11.163189.xyz/stream/live/typd/
+#EXTINF:-1 group-title="港澳台精选" tvg-name="千禧经典" tvg-logo="https://epg.112114.xyz/logo/千禧经典.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",千禧经典
+http://o11.163189.xyz/stream/live/tvbc/
+#EXTINF:-1 group-title="港澳台精选" tvg-name="八度空间" tvg-logo="https://epg.112114.xyz/logo/八度空间.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",八度空间
+http://cdn6.163189.xyz/163189/8tv
+#EXTINF:-1 group-title="港澳台精选" tvg-name="TVB星河" tvg-logo="https://epg.112114.xyz/logo/TVB星河.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB星河
+http://o11.163189.xyz/stream/live/tvbxh/
+#EXTINF:-1 group-title="港澳台精选" tvg-name="TVBPLUS" tvg-logo="https://epg.112114.xyz/logo/TVBPLUS.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVBPLUS
+http://o11.163189.xyz/stream/tvb/tvbp/
+#EXTINF:-1 group-title="港澳台精选" tvg-name="TVBJ1" tvg-logo="https://epg.112114.xyz/logo/TVBJ1.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVBJ1
+http://iptv.4666888.xyz/iptv2A.php?id=26
+#EXTINF:-1 group-title="港澳台精选" tvg-name="TVB娱乐新闻" tvg-logo="https://epg.112114.xyz/logo/TVB娱乐新闻.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB娱乐新闻
+http://iptv.4666888.xyz/iptv2A.php?id=36
+#EXTINF:-1 group-title="港澳台精选" tvg-name="TVB黄金华剧" tvg-logo="https://epg.112114.xyz/logo/TVB黄金华剧.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB黄金华剧
+http://iptv.4666888.xyz/iptv2A.php?id=34
+#EXTINF:-1 group-title="港澳台精选" tvg-name="TVB功夫台" tvg-logo="https://epg.112114.xyz/logo/TVB功夫台.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB功夫台
+http://cdn6.163189.xyz/163189/yzwx
+#EXTINF:-1 group-title="港澳台精选" tvg-name="TVB1" tvg-logo="https://epg.112114.xyz/logo/TVB1.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB1
+http://iptv.4666888.xyz/iptv2A.php?id=25
+#EXTINF:-1 group-title="港澳台精选" tvg-name="HOY资讯" tvg-logo="https://epg.112114.xyz/logo/HOY资讯.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",HOY资讯
+http://cdn.163189.xyz/163189/hoy78
+#EXTINF:-1 group-title="港澳台精选" tvg-name="HOYTV" tvg-logo="https://epg.112114.xyz/logo/HOYTV.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",HOYTV
+http://cdn6.163189.xyz/163189/hoy
+#EXTINF:-1 group-title="港澳台精选" tvg-name="HOY77" tvg-logo="https://epg.112114.xyz/logo/HOY77.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",HOY77
+http://iptv.4666888.xyz/iptv2A.php?id=35
+#EXTINF:-1 group-title="港澳台精选" tvg-name="RTHK31" tvg-logo="https://epg.112114.xyz/logo/RTHK31.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",RTHK31
+http://iptv.4666888.xyz/iptv2A.php?id=23
+#EXTINF:-1 group-title="港澳台精选" tvg-name="RTHK32" tvg-logo="https://epg.112114.xyz/logo/RTHK32.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",RTHK32
+http://cdn.163189.xyz/163189/rthk32
+#EXTINF:-1 group-title="港澳台精选" tvg-name="ROCK_Action" tvg-logo="https://epg.112114.xyz/logo/ROCK_Action.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",ROCK_Action
+http://iptv.4666888.xyz/iptv2A.php?id=50
+#EXTINF:-1 group-title="港澳台精选" tvg-name="MYTV黄金翡翠" tvg-logo="https://epg.112114.xyz/logo/MYTV黄金翡翠.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",MYTV黄金翡翠
+http://iptv.4666888.xyz/iptv2A.php?id=32
+#EXTINF:-1 group-title="港澳台精选" tvg-name="iQIYI" tvg-logo="https://epg.112114.xyz/logo/iQIYI.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",iQIYI
+https://o11.163189.xyz/stream/live/iqiyi/
+#EXTINF:-1 group-title="港澳台精选" tvg-name="Channel 5" tvg-logo="https://epg.112114.xyz/logo/Channel 5.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",Channel 5
+http://cdn6.163189.xyz/163189/ch5
+#EXTINF:-1 group-title="港澳台精选" tvg-name="Channel 8" tvg-logo="https://epg.112114.xyz/logo/Channel 8.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",Channel 8
+http://cdn6.163189.xyz/163189/ch8
+#EXTINF:-1 group-title="港澳台精选" tvg-name="Channel U" tvg-logo="https://epg.112114.xyz/logo/Channel U.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",Channel U
+http://cdn6.163189.xyz/163189/chu
+
 # HK
 #EXTINF:-1 tvg-id="鳳凰衛視中文台" tvg-name="鳳凰衛視中文台" tvg-logo="https://epg.iill.top/logo/凤凰中文.png" group-title="HK",鳳凰衛視·中文
 https://cdn6.163189.xyz/163189/fhzw
@@ -250,215 +431,43 @@ https://cdn6.163189.xyz/163189/fhhk
 https://o11.163189.xyz/stream/tvb/fct4k/
 #EXTINF:-1 tvg-id="翡翠台" tvg-name="翡翠台" tvg-logo="https://epg.iill.top/logo/翡翠台.png" group-title="HK", 翡翠台「多音轨字幕」
 https://o11.163189.xyz/stream/tvb/fct/
-#EXTINF:-1 tvg-id="Now新聞台" tvg-name="Now新聞台" tvg-logo="https://epg.iill.top/logo/Now新聞台.png" group-title="HK",Now新聞台
-https://cdn.163189.xyz/163189/now
 #EXTINF:-1 tvg-id="明珠台" tvg-name="明珠台" tvg-logo="https://epg.iill.top/logo/明珠台.png" group-title="HK", 明珠台「多音轨字幕」
 https://o11.163189.xyz/stream/tvb/mzt/
+#EXTINF:-1 tvg-id="TVB Plus" tvg-name="TVB Plus" tvg-logo="https://epg.iill.top/logo/TVBPlus.png" group-title="HK",TVB Plus「多音轨字幕」
+https://o11.163189.xyz/stream/tvb/tvbp/
+#EXTINF:-1 tvg-id="無綫新聞台" tvg-name="無綫新聞台" tvg-logo="https://epg.iill.top/logo/無綫新聞台.png" group-title="HK",無綫新聞台
+https://cdn6.163189.xyz/163189/wxxw
+#EXTINF:-1 tvg-id="Now新聞台" tvg-name="Now新聞台" tvg-logo="https://epg.iill.top/logo/Now新聞台.png" group-title="HK",Now新聞台
+https://cdn.163189.xyz/163189/now
+#EXTINF:-1 tvg-id="娛樂新聞台" tvg-name="娛樂新聞台" tvg-logo="https://epg.iill.top/logo/娛樂新聞.png" group-title="HK",娛樂新聞台
+https://cdn6.163189.xyz/163189/ylxw
+#EXTINF:-1 tvg-id="千禧經典台" tvg-name="千禧經典台" tvg-logo="https://epg.iill.top/logo/千禧經典台.png" group-title="HK",千禧經典台
+https://o11.163189.xyz/stream/live/tvbc/
 #EXTINF:-1 tvg-id="天映马来西亚" tvg-name="天映马来西亚" tvg-logo="https://epg.iill.top/logo/天映频道.png" group-title="HK",天映频道
 https://o11.163189.xyz/stream/live/typd/
 #EXTINF:-1 tvg-id="天映經典頻道" tvg-name="天映經典頻道" tvg-logo="https://epg.iill.top/logo/天映经典.png" group-title="HK",天映經典
 https://o11.163189.xyz/stream/live/ccm/
-#EXTINF:-1 tvg-id="TVB Plus" tvg-name="TVB Plus" tvg-logo="https://epg.iill.top/logo/TVBPlus.png" group-title="HK",TVB Plus「多音轨字幕」
-https://o11.163189.xyz/stream/tvb/tvbp/
+#EXTINF:-1 tvg-id="功夫台" tvg-name="功夫台" tvg-logo="https://epg.iill.top/logo/亞洲武俠.png" group-title="HK",亞洲武俠
+https://cdn6.163189.xyz/163189/yzwx
 #EXTINF:-1 tvg-id="TVB XING HE" tvg-name="TVB XING HE" tvg-logo="https://epg.iill.top/logo/星河台.png" group-title="HK",TVB 星河「多音轨字幕」
 https://o11.163189.xyz/stream/live/tvbxh/
-#EXTINF:-1 tvg-id="AEC" tvg-name="AEC" tvg-logo="https://epg.iill.top/logo/AEC.png" group-title="HK",Astro AEC「多音轨字幕」
-https://o11.163189.xyz/stream/live/aec/
 #EXTINF:-1 tvg-id="AOD" tvg-name="AOD" tvg-logo="https://epg.iill.top/logo/AOD.png" group-title="HK",Astro AOD「多音轨字幕」
 https://o11.163189.xyz/stream/live/aod/
+#EXTINF:-1 tvg-id="AEC" tvg-name="AEC" tvg-logo="https://epg.iill.top/logo/AEC.png" group-title="HK",Astro AEC「多音轨字幕」
+https://o11.163189.xyz/stream/live/aec/
 #EXTINF:-1 tvg-id="QJ" tvg-name="QJ" tvg-logo="https://epg.iill.top/logo/全佳.png" group-title="HK",Astro QJ
 https://smt.1678520.xyz/smt3.2.3.php?id=Quanjia
 #EXTINF:-1 tvg-id="HUA HEE DAI" tvg-name="HUA HEE DAI" tvg-logo="https://epg.iill.top/logo/欢喜台.png" group-title="HK",Astro 欢喜台
 https://o11.163189.xyz/stream/live/hxt/
+#EXTINF:-1 tvg-id="iQIYI" tvg-name="iQIYI" tvg-logo="https://epg.iill.top/logo/爱奇艺.png" group-title="HK",iQIYI
+https://o11.163189.xyz/stream/live/iqiyi/
+#EXTINF:-1 tvg-id="8tv" tvg-name="8TV" tvg-logo="https://epg.iill.top/logo/八度空間.png" group-title="HK",八度空間
+http://cdn6.163189.xyz/163189/8tv
 #EXTINF:-1 tvg-id="Channel 5" tvg-name="Channel 5" tvg-logo="https://epg.iill.top/logo/Channel5.png" group-title="HK",Channel 5
 http://cdn6.163189.xyz/163189/ch5
 #EXTINF:-1 tvg-id="Channel 8" tvg-name="Channel 8" tvg-logo="https://epg.iill.top/logo/Channel8.png" group-title="HK",Channel 8
 http://cdn6.163189.xyz/163189/ch8
 #EXTINF:-1 tvg-id="Channel U" tvg-name="Channel U" tvg-logo="https://epg.iill.top/logo/ChannelU.png" group-title="HK",Channel U
 http://cdn6.163189.xyz/163189/ch
-#EXTINF:-1 tvg-id="iQIYI" tvg-name="iQIYI" tvg-logo="https://epg.iill.top/logo/爱奇艺.png" group-title="HK",iQIYI
-https://o11.163189.xyz/stream/live/iqiyi/
-#EXTINF:-1 tvg-id="功夫台" tvg-name="功夫台" tvg-logo="https://epg.iill.top/logo/亞洲武俠.png" group-title="HK",亞洲武俠
-https://cdn6.163189.xyz/163189/yzwx
-#EXTINF:-1 tvg-id="8tv" tvg-name="8TV" tvg-logo="https://epg.iill.top/logo/八度空間.png" group-title="HK",八度空間
-http://cdn6.163189.xyz/163189/8tv
-#EXTINF:-1 tvg-id="千禧經典台" tvg-name="千禧經典台" tvg-logo="https://epg.iill.top/logo/千禧經典台.png" group-title="HK",千禧經典台
-https://o11.163189.xyz/stream/live/tvbc/
-#EXTINF:-1 tvg-id="娛樂新聞台" tvg-name="娛樂新聞台" tvg-logo="https://epg.iill.top/logo/娛樂新聞.png" group-title="HK",娛樂新聞台
-https://cdn6.163189.xyz/163189/ylxw
-#EXTINF:-1 tvg-id="無綫新聞台" tvg-name="無綫新聞台" tvg-logo="https://epg.iill.top/logo/無綫新聞台.png" group-title="HK",無綫新聞台
-https://cdn6.163189.xyz/163189/wxxw
 
 # TW
-#EXTINF:-1 tvg-id="民视频道" tvg-name="民视台湾台" tvg-logo="https://iptv-pro.github.io/logo/民视台湾台.png" group-title="TW",民视台湾台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv001&token=pixman
-#EXTINF:-1 tvg-id="寰宇新闻台湾" tvg-name="寰宇新闻台湾台" tvg-logo="https://iptv-pro.github.io/logo/寰宇新闻台湾台.png" group-title="TW",寰宇新闻台湾台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv156&token=pixman
-#EXTINF:-1 tvg-id="中天新闻" tvg-name="中天新闻台" tvg-logo="https://iptv-pro.github.io/logo/中天新闻台.png" group-title="TW",中天新闻台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv009&token=pixman
-#EXTINF:-1 tvg-id="非凡新闻" tvg-name="非凡新闻台" tvg-logo="https://iptv-pro.github.io/logo/非凡新闻台.png" group-title="TW",非凡新闻台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv010&token=pixman
-#EXTINF:-1 tvg-id="台视新闻" tvg-name="台视新闻" tvg-logo="https://iptv-pro.github.io/logo/台视新闻台.png" group-title="TW",台视新闻
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv051&token=pixman
-#EXTINF:-1 tvg-id="华视新闻" tvg-name="华视新闻" tvg-logo="https://iptv-pro.github.io/logo/华视新闻.png" group-title="TW",华视新闻
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv052&token=pixman
-#EXTINF:-1 tvg-id="TVBS新闻" tvg-name="TVBS新闻" tvg-logo="https://iptv-pro.github.io/logo/TVBS新闻.png" group-title="TW",TVBS新闻
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv072&token=pixman
-#EXTINF:-1 tvg-id="中视新闻" tvg-name="中视新闻" tvg-logo="https://iptv-pro.github.io/logo/中视新闻.png" group-title="TW",中视新闻
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv074&token=pixman
-#EXTINF:-1 tvg-id="镜电视新闻" tvg-name="镜电视新闻台" tvg-logo="https://iptv-pro.github.io/logo/镜电视新闻台.png" group-title="TW",镜电视新闻台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv075&token=pixman
-#EXTINF:-1 tvg-id="东森新闻" tvg-name="东森新闻台" tvg-logo="https://iptv-pro.github.io/logo/东森新闻台.png" group-title="TW",东森新闻台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv152&token=pixman
-#EXTINF:-1 tvg-id="民视新闻" tvg-name="民视新闻台" tvg-logo="https://iptv-pro.github.io/logo/民视新闻台.png" group-title="TW",民视新闻台
-https://litv.tzh911.qzz.io/litv.php?id=litv-ftv13&token=pixman
-#EXTINF:-1 tvg-id="寰宇新闻" tvg-name="寰宇新闻台" tvg-logo="https://iptv-pro.github.io/logo/寰宇新闻台.png" group-title="TW",寰宇新闻台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn14&token=pixman
-#EXTINF:-1 tvg-id="半岛新闻" tvg-name="半岛国际新闻台" tvg-logo="https://iptv-pro.github.io/logo/半岛国际新闻台.png" group-title="TW",半岛国际新闻台
-https://litv.tzh911.qzz.io/litv.php?id=litv-ftv10&token=pixman
-#EXTINF:-1 tvg-id="非凡商业" tvg-name="非凡商业台" tvg-logo="https://iptv-pro.github.io/logo/非凡商业台.png" group-title="TW",非凡商业台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv048&token=pixman
-#EXTINF:-1 tvg-id="台视财经" tvg-name="台视财经" tvg-logo="https://iptv-pro.github.io/logo/台视财经台.png" group-title="TW",台视财经
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv056&token=pixman
-#EXTINF:-1 tvg-id="第1商业" tvg-name="第1商业台" tvg-logo="https://iptv-pro.github.io/logo/第1商业.png" group-title="TW",第1商业台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv104&token=pixman
-#EXTINF:-1 tvg-id="东森财经" tvg-name="东森财经新闻台" tvg-logo="https://iptv-pro.github.io/logo/东森财经新闻台.png" group-title="TW",东森财经新闻台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv153&token=pixman
-#EXTINF:-1 tvg-id="民视" tvg-name="民视" tvg-logo="https://iptv-pro.github.io/logo/民视.png" group-title="TW",民视
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv002&token=pixman
-#EXTINF:-1 tvg-id="民视" tvg-name="民视 (4GTV)" tvg-logo="https://iptv-pro.github.io/logo/民视.png" group-title="TW",民视 (4GTV)
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv155&token=pixman
-#EXTINF:-1 tvg-id="民视第一" tvg-name="民视第一台" tvg-logo="https://iptv-pro.github.io/logo/民视第一台.png" group-title="TW",民视第一台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv003&token=pixman
-#EXTINF:-1 tvg-id="中视" tvg-name="中视" tvg-logo="https://iptv-pro.github.io/logo/中视.png" group-title="TW",中视
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv040&token=pixman
-#EXTINF:-1 tvg-id="华视" tvg-name="华视" tvg-logo="https://iptv-pro.github.io/logo/华视.png" group-title="TW",华视
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv041&token=pixman
-#EXTINF:-1 tvg-id="台视" tvg-name="台视" tvg-logo="https://iptv-pro.github.io/logo/台视.png" group-title="TW",台视
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv066&token=pixman
-#EXTINF:-1 tvg-id="TVBS" tvg-name="TVBS" tvg-logo="https://iptv-pro.github.io/logo/TVBS.png" group-title="TW",TVBS
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv073&token=pixman
-#EXTINF:-1 tvg-id="客家电视" tvg-name="客家电视台" tvg-logo="https://iptv-pro.github.io/logo/客家电视台.png" group-title="TW",客家电视台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv043&token=pixman
-#EXTINF:-1 tvg-id="靖天综合" tvg-name="靖天综合台" tvg-logo="https://iptv-pro.github.io/logo/靖天综合台.png" group-title="TW",靖天综合台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv046&token=pixman
-#EXTINF:-1 tvg-id="靖天国际" tvg-name="靖天国际台" tvg-logo="https://iptv-pro.github.io/logo/靖天国际台.png" group-title="TW",靖天国际台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv063&token=pixman
-#EXTINF:-1 tvg-id="靖天资讯" tvg-name="靖天资讯台" tvg-logo="https://iptv-pro.github.io/logo/靖天资讯台.png" group-title="TW",靖天资讯台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv065&token=pixman
-#EXTINF:-1 tvg-id="中视菁采" tvg-name="中视菁采台" tvg-logo="https://iptv-pro.github.io/logo/中视菁采台.png" group-title="TW",中视菁采台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv064&token=pixman
-#EXTINF:-1 tvg-id="中天亚洲" tvg-name="中天亚洲台" tvg-logo="https://iptv-pro.github.io/logo/中天亚洲台.png" group-title="TW",中天亚洲台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv109&token=pixman
-#EXTINF:-1 tvg-id="阿里郎" tvg-name="ARIRANG阿里郎频道" tvg-logo="https://iptv-pro.github.io/logo/ARIRANG.png" group-title="TW",ARIRANG阿里郎频道
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv079&token=pixman
-#EXTINF:-1 tvg-id="国会1" tvg-name="国会频道1台" tvg-logo="https://iptv-pro.github.io/logo/国会1.png" group-title="TW",国会频道1台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv084&token=pixman
-#EXTINF:-1 tvg-id="国会2" tvg-name="国会频道2台" tvg-logo="https://iptv-pro.github.io/logo/国会2.png" group-title="TW",国会频道2台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv085&token=pixman
-#EXTINF:-1 tvg-id="影迷电影" tvg-name="影迷數位电影台" tvg-logo="https://iptv-pro.github.io/logo/影迷电影.png" group-title="TW",影迷數位电影台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv011&token=pixman
-#EXTINF:-1 tvg-id="AMC电影" tvg-name="AMC 最爱电影" tvg-logo="https://iptv-pro.github.io/logo/AMC.png" group-title="TW",AMC 最爱电影
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv017&token=pixman
-#EXTINF:-1 tvg-id="采昌影剧" tvg-name="采昌影剧台" tvg-logo="https://iptv-pro.github.io/logo/采昌.png" group-title="TW",采昌影剧台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv049&token=pixman
-#EXTINF:-1 tvg-id="靖天映画" tvg-name="靖天映画" tvg-logo="https://iptv-pro.github.io/logo/靖天映画.png" group-title="TW",靖天映画
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv055&token=pixman
-#EXTINF:-1 tvg-id="靖天电影" tvg-name="靖天电影台" tvg-logo="https://iptv-pro.github.io/logo/靖天电影.png" group-title="TW",靖天电影台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv061&token=pixman
-#EXTINF:-1 tvg-id="公视戏剧" tvg-name="公视戏剧" tvg-logo="https://iptv-pro.github.io/logo/公视戏剧.png" group-title="TW",公视戏剧
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv042&token=pixman
-#EXTINF:-1 tvg-id="靖洋戏剧" tvg-name="靖洋戏剧台" tvg-logo="https://iptv-pro.github.io/logo/靖洋戏剧.png" group-title="TW",靖洋戏剧台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv045&token=pixman
-#EXTINF:-1 tvg-id="靖天日本" tvg-name="靖天日本台" tvg-logo="https://iptv-pro.github.io/logo/靖天日本.png" group-title="TW",靖天日本台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv047&token=pixman
-#EXTINF:-1 tvg-id="靖天戏剧" tvg-name="靖天戏剧台" tvg-logo="https://iptv-pro.github.io/logo/靖天戏剧.png" group-title="TW",靖天戏剧台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv058&token=pixman
-#EXTINF:-1 tvg-id="中视经典" tvg-name="中视经典台" tvg-logo="https://iptv-pro.github.io/logo/中视经典.png" group-title="TW",中视经典台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv080&token=pixman
-#EXTINF:-1 tvg-id="民视影剧" tvg-name="民视影剧台" tvg-logo="https://iptv-pro.github.io/logo/民视影剧.png" group-title="TW",民视影剧台
-https://litv.tzh911.qzz.io/litv.php?id=litv-ftv09&token=pixman
-#EXTINF:-1 tvg-id="龙华洋片" tvg-name="龙华洋片台" tvg-logo="https://iptv-pro.github.io/logo/龙华洋片.png" group-title="TW",龙华洋片台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn02&token=pixman
-#EXTINF:-1 tvg-id="龙华电影" tvg-name="龙华电影台" tvg-logo="https://iptv-pro.github.io/logo/龙华电影.png" group-title="TW",龙华电影台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn03&token=pixman
-#EXTINF:-1 tvg-id="龙华日韩" tvg-name="龙华日韩台" tvg-logo="https://iptv-pro.github.io/logo/龙华日韩.png" group-title="TW",龙华日韩台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn11&token=pixman
-#EXTINF:-1 tvg-id="龙华偶像" tvg-name="龙华偶像台" tvg-logo="https://iptv-pro.github.io/logo/龙华偶像.png" group-title="TW",龙华偶像台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn12&token=pixman
-#EXTINF:-1 tvg-id="龙华戏剧" tvg-name="龙华戏剧台" tvg-logo="https://iptv-pro.github.io/logo/龙华戏剧.png" group-title="TW",龙华戏剧台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn18&token=pixman
-#EXTINF:-1 tvg-id="龙华经典" tvg-name="龙华经典台" tvg-logo="https://iptv-pro.github.io/logo/龙华经典.png" group-title="TW",龙华经典台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn21&token=pixman
-#EXTINF:-1 tvg-id="台湾戏剧" tvg-name="台湾戏剧台" tvg-logo="https://iptv-pro.github.io/logo/台湾戏剧.png" group-title="TW",台湾戏剧台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn22&token=pixman
-#EXTINF:-1 tvg-id="民视综艺" tvg-name="民视综艺台" tvg-logo="https://iptv-pro.github.io/logo/民视综艺.png" group-title="TW",民视综艺台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv004&token=pixman
-#EXTINF:-1 tvg-id="猪哥亮" tvg-name="猪哥亮歌厅秀" tvg-logo="https://iptv-pro.github.io/logo/猪哥亮.png" group-title="TW",猪哥亮歌厅秀
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv006&token=pixman
-#EXTINF:-1 tvg-id="八大精彩" tvg-name="八大精彩台" tvg-logo="https://iptv-pro.github.io/logo/八大精彩.png" group-title="TW",八大精彩台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv034&token=pixman
-#EXTINF:-1 tvg-id="八大综艺" tvg-name="八大综艺台" tvg-logo="https://iptv-pro.github.io/logo/八大综艺.png" group-title="TW",八大综艺台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv039&token=pixman
-#EXTINF:-1 tvg-id="TVBS精采" tvg-name="TVBS精采台" tvg-logo="https://iptv-pro.github.io/logo/TVBS精采.png" group-title="TW",TVBS精采台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv067&token=pixman
-#EXTINF:-1 tvg-id="TVBS欢乐" tvg-name="TVBS欢乐台" tvg-logo="https://iptv-pro.github.io/logo/TVBS欢乐.png" group-title="TW",TVBS欢乐台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv068&token=pixman
-#EXTINF:-1 tvg-id="爱尔达娱乐" tvg-name="ELTA 娱乐台" tvg-logo="https://iptv-pro.github.io/logo/ELTA.png" group-title="TW",ELTA 娱乐台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv070&token=pixman
-#EXTINF:-1 tvg-id="靖天欢乐" tvg-name="靖天欢乐台" tvg-logo="https://iptv-pro.github.io/logo/靖天欢乐.png" group-title="TW",靖天欢乐台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv054&token=pixman
-#EXTINF:-1 tvg-id="靖天育乐" tvg-name="靖天育乐台" tvg-logo="https://iptv-pro.github.io/logo/靖天育乐.png" group-title="TW",靖天育乐台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv062&token=pixman
-#EXTINF:-1 tvg-id="民视旅游" tvg-name="民视旅游台" tvg-logo="https://iptv-pro.github.io/logo/民视旅游.png" group-title="TW",民视旅游台
-https://litv.tzh911.qzz.io/litv.php?id=litv-ftv07&token=pixman
-#EXTINF:-1 tvg-id="时尚运动" tvg-name="时尚运动X" tvg-logo="https://iptv-pro.github.io/logo/时尚运动.png" group-title="TW",时尚运动X
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv014&token=pixman
-#EXTINF:-1 tvg-id="GINX" tvg-name="GINX Esports TV" tvg-logo="https://iptv-pro.github.io/logo/GINX.png" group-title="TW",GINX Esports TV
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv053&token=pixman
-#EXTINF:-1 tvg-id="智林体育" tvg-name="智林体育台" tvg-logo="https://iptv-pro.github.io/logo/智林体育.png" group-title="TW",智林体育台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv101&token=pixman
-#EXTINF:-1 tvg-id="博斯魅力" tvg-name="博斯魅力台" tvg-logo="https://iptv-pro.github.io/logo/博斯.png" group-title="TW",博斯魅力台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn04&token=pixman
-#EXTINF:-1 tvg-id="博斯高球" tvg-name="博斯高球台" tvg-logo="https://iptv-pro.github.io/logo/博斯.png" group-title="TW",博斯高球台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn05&token=pixman
-#EXTINF:-1 tvg-id="博斯高球2" tvg-name="博斯高球二台" tvg-logo="https://iptv-pro.github.io/logo/博斯.png" group-title="TW",博斯高球二台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn06&token=pixman
-#EXTINF:-1 tvg-id="博斯运动1" tvg-name="博斯运动一台" tvg-logo="https://iptv-pro.github.io/logo/博斯.png" group-title="TW",博斯运动一台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn07&token=pixman
-#EXTINF:-1 tvg-id="博斯运动2" tvg-name="博斯运动二台" tvg-logo="https://iptv-pro.github.io/logo/博斯.png" group-title="TW",博斯运动二台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn08&token=pixman
-#EXTINF:-1 tvg-id="博斯网球" tvg-name="博斯网球台" tvg-logo="https://iptv-pro.github.io/logo/博斯.png" group-title="TW",博斯网球台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn09&token=pixman
-#EXTINF:-1 tvg-id="博斯无限" tvg-name="博斯无限台" tvg-logo="https://iptv-pro.github.io/logo/博斯.png" group-title="TW",博斯无限台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn10&token=pixman
-#EXTINF:-1 tvg-id="博斯无限2" tvg-name="博斯无限二台" tvg-logo="https://iptv-pro.github.io/logo/博斯.png" group-title="TW",博斯无限二台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn13&token=pixman
-#EXTINF:-1 tvg-id="视纳华仁" tvg-name="视纳华仁纪实频道" tvg-logo="https://iptv-pro.github.io/logo/视纳华仁.png" group-title="TW",视纳华仁纪实频道
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv013&token=pixman
-#EXTINF:-1 tvg-id="环游旅行家" tvg-name="Globetrotter 环游旅行家" tvg-logo="https://iptv-pro.github.io/logo/环游.png" group-title="TW",Globetrotter 环游旅行家
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv016&token=pixman
-#EXTINF:-1 tvg-id="达文西" tvg-name="达文西频道" tvg-logo="https://iptv-pro.github.io/logo/达文西.png" group-title="TW",达文西频道
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv018&token=pixman
-#EXTINF:-1 tvg-id="亚洲旅游" tvg-name="亚洲旅游台" tvg-logo="https://iptv-pro.github.io/logo/亚洲旅游.png" group-title="TW",亚洲旅游台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv076&token=pixman
-#EXTINF:-1 tvg-id="Smart知识" tvg-name="Smart知识台" tvg-logo="https://iptv-pro.github.io/logo/Smart.png" group-title="TW",Smart知识台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn19&token=pixman
-#EXTINF:-1 tvg-id="靖天卡通" tvg-name="靖天卡通台" tvg-logo="https://iptv-pro.github.io/logo/靖天卡通.png" group-title="TW",靖天卡通台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv044&token=pixman
-#EXTINF:-1 tvg-id="靖洋卡通" tvg-name="靖洋卡通台" tvg-logo="https://iptv-pro.github.io/logo/靖洋卡通.png" group-title="TW",靖洋卡通台
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv057&token=pixman
-#EXTINF:-1 tvg-id="龙华卡通" tvg-name="龙华卡通台" tvg-logo="https://iptv-pro.github.io/logo/龙华卡通.png" group-title="TW",龙华卡通台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn01&token=pixman
-#EXTINF:-1 tvg-id="ELTA英语" tvg-name="ELTA生活英语台" tvg-logo="https://iptv-pro.github.io/logo/ELTA.png" group-title="TW",ELTA生活英语台
-https://litv.tzh911.qzz.io/litv.php?id=litv-longturn20&token=pixman
-#EXTINF:-1 tvg-id="TRACE_U" tvg-name="TRACE Urban" tvg-logo="https://iptv-pro.github.io/logo/TRACE.png" group-title="TW",TRACE Urban
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv082&token=pixman
-#EXTINF:-1 tvg-id="CLASSICA" tvg-name="CLASSICA古典乐" tvg-logo="https://iptv-pro.github.io/logo/CLASSICA.png" group-title="TW",CLASSICA古典乐
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv059&token=pixman
-#EXTINF:-1 tvg-id="MezzoLive" tvg-name="Mezzo Live" tvg-logo="https://iptv-pro.github.io/logo/Mezzo.png" group-title="TW",Mezzo Live
-https://litv.tzh911.qzz.io/litv.php?id=4gtv-4gtv083&token=pixman
-#EXTINF:-1 tvg-id="好消息" tvg-name="好消息 1 台" tvg-logo="https://iptv-pro.github.io/logo/好消息.png" group-title="TW",好消息 1 台
-https://litv.tzh911.qzz.io/litv.php?id=litv-ftv16&token=pixman
-#EXTINF:-1 tvg-id="好消息2" tvg-name="好消息 2 台" tvg-logo="https://iptv-pro.github.io/logo/好消息.png" group-title="TW",好消息 2 台
-https://litv.tzh911.qzz.io/litv.php?id=litv-ftv17&token=pixman
