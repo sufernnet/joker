@@ -360,7 +360,7 @@ http://38.75.136.137:98/gslb/dsdqpub/sjdl.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="兵器科技" tvg-name="兵器科技" tvg-logo="https://www.xn--rgv465a.top/tvlogo/兵器科技.png" group-title="数字",兵器科技
 http://38.75.136.137:98/gslb/dsdqpub/gfjs.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="怀旧剧场" tvg-name="怀旧剧场" tvg-logo="https://www.xn--rgv465a.top/tvlogo/怀旧剧场.png" group-title="数字",怀旧剧场
-http://61.184.46.85:85/tsfile/live/1022_1.m3u8?key=txiptv&playlive=1&authid=0$荆州电信
+http://38.75.136.137:98/gslb/dsdqpub/hjjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="第一剧场" tvg-name="第一剧场" tvg-logo="https://www.xn--rgv465a.top/tvlogo/第一剧场.png" group-title="数字",第一剧场
 http://38.75.136.137:98/gslb/dsdqpub/dyjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="女性时尚" tvg-name="女性时尚" tvg-logo="https://www.xn--rgv465a.top/tvlogo/女性时尚.png" group-title="数字",女性时尚
@@ -453,7 +453,91 @@ https://v.iill.top/4gtv/4gtv-live208/index.m3u8
 https://v.iill.top/4gtv/4gtv-4gtv076/index.m3u8
 #EXTINF:-1 tvg-id="民視" tvg-name="民視" tvg-logo="https://epg.iill.top/logo/民視.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視
 https://v.iill.top/4gtv/4gtv-4gtv002/index.m3u8
-#EXTINF:-1 group-title="TW" tvg-name="中天新聞台",中天新聞台
+#EXTINF:-1 group-title="TW" tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://epg.iill.top/logo/中天新聞台.png" http-user-agent="okhttp/1.9.89",中天新聞台
 https://v.iill.top/4gtv/4gtv-4gtv009/index.m3u8
 #EXTINF:-1 tvg-id="華視" tvg-name="華視" tvg-logo="https://epg.iill.top/logo/華視.png" http-user-agent="okhttp/1.9.89" group-title="TW",華視
 https://v.iill.top/4gtv/4gtv-4gtv041/index.m3u8
+#EXTINF:-1 tvg-id="寰宇新聞台" tvg-name="寰宇新聞台" tvg-logo="https://epg.iill.top/logo/寰宇新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",寰宇新聞
+https://v.iill.top/4gtv/litv-longturn14/index.m3u8
+#EXTINF:-1 tvg-id="寰宇財經台" tvg-name="寰宇財經台" tvg-logo="https://epg.iill.top/logo/寰宇財經台.png" http-user-agent="okhttp/1.9.89" group-title="TW",寰宇財經
+https://tv.iill.top/ofiii/4gtv-4gtv158
+#EXTINF:-1 tvg-id="靖天綜合台" tvg-name="靖天綜合台" tvg-logo="https://epg.iill.top/logo/靖天綜合台.png" http-user-agent="okhttp/1.9.89" group-title="TW",靖天綜合
+https://v.iill.top/4gtv/4gtv-4gtv046/index.m3u8
+#EXTINF:-1 tvg-id="Global Trekker" tvg-name="Global Trekker" tvg-logo="https://epg.iill.top/logo/Global-Trekker.png" http-user-agent="okhttp/1.9.89" group-title="TW",Global Trekker
+https://v.iill.top/4gtv/4gtv-live112/index.m3u8
+#EXTINF:-1 tvg-id="東森新聞台" tvg-name="東森新聞台" tvg-logo="https://epg.iill.top/logo/東森新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",東森新聞
+https://v.iill.top/4gtv/4gtv-4gtv152/index.m3u8
+#EXTINF:-1 tvg-id="華視新聞" tvg-name="華視新聞" tvg-logo="https://epg.iill.top/logo/華視新聞.png" http-user-agent="okhttp/1.9.89" group-title="TW",華視新聞
+https://v.iill.top/4gtv/4gtv-4gtv052/index.m3u8
+#EXTINF:-1 tvg-id="民視新聞台" tvg-name="民視新聞台" tvg-logo="https://epg.iill.top/logo/民視新聞台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視新聞
+https://v.iill.top/4gtv/litv-ftv13/index.m3u8
+#EXTINF:-1 tvg-id="中視新聞" tvg-name="中視新聞" tvg-logo="https://epg.iill.top/logo/中視新聞.png" http-user-agent="okhttp/1.9.89" group-title="TW",中視新聞
+https://v.iill.top/4gtv/4gtv-4gtv074/index.m3u8
+#EXTINF:-1 tvg-id="TVBS" tvg-name="TVBS" tvg-logo="https://epg.iill.top/logo/TVBS.png" http-user-agent="okhttp/1.9.89" group-title="TW",TVBS
+https://v.iill.top/4gtv/media-live073/index.m3u8
+#EXTINF:-1 tvg-id="民視綜藝台" tvg-name="民視綜藝台" tvg-logo="https://epg.iill.top/logo/民視綜藝台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視綜藝
+https://v.iill.top/4gtv/4gtv-4gtv004/index.m3u8
+#EXTINF:-1 tvg-id="豬哥亮歌廳秀" tvg-name="豬哥亮歌廳秀" tvg-logo="https://epg.iill.top/logo/豬哥亮歌廳秀.png" http-user-agent="okhttp/1.9.89" group-title="TW",豬哥亮歌廳秀
+https://v.iill.top/4gtv/4gtv-4gtv006/index.m3u8
+#EXTINF:-1 tvg-id="靖天育樂台" tvg-name="靖天育樂台" tvg-logo="https://epg.iill.top/logo/靖天育樂台.png" http-user-agent="okhttp/1.9.89" group-title="TW",靖天育樂
+https://v.iill.top/4gtv/4gtv-4gtv062/index.m3u8
+#EXTINF:-1 tvg-id="靖天資訊台" tvg-name="靖天資訊台" tvg-logo="https://epg.iill.top/logo/靖天資訊台.png" http-user-agent="okhttp/1.9.89" group-title="TW",靖天資訊
+https://v.iill.top/4gtv/4gtv-4gtv065/index.m3u8
+#EXTINF:-1 tvg-id="韓國娛樂台 KMTV" tvg-name="韓國娛樂台 KMTV" tvg-logo="https://epg.iill.top/logo/韓國娛樂台-KMTV.png" http-user-agent="okhttp/1.9.89" group-title="TW",韓國娛樂台 KMTV
+https://v.iill.top/4gtv/4gtv-4gtv016/index.m3u8
+#EXTINF:-1 tvg-id="ROCK Entertainment" tvg-name="ROCK Entertainment" tvg-logo="https://epg.iill.top/logo/ROCK-Entertainment.png" http-user-agent="okhttp/1.9.89" group-title="TW",ROCK Entertainment
+https://v.iill.top/4gtv/4gtv-live080/index.m3u8
+#EXTINF:-1 tvg-id="Lifetime 娛樂頻道" tvg-name="Lifetime 娛樂頻道" tvg-logo="https://epg.iill.top/logo/Lifetime-娛樂頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",Lifetime 娛樂頻道
+https://v.iill.top/4gtv/4gtv-live029/index.m3u8
+#EXTINF:-1 tvg-id="TRACE Urban" tvg-name="TRACE Urban" tvg-logo="https://epg.iill.top/logo/TRACE-Urban.png" http-user-agent="okhttp/1.9.89" group-title="TW",TRACE Urban
+https://v.iill.top/4gtv/4gtv-4gtv082/index.m3u8
+#EXTINF:-1 tvg-id="INULTRA" tvg-name="INULTRA" tvg-logo="https://epg.iill.top/logo/INULTRA.png" http-user-agent="okhttp/1.9.89" group-title="TW",INULTRA
+https://v.iill.top/4gtv/4gtv-live096/index.m3u8
+#EXTINF:-1 tvg-id="TRACE Sport Stars" tvg-name="TRACE Sport Stars" tvg-logo="https://epg.iill.top/logo/TRACE-Sport-Stars.png" http-user-agent="okhttp/1.9.89" group-title="TW",TRACE Sport Stars
+https://v.iill.top/4gtv/4gtv-4gtv077/index.m3u8
+#EXTINF:-1 tvg-id="車迷TV" tvg-name="車迷TV" tvg-logo="https://epg.iill.top/logo/車迷TV.png" http-user-agent="okhttp/1.9.89" group-title="TW",車迷 TV
+https://v.iill.top/4gtv/4gtv-live201/index.m3u8
+#EXTINF:-1 tvg-id="GINX Esports TV" tvg-name="GINX Esports TV" tvg-logo="https://epg.iill.top/logo/GINX-Esports-TV.png" http-user-agent="okhttp/1.9.89" group-title="TW",GINX Esports TV
+https://v.iill.top/4gtv/4gtv-4gtv053/index.m3u8
+#EXTINF:-1 tvg-id="民視旅遊台" tvg-name="民視旅遊台" tvg-logo="https://epg.iill.top/logo/民視旅遊台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視旅遊
+https://v.iill.top/4gtv/litv-ftv07/index.m3u8
+#EXTINF:-1 tvg-id="民視影劇台" tvg-name="民視影劇台" tvg-logo="https://epg.iill.top/logo/民視影劇台.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視影劇
+https://v.iill.top/4gtv/litv-ftv09/index.m3u8
+#EXTINF:-1 tvg-id="HITS頻道" tvg-name="HITS頻道" tvg-logo="https://epg.iill.top/logo/HITS頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",HITS頻道
+https://v.iill.top/4gtv/4gtv-live620/index.m3u8
+#EXTINF:-1 tvg-id="八大精彩台" tvg-name="八大精彩台" tvg-logo="https://epg.iill.top/logo/八大精彩台.png" http-user-agent="okhttp/1.9.89" group-title="TW",八大精彩
+https://v.iill.top/4gtv/4gtv-4gtv034/index.m3u8
+#EXTINF:-1 tvg-id="FashionTV 時尚頻道" tvg-name="FashionTV 時尚頻道" tvg-logo="https://epg.iill.top/logo/FashionTV.png" http-user-agent="okhttp/1.9.89" group-title="TW" ,FashionTV 時尚頻道
+https://v.iill.top/4gtv/4gtv-live085/index.m3u8
+#EXTINF:-1 tvg-id="CI 罪案偵查頻道" tvg-name="CI 罪案偵查頻道" tvg-logo="https://epg.iill.top/logo/CI-罪案偵查頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",CI 罪案偵查頻道
+https://v.iill.top/4gtv/4gtv-live027/index.m3u8
+#EXTINF:-1 tvg-id="視納華仁紀實頻道" tvg-name="視納華仁紀實頻道" tvg-logo="https://epg.iill.top/logo/視納華仁紀實頻道.png" http-user-agent="okhttp/1.9.89" group-title="TW",視納華仁紀實頻道
+https://v.iill.top/4gtv/4gtv-4gtv013/index.m3u8
+#EXTINF:-1 tvg-id="ROCK Action" tvg-name="ROCK Action" tvg-logo="https://epg.iill.top/logo/ROCK-Action.png" http-user-agent="okhttp/1.9.89" group-title="TW",ROCK Action
+https://v.iill.top/4gtv/4gtv-live138/index.m3u8
+#EXTINF:-1 tvg-id="采昌影劇台" tvg-name="采昌影劇台" tvg-logo="https://epg.iill.top/logo/采昌影劇台.png" http-user-agent="okhttp/1.9.89" group-title="TW",采昌影劇
+https://v.iill.top/4gtv/4gtv-4gtv049/index.m3u8
+#EXTINF:-1 tvg-id="靖天映畫" tvg-name="靖天映畫" tvg-logo="https://epg.iill.top/logo/靖天映畫.png" http-user-agent="okhttp/1.9.89" group-title="TW",靖天映畫
+https://v.iill.top/4gtv/4gtv-4gtv055/index.m3u8
+#EXTINF:-1 tvg-id="靖天電影台" tvg-name="靖天電影台" tvg-logo="https://epg.iill.top/logo/靖天電影台.png" http-user-agent="okhttp/1.9.89" group-title="TW",靖天電影
+https://v.iill.top/4gtv/4gtv-4gtv061/index.m3u8
+#EXTINF:-1 tvg-id="中視" tvg-name="中視" tvg-logo="https://epg.iill.top/logo/中視.png" http-user-agent="okhttp/1.9.89" group-title="TW",中視
+https://v.iill.top/4gtv/4gtv-4gtv040/index.m3u8
+#EXTINF:-1 tvg-id="三立新聞iNEWS" tvg-name="三立新聞iNEWS" tvg-logo="https://epg.iill.top/logo/三立新聞iNEWS.png" http-user-agent="okhttp/1.9.89" group-title="TW",三立新聞iNEWS
+https://v.iill.top/4gtv/4gtv-live089/index.m3u8
+#EXTINF:-1 tvg-id="龍華洋片台" tvg-name="龍華洋片台" tvg-logo="https://epg.iill.top/logo/龍華洋片台.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍華洋片
+https://tv.iill.top/ofiii/litv-xinchuang02
+#EXTINF:-1 tvg-id="龍華卡通台" tvg-name="龍華卡通台" tvg-logo="https://epg.iill.top/logo/龍華卡通台.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍華卡通
+https://tv.iill.top/ofiii/litv-xinchuang01
+#EXTINF:-1 tvg-id="龍華電影台" tvg-name="龍華電影台" tvg-logo="https://epg.iill.top/logo/龍華電影台.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍華電影
+https://tv.iill.top/ofiii/litv-xinchuang03
+#EXTINF:-1 tvg-id="龍華日韓台" tvg-name="龍華日韓台" tvg-logo="https://epg.iill.top/logo/龍華日韓台.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍華日韓
+https://tv.iill.top/ofiii/litv-xinchuang11
+#EXTINF:-1 tvg-id="龍華偶像台" tvg-name="龍華偶像台" tvg-logo="https://epg.iill.top/logo/龍華偶像台.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍華偶像
+https://tv.iill.top/ofiii/litv-xinchuang12
+#EXTINF:-1 tvg-id="龍華戲劇台" tvg-name="龍華戲劇台" tvg-logo="https://epg.iill.top/logo/龍華戲劇台.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍華戲劇
+https://tv.iill.top/ofiii/litv-xinchuang18
+#EXTINF:-1 tvg-id="龍華經典台" tvg-name="龍華經典台" tvg-logo="https://epg.iill.top/logo/龍華經典台.png" http-user-agent="okhttp/1.9.89" group-title="TW",龍華經典
+https://tv.iill.top/ofiii/litv-xinchuang21
+#EXTINF:-1 tvg-id="DayStar" tvg-name="DayStar" tvg-logo="https://epg.iill.top/logo/DayStar.png" http-user-agent="okhttp/1.9.89" group-title="TW" ,DayStar
+https://tv.iill.top/ofiii/daystar
