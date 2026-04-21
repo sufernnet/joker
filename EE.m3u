@@ -366,7 +366,7 @@ http://38.75.136.137:98/gslb/dsdqpub/dyjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="女性时尚" tvg-name="女性时尚" tvg-logo="https://www.xn--rgv465a.top/tvlogo/女性时尚.png" group-title="数字",女性时尚
 http://38.75.136.137:98/gslb/dsdqpub/nxss.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="风云足球" tvg-name="风云足球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云足球.png" group-title="数字",风云足球
-http://38.75.136.137:98/gslb/dsdqpub/fyzq.m3u8?auth=testpub
+https://epg.pw/stream/ac8062ec9484078061d3bef507c15a423ac57ae4144e3fcc4b0a198dd420f911.m3u8
 #EXTINF:-1 tvg-id="风云音乐" tvg-name="风云音乐" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云音乐.png" group-title="数字",风云音乐
 http://38.75.136.137:98/gslb/dsdqpub/fyyy.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="央视台球" tvg-name="央视台球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/央视台球.png" group-title="数字",央视台球
@@ -381,6 +381,74 @@ https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001570/index.m3
 https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001580/index.m3u8?streamid=87c13b6e841ed5039d4c2ce8f266f9ef&streamkey=0gNYRWDeQgJcsRRVxgX7CXzeeNfbK5b6jgfx2dUMMXpSOjJ6HaVTnXNZIvUs7ZjMVIipZGwSqsLBoB1csVGKjUersUPcVyHJvvzH9lv6u5pQ0BcM1SFtompQvPNMFD09b&token=1775754577-a16c17c5548559fa-0-23e1bb39b278d07d81f7441cf04c41ce
 
 # HK
+#EXTINF:-1 group-title="HK" tvg-name="凤凰中文" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰中文.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",凤凰中文
+http://cdn6.163189.xyz/163189/fhzw
+#EXTINF:-1 group-title="HK" tvg-name="凤凰资讯" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰资讯.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",凤凰资讯
+http://cdn6.163189.xyz/163189/fhzx
+#EXTINF:-1 group-title="HK" tvg-name="凤凰香港" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰香港.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",凤凰香港
+http://cdn6.163189.xyz/163189/fhhk
+#EXTINF:-1 group-title="HK" tvg-name="NOW新闻" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/NOW新闻.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",NOW新闻
+http://cdn.163189.xyz/163189/now
+#EXTINF:-1 group-title="HK" tvg-name="翡翠台" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",翡翠台
+http://cdn6.163189.xyz/163189/fct
+#EXTINF:-1 group-title="HK" tvg-name="翡翠一台(TVB1)" tvg-logo="https://epg.112114.xyz/logo/翡翠一台(TVB1).png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",翡翠一台(TVB1)
+http://cdn6.163189.xyz/163189/tvb1
+#EXTINF:-1 group-title="HK" tvg-name="TVB翡翠剧集台(TVBDRAMA)" tvg-logo="https://epg.112114.xyz/logo/TVB翡翠剧集台(TVBDRAMA).png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB翡翠剧集台(TVBDRAMA)
+http://cdn6.163189.xyz/163189/tvbd
+#EXTINF:-1 group-title="HK" tvg-name="TVB翡翠剧集台(TVBDRAMA)" tvg-logo="https://epg.112114.xyz/logo/TVB翡翠剧集台(TVBDRAMA).png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB翡翠剧集台(TVBDRAMA)
+http://cdn6.163189.xyz/163189/tvbd
+#EXTINF:-1 group-title="HK" tvg-name="TVBJADE(HD)" tvg-logo="https://epg.112114.xyz/logo/TVBJADE(HD).png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVBJADE(HD)
+http://cdn6.163189.xyz/163189/jade
+#EXTINF:-1 group-title="HK" tvg-name="娱乐新闻" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/娱乐新闻.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",娱乐新闻
+http://cdn6.163189.xyz/163189/ylxw
+#EXTINF:-1 group-title="HK" tvg-name="无线新闻" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/无线新闻.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",无线新闻
+http://cdn6.163189.xyz/163189/wxxw
+#EXTINF:-1 group-title="HK" tvg-name="天映频道马来西亚" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/天映频道马来西亚.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",天映频道马来西亚
+http://o11.163189.xyz/stream/live/typd/
+#EXTINF:-1 group-title="HK" tvg-name="千禧经典" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/千禧经典.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",千禧经典
+http://o11.163189.xyz/stream/live/tvbc/
+#EXTINF:-1 group-title="HK" tvg-name="八度空间" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/八度空间.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",八度空间
+http://cdn6.163189.xyz/163189/8tv
+#EXTINF:-1 group-title="HK" tvg-name="TVB星河" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB星河.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB星河
+http://cdn6.163189.xyz/163189/tvbxh
+#EXTINF:-1 group-title="HK" tvg-name="TVBPLUS" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVBPLUS.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVBPLUS
+http://o11.163189.xyz/stream/tvb/tvbp/
+#EXTINF:-1 group-title="HK" tvg-name="TVBJ1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVBJ1.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVBJ1
+http://iptv.4666888.xyz/iptv2A.php?id=26
+#EXTINF:-1 group-title="HK" tvg-name="TVB娱乐新闻" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB娱乐新闻.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB娱乐新闻
+http://iptv.4666888.xyz/iptv2A.php?id=36
+#EXTINF:-1 group-title="HK" tvg-name="TVB黄金华剧" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/黄金华剧.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB黄金华剧
+http://iptv.4666888.xyz/iptv2A.php?id=34
+#EXTINF:-1 group-title="HK" tvg-name="TVB功夫台" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB功夫.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB功夫台
+http://cdn6.163189.xyz/163189/yzwx
+#EXTINF:-1 group-title="HK" tvg-name="TVB1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",TVB1
+http://iptv.4666888.xyz/iptv2A.php?id=25
+#EXTINF:-1 group-title="HK" tvg-name="HOY资讯" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/HOYTV资讯.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",HOY资讯
+http://cdn.163189.xyz/163189/hoy78
+#EXTINF:-1 group-title="HK" tvg-name="HOYTV" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/HOYTV.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",HOYTV
+http://cdn6.163189.xyz/163189/hoy
+#EXTINF:-1 group-title="HK" tvg-name="HOY77" tvg-logo="https://epg.112114.xyz/logo/HOY77.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",HOY77
+http://iptv.4666888.xyz/iptv2A.php?id=35
+#EXTINF:-1 group-title="HK" tvg-name="RTHK31" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/RTHK31.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",RTHK31
+http://iptv.4666888.xyz/iptv2A.php?id=23
+#EXTINF:-1 group-title="HK" tvg-name="RTHK32" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/RTHK32.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",RTHK32
+http://cdn.163189.xyz/163189/rthk32
+#EXTINF:-1 group-title="HK" tvg-name="ROCK_Action" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/ROCKACTION.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",ROCK_Action
+http://iptv.4666888.xyz/iptv2A.php?id=50
+#EXTINF:-1 group-title="HK" tvg-name="MYTV黄金翡翠" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/黄金华剧.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",MYTV黄金翡翠
+http://iptv.4666888.xyz/iptv2A.php?id=32
+#EXTINF:-1 group-title="HK" tvg-name="iQIYI" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/爱奇艺.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",iQIYI
+https://o11.163189.xyz/stream/live/iqiyi/
+#EXTINF:-1 group-title="HK" tvg-name="Astro AEC" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/Astro_AEC.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",Astro AEC
+https://o11.163189.xyz/stream/live/aec/
+#EXTINF:-1 group-title="HK" tvg-name="Astro AOD" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/Astro_AOD.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",Astro AOD
+https://o11.163189.xyz/stream/live/aod/
+#EXTINF:-1 group-title="HK" tvg-name="Channel 5" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel 5.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",Channel 5
+http://cdn6.163189.xyz/163189/ch5
+#EXTINF:-1 group-title="HK" tvg-name="Channel 8" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel 8.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",Channel 8
+http://cdn6.163189.xyz/163189/ch8
+#EXTINF:-1 group-title="HK" tvg-name="Channel U" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel U.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",Channel U
+http://cdn6.163189.xyz/163189/chu
 
 # TW
 #EXTINF:-1 tvg-id="Love Nature" tvg-name="Love Nature" tvg-logo="https://epg.iill.top/logo/Love-Nature.png" http-user-agent="okhttp/1.9.89" group-title="TW",Love Nature
