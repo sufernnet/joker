@@ -4,7 +4,9 @@ import requests
 import yaml
 import time
 import os
+import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from urllib.parse import urlparse
 import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -21,13 +23,38 @@ class LiveStreamFetcher:
         
         self.session = requests.Session()
         self.session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
-        self.channels = {}  # 存储最终频道 {name: url}
-        self.output_path = os.path.join(script_dir, '..', 'auto.m3u')  # 输出到仓库根目录
+        self.channels = {}
+        self.output_path = os.path.join(script_dir, '..', 'auto.m3u')
+        self.cache_path = os.path.join(script_dir, 'speed_cache.json')
         
+        # 加载速度缓存
+        self.speed_cache = self.load_cache()
+        
+    def load_cache(self):
+        """加载速度缓存"""
+        if os.path.exists(self.cache_path):
+            try:
+                with open(self.cache_path, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except:
+                return {}
+        return {}
+    
+    def save_cache(self):
+        """保存速度缓存"""
+        # 只保留最近7天的记录
+        current_time = time.time()
+        filtered_cache = {}
+        for url, data in self.speed_cache.items():
+            if current_time - data.get('timestamp', 0) < 7 * 24 * 3600:
+                filtered_cache[url] = data
+        with open(self.cache_path, 'w', encoding='utf-8') as f:
+            json.dump(filtered_cache, f, ensure_ascii=False, indent=2)
+    
     def fetch_m3u_content(self, url):
         """获取单个订阅源内容"""
         try:
-            resp = self.session.get(url, timeout=10)
+            resp = self.session.get(url, timeout=15)
             resp.encoding = 'utf-8'
             if resp.status_code == 200:
                 return resp.text
@@ -35,7 +62,7 @@ class LiveStreamFetcher:
             logging.error(f"获取失败 {url}: {e}")
         return None
     
-    def parse_m3u(self, content, source_url):
+    def parse_m3u(self, content):
         """解析M3U内容，返回频道列表 [(name, url)]"""
         channels = []
         lines = content.split('\n')
@@ -50,88 +77,150 @@ class LiveStreamFetcher:
                     # 下一行是URL
                     if i + 1 < len(lines):
                         url = lines[i+1].strip()
-                        if url and not url.startswith('#'):
+                        if url and not url.startswith('#') and url.startswith(('http', 'https', 'rtmp', 'rtsp')):
                             channels.append((name, url))
                 i += 2
             else:
                 i += 1
         return channels
     
+    def quick_check_url(self, url):
+        """快速检查URL是否有效（不测试速度）"""
+        # 检查缓存
+        if url in self.speed_cache:
+            cache_data = self.speed_cache[url]
+            # 如果缓存时间在24小时内，直接使用
+            if time.time() - cache_data.get('timestamp', 0) < 86400:
+                return cache_data.get('delay', None)
+        
+        # 快速检查：只检查HTTP状态码
+        try:
+            resp = self.session.head(url, timeout=3, allow_redirects=True)
+            if resp.status_code < 400:
+                # 简单测试一下速度（只测试一次）
+                start = time.time()
+                resp = self.session.get(url, timeout=3, stream=True)
+                if resp.status_code < 400:
+                    for chunk in resp.iter_content(512):
+                        break
+                    delay = time.time() - start
+                    resp.close()
+                    # 缓存结果
+                    self.speed_cache[url] = {'delay': delay, 'timestamp': time.time()}
+                    return delay
+        except:
+            pass
+        return None
+    
     def test_url_speed(self, url):
         """测试URL速度，返回延迟(秒)或None"""
+        # 检查缓存
+        if url in self.speed_cache:
+            cache_data = self.speed_cache[url]
+            # 如果缓存时间在24小时内，直接使用
+            if time.time() - cache_data.get('timestamp', 0) < 86400:
+                return cache_data.get('delay', None)
+        
         try:
             start = time.time()
-            # 只请求头部，快速检测
-            resp = self.session.head(url, timeout=5, allow_redirects=True)
-            if resp.status_code < 400:
-                delay = time.time() - start
-                return delay
-            # 如果head失败，尝试get前几个字节
+            # 使用GET获取前几个字节
             resp = self.session.get(url, timeout=5, stream=True)
             if resp.status_code < 400:
                 for chunk in resp.iter_content(1024):
                     break
                 delay = time.time() - start
                 resp.close()
+                # 缓存结果
+                self.speed_cache[url] = {'delay': delay, 'timestamp': time.time()}
                 return delay
         except:
             pass
         return None
     
     def select_best_url(self, urls):
-        """从多个URL中选择速度最快的"""
+        """从多个URL中选择速度最快的（智能策略）"""
         if not urls:
             return None
         if len(urls) == 1:
             return urls[0]
         
-        with ThreadPoolExecutor(max_workers=10) as executor:
-            future_to_url = {executor.submit(self.test_url_speed, url): url for url in urls}
-            best_url = None
-            best_delay = float('inf')
-            for future in as_completed(future_to_url):
-                url = future_to_url[future]
-                delay = future.result()
-                if delay is not None and delay < best_delay:
-                    best_delay = delay
-                    best_url = url
-        return best_url if best_url else urls[0]
+        # 先快速检查所有URL
+        valid_urls = []
+        for url in urls:
+            delay = self.quick_check_url(url)
+            if delay is not None:
+                valid_urls.append((url, delay))
+        
+        if not valid_urls:
+            return urls[0]
+        
+        # 按速度排序
+        valid_urls.sort(key=lambda x: x[1])
+        return valid_urls[0][0]
     
     def process_sources(self):
-        """处理所有订阅源"""
+        """处理所有订阅源（优化版：不测试单源频道）"""
         all_raw_channels = []  # (name, url)
         
+        # 第一步：收集所有频道
         for url in self.config['extra_urls']:
             logging.info(f"处理订阅源: {url}")
             content = self.fetch_m3u_content(url)
             if content:
-                channels = self.parse_m3u(content, url)
+                channels = self.parse_m3u(content)
                 logging.info(f"  获取到 {len(channels)} 个频道")
                 all_raw_channels.extend(channels)
             else:
-                logging.warning(f"  获取失败或内容为空")
+                logging.warning(f"  获取失败")
         
-        # 按频道名分组URL
+        # 第二步：按频道名分组URL
         channel_urls = {}
+        channel_count = {}
         for name, url in all_raw_channels:
             # 清理名称中的特殊字符
             clean_name = re.sub(r'[\[\(].*?[\]\)]', '', name).strip()
             if clean_name not in channel_urls:
-                channel_urls[clean_name] = set()
-            channel_urls[clean_name].add(url)
+                channel_urls[clean_name] = []
+                channel_count[clean_name] = 0
+            if url not in channel_urls[clean_name]:
+                channel_urls[clean_name].append(url)
+                channel_count[clean_name] += 1
         
-        # 为每个频道选择最快地址
-        logging.info(f"开始测试频道速度（共 {len(channel_urls)} 个唯一频道）...")
-        tested = 0
-        for name, urls in channel_urls.items():
-            best_url = self.select_best_url(list(urls))
-            if best_url:
-                self.channels[name] = best_url
-            tested += 1
-            if tested % 50 == 0:
-                logging.info(f"已测试 {tested}/{len(channel_urls)} 个频道")
+        # 第三步：智能选择最佳URL
+        logging.info(f"共 {len(channel_urls)} 个唯一频道")
         
-        logging.info(f"共处理 {len(self.channels)} 个有效频道")
+        # 统计多源频道
+        multi_source = {name: urls for name, urls in channel_urls.items() if len(urls) > 1}
+        single_source = {name: urls[0] for name, urls in channel_urls.items() if len(urls) == 1}
+        
+        logging.info(f"单源频道: {len(single_source)} 个（直接采用）")
+        logging.info(f"多源频道: {len(multi_source)} 个（需要测速）")
+        
+        # 单源频道直接采用
+        for name, url in single_source.items():
+            self.channels[name] = url
+        
+        # 多源频道进行测速（并发处理）
+        if multi_source:
+            logging.info("开始测试多源频道速度...")
+            tested = 0
+            with ThreadPoolExecutor(max_workers=20) as executor:
+                future_to_name = {}
+                for name, urls in multi_source.items():
+                    future = executor.submit(self.select_best_url, urls)
+                    future_to_name[future] = name
+                
+                for future in as_completed(future_to_name):
+                    name = future_to_name[future]
+                    best_url = future.result()
+                    if best_url:
+                        self.channels[name] = best_url
+                    tested += 1
+                    if tested % 50 == 0:
+                        logging.info(f"已测试 {tested}/{len(multi_source)} 个多源频道")
+        
+        logging.info(f"最终获得 {len(self.channels)} 个有效频道")
+        self.save_cache()  # 保存缓存
     
     def classify_channels(self):
         """分类频道到不同分组"""
@@ -212,7 +301,7 @@ class LiveStreamFetcher:
                       '东森', '中天', 'TVBS', '年代', '非凡', '八大', '纬来', 
                       '客家', '原住民']
         
-        processed = set()  # 避免重复处理
+        processed = set()
         
         for name, url in self.channels.items():
             if name in processed:
@@ -220,7 +309,7 @@ class LiveStreamFetcher:
                 
             name_upper = name.upper()
             
-            # 4K分组（优先）
+            # 4K分组
             if any(kw in name for kw in keywords_4k):
                 groups['4K'].append((name, url))
                 processed.add(name)
@@ -272,7 +361,6 @@ class LiveStreamFetcher:
     
     def generate_m3u(self, groups):
         """生成M3U播放列表"""
-        # 确保输出目录存在
         output_dir = os.path.dirname(self.output_path)
         if output_dir and not os.path.exists(output_dir):
             os.makedirs(output_dir)
@@ -280,14 +368,14 @@ class LiveStreamFetcher:
         with open(self.output_path, 'w', encoding='utf-8') as f:
             f.write('#EXTM3U\n')
             f.write('# 自动生成的直播源列表\n')
-            f.write(f'# 生成时间: {time.strftime("%Y-%m-%d %H:%M:%S")}\n\n')
+            f.write(f'# 生成时间: {time.strftime("%Y-%m-%d %H:%M:%S")}\n')
+            f.write(f'# 频道总数: {sum(len(channels) for channels in groups.values())}\n\n')
             
             for group_name, channels in groups.items():
                 if not channels:
                     continue
                 f.write(f'# 分组: {group_name} (共{len(channels)}个频道)\n')
                 for name, url in channels:
-                    # 清理名称中的特殊字符用于显示
                     display_name = re.sub(r'[\[\(].*?[\]\)]', '', name).strip()
                     f.write(f'#EXTINF:-1 group-title="{group_name}",{display_name}\n')
                     f.write(f'{url}\n')
@@ -299,9 +387,10 @@ class LiveStreamFetcher:
     def run(self):
         """主流程"""
         logging.info("=" * 50)
-        logging.info("开始拉取直播源...")
+        logging.info("开始拉取直播源（优化速度模式）...")
         logging.info("=" * 50)
         
+        start_time = time.time()
         self.process_sources()
         groups = self.classify_channels()
         
@@ -316,8 +405,9 @@ class LiveStreamFetcher:
         logging.info(f"  总计: {total} 个频道")
         logging.info("=" * 50)
         
-        output_file = self.generate_m3u(groups)
-        logging.info(f"完成! 输出文件: {output_file}")
+        self.generate_m3u(groups)
+        elapsed = time.time() - start_time
+        logging.info(f"完成! 总耗时: {elapsed:.2f} 秒")
 
 if __name__ == '__main__':
     fetcher = LiveStreamFetcher()
