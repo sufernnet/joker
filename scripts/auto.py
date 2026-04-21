@@ -84,6 +84,32 @@ class LiveStreamFetcher:
                 i += 1
         return channels
     
+    def parse_m3u_with_group(self, content):
+        """解析M3U内容，返回带分组信息的频道列表 [(group, name, url)]"""
+        channels = []
+        lines = content.split('\n')
+        current_group = ''
+        i = 0
+        while i < len(lines):
+            line = lines[i].strip()
+            if line.startswith('#EXTINF:'):
+                # 提取分组和频道名
+                group_match = re.search(r'group-title="([^"]+)"', line)
+                if group_match:
+                    current_group = group_match.group(1)
+                
+                match = re.search(r',(.+)$', line)
+                if match:
+                    name = match.group(1).strip()
+                    if i + 1 < len(lines):
+                        url = lines[i+1].strip()
+                        if url and not url.startswith('#') and url.startswith(('http', 'https', 'rtmp', 'rtsp')):
+                            channels.append((current_group, name, url))
+                i += 2
+            else:
+                i += 1
+        return channels
+    
     def quick_check_url(self, url):
         """快速检查URL是否有效（不测试速度）"""
         # 检查缓存
@@ -161,15 +187,26 @@ class LiveStreamFetcher:
     def process_sources(self):
         """处理所有订阅源（优化版：不测试单源频道）"""
         all_raw_channels = []  # (name, url)
+        hk_tw_channels = []  # 存储港澳台分组的频道
         
         # 第一步：收集所有频道
         for url in self.config['extra_urls']:
             logging.info(f"处理订阅源: {url}")
             content = self.fetch_m3u_content(url)
             if content:
-                channels = self.parse_m3u(content)
-                logging.info(f"  获取到 {len(channels)} 个频道")
-                all_raw_channels.extend(channels)
+                # 特殊处理包含港澳台分组的源
+                if 'codeberg.org' in url:
+                    channels_with_group = self.parse_m3u_with_group(content)
+                    for group, name, channel_url in channels_with_group:
+                        if group == '🔮港澳台直播':
+                            hk_tw_channels.append((name, channel_url))
+                        else:
+                            all_raw_channels.append((name, channel_url))
+                    logging.info(f"  获取到 {len(channels_with_group)} 个频道（含分组）")
+                else:
+                    channels = self.parse_m3u(content)
+                    all_raw_channels.extend(channels)
+                    logging.info(f"  获取到 {len(channels)} 个频道")
             else:
                 logging.warning(f"  获取失败")
         
@@ -219,6 +256,14 @@ class LiveStreamFetcher:
                     if tested % 50 == 0:
                         logging.info(f"已测试 {tested}/{len(multi_source)} 个多源频道")
         
+        # 处理港澳台频道的分组信息
+        for name, url in hk_tw_channels:
+            clean_name = re.sub(r'[\[\(].*?[\]\)]', '', name).strip()
+            # 存储到专门的字典中，供分类使用
+            if not hasattr(self, 'hk_tw_sources'):
+                self.hk_tw_sources = {}
+            self.hk_tw_sources[clean_name] = url
+        
         logging.info(f"最终获得 {len(self.channels)} 个有效频道")
         self.save_cache()  # 保存缓存
     
@@ -234,17 +279,170 @@ class LiveStreamFetcher:
             'TaiWan': []
         }
         
-        # 央视1-17频道
-        cctv_list = []
+        # ========== 1. 央视分组：只保留 CCTV-1高清 到 CCTV-17高清 ==========
+        cctv_hd_set = {f'CCTV-{i}高清' for i in range(1, 18)}
+        # 也支持可能的变体
+        cctv_variants = {}
         for i in range(1, 18):
-            cctv_list.extend([f'CCTV{i}', f'CCTV-{i}', f'中央电视台{i}套', f'央视{i}套'])
-        cctv_list.extend(['CCTV1综合', 'CCTV2财经', 'CCTV3综艺', 'CCTV4中文国际', 
-                         'CCTV5体育', 'CCTV6电影', 'CCTV7军事农业', 'CCTV8电视剧',
-                         'CCTV9纪录', 'CCTV10科教', 'CCTV11戏曲', 'CCTV12社会与法',
-                         'CCTV13新闻', 'CCTV14少儿', 'CCTV15音乐', 'CCTV16奥林匹克',
-                         'CCTV17农业农村'])
+            cctv_variants[f'CCTV{i}高清'] = f'CCTV-{i}高清'
+            cctv_variants[f'CCTV-{i}HD'] = f'CCTV-{i}高清'
+            cctv_variants[f'CCTV{i}HD'] = f'CCTV-{i}高清'
         
-        # 卫视列表
+        cctv_channels = {}
+        for name, url in self.channels.items():
+            # 标准化名称
+            if name in cctv_hd_set:
+                cctv_channels[name] = url
+            elif name in cctv_variants:
+                standard_name = cctv_variants[name]
+                if standard_name not in cctv_channels:
+                    cctv_channels[standard_name] = url
+            else:
+                # 检查是否是CCTVx高清格式
+                match = re.match(r'CCTV[-]?(\d+)[高清HD]+', name, re.IGNORECASE)
+                if match:
+                    num = int(match.group(1))
+                    if 1 <= num <= 17:
+                        standard_name = f'CCTV-{num}高清'
+                        if standard_name not in cctv_channels:
+                            cctv_channels[standard_name] = url
+        
+        # 按数字排序
+        for i in range(1, 18):
+            standard_name = f'CCTV-{i}高清'
+            if standard_name in cctv_channels:
+                groups['央视'].append((standard_name, cctv_channels[standard_name]))
+        
+        # ========== 2. 数字分组：只保留指定的8个频道 ==========
+        digital_allow = {
+            'CCTV-第一剧场', 'CCTV-风云剧场', 'CCTV-风云音乐', 'CCTV-风云足球',
+            'CCTV-怀旧剧场', 'CCTV-央视文化', 'CCTV-世界地理', 'CCTV-央视台球'
+        }
+        
+        # 名称映射（处理可能的变体）
+        digital_mapping = {
+            '第一剧场': 'CCTV-第一剧场',
+            '风云剧场': 'CCTV-风云剧场',
+            '风云音乐': 'CCTV-风云音乐',
+            '风云足球': 'CCTV-风云足球',
+            '怀旧剧场': 'CCTV-怀旧剧场',
+            '央视文化': 'CCTV-央视文化',
+            '世界地理': 'CCTV-世界地理',
+            '央视台球': 'CCTV-央视台球',
+            'CCTV第一剧场': 'CCTV-第一剧场',
+            'CCTV风云剧场': 'CCTV-风云剧场',
+            'CCTV风云音乐': 'CCTV-风云音乐',
+            'CCTV风云足球': 'CCTV-风云足球',
+            'CCTV怀旧剧场': 'CCTV-怀旧剧场',
+            'CCTV世界地理': 'CCTV-世界地理'
+        }
+        
+        digital_channels = {}
+        for name, url in self.channels.items():
+            # 直接匹配
+            if name in digital_allow:
+                digital_channels[name] = url
+            # 映射匹配
+            elif name in digital_mapping:
+                standard_name = digital_mapping[name]
+                if standard_name not in digital_channels:
+                    digital_channels[standard_name] = url
+            # 模糊匹配
+            else:
+                for keyword in digital_allow:
+                    if keyword.replace('CCTV-', '') in name or name in keyword:
+                        if keyword not in digital_channels:
+                            digital_channels[keyword] = url
+        
+        # 按指定顺序添加
+        digital_order = ['CCTV-第一剧场', 'CCTV-风云剧场', 'CCTV-风云音乐', 'CCTV-风云足球',
+                        'CCTV-怀旧剧场', 'CCTV-央视文化', 'CCTV-世界地理', 'CCTV-央视台球']
+        for channel in digital_order:
+            if channel in digital_channels:
+                groups['数字'].append((channel, digital_channels[channel]))
+        
+        # ========== 3. CHC分组：只保留3个频道 ==========
+        chc_allow = {
+            'CHC动作电影': ['CHC动作电影', 'CHC动作', '动作电影'],
+            'CHC影迷电影': ['CHC影迷电影', 'CHC影迷', '影迷电影'],
+            'CHC家庭影院': ['CHC家庭影院', 'CHC家庭', '家庭影院']
+        }
+        
+        chc_channels = {}
+        for name, url in self.channels.items():
+            for standard, keywords in chc_allow.items():
+                if any(kw in name for kw in keywords):
+                    if standard not in chc_channels:
+                        chc_channels[standard] = url
+                    break
+        
+        # 按顺序添加
+        chc_order = ['CHC动作电影', 'CHC影迷电影', 'CHC家庭影院']
+        for channel in chc_order:
+            if channel in chc_channels:
+                groups['CHC'].append((channel, chc_channels[channel]))
+        
+        # ========== 4. HongKong分组：凤凰台只保留3个并置顶 ==========
+        hk_channels = {}
+        
+        # 优先处理凤凰台
+        phoenix_order = ['凤凰中文', '凤凰资讯', '凤凰香港']
+        phoenix_found = {}
+        
+        for name, url in self.channels.items():
+            # 匹配凤凰台
+            if '凤凰' in name:
+                if '中文' in name and '凤凰中文' not in phoenix_found:
+                    phoenix_found['凤凰中文'] = url
+                elif '资讯' in name and '凤凰资讯' not in phoenix_found:
+                    phoenix_found['凤凰资讯'] = url
+                elif '香港' in name and '凤凰香港' not in phoenix_found:
+                    phoenix_found['凤凰香港'] = url
+                elif '卫视' in name and '凤凰中文' not in phoenix_found:
+                    phoenix_found['凤凰中文'] = url
+            else:
+                # 其他香港频道
+                if any(kw in name for kw in ['香港', 'TVB', '翡翠', '明珠', 'NOW', 'CABLE', '港台', 'RTHK', '无线', '亚洲电视', 'ATV', 'VIU']):
+                    if name not in hk_channels:
+                        hk_channels[name] = url
+        
+        # 先添加凤凰台（按顺序）
+        for phoenix in phoenix_order:
+            if phoenix in phoenix_found:
+                groups['HongKong'].append((phoenix, phoenix_found[phoenix]))
+        
+        # 再添加其他香港频道
+        for name, url in hk_channels.items():
+            groups['HongKong'].append((name, url))
+        
+        # ========== 5. TaiWan分组：从港澳台分组中提取 ==========
+        taiwan_channels = {}
+        
+        # 如果有从codeberg.org提取的港澳台频道
+        if hasattr(self, 'hk_tw_sources'):
+            for name, url in self.hk_tw_sources.items():
+                # 台湾频道关键词
+                if any(kw in name for kw in ['台湾', '台视', '中视', '华视', '民视', '公视', '三立', '东森', '中天', 'TVBS', '年代', '非凡', '八大', '纬来', '客家', '原住民']):
+                    if name not in taiwan_channels:
+                        taiwan_channels[name] = url
+        
+        # 也从主频道列表中提取台湾频道
+        for name, url in self.channels.items():
+            if any(kw in name for kw in ['台湾', '台视', '中视', '华视', '民视', '公视', '三立', '东森', '中天', 'TVBS', '年代', '非凡', '八大', '纬来', '客家', '原住民']):
+                if name not in taiwan_channels:
+                    taiwan_channels[name] = url
+        
+        # 添加台湾频道
+        for name, url in taiwan_channels.items():
+            groups['TaiWan'].append((name, url))
+        
+        # ========== 6. 4K分组：保留所有4K频道 ==========
+        keywords_4k = ['4K', '4k', 'UHD', '2160p', 'CCTV-4K', 'CCTV4K']
+        for name, url in self.channels.items():
+            if any(kw in name for kw in keywords_4k):
+                groups['4K'].append((name, url))
+        
+        # ========== 7. 卫视分组：保留所有卫视 ==========
         province_keywords = {
             '湖南卫视': ['湖南卫视', '湖南卫视HD', 'HNTV', '湖南'],
             '浙江卫视': ['浙江卫视', '浙江卫视HD', 'ZJTV', '浙江'],
@@ -280,74 +478,16 @@ class LiveStreamFetcher:
             '西藏卫视': ['西藏卫视', '西藏']
         }
         
-        # 4K频道关键词
-        keywords_4k = ['4K', '4k', 'UHD', '2160p', 'CCTV-4K', 'CCTV4K']
-        
-        # 数字频道关键词
-        digital_keywords = ['地理', '第一剧场', '风云', '怀旧剧场', '戏曲', '音乐', '少儿', 
-                           '科教', '纪录', '发现', '世界地理', '风云剧场', '风云音乐', 
-                           '风云足球', '第一时尚', '电视指南', '国防军事', '女性时尚', 
-                           '高尔夫网球', '央视文化', '央视记录', 'CCTV地理', 'CCTV第一剧场']
-        
-        # CHC频道
-        chc_keywords = ['CHC', '华诚', '动作电影', '家庭影院']
-        
-        # 香港频道
-        hk_keywords = ['香港', 'TVB', '翡翠', '明珠', '凤凰卫视', '凤凰', 'NOW', 
-                      'CABLE', '港台', 'RTHK', '无线', '亚洲电视', 'ATV', 'VIU']
-        
-        # 台湾频道
-        tw_keywords = ['台湾', '台视', '中视', '华视', '民视', '公视', '三立', 
-                      '东森', '中天', 'TVBS', '年代', '非凡', '八大', '纬来', 
-                      '客家', '原住民']
-        
-        processed = set()
-        
+       卫视_found = set()
         for name, url in self.channels.items():
-            if name in processed:
-                continue
-                
-            name_upper = name.upper()
-            
-            # 4K分组
-            if any(kw in name for kw in keywords_4k):
-                groups['4K'].append((name, url))
-                processed.add(name)
-            
-            # 央视分组
-            elif any(cctv in name_upper for cctv in cctv_list) or ('CCTV' in name_upper and '4K' not in name_upper):
-                groups['央视'].append((name, url))
-                processed.add(name)
-            
-            # CHC分组
-            elif any(kw in name_upper for kw in chc_keywords):
-                groups['CHC'].append((name, url))
-                processed.add(name)
-            
-            # 香港分组
-            elif any(kw in name for kw in hk_keywords):
-                groups['HongKong'].append((name, url))
-                processed.add(name)
-            
-            # 台湾分组
-            elif any(kw in name for kw in tw_keywords):
-                groups['TaiWan'].append((name, url))
-                processed.add(name)
-            
-            # 数字分组
-            elif any(kw in name for kw in digital_keywords):
-                groups['数字'].append((name, url))
-                processed.add(name)
-            
-            # 卫视分组
-            else:
-                for display_name, keywords in province_keywords.items():
-                    if any(kw in name for kw in keywords):
+            for display_name, keywords in province_keywords.items():
+                if any(kw in name for kw in keywords):
+                    if display_name not in卫视_found:
                         groups['卫视'].append((display_name, url))
-                        processed.add(name)
-                        break
+                        卫视_found.add(display_name)
+                    break
         
-        # 去重
+        # 去重（确保每个分组内频道不重复）
         for group in groups:
             seen = set()
             unique = []
@@ -371,7 +511,11 @@ class LiveStreamFetcher:
             f.write(f'# 生成时间: {time.strftime("%Y-%m-%d %H:%M:%S")}\n')
             f.write(f'# 频道总数: {sum(len(channels) for channels in groups.values())}\n\n')
             
-            for group_name, channels in groups.items():
+            # 定义分组显示顺序
+            group_order = ['央视', '卫视', '4K', '数字', 'CHC', 'HongKong', 'TaiWan']
+            
+            for group_name in group_order:
+                channels = groups.get(group_name, [])
                 if not channels:
                     continue
                 f.write(f'# 分组: {group_name} (共{len(channels)}个频道)\n')
