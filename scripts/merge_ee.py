@@ -21,51 +21,16 @@ TW_SOURCE_GROUP = "•台湾「限制」"
 
 # ===================== ⭐ 港澳台精选（替换 HK） =====================
 
-# 香港频道列表：(显示名称, 完整EXTINF行, URL)
-# 注意：URL需要您自己填入实际有效的播放地址
-HK_CHANNELS = [
-    ("凤凰中文", '#EXTINF:-1 group-title="HK" tvg-name="凤凰中文" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰中文.png",凤凰中文', "请填入URL"),
-    ("凤凰资讯", '#EXTINF:-1 group-title="HK" tvg-name="凤凰资讯" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰资讯.png",凤凰资讯', "请填入URL"),
-    ("凤凰香港", '#EXTINF:-1 group-title="HK" tvg-name="凤凰香港" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰香港.png",凤凰香港', "请填入URL"),
-    ("NOW新闻", '#EXTINF:-1 group-title="HK" tvg-name="NOW新闻" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/NOW新闻.png",NOW新闻', "请填入URL"),
-    ("翡翠台", '#EXTINF:-1 group-title="HK" tvg-name="翡翠台" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",翡翠台', "请填入URL"),
-    ("翡翠一台(TVB1)", '#EXTINF:-1 group-title="HK" tvg-name="翡翠一台(TVB1)" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png",翡翠一台(TVB1)', "请填入URL"),
-    ("TVB翡翠剧集台(TVBDRAMA)", '#EXTINF:-1 group-title="HK" tvg-name="TVB翡翠剧集台(TVBDRAMA)" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB翡翠剧集台(TVBDRAMA).png",TVB翡翠剧集台(TVBDRAMA)', "请填入URL"),
-    ("TVBJADE(HD)", '#EXTINF:-1 group-title="HK" tvg-name="TVBJADE(HD)" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",TVBJADE(HD)', "请填入URL"),
-    ("娱乐新闻", '#EXTINF:-1 group-title="HK" tvg-name="娱乐新闻" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/娱乐新闻.png",娱乐新闻', "请填入URL"),
-    ("无线新闻", '#EXTINF:-1 group-title="HK" tvg-name="无线新闻" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/无线新闻.png",无线新闻', "请填入URL"),
-    ("天映频道马来西亚", '#EXTINF:-1 group-title="HK" tvg-name="天映频道马来西亚" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/天映频道马来西亚.png",天映频道马来西亚', "请填入URL"),
-    ("千禧经典", '#EXTINF:-1 group-title="HK" tvg-name="千禧经典" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/千禧经典.png",千禧经典', "请填入URL"),
-    ("八度空间", '#EXTINF:-1 group-title="HK" tvg-name="八度空间" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/八度空间.png",八度空间', "请填入URL"),
-    ("TVB星河", '#EXTINF:-1 group-title="HK" tvg-name="TVB星河" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB星河.png",TVB星河', "请填入URL"),
-    ("TVBPLUS", '#EXTINF:-1 group-title="HK" tvg-name="TVBPLUS" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVBPLUS.png",TVBPLUS', "请填入URL"),
-    ("TVBJ1", '#EXTINF:-1 group-title="HK" tvg-name="TVBJ1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVBJ1.png",TVBJ1', "请填入URL"),
-    ("TVB娱乐新闻", '#EXTINF:-1 group-title="HK" tvg-name="TVB娱乐新闻" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB娱乐新闻.png",TVB娱乐新闻', "请填入URL"),
-    ("TVB黄金华剧", '#EXTINF:-1 group-title="HK" tvg-name="TVB黄金华剧" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/黄金华剧.png",TVB黄金华剧', "请填入URL"),
-    ("TVB功夫台", '#EXTINF:-1 group-title="HK" tvg-name="TVB功夫台" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB功夫.png",TVB功夫台', "请填入URL"),
-    ("TVB1", '#EXTINF:-1 group-title="HK" tvg-name="TVB1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png",TVB1', "请填入URL"),
-    ("HOY资讯", '#EXTINF:-1 group-title="HK" tvg-name="HOY资讯" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/HOYTV资讯.png",HOY资讯', "请填入URL"),
-    ("HOYTV", '#EXTINF:-1 group-title="HK" tvg-name="HOYTV" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/HOYTV.png",HOYTV', "请填入URL"),
-    ("HOY77", '#EXTINF:-1 group-title="HK" tvg-name="HOY77" tvg-logo="https://epg.112114.xyz/logo/HOY77.png",HOY77', "请填入URL"),
-    ("RTHK31", '#EXTINF:-1 group-title="HK" tvg-name="RTHK31" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/RTHK31.png",RTHK31', "请填入URL"),
-    ("RTHK32", '#EXTINF:-1 group-title="HK" tvg-name="RTHK32" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/RTHK32.png",RTHK32', "请填入URL"),
-    ("ROCK_Action", '#EXTINF:-1 group-title="HK" tvg-name="ROCK_Action" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/ROCKACTION.png",ROCK_Action', "请填入URL"),
-    ("MYTV黄金翡翠", '#EXTINF:-1 group-title="HK" tvg-name="MYTV黄金翡翠" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/黄金华剧.png",MYTV黄金翡翠', "请填入URL"),
-    ("iQIYI", '#EXTINF:-1 group-title="HK" tvg-name="iQIYI" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/爱奇艺.png",iQIYI', "请填入URL"),
-    ("Astro AEC", '#EXTINF:-1 group-title="HK" tvg-name="Astro AEC" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/Astro_AEC.png",Astro AEC', "请填入URL"),
-    ("Astro AOD", '#EXTINF:-1 group-title="HK" tvg-name="Astro AOD" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/Astro_AOD.png",Astro AOD', "请填入URL"),
-    ("Channel 5", '#EXTINF:-1 group-title="HK" tvg-name="Channel 5" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel 5.png",Channel 5', "请填入URL"),
-    ("Channel 8", '#EXTINF:-1 group-title="HK" tvg-name="Channel 8" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel 8.png",Channel 8', "请填入URL"),
-    ("Channel U", '#EXTINF:-1 group-title="HK" tvg-name="Channel U" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel U.png",Channel U', "请填入URL"),
-]
+GAT_SOURCE = "https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/branch/Jsnzkpg/Jsnzkpg1.m3u"
+GAT_GROUP_NAME = "🔮港澳台直播"
 
-def load_gat():
-    """加载固定的香港频道列表"""
-    result = []
-    for name, extinf, url in HK_CHANNELS:
-        if url and url != "请填入URL":  # 只添加有效URL的频道
-            result.append((name, extinf, url))
-    return result
+GAT_TARGET_ORDER = [
+    "凤凰中文", "凤凰资讯", "凤凰香港", "NOW新闻", "翡翠台", "翡翠一台", "TVB翡翠", "TVB翡翠(马来)", "TVB翡翠剧集台",
+    "TVBJADE", "娱乐新闻", "无线新闻", "天映频道", "千禧经典", "明珠台", "八度空间",
+    "TVB星河", "TVBPLUS", "TVBJ1", "TVB娱乐新闻", "TVB黄金华剧", "TVB功夫台", "TVB1",
+    "HOY资讯", "HOYTV", "HOY77", "RTHK31", "RTHK32", "ROCK_Action", "MYTV黄金翡翠",
+    "iQIYI", "Astro AEC", "Astro AOD", "Channel 5", "Channel 8", "Channel U"
+]
 
 # ===================== EXTRA =====================
 
@@ -83,18 +48,57 @@ EXTRA_URLS = [
 ]
 
 CCTV_TARGET = [
-    "世界地理","兵器科技","怀旧剧场","第一剧场",
-    "女性时尚","风云足球","风云音乐","央视台球"
+    "世界地理", "兵器科技", "怀旧剧场", "第一剧场",
+    "女性时尚", "风云足球", "风云音乐", "央视台球"
 ]
 
 CHC_TARGET = [
-    "CHC影迷电影","CHC家庭影院","CHC动作电影"
+    "CHC影迷电影", "CHC家庭影院", "CHC动作电影"
 ]
 
 LOGO_MAP = {
     "CHC影迷电影": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png",
     "CHC家庭影院": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png",
     "CHC动作电影": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png"
+}
+
+# ===================== 频道台标替换（仅限HK分组） =====================
+
+# 定义台标的映射
+HK_LOGO_MAP = {
+    "凤凰中文": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰中文.png",
+    "凤凰资讯": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰资讯.png",
+    "凤凰香港": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰香港.png",
+    "NOW新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/NOW新闻.png",
+    "翡翠台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",
+    "翡翠一台(TVB1)": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png",
+    "TVB翡翠剧集台(TVBDRAMA)": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB翡翠剧集台(TVBDRAMA).png",
+    "TVBJADE(HD)": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",
+    "娱乐新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/娱乐新闻.png",
+    "无线新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/无线新闻.png",
+    "天映频道马来西亚": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/天映频道马来西亚.png",
+    "千禧经典": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/千禧经典.png",
+    "八度空间": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/八度空间.png",
+    "TVB星河": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB星河.png",
+    "TVBPLUS": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVBPLUS.png",
+    "TVBJ1": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVBJ1.png",
+    "TVB娱乐新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB娱乐新闻.png",
+    "TVB黄金华剧": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/黄金华剧.png",
+    "TVB功夫台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB功夫.png",
+    "TVB1": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png",
+    "HOY资讯": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/HOYTV资讯.png",
+    "HOYTV": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/HOYTV.png",
+    "HOY77": "https://epg.112114.xyz/logo/HOY77.png",
+    "RTHK31": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/RTHK31.png",
+    "RTHK32": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/RTHK32.png",
+    "ROCK_Action": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/ROCKACTION.png",
+    "MYTV黄金翡翠": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/黄金华剧.png",
+    "iQIYI": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/爱奇艺.png",
+    "Astro AEC": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/Astro_AEC.png",
+    "Astro AOD": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/Astro_AOD.png",
+    "Channel 5": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel 5.png",
+    "Channel 8": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel 8.png",
+    "Channel U": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel U.png"
 }
 
 # ===================== 下载 =====================
@@ -162,6 +166,31 @@ def parse_txt(content):
             ext=f'#EXTINF:-1 group-title="未知",{name}'
             out.append((name,ext,url))
     return out
+
+# ===================== ⭐ 港澳台精选 =====================
+
+def load_gat():
+    raw = download(GAT_SOURCE)
+    data = parse_m3u(raw)
+
+    temp = [(clean_name(n), e, u) for n, e, u in data if parse_group(e) == GAT_GROUP_NAME]
+    temp = dedup(temp)
+
+    result = []
+    for target in GAT_TARGET_ORDER:
+        candidates = [x for x in temp if target in x[0]]
+        if candidates:
+            best = pick_best([u for _, _, u in candidates])
+            for n, e, u in candidates:
+                if u == best:
+                    # 检查是否为HK分组，并替换台标
+                    if n in HK_LOGO_MAP:
+                        new_ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{HK_LOGO_MAP[n]}"', e)
+                        result.append((n, new_ext, u))
+                    else:
+                        result.append((n, e, u))
+                    break
+    return result
 
 # ===================== CHC =====================
 
@@ -315,7 +344,7 @@ def main():
 
     out+="\n# HK\n"
     for n,e,u in hk:
-        out+=e+"\n"+u+"\n"
+        out+=normalize_group(e,"HK")+"\n"+u+"\n"
 
     out+="\n# TW\n"
     for n,e,u in tw:
