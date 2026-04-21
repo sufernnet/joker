@@ -187,11 +187,16 @@ def load_cctv():
             result.append((name,ext,best))
     return result
 
-# ===================== TW（原样） =====================
+# ===================== TW（完全按照参考代码修改） =====================
 
 def fetch_tw(lines):
     parsed=parse_m3u("\n".join(lines))
-    temp=[(clean_name(n),e,u) for n,e,u in parsed if parse_group(e)==TW_SOURCE_GROUP]
+
+    temp=[]
+    for n,e,u in parsed:
+        if parse_group(e)==TW_SOURCE_GROUP:
+            temp.append((clean_name(n),e,u))
+
     temp=dedup(temp)
 
     result=[]
@@ -200,13 +205,29 @@ def fetch_tw(lines):
     for target in TW_TARGET_ORDER:
         for n,e,u in temp:
             if target in n and n not in used:
-                result.append((n,e.rsplit(',',1)[0]+','+n,u))
+                new_e = e.rsplit(',', 1)[0] + ',' + n
+                result.append((n, new_e, u))
                 used.add(n)
                 break
     return result
 
 TW_TARGET_ORDER = [
-    "Love Nature","亞洲旅遊","民視第一台","民視台灣台","民視","華視"
+    "Love Nature","亞洲旅遊","民視第一台","民視台灣台","民視","華視",
+    "寰宇新聞","寰宇新聞台灣台","寰宇財經","三立綜合台",
+    "ELTA娛樂","靖天綜合","Global Trekker","鏡電視新聞台","東森新聞",
+    "華視新聞","民視新聞","TVBS新聞台","三立iNEWS","東森財經新聞",
+    "中視新聞","TVBS","民視綜藝","豬哥亮歌廳秀","靖天育樂",
+    "KLT-靖天國際台","NICE TV 靖天歡樂台","靖天資訊","TVBS歡樂台",
+    "韓國娛樂台","ROCK Entertainment","Lifetime 娛樂頻道","電影原聲台CMusic",
+    "TRACE Urban","Mezzo Live HD","INULTRA","TRACE Sport Stars","車迷 TV",
+    "GINX Esports TV","民視旅遊","滾動力 Rollor","fun探索娛樂台",
+    "ELTATW","MagellanTV頻道","民視影劇","HITS頻道","八大精彩",
+    "FashionTV 時尚頻道","CI 罪案偵查頻道","視納華仁紀實頻道",
+    "影迷數位紀實台","ROCK Action","采昌影劇","靖天映畫","靖天電影",
+    "影迷數位電影台","amc 電影台","Cinema World",
+    "My Cinema Europe HD 我的歐洲電影","CNBC Asia 財經台","經典電影台",
+    "中視","Smart知識台","三立新聞iNEWS","龍華洋片","龍華卡通",
+    "龍華電影","龍華日韓","龍華偶像","龍華戲劇","龍華經典","DayStar"
 ]
 
 # ===================== 测速 =====================
@@ -241,15 +262,20 @@ def main():
     hk = load_gat()     # ⭐ 替换 HK
     tw = fetch_tw(lines)
 
-    # 中天插入（原逻辑）
-    custom = ("中天新聞台",
-              '#EXTINF:-1 tvg-name="中天新聞台",中天新聞台',
-              "https://v.iill.top/4gtv/4gtv-4gtv009/index.m3u8")
+    # 中天新聞台插入（完全对齐参考代码）
+    custom_extinf = '#EXTINF:-1 tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://epg.iill.top/logo/中天新聞台.png" http-user-agent="okhttp/1.9.89",中天新聞台'
+    custom_url = "https://v.iill.top/4gtv/4gtv-4gtv009/index.m3u8"
+    custom_item = ("中天新聞台", custom_extinf, custom_url)
 
-    for i,(n,_,_) in enumerate(tw):
-        if n=="民視":
-            tw.insert(i+1,custom)
+    insert_index = -1
+    for i, (name, _, _) in enumerate(tw):
+        if name == "民視":
+            insert_index = i + 1
             break
+    if insert_index != -1:
+        tw.insert(insert_index, custom_item)
+    else:
+        tw.append(custom_item)
 
     cctv = load_cctv()
     chc = load_chc()
