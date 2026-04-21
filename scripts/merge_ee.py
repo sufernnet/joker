@@ -64,16 +64,16 @@ LOGO_MAP = {
 
 # ===================== 频道台标替换（仅限HK分组） =====================
 
-# 定义台标的映射
+# ⭐ 已修复：全部使用 clean 后名称（去括号）
 HK_LOGO_MAP = {
     "凤凰中文": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰中文.png",
     "凤凰资讯": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰资讯.png",
     "凤凰香港": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰香港.png",
     "NOW新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/NOW新闻.png",
     "翡翠台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",
-    "翡翠一台(TVB1)": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png",
-    "TVB翡翠剧集台(TVBDRAMA)": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB翡翠剧集台(TVBDRAMA).png",
-    "TVBJADE(HD)": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",
+    "翡翠一台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png",
+    "TVB翡翠剧集台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB翡翠剧集台(TVBDRAMA).png",
+    "TVBJADE": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",
     "娱乐新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/娱乐新闻.png",
     "无线新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/无线新闻.png",
     "天映频道马来西亚": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/天映频道马来西亚.png",
@@ -183,9 +183,13 @@ def load_gat():
             best = pick_best([u for _, _, u in candidates])
             for n, e, u in candidates:
                 if u == best:
-                    # 检查是否为HK分组，并替换台标
+                    # ⭐ 修复：匹配 clean 后名称 + 无logo兜底
                     if n in HK_LOGO_MAP:
-                        new_ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{HK_LOGO_MAP[n]}"', e)
+                        logo = HK_LOGO_MAP[n]
+                        if 'tvg-logo="' in e:
+                            new_ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{logo}"', e)
+                        else:
+                            new_ext = e.replace("#EXTINF:-1", f'#EXTINF:-1 tvg-logo="{logo}"')
                         result.append((n, new_ext, u))
                     else:
                         result.append((n, e, u))
@@ -231,7 +235,7 @@ def load_cctv():
             result.append((name,ext,best))
     return result
 
-# ===================== TW（完全按照参考代码修改） =====================
+# ===================== TW =====================
 
 def fetch_tw(lines):
     parsed=parse_m3u("\n".join(lines))
@@ -303,10 +307,9 @@ def main():
     content=download(SOURCE_URL)
     lines=content.splitlines()
 
-    hk = load_gat()     # ⭐ 替换 HK
+    hk = load_gat()
     tw = fetch_tw(lines)
 
-    # 中天新聞台插入（完全对齐参考代码）
     custom_extinf = '#EXTINF:-1 tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://epg.iill.top/logo/中天新聞台.png" http-user-agent="okhttp/1.9.89",中天新聞台'
     custom_url = "https://v.iill.top/4gtv/4gtv-4gtv009/index.m3u8"
     custom_item = ("中天新聞台", custom_extinf, custom_url)
