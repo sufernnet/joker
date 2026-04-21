@@ -478,13 +478,13 @@ class LiveStreamFetcher:
             '西藏卫视': ['西藏卫视', '西藏']
         }
         
-       卫视_found = set()
+        weishi_found = set()
         for name, url in self.channels.items():
             for display_name, keywords in province_keywords.items():
                 if any(kw in name for kw in keywords):
-                    if display_name not in卫视_found:
+                    if display_name not in weishi_found:
                         groups['卫视'].append((display_name, url))
-                        卫视_found.add(display_name)
+                        weishi_found.add(display_name)
                     break
         
         # 去重（确保每个分组内频道不重复）
