@@ -85,6 +85,12 @@ http://124.90.44.40:6060/010/2/00000009000000060000000000002075?virtualDomain=01
 #EXTINF:-1 tvg-id="山东卫视" tvg-name="山东卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/SD4K.png" group-title="4K",山东卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002073?virtualDomain=010.live_hls.zte.com
 
+#EXTINF:-1 tvg-id="苏州4K" tvg-name="苏州4K" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/苏州4K.png" group-title="4K",苏州4K
+http://43.251.226.110:8880/play/1830.m3u8
+
+#EXTINF:-1 tvg-id="河北4K" tvg-name="河北4K" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/河北4K.png" group-title="4K",河北4K
+http://43.251.226.110:8880/play/1831.m3u8
+
 #EXTINF:-1 tvg-id="浙江卫视" tvg-name="浙江卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/zhejiang.png" group-title="卫视",浙江卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000392?virtualDomain=010.live_hls.zte.com
 
@@ -356,21 +362,21 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=01
 
 # 数字
 #EXTINF:-1 tvg-id="世界地理" tvg-name="世界地理" tvg-logo="https://www.xn--rgv465a.top/tvlogo/世界地理.png" group-title="数字",世界地理
-http://61.184.46.85:85/tsfile/live/1025_1.m3u8?key=txiptv&playlive=1&authid=0$荆州电信
+http://38.75.136.137:98/gslb/dsdqpub/sjdl.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="兵器科技" tvg-name="兵器科技" tvg-logo="https://www.xn--rgv465a.top/tvlogo/兵器科技.png" group-title="数字",兵器科技
 http://38.75.136.137:98/gslb/dsdqpub/gfjs.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="怀旧剧场" tvg-name="怀旧剧场" tvg-logo="https://www.xn--rgv465a.top/tvlogo/怀旧剧场.png" group-title="数字",怀旧剧场
 http://38.75.136.137:98/gslb/dsdqpub/hjjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="第一剧场" tvg-name="第一剧场" tvg-logo="https://www.xn--rgv465a.top/tvlogo/第一剧场.png" group-title="数字",第一剧场
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001621/index.m3u8?streamid=d81e188b59ece96b7e8f1ce34aea3ef8&streamkey=07xclP9QQ7A17NHSunxvhUhDmEAgCJHPSWwcmXXGtD5B1ctgr4sNGjOLgDUiqhY3hbKKrXCg3V0Mv4oFIdXvsvsAV0LnOhkY1hZzilPs1GDH833k0xqsPako&token=1775754265-e70414852ba80d73-0-504af0de169af5289009509fea184863
+http://38.75.136.137:98/gslb/dsdqpub/dyjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="女性时尚" tvg-name="女性时尚" tvg-logo="https://www.xn--rgv465a.top/tvlogo/女性时尚.png" group-title="数字",女性时尚
-http://39.152.103.17:8089/tsfile/live/1068_1.m3u8?key=txiptv&playlive=1&down=1
+https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001571/index.m3u8?streamid=15732e48a35953bb064f0ffb4197035c&streamkey=092SzM8qh4GNZnGRAOz6y3nvNrssZJcflnNDbtwifQsVSBFB4hpwpDInl50YKu2zt1eb26JJwNN5CopCgczz7WZR3dtJlHFGA3m8Sgjvc2xB9twEzATcT54y15wY&token=1775754397-43927d95ab17a1ae-0-d7fc3f2a8df09c74d345181b73c6c670
 #EXTINF:-1 tvg-id="风云足球" tvg-name="风云足球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云足球.png" group-title="数字",风云足球
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001590/index.m3u8?streamid=927ac8a2bbea16a44fbdc8cd59deabc8&streamkey=0WsC3jqv5pZMcVlxFBNnufmiOCXFZigfn61ogjSwht3bqXevILtdE9S00t1S31TUcNtpNMycyrjLcmhMwenwuh8FAxcPIPYTEQUX1MDXgmTdP03V9WzCfa1iP&token=1775754113-ea7ee6d53b99caad-0-c93511c176fc0c319dc73b7c39050be7
+https://epg.pw/stream/ac8062ec9484078061d3bef507c15a423ac57ae4144e3fcc4b0a198dd420f911.m3u8
 #EXTINF:-1 tvg-id="风云音乐" tvg-name="风云音乐" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云音乐.png" group-title="数字",风云音乐
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001660/index.m3u8?streamid=be37d16b874e7ba11dd383d7ecd75752&streamkey=02BjlnRKVk4w1Oyqq9aXRB4YtWxqlybIfl2lS5mkFVN5iNWAFYdKIFbyaEPKZTNBgIoU9bQc4m8PrS8Pw3iTRKs635HzsGgAANSe4AgbCngHqxM1kM6le1OCEWm&token=1775754243-94f06a5cf0b92094-0-743c505a12a44d0e7fd5d08f14b11504
+http://38.75.136.137:98/gslb/dsdqpub/fyyy.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="央视台球" tvg-name="央视台球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/央视台球.png" group-title="数字",央视台球
-http://38.75.136.137:98/gslb/dsdqpub/ystq.m3u8?auth=testpub
+https://epg.pw/stream/ca9c1cd4b97fb824cedd7fedfd0c7a950afdd7f00751cfbb7c2d89831d7746a5.m3u8
 
 # CHC
 #EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" group-title="CHC",CHC影迷电影
