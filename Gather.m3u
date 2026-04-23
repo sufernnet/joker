@@ -1,6 +1,6 @@
 #EXTM3U
 
-# 更新时间 2026-04-23 02:02:19
+# 更新时间 2026-04-23 02:06:07
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -510,8 +510,6 @@ http://192.168.100.1:50008/litv-ftv09/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGu
 http://192.168.100.1:50008/4gtv-live620/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 tvg-id="八大精彩台" tvg-name="八大精彩台" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/GTV5.png" group-title="TW",八大精彩
 http://192.168.100.1:50008/4gtv-4gtv034/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
-#EXTINF:-1 tvg-id="八大精彩台" tvg-name="八大精彩台" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/GTV5.png" group-title="TW",八大精彩
-http://192.168.100.1:50008/4gtv-live124/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 tvg-id="FashionTV 時尚頻道" tvg-name="FashionTV 時尚頻道" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/FashionTV.png" group-title="TW",FashionTV 時尚頻道
 http://192.168.100.1:50008/4gtv-live085/index.m3u8?token=iawXxRTd4cKZioJfMdbjCLlGuvgQx6tcHLnrUhQHtNadRSpDZ3EvBaSDVVAhaARZ
 #EXTINF:-1 tvg-id="CI罪案偵查頻道" tvg-name="CI罪案偵查頻道" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Crimeplus.png" group-title="TW",CI 罪案偵查頻道
