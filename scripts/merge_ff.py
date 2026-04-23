@@ -3,15 +3,12 @@
 
 import requests
 import re
-import time
 from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ===================== 配置 =====================
 
 SOURCE_URL = "https://yang.sufern001.workers.dev/"
 TW_M3U_URL = "https://raw.githubusercontent.com/sufernnet/joker/main/TW.m3u"
-
 MYTV_URL = "https://php.946985.filegear-sg.me/jackTV.m3u"
 
 OUTPUT_FILE = "Gather.m3u"
@@ -19,49 +16,31 @@ BB_FILE = "BB.m3u"
 
 HK_SOURCE_GROUP = "• Juli 「精選」"
 
-CCTV_TARGET = [
-    "世界地理","兵器科技","怀旧剧场","第一剧场",
-    "女性时尚","风云足球","风云音乐","央视台球"
-]
-
-CHC_TARGET = [
-    "CHC影迷电影","CHC家庭影院","CHC动作电影"
-]
-
 MYTV_TARGET = ["Love Nature 4K", "AXN", "PopC", "tvN"]
 
 BAD_KEYWORDS = ["测试", "购物", "广告"]
 
-# ===================== 下载 =====================
+# ===================== 下载（增强稳定） =====================
 
-def download(url, retry=3):
+def download(url):
     headers = {
         "User-Agent": "Mozilla/5.0",
-        "Accept": "*/*",
         "Referer": url
     }
 
-    for i in range(retry):
-        try:
-            r = requests.get(url, headers=headers, timeout=20, allow_redirects=True)
-            if r.status_code == 200:
-                return r.text
-        except Exception as e:
-            print(f"重试 {i+1}: {url} | {e}")
+    try:
+        r = requests.get(url, headers=headers, timeout=20, allow_redirects=True)
+        return r.text
+    except Exception as e:
+        print("下载失败:", url, e)
+        return ""
 
-    print(f"跳过: {url}")
-    return ""
-
-# ===================== 解析（✔ 已修复 KODIPROP） =====================
-
-def parse_name(extinf):
-    return extinf.split(",", 1)[-1].strip()
-
-def parse_group(extinf):
-    m = re.search(r'group-title="([^"]*)"', extinf)
-    return m.group(1) if m else ""
+# ===================== M3U解析（保留KODIPROP） =====================
 
 def parse_m3u(content):
+    if not content:
+        return []
+
     content = content.lstrip("\ufeff").strip()
 
     lines = content.splitlines()
@@ -81,54 +60,67 @@ def parse_m3u(content):
             props.append(l)
 
         elif l.startswith("http") and ext:
-            name = parse_name(ext)
+            name = ext.split(",", 1)[-1].strip()
 
-            if not any(x in name for x in BAD_KEYWORDS):
+            if any(b in name for b in BAD_KEYWORDS):
+                continue
 
-                full_ext = ext
+            full_ext = "\n".join([ext] + props) if props else ext
 
-                # ✔ 保留 KODIPROP
-                if props:
-                    full_ext = "\n".join([ext] + props)
-
-                data.append((name, full_ext, l))
+            data.append((name, full_ext, l))
 
             ext = None
             props = []
 
     return data
 
-# ===================== MYTV 匹配增强 =====================
+# ===================== MYTV增强解析（核心） =====================
 
-def match_channel(name, target):
-    name = name.lower()
-    target = target.lower()
-    return target in name or name.replace(" ", "") == target.replace(" ", "")
-
-def is_mytv(group):
-    return group and "mytv" in group.lower()
-
-# ===================== MYTV 提取 =====================
+def normalize(s):
+    return s.lower().replace(" ", "").replace("-", "")
 
 def load_mytv():
-    print("MYTV源...")
+    print("\n========== MYTV 调试开始 ==========")
+
     raw = download(MYTV_URL)
+
+    if not raw:
+        print("❌ MYTV 未获取到内容")
+        return {}
+
+    print("✔ MYTV 已下载")
+
     data = parse_m3u(raw)
+
+    print("✔ 解析条数:", len(data))
+
+    # 打印前30个频道用于确认真实结构
+    print("\n--- 前30个频道 ---")
+    for i, (n, _, _) in enumerate(data[:30]):
+        print(i+1, n)
 
     result = {}
 
     for n, e, u in data:
 
-        if not is_mytv(parse_group(e)):
-            continue
+        nn = normalize(n)
 
         for t in MYTV_TARGET:
-            if match_channel(n, t):
+            if normalize(t) in nn:
                 result[t] = u
+                print(f"✔ 命中: {t} -> {n}")
+
+    print("\n========== MYTV 命中结果 ==========")
+    print(result)
 
     return result
 
 # ===================== 工具 =====================
+
+def set_group(extinf, group):
+    if 'group-title="' in extinf:
+        return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
+    return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"')
 
 def dedup(data):
     seen, out = set(), []
@@ -138,27 +130,23 @@ def dedup(data):
             out.append((n, e, u))
     return out
 
-def set_group(extinf, group):
-    if 'group-title="' in extinf:
-        return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
-    return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"')
-
 # ===================== 主程序 =====================
 
 def main():
 
-    print("主源...")
+    print("\n========== 主源 ==========")
     main_data = parse_m3u(download(SOURCE_URL))
 
-    print("TW...")
+    print("\n========== TW ==========")
     tw_data = parse_m3u(download(TW_M3U_URL))
 
+    print("\n========== MYTV ==========")
     mytv_map = load_mytv()
+
+    # ===================== HK =====================
 
     hk = dedup([x for x in main_data if HK_SOURCE_GROUP in x[1]])
     tw = dedup(tw_data)
-
-    # ===================== MYTV 构造 =====================
 
     mytv_channels = []
 
@@ -166,29 +154,17 @@ def main():
         if name in mytv_map:
             url = mytv_map[name]
 
-            ext = (
-                f'#EXTINF:-1 tvg-id="{name}" '
-                f'tvg-name="{name}" '
-                f'tvg-logo="" group-title="HK",{name}'
-            )
-
+            ext = f'#EXTINF:-1 tvg-id="{name}" tvg-name="{name}" group-title="HK",{name}'
             mytv_channels.append((name, ext, url))
+
+    # ===================== 输出 =====================
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     out = "#EXTM3U\n\n"
     out += f"# 更新时间 {now}\n\n"
 
-    try:
-        with open(BB_FILE, encoding="utf-8") as f:
-            for l in f:
-                if not l.startswith("#EXTM3U"):
-                    out += l
-        out += "\n"
-    except:
-        pass
-
-    # ===================== HK 插入逻辑 =====================
+    # ===================== HK插入 =====================
 
     out += "\n# HK\n"
 
@@ -198,12 +174,13 @@ def main():
         out += set_group(e, "HK") + "\n" + u + "\n"
 
         if not inserted and "鳳凰衛視·香港" in n:
-            for cn, ce, cu in mytv_channels:
+            for _, ce, cu in mytv_channels:
                 out += ce + "\n" + cu + "\n"
             inserted = True
 
     if not inserted:
-        for cn, ce, cu in mytv_channels:
+        print("⚠ 未找到插入点，追加 MYTV")
+        for _, ce, cu in mytv_channels:
             out += ce + "\n" + cu + "\n"
 
     # ===================== TW =====================
@@ -212,12 +189,10 @@ def main():
     for n, e, u in tw:
         out += set_group(e, "TW") + "\n" + u + "\n"
 
-    # ===================== 输出 =====================
-
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(out)
 
-    print("✅ 完成")
+    print("\n✅ 完成")
 
 if __name__ == "__main__":
     main()
