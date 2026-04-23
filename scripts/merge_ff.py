@@ -25,6 +25,9 @@ EXTRA_URLS = [
     "https://iptv.catvod.com/list.php?token=e222e4d00c9d1945c3387a6c63b434577afbefd92f01f3fa39da76f154997133"
 ]
 
+# ⭐ 新增 MYTV 源
+MYTV_URL = "https://php.946985.filegear-sg.me/jackTV.m3u"
+
 OUTPUT_FILE = "Gather.m3u"
 BB_FILE = "BB.m3u"
 
@@ -35,10 +38,12 @@ CCTV_TARGET = [
     "女性时尚","风云足球","风云音乐","央视台球"
 ]
 
-# ✅ 修复 HC
 CHC_TARGET = [
     "CHC影迷电影","CHC家庭影院","CHC动作电影"
 ]
+
+# ⭐ 目标频道
+MYTV_TARGET = ["Love Nature 4K", "AXN", "PopC", "tvN"]
 
 BAD_KEYWORDS = ["测试", "购物", "广告"]
 
@@ -96,53 +101,21 @@ def parse_m3u(content):
                 data.append((name, ext, l))
     return data
 
-def parse_txt(content):
-    data = []
-    for l in content.splitlines():
-        if "," in l and "http" in l:
-            name, url = l.split(",", 1)
-            if not any(x in name for x in BAD_KEYWORDS):
-                ext = f'#EXTINF:-1 group-title="未知",{name.strip()}'
-                data.append((name.strip(), ext, url.strip()))
-    return data
+# ===================== ⭐ MYTV 提取 =====================
 
-def load_extra():
-    all_data = []
-    for url in EXTRA_URLS:
-        print("抓取:", url)
-        raw = download(url)
-        if not raw:
-            continue
-        try:
-            if "#EXTINF" in raw:
-                all_data += parse_m3u(raw)
-            else:
-                all_data += parse_txt(raw)
-        except:
-            print("解析失败:", url)
-    return all_data
-
-# ===================== ⭐ CHC 专用（新增） =====================
-
-def load_chc_from_shanghai():
-    url = "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u"
-    raw = download(url)
+def load_mytv():
+    raw = download(MYTV_URL)
     data = parse_m3u(raw)
 
-    result = []
+    result = {}
 
     for n, e, u in data:
-        if parse_group(e) != "上海":
+        if parse_group(e) != "MYTV":
             continue
 
-        m = re.search(r'tvg-name="([^"]+)"', e)
-        if not m:
-            continue
-
-        tvg_name = m.group(1).strip()
-
-        if tvg_name in CHC_TARGET:
-            result.append((tvg_name, e, u))
+        for target in MYTV_TARGET:
+            if target.lower() in n.lower():
+                result[target] = u
 
     return result
 
@@ -161,28 +134,6 @@ def set_group(extinf, group):
         return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
     return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"')
 
-# ===================== 并发测速 =====================
-
-def check(url):
-    try:
-        start = time.time()
-        r = requests.get(url, timeout=5, stream=True, headers={"User-Agent": "Mozilla/5.0"})
-        if r.status_code == 200:
-            return url, time.time() - start
-    except:
-        pass
-    return url, 999
-
-def pick_best(urls):
-    best_url, best_time = None, 999
-    with ThreadPoolExecutor(max_workers=5) as executor:
-        futures = [executor.submit(check, u) for u in urls]
-        for f in as_completed(futures):
-            url, t = f.result()
-            if t < best_time:
-                best_time, best_url = t, url
-    return best_url
-
 # ===================== 主程序 =====================
 
 def main():
@@ -192,38 +143,20 @@ def main():
     print("TW...")
     tw_data = parse_m3u(download(TW_M3U_URL))
 
-    print("扩展源...")
-    extra_data = load_extra()
+    print("MYTV...")
+    mytv_map = load_mytv()
 
     hk = dedup([x for x in main_data if HK_SOURCE_GROUP in x[1]])
     tw = dedup(tw_data)
 
-    # 央视
-    cctv_map = {}
-    for n, e, u in extra_data:
-        if n in CCTV_TARGET:
-            cctv_map.setdefault(n, []).append((e, u))
+    # ⭐ 构造插入频道（强制模板格式）
+    mytv_channels = []
+    for name in MYTV_TARGET:
+        if name in mytv_map:
+            url = mytv_map[name]
 
-    cctv = []
-    for name in CCTV_TARGET:
-        if name in cctv_map:
-            best = pick_best([u for _, u in cctv_map[name]])
-            ext = cctv_map[name][0][0]
-            cctv.append((name, ext, best))
-
-    # ⭐ CHC（只从上海源）
-    chc_raw = load_chc_from_shanghai()
-
-    chc_map = {}
-    for n, e, u in chc_raw:
-        chc_map.setdefault(n, []).append((e, u))
-
-    chc = []
-    for name in CHC_TARGET:
-        if name in chc_map:
-            best = pick_best([u for _, u in chc_map[name]])
-            ext = chc_map[name][0][0]
-            chc.append((name, ext, best))
+            ext = f'#EXTINF:-1 tvg-id="{name}" tvg-name="{name}" tvg-logo="" group-title="HK",{name}'
+            mytv_channels.append((name, ext, url))
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -239,18 +172,27 @@ def main():
     except:
         pass
 
-    out += "# 数字\n"
-    for n, e, u in cctv:
-        out += set_group(e, "数字") + "\n" + u + "\n"
-
-    out += "\n# CHC\n"
-    for n, e, u in chc:
-        e = fix_logo(n, e)
-        out += set_group(e, "CHC") + "\n" + u + "\n"
+    # ===================== HK（插入逻辑）=====================
 
     out += "\n# HK\n"
+
+    inserted = False
+
     for n, e, u in hk:
         out += set_group(e, "HK") + "\n" + u + "\n"
+
+        # ⭐ 在凤凰香港后插入
+        if not inserted and "鳳凰衛視·香港" in n:
+            for cn, ce, cu in mytv_channels:
+                out += ce + "\n" + cu + "\n"
+            inserted = True
+
+    # 如果没找到锚点，就追加
+    if not inserted:
+        for cn, ce, cu in mytv_channels:
+            out += ce + "\n" + cu + "\n"
+
+    # ===================== TW =====================
 
     out += "\n# TW\n"
     for n, e, u in tw:
