@@ -84,12 +84,6 @@ http://124.90.44.40:6060/010/2/00000009000000060000000000002075?virtualDomain=01
 #EXTINF:-1 tvg-id="山东卫视" tvg-name="山东卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/SD4K.png" group-title="4K",山东卫视
 http://124.90.44.40:6060/010/2/00000009000000060000000000002073?virtualDomain=010.live_hls.zte.com
 
-#EXTINF:-1 tvg-id="苏州4K" tvg-name="苏州4K" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/苏州4K.png" group-title="4K",苏州4K
-http://43.251.226.110:8880/play/1830.m3u8
-
-#EXTINF:-1 tvg-id="河北4K" tvg-name="河北4K" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/河北4K.png" group-title="4K",河北4K
-http://43.251.226.110:8880/play/1831.m3u8
-
 #EXTINF:-1 tvg-id="浙江卫视" tvg-name="浙江卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/zhejiang.png" group-title="卫视",浙江卫视
 http://124.90.44.40:6060/010/2/00000001000000060000000000000392?virtualDomain=010.live_hls.zte.com
 
