@@ -1,6 +1,6 @@
 #EXTM3U
 
-# 更新时间 2026-04-23 10:22:55
+# 更新时间 2026-04-23 22:37:25
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -250,15 +250,21 @@ http://38.75.136.137:98/gslb/dsdqpub/hjjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="第一剧场" tvg-name="第一剧场" tvg-logo="https://www.xn--rgv465a.top/tvlogo/第一剧场.png" group-title="数字",第一剧场
 http://38.75.136.137:98/gslb/dsdqpub/dyjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="女性时尚" tvg-name="女性时尚" tvg-logo="https://www.xn--rgv465a.top/tvlogo/女性时尚.png" group-title="数字",女性时尚
-http://38.75.136.137:98/gslb/dsdqpub/nxss.m3u8?auth=testpub
+http://39.152.103.17:8089/tsfile/live/1068_1.m3u8?key=txiptv&playlive=1&down=1
 #EXTINF:-1 tvg-id="风云足球" tvg-name="风云足球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云足球.png" group-title="数字",风云足球
-https://epg.pw/stream/ac8062ec9484078061d3bef507c15a423ac57ae4144e3fcc4b0a198dd420f911.m3u8
+http://38.75.136.137:98/gslb/dsdqpub/fyzq.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="风云音乐" tvg-name="风云音乐" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云音乐.png" group-title="数字",风云音乐
 http://38.75.136.137:98/gslb/dsdqpub/fyyy.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="央视台球" tvg-name="央视台球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/央视台球.png" group-title="数字",央视台球
-http://38.75.136.137:98/gslb/dsdqpub/ystq.m3u8?auth=testpub
+https://epg.pw/stream/25677ac2e8c1f7c3dd6359c43eb5f0f54efb3f5c11f9dda18d01b3e0308ed017.m3u8
 
 # CHC
+#EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" group-title="CHC",CHC影迷电影
+https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001581/index.m3u8?streamid=af62547c4c8be0ef4a658f4b4853388f&streamkey=0AGMO6LiBIxyH55HrvMarEqxYYHHBsBI1AS8pWYcug6hIz6JcOuFRUYGPeeB6DUdYBhCZW4VbAvlr77F1jurxYfAy8mix71ZcG7gxzAeeVpjSNe4Slu1Xui5R21MiDUL&token=1775754555-63098edc022aecb0-0-61ebd04bf297352038785125878e0b8f
+#EXTINF:-1 tvg-name="CHC家庭影院" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png" group-title="CHC",CHC家庭影院
+https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001570/index.m3u8?streamid=136f530a61d26dc0f670f39f05291586&streamkey=0gNYRWDeQgJcsQzJtwy5YfNuNXxp8JTqLQoubxJdaerqPImB5Zqld0YLrCikCEEBNzsaCMzgiZxPacL6jVLMJd0KpMDkxYV4BhGlwYU0ju7r1WxWgQER2jIf9CgZaG3mq&token=1775754529-ed2502f4a1a9b5b0-0-ab6ce23e1854b42f8e2b31cb58021423
+#EXTINF:-1 tvg-name="CHC动作电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png" group-title="CHC",CHC动作电影
+https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001580/index.m3u8?streamid=87c13b6e841ed5039d4c2ce8f266f9ef&streamkey=0gNYRWDeQgJcsRRVxgX7CXzeeNfbK5b6jgfx2dUMMXpSOjJ6HaVTnXNZIvUs7ZjMVIipZGwSqsLBoB1csVGKjUersUPcVyHJvvzH9lv6u5pQ0BcM1SFtompQvPNMFD09b&token=1775754577-a16c17c5548559fa-0-23e1bb39b278d07d81f7441cf04c41ce
 
 # HK
 #EXTINF:-1 tvg-id="鳳凰衛視中文台" tvg-name="鳳凰衛視中文台" tvg-logo="https://epg.iill.top/logo/凤凰中文.png" group-title="HK",鳳凰衛視·中文
