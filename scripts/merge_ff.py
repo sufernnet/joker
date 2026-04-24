@@ -248,20 +248,20 @@ def main():
 
     out += "# 数字\n"
     for n, e, u in cctv:
-        out += set_group(e, "数字") + "\n" + u + "\n"
+        out += (set_group(e, "数字") or "") + "\n" + (u or "") + "\n"
 
     out += "\n# CHC\n"
     for n, e, u in chc:
         e = fix_logo(n, e)
-        out += set_group(e, "CHC") + "\n" + u + "\n"
+        out += (set_group(e, "CHC") or "") + "\n" + (u or "") + "\n"
 
     out += "\n# HK\n"
     for n, e, u in hk:
-        out += set_group(e, "HK") + "\n" + u + "\n"
+        out += (set_group(e, "HK") or "") + "\n" + (u or "") + "\n"
 
     out += "\n# TW\n"
     for n, e, u in tw:
-        out += set_group(e, "TW") + "\n" + u + "\n"
+        out += (set_group(e, "TW") or "") + "\n" + (u or "") + "\n"
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(out)
