@@ -333,26 +333,13 @@ def main():
     except:
         pass
 
-    out += "\n# 数字\n"
-    for n, e, u in cctv:
-        out += normalize_group(e, "数字") + "\n" + u + "\n"
-
-    out += "\n# CHC\n"
-    for n, e, u in chc:
-        out += normalize_group(e, "CHC") + "\n" + u + "\n"
-
-    out += "\n# HK\n"
-    for n, e, u in hk:
-        out += normalize_group(e, "HK") + "\n" + u + "\n"
-
-    out += "\n# TW\n"
-    for n, e, u in tw:
-        out += normalize_group(e, "TW") + "\n" + u + "\n"
+    out += "\n".join(f"{e}\n{u}" for _, e, u in hk)
+    out += "\n".join(f"{e}\n{u}" for _, e, u in cctv)
+    out += "\n".join(f"{e}\n{u}" for _, e, u in chc)
+    out += "\n".join(f"{e}\n{u}" for _, e, u in tw)
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(out)
-
-    print("✅ 完成")
 
 if __name__ == "__main__":
     main()
