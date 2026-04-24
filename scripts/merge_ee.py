@@ -333,10 +333,21 @@ def main():
     except:
         pass
 
-    out += "\n".join(f"{e}\n{u}" for _, e, u in hk)
-    out += "\n".join(f"{e}\n{u}" for _, e, u in cctv)
-    out += "\n".join(f"{e}\n{u}" for _, e, u in chc)
-    out += "\n".join(f"{e}\n{u}" for _, e, u in tw)
+    out += "\n# 数字\n"
+    for n, e, u in cctv:
+        out += normalize_group(e, "数字") or "" + "\n" + u + "\n"
+
+    out += "\n# CHC\n"
+    for n, e, u in chc:
+        out += normalize_group(e, "CHC") or "" + "\n" + u + "\n"
+
+    out += "\n# HK\n"
+    for n, e, u in hk:
+        out += normalize_group(e, "港澳台精选") or "" + "\n" + u + "\n"
+
+    out += "\n# TW\n"
+    for n, e, u in tw:
+        out += normalize_group(e, "台湾精选") or "" + "\n" + u + "\n"
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(out)
