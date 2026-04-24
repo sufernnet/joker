@@ -63,7 +63,6 @@ LOGO_MAP = {
 }
 
 # ===================== 频道台标替换（仅限HK分组） =====================
-# 注意：所有键名均已使用 clean_name() 后的形式（即去掉了括号及其内容）
 
 HK_LOGO_MAP = {
     "凤凰中文": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰中文.png",
@@ -71,9 +70,9 @@ HK_LOGO_MAP = {
     "凤凰香港": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰香港.png",
     "NOW新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/NOW新闻.png",
     "翡翠台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",
-    "翡翠一台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png",      # 原 "翡翠一台(TVB1)"
-    "TVB翡翠剧集台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB翡翠剧集台(TVBDRAMA).png",  # 原 "TVB翡翠剧集台(TVBDRAMA)"
-    "TVBJADE": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",                 # 原 "TVBJADE(HD)"
+    "翡翠一台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png",
+    "TVB翡翠剧集台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB翡翠剧集台(TVBDRAMA).png",
+    "TVBJADE": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",
     "娱乐新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/娱乐新闻.png",
     "无线新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/无线新闻.png",
     "天映频道马来西亚": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/天映频道马来西亚.png",
@@ -129,9 +128,17 @@ def parse_group(extinf):
     return m.group(1) if m else ""
 
 def normalize_group(extinf, group):
+    """确保返回字符串，如果处理失败则返回原始extinf"""
+    if not extinf:
+        return f'#EXTINF:-1 group-title="{group}",未知'
+    
     if 'group-title="' in extinf:
-        return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
-    return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"')
+        result = re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
+    else:
+        result = extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"')
+    
+    # 确保返回字符串
+    return result if result else extinf
 
 def dedup(data):
     seen = set()
@@ -155,22 +162,28 @@ def parse_m3u(content):
         elif l.startswith("http") and ext:
             name = parse_name(ext)
             out.append((name, ext, l))
+            ext = None
     return out
 
 def parse_txt(content):
     out = []
     for l in content.splitlines():
         if "," in l and "http" in l:
-            name, url = l.split(",", 1)
-            name = clean_name(name)
-            ext = f'#EXTINF:-1 group-title="未知",{name}'
-            out.append((name, ext, url))
+            parts = l.split(",", 1)
+            if len(parts) == 2:
+                name, url = parts
+                name = clean_name(name)
+                ext = f'#EXTINF:-1 group-title="未知",{name}'
+                out.append((name, ext, url))
     return out
 
 # ===================== ⭐ 港澳台精选 =====================
 
 def load_gat():
     raw = download(GAT_SOURCE)
+    if not raw:
+        return []
+    
     data = parse_m3u(raw)
 
     temp = [(clean_name(n), e, u) for n, e, u in data if parse_group(e) == GAT_GROUP_NAME]
@@ -183,7 +196,6 @@ def load_gat():
             best = pick_best([u for _, _, u in candidates])
             for n, e, u in candidates:
                 if u == best:
-                    # 检查是否需要替换台标（n 已经是 clean_name 后的名称，与 HK_LOGO_MAP 的键匹配）
                     if n in HK_LOGO_MAP:
                         new_ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{HK_LOGO_MAP[n]}"', e)
                         result.append((n, new_ext, u))
@@ -196,16 +208,20 @@ def load_gat():
 
 def load_chc():
     raw = download("https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u")
+    if not raw:
+        return []
+    
     data = parse_m3u(raw)
 
     temp = [(n, e, u) for n, e, u in data if parse_group(e) == "上海" and n in CHC_TARGET]
 
     chc = []
     for name in CHC_TARGET:
-        urls = [u for n, e, u in temp if n == name]
-        if urls:
+        items = [(n, e, u) for n, e, u in temp if n == name]
+        if items:
+            urls = [u for _, _, u in items]
             best = pick_best(urls)
-            ext = [e for n, e, u in temp if n == name][0]
+            ext = items[0][1]
             if name in LOGO_MAP:
                 ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{LOGO_MAP[name]}"', ext)
             chc.append((name, ext, best))
@@ -217,23 +233,28 @@ def load_cctv():
     data = []
     for url in EXTRA_URLS:
         raw = download(url)
-        if "#EXTINF" in raw:
-            data += parse_m3u(raw)
-        else:
-            data += parse_txt(raw)
+        if raw:
+            if "#EXTINF" in raw:
+                data += parse_m3u(raw)
+            else:
+                data += parse_txt(raw)
 
     result = []
     for name in CCTV_TARGET:
-        urls = [u for n, e, u in data if n == name]
-        if urls:
+        items = [(n, e, u) for n, e, u in data if n == name]
+        if items:
+            urls = [u for _, _, u in items]
             best = pick_best(urls)
-            ext = [e for n, e, u in data if n == name][0]
+            ext = items[0][1]
             result.append((name, ext, best))
     return result
 
 # ===================== TW =====================
 
 def fetch_tw(lines):
+    if not lines:
+        return []
+    
     parsed = parse_m3u("\n".join(lines))
 
     temp = []
@@ -287,6 +308,9 @@ def check(url):
     return url, 999
 
 def pick_best(urls):
+    if not urls:
+        return None
+    
     best = None
     best_t = 999
     with ThreadPoolExecutor(max_workers=5) as ex:
@@ -299,13 +323,22 @@ def pick_best(urls):
 # ===================== 主程序 =====================
 
 def main():
+    print("开始生成EE.m3u...")
+    
     content = download(SOURCE_URL)
+    if not content:
+        print("❌ 无法下载源文件")
+        return
+    
     lines = content.splitlines()
 
-    hk = load_gat()     # ⭐ 替换 HK
+    hk = load_gat()
+    print(f"✅ 加载 HK 频道: {len(hk)} 个")
+    
     tw = fetch_tw(lines)
+    print(f"✅ 加载 TW 频道: {len(tw)} 个")
 
-    # 中天新聞台插入（完全对齐参考代码）
+    # 中天新聞台插入
     custom_extinf = '#EXTINF:-1 tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://epg.iill.top/logo/中天新聞台.png" http-user-agent="okhttp/1.9.89",中天新聞台'
     custom_url = "https://v.iill.top/4gtv/4gtv-4gtv009/index.m3u8"
     custom_item = ("中天新聞台", custom_extinf, custom_url)
@@ -321,7 +354,10 @@ def main():
         tw.append(custom_item)
 
     cctv = load_cctv()
+    print(f"✅ 加载 CCTV 频道: {len(cctv)} 个")
+    
     chc = load_chc()
+    print(f"✅ 加载 CHC 频道: {len(chc)} 个")
 
     out = "#EXTM3U\n\n"
 
@@ -330,29 +366,39 @@ def main():
             for l in f:
                 if not l.startswith("#EXTM3U"):
                     out += l
-    except:
-        pass
+    except Exception as e:
+        print(f"⚠️ 无法读取 BB.m3u: {e}")
 
-    out += "\n# 数字\n"
-    for n, e, u in cctv:
-        out += normalize_group(e, "数字") + "\n" + u + "\n"
+    if cctv:
+        out += "\n# 数字\n"
+        for n, e, u in cctv:
+            if e and u:
+                out += normalize_group(e, "数字") + "\n" + u + "\n"
 
-    out += "\n# CHC\n"
-    for n, e, u in chc:
-        out += normalize_group(e, "CHC") + "\n" + u + "\n"
+    if chc:
+        out += "\n# CHC\n"
+        for n, e, u in chc:
+            if e and u:
+                out += normalize_group(e, "CHC") + "\n" + u + "\n"
 
-    out += "\n# HK\n"
-    for n, e, u in hk:
-        out += normalize_group(e, "HK") + "\n" + u + "\n"
+    if hk:
+        out += "\n# HK\n"
+        for n, e, u in hk:
+            if e and u:
+                out += normalize_group(e, "HK") + "\n" + u + "\n"
 
-    out += "\n# TW\n"
-    for n, e, u in tw:
-        out += normalize_group(e, "TW") + "\n" + u + "\n"
+    if tw:
+        out += "\n# TW\n"
+        for n, e, u in tw:
+            if e and u:
+                out += normalize_group(e, "TW") + "\n" + u + "\n"
 
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(out)
-
-    print("✅ 完成")
+    try:
+        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+            f.write(out)
+        print(f"✅ 完成！文件已保存到: {OUTPUT_FILE}")
+    except Exception as e:
+        print(f"❌ 保存文件失败: {e}")
 
 if __name__ == "__main__":
     main()
