@@ -157,6 +157,8 @@ def dedup(data):
     return out
 
 def set_group(extinf, group):
+    if extinf is None:
+        return ""  # 如果 extinf 是 None，则返回一个空字符串
     if 'group-title="' in extinf:
         return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
     return extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"')
