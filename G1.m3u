@@ -599,7 +599,7 @@ https://icreipocoxiy.ap-northeast-1.clawcloudrun.com/smt/2871
 https://icreipocoxiy.ap-northeast-1.clawcloudrun.com/smt/1541
 #EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/ELTA体育3.png" group-title="体育",ELTA体育3
 https://icreipocoxiy.ap-northeast-1.clawcloudrun.com/smt/2578
-#EXTINF:-1 tvg-name="NOW体育1" tvg-logo="https://epg.iill.top/logo/NOW体育1.png" group-title="体育",NOW体育1
+#EXTINF:-1 tvg-name="NOW体育1" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW1.png" group-title="体育",NOW体育1
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236720.m3u8
 #EXTINF:-1 tvg-name="NOW体育2" tvg-logo="https://epg.iill.top/logo/NOW体育2.png" group-title="体育",NOW体育2
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236721.m3u8
