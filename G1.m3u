@@ -520,6 +520,49 @@ http://23.237.104.106:8080/USA_ANIMAL_PLANET/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/BBC2.png",BBC Earth
 https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEarthA-hls/playlist.m3u8
 
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a98f24ab1e1e_lcJU.png" tvg-name="CI" group-title="Documentary",CI
+http://192.168.100.1:19890/trams/1243/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a07e202a1f2a_rv0X.png" tvg-name="Asia Travel" group-title="Documentary",Asia Travel
+http://192.168.100.1:19890/trams/479/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4cb6e4ec03_5cx5.jpg" tvg-name="亚洲美食" group-title="Documentary",亚洲美食
+http://192.168.100.1:19890/trams/2035/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5fa3ba3874dd6_052Z.png" tvg-name="NatGeo HD" group-title="Documentary",NatGeo HD
+http://192.168.100.1:19890/trams/2235/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5f6b2d6f239ec_Oob3.jpg" tvg-name="Fashion TV" group-title="Documentary",Fashion TV
+http://192.168.100.1:19890/trams/2117/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a07e090ed797_tvMv.png" tvg-name="History" group-title="Documentary",History
+http://192.168.100.1:19890/trams/472/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4ccb450d60_liZo.jpg" tvg-name="BBC Earth HD" group-title="Documentary",BBC Earth HD
+http://192.168.100.1:19890/trams/2037/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4cce6aa24d_WykD.jpg" tvg-name="BBC Earth Lifestyle" group-title="Documentary",BBC Earth Lifestyle
+http://192.168.100.1:19890/trams/2038/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4d38506957_oDZu.jpg" tvg-name="亚洲旅游 TLC Asia" group-title="Documentary",亚洲旅游 TLC Asia
+http://192.168.100.1:19890/trams/2055/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4d0fabc707_0V7z.jpg" tvg-name="MTV Live" group-title="Documentary",MTV Live
+http://192.168.100.1:19890/trams/2046/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a98f64207d24_Z7IR.png" tvg-name="NatGeo_Wild HD" group-title="Documentary",NatGeo_Wild HD
+http://192.168.100.1:19890/trams/1255/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a07e0b6e4e25_1t87.png" tvg-name="Animal_Planet" group-title="Documentary",Animal_Planet
+http://192.168.100.1:19890/trams/474/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/6230103f0133e_OdSA.png" tvg-name="HGTV" group-title="Documentary",HGTV
+http://192.168.100.1:19890/trams/2508/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5b502a10ccb7c_HELo.png" tvg-name="TLC" group-title="Documentary",TLC
+http://192.168.100.1:19890/trams/1595/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/6319a9164e71e_3i8V.png" tvg-name="Foodnetwork Hd" group-title="Documentary",Foodnetwork Hd
+http://192.168.100.1:19890/trams/2615/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/6915b1b5d62a3_A6Zw.png" tvg-name="Asia Food Network" group-title="Documentary",Asia Food Network
+http://192.168.100.1:19890/trams/1042/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ecf924651f26_c7eN.png" tvg-name="Animal Planet (Eng)" group-title="Documentary",Animal Planet (Eng)
+http://192.168.100.1:19890/trams/2011/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5f5238eb84441_i5BZ.png" tvg-name="NatGeo Wild HD" group-title="Documentary",NatGeo Wild HD
+http://192.168.100.1:19890/trams/2106/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/68cbccddd541a_zfGf.png" tvg-name="Discovery Asia" group-title="Documentary",Discovery Asia
+http://192.168.100.1:19890/trams/2888/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/68cbcd907aad2_kPeK.jpeg" tvg-name="Dmax" group-title="Documentary",Dmax
+http://192.168.100.1:19890/trams/2889/playlist.m3u8?token=sufern
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/6899b0b5131a2_T2qC.png" tvg-name="探索频道" group-title="Documentary",探索频道
+http://192.168.100.1:19890/trams/2878/playlist.m3u8?token=sufern
+
 #Sports
 #EXTINF:-1 tvg-name=" BRTV体育休闲" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Beijing10.png" group-title="Sports",北京体育休闲
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.23:8002
