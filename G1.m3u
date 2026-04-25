@@ -589,9 +589,11 @@ http://4px369674fn3.vicp.fun:7088/udp/225.1.8.23:8002
 http://119.32.12.131:2905/udp/225.1.101.102:7523
 #EXTINF:-1 tvg-name="五星体育" tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="体育",五星体育
 http://pplee.vicp.net:4022/udp/233.18.204.58:5140
+#EXTINF:-1 group-title="体育" tvg-name="红牛运动" tvg-logo="https://epg.112114.xyz/logo/红牛运动.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",红牛运动
+http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_1660.m3u8
 #EXTINF:-1 tvg-name="ESPN" tvg-logo="https://epg.iill.top/logo/ESPN.png" group-title="体育",ESPN
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119665
-#EXTINF:-1 tvg-name="ESPN2" tvg-logo="https://epg.iill.top/logo/ESPN.png" group-title="体育",ESPN2
+#EXTINF:-1 tvg-name="ESPN2" tvg-logo="https://epg.112114.xyz/logo/ESPN2.png" group-title="体育",ESPN2
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119666
 #EXTINF:-1 tvg-name="NOW体育1" tvg-logo="https://epg.iill.top/logo/NOW体育1.png" group-title="体育",NOW体育1
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236720.m3u8
