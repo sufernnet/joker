@@ -503,7 +503,7 @@ http://23.237.104.106:8080/USA_ANIMAL_PLANET/tracks-v1a1/mono.m3u8
 https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEarthA-hls/playlist.m3u8
 
 #Sports
-#EXTINF:-1 tvg-name="北京体育休闲" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Beijing10.png" group-title="Sports",北京体育休闲
+#EXTINF:-1 tvg-name=" BRTV体育休闲" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Beijing10.png" group-title="Sports",北京体育休闲
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.23:8002
 #EXTINF:-1 tvg-name="广东体育" tvg-logo="https://epg.iill.top/logo/广东体育.png" group-title="Sports",广东体育
 http://119.32.12.131:2905/udp/225.1.101.102:7523
@@ -511,7 +511,7 @@ http://119.32.12.131:2905/udp/225.1.101.102:7523
 http://pplee.vicp.net:4022/udp/233.18.204.58:5140
 #EXTINF:-1 tvg-name="ESPN" tvg-logo="https://epg.iill.top/logo/ESPN.png" group-title="Sports",ESPN
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119665
-#EXTINF:-1 tvg-name="ESPN2" tvg-logo="https://epg.iill.top/logo/ESPN2.png" group-title="Sports",ESPN2
+#EXTINF:-1 tvg-name="ESPN2" tvg-logo="https://epg.iill.top/logo/ESPN.png" group-title="Sports",ESPN2
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119666
 #EXTINF:-1 tvg-name="NOW体育1" tvg-logo="https://epg.iill.top/logo/NOW体育1.png" group-title="Sports",NOW体育1
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236720.m3u8
