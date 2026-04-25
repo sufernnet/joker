@@ -219,8 +219,23 @@ https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001570/index.m3
 #EXTINF:-1 tvg-name="CHC动作电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png" group-title="Movies&Series",CHC动作电影
 https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001580/index.m3u8?streamid=87c13b6e841ed5039d4c2ce8f266f9ef&streamkey=0gNYRWDeQgJcsRRVxgX7CXzeeNfbK5b6jgfx2dUMMXpSOjJ6HaVTnXNZIvUs7ZjMVIipZGwSqsLBoB1csVGKjUersUPcVyHJvvzH9lv6u5pQ0BcM1SFtompQvPNMFD09b&token=1775754577-a16c17c5548559fa-0-23e1bb39b278d07d81f7441cf04c41ce
 
-#EXTINF:-1 tvg-name="北京IPTV淘电影" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bjtdy.png" group-title="Movies&Series",北京IPTV淘电影
+#EXTINF:-1 tvg-name="淘电影" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bjtdy.png" group-title="Movies&Series",淘电影
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.38:8002
+
+#EXTINF:-1 tvg-id="美亞電影台" tvg-name="美亞電影台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/美亚电影.png" group-title="Movies&Series",美亞電影台
+http://iptv.707626.xyz/live/stream-c5d6f2af/master.m3u8
+
+#EXTINF:-1 tvg-id="Now爆谷星影台" tvg-name="Now星影台" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/now5.png" group-title="Movies&Series",Now星影台
+http://iptv.707626.xyz/live/stream-now-x1vz/master.m3u8
+
+#EXTINF:-1 tvg-id="Now 爆谷台" tvg-name="Now爆谷台" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/now4.png" group-title="Movies&Series",Now爆谷台
+http://iptv.707626.xyz/live/stream-now-91y5/master.m3u8
+
+#EXTINF:-1 tvg-id="PopC" tvg-name="PopC" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/POPC.png" group-title="Movies&Series",PopC
+http://iptv.707626.xyz/live/stream-221591ba/master.m3u8
+
+#EXTINF:-1 tvg-id="功夫台" tvg-name="功夫台" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/TVB15.png" group-title="Movies&Series",功夫台
+http://iptv.707626.xyz/live/stream-ch-j3ol/master.m3u8
 
 #EXTINF:-1 tvg-id="龍華洋片台" tvg-name="龍華洋片台" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/LTV2.png" group-title="Movies&Series",龍華洋片
 http://192.168.100.1:50009/litv-xinchuang02/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3DHwLmFTAVAMGuZ7MEeR96ULAt0fyJFfe1dIjs
@@ -253,6 +268,9 @@ https://o11.163189.xyz/stream/tvb/fct4k/
 
 #EXTINF:-1 tvg-id="翡翠台" tvg-name="翡翠台" tvg-logo="https://epg.iill.top/logo/翡翠台.png" group-title="HongKong", 翡翠台
 https://o11.163189.xyz/stream/tvb/fct/
+
+#EXTINF:-1 tvg-id="" tvg-name="龙祥时代" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/LStime.png" group-title="HongKong",龙祥时代
+http://iptv.707626.xyz/live/stream-ch-cpzy/master.m3u8
 
 #EXTINF:-1 tvg-id="明珠台" tvg-name="明珠台" tvg-logo="https://epg.iill.top/logo/明珠台.png" group-title="HongKong", 明珠台
 https://o11.163189.xyz/stream/tvb/mzt/
