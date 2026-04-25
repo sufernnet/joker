@@ -245,11 +245,9 @@ http://4px369674fn3.vicp.fun:7088/udp/225.1.8.61:8002
 http://iptv.707626.xyz/live/stream-c5d6f2af/master.m3u8
 
 #EXTINF:-1 tvg-id="Now爆谷星影台" tvg-name="Now星影台" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/now5.png" group-title="电影&剧集",Now星影台
-https://gptapi.passwdword.xyz/live/encrypted/Y2VkZjNiMGFkNmNiZGEwMzExYmQ3M2UzMjFhYjVjMzE6YjU3MzFiZTJlMTM1ZGMzYTg0ZDUxMjIzZGNlMDMyYmU2MzBhYmM4YzY1ZDg0OTdiZWI5MzFhMTc0ZDdmODI5ZDVlNjgxMWVjMzdkYTRmN2E3ZTQyMGViMmFkZDc4Mjk4OGQ4YzlmZmY5ZTg0YjIxZGNhMDY3ZTk3NmVjYzExMjA2YTlmNWY0ODg2ZTA5ZWQ0ZmJlOTFjN2YzYTg4NWYwOWUyOWI0NGQ1NGZkODc2YzQwMDY4Y2UxOTVkZmIzOTNmYmUzNzMwYmEzNzM2MTAxM2E1OGNmNTYwMjM0OWFjNDg2MjVlNTMwODBhYjJmYzg4OWM1Y2I1YmMzNDczMjk2MmI4MzNmODUyNTEzNWI2NThhMzk2NjE4MDA3NWExYzUwMDJiMmRiZDMxNzQzMzZmNjg3YWVkODE2NjNkNmE4NzkwMmJkMTIzMjc0MTE4YmM4NzZhYjQwYmNiZWZmZDEzNzg3ZjJkNGU5NjRiMTRjYTY0NWJmZjQ3MzQ4ZWM1MTM3?username=tg_x6t5q0uq
-
+http://iptv.707626.xyz/live/stream-now-x1vz/master.m3u8
 #EXTINF:-1 tvg-id="Now 爆谷台" tvg-name="Now爆谷台" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/now4.png" group-title="电影&剧集",Now爆谷台
-https://gptapi.passwdword.xyz/live/encrypted/YzE5M2QzMzk2NDJhNWVhMGFkMTQwZTk0OTA5NWIwNmM6MDI0MjVmYWU3OGMwM2ZlOGVmNTE2ZWM2OTdiMjUyYmJjZTI2MGVjZjVmYjUzZDRkNDFjZTIxYmY2MjBlNWI1MDI4NDBmYWNjZmMyMTUwZWJlNjcyOTlhYWRmOTNiYjhmOTNhOWZhZDQ3OGM1MTNmZDRiMDI1OTIwMjJhYTQ3MGQzYTg0Yzg0NWI3MDUwYmMyNjBhMTg4NGMzYWYyM2M1OTk2OTJhZDA1NDViODIwZjA1M2U4ZWNkMmUwYWY5ZmZhODk0OTdmY2U5ZmIyMjU2NjA3MTU5M2Q4NzIzYzlhOWQxY2U2M2FkMjRlODcyYzAyOGEwM2NmNGJjNDQ0MWVjODhkMmNjODU4MDBkODQyNzg4N2Q0MGVhNTU5NzQxYjVmNWIxZmQ0NTY5YTY3N2JjOWVlODU3YTA3MTBiN2FiY2MwMWM5ZDQwZDcyMDUxNGU1ZWE0ODZkNDRjZDdjMzdkNzJmMjY4ZGQ4NDVhMTliNzMzZjdiNThkZWZmNmEwYTg0?username=tg_x6t5q0uq
-
+http://iptv.707626.xyz/live/stream-now-91y5/master.m3u8
 #EXTINF:-1 tvg-id="PopC" tvg-name="PopC" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/POPC.png" group-title="电影&剧集",PopC
 http://iptv.707626.xyz/live/stream-221591ba/master.m3u8
 
@@ -315,13 +313,13 @@ https://o11.163189.xyz/stream/live/typd/
 #EXTINF:-1 tvg-id="HOY" tvg-name="HOY" tvg-logo="https://epg.iill.top/logo/HOY.png" group-title="香港",HOY
 https://cdn6.163189.xyz/163189/hoy
 
-#EXTINF:-1 tvg-id="HOY76" tvg-name="HOY76" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/HOY1.png" group-title="香港",HOY76
+#EXTINF:-1 tvg-id="HOY76" tvg-name="HOY76" tvg-logo="https://static.wikia.nocookie.net/logos/images/0/0a/HOY_76.png/revision/latest?cb=20240605025122&path-prefix=vi" group-title="香港",HOY76
 https://cdn11.163189.xyz/163189/2c86601a7180416e
 
-#EXTINF:-1 tvg-id="HOY77" tvg-name="HOY77" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/HOY1.png" group-title="香港",HOY77
+#EXTINF:-1 tvg-id="HOY77" tvg-name="HOY77" tvg-logo="https://static.wikia.nocookie.net/logos/images/8/87/HOY_77.png/revision/latest?cb=20240605025138&path-prefix=vi" group-title="香港",HOY77
 https://cdn6.163189.xyz/163189/hoy
 
-#EXTINF:-1 tvg-id="HOY78" tvg-name="HOY78" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/HOY1.png" group-title="香港",HOY78
+#EXTINF:-1 tvg-id="HOY78" tvg-name="HOY78" tvg-logo="https://static.wikia.nocookie.net/logos/images/7/72/HOY_78.png/revision/latest?cb=20240605025155&path-prefix=vi" group-title="香港",HOY78
 https://cdn.163189.xyz/163189/hoy78
 
 #EXTINF:-1 tvg-id="ViuTV" tvg-name="ViuTV" tvg-logo="https://epg.iill.top/logo/ViuTV.png" group-title="香港",ViuTV
@@ -595,6 +593,12 @@ http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_1660.m3u8
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119665
 #EXTINF:-1 tvg-name="ESPN2" tvg-logo="https://epg.112114.xyz/logo/ESPN2.png" group-title="体育",ESPN2
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119666
+#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/ELTA体育1.png" group-title="体育",ELTA体育1
+https://icreipocoxiy.ap-northeast-1.clawcloudrun.com/smt/2871
+#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/ELTA体育2.png" group-title="体育",ELTA体育2
+https://icreipocoxiy.ap-northeast-1.clawcloudrun.com/smt/1541
+#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/ELTA体育3.png" group-title="体育",ELTA体育3
+https://icreipocoxiy.ap-northeast-1.clawcloudrun.com/smt/2578
 #EXTINF:-1 tvg-name="NOW体育1" tvg-logo="https://epg.iill.top/logo/NOW体育1.png" group-title="体育",NOW体育1
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236720.m3u8
 #EXTINF:-1 tvg-name="NOW体育2" tvg-logo="https://epg.iill.top/logo/NOW体育2.png" group-title="体育",NOW体育2
