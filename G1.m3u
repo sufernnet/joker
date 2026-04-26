@@ -528,10 +528,11 @@ http://23.237.104.106:8080/USA_DISCOVERY/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="動物星球頻道" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/animalplanet.png" group-title="探索&记录",動物星球頻道
 http://23.237.104.106:8080/USA_ANIMAL_PLANET/tracks-v1a1/mono.m3u8
 
-#EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/BBC2.png",BBC Earth
+#EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/animalplanet.png" group-title="探索&记录",BBC Earth
+http://23.237.104.106:8080/USA_ANIMAL_PLANET/tracks-v1a1/mono.m3u8
 https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEarthA-hls/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a98f24ab1e1e_lcJU.png" tvg-name="CI 罪案偵緝頻道" group-title="探索&记录", CI 罪案偵緝頻道
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a98f24ab1e1e_lcJU.png" tvg-name="CI 罪案偵緝" group-title="探索&记录", CI 罪案偵緝
 http://192.168.100.1:19890/trams/1243/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a07e202a1f2a_rv0X.png" tvg-name="Asia Travel" group-title="探索&记录",亞洲旅遊台
 http://192.168.100.1:19890/trams/479/playlist.m3u8?token=sufern
