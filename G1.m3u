@@ -1,4 +1,3 @@
-#EXTM3U url-tvg="https://epg.cdn.loc.cc/xml" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -532,7 +531,7 @@ http://23.237.104.106:8080/USA_ANIMAL_PLANET/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/BBC2.png",BBC Earth
 https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEarthA-hls/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a98f24ab1e1e_lcJU.png" tvg-name="CI罪案偵緝頻道" group-title="探索&记录", CI罪案偵緝頻道
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a98f24ab1e1e_lcJU.png" tvg-name="CI 罪案偵緝頻道" group-title="探索&记录", CI 罪案偵緝頻道
 http://192.168.100.1:19890/trams/1243/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a07e202a1f2a_rv0X.png" tvg-name="Asia Travel" group-title="探索&记录",亞洲旅遊台
 http://192.168.100.1:19890/trams/479/playlist.m3u8?token=sufern
@@ -546,9 +545,9 @@ http://192.168.100.1:19890/trams/2117/playlist.m3u8?token=sufern
 http://192.168.100.1:19890/trams/2037/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4cce6aa24d_WykD.jpg" tvg-name="BBC Earth Lifestyle" group-title="探索&记录",BBC Earth Lifestyle
 http://192.168.100.1:19890/trams/2038/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4d38506957_oDZu.jpg" tvg-name="亚洲旅游 TLC Asia" group-title="探索&记录",亚洲旅游 TLC Asia
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4d38506957_oDZu.jpg" tvg-name="TLC Asia" group-title="探索&记录",亚洲旅游 TLC Asia
 http://192.168.100.1:19890/trams/2055/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4d0fabc707_0V7z.jpg" tvg-name="MTV Live" group-title="探索&记录",MTV Live
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4d0fabc707_0V7z.jpg" tvg-name="音樂電視網" group-title="探索&记录",音樂電視網
 http://192.168.100.1:19890/trams/2046/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a98f64207d24_Z7IR.png" tvg-name="NatGeo_Wild HD" group-title="探索&记录",NatGeo_Wild HD
 http://192.168.100.1:19890/trams/1255/playlist.m3u8?token=sufern
