@@ -531,7 +531,7 @@ https://d2wh06mmk97552.cloudfront.net/playlist/bamusaAAA-bamus-lovenature-lg/pla
 #EXTINF:-1 tvg-name="Discovery" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Discovery.png" group-title="探索&记录",Discovery
 http://23.237.104.106:8080/USA_DISCOVERY/tracks-v1a1/mono.m3u8
 
-#EXTINF:-1 tvg-name="Animal Planet" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/animalplanet.png" group-title="探索&记录",Animal Planet
+#EXTINF:-1 tvg-name="動物星球頻道" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/animalplanet.png" group-title="探索&记录",動物星球頻道
 http://23.237.104.106:8080/USA_ANIMAL_PLANET/tracks-v1a1/mono.m3u8
 
 #EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/BBC2.png",BBC Earth
@@ -588,17 +588,17 @@ https://icreipocoxiy.ap-northeast-1.clawcloudrun.com/smt/1541
 https://icreipocoxiy.ap-northeast-1.clawcloudrun.com/smt/2578
 #EXTINF:-1 tvg-name="Now Sports 1" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW1.png" group-title="体育",Now Sports 1
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236720.m3u8
-#EXTINF:-1 tvg-name="NOW体育2" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW2.jpg" group-title="体育",NOW体育2
+#EXTINF:-1 tvg-name="Now Sports 2" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW2.jpg" group-title="体育",Now Sports 2
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236721.m3u8
-#EXTINF:-1 tvg-name="NOW体育3" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW3.jpg" group-title="体育",NOW体育3
+#EXTINF:-1 tvg-name="Now Sports 3" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW3.jpg" group-title="体育",Now Sports 3
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236722.m3u8
-#EXTINF:-1 tvg-name="NOW体育4" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW4.jpg" group-title="体育",NOW体育4
+#EXTINF:-1 tvg-name="Now Sports 4" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW4.jpg" group-title="体育",Now Sports 4
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236723.m3u8
-#EXTINF:-1 tvg-name="NOW体育5" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW5.jpg" group-title="体育",NOW体育5
+#EXTINF:-1 tvg-name="Now Sports 5" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW5.jpg" group-title="体育",Now Sports 5
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236724.m3u8
-#EXTINF:-1 tvg-name="NOW体育6" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW6.jpg" group-title="体育",NOW体育6
+#EXTINF:-1 tvg-name="Now Sports 6" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW6.jpg" group-title="体育",Now Sports 6
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236725.m3u8
-#EXTINF:-1 tvg-name="NOW体育7" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW7.jpg" group-title="体育",NOW体育7
+#EXTINF:-1 tvg-name="Now Sports 7" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW7.jpg" group-title="体育",Now Sports 7
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236726.m3u8
 #EXTINF:-1 tvg-name="NOW体育精选" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW体育精选.png" group-title="体育",NOW体育精选
 http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/313830.m3u8
