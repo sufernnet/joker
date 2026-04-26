@@ -1,3 +1,4 @@
+#EXTM3U url-tvg="https://epg.cdn.loc.cc/xml" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -285,9 +286,6 @@ https://o11.163189.xyz/stream/tvb/fct4k/
 #EXTINF:-1 tvg-id="翡翠台" tvg-name="翡翠台" tvg-logo="https://epg.iill.top/logo/翡翠台.png" group-title="香港", 翡翠台
 https://o11.163189.xyz/stream/tvb/fct/
 
-#EXTINF:-1 tvg-id="" tvg-name="龙祥时代" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/LStime.png" group-title="香港",龙祥时代
-http://iptv.707626.xyz/live/stream-ch-cpzy/master.m3u8
-
 #EXTINF:-1 tvg-id="明珠台" tvg-name="明珠台" tvg-logo="https://epg.iill.top/logo/明珠台.png" group-title="香港", 明珠台
 https://o11.163189.xyz/stream/tvb/mzt/
 
@@ -476,8 +474,6 @@ http://192.168.100.1:50009/4gtv-live027/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOf
 http://192.168.100.1:50009/4gtv-4gtv013/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3DHwLmFTAVAMGuZ7MEeR96ULAt0fyJFfe1dIjs
 #EXTINF:-1 tvg-id="影迷數位紀實台" tvg-name="影迷數位紀實台" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/FANS2.png" group-title="台湾",影迷數位紀實台
 http://192.168.100.1:50009/litv-ftv15/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3DHwLmFTAVAMGuZ7MEeR96ULAt0fyJFfe1dIjs
-#EXTINF:-1 tvg-id="金光布袋戲" tvg-name="金光布袋戲" tvg-logo="https://4gtvimg2.4gtv.tv/4gtv-Image/Channel/pc/logo_4gtv_4gtv-live144_pc.png" group-title="台湾",金光布袋戲
-http://192.168.100.1:50009/4gtv-live144/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3DHwLmFTAVAMGuZ7MEeR96ULAt0fyJFfe1dIjs
 #EXTINF:-1 tvg-id="ROCK Action" tvg-name="ROCK Action" tvg-logo="https://4gtvimg2.4gtv.tv/4gtv-Image/Channel/mobile/live138_mobile.png" group-title="台湾",ROCK Action
 http://192.168.100.1:50009/4gtv-live138/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3DHwLmFTAVAMGuZ7MEeR96ULAt0fyJFfe1dIjs
 #EXTINF:-1 tvg-id="采昌影劇台" tvg-name="采昌影劇台" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/caichang.png" group-title="台湾",采昌影劇
@@ -536,13 +532,13 @@ http://23.237.104.106:8080/USA_ANIMAL_PLANET/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/BBC2.png",BBC Earth
 https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEarthA-hls/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a98f24ab1e1e_lcJU.png" tvg-name="CI" group-title="探索&记录", CI Network
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a98f24ab1e1e_lcJU.png" tvg-name="CI Network" group-title="探索&记录", CI Network
 http://192.168.100.1:19890/trams/1243/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a07e202a1f2a_rv0X.png" tvg-name="Asia Travel" group-title="探索&记录",亞洲旅遊台
 http://192.168.100.1:19890/trams/479/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4cb6e4ec03_5cx5.jpg" tvg-name="亚洲美食" group-title="探索&记录",亚洲美食台
 http://192.168.100.1:19890/trams/2035/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5fa3ba3874dd6_052Z.png" tvg-name="國家地理頻道" group-title="探索&记录",國家地理頻道
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5fa3ba3874dd6_052Z.png" tvg-name="National Geographic" group-title="探索&记录",國家地理頻道
 http://192.168.100.1:19890/trams/2235/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5f6b2d6f239ec_Oob3.jpg" tvg-name="FashionTV 時尚頻道" group-title="探索&记录",FashionTV 時尚頻道
 http://192.168.100.1:19890/trams/2117/playlist.m3u8?token=sufern
