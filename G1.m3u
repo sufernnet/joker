@@ -1,4 +1,3 @@
-#EXTM3U url-tvg="https://epg.cdn.loc.cc/xml" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
 http://124.90.44.40:6060/010/2/00000001000000060000000000000469?virtualDomain=010.live_hls.zte.com
@@ -539,13 +538,13 @@ https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEar
 
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a98f24ab1e1e_lcJU.png" tvg-name="CI" group-title="探索&记录", CI Network
 http://192.168.100.1:19890/trams/1243/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a07e202a1f2a_rv0X.png" tvg-name="Asia Travel" group-title="探索&记录",亞洲旅遊
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a07e202a1f2a_rv0X.png" tvg-name="Asia Travel" group-title="探索&记录",亞洲旅遊台
 http://192.168.100.1:19890/trams/479/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4cb6e4ec03_5cx5.jpg" tvg-name="亚洲美食" group-title="探索&记录",亚洲美食
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4cb6e4ec03_5cx5.jpg" tvg-name="亚洲美食" group-title="探索&记录",亚洲美食台
 http://192.168.100.1:19890/trams/2035/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5fa3ba3874dd6_052Z.png" tvg-name="NatGeo HD" group-title="探索&记录",NatGeo HD
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5fa3ba3874dd6_052Z.png" tvg-name="國家地理頻道" group-title="探索&记录",國家地理頻道
 http://192.168.100.1:19890/trams/2235/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5f6b2d6f239ec_Oob3.jpg" tvg-name="Fashion TV" group-title="探索&记录",Fashion TV
+#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5f6b2d6f239ec_Oob3.jpg" tvg-name="FashionTV 時尚頻道" group-title="探索&记录",FashionTV 時尚頻道
 http://192.168.100.1:19890/trams/2117/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4ccb450d60_liZo.jpg" tvg-name="BBC Earth HD" group-title="探索&记录",BBC Earth HD
 http://192.168.100.1:19890/trams/2037/playlist.m3u8?token=sufern
