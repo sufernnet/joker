@@ -1,6 +1,6 @@
 #EXTM3U
 
-# 更新时间 2026-04-26 10:31:53
+# 更新时间 2026-04-26 10:53:07
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -252,21 +252,69 @@ http://38.75.136.137:98/gslb/dsdqpub/dyjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="女性时尚" tvg-name="女性时尚" tvg-logo="https://www.xn--rgv465a.top/tvlogo/女性时尚.png" group-title="数字",女性时尚
 http://38.75.136.137:98/gslb/dsdqpub/nxss.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="风云足球" tvg-name="风云足球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云足球.png" group-title="数字",风云足球
-http://38.75.136.137:98/gslb/dsdqpub/fyzq.m3u8?auth=testpub
+https://epg.pw/stream/ac8062ec9484078061d3bef507c15a423ac57ae4144e3fcc4b0a198dd420f911.m3u8
 #EXTINF:-1 tvg-id="风云音乐" tvg-name="风云音乐" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云音乐.png" group-title="数字",风云音乐
 http://38.75.136.137:98/gslb/dsdqpub/fyyy.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="央视台球" tvg-name="央视台球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/央视台球.png" group-title="数字",央视台球
-http://38.75.136.137:98/gslb/dsdqpub/ystq.m3u8?auth=testpub
+https://epg.pw/stream/ca9c1cd4b97fb824cedd7fedfd0c7a950afdd7f00751cfbb7c2d89831d7746a5.m3u8
 
 # CHC
 #EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" group-title="CHC",CHC影迷电影
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001581/index.m3u8?streamid=af62547c4c8be0ef4a658f4b4853388f&streamkey=0AGMO6LiBIxyH55HrvMarEqxYYHHBsBI1AS8pWYcug6hIz6JcOuFRUYGPeeB6DUdYBhCZW4VbAvlr77F1jurxYfAy8mix71ZcG7gxzAeeVpjSNe4Slu1Xui5R21MiDUL&token=1775754555-63098edc022aecb0-0-61ebd04bf297352038785125878e0b8f
+
 #EXTINF:-1 tvg-name="CHC家庭影院" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png" group-title="CHC",CHC家庭影院
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001570/index.m3u8?streamid=136f530a61d26dc0f670f39f05291586&streamkey=0gNYRWDeQgJcsQzJtwy5YfNuNXxp8JTqLQoubxJdaerqPImB5Zqld0YLrCikCEEBNzsaCMzgiZxPacL6jVLMJd0KpMDkxYV4BhGlwYU0ju7r1WxWgQER2jIf9CgZaG3mq&token=1775754529-ed2502f4a1a9b5b0-0-ab6ce23e1854b42f8e2b31cb58021423
+
 #EXTINF:-1 tvg-name="CHC动作电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png" group-title="CHC",CHC动作电影
 https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001580/index.m3u8?streamid=87c13b6e841ed5039d4c2ce8f266f9ef&streamkey=0gNYRWDeQgJcsRRVxgX7CXzeeNfbK5b6jgfx2dUMMXpSOjJ6HaVTnXNZIvUs7ZjMVIipZGwSqsLBoB1csVGKjUersUPcVyHJvvzH9lv6u5pQ0BcM1SFtompQvPNMFD09b&token=1775754577-a16c17c5548559fa-0-23e1bb39b278d07d81f7441cf04c41ce
 
 # HK
+#EXTINF:-1 tvg-id="鳳凰衛視中文台" tvg-name="鳳凰衛視中文台" tvg-logo="https:/epg.yang-1989.eu.org/logo/凤凰中文.png" group-title="HK",鳳凰衛視·中文
+https://cdn6.163189.xyz/163189/fhzw
+#EXTINF:-1 tvg-id="鳳凰衛視資訊台" tvg-name="鳳凰衛視資訊台" tvg-logo="https:/epg.yang-1989.eu.org/logo/凤凰资讯.png" group-title="HK",鳳凰衛視·資訊
+https://cdn6.163189.xyz/163189/fhzx
+#EXTINF:-1 tvg-id="鳳凰衛視香港台" tvg-name="鳳凰衛視香港台" tvg-logo="https:/epg.yang-1989.eu.org/logo/凤凰香港.png" group-title="HK",鳳凰衛視·香港
+https://cdn6.163189.xyz/163189/fhhk
+#EXTINF:-1 tvg-id="翡翠台" tvg-name="翡翠台" tvg-logo="https:/epg.yang-1989.eu.org/logo/翡翠台.png" group-title="HK", 翡翠台 4K「多音轨字幕」
+https://o11.163189.xyz/stream/tvb/fct4k/
+#EXTINF:-1 tvg-id="翡翠台" tvg-name="翡翠台" tvg-logo="https:/epg.yang-1989.eu.org/logo/翡翠台.png" group-title="HK", 翡翠台「多音轨字幕」
+https://o11.163189.xyz/stream/tvb/fct/
+#EXTINF:-1 tvg-id="明珠台" tvg-name="明珠台" tvg-logo="https:/epg.yang-1989.eu.org/logo/明珠台.png" group-title="HK", 明珠台「多音轨字幕」
+https://o11.163189.xyz/stream/tvb/mzt/
+#EXTINF:-1 tvg-id="TVB Plus" tvg-name="TVB Plus" tvg-logo="https:/epg.yang-1989.eu.org/logo/TVBPlus.png" group-title="HK",TVB Plus「多音轨字幕」
+https://o11.163189.xyz/stream/tvb/tvbp/
+#EXTINF:-1 tvg-id="無綫新聞台" tvg-name="無綫新聞台" tvg-logo="https:/epg.yang-1989.eu.org/logo/無綫新聞台.png" group-title="HK",無綫新聞台
+https://cdn6.163189.xyz/163189/wxxw
+#EXTINF:-1 tvg-id="Now新聞台" tvg-name="Now新聞台" tvg-logo="https:/epg.yang-1989.eu.org/logo/Now新聞台.png" group-title="HK",Now新聞台
+https://cdn.163189.xyz/163189/now
+#EXTINF:-1 tvg-id="娛樂新聞台" tvg-name="娛樂新聞台" tvg-logo="https:/epg.yang-1989.eu.org/logo/娛樂新聞.png" group-title="HK",娛樂新聞台
+https://cdn6.163189.xyz/163189/ylxw
+#EXTINF:-1 tvg-id="千禧經典台" tvg-name="千禧經典台" tvg-logo="https:/epg.yang-1989.eu.org/logo/千禧經典台.png" group-title="HK",千禧經典台
+https://o11.163189.xyz/stream/live/tvbc/
+#EXTINF:-1 tvg-id="天映马来西亚" tvg-name="天映马来西亚" tvg-logo="https:/epg.yang-1989.eu.org/logo/天映频道.png" group-title="HK",天映频道
+https://o11.163189.xyz/stream/live/typd/
+#EXTINF:-1 tvg-id="天映經典頻道" tvg-name="天映經典頻道" tvg-logo="https:/epg.yang-1989.eu.org/logo/天映经典.png" group-title="HK",天映經典
+https://o11.163189.xyz/stream/live/ccm/
+#EXTINF:-1 tvg-id="功夫台" tvg-name="功夫台" tvg-logo="https:/epg.yang-1989.eu.org/logo/亞洲武俠.png" group-title="HK",亞洲武俠
+https://cdn6.163189.xyz/163189/yzwx
+#EXTINF:-1 tvg-id="TVB XING HE" tvg-name="TVB XING HE" tvg-logo="https:/epg.yang-1989.eu.org/logo/星河台.png" group-title="HK",TVB 星河「多音轨字幕」
+https://o11.163189.xyz/stream/live/tvbxh/
+#EXTINF:-1 tvg-id="AOD" tvg-name="AOD" tvg-logo="https:/epg.yang-1989.eu.org/logo/AOD.png" group-title="HK",Astro AOD「多音轨字幕」
+https://o11.163189.xyz/stream/live/aod/
+#EXTINF:-1 tvg-id="AEC" tvg-name="AEC" tvg-logo="https:/epg.yang-1989.eu.org/logo/AEC.png" group-title="HK",Astro AEC「多音轨字幕」
+https://o11.163189.xyz/stream/live/aec/
+#EXTINF:-1 tvg-id="QJ" tvg-name="QJ" tvg-logo="https:/epg.yang-1989.eu.org/logo/全佳.png" group-title="HK",Astro QJ
+https://smt.1678520.xyz/smt3.2.3.php?id=Quanjia
+#EXTINF:-1 tvg-id="HUA HEE DAI" tvg-name="HUA HEE DAI" tvg-logo="https:/epg.yang-1989.eu.org/logo/欢喜台.png" group-title="HK",Astro 欢喜台
+https://o11.163189.xyz/stream/live/hxt/
+#EXTINF:-1 tvg-id="iQIYI" tvg-name="iQIYI" tvg-logo="https:/epg.yang-1989.eu.org/logo/爱奇艺.png" group-title="HK",iQIYI
+https://o11.163189.xyz/stream/live/iqiyi/
+#EXTINF:-1 tvg-id="8tv" tvg-name="8TV" tvg-logo="https:/epg.yang-1989.eu.org/logo/八度空間.png" group-title="HK",八度空間
+http://cdn6.163189.xyz/163189/8tv
+#EXTINF:-1 tvg-id="Channel 5" tvg-name="Channel 5" tvg-logo="https:/epg.yang-1989.eu.org/logo/Channel5.png" group-title="HK",Channel 5
+http://cdn6.163189.xyz/163189/ch5
+#EXTINF:-1 tvg-id="Channel 8" tvg-name="Channel 8" tvg-logo="https:/epg.yang-1989.eu.org/logo/Channel8.png" group-title="HK",Channel 8
+http://cdn6.163189.xyz/163189/ch8
+#EXTINF:-1 tvg-id="Channel U" tvg-name="Channel U" tvg-logo="https:/epg.yang-1989.eu.org/logo/ChannelU.png" group-title="HK",Channel U
+http://cdn6.163189.xyz/163189/ch
 
 # TW
 #EXTINF:-1 tvg-id="Love Nature" tvg-name="Love Nature" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/LoveNarure4K.png" group-title="TW",Love Nature
