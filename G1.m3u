@@ -547,8 +547,6 @@ http://192.168.100.1:19890/trams/2035/playlist.m3u8?token=sufern
 http://192.168.100.1:19890/trams/2235/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5f6b2d6f239ec_Oob3.jpg" tvg-name="Fashion TV" group-title="探索&记录",Fashion TV
 http://192.168.100.1:19890/trams/2117/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a07e090ed797_tvMv.png" tvg-name="History" group-title="探索&记录",History
-http://192.168.100.1:19890/trams/472/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4ccb450d60_liZo.jpg" tvg-name="BBC Earth HD" group-title="探索&记录",BBC Earth HD
 http://192.168.100.1:19890/trams/2037/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ef4cce6aa24d_WykD.jpg" tvg-name="BBC Earth Lifestyle" group-title="探索&记录",BBC Earth Lifestyle
@@ -559,26 +557,15 @@ http://192.168.100.1:19890/trams/2055/playlist.m3u8?token=sufern
 http://192.168.100.1:19890/trams/2046/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a98f64207d24_Z7IR.png" tvg-name="NatGeo_Wild HD" group-title="探索&记录",NatGeo_Wild HD
 http://192.168.100.1:19890/trams/1255/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5a07e0b6e4e25_1t87.png" tvg-name="Animal_Planet" group-title="探索&记录",Animal_Planet
-http://192.168.100.1:19890/trams/474/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/6230103f0133e_OdSA.png" tvg-name="HGTV" group-title="探索&记录",HGTV
 http://192.168.100.1:19890/trams/2508/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5b502a10ccb7c_HELo.png" tvg-name="TLC" group-title="探索&记录",TLC
 http://192.168.100.1:19890/trams/1595/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/6319a9164e71e_3i8V.png" tvg-name="Foodnetwork Hd" group-title="探索&记录",Foodnetwork Hd
-http://192.168.100.1:19890/trams/2615/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/6915b1b5d62a3_A6Zw.png" tvg-name="Asia Food Network" group-title="探索&记录",Asia Food Network
-http://192.168.100.1:19890/trams/1042/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5ecf924651f26_c7eN.png" tvg-name="Animal Planet (Eng)" group-title="探索&记录",Animal Planet (Eng)
-http://192.168.100.1:19890/trams/2011/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/5f5238eb84441_i5BZ.png" tvg-name="NatGeo Wild HD" group-title="探索&记录",NatGeo Wild HD
-http://192.168.100.1:19890/trams/2106/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/68cbccddd541a_zfGf.png" tvg-name="Discovery Asia" group-title="探索&记录",Discovery Asia
 http://192.168.100.1:19890/trams/2888/playlist.m3u8?token=sufern
 #EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/68cbcd907aad2_kPeK.jpeg" tvg-name="Dmax" group-title="探索&记录",Dmax
 http://192.168.100.1:19890/trams/2889/playlist.m3u8?token=sufern
-#EXTINF:-1 tvg-logo="http://tpshen.com:16310/uploadfiles/livelogo/6899b0b5131a2_T2qC.png" tvg-name="探索频道" group-title="探索&记录",探索频道
-http://192.168.100.1:19890/trams/2878/playlist.m3u8?token=sufern
+
 
 #Sports
 #EXTINF:-1 tvg-name=" BRTV体育休闲" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Beijing10.png" group-title="体育",北京体育休闲
@@ -593,11 +580,11 @@ http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_1660.m3u8
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119665
 #EXTINF:-1 tvg-name="ESPN2" tvg-logo="https://epg.112114.xyz/logo/ESPN2.png" group-title="体育",ESPN2
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119666
-#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/ELTA体育1.png" group-title="体育",ELTA体育1
+#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/ELTA体育1.png" group-title="体育",愛爾達體育1台
 https://icreipocoxiy.ap-northeast-1.clawcloudrun.com/smt/2871
-#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/ELTA体育2.png" group-title="体育",ELTA体育2
+#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/ELTA体育2.png" group-title="体育",愛爾達體育2台
 https://icreipocoxiy.ap-northeast-1.clawcloudrun.com/smt/1541
-#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/ELTA体育3.png" group-title="体育",ELTA体育3
+#EXTINF:-1 tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/ELTA体育3.png" group-title="体育",愛爾達體育3台
 https://icreipocoxiy.ap-northeast-1.clawcloudrun.com/smt/2578
 #EXTINF:-1 tvg-name="NOW体育1" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW1.png" group-title="体育",NOW体育1
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236720.m3u8
