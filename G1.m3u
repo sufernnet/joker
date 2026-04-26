@@ -594,7 +594,7 @@ http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236726.m3u8
 #EXTINF:-1 tvg-name="NOW体育精选" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW体育精选.png" group-title="体育",NOW体育精选
 http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/313830.m3u8
-#EXTINF:-1 tvg-name="NOW体育4K 1" tvg-logo="https://epg.iill.top/logo/NOW体育4K1.png" group-title="体育",NOW体育4K 1
+#EXTINF:-1 tvg-name="NOW体育4K 1" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW体育4K 1.png" group-title="体育",NOW体育4K 1
 http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/641325.m3u8
 #EXTINF:-1 tvg-name="NOW英超 TV" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/NOW英超TV.png" group-title="体育",NOW英超 TV
 http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/313829.m3u8
