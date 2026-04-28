@@ -1,43 +1,45 @@
 #EXTM3U
 # 自动生成的直播源列表
-# 生成时间: 2026-04-28 04:57:30
-# 频道总数: 283
+# 生成时间: 2026-04-28 05:33:35
+# 频道总数: 284
 
-# 分组: 央视 (共17个频道)
+# 分组: 央视 (共18个频道)
 #EXTINF:-1 group-title="央视",CCTV-1高清
-http://120.76.248.139/live/bfgd/4200000488.m3u8
+http://43.251.226.110:8880/play/43.m3u8
 #EXTINF:-1 group-title="央视",CCTV-2高清
-http://120.76.248.139/live/bfgd/4200000061.m3u8
+http://43.251.226.110:8880/play/45.m3u8
 #EXTINF:-1 group-title="央视",CCTV-3高清
-http://120.76.248.139/live/bfgd/4200000062.m3u8
+http://43.251.226.110:8880/play/47.m3u8
 #EXTINF:-1 group-title="央视",CCTV-4高清
-http://120.76.248.139/live/bfgd/4200000063.m3u8
+http://43.251.226.110:8880/play/49.m3u8
 #EXTINF:-1 group-title="央视",CCTV-5高清
-http://120.76.248.139/live/bfgd/4200000064.m3u8
+http://43.251.226.110:8880/play/51.m3u8
 #EXTINF:-1 group-title="央视",CCTV-6高清
-http://120.76.248.139/live/bfgd/4200000065.m3u8
+http://43.251.226.110:8880/play/53.m3u8
 #EXTINF:-1 group-title="央视",CCTV-7高清
-http://120.76.248.139/live/bfgd/4200000127.m3u8
+http://43.251.226.110:8880/play/55.m3u8
 #EXTINF:-1 group-title="央视",CCTV-8高清
-http://120.76.248.139/live/bfgd/4200000066.m3u8
+http://43.251.226.110:8880/play/57.m3u8
 #EXTINF:-1 group-title="央视",CCTV-9高清
-http://120.76.248.139/live/bfgd/4200000128.m3u8
+http://43.251.226.110:8880/play/59.m3u8
 #EXTINF:-1 group-title="央视",CCTV-10高清
-http://120.76.248.139/live/bfgd/4200000129.m3u8
+http://43.251.226.110:8880/play/61.m3u8
 #EXTINF:-1 group-title="央视",CCTV-11高清
-http://120.76.248.139/live/bfgd/4200000130.m3u8
+http://43.251.226.110:8880/play/63.m3u8
 #EXTINF:-1 group-title="央视",CCTV-12高清
-http://120.76.248.139/live/bfgd/4200000131.m3u8
+http://43.251.226.110:8880/play/64.m3u8
 #EXTINF:-1 group-title="央视",CCTV-13高清
-http://120.76.248.139/live/bfgd/4200000067.m3u8
+http://43.251.226.110:8880/play/65.m3u8
 #EXTINF:-1 group-title="央视",CCTV-14高清
-http://120.76.248.139/live/bfgd/4200000132.m3u8
+http://43.251.226.110:8880/play/66.m3u8
 #EXTINF:-1 group-title="央视",CCTV-15高清
-http://120.76.248.139/live/bfgd/4200000133.m3u8
+http://43.251.226.110:8880/play/68.m3u8
 #EXTINF:-1 group-title="央视",CCTV-16高清
-http://107.150.60.122/live/cctv16hd.m3u8
+http://43.251.226.110:8880/play/70.m3u8
 #EXTINF:-1 group-title="央视",CCTV-17高清
-http://120.76.248.139/live/bfgd/4200000204.m3u8
+http://43.251.226.110:8880/play/72.m3u8
+#EXTINF:-1 group-title="央视",CCTV-5+高清
+http://43.251.226.110:8880/play/52.m3u8
 
 # 分组: 卫视 (共32个频道)
 #EXTINF:-1 group-title="卫视",浙江卫视
@@ -179,11 +181,11 @@ http://43.251.226.110:8880/play/1993.m3u8
 #EXTINF:-1 group-title="4K",四川卫视4K
 http://39.152.103.17:8089/tsfile/live/1044_1.m3u8
 #EXTINF:-1 group-title="4K",东方卫视4K
-https://bp-resource-dfl.bestv.cn/148/3/video.m3u8
+http://bp-resource-dfl.bestv.cn/148/3/video.m3u8
 #EXTINF:-1 group-title="4K",苏州4K
 https://tylive.kan0512.com/norecord/csztv4k_4k.m3u8
 #EXTINF:-1 group-title="4K",CCTV-4K超高清
-http://107.150.60.122/live/cctv4k.m3u8
+http://38.75.136.137:98/gslb/dsdqpub/cctv4k.m3u8?auth=testpub
 #EXTINF:-1 group-title="4K",CCTV4K超高清
 http://www.520345.xyz:8188/rtp/239.69.1.111:10304?$3840x2160
 #EXTINF:-1 group-title="4K",湖南卫视4K
@@ -196,10 +198,10 @@ https://event.pull.hebtv.com:443/live/live101.m3u8
 http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000015686
 #EXTINF:-1 group-title="4K",咪视界4K
 http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000005180
-#EXTINF:-1 group-title="4K",CCTV4K
-http://107.150.60.122/live/cctv4k.m3u8
 #EXTINF:-1 group-title="4K",Now体育4K 1
 http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/438867.m3u8
+#EXTINF:-1 group-title="4K",CCTV4K
+http://107.150.60.122/live/cctv4k.m3u8
 #EXTINF:-1 group-title="4K",波兰Eleven Sports 1 4K
 http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/1281071.m3u8
 #EXTINF:-1 group-title="4K",北京IPTV4K
@@ -425,35 +427,35 @@ http://43.251.226.110:8880/play/2055.m3u8
 #EXTINF:-1 group-title="HongKong",香港古典音乐
 http://43.251.226.110:8880/play/2066.m3u8
 #EXTINF:-1 group-title="HongKong",香港卫视
-https://stream1.freetv.fun/ae7eaf28d8610cdc1651ef6a1f7dbb24b49c5a87627d0d881330afaea37a1616.m3u8
+https://stream1.freetv.fun/5335c88a9a7d8b74173b491f480d4f94e8d3bd596af54478106aa2399e6c7917.m3u8
 #EXTINF:-1 group-title="HongKong",杭州明珠
-https://stream1.freetv.fun/hang-zhou-ming-zhu-2.ctv
+https://stream1.freetv.fun/hang-zhou-ming-zhu-1.ctv
 #EXTINF:-1 group-title="HongKong",TVBS亚洲
 http://38.64.72.148/hls/modn/list/4005/chunklist0.m3u8
-#EXTINF:-1 group-title="HongKong",无线新闻
-http://cdn9.163189.xyz/smt1.1.php?id=inews_twn
 #EXTINF:-1 group-title="HongKong",明珠台
 http://o11.163189.xyz/stream/tvb/mzt/
+#EXTINF:-1 group-title="HongKong",无线新闻
+http://cdn9.163189.xyz/smt1.1.php?id=inews_twn
 #EXTINF:-1 group-title="HongKong",翡翠台
 http://mytv.cdn.loc.cc/o12.php?id=fct
 #EXTINF:-1 group-title="HongKong",无线星河
-https://cdn6.101.qzz.io/163189/tvbxh
+http://php.jdshipin.com:8880/TVOD/iptv.php?id=xinghe
 #EXTINF:-1 group-title="HongKong",经典香港电影
 http://43.251.226.110:8880/play/173.m3u8
 #EXTINF:-1 group-title="HongKong",香港片系列
 https://live.ottiptv.cc/huya/29982660
-#EXTINF:-1 group-title="HongKong",千禧经典台
-https://o11.163189.xyz/stream/live/tvbc/
 #EXTINF:-1 group-title="HongKong",华丽翡翠台
 https://o11.163189.xyz/stream/live/hlt/
+#EXTINF:-1 group-title="HongKong",千禧经典台
+https://o11.163189.xyz/stream/live/tvbc/
 #EXTINF:-1 group-title="HongKong",TVB星河
 https://o11.163189.xyz/stream/live/tvbxh/
 #EXTINF:-1 group-title="HongKong",无线新闻台
 https://cdn6.163189.xyz/163189/wxxw
-#EXTINF:-1 group-title="HongKong",TVB Plus
-https://o11.163189.xyz/stream/tvb/tvbp/
 #EXTINF:-1 group-title="HongKong",TVBS新闻
 http://43.251.226.110:8880/play/1079.m3u8
+#EXTINF:-1 group-title="HongKong",TVB Plus
+https://o11.163189.xyz/stream/tvb/tvbp/
 #EXTINF:-1 group-title="HongKong",VIUTV
 http://43.251.226.110:8880/play/1140.m3u8
 
@@ -569,13 +571,13 @@ http://43.251.226.110:8880/play/1083.m3u8
 #EXTINF:-1 group-title="TaiWan",纬来体育
 https://epg.pw/stream/4f18dfe0593db5c686eb64ae8edaf2a9202d4d46bdc9bbde2cee27708e12ea01.m3u8
 #EXTINF:-1 group-title="TaiWan",东森超视
-https://stream1.freetv.fun/dong-sen-chao-shi-7.ctv
+https://stream1.freetv.fun/dong-sen-chao-shi-4.m3u8
 #EXTINF:-1 group-title="TaiWan",东森洋片
 https://stream1.freetv.fun/dong-sen-yang-pian-3.m3u8
-#EXTINF:-1 group-title="TaiWan",华视
-http://43.251.226.110:8880/play/1091.m3u8
 #EXTINF:-1 group-title="TaiWan",台视
 http://43.251.226.110:8880/play/1090.m3u8
+#EXTINF:-1 group-title="TaiWan",华视
+http://43.251.226.110:8880/play/1091.m3u8
 #EXTINF:-1 group-title="TaiWan",中视
 http://43.251.226.110:8880/play/1089.m3u8
 #EXTINF:-1 group-title="TaiWan",台湾剧专区
