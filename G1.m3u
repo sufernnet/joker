@@ -242,7 +242,12 @@ http://iptv.707626.xyz/live/stream-now-x1vz/master.m3u8
 http://iptv.707626.xyz/live/stream-now-91y5/master.m3u8
 #EXTINF:-1 tvg-id="PopC" tvg-name="PopC" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/POPC.png" group-title="电影&剧集",PopC
 http://iptv.707626.xyz/live/stream-221591ba/master.m3u8
-
+#EXTINF:-1 tvg-id="HBO HD" tvg-name="HBO HD" tvg-logo="https://epg.yang-1989.eu.org/logo/HBO.png" group-title="电影&剧集",HBO
+https://cdn-1.ttvb.eu.org/api/HBO/index.m3u8
+#EXTINF:-1 tvg-id="HBO Family HD" tvg-name="HBO Family HD" tvg-logo="https://epg.yang-1989.eu.org/logo/HBO-Family.png" group-title="电影&剧集",HBO Family
+https://cdn-1.ttvb.eu.org/api/HBO-Family/index.m3u8
+#EXTINF:-1 tvg-id="HBO Signature HD" tvg-name="HBO Signature HD" tvg-logo="https://epg.yang-1989.eu.org/logo/HBO-Signature.png" group-title="电影&剧集",HBO Signature
+https://cdn-1.ttvb.eu.org/api/HBO-Signature/index.m3u8
 #EXTINF:-1 tvg-id="功夫台" tvg-name="功夫台" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/TVB15.png" group-title="电影&剧集",功夫台
 http://iptv.707626.xyz/live/stream-ch-j3ol/master.m3u8
 
@@ -524,6 +529,11 @@ http://23.237.104.106:8080/USA_ANIMAL_PLANET/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/BBC2.png" group-title="探索&记录",BBC Earth
 https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEarthA-hls/playlist.m3u8
 
+#EXTINF:-1 tvg-id="Red Bull TV" tvg-name="Red Bull TV" tvg-logo="https://epg.yang-1989.eu.org/logo/RedBull.png" group-title="探索&记录",Red Bull TV
+http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_6660.m3u8
+
+#EXTINF:-1 tvg-id="BBC Lifestyle" tvg-name="BBC Lifestyle" tvg-logo="https://epg.yang-1989.eu.org/logo/BBC-Lifestyle.png" group-title="探索&记录",BBC Lifestyle
+https://cdn-1.ttvb.eu.org/api/BBC-Lifestyle/index.m3u8
 
 #Sports
 #EXTINF:-1 tvg-name=" BRTV体育休闲" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Beijing10.png" group-title="体育",北京体育休闲
