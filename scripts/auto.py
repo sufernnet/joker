@@ -328,9 +328,6 @@ class LiveStreamFetcher:
         }
         
         # ========== 1. 央视分组：直接从cctv_channels获取 ==========
-        cctv_hd_set = {f'CCTV-{i}高清' for i in range(1, 18)}
-        
-        # 处理央视频道
         cctv_ordered = []
         for i in range(1, 18):
             standard_name = f'CCTV-{i}高清'
