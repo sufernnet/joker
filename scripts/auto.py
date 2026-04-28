@@ -402,7 +402,7 @@ class LiveStreamFetcher:
                     phoenix_found['凤凰中文'] = url
             else:
                 # 其他香港频道
-                if any(kw in name for kw in ['香港', 'TVB', '无线','翡翠', '明珠', '星影','爆谷','HOY','NOW', 'HBO','CABLE', '港台', 'RTHK', '无线', '亚洲电视', 'ATV', 'VIU']):
+                if any(kw in name for kw in ['香港', 'TVB', '無綫','无线','千禧','翡翠', '明珠', '星影','爆谷','HOY','NOW', 'HBO','CABLE', '港台', 'RTHK', '无线', '亚洲电视', 'ATV', 'VIU']):
                     if name not in hk_channels:
                         hk_channels[name] = url
         
