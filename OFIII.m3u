@@ -1,0 +1,48 @@
+#EXTINF:-1 tvg-id="4gtv-4gtv009" tvg-name="中天新聞台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_4gtv-4gtv009_mobile.png" group-title="TW",中天新聞台
+http://192.168.100.1:50002/index.m3u8?pid=4gtv-4gtv009&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="4gtv-4gtv040" tvg-name="中視" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_4gtv-4gtv040_mobile.png" group-title="TW",中視
+http://192.168.100.1:50002/index.m3u8?pid=4gtv-4gtv040&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="4gtv-4gtv041" tvg-name="華視" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_4gtv-4gtv041_mobile.png" group-title="TW",華視
+http://192.168.100.1:50002/index.m3u8?pid=4gtv-4gtv041&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="4gtv-4gtv052" tvg-name="華視新聞" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_4gtv-4gtv052_mobile.png" group-title="TW",華視新聞
+http://192.168.100.1:50002/index.m3u8?pid=4gtv-4gtv052&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="4gtv-4gtv074" tvg-name="中視新聞" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_4gtv-4gtv074_mobile.png" group-title="TW",中視新聞
+http://192.168.100.1:50002/index.m3u8?pid=4gtv-4gtv074&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="4gtv-4gtv076" tvg-name="亞洲旅遊台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_4gtv_litv-longturn17_mobile.png" group-title="TW",亞洲旅遊台
+http://192.168.100.1:50002/index.m3u8?pid=4gtv-4gtv076&sd=1080&proxy=false&token=sufern
+http://192.168.100.1:50002/index.m3u8?pid=4gtv-4gtv104&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="4gtv-4gtv156" tvg-name="寰宇新聞台灣台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn15_mobile.png" group-title="TW",寰宇新聞台灣台
+http://192.168.100.1:50002/index.m3u8?pid=4gtv-4gtv156&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="4gtv-4gtv158" tvg-name="寰宇財經台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn23_mobile.png" group-title="TW",寰宇財經台
+http://192.168.100.1:50002/index.m3u8?pid=4gtv-4gtv158&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="daystar" tvg-name="DayStar" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/Daystar_214x120.png" group-title="TW",DayStar
+http://192.168.100.1:50002/index.m3u8?pid=daystar&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="iNEWS" tvg-name="三立新聞iNEWS" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_iNEWS_mobile.png" group-title="TW",三立新聞iNEWS
+http://192.168.100.1:50002/index.m3u8?pid=iNEWS&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-ftv16" tvg-name="好消息" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-ftv16_mobile.png" group-title="TW",好消息
+http://192.168.100.1:50002/index.m3u8?pid=litv-ftv16&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-ftv17" tvg-name="好消息2台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-ftv17_mobile.png" group-title="TW",好消息2台
+http://192.168.100.1:50002/index.m3u8?pid=litv-ftv17&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-longturn14" tvg-name="寰宇新聞台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn14_mobile.png" group-title="TW",寰宇新聞台
+http://192.168.100.1:50002/index.m3u8?pid=litv-longturn14&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-xinchuang01" tvg-name="龍華卡通台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_4gtv_litv-longturn01_mobile.png" group-title="TW",龍華卡通台
+http://192.168.100.1:50002/index.m3u8?pid=litv-xinchuang01&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-xinchuang02" tvg-name="龍華洋片台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn02_mobile.png" group-title="TW",龍華洋片台
+http://192.168.100.1:50002/index.m3u8?pid=litv-xinchuang02&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-xinchuang03" tvg-name="龍華電影台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn03_mobile.png" group-title="TW",龍華電影台
+http://192.168.100.1:50002/index.m3u8?pid=litv-xinchuang03&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-xinchuang11" tvg-name="龍華日韓台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn11_mobile.png" group-title="TW",龍華日韓台
+http://192.168.100.1:50002/index.m3u8?pid=litv-xinchuang11&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-xinchuang12" tvg-name="龍華偶像台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn12_mobile.png" group-title="TW",龍華偶像台
+http://192.168.100.1:50002/index.m3u8?pid=litv-xinchuang12&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-xinchuang18" tvg-name="龍華戲劇台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn18_mobile.png" group-title="TW",龍華戲劇台
+http://192.168.100.1:50002/index.m3u8?pid=litv-xinchuang18&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-xinchuang19" tvg-name="Smart知識台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn19_mobile.png" group-title="TW",Smart知識台
+http://192.168.100.1:50002/index.m3u8?pid=litv-xinchuang19&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-xinchuang20" tvg-name="ELTV生活英語台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn20_mobile.png" group-title="TW",ELTV生活英語台
+http://192.168.100.1:50002/index.m3u8?pid=litv-xinchuang20&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-xinchuang21" tvg-name="龍華經典台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn21_mobile.png" group-title="TW",龍華經典台
+http://192.168.100.1:50002/index.m3u8?pid=litv-xinchuang21&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="litv-xinchuang22" tvg-name="台灣戲劇台" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_litv-longturn22_mobile.png" group-title="TW",台灣戲劇台
+http://192.168.100.1:50002/index.m3u8?pid=litv-xinchuang22&sd=1080&proxy=false&token=sufern
+#EXTINF:-1 tvg-id="nnews-zh" tvg-name="倪珍播新聞" tvg-logo="https://p-cdnstatic.svc.litv.tv/pics/logo_litv_nnews_mobile.png" group-t
