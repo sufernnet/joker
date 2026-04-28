@@ -402,7 +402,7 @@ class LiveStreamFetcher:
                     phoenix_found['凤凰中文'] = url
             else:
                 # 其他香港频道
-                if any(kw in name for kw in ['香港', 'TVB', '翡翠', '明珠', 'NOW', 'CABLE', '港台', 'RTHK', '无线', '亚洲电视', 'ATV', 'VIU']):
+                if any(kw in name for kw in ['香港', 'TVB', '无线','翡翠', '明珠', '星影','爆谷','HOY','NOW', 'HBO','CABLE', '港台', 'RTHK', '无线', '亚洲电视', 'ATV', 'VIU']):
                     if name not in hk_channels:
                         hk_channels[name] = url
         
@@ -422,13 +422,13 @@ class LiveStreamFetcher:
         if hasattr(self, 'hk_tw_sources'):
             for name, url in self.hk_tw_sources.items():
                 # 台湾频道关键词
-                if any(kw in name for kw in ['台湾', '台视', '中视', '华视', '民视', '公视', '三立', '东森', '中天', 'TVBS', '年代', '非凡', '八大', '纬来', '客家', '原住民']):
+                if any(kw in name for kw in ['台湾', '台视', '寰宇','中视', '华视', '民视','三立','公视', '三立', '东森', '中天', 'TVBS', '年代', '非凡', '八大', '纬来', '客家', '原住民']):
                     if name not in taiwan_channels:
                         taiwan_channels[name] = url
         
         # 也从主频道列表中提取台湾频道
         for name, url in self.channels.items():
-            if any(kw in name for kw in ['台湾', '台视', '中视', '华视', '民视', '公视', '三立', '东森', '中天', 'TVBS', '年代', '非凡', '八大', '纬来', '客家', '原住民']):
+            if any(kw in name for kw in ['台湾', '台视', '寰宇','中视', '华视', '民视','三立','公视', '三立', '东森', '中天', 'TVBS', '年代', '非凡', '八大', '纬来', '客家', '原住民']):
                 if name not in taiwan_channels:
                     taiwan_channels[name] = url
         
