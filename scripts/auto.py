@@ -189,7 +189,7 @@ class LiveStreamFetcher:
         all_raw_channels = []  # (name, url)
         hk_tw_channels = []  # 存储港澳台分组的频道
         
-        # 第一步：收集所有频道
+        # 第一步：收集所有频道（包括所有订阅源）
         for url in self.config['extra_urls']:
             logging.info(f"处理订阅源: {url}")
             content = self.fetch_m3u_content(url)
@@ -279,39 +279,49 @@ class LiveStreamFetcher:
             'TaiWan': []
         }
         
-        # ========== 1. 央视分组：只保留 CCTV-1高清 到 CCTV-17高清 ==========
-        cctv_hd_set = {f'CCTV-{i}高清' for i in range(1, 18)}
-        # 也支持可能的变体
-        cctv_variants = {}
-        for i in range(1, 18):
-            cctv_variants[f'CCTV{i}高清'] = f'CCTV-{i}高清'
-            cctv_variants[f'CCTV-{i}HD'] = f'CCTV-{i}高清'
-            cctv_variants[f'CCTV{i}HD'] = f'CCTV-{i}高清'
+        # ========== 1. 央视分组：从所有频道中收集CCTV1~CCTV17，测速选最快 ==========
+        # 收集所有CCTV相关的URL
+        cctv_urls = {f'CCTV{i}': [] for i in range(1, 18)}
         
-        cctv_channels = {}
+        # 遍历所有频道，找出CCTV相关的
         for name, url in self.channels.items():
-            # 标准化名称
-            if name in cctv_hd_set:
-                cctv_channels[name] = url
-            elif name in cctv_variants:
-                standard_name = cctv_variants[name]
-                if standard_name not in cctv_channels:
-                    cctv_channels[standard_name] = url
-            else:
-                # 检查是否是CCTVx高清格式
-                match = re.match(r'CCTV[-]?(\d+)[高清HD]+', name, re.IGNORECASE)
-                if match:
-                    num = int(match.group(1))
-                    if 1 <= num <= 17:
-                        standard_name = f'CCTV-{num}高清'
-                        if standard_name not in cctv_channels:
-                            cctv_channels[standard_name] = url
+            # 匹配CCTV1~CCTV17的各种格式
+            match = re.search(r'CCTV[-]?(\d{1,2})', name, re.IGNORECASE)
+            if match:
+                num = int(match.group(1))
+                if 1 <= num <= 17:
+                    cctv_urls[f'CCTV{num}'].append(url)
+            
+            # 也匹配CCTV-数字高清等格式
+            match_hd = re.search(r'CCTV[-]?(\d{1,2})[高清HD]+', name, re.IGNORECASE)
+            if match_hd:
+                num = int(match_hd.group(1))
+                if 1 <= num <= 17:
+                    cctv_urls[f'CCTV{num}'].append(url)
         
-        # 按数字排序
+        # 对每个CCTV频道测速选择最快的URL
+        logging.info("开始为CCTV1~CCTV17测速选源...")
         for i in range(1, 18):
-            standard_name = f'CCTV-{i}高清'
-            if standard_name in cctv_channels:
-                groups['央视'].append((standard_name, cctv_channels[standard_name]))
+            channel_key = f'CCTV{i}'
+            urls = cctv_urls[channel_key]
+            
+            if urls:
+                # 去重
+                urls = list(set(urls))
+                if len(urls) == 1:
+                    best_url = urls[0]
+                else:
+                    # 测速选择最快的
+                    best_url = self.select_best_url(urls)
+                
+                if best_url:
+                    # 统一命名为 CCTV-1 到 CCTV-17
+                    groups['央视'].append((f'CCTV-{i}', best_url))
+                    logging.info(f"  CCTV-{i}: 找到 {len(urls)} 个源，选择最快链接")
+                else:
+                    logging.warning(f"  CCTV-{i}: 未找到有效链接")
+            else:
+                logging.warning(f"  CCTV-{i}: 未找到任何链接")
         
         # ========== 2. 数字分组：只保留指定的8个频道 ==========
         digital_allow = {
@@ -552,6 +562,12 @@ class LiveStreamFetcher:
         self.generate_m3u(groups)
         elapsed = time.time() - start_time
         logging.info(f"完成! 总耗时: {elapsed:.2f} 秒")
+        
+        # 显示最终拉取到的频道总数
+        logging.info("=" * 50)
+        logging.info(f"本次拉取共获得 {len(self.channels)} 个频道链接")
+        logging.info(f"最终生成 {total} 个播出频道")
+        logging.info("=" * 50)
 
 if __name__ == '__main__':
     fetcher = LiveStreamFetcher()
