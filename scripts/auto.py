@@ -17,12 +17,12 @@ class LiveStreamFetcher:
         script_dir = os.path.dirname(os.path.abspath(__file__))
         if config_path is None:
             config_path = os.path.join(script_dir, 'auto.yml')
+        
         with open(config_path, 'r', encoding='utf-8') as f:
             self.config = yaml.safe_load(f)
         
         self.session = requests.Session()
         self.session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
-        
         self.channels = {}
         self.output_path = os.path.join(script_dir, '..', 'auto.m3u')
         self.cache_path = os.path.join(script_dir, 'speed_cache.json')
@@ -30,10 +30,6 @@ class LiveStreamFetcher:
         # 加载速度缓存
         self.speed_cache = self.load_cache()
         
-        # 央视专用订阅源
-        self.cctv_source_url = "https://abc.sufern001.workers.dev"
-        self.cctv_channels = {}  # 存储央视频道的URL
-
     def load_cache(self):
         """加载速度缓存"""
         if os.path.exists(self.cache_path):
@@ -43,7 +39,7 @@ class LiveStreamFetcher:
             except:
                 return {}
         return {}
-
+    
     def save_cache(self):
         """保存速度缓存"""
         # 只保留最近7天的记录
@@ -54,7 +50,7 @@ class LiveStreamFetcher:
                 filtered_cache[url] = data
         with open(self.cache_path, 'w', encoding='utf-8') as f:
             json.dump(filtered_cache, f, ensure_ascii=False, indent=2)
-
+    
     def fetch_m3u_content(self, url):
         """获取单个订阅源内容"""
         try:
@@ -65,7 +61,7 @@ class LiveStreamFetcher:
         except Exception as e:
             logging.error(f"获取失败 {url}: {e}")
         return None
-
+    
     def parse_m3u(self, content):
         """解析M3U内容，返回频道列表 [(name, url)]"""
         channels = []
@@ -83,13 +79,11 @@ class LiveStreamFetcher:
                         url = lines[i+1].strip()
                         if url and not url.startswith('#') and url.startswith(('http', 'https', 'rtmp', 'rtsp')):
                             channels.append((name, url))
-                        i += 2
-                    else:
-                        i += 1
+                i += 2
             else:
                 i += 1
         return channels
-
+    
     def parse_m3u_with_group(self, content):
         """解析M3U内容，返回带分组信息的频道列表 [(group, name, url)]"""
         channels = []
@@ -103,6 +97,7 @@ class LiveStreamFetcher:
                 group_match = re.search(r'group-title="([^"]+)"', line)
                 if group_match:
                     current_group = group_match.group(1)
+                
                 match = re.search(r',(.+)$', line)
                 if match:
                     name = match.group(1).strip()
@@ -110,34 +105,11 @@ class LiveStreamFetcher:
                         url = lines[i+1].strip()
                         if url and not url.startswith('#') and url.startswith(('http', 'https', 'rtmp', 'rtsp')):
                             channels.append((current_group, name, url))
-                        i += 2
-                    else:
-                        i += 1
+                i += 2
             else:
                 i += 1
         return channels
-
-    def fetch_cctv_channels(self):
-        """从专用源获取央视卫视分组中的频道"""
-        logging.info(f"从央视源获取频道: {self.cctv_source_url}")
-        content = self.fetch_m3u_content(self.cctv_source_url)
-        if not content:
-            logging.error("获取央视源失败")
-            return {}
-        
-        channels_with_group = self.parse_m3u_with_group(content)
-        cctv_channels = {}
-        
-        for group, name, url in channels_with_group:
-            # 只获取"央视卫视"分组
-            if group == "央视卫视":
-                # 清理名称
-                clean_name = re.sub(r'[\[\(].*?[\]\)]', '', name).strip()
-                cctv_channels[clean_name] = url
-        
-        logging.info(f"从央视源获取到 {len(cctv_channels)} 个央视/卫视频道")
-        return cctv_channels
-
+    
     def quick_check_url(self, url):
         """快速检查URL是否有效（不测试速度）"""
         # 检查缓存
@@ -165,7 +137,7 @@ class LiveStreamFetcher:
         except:
             pass
         return None
-
+    
     def test_url_speed(self, url):
         """测试URL速度，返回延迟(秒)或None"""
         # 检查缓存
@@ -190,7 +162,7 @@ class LiveStreamFetcher:
         except:
             pass
         return None
-
+    
     def select_best_url(self, urls):
         """从多个URL中选择速度最快的（智能策略）"""
         if not urls:
@@ -211,17 +183,13 @@ class LiveStreamFetcher:
         # 按速度排序
         valid_urls.sort(key=lambda x: x[1])
         return valid_urls[0][0]
-
+    
     def process_sources(self):
-        """处理所有订阅源（央视频道直接从专用源获取，不测速）"""
+        """处理所有订阅源（优化版：不测试单源频道）"""
+        all_raw_channels = []  # (name, url)
+        hk_tw_channels = []  # 存储港澳台分组的频道
         
-        # 第一步：从专用源获取央视/卫视频道（不测速，直接采用）
-        self.cctv_channels = self.fetch_cctv_channels()
-        
-        all_raw_channels = []  # (name, url) - 用于其他频道
-        hk_tw_channels = []    # 存储港澳台分组的频道
-        
-        # 第二步：处理其他订阅源
+        # 第一步：收集所有频道
         for url in self.config['extra_urls']:
             logging.info(f"处理订阅源: {url}")
             content = self.fetch_m3u_content(url)
@@ -234,45 +202,29 @@ class LiveStreamFetcher:
                             hk_tw_channels.append((name, channel_url))
                         else:
                             all_raw_channels.append((name, channel_url))
-                    logging.info(f" 获取到 {len(channels_with_group)} 个频道（含分组）")
+                    logging.info(f"  获取到 {len(channels_with_group)} 个频道（含分组）")
                 else:
                     channels = self.parse_m3u(content)
                     all_raw_channels.extend(channels)
-                    logging.info(f" 获取到 {len(channels)} 个频道")
+                    logging.info(f"  获取到 {len(channels)} 个频道")
             else:
-                logging.warning(f" 获取失败")
+                logging.warning(f"  获取失败")
         
-        # 第三步：处理其他频道（排除央视和卫视，因为已经单独获取了）
-        # 过滤掉央视和卫视频道，避免重复
-        def is_cctv_or_weishi(name):
-            """判断是否是央视或卫视频道"""
-            # 央视关键词
-            if re.match(r'CCTV[-]?\d+', name, re.IGNORECASE):
-                return True
-            # 卫视关键词
-            weishi_keywords = ['卫视', '湖南', '浙江', '江苏', '东方', '北京', '广东', '深圳', 
-                              '天津', '山东', '安徽', '辽宁', '黑龙江', '四川', '湖北', '江西',
-                              '重庆', '河南', '河北', '陕西', '山西', '云南', '广西', '吉林',
-                              '东南', '福建', '贵州', '甘肃', '内蒙古', '新疆', '宁夏', '青海',
-                              '海南', '西藏']
-            for kw in weishi_keywords:
-                if kw in name:
-                    return True
-            return False
-        
-        filtered_channels = [(name, url) for name, url in all_raw_channels if not is_cctv_or_weishi(name)]
-        
-        # 按频道名分组URL
+        # 第二步：按频道名分组URL
         channel_urls = {}
-        for name, url in filtered_channels:
+        channel_count = {}
+        for name, url in all_raw_channels:
+            # 清理名称中的特殊字符
             clean_name = re.sub(r'[\[\(].*?[\]\)]', '', name).strip()
             if clean_name not in channel_urls:
                 channel_urls[clean_name] = []
+                channel_count[clean_name] = 0
             if url not in channel_urls[clean_name]:
                 channel_urls[clean_name].append(url)
+                channel_count[clean_name] += 1
         
-        # 第四步：智能选择最佳URL（只对其他频道测速）
-        logging.info(f"其他频道: {len(channel_urls)} 个唯一频道")
+        # 第三步：智能选择最佳URL
+        logging.info(f"共 {len(channel_urls)} 个唯一频道")
         
         # 统计多源频道
         multi_source = {name: urls for name, urls in channel_urls.items() if len(urls) > 1}
@@ -307,16 +259,16 @@ class LiveStreamFetcher:
         # 处理港澳台频道的分组信息
         for name, url in hk_tw_channels:
             clean_name = re.sub(r'[\[\(].*?[\]\)]', '', name).strip()
+            # 存储到专门的字典中，供分类使用
             if not hasattr(self, 'hk_tw_sources'):
                 self.hk_tw_sources = {}
             self.hk_tw_sources[clean_name] = url
         
-        logging.info(f"其他频道: {len(self.channels)} 个有效频道")
-        logging.info(f"央视频道: {len(self.cctv_channels)} 个有效频道")
+        logging.info(f"最终获得 {len(self.channels)} 个有效频道")
         self.save_cache()  # 保存缓存
-
+    
     def classify_channels(self):
-        """分类频道到不同分组（央视分组直接从cctv_channels获取）"""
+        """分类频道到不同分组"""
         groups = {
             '央视': [],
             '卫视': [],
@@ -327,67 +279,84 @@ class LiveStreamFetcher:
             'TaiWan': []
         }
         
-        # ========== 1. 央视分组：直接从cctv_channels获取 ==========
-        cctv_ordered = []
+        # ========== 1. 央视分组：只保留 CCTV-1高清 到 CCTV-17高清 ==========
+        cctv_hd_set = {f'CCTV-{i}高清' for i in range(1, 18)}
+        # 也支持可能的变体
+        cctv_variants = {}
+        for i in range(1, 18):
+            cctv_variants[f'CCTV{i}高清'] = f'CCTV-{i}高清'
+            cctv_variants[f'CCTV-{i}HD'] = f'CCTV-{i}高清'
+            cctv_variants[f'CCTV{i}HD'] = f'CCTV-{i}高清'
+        
+        cctv_channels = {}
+        for name, url in self.channels.items():
+            # 标准化名称
+            if name in cctv_hd_set:
+                cctv_channels[name] = url
+            elif name in cctv_variants:
+                standard_name = cctv_variants[name]
+                if standard_name not in cctv_channels:
+                    cctv_channels[standard_name] = url
+            else:
+                # 检查是否是CCTVx高清格式
+                match = re.match(r'CCTV[-]?(\d+)[高清HD]+', name, re.IGNORECASE)
+                if match:
+                    num = int(match.group(1))
+                    if 1 <= num <= 17:
+                        standard_name = f'CCTV-{num}高清'
+                        if standard_name not in cctv_channels:
+                            cctv_channels[standard_name] = url
+        
+        # 按数字排序
         for i in range(1, 18):
             standard_name = f'CCTV-{i}高清'
-            # 在cctv_channels中查找匹配的频道
-            found = False
-            for name, url in self.cctv_channels.items():
-                # 标准化名称匹配
-                if name == standard_name:
-                    cctv_ordered.append((standard_name, url))
-                    found = True
-                    break
-                elif re.match(f'CCTV[-]?{i}[高清HD]+', name, re.IGNORECASE):
-                    cctv_ordered.append((standard_name, url))
-                    found = True
-                    break
-                elif name.replace(' ', '') == standard_name.replace(' ', ''):
-                    cctv_ordered.append((standard_name, url))
-                    found = True
-                    break
-            
-            # 如果没找到，尝试从主频道中查找备用
-            if not found and standard_name in self.channels:
-                cctv_ordered.append((standard_name, self.channels[standard_name]))
-        
-        groups['央视'] = cctv_ordered
+            if standard_name in cctv_channels:
+                groups['央视'].append((standard_name, cctv_channels[standard_name]))
         
         # ========== 2. 数字分组：只保留指定的8个频道 ==========
         digital_allow = {
-            'CCTV-第一剧场', 'CCTV-风云剧场', 'CCTV-风云音乐', 
-            'CCTV-风云足球', 'CCTV-怀旧剧场', 'CCTV-央视文化', 
-            'CCTV-世界地理', 'CCTV-央视台球'
+            'CCTV-第一剧场', 'CCTV-风云剧场', 'CCTV-风云音乐', 'CCTV-风云足球',
+            'CCTV-怀旧剧场', 'CCTV-央视文化', 'CCTV-世界地理', 'CCTV-央视台球'
         }
         
+        # 名称映射（处理可能的变体）
         digital_mapping = {
-            '第一剧场': 'CCTV-第一剧场', '风云剧场': 'CCTV-风云剧场',
-            '风云音乐': 'CCTV-风云音乐', '风云足球': 'CCTV-风云足球',
-            '怀旧剧场': 'CCTV-怀旧剧场', '央视文化': 'CCTV-央视文化',
-            '世界地理': 'CCTV-世界地理', '央视台球': 'CCTV-央视台球',
-            'CCTV第一剧场': 'CCTV-第一剧场', 'CCTV风云剧场': 'CCTV-风云剧场',
-            'CCTV风云音乐': 'CCTV-风云音乐', 'CCTV风云足球': 'CCTV-风云足球',
-            'CCTV怀旧剧场': 'CCTV-怀旧剧场', 'CCTV世界地理': 'CCTV-世界地理'
+            '第一剧场': 'CCTV-第一剧场',
+            '风云剧场': 'CCTV-风云剧场',
+            '风云音乐': 'CCTV-风云音乐',
+            '风云足球': 'CCTV-风云足球',
+            '怀旧剧场': 'CCTV-怀旧剧场',
+            '央视文化': 'CCTV-央视文化',
+            '世界地理': 'CCTV-世界地理',
+            '央视台球': 'CCTV-央视台球',
+            'CCTV第一剧场': 'CCTV-第一剧场',
+            'CCTV风云剧场': 'CCTV-风云剧场',
+            'CCTV风云音乐': 'CCTV-风云音乐',
+            'CCTV风云足球': 'CCTV-风云足球',
+            'CCTV怀旧剧场': 'CCTV-怀旧剧场',
+            'CCTV世界地理': 'CCTV-世界地理'
         }
         
         digital_channels = {}
         for name, url in self.channels.items():
+            # 直接匹配
             if name in digital_allow:
                 digital_channels[name] = url
+            # 映射匹配
             elif name in digital_mapping:
                 standard_name = digital_mapping[name]
                 if standard_name not in digital_channels:
                     digital_channels[standard_name] = url
+            # 模糊匹配
             else:
                 for keyword in digital_allow:
                     if keyword.replace('CCTV-', '') in name or name in keyword:
                         if keyword not in digital_channels:
                             digital_channels[keyword] = url
         
-        digital_order = ['CCTV-第一剧场', 'CCTV-风云剧场', 'CCTV-风云音乐', 
-                        'CCTV-风云足球', 'CCTV-怀旧剧场', 'CCTV-央视文化', 
-                        'CCTV-世界地理', 'CCTV-央视台球']
+        # 按指定顺序添加
+        digital_order = ['CCTV-第一剧场', 'CCTV-风云剧场', 'CCTV-风云音乐', 'CCTV-风云足球',
+                        'CCTV-怀旧剧场', 'CCTV-央视文化', 'CCTV-世界地理', 'CCTV-央视台球']
         for channel in digital_order:
             if channel in digital_channels:
                 groups['数字'].append((channel, digital_channels[channel]))
@@ -407,12 +376,73 @@ class LiveStreamFetcher:
                         chc_channels[standard] = url
                     break
         
+        # 按顺序添加
         chc_order = ['CHC动作电影', 'CHC影迷电影', 'CHC家庭影院']
         for channel in chc_order:
             if channel in chc_channels:
                 groups['CHC'].append((channel, chc_channels[channel]))
         
-        # ========== 4. 卫视分组：从cctv_channels中提取卫视 ==========
+        # ========== 4. HongKong分组：凤凰台只保留3个并置顶 ==========
+        hk_channels = {}
+        
+        # 优先处理凤凰台
+        phoenix_order = ['凤凰中文', '凤凰资讯', '凤凰香港']
+        phoenix_found = {}
+        
+        for name, url in self.channels.items():
+            # 匹配凤凰台
+            if '凤凰' in name:
+                if '中文' in name and '凤凰中文' not in phoenix_found:
+                    phoenix_found['凤凰中文'] = url
+                elif '资讯' in name and '凤凰资讯' not in phoenix_found:
+                    phoenix_found['凤凰资讯'] = url
+                elif '香港' in name and '凤凰香港' not in phoenix_found:
+                    phoenix_found['凤凰香港'] = url
+                elif '卫视' in name and '凤凰中文' not in phoenix_found:
+                    phoenix_found['凤凰中文'] = url
+            else:
+                # 其他香港频道
+                if any(kw in name for kw in ['香港', 'TVB', '無綫','无线','千禧','翡翠', '明珠', '星影','爆谷','HOY','NOW', 'HBO','CABLE', '港台', 'RTHK', '无线', '亚洲电视', 'ATV', 'VIU']):
+                    if name not in hk_channels:
+                        hk_channels[name] = url
+        
+        # 先添加凤凰台（按顺序）
+        for phoenix in phoenix_order:
+            if phoenix in phoenix_found:
+                groups['HongKong'].append((phoenix, phoenix_found[phoenix]))
+        
+        # 再添加其他香港频道
+        for name, url in hk_channels.items():
+            groups['HongKong'].append((name, url))
+        
+        # ========== 5. TaiWan分组：从港澳台分组中提取 ==========
+        taiwan_channels = {}
+        
+        # 如果有从codeberg.org提取的港澳台频道
+        if hasattr(self, 'hk_tw_sources'):
+            for name, url in self.hk_tw_sources.items():
+                # 台湾频道关键词
+                if any(kw in name for kw in ['台湾', '台视', '寰宇','中视', '华视', '民视','三立','公视', '三立', '东森', '中天', 'TVBS', '年代', '非凡', '八大', '纬来', '客家', '原住民']):
+                    if name not in taiwan_channels:
+                        taiwan_channels[name] = url
+        
+        # 也从主频道列表中提取台湾频道
+        for name, url in self.channels.items():
+            if any(kw in name for kw in ['台湾', '台视', '寰宇','中视', '华视', '民视','三立','公视', '三立', '东森', '中天', 'TVBS', '年代', '非凡', '八大', '纬来', '客家', '原住民']):
+                if name not in taiwan_channels:
+                    taiwan_channels[name] = url
+        
+        # 添加台湾频道
+        for name, url in taiwan_channels.items():
+            groups['TaiWan'].append((name, url))
+        
+        # ========== 6. 4K分组：保留所有4K频道 ==========
+        keywords_4k = ['4K', '4k', 'UHD', '2160p', 'CCTV-4K', 'CCTV4K']
+        for name, url in self.channels.items():
+            if any(kw in name for kw in keywords_4k):
+                groups['4K'].append((name, url))
+        
+        # ========== 7. 卫视分组：保留所有卫视 ==========
         province_keywords = {
             '湖南卫视': ['湖南卫视', '湖南卫视HD', 'HNTV', '湖南'],
             '浙江卫视': ['浙江卫视', '浙江卫视HD', 'ZJTV', '浙江'],
@@ -449,8 +479,7 @@ class LiveStreamFetcher:
         }
         
         weishi_found = set()
-        # 从cctv_channels中提取卫视
-        for name, url in self.cctv_channels.items():
+        for name, url in self.channels.items():
             for display_name, keywords in province_keywords.items():
                 if any(kw in name for kw in keywords):
                     if display_name not in weishi_found:
@@ -458,65 +487,7 @@ class LiveStreamFetcher:
                         weishi_found.add(display_name)
                     break
         
-        # ========== 5. HongKong分组：凤凰台只保留3个并置顶 ==========
-        hk_channels = {}
-        
-        phoenix_order = ['凤凰中文', '凤凰资讯', '凤凰香港']
-        phoenix_found = {}
-        
-        for name, url in self.channels.items():
-            if '凤凰' in name:
-                if '中文' in name and '凤凰中文' not in phoenix_found:
-                    phoenix_found['凤凰中文'] = url
-                elif '资讯' in name and '凤凰资讯' not in phoenix_found:
-                    phoenix_found['凤凰资讯'] = url
-                elif '香港' in name and '凤凰香港' not in phoenix_found:
-                    phoenix_found['凤凰香港'] = url
-                elif '卫视' in name and '凤凰中文' not in phoenix_found:
-                    phoenix_found['凤凰中文'] = url
-            else:
-                if any(kw in name for kw in ['香港', 'TVB', '無綫', '无线', '千禧', '翡翠', 
-                                            '明珠', '星影', '爆谷', 'HOY', 'NOW', 'HBO', 
-                                            'CABLE', '港台', 'RTHK', '无线', '亚洲电视', 
-                                            'ATV', 'VIU']):
-                    if name not in hk_channels:
-                        hk_channels[name] = url
-        
-        for phoenix in phoenix_order:
-            if phoenix in phoenix_found:
-                groups['HongKong'].append((phoenix, phoenix_found[phoenix]))
-        
-        for name, url in hk_channels.items():
-            groups['HongKong'].append((name, url))
-        
-        # ========== 6. TaiWan分组：从港澳台分组中提取 ==========
-        taiwan_channels = {}
-        
-        if hasattr(self, 'hk_tw_sources'):
-            for name, url in self.hk_tw_sources.items():
-                if any(kw in name for kw in ['台湾', '台视', '寰宇', '中视', '华视', '民视',
-                                            '三立', '公视', '东森', '中天', 'TVBS', '年代', 
-                                            '非凡', '八大', '纬来', '客家', '原住民']):
-                    if name not in taiwan_channels:
-                        taiwan_channels[name] = url
-        
-        for name, url in self.channels.items():
-            if any(kw in name for kw in ['台湾', '台视', '寰宇', '中视', '华视', '民视',
-                                        '三立', '公视', '东森', '中天', 'TVBS', '年代', 
-                                        '非凡', '八大', '纬来', '客家', '原住民']):
-                if name not in taiwan_channels:
-                    taiwan_channels[name] = url
-        
-        for name, url in taiwan_channels.items():
-            groups['TaiWan'].append((name, url))
-        
-        # ========== 7. 4K分组：保留所有4K频道 ==========
-        keywords_4k = ['4K', '4k', 'UHD', '2160p', 'CCTV-4K', 'CCTV4K']
-        for name, url in self.channels.items():
-            if any(kw in name for kw in keywords_4k):
-                groups['4K'].append((name, url))
-        
-        # 去重
+        # 去重（确保每个分组内频道不重复）
         for group in groups:
             seen = set()
             unique = []
@@ -527,7 +498,7 @@ class LiveStreamFetcher:
             groups[group] = unique
         
         return groups
-
+    
     def generate_m3u(self, groups):
         """生成M3U播放列表"""
         output_dir = os.path.dirname(self.output_path)
@@ -540,6 +511,7 @@ class LiveStreamFetcher:
             f.write(f'# 生成时间: {time.strftime("%Y-%m-%d %H:%M:%S")}\n')
             f.write(f'# 频道总数: {sum(len(channels) for channels in groups.values())}\n\n')
             
+            # 定义分组显示顺序
             group_order = ['央视', '卫视', '4K', '数字', 'CHC', 'HongKong', 'TaiWan']
             
             for group_name in group_order:
@@ -555,7 +527,7 @@ class LiveStreamFetcher:
         
         logging.info(f"生成M3U文件: {self.output_path}")
         return self.output_path
-
+    
     def run(self):
         """主流程"""
         logging.info("=" * 50)
@@ -563,10 +535,10 @@ class LiveStreamFetcher:
         logging.info("=" * 50)
         
         start_time = time.time()
-        
         self.process_sources()
         groups = self.classify_channels()
         
+        # 统计各分组数量
         logging.info("=" * 50)
         logging.info("分组统计:")
         total = 0
@@ -578,7 +550,6 @@ class LiveStreamFetcher:
         logging.info("=" * 50)
         
         self.generate_m3u(groups)
-        
         elapsed = time.time() - start_time
         logging.info(f"完成! 总耗时: {elapsed:.2f} 秒")
 
