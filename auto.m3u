@@ -1,43 +1,43 @@
 #EXTM3U
 # 自动生成的直播源列表
-# 生成时间: 2026-04-28 03:10:50
+# 生成时间: 2026-04-28 03:22:52
 # 频道总数: 218
 
 # 分组: 央视 (共17个频道)
-#EXTINF:-1 group-title="央视",CCTV-1高清
-http://120.76.248.139/live/bfgd/4200000488.m3u8
-#EXTINF:-1 group-title="央视",CCTV-2高清
-http://120.76.248.139/live/bfgd/4200000061.m3u8
-#EXTINF:-1 group-title="央视",CCTV-3高清
-http://120.76.248.139/live/bfgd/4200000062.m3u8
-#EXTINF:-1 group-title="央视",CCTV-4高清
-http://120.76.248.139/live/bfgd/4200000063.m3u8
-#EXTINF:-1 group-title="央视",CCTV-5高清
-http://120.76.248.139/live/bfgd/4200000064.m3u8
-#EXTINF:-1 group-title="央视",CCTV-6高清
-http://120.76.248.139/live/bfgd/4200000065.m3u8
-#EXTINF:-1 group-title="央视",CCTV-7高清
-http://120.76.248.139/live/bfgd/4200000127.m3u8
-#EXTINF:-1 group-title="央视",CCTV-8高清
-http://120.76.248.139/live/bfgd/4200000066.m3u8
-#EXTINF:-1 group-title="央视",CCTV-9高清
-http://120.76.248.139/live/bfgd/4200000128.m3u8
-#EXTINF:-1 group-title="央视",CCTV-10高清
-http://120.76.248.139/live/bfgd/4200000129.m3u8
-#EXTINF:-1 group-title="央视",CCTV-11高清
-http://120.76.248.139/live/bfgd/4200000130.m3u8
-#EXTINF:-1 group-title="央视",CCTV-12高清
-http://120.76.248.139/live/bfgd/4200000131.m3u8
-#EXTINF:-1 group-title="央视",CCTV-13高清
-http://120.76.248.139/live/bfgd/4200000067.m3u8
-#EXTINF:-1 group-title="央视",CCTV-14高清
-http://120.76.248.139/live/bfgd/4200000132.m3u8
-#EXTINF:-1 group-title="央视",CCTV-15高清
-http://120.76.248.139/live/bfgd/4200000133.m3u8
-#EXTINF:-1 group-title="央视",CCTV-16高清
-http://107.150.60.122/live/cctv16hd.m3u8
-#EXTINF:-1 group-title="央视",CCTV-17高清
-http://120.76.248.139/live/bfgd/4200000204.m3u8
+#EXTINF:-1 group-title="央视",CCTV-1
+http://cdn6.163189.xyz/163189/cctv1
+#EXTINF:-1 group-title="央视",CCTV-2
+https://iptv.catvod.com/live.php?id=CCTV2&line=4
+#EXTINF:-1 group-title="央视",CCTV-3
+https://iptv.catvod.com/live.php?id=CCTV3&line=3
+#EXTINF:-1 group-title="央视",CCTV-4
+https://iptv.catvod.com/live.php?id=CCTV4&line=3
+#EXTINF:-1 group-title="央视",CCTV-5
+https://live12.xiazhix1.top/live/38260737.m3u8
+#EXTINF:-1 group-title="央视",CCTV-6
+https://iptv.catvod.com/live.php?id=CCTV6&line=7
+#EXTINF:-1 group-title="央视",CCTV-7
+https://iptv.catvod.com/live.php?id=CCTV7&line=2
+#EXTINF:-1 group-title="央视",CCTV-8
+https://iptv.catvod.com/live.php?id=CCTV8&line=4
+#EXTINF:-1 group-title="央视",CCTV-9
+https://iptv.catvod.com/live.php?id=CCTV9&line=4
+#EXTINF:-1 group-title="央视",CCTV-10
+https://iptv.catvod.com/live.php?id=CCTV10&line=8
+#EXTINF:-1 group-title="央视",CCTV-11
+https://iptv.catvod.com/live.php?id=CCTV11&line=5
+#EXTINF:-1 group-title="央视",CCTV-12
+https://iptv.catvod.com/live.php?id=CCTV12&line=5
+#EXTINF:-1 group-title="央视",CCTV-13
+https://iptv.catvod.com/live.php?id=CCTV13&line=13
+#EXTINF:-1 group-title="央视",CCTV-14
+https://iptv.catvod.com/live.php?id=CCTV14&line=6
+#EXTINF:-1 group-title="央视",CCTV-15
+https://iptv.catvod.com/live.php?id=CCTV15&line=5
+#EXTINF:-1 group-title="央视",CCTV-16
+https://iptv.catvod.com/live.php?id=CCTV16&line=1
+#EXTINF:-1 group-title="央视",CCTV-17
+https://iptv.catvod.com/live.php?id=CCTV17&line=2
 
 # 分组: 卫视 (共32个频道)
 #EXTINF:-1 group-title="卫视",浙江卫视
@@ -101,9 +101,9 @@ http://120.76.248.139/live/bfgd/4200000473.m3u8
 #EXTINF:-1 group-title="卫视",广东卫视
 http://120.76.248.139/live/bfgd/4200000100.m3u8
 #EXTINF:-1 group-title="卫视",青海卫视
-https://iptv.catvod.com/live.php?id=%E9%9D%92%E6%B5%B7%E5%8D%AB%E8%A7%86&line=1
+https://iptv.catvod.com/live.php?id=%E9%9D%92%E6%B5%B7%E5%8D%AB%E8%A7%86&line=3
 #EXTINF:-1 group-title="卫视",西藏卫视
-https://iptv.catvod.com/live.php?id=%E8%A5%BF%E8%97%8F%E5%8D%AB%E8%A7%86&line=2
+https://iptv.catvod.com/live.php?id=%E8%A5%BF%E8%97%8F%E5%8D%AB%E8%A7%86&line=3
 
 # 分组: 4K (共50个频道)
 #EXTINF:-1 group-title="4K",苏州4K
@@ -185,23 +185,23 @@ http://101.35.240.114:88/live.php?id=广东卫视4K
 #EXTINF:-1 group-title="4K",四川卫视4K
 http://39.152.103.17:8089/tsfile/live/1044_1.m3u8
 #EXTINF:-1 group-title="4K",东方卫视4K
-https://bp-resource-dfl.bestv.cn/148/3/video.m3u8
+http://bp-resource-dfl.bestv.cn/148/3/video.m3u8
 #EXTINF:-1 group-title="4K",CCTV-4K超高清
-http://38.75.136.137:98/gslb/dsdqpub/cctv4k.m3u8?auth=testpub
+http://107.150.60.122/live/cctv4k.m3u8
 #EXTINF:-1 group-title="4K",浙江卫视4K
 https://play-qukan.cztv.com/live/1758879019692345.m3u8
-#EXTINF:-1 group-title="4K",CCTV4K超高清
-http://www.520345.xyz:8188/rtp/239.69.1.111:10304?$3840x2160
 #EXTINF:-1 group-title="4K",湖南卫视4K
 http://hlsal-ldvt.qing.mgtv.com/nn_live/nn_x64/dWlwPTEyNy4wLjAuMSZ1aWQ9cWluZy1jbXMmbm5fdGltZXpvbmU9OCZjZG5leF9pZD1hbF9obHNfbGR2dCZ1dWlkPTliODY4NmU5ZTM2YzYwMmMmZT02OTE0NjA0JnY9MSZpZD1ITldTWkdTVCZzPTcwN2RiYTc2YzJjNmJmMTQ4MmUyZGYzOWU2NWM3YWFi/HNWSZGST.m3u8
+#EXTINF:-1 group-title="4K",CCTV4K超高清
+http://www.520345.xyz:8188/rtp/239.69.1.111:10304?$3840x2160
 #EXTINF:-1 group-title="4K",至臻视界4K
 http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000015686
 #EXTINF:-1 group-title="4K",CCTV4K
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001451/index.m3u8?streamid=69b8ad870d6e6b638349a2eb5d3c6e98&streamkey=0PV1gjFJAoweF3LBEa3Bs0tDJJ820W4wW1ZFaj9mvIJCTOb7YMJjyNipqSJ5XRwGMieXBE8k0nEcmgeD1GaGAG2QdDltcdT65Yz2RRyKTd82wMqT6&token=1775754026-64bf526cb923c04a-0-cf56d9188e3b064b963ed02898bf719d
+http://107.150.60.122/live/cctv4k.m3u8
 #EXTINF:-1 group-title="4K",Now体育4K 1
 http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/438867.m3u8
 #EXTINF:-1 group-title="4K",咪视界4K
-http://anfeind1.kmdns.net:19999/migunohosts.php?Contentid=3000000010000005180
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000005180
 #EXTINF:-1 group-title="4K",波兰Eleven Sports 1 4K
 http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/1281071.m3u8
 #EXTINF:-1 group-title="4K",北京IPTV4K
@@ -335,19 +335,19 @@ https://iptv.707626.xyz/ch/6be62e159f4a470cce4593fc6a780cd5/master.m3u8
 #EXTINF:-1 group-title="HongKong",鳳凰衛視香港台
 https://iptv.707626.xyz/ch/1183bed3a5b7e98e94e1ca51f890a1bb/master.m3u8
 #EXTINF:-1 group-title="HongKong",香港卫视
-https://stream1.freetv.fun/ae7eaf28d8610cdc1651ef6a1f7dbb24b49c5a87627d0d881330afaea37a1616.m3u8
+https://stream1.freetv.fun/5335c88a9a7d8b74173b491f480d4f94e8d3bd596af54478106aa2399e6c7917.m3u8
 #EXTINF:-1 group-title="HongKong",杭州明珠
 https://stream1.freetv.fun/hang-zhou-ming-zhu-1.ctv
 #EXTINF:-1 group-title="HongKong",TVBS亚洲
-http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8?zshijd
-#EXTINF:-1 group-title="HongKong",明珠台
-http://cdn9.163189.xyz/smt1.1.php?id=pearl_twn
+http://38.64.72.148/hls/modn/list/4005/chunklist0.m3u8
 #EXTINF:-1 group-title="HongKong",无线新闻
 http://cdn9.163189.xyz/smt1.1.php?id=inews_twn
+#EXTINF:-1 group-title="HongKong",明珠台
+http://o11.163189.xyz/stream/tvb/mzt/
 #EXTINF:-1 group-title="HongKong",翡翠台
 http://mytv.cdn.loc.cc/o12.php?id=fct
 #EXTINF:-1 group-title="HongKong",无线星河
-http://php.jdshipin.com:8880/TVOD/iptv.php?id=xinghe
+https://cdn6.101.qzz.io/163189/tvbxh
 #EXTINF:-1 group-title="HongKong",无线新闻台
 https://cdn6.163189.xyz/163189/wxxw
 #EXTINF:-1 group-title="HongKong",TVB Plus
@@ -437,17 +437,17 @@ https://iptv.707626.xyz/ch/5d63f4c7138710902e7a556d56153053/master.m3u8
 #EXTINF:-1 group-title="TaiWan",非凡新聞台
 https://iptv.707626.xyz/ch/a119271e4a5a1ec6522fe55e1e07121f/master.m3u8
 #EXTINF:-1 group-title="TaiWan",TVBS亚洲
-http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8?zshijd
+http://38.64.72.148/hls/modn/list/4005/chunklist0.m3u8
 #EXTINF:-1 group-title="TaiWan",三立新闻
 https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV32.m3u8
 #EXTINF:-1 group-title="TaiWan",纬来育乐
 https://hls-gateway.vpstv.net/streams/477081.m3u8
 #EXTINF:-1 group-title="TaiWan",纬来体育
-https://epg.pw/stream/4f18dfe0593db5c686eb64ae8edaf2a9202d4d46bdc9bbde2cee27708e12ea01.m3u8
-#EXTINF:-1 group-title="TaiWan",东森洋片
-https://stream1.freetv.fun/dong-sen-yang-pian-3.m3u8
+https://epg.pw/stream/8855a9936e37e608a0ec8a014cce1673dee9c5d68d560da376cc92e5edef2b25.m3u8
 #EXTINF:-1 group-title="TaiWan",东森超视
 https://stream1.freetv.fun/dong-sen-chao-shi-4.m3u8
+#EXTINF:-1 group-title="TaiWan",东森洋片
+https://stream1.freetv.fun/dong-sen-yang-pian-3.m3u8
 #EXTINF:-1 group-title="TaiWan",华视
 rtmp://f13h.mine.nu/sat/tv111
 #EXTINF:-1 group-title="TaiWan",中视
