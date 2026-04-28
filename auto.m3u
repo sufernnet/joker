@@ -1,43 +1,43 @@
 #EXTM3U
 # 自动生成的直播源列表
-# 生成时间: 2026-04-28 03:22:52
-# 频道总数: 218
+# 生成时间: 2026-04-28 03:38:58
+# 频道总数: 279
 
 # 分组: 央视 (共17个频道)
-#EXTINF:-1 group-title="央视",CCTV-1
-http://cdn6.163189.xyz/163189/cctv1
-#EXTINF:-1 group-title="央视",CCTV-2
-https://iptv.catvod.com/live.php?id=CCTV2&line=4
-#EXTINF:-1 group-title="央视",CCTV-3
-https://iptv.catvod.com/live.php?id=CCTV3&line=3
-#EXTINF:-1 group-title="央视",CCTV-4
-https://iptv.catvod.com/live.php?id=CCTV4&line=3
-#EXTINF:-1 group-title="央视",CCTV-5
-https://live12.xiazhix1.top/live/38260737.m3u8
-#EXTINF:-1 group-title="央视",CCTV-6
-https://iptv.catvod.com/live.php?id=CCTV6&line=7
-#EXTINF:-1 group-title="央视",CCTV-7
-https://iptv.catvod.com/live.php?id=CCTV7&line=2
-#EXTINF:-1 group-title="央视",CCTV-8
-https://iptv.catvod.com/live.php?id=CCTV8&line=4
-#EXTINF:-1 group-title="央视",CCTV-9
-https://iptv.catvod.com/live.php?id=CCTV9&line=4
-#EXTINF:-1 group-title="央视",CCTV-10
-https://iptv.catvod.com/live.php?id=CCTV10&line=8
-#EXTINF:-1 group-title="央视",CCTV-11
-https://iptv.catvod.com/live.php?id=CCTV11&line=5
-#EXTINF:-1 group-title="央视",CCTV-12
-https://iptv.catvod.com/live.php?id=CCTV12&line=5
-#EXTINF:-1 group-title="央视",CCTV-13
-https://iptv.catvod.com/live.php?id=CCTV13&line=13
-#EXTINF:-1 group-title="央视",CCTV-14
-https://iptv.catvod.com/live.php?id=CCTV14&line=6
-#EXTINF:-1 group-title="央视",CCTV-15
-https://iptv.catvod.com/live.php?id=CCTV15&line=5
-#EXTINF:-1 group-title="央视",CCTV-16
-https://iptv.catvod.com/live.php?id=CCTV16&line=1
-#EXTINF:-1 group-title="央视",CCTV-17
-https://iptv.catvod.com/live.php?id=CCTV17&line=2
+#EXTINF:-1 group-title="央视",CCTV-1高清
+http://43.251.226.110:8880/play/10.m3u8
+#EXTINF:-1 group-title="央视",CCTV-2高清
+http://43.251.226.110:8880/play/12.m3u8
+#EXTINF:-1 group-title="央视",CCTV-3高清
+http://43.251.226.110:8880/play/14.m3u8
+#EXTINF:-1 group-title="央视",CCTV-4高清
+http://43.251.226.110:8880/play/16.m3u8
+#EXTINF:-1 group-title="央视",CCTV-5高清
+http://43.251.226.110:8880/play/18.m3u8
+#EXTINF:-1 group-title="央视",CCTV-6高清
+http://43.251.226.110:8880/play/20.m3u8
+#EXTINF:-1 group-title="央视",CCTV-7高清
+http://43.251.226.110:8880/play/22.m3u8
+#EXTINF:-1 group-title="央视",CCTV-8高清
+http://43.251.226.110:8880/play/24.m3u8
+#EXTINF:-1 group-title="央视",CCTV-9高清
+http://43.251.226.110:8880/play/26.m3u8
+#EXTINF:-1 group-title="央视",CCTV-10高清
+http://43.251.226.110:8880/play/28.m3u8
+#EXTINF:-1 group-title="央视",CCTV-11高清
+http://43.251.226.110:8880/play/30.m3u8
+#EXTINF:-1 group-title="央视",CCTV-12高清
+http://43.251.226.110:8880/play/31.m3u8
+#EXTINF:-1 group-title="央视",CCTV-13高清
+http://43.251.226.110:8880/play/32.m3u8
+#EXTINF:-1 group-title="央视",CCTV-14高清
+http://43.251.226.110:8880/play/33.m3u8
+#EXTINF:-1 group-title="央视",CCTV-15高清
+http://43.251.226.110:8880/play/35.m3u8
+#EXTINF:-1 group-title="央视",CCTV-16高清
+http://43.251.226.110:8880/play/37.m3u8
+#EXTINF:-1 group-title="央视",CCTV-17高清
+http://43.251.226.110:8880/play/39.m3u8
 
 # 分组: 卫视 (共32个频道)
 #EXTINF:-1 group-title="卫视",浙江卫视
@@ -66,8 +66,6 @@ https://satellitepull.cnr.cn/live/wxjlxcgb/playlist.m3u8
 https://ls.qingting.fm/live/1885/64k.m3u8
 #EXTINF:-1 group-title="卫视",云南卫视
 https://hwapi.yntv.net/62hdvf/rjwt14.m3u8
-#EXTINF:-1 group-title="卫视",北京卫视
-http://player.cntv.cn/standard/live_HLSDRM20180606.swf?ChannelID=btv3&P2PChannelID=pd://cctv_p2p_hdbtv3
 #EXTINF:-1 group-title="卫视",辽宁卫视
 http://120.76.248.139/live/bfgd/4200000077.m3u8
 #EXTINF:-1 group-title="卫视",四川卫视
@@ -84,6 +82,8 @@ https://gcalic.v.myalicdn.com/gc/xywfl_1/index.m3u8
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dfwshd
 #EXTINF:-1 group-title="卫视",深圳卫视
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=szwshd
+#EXTINF:-1 group-title="卫视",北京卫视
+http://38.75.136.137:98/gslb/dsdqpub/bjwshd.m3u8?auth=testpub
 #EXTINF:-1 group-title="卫视",河南卫视
 http://38.75.136.137:98/gslb/dsdqpub/hawshd.m3u8?auth=testpub
 #EXTINF:-1 group-title="卫视",河北卫视
@@ -100,16 +100,12 @@ http://120.76.248.139/live/bfgd/4200000084.m3u8
 http://120.76.248.139/live/bfgd/4200000473.m3u8
 #EXTINF:-1 group-title="卫视",广东卫视
 http://120.76.248.139/live/bfgd/4200000100.m3u8
-#EXTINF:-1 group-title="卫视",青海卫视
-https://iptv.catvod.com/live.php?id=%E9%9D%92%E6%B5%B7%E5%8D%AB%E8%A7%86&line=3
 #EXTINF:-1 group-title="卫视",西藏卫视
-https://iptv.catvod.com/live.php?id=%E8%A5%BF%E8%97%8F%E5%8D%AB%E8%A7%86&line=3
+http://43.251.226.110:8880/play/2315.m3u8
+#EXTINF:-1 group-title="卫视",青海卫视
+https://iptv.catvod.com/live.php?id=%E9%9D%92%E6%B5%B7%E5%8D%AB%E8%A7%86&line=4
 
-# 分组: 4K (共50个频道)
-#EXTINF:-1 group-title="4K",苏州4K
-https://tylive.kan0512.com/norecord/csztv4k_4k.m3u8
-#EXTINF:-1 group-title="4K",河北4K
-https://event.pull.hebtv.com:443/live/live101.m3u8
+# 分组: 4K (共49个频道)
 #EXTINF:-1 group-title="4K",南国都市4K
 http://tencentplay.gztv.com/live/nanguodushi.m3u8?txSecret=140110ae3d6c936a77f94c4f4d85b0d3&txTime=18d57929bd4
 #EXTINF:-1 group-title="4K",汶川4K
@@ -172,40 +168,42 @@ https://iptv.707626.xyz/ch/b8574fca20a915b8a47efb2d91793c8c/master.m3u8
 https://iptv.707626.xyz/ch/3aa7cb9436cc7ed1a4f232991c865d14/master.m3u8
 #EXTINF:-1 group-title="4K",Sky Sports F1 4K UK
 https://iptv.707626.xyz/ch/5ae2b33b5e1fd9105b6f4f459b2bc66d/master.m3u8
-#EXTINF:-1 group-title="4K",北京卫视4K
-http://101.35.240.114:88/live.php?id=北京卫视
-#EXTINF:-1 group-title="4K",深圳卫视4K
-http://101.35.240.114:88/live.php?id=深圳卫视4K
-#EXTINF:-1 group-title="4K",江苏卫视4K
-http://101.35.240.114:88/live.php?id=江苏卫视4K
 #EXTINF:-1 group-title="4K",山东卫视4K
 http://101.35.240.114:88/live.php?id=山东卫视4K
 #EXTINF:-1 group-title="4K",广东卫视4K
 http://101.35.240.114:88/live.php?id=广东卫视4K
+#EXTINF:-1 group-title="4K",笑傲江湖 4K超清
+http://43.251.226.110:8880/play/1218.m3u8
+#EXTINF:-1 group-title="4K",苏州4K台
+http://43.251.226.110:8880/play/1960.m3u8
 #EXTINF:-1 group-title="4K",四川卫视4K
 http://39.152.103.17:8089/tsfile/live/1044_1.m3u8
+#EXTINF:-1 group-title="4K",苏州4K
+https://tylive.kan0512.com/norecord/csztv4k_4k.m3u8
 #EXTINF:-1 group-title="4K",东方卫视4K
-http://bp-resource-dfl.bestv.cn/148/3/video.m3u8
-#EXTINF:-1 group-title="4K",CCTV-4K超高清
-http://107.150.60.122/live/cctv4k.m3u8
+https://bp-resource-dfl.bestv.cn/148/3/video.m3u8
 #EXTINF:-1 group-title="4K",浙江卫视4K
-https://play-qukan.cztv.com/live/1758879019692345.m3u8
+http://43.251.226.110:8880/play/82.m3u8
 #EXTINF:-1 group-title="4K",湖南卫视4K
-http://hlsal-ldvt.qing.mgtv.com/nn_live/nn_x64/dWlwPTEyNy4wLjAuMSZ1aWQ9cWluZy1jbXMmbm5fdGltZXpvbmU9OCZjZG5leF9pZD1hbF9obHNfbGR2dCZ1dWlkPTliODY4NmU5ZTM2YzYwMmMmZT02OTE0NjA0JnY9MSZpZD1ITldTWkdTVCZzPTcwN2RiYTc2YzJjNmJmMTQ4MmUyZGYzOWU2NWM3YWFi/HNWSZGST.m3u8
-#EXTINF:-1 group-title="4K",CCTV4K超高清
-http://www.520345.xyz:8188/rtp/239.69.1.111:10304?$3840x2160
+http://43.251.226.110:8880/play/83.m3u8
+#EXTINF:-1 group-title="4K",河北4K
+https://event.pull.hebtv.com:443/live/live101.m3u8
 #EXTINF:-1 group-title="4K",至臻视界4K
 http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000015686
-#EXTINF:-1 group-title="4K",CCTV4K
-http://107.150.60.122/live/cctv4k.m3u8
+#EXTINF:-1 group-title="4K",咪视界4K
+http://anfeind1.kmdns.net:19999/migunohosts.php?Contentid=3000000010000005180
 #EXTINF:-1 group-title="4K",Now体育4K 1
 http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/438867.m3u8
-#EXTINF:-1 group-title="4K",咪视界4K
-http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000005180
 #EXTINF:-1 group-title="4K",波兰Eleven Sports 1 4K
 http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/1281071.m3u8
 #EXTINF:-1 group-title="4K",北京IPTV4K
 http://home.airengine.net:9003/rtp/228.1.1.123:8001
+#EXTINF:-1 group-title="4K",北京卫视4K
+http://101.35.240.114:88/live.php?id=北京卫视
+#EXTINF:-1 group-title="4K",江苏卫视4K
+http://101.35.240.114:88/live.php?id=江苏卫视4K
+#EXTINF:-1 group-title="4K",深圳卫视4K
+http://101.35.240.114:88/live.php?id=深圳卫视4K
 
 # 分组: 数字 (共8个频道)
 #EXTINF:-1 group-title="数字",CCTV-第一剧场
@@ -233,7 +231,7 @@ http://38.75.136.137:98/gslb/dsdqpub/chchd.m3u8?auth=testpub
 #EXTINF:-1 group-title="CHC",CHC家庭影院
 https://iptv.catvod.com/live.php?id=CHC%E5%AE%B6%E5%BA%AD%E5%BD%B1%E9%99%A2
 
-# 分组: HongKong (共59个频道)
+# 分组: HongKong (共108个频道)
 #EXTINF:-1 group-title="HongKong",凤凰中文
 https://cdn6.163189.xyz/163189/fhzw
 #EXTINF:-1 group-title="HongKong",凤凰资讯
@@ -242,26 +240,14 @@ https://cdn6.163189.xyz/163189/fhzx
 https://cdn6.163189.xyz/163189/fhhk
 #EXTINF:-1 group-title="HongKong",福建漳州醉美沙滩翡翠湾
 https://gcalic.v.myalicdn.com/gc/fcw03_1/index.m3u8
-#EXTINF:-1 group-title="HongKong",经典香港电影
-http://fei01.kmdns.net:8807/625703337
 #EXTINF:-1 group-title="HongKong",KHANHHOATV
 https://liveh12.vtvprime.vn/hls/KHANHHOATV/03.m3u8
-#EXTINF:-1 group-title="HongKong",香港片系列
-https://live.ottiptv.cc/huya/29982660
-#EXTINF:-1 group-title="HongKong",CCTV1 香港
-http://cdn6.163189.xyz/163189/cctv1
 #EXTINF:-1 group-title="HongKong",翡翠台 广电版
 http://o11.163189.xyz/stream/tvb/fct/
 #EXTINF:-1 group-title="HongKong",翡翠台4K
 http://o11.163189.xyz/stream/tvb/fct4k/
-#EXTINF:-1 group-title="HongKong",TVB星河
-https://o11.163189.xyz/stream/live/tvbxh/
 #EXTINF:-1 group-title="HongKong",翡翠剧集台
 https://6.cdn.loc.cc/163189.php?id=tvbd
-#EXTINF:-1 group-title="HongKong",华丽翡翠台
-https://o11.163189.xyz/stream/live/hlt/
-#EXTINF:-1 group-title="HongKong",千禧经典台
-https://o11.163189.xyz/stream/live/tvbc/
 #EXTINF:-1 group-title="HongKong",NOW新闻
 https://cdn.163189.xyz/163189/now
 #EXTINF:-1 group-title="HongKong",HOY77
@@ -272,8 +258,6 @@ https://cdn.163189.xyz/163189/hoy78
 https://cdn.163189.xyz/163189/rthk31
 #EXTINF:-1 group-title="HongKong",RTHK32
 https://cdn.163189.xyz/163189/rthk32
-#EXTINF:-1 group-title="HongKong",TVBS新闻
-http://iptv.4666888.xyz/iptv2A.php?id=43
 #EXTINF:-1 group-title="HongKong",NOW体育1
 http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236720.m3u8
 #EXTINF:-1 group-title="HongKong",NOW体育2
@@ -334,26 +318,138 @@ https://iptv.707626.xyz/ch/76a00255d5a3433482bd21dcab9c2493/master.m3u8
 https://iptv.707626.xyz/ch/6be62e159f4a470cce4593fc6a780cd5/master.m3u8
 #EXTINF:-1 group-title="HongKong",鳳凰衛視香港台
 https://iptv.707626.xyz/ch/1183bed3a5b7e98e94e1ca51f890a1bb/master.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 侯英超 程靖淇 周冠达 16:00
+http://43.251.226.110:8880/play/233.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 朱子恒 17:00
+http://43.251.226.110:8880/play/234.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 5号桌 17:00
+http://43.251.226.110:8880/play/235.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 6号桌 17:00
+http://43.251.226.110:8880/play/236.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 7号桌 17:00
+http://43.251.226.110:8880/play/237.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 8号桌 17:00
+http://43.251.226.110:8880/play/238.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 9号桌 17:00
+http://43.251.226.110:8880/play/239.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 10号桌 17:00
+http://43.251.226.110:8880/play/240.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 11号桌 17:00
+http://43.251.226.110:8880/play/241.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 12号桌 17:00
+http://43.251.226.110:8880/play/242.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 13号桌 17:00
+http://43.251.226.110:8880/play/243.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 14号桌 17:00
+http://43.251.226.110:8880/play/244.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 15号桌 17:00
+http://43.251.226.110:8880/play/245.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 杜凯琹率中国香港女团冲开门红 16号桌 17:00
+http://43.251.226.110:8880/play/246.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 刘国正 周冠达 周泽昊 16:00
+http://43.251.226.110:8880/play/302.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 刘馨蕊 17:00
+http://43.251.226.110:8880/play/303.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 5号桌 17:00
+http://43.251.226.110:8880/play/304.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 6号桌 17:00
+http://43.251.226.110:8880/play/305.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 7号桌 17:00
+http://43.251.226.110:8880/play/306.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 8号桌 17:00
+http://43.251.226.110:8880/play/307.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 9号桌 17:00
+http://43.251.226.110:8880/play/308.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 10号桌 17:00
+http://43.251.226.110:8880/play/309.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 11号桌 17:00
+http://43.251.226.110:8880/play/310.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 12号桌 17:00
+http://43.251.226.110:8880/play/311.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 13号桌 17:00
+http://43.251.226.110:8880/play/312.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 14号桌 17:00
+http://43.251.226.110:8880/play/313.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 15号桌 17:00
+http://43.251.226.110:8880/play/314.m3u8
+#EXTINF:-1 group-title="HongKong",伦敦团体世乒赛 黄镇廷、杜凯琹领衔中国香港男女团冲胜 16号桌 17:00
+http://43.251.226.110:8880/play/315.m3u8
+#EXTINF:-1 group-title="HongKong",VIU TV
+http://43.251.226.110:8880/play/1011.m3u8
+#EXTINF:-1 group-title="HongKong",VIU TV6
+http://43.251.226.110:8880/play/1012.m3u8
+#EXTINF:-1 group-title="HongKong",TVB娱乐新闻
+http://43.251.226.110:8880/play/1013.m3u8
+#EXTINF:-1 group-title="HongKong",TVB 华语剧台
+http://43.251.226.110:8880/play/1025.m3u8
+#EXTINF:-1 group-title="HongKong",TVB 亚洲剧台
+http://43.251.226.110:8880/play/1026.m3u8
+#EXTINF:-1 group-title="HongKong",TVB 戏曲台
+http://43.251.226.110:8880/play/1027.m3u8
+#EXTINF:-1 group-title="HongKong",TVB 黄金华剧台
+http://43.251.226.110:8880/play/1028.m3u8
+#EXTINF:-1 group-title="HongKong",TVB 黄金翡翠台
+http://43.251.226.110:8880/play/1029.m3u8
+#EXTINF:-1 group-title="HongKong",TVB 星河
+http://43.251.226.110:8880/play/1030.m3u8
+#EXTINF:-1 group-title="HongKong",HOY 78
+http://43.251.226.110:8880/play/1037.m3u8
+#EXTINF:-1 group-title="HongKong",HOY 76
+http://43.251.226.110:8880/play/1038.m3u8
+#EXTINF:-1 group-title="HongKong",HOY TV
+http://43.251.226.110:8880/play/1039.m3u8
+#EXTINF:-1 group-title="HongKong",NOW新闻台
+http://43.251.226.110:8880/play/1093.m3u8
+#EXTINF:-1 group-title="HongKong",TVB PLUS
+http://43.251.226.110:8880/play/1105.m3u8
+#EXTINF:-1 group-title="HongKong",VIUTVSIX
+http://43.251.226.110:8880/play/1108.m3u8
+#EXTINF:-1 group-title="HongKong",黄金翡翠台
+http://43.251.226.110:8880/play/1122.m3u8
+#EXTINF:-1 group-title="HongKong",TVBPlus
+http://43.251.226.110:8880/play/1124.m3u8
+#EXTINF:-1 group-title="HongKong",香港院线大片-最新
+http://43.251.226.110:8880/play/1401.m3u8
+#EXTINF:-1 group-title="HongKong",TVB力作：团圆
+http://43.251.226.110:8880/play/1655.m3u8
+#EXTINF:-1 group-title="HongKong",香港第三台
+http://43.251.226.110:8880/play/2022.m3u8
+#EXTINF:-1 group-title="HongKong",香港古典音乐
+http://43.251.226.110:8880/play/2033.m3u8
 #EXTINF:-1 group-title="HongKong",香港卫视
-https://stream1.freetv.fun/5335c88a9a7d8b74173b491f480d4f94e8d3bd596af54478106aa2399e6c7917.m3u8
+https://stream1.freetv.fun/ae7eaf28d8610cdc1651ef6a1f7dbb24b49c5a87627d0d881330afaea37a1616.m3u8
 #EXTINF:-1 group-title="HongKong",杭州明珠
 https://stream1.freetv.fun/hang-zhou-ming-zhu-1.ctv
 #EXTINF:-1 group-title="HongKong",TVBS亚洲
-http://38.64.72.148/hls/modn/list/4005/chunklist0.m3u8
-#EXTINF:-1 group-title="HongKong",无线新闻
-http://cdn9.163189.xyz/smt1.1.php?id=inews_twn
+http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8?zshijd
 #EXTINF:-1 group-title="HongKong",明珠台
 http://o11.163189.xyz/stream/tvb/mzt/
+#EXTINF:-1 group-title="HongKong",无线新闻
+http://cdn9.163189.xyz/smt1.1.php?id=inews_twn
 #EXTINF:-1 group-title="HongKong",翡翠台
 http://mytv.cdn.loc.cc/o12.php?id=fct
 #EXTINF:-1 group-title="HongKong",无线星河
 https://cdn6.101.qzz.io/163189/tvbxh
+#EXTINF:-1 group-title="HongKong",经典香港电影
+http://43.251.226.110:8880/play/140.m3u8
+#EXTINF:-1 group-title="HongKong",香港片系列
+https://live.ottiptv.cc/huya/29982660
+#EXTINF:-1 group-title="HongKong",华丽翡翠台
+https://o11.163189.xyz/stream/live/hlt/
+#EXTINF:-1 group-title="HongKong",千禧经典台
+https://o11.163189.xyz/stream/live/tvbc/
+#EXTINF:-1 group-title="HongKong",TVB星河
+https://o11.163189.xyz/stream/live/tvbxh/
 #EXTINF:-1 group-title="HongKong",无线新闻台
 https://cdn6.163189.xyz/163189/wxxw
 #EXTINF:-1 group-title="HongKong",TVB Plus
 https://o11.163189.xyz/stream/tvb/tvbp/
+#EXTINF:-1 group-title="HongKong",TVBS新闻
+http://43.251.226.110:8880/play/1046.m3u8
+#EXTINF:-1 group-title="HongKong",VIUTV
+http://43.251.226.110:8880/play/1094.m3u8
 
-# 分组: TaiWan (共49个频道)
+# 分组: TaiWan (共62个频道)
 #EXTINF:-1 group-title="TaiWan",TVBS精彩
 http://iptv.4666888.xyz/iptv2A.php?id=47
 #EXTINF:-1 group-title="TaiWan",TVBS新闻
@@ -404,16 +500,8 @@ http://74.91.26.218:82/live/ctvnews.m3u8
 https://stream1.freetv.fun/1b67bc523c86ffa05707cd3f9471cfe1ced1c17d0537471788e00679a1d6cde3.m3u8
 #EXTINF:-1 group-title="TaiWan",三立台湾
 https://stream1.freetv.fun/san-li-tai-wan-1.ctv
-#EXTINF:-1 group-title="TaiWan",东森综合
-https://hls-gateway.vpstv.net/streams/476987.m3u8
 #EXTINF:-1 group-title="TaiWan",纬来日本
 rtmp://f13h.mine.nu/sat/tv771
-#EXTINF:-1 group-title="TaiWan",台视
-rtmp://f13h.mine.nu/sat/tv071
-#EXTINF:-1 group-title="TaiWan",台湾剧专区
-https://live.ottiptv.cc/huya/11342436
-#EXTINF:-1 group-title="TaiWan",年代剧专区
-https://live.ottiptv.cc/huya/20969095
 #EXTINF:-1 group-title="TaiWan",三立综合台
 http://116.241.240.176:5050/4gtv-live207/index.m3u8
 #EXTINF:-1 group-title="TaiWan",寰宇新闻台
@@ -436,20 +524,54 @@ https://iptv.707626.xyz/ch/48427aaf6dc96edbb10da27d2de03400/master.m3u8
 https://iptv.707626.xyz/ch/5d63f4c7138710902e7a556d56153053/master.m3u8
 #EXTINF:-1 group-title="TaiWan",非凡新聞台
 https://iptv.707626.xyz/ch/a119271e4a5a1ec6522fe55e1e07121f/master.m3u8
+#EXTINF:-1 group-title="TaiWan",东森新闻
+http://43.251.226.110:8880/play/1047.m3u8
+#EXTINF:-1 group-title="TaiWan",民视第一
+http://43.251.226.110:8880/play/1053.m3u8
+#EXTINF:-1 group-title="TaiWan",民视台湾
+http://43.251.226.110:8880/play/1054.m3u8
+#EXTINF:-1 group-title="TaiWan",公视
+http://43.251.226.110:8880/play/1059.m3u8
+#EXTINF:-1 group-title="TaiWan",中天娱乐
+http://43.251.226.110:8880/play/1060.m3u8
+#EXTINF:-1 group-title="TaiWan",八大第一
+http://43.251.226.110:8880/play/1061.m3u8
+#EXTINF:-1 group-title="TaiWan",八大综合
+http://43.251.226.110:8880/play/1062.m3u8
+#EXTINF:-1 group-title="TaiWan",八大戏剧
+http://43.251.226.110:8880/play/1063.m3u8
+#EXTINF:-1 group-title="TaiWan",八大娱乐
+http://43.251.226.110:8880/play/1064.m3u8
+#EXTINF:-1 group-title="TaiWan",原住民族電視台
+http://43.251.226.110:8880/play/1076.m3u8
+#EXTINF:-1 group-title="TaiWan",1930年代经典电影
+http://43.251.226.110:8880/play/1243.m3u8
+#EXTINF:-1 group-title="TaiWan",易中天品三国
+http://43.251.226.110:8880/play/1361.m3u8
+#EXTINF:-1 group-title="TaiWan",先锋之那时青春-热血年代
+http://43.251.226.110:8880/play/1622.m3u8
 #EXTINF:-1 group-title="TaiWan",TVBS亚洲
-http://38.64.72.148/hls/modn/list/4005/chunklist0.m3u8
+http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8?zshijd
 #EXTINF:-1 group-title="TaiWan",三立新闻
 https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV32.m3u8
+#EXTINF:-1 group-title="TaiWan",东森综合
+http://43.251.226.110:8880/play/1050.m3u8
 #EXTINF:-1 group-title="TaiWan",纬来育乐
 https://hls-gateway.vpstv.net/streams/477081.m3u8
 #EXTINF:-1 group-title="TaiWan",纬来体育
-https://epg.pw/stream/8855a9936e37e608a0ec8a014cce1673dee9c5d68d560da376cc92e5edef2b25.m3u8
+https://epg.pw/stream/4f18dfe0593db5c686eb64ae8edaf2a9202d4d46bdc9bbde2cee27708e12ea01.m3u8
 #EXTINF:-1 group-title="TaiWan",东森超视
-https://stream1.freetv.fun/dong-sen-chao-shi-4.m3u8
+https://stream1.freetv.fun/dong-sen-chao-shi-8.m3u8
 #EXTINF:-1 group-title="TaiWan",东森洋片
 https://stream1.freetv.fun/dong-sen-yang-pian-3.m3u8
+#EXTINF:-1 group-title="TaiWan",台视
+http://43.251.226.110:8880/play/1057.m3u8
 #EXTINF:-1 group-title="TaiWan",华视
-rtmp://f13h.mine.nu/sat/tv111
+http://43.251.226.110:8880/play/1058.m3u8
 #EXTINF:-1 group-title="TaiWan",中视
-rtmp://f13h.mine.nu/sat/tv091
+http://43.251.226.110:8880/play/1056.m3u8
+#EXTINF:-1 group-title="TaiWan",台湾剧专区
+https://live.ottiptv.cc/huya/11342436
+#EXTINF:-1 group-title="TaiWan",年代剧专区
+https://live.ottiptv.cc/huya/20969095
 
