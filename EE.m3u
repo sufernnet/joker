@@ -362,23 +362,17 @@ http://38.75.136.137:98/gslb/dsdqpub/gfjs.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="怀旧剧场" tvg-name="怀旧剧场" tvg-logo="https://www.xn--rgv465a.top/tvlogo/怀旧剧场.png" group-title="数字",怀旧剧场
 http://38.75.136.137:98/gslb/dsdqpub/hjjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="第一剧场" tvg-name="第一剧场" tvg-logo="https://www.xn--rgv465a.top/tvlogo/第一剧场.png" group-title="数字",第一剧场
-http://38.75.136.137:98/gslb/dsdqpub/dyjc.m3u8?auth=testpub
+https://epg.pw/stream/6d7bf281e3d739806a73f5373acaa6e01988ec9739f5ac1355ce54b47a928472.m3u8
 #EXTINF:-1 tvg-id="女性时尚" tvg-name="女性时尚" tvg-logo="https://www.xn--rgv465a.top/tvlogo/女性时尚.png" group-title="数字",女性时尚
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001571/index.m3u8?streamid=15732e48a35953bb064f0ffb4197035c&streamkey=092SzM8qh4GNZnGRAOz6y3nvNrssZJcflnNDbtwifQsVSBFB4hpwpDInl50YKu2zt1eb26JJwNN5CopCgczz7WZR3dtJlHFGA3m8Sgjvc2xB9twEzATcT54y15wY&token=1775754397-43927d95ab17a1ae-0-d7fc3f2a8df09c74d345181b73c6c670
+http://38.75.136.137:98/gslb/dsdqpub/nxss.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="风云足球" tvg-name="风云足球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云足球.png" group-title="数字",风云足球
-http://38.75.136.137:98/gslb/dsdqpub/fyzq.m3u8?auth=testpub
+https://epg.pw/stream/ac8062ec9484078061d3bef507c15a423ac57ae4144e3fcc4b0a198dd420f911.m3u8
 #EXTINF:-1 tvg-id="风云音乐" tvg-name="风云音乐" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云音乐.png" group-title="数字",风云音乐
 http://38.75.136.137:98/gslb/dsdqpub/fyyy.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="央视台球" tvg-name="央视台球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/央视台球.png" group-title="数字",央视台球
 https://epg.pw/stream/25677ac2e8c1f7c3dd6359c43eb5f0f54efb3f5c11f9dda18d01b3e0308ed017.m3u8
 
 # CHC
-#EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" group-title="CHC",CHC影迷电影
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001581/index.m3u8?streamid=af62547c4c8be0ef4a658f4b4853388f&streamkey=0AGMO6LiBIxyH55HrvMarEqxYYHHBsBI1AS8pWYcug6hIz6JcOuFRUYGPeeB6DUdYBhCZW4VbAvlr77F1jurxYfAy8mix71ZcG7gxzAeeVpjSNe4Slu1Xui5R21MiDUL&token=1775754555-63098edc022aecb0-0-61ebd04bf297352038785125878e0b8f
-#EXTINF:-1 tvg-name="CHC家庭影院" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png" group-title="CHC",CHC家庭影院
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001570/index.m3u8?streamid=136f530a61d26dc0f670f39f05291586&streamkey=0gNYRWDeQgJcsQzJtwy5YfNuNXxp8JTqLQoubxJdaerqPImB5Zqld0YLrCikCEEBNzsaCMzgiZxPacL6jVLMJd0KpMDkxYV4BhGlwYU0ju7r1WxWgQER2jIf9CgZaG3mq&token=1775754529-ed2502f4a1a9b5b0-0-ab6ce23e1854b42f8e2b31cb58021423
-#EXTINF:-1 tvg-name="CHC动作电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png" group-title="CHC",CHC动作电影
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001580/index.m3u8?streamid=87c13b6e841ed5039d4c2ce8f266f9ef&streamkey=0gNYRWDeQgJcsRRVxgX7CXzeeNfbK5b6jgfx2dUMMXpSOjJ6HaVTnXNZIvUs7ZjMVIipZGwSqsLBoB1csVGKjUersUPcVyHJvvzH9lv6u5pQ0BcM1SFtompQvPNMFD09b&token=1775754577-a16c17c5548559fa-0-23e1bb39b278d07d81f7441cf04c41ce
 
 # HK
 #EXTINF:-1 group-title="HK" tvg-name="凤凰中文" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰中文.png" epg-url="https://123.tv1288.xyz/2026.xml",凤凰中文
@@ -390,7 +384,7 @@ http://cdn6.163189.xyz/163189/fhhk
 #EXTINF:-1 group-title="HK" tvg-name="NOW新闻" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/NOW新闻.png" epg-url="https://123.tv1288.xyz/2026.xml",NOW新闻
 http://cdn.163189.xyz/163189/now
 #EXTINF:-1 group-title="HK" tvg-name="翡翠台" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png" epg-url="https://123.tv1288.xyz/2026.xml",翡翠台
-http://cdn6.163189.xyz/163189/fct
+https://cdn6.163189.xyz/163189/fct4k
 #EXTINF:-1 group-title="HK" tvg-name="翡翠一台(TVB1)" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png" epg-url="https://123.tv1288.xyz/2026.xml",翡翠一台(TVB1)
 http://cdn6.163189.xyz/163189/tvb1
 #EXTINF:-1 group-title="HK" tvg-name="TVB翡翠剧集台(TVBDRAMA)" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB翡翠剧集台(TVBDRAMA).png" epg-url="https://123.tv1288.xyz/2026.xml",TVB翡翠剧集台(TVBDRAMA)
@@ -410,7 +404,7 @@ http://o11.163189.xyz/stream/live/tvbc/
 #EXTINF:-1 group-title="HK" tvg-name="八度空间" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/八度空间.png" epg-url="https://123.tv1288.xyz/2026.xml",八度空间
 http://cdn6.163189.xyz/163189/8tv
 #EXTINF:-1 group-title="HK" tvg-name="TVB星河" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB星河.png" epg-url="https://123.tv1288.xyz/2026.xml",TVB星河
-http://cdn6.163189.xyz/163189/tvbxh
+http://o11.163189.xyz/stream/live/tvbxh/
 #EXTINF:-1 group-title="HK" tvg-name="TVBPLUS" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVBPLUS.png" epg-url="https://123.tv1288.xyz/2026.xml",TVBPLUS
 http://o11.163189.xyz/stream/tvb/tvbp/
 #EXTINF:-1 group-title="HK" tvg-name="TVBJ1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVBJ1.png" epg-url="https://123.tv1288.xyz/2026.xml",TVBJ1
