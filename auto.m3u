@@ -1,7 +1,7 @@
 #EXTM3U
 # 自动生成的直播源列表
-# 生成时间: 2026-04-21 05:29:26
-# 频道总数: 170
+# 生成时间: 2026-04-28 02:23:31
+# 频道总数: 185
 
 # 分组: 央视 (共17个频道)
 #EXTINF:-1 group-title="央视",CCTV-1高清
@@ -70,8 +70,6 @@ https://hwapi.yntv.net/62hdvf/rjwt14.m3u8
 http://39.152.103.17:8089/tsfile/live/1044_1.m3u8
 #EXTINF:-1 group-title="卫视",北京卫视
 http://player.cntv.cn/standard/live_HLSDRM20180606.swf?ChannelID=btv3&P2PChannelID=pd://cctv_p2p_hdbtv3
-#EXTINF:-1 group-title="卫视",广东卫视
-http://119.32.12.17:2901/udp/224.1.100.6:11111
 #EXTINF:-1 group-title="卫视",辽宁卫视
 http://120.76.248.139/live/bfgd/4200000077.m3u8
 #EXTINF:-1 group-title="卫视",广西卫视
@@ -100,12 +98,14 @@ http://38.75.136.137:98/gslb/dsdqpub/sxwshd.m3u8?auth=testpub
 http://120.76.248.139/live/bfgd/4200000084.m3u8
 #EXTINF:-1 group-title="卫视",海南卫视
 http://120.76.248.139/live/bfgd/4200000473.m3u8
+#EXTINF:-1 group-title="卫视",广东卫视
+http://120.76.248.139/live/bfgd/4200000100.m3u8
 #EXTINF:-1 group-title="卫视",西藏卫视
 https://iptv.catvod.com/live.php?id=%E8%A5%BF%E8%97%8F%E5%8D%AB%E8%A7%86&line=1
 #EXTINF:-1 group-title="卫视",青海卫视
 https://iptv.catvod.com/live.php?id=%E9%9D%92%E6%B5%B7%E5%8D%AB%E8%A7%86&line=3
 
-# 分组: 4K (共30个频道)
+# 分组: 4K (共39个频道)
 #EXTINF:-1 group-title="4K",四川卫视4K
 http://39.152.103.17:8089/tsfile/live/1044_1.m3u8
 #EXTINF:-1 group-title="4K",苏州4K
@@ -126,10 +126,18 @@ http://gslbserv.itv.cmvideo.cn:80/1.m3u8?channel-id=FifastbLive&Contentid=100000
 http://111.29.9.33:6610/000000001000/1000000004000011651/index.m3u8?channel-id=bestzb&Contentid=1000000004000011651&livemode=1&stbId=3
 #EXTINF:-1 group-title="4K",🔄4K视频
 http://xjj1.716888.xyz/fenlei/4k/4k.php
+#EXTINF:-1 group-title="4K",广东4K超高清
+http://119.32.12.131:2905/udp/225.1.1.3:7523
+#EXTINF:-1 group-title="4K",天空体育4K 1
+http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/1281426.m3u8
+#EXTINF:-1 group-title="4K",天空体育4K 2
+http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/1281427.m3u8
 #EXTINF:-1 group-title="4K",翡翠台4K
 http://o11.163189.xyz/stream/tvb/fct4k/
+#EXTINF:-1 group-title="4K",NOW体育4K 1
+http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/641325.m3u8
 #EXTINF:-1 group-title="4K",英国TNT体育 4K
-http://czstream.com:826/LouCarey/KYsHfE1YLU/119906
+http://czstream.com:826/live/LouCarey/KYsHfE1YLU/119906.m3u8
 #EXTINF:-1 group-title="4K",英国天空体育主赛事 4K
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119327
 #EXTINF:-1 group-title="4K",英国天空体育F1 4K
@@ -138,10 +146,10 @@ http://czstream.com:826/LouCarey/KYsHfE1YLU/118946
 http://czstream.com:826/LouCarey/KYsHfE1YLU/118944
 #EXTINF:-1 group-title="4K",英国天空体育4K 2
 http://czstream.com:826/LouCarey/KYsHfE1YLU/118945
-#EXTINF:-1 group-title="4K",波兰Eleven Sports 1 4K
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/Q9HCQVD66DX86T/20068/index.m3u8
 #EXTINF:-1 group-title="4K",加拿大TSN 4K
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119333
+#EXTINF:-1 group-title="4K",加拿大SPORTSNET 4K
+http://czstream.com:826/LouCarey/KYsHfE1YLU/119328
 #EXTINF:-1 group-title="4K",加拿大SPORTSNET One 4K
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119329
 #EXTINF:-1 group-title="4K",Love Nature 4K
@@ -150,20 +158,30 @@ https://pb-ehs1glsha1juy.akamaized.net/Love_Nature_4K.m3u8
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119331
 #EXTINF:-1 group-title="4K",加拿大Stingray Now 4K
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119332
+#EXTINF:-1 group-title="4K",法国1台 4K
+http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/264279.m3u8
+#EXTINF:-1 group-title="4K",法国2台 4K
+http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/1090663.m3u8
+#EXTINF:-1 group-title="4K",法国Canal+ 4K
+http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/1854081.m3u8
 #EXTINF:-1 group-title="4K",意大利1台 4K
 https://mynettv.duckdns.org/stream/channelid/1539667822?profile=pass
 #EXTINF:-1 group-title="4K",东方卫视4K
-http://bp-resource-dfl.bestv.cn/148/3/video.m3u8
+https://bp-resource-dfl.bestv.cn/148/3/video.m3u8
 #EXTINF:-1 group-title="4K",CCTV-4K超高清
 http://107.150.60.122/live/cctv4k.m3u8
 #EXTINF:-1 group-title="4K",CCTV4K超高清
 http://www.520345.xyz:8188/rtp/239.69.1.111:10304?$3840x2160
-#EXTINF:-1 group-title="4K",CCTV4K
-http://107.150.60.122/live/cctv4k.m3u8
-#EXTINF:-1 group-title="4K",北京IPTV4K
-http://home.airengine.net:9003/rtp/228.1.1.123:8001
 #EXTINF:-1 group-title="4K",至臻视界4K
 http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000015686
+#EXTINF:-1 group-title="4K",CCTV4K
+http://107.150.60.122/live/cctv4k.m3u8
+#EXTINF:-1 group-title="4K",Now体育4K 1
+http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/438867.m3u8
+#EXTINF:-1 group-title="4K",波兰Eleven Sports 1 4K
+http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/1281071.m3u8
+#EXTINF:-1 group-title="4K",北京IPTV4K
+http://home.airengine.net:9003/rtp/228.1.1.123:8001
 #EXTINF:-1 group-title="4K",咪视界4K
 http://anfeind1.kmdns.net:19999/migunohosts.php?Contentid=3000000010000005180
 
@@ -187,31 +205,31 @@ http://38.75.136.137:98/gslb/dsdqpub/ystq.m3u8?auth=testpub
 
 # 分组: CHC (共3个频道)
 #EXTINF:-1 group-title="CHC",CHC动作电影
-https://iptv.catvod.com/live.php?id=NewTV%E5%8A%A8%E4%BD%9C%E7%94%B5%E5%BD%B1
+http://live.metshop.top/huya/11602077?cdn=alicdn
 #EXTINF:-1 group-title="CHC",CHC影迷电影
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001581/index.m3u8?streamid=af62547c4c8be0ef4a658f4b4853388f&streamkey=0AGMO6LiBIxyH55HrvMarEqxYYHHBsBI1AS8pWYcug6hIz6JcOuFRUYGPeeB6DUdYBhCZW4VbAvlr77F1jurxYfAy8mix71ZcG7gxzAeeVpjSNe4Slu1Xui5R21MiDUL&token=1775754555-63098edc022aecb0-0-61ebd04bf297352038785125878e0b8f
+http://38.75.136.137:98/gslb/dsdqpub/chchd.m3u8?auth=testpub
 #EXTINF:-1 group-title="CHC",CHC家庭影院
 https://iptv.catvod.com/live.php?id=CHC%E5%AE%B6%E5%BA%AD%E5%BD%B1%E9%99%A2
 
-# 分组: HongKong (共39个频道)
+# 分组: HongKong (共45个频道)
 #EXTINF:-1 group-title="HongKong",凤凰中文
 https://cdn6.163189.xyz/163189/fhzw
 #EXTINF:-1 group-title="HongKong",凤凰资讯
 https://cdn6.163189.xyz/163189/fhzx
 #EXTINF:-1 group-title="HongKong",凤凰香港
 https://cdn6.163189.xyz/163189/fhhk
-#EXTINF:-1 group-title="HongKong",TVBS亚洲
-http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8?zshijd
 #EXTINF:-1 group-title="HongKong",福建漳州醉美沙滩翡翠湾
 https://gcalic.v.myalicdn.com/gc/fcw03_1/index.m3u8
+#EXTINF:-1 group-title="HongKong",经典香港电影
+http://fei01.kmdns.net:8807/625703337
 #EXTINF:-1 group-title="HongKong",KHANHHOATV
 https://liveh12.vtvprime.vn/hls/KHANHHOATV/03.m3u8
 #EXTINF:-1 group-title="HongKong",香港片系列
 https://live.ottiptv.cc/huya/29982660
 #EXTINF:-1 group-title="HongKong",CCTV1 香港
 http://cdn6.163189.xyz/163189/cctv1
-#EXTINF:-1 group-title="HongKong",CCRV6 香港
-http://iptv.4666888.xyz/iptv2A.php?id=61
+#EXTINF:-1 group-title="HongKong",翡翠台 广电版
+http://o11.163189.xyz/stream/tvb/fct/
 #EXTINF:-1 group-title="HongKong",翡翠台4K
 http://o11.163189.xyz/stream/tvb/fct4k/
 #EXTINF:-1 group-title="HongKong",TVB Plus
@@ -228,32 +246,42 @@ https://cdn.163189.xyz/163189/now
 https://cdn.163189.xyz/163189/rthk31
 #EXTINF:-1 group-title="HongKong",RTHK32
 https://cdn.163189.xyz/163189/rthk32
+#EXTINF:-1 group-title="HongKong",TVBS新闻
+http://iptv.4666888.xyz/iptv2A.php?id=43
 #EXTINF:-1 group-title="HongKong",NOW体育1
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236720.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236720.m3u8
 #EXTINF:-1 group-title="HongKong",NOW体育2
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236721.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236721.m3u8
 #EXTINF:-1 group-title="HongKong",NOW体育3
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236722.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236722.m3u8
 #EXTINF:-1 group-title="HongKong",NOW体育4
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236723.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236723.m3u8
 #EXTINF:-1 group-title="HongKong",NOW体育5
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236724.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236724.m3u8
 #EXTINF:-1 group-title="HongKong",NOW体育6
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236725.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236725.m3u8
 #EXTINF:-1 group-title="HongKong",NOW体育7
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236726.m3u8
-#EXTINF:-1 group-title="HongKong",NOW英超1
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236727.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236726.m3u8
+#EXTINF:-1 group-title="HongKong",NOW体育精选
+http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/313830.m3u8
+#EXTINF:-1 group-title="HongKong",NOW体育4K 1
+http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/641325.m3u8
+#EXTINF:-1 group-title="HongKong",NOW英超 TV
+http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/313829.m3u8
+#EXTINF:-1 group-title="HongKong",NOW英超1粤语
+http://172.110.220.61/eric@kowalewski.com/1933542380/1391046.m3u8
+#EXTINF:-1 group-title="HongKong",NOW英超1英语
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236727.m3u8
 #EXTINF:-1 group-title="HongKong",NOW英超2
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236728.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236728.m3u8
 #EXTINF:-1 group-title="HongKong",NOW英超3
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236729.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236729.m3u8
 #EXTINF:-1 group-title="HongKong",NOW英超4
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236730.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236730.m3u8
 #EXTINF:-1 group-title="HongKong",NOW英超5
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236731.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236731.m3u8
 #EXTINF:-1 group-title="HongKong",NOW英超6
-http://154.222.16.140:5080/1.php?url=http://hostengine.live/live/Cori/123456/236732.m3u8
+http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236732.m3u8
 #EXTINF:-1 group-title="HongKong",美国NBC Sports NOW
 https://xumo-xumoent-vc-122-sjv70.fast.nbcuni.com/live/master.m3u8
 #EXTINF:-1 group-title="HongKong",J:COM无线频道
@@ -261,15 +289,17 @@ http://quanwen:quanwen@jptv.benkailam.com:9961/stream/channelid/872879899?profil
 #EXTINF:-1 group-title="HongKong",香港卫视
 https://stream1.freetv.fun/5335c88a9a7d8b74173b491f480d4f94e8d3bd596af54478106aa2399e6c7917.m3u8
 #EXTINF:-1 group-title="HongKong",杭州明珠
-https://stream1.freetv.fun/hang-zhou-ming-zhu-2.ctv
+https://stream1.freetv.fun/hang-zhou-ming-zhu-1.ctv
+#EXTINF:-1 group-title="HongKong",TVBS亚洲
+http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8?zshijd
+#EXTINF:-1 group-title="HongKong",翡翠台
+http://mytv.cdn.loc.cc/o12.php?id=fct
 #EXTINF:-1 group-title="HongKong",明珠台
-http://o11.163189.xyz/stream/tvb/mzt/
+http://cdn9.163189.xyz/smt1.1.php?id=pearl_twn
 #EXTINF:-1 group-title="HongKong",无线新闻
 http://cdn9.163189.xyz/smt1.1.php?id=inews_twn
-#EXTINF:-1 group-title="HongKong",翡翠台
-http://o11.163189.xyz/stream/tvb/fct/
 #EXTINF:-1 group-title="HongKong",无线星河
-https://cdn6.101.qzz.io/163189/tvbxh
+http://php.jdshipin.com:8880/TVOD/iptv.php?id=xinghe
 #EXTINF:-1 group-title="HongKong",无线新闻台
 https://cdn6.163189.xyz/163189/wxxw
 
@@ -320,8 +350,6 @@ http://74.91.26.218:82/live/ctvjc.m3u8
 http://74.91.26.218:82/live/ctvnews.m3u8
 #EXTINF:-1 group-title="TaiWan",中天新闻
 https://stream1.freetv.fun/1b67bc523c86ffa05707cd3f9471cfe1ced1c17d0537471788e00679a1d6cde3.m3u8
-#EXTINF:-1 group-title="TaiWan",TVBS亚洲
-http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8?zshijd
 #EXTINF:-1 group-title="TaiWan",三立台湾
 https://stream1.freetv.fun/san-li-tai-wan-1.ctv
 #EXTINF:-1 group-title="TaiWan",东森综合
@@ -342,16 +370,18 @@ http://218.166.92.149:6000/of-4gtv-4gtv156/index.m3u8
 http://116.241.240.176:5050/4gtv-live105/index.m3u8
 #EXTINF:-1 group-title="TaiWan",Love Nature 台湾
 http://116.241.240.176:5050/4gtv-live208/index.m3u8
+#EXTINF:-1 group-title="TaiWan",TVBS亚洲
+http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8?zshijd
 #EXTINF:-1 group-title="TaiWan",三立新闻
 https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV32.m3u8
 #EXTINF:-1 group-title="TaiWan",纬来育乐
 https://hls-gateway.vpstv.net/streams/477081.m3u8
 #EXTINF:-1 group-title="TaiWan",纬来体育
-https://epg.pw/stream/8855a9936e37e608a0ec8a014cce1673dee9c5d68d560da376cc92e5edef2b25.m3u8
+https://epg.pw/stream/4f18dfe0593db5c686eb64ae8edaf2a9202d4d46bdc9bbde2cee27708e12ea01.m3u8
+#EXTINF:-1 group-title="TaiWan",东森超视
+https://stream1.freetv.fun/dong-sen-chao-shi-2.m3u8
 #EXTINF:-1 group-title="TaiWan",东森洋片
 https://stream1.freetv.fun/dong-sen-yang-pian-3.m3u8
-#EXTINF:-1 group-title="TaiWan",东森超视
-https://stream1.freetv.fun/dong-sen-chao-shi-8.m3u8
 #EXTINF:-1 group-title="TaiWan",华视
 rtmp://f13h.mine.nu/sat/tv111
 #EXTINF:-1 group-title="TaiWan",中视
