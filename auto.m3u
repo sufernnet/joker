@@ -1,7 +1,7 @@
 #EXTM3U
 # 自动生成的直播源列表
-# 生成时间: 2026-04-28 02:23:31
-# 频道总数: 185
+# 生成时间: 2026-04-28 02:36:50
+# 频道总数: 197
 
 # 分组: 央视 (共17个频道)
 #EXTINF:-1 group-title="央视",CCTV-1高清
@@ -105,7 +105,7 @@ https://iptv.catvod.com/live.php?id=%E8%A5%BF%E8%97%8F%E5%8D%AB%E8%A7%86&line=1
 #EXTINF:-1 group-title="卫视",青海卫视
 https://iptv.catvod.com/live.php?id=%E9%9D%92%E6%B5%B7%E5%8D%AB%E8%A7%86&line=3
 
-# 分组: 4K (共39个频道)
+# 分组: 4K (共45个频道)
 #EXTINF:-1 group-title="4K",四川卫视4K
 http://39.152.103.17:8089/tsfile/live/1044_1.m3u8
 #EXTINF:-1 group-title="4K",苏州4K
@@ -166,14 +166,28 @@ http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8i
 http://156.238.224.122:6080/1.php?url=http://best-8k.org/live/jjyw70ss4w/ek5ui8ithc/1854081.m3u8
 #EXTINF:-1 group-title="4K",意大利1台 4K
 https://mynettv.duckdns.org/stream/channelid/1539667822?profile=pass
+#EXTINF:-1 group-title="4K",Bloomberg Television 4K
+https://iptv.707626.xyz/ch/484975b05af7f75dccb2b81c7797ca81/master.m3u8
+#EXTINF:-1 group-title="4K",Clarity 4K
+https://iptv.707626.xyz/ch/721162bc9d55d5fbe933df8ca6618d9c/master.m3u8
+#EXTINF:-1 group-title="4K",Loupe 4K
+https://iptv.707626.xyz/ch/a88cdd724ce62f6d625cb8695b536cfd/master.m3u8
+#EXTINF:-1 group-title="4K",Love Nature 4K CA
+https://iptv.707626.xyz/ch/b8574fca20a915b8a47efb2d91793c8c/master.m3u8
+#EXTINF:-1 group-title="4K",NESN 4K
+https://iptv.707626.xyz/ch/3aa7cb9436cc7ed1a4f232991c865d14/master.m3u8
+#EXTINF:-1 group-title="4K",Sky Sports F1 4K UK
+https://iptv.707626.xyz/ch/5ae2b33b5e1fd9105b6f4f459b2bc66d/master.m3u8
 #EXTINF:-1 group-title="4K",东方卫视4K
-https://bp-resource-dfl.bestv.cn/148/3/video.m3u8
+http://bp-resource-dfl.bestv.cn/148/3/video.m3u8
 #EXTINF:-1 group-title="4K",CCTV-4K超高清
 http://107.150.60.122/live/cctv4k.m3u8
 #EXTINF:-1 group-title="4K",CCTV4K超高清
 http://www.520345.xyz:8188/rtp/239.69.1.111:10304?$3840x2160
 #EXTINF:-1 group-title="4K",至臻视界4K
 http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000015686
+#EXTINF:-1 group-title="4K",咪视界4K
+http://anfeind1.kmdns.net:19999/migunohosts.php?Contentid=3000000010000005180
 #EXTINF:-1 group-title="4K",CCTV4K
 http://107.150.60.122/live/cctv4k.m3u8
 #EXTINF:-1 group-title="4K",Now体育4K 1
@@ -181,9 +195,7 @@ http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/438867.m3u8
 #EXTINF:-1 group-title="4K",波兰Eleven Sports 1 4K
 http://seatv.xyz/live/3Z4SFBM0NJX0N9H/yVVlYoaT60/1281071.m3u8
 #EXTINF:-1 group-title="4K",北京IPTV4K
-http://home.airengine.net:9003/rtp/228.1.1.123:8001
-#EXTINF:-1 group-title="4K",咪视界4K
-http://anfeind1.kmdns.net:19999/migunohosts.php?Contentid=3000000010000005180
+http://4px369674fn3.vicp.fun:7088/udp/225.1.8.211:8002
 
 # 分组: 数字 (共8个频道)
 #EXTINF:-1 group-title="数字",CCTV-第一剧场
@@ -211,7 +223,7 @@ http://38.75.136.137:98/gslb/dsdqpub/chchd.m3u8?auth=testpub
 #EXTINF:-1 group-title="CHC",CHC家庭影院
 https://iptv.catvod.com/live.php?id=CHC%E5%AE%B6%E5%BA%AD%E5%BD%B1%E9%99%A2
 
-# 分组: HongKong (共45个频道)
+# 分组: HongKong (共47个频道)
 #EXTINF:-1 group-title="HongKong",凤凰中文
 https://cdn6.163189.xyz/163189/fhzw
 #EXTINF:-1 group-title="HongKong",凤凰资讯
@@ -232,8 +244,6 @@ http://cdn6.163189.xyz/163189/cctv1
 http://o11.163189.xyz/stream/tvb/fct/
 #EXTINF:-1 group-title="HongKong",翡翠台4K
 http://o11.163189.xyz/stream/tvb/fct4k/
-#EXTINF:-1 group-title="HongKong",TVB Plus
-https://o11.163189.xyz/stream/tvb/tvbp/
 #EXTINF:-1 group-title="HongKong",TVB星河
 https://o11.163189.xyz/stream/live/tvbxh/
 #EXTINF:-1 group-title="HongKong",翡翠剧集台
@@ -286,24 +296,30 @@ http://154.222.16.140:5080/1.php?url=http://206.212.246.239/live/Cori/123456/236
 https://xumo-xumoent-vc-122-sjv70.fast.nbcuni.com/live/master.m3u8
 #EXTINF:-1 group-title="HongKong",J:COM无线频道
 http://quanwen:quanwen@jptv.benkailam.com:9961/stream/channelid/872879899?profile=pass
+#EXTINF:-1 group-title="HongKong",NBC Sports NOW
+https://iptv.707626.xyz/ch/5cb774b6d873bb1932714875287861e8/master.m3u8
+#EXTINF:-1 group-title="HongKong",鳳凰衛視香港台
+https://iptv.707626.xyz/ch/1183bed3a5b7e98e94e1ca51f890a1bb/master.m3u8
 #EXTINF:-1 group-title="HongKong",香港卫视
-https://stream1.freetv.fun/5335c88a9a7d8b74173b491f480d4f94e8d3bd596af54478106aa2399e6c7917.m3u8
+https://stream1.freetv.fun/ae7eaf28d8610cdc1651ef6a1f7dbb24b49c5a87627d0d881330afaea37a1616.m3u8
 #EXTINF:-1 group-title="HongKong",杭州明珠
 https://stream1.freetv.fun/hang-zhou-ming-zhu-1.ctv
 #EXTINF:-1 group-title="HongKong",TVBS亚洲
-http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8?zshijd
-#EXTINF:-1 group-title="HongKong",翡翠台
-http://mytv.cdn.loc.cc/o12.php?id=fct
-#EXTINF:-1 group-title="HongKong",明珠台
-http://cdn9.163189.xyz/smt1.1.php?id=pearl_twn
+http://38.64.72.148/hls/modn/list/4005/chunklist0.m3u8
 #EXTINF:-1 group-title="HongKong",无线新闻
 http://cdn9.163189.xyz/smt1.1.php?id=inews_twn
+#EXTINF:-1 group-title="HongKong",明珠台
+http://cdn9.163189.xyz/smt1.1.php?id=pearl_twn
+#EXTINF:-1 group-title="HongKong",翡翠台
+http://mytv.cdn.loc.cc/o12.php?id=fct
 #EXTINF:-1 group-title="HongKong",无线星河
 http://php.jdshipin.com:8880/TVOD/iptv.php?id=xinghe
 #EXTINF:-1 group-title="HongKong",无线新闻台
 https://cdn6.163189.xyz/163189/wxxw
+#EXTINF:-1 group-title="HongKong",TVB Plus
+https://o11.163189.xyz/stream/tvb/tvbp/
 
-# 分组: TaiWan (共41个频道)
+# 分组: TaiWan (共45个频道)
 #EXTINF:-1 group-title="TaiWan",TVBS精彩
 http://iptv.4666888.xyz/iptv2A.php?id=47
 #EXTINF:-1 group-title="TaiWan",TVBS新闻
@@ -370,8 +386,16 @@ http://218.166.92.149:6000/of-4gtv-4gtv156/index.m3u8
 http://116.241.240.176:5050/4gtv-live105/index.m3u8
 #EXTINF:-1 group-title="TaiWan",Love Nature 台湾
 http://116.241.240.176:5050/4gtv-live208/index.m3u8
+#EXTINF:-1 group-title="TaiWan",年代新闻
+https://iptv.707626.xyz/ch/f92bee3f634772070bc7e3b4b6e5909b/master.m3u8
+#EXTINF:-1 group-title="TaiWan",三立綜合台
+https://iptv.707626.xyz/ch/c4ec421108818660ddae5a78da732c3b/master.m3u8
+#EXTINF:-1 group-title="TaiWan",中天新聞台
+https://iptv.707626.xyz/ch/48427aaf6dc96edbb10da27d2de03400/master.m3u8
+#EXTINF:-1 group-title="TaiWan",非凡新聞台
+https://iptv.707626.xyz/ch/a119271e4a5a1ec6522fe55e1e07121f/master.m3u8
 #EXTINF:-1 group-title="TaiWan",TVBS亚洲
-http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8?zshijd
+http://38.64.72.148/hls/modn/list/4005/chunklist0.m3u8
 #EXTINF:-1 group-title="TaiWan",三立新闻
 https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV32.m3u8
 #EXTINF:-1 group-title="TaiWan",纬来育乐
