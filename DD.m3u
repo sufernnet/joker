@@ -1,7 +1,7 @@
 #EXTM3U url-tvg="https://epg.zsdc.eu.org/t.xml.gz,https://epg.iill.top/epg,https://bit.ly/a1xepg,https://epg.catvod.com/epg.xml,https://7pal.short.gy/alex-epg,https://bit.ly/a1xepg"
 
 # DD.m3u
-# 生成时间: 2026-04-29 10:55:06
+# 生成时间: 2026-04-29 23:02:05
 
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV1.png" group-title="央视",CCTV1
@@ -387,17 +387,33 @@ http://o11.163189.xyz/stream/live/tvbc/
 #EXTINF:-1 group-title="HK",八度空间
 http://cdn6.163189.xyz/163189/8tv
 #EXTINF:-1 group-title="HK",TVB星河
-http://o11.163189.xyz/stream/live/tvbxh/
+http://r.jdshipin.com/Voac4
 #EXTINF:-1 group-title="HK",TVBPLUS
 http://o11.163189.xyz/stream/tvb/tvbp/
+#EXTINF:-1 group-title="HK",TVBJ1
+http://iptv.4666888.xyz/iptv2A.php?id=26
+#EXTINF:-1 group-title="HK",TVB娱乐新闻
+http://iptv.4666888.xyz/iptv2A.php?id=36
+#EXTINF:-1 group-title="HK",TVB黄金华剧
+http://iptv.4666888.xyz/iptv2A.php?id=34
 #EXTINF:-1 group-title="HK",TVB功夫台
 http://cdn6.163189.xyz/163189/yzwx
+#EXTINF:-1 group-title="HK",TVB1
+http://iptv.4666888.xyz/iptv2A.php?id=25
 #EXTINF:-1 group-title="HK",HOY资讯
 http://cdn.163189.xyz/163189/hoy78
 #EXTINF:-1 group-title="HK",HOYTV
 http://cdn6.163189.xyz/163189/hoy
+#EXTINF:-1 group-title="HK",HOY77
+http://iptv.4666888.xyz/iptv2A.php?id=35
+#EXTINF:-1 group-title="HK",RTHK31
+http://iptv.4666888.xyz/iptv2A.php?id=23
 #EXTINF:-1 group-title="HK",RTHK32
 http://cdn.163189.xyz/163189/rthk32
+#EXTINF:-1 group-title="HK",ROCK_Action
+http://iptv.4666888.xyz/iptv2A.php?id=50
+#EXTINF:-1 group-title="HK",MYTV黄金翡翠
+http://iptv.4666888.xyz/iptv2A.php?id=32
 #EXTINF:-1 group-title="HK",iQIYI
 https://o11.163189.xyz/stream/live/iqiyi/
 #EXTINF:-1 group-title="HK",Astro AEC
@@ -723,4 +739,4 @@ https://cdn-2.ttvb.eu.org/api/Sky-Sports-F1/index.m3u8
 #EXTINF:-1 tvg-id="SkySp Mix HD" tvg-name="SkySp Mix HD" tvg-logo="https://epg.yang-1989.eu.org/logo/Sky-Sports-Mix.png" group-title="SPORTS",Sky Sports Mix
 https://cdn-2.ttvb.eu.org/api/Sky-Sports-Mix/index.m3u8
 
-# 统计: HK(26) + TW(112) + SPORTS(42) = 180
+# 统计: HK(34) + TW(112) + SPORTS(42) = 188
