@@ -40,7 +40,6 @@ CCTV_TARGET = [
     "女性时尚","风云足球","风云音乐","央视台球"
 ]
 
-# ✅ 修复这里（删除 HC家庭影院）
 CHC_TARGET = [
     "CHC影迷电影","CHC家庭影院","CHC动作电影"
 ]
@@ -104,10 +103,17 @@ def parse_group(extinf):
     m=re.search(r'group-title="([^"]*)"',extinf)
     return m.group(1) if m else ""
 
-def normalize_group(extinf,group):
+def normalize_group(extinf, group):
+    """确保返回字符串，不返回None"""
+    if extinf is None:
+        return f'#EXTINF:-1 group-title="{group}"'
+    
     if 'group-title="' in extinf:
-        return re.sub(r'group-title="[^"]*"',f'group-title="{group}"',extinf)
-    return extinf.replace("#EXTINF:-1",f'#EXTINF:-1 group-title="{group}"')
+        return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
+    elif extinf.startswith("#EXTINF"):
+        return extinf.replace("#EXTINF", f'#EXTINF group-title="{group}"', 1)
+    else:
+        return f'#EXTINF:-1 group-title="{group}",{extinf}'
 
 def dedup(data):
     seen=set()
@@ -148,8 +154,10 @@ def parse_txt(content):
 def load_chc_from_shanghai():
     url = "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u"
     raw = download(url)
+    if not raw:
+        return []
+    
     data = parse_m3u(raw)
-
     result = []
 
     for n, e, u in data:
@@ -194,13 +202,17 @@ def check(url):
     return url,999
 
 def pick_best(urls):
+    if not urls:
+        return None
+    
     best=None
     best_t=999
     with ThreadPoolExecutor(max_workers=5) as ex:
-        for f in as_completed([ex.submit(check,u) for u in urls]):
-            u,t=f.result()
-            if t<best_t:
-                best,best_t=u,t
+        futures = [ex.submit(check, u) for u in urls if u]
+        for f in as_completed(futures):
+            u,t = f.result()
+            if t < best_t:
+                best, best_t = u, t
     return best
 
 # ===================== TW =====================
@@ -232,6 +244,10 @@ def fetch_tw(lines):
 def main():
 
     content=download(SOURCE_URL)
+    if not content:
+        print("❌ 无法下载主源")
+        return
+    
     lines=content.splitlines()
 
     main_data=parse_m3u(content)
@@ -267,7 +283,8 @@ def main():
     for name in CCTV_TARGET:
         if name in cctv_map:
             best=pick_best([u for _,u in cctv_map[name]])
-            cctv.append((name,cctv_map[name][0][0],best))
+            if best:  # 确保有有效的URL
+                cctv.append((name, cctv_map[name][0][0], best))
 
     # ⭐ CHC（只用上海源）
     chc_raw = load_chc_from_shanghai()
@@ -280,10 +297,11 @@ def main():
     for name in CHC_TARGET:
         if name in chc_map:
             best=pick_best([u for _,u in chc_map[name]])
-            ext=chc_map[name][0][0]
-            if name in LOGO_MAP:
-                ext=re.sub(r'tvg-logo="[^"]*"',f'tvg-logo="{LOGO_MAP[name]}"',ext)
-            chc.append((name,ext,best))
+            if best:  # 确保有有效的URL
+                ext = chc_map[name][0][0]
+                if name in LOGO_MAP:
+                    ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{LOGO_MAP[name]}"', ext)
+                chc.append((name, ext, best))
 
     # ===================== 输出 =====================
 
@@ -297,21 +315,37 @@ def main():
     except:
         pass
 
-    out+="\n# 数字\n"
-    for n,e,u in cctv:
-        out+=normalize_group(e,"数字")+"\n"+u+"\n"
+    # 数字频道
+    if cctv:
+        out+="\n# 数字\n"
+        for n,e,u in cctv:
+            normalized = normalize_group(e, "数字")
+            if normalized:  # 确保不是None
+                out += normalized + "\n" + u + "\n"
 
-    out+="\n# CHC\n"
-    for n,e,u in chc:
-        out+=normalize_group(e,"CHC")+"\n"+u+"\n"
+    # CHC频道
+    if chc:
+        out+="\n# CHC\n"
+        for n,e,u in chc:
+            normalized = normalize_group(e, "CHC")
+            if normalized:
+                out += normalized + "\n" + u + "\n"
 
-    out+="\n# HK\n"
-    for n,e,u in hk:
-        out+=normalize_group(e,"HK")+"\n"+u+"\n"
+    # HK频道
+    if hk:
+        out+="\n# HK\n"
+        for n,e,u in hk:
+            normalized = normalize_group(e, "HK")
+            if normalized:
+                out += normalized + "\n" + u + "\n"
 
-    out+="\n# TW\n"
-    for n,e,u in tw:
-        out+=normalize_group(e,"TW")+"\n"+u+"\n"
+    # TW频道
+    if tw:
+        out+="\n# TW\n"
+        for n,e,u in tw:
+            normalized = normalize_group(e, "TW")
+            if normalized:
+                out += normalized + "\n" + u + "\n"
 
     with open(OUTPUT_FILE,"w",encoding="utf-8") as f:
         f.write(out)
