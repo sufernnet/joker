@@ -230,7 +230,6 @@ http://4px369674fn3.vicp.fun:7088/udp/225.1.8.39:8002
 https://iptv.707626.xyz/ch/a4b55ca9ac177e194e6df0d37b500a3c/master.m3u8
 #EXTINF:-1 tvg-id="龍祥時代" tvg-name="龍祥時代" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/LStime.png" group-title="电影&剧集",龍祥時代
 http://192.168.100.1:19890/trams/2024/playlist.m3u8?token=w55SBUOjGL9wGK2onuDzoLm02lggdZsPBuNCBfnKS78=
-http://iptv.707626.xyz/live/stream-now-91y5/master.m3u8
 #EXTINF:-1 tvg-id="PopC" tvg-name="PopC" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/POPC.png" group-title="电影&剧集",PopC
 https://iptv.707626.xyz/ch/daeefde9dc8798b55bca340479357ebf/master.m3u8
 #EXTINF:-1 tvg-id="HBO HD" tvg-name="HBO HD" tvg-logo="https://epg.yang-1989.eu.org/logo/HBO.png" group-title="电影&剧集",HBO
