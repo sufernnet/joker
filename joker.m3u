@@ -362,23 +362,15 @@ http://38.75.136.137:98/gslb/dsdqpub/gfjs.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="怀旧剧场" tvg-name="怀旧剧场" tvg-logo="https://www.xn--rgv465a.top/tvlogo/怀旧剧场.png" group-title="数字",怀旧剧场
 http://38.75.136.137:98/gslb/dsdqpub/hjjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="第一剧场" tvg-name="第一剧场" tvg-logo="https://www.xn--rgv465a.top/tvlogo/第一剧场.png" group-title="数字",第一剧场
-https://epg.pw/stream/6d7bf281e3d739806a73f5373acaa6e01988ec9739f5ac1355ce54b47a928472.m3u8
+http://38.75.136.137:98/gslb/dsdqpub/dyjc.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="女性时尚" tvg-name="女性时尚" tvg-logo="https://www.xn--rgv465a.top/tvlogo/女性时尚.png" group-title="数字",女性时尚
 http://38.75.136.137:98/gslb/dsdqpub/nxss.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="风云足球" tvg-name="风云足球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云足球.png" group-title="数字",风云足球
-https://epg.pw/stream/ac8062ec9484078061d3bef507c15a423ac57ae4144e3fcc4b0a198dd420f911.m3u8
+http://38.75.136.137:98/gslb/dsdqpub/fyzq.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="风云音乐" tvg-name="风云音乐" tvg-logo="https://www.xn--rgv465a.top/tvlogo/风云音乐.png" group-title="数字",风云音乐
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001660/index.m3u8?streamid=be37d16b874e7ba11dd383d7ecd75752&streamkey=02BjlnRKVk4w1Oyqq9aXRB4YtWxqlybIfl2lS5mkFVN5iNWAFYdKIFbyaEPKZTNBgIoU9bQc4m8PrS8Pw3iTRKs635HzsGgAANSe4AgbCngHqxM1kM6le1OCEWm&token=1775754243-94f06a5cf0b92094-0-743c505a12a44d0e7fd5d08f14b11504
+http://38.75.136.137:98/gslb/dsdqpub/fyyy.m3u8?auth=testpub
 #EXTINF:-1 tvg-id="央视台球" tvg-name="央视台球" tvg-logo="https://www.xn--rgv465a.top/tvlogo/央视台球.png" group-title="数字",央视台球
 http://38.75.136.137:98/gslb/dsdqpub/ystq.m3u8?auth=testpub
-
-# CHC
-#EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" group-title="CHC",CHC影迷电影
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001581/index.m3u8?streamid=af62547c4c8be0ef4a658f4b4853388f&streamkey=0AGMO6LiBIxyH55HrvMarEqxYYHHBsBI1AS8pWYcug6hIz6JcOuFRUYGPeeB6DUdYBhCZW4VbAvlr77F1jurxYfAy8mix71ZcG7gxzAeeVpjSNe4Slu1Xui5R21MiDUL&token=1775754555-63098edc022aecb0-0-61ebd04bf297352038785125878e0b8f
-#EXTINF:-1 tvg-name="CHC家庭影院" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png" group-title="CHC",CHC家庭影院
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001570/index.m3u8?streamid=136f530a61d26dc0f670f39f05291586&streamkey=0gNYRWDeQgJcsQzJtwy5YfNuNXxp8JTqLQoubxJdaerqPImB5Zqld0YLrCikCEEBNzsaCMzgiZxPacL6jVLMJd0KpMDkxYV4BhGlwYU0ju7r1WxWgQER2jIf9CgZaG3mq&token=1775754529-ed2502f4a1a9b5b0-0-ab6ce23e1854b42f8e2b31cb58021423
-#EXTINF:-1 tvg-name="CHC动作电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png" group-title="CHC",CHC动作电影
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001580/index.m3u8?streamid=87c13b6e841ed5039d4c2ce8f266f9ef&streamkey=0gNYRWDeQgJcsRRVxgX7CXzeeNfbK5b6jgfx2dUMMXpSOjJ6HaVTnXNZIvUs7ZjMVIipZGwSqsLBoB1csVGKjUersUPcVyHJvvzH9lv6u5pQ0BcM1SFtompQvPNMFD09b&token=1775754577-a16c17c5548559fa-0-23e1bb39b278d07d81f7441cf04c41ce
 
 # HK
 #EXTINF:-1 tvg-id="鳳凰衛視中文台" tvg-name="鳳凰衛視中文台" tvg-logo="https://epg.yang-1989.eu.org/logo/凤凰中文.png" group-title="HK",鳳凰衛視·中文
@@ -437,7 +429,7 @@ https://cdn-2.ttvb.eu.org/4gtv/4gtv-live208/index.m3u8
 https://cdn-2.ttvb.eu.org/4gtv/4gtv-4gtv076/index.m3u8
 #EXTINF:-1 tvg-id="民視" tvg-name="民視" tvg-logo="https://epg.yang-1989.eu.org/logo/民視.png" http-user-agent="okhttp/1.9.89" group-title="TW",民視
 https://cdn-2.ttvb.eu.org/4gtv/4gtv-4gtv002/index.m3u8
-#EXTINF:-1 group-title="TW" tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://epg.iill.top/logo/中天新聞台.png" http-user-agent="okhttp/1.9.89",中天新聞台
+#EXTINF group-title="TW":-1 tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://epg.iill.top/logo/中天新聞台.png" http-user-agent="okhttp/1.9.89",中天新聞台
 https://v.iill.top/4gtv/4gtv-4gtv009/index.m3u8
 #EXTINF:-1 tvg-id="華視" tvg-name="華視" tvg-logo="https://epg.yang-1989.eu.org/logo/華視.png" http-user-agent="okhttp/1.9.89" group-title="TW",華視
 https://cdn-2.ttvb.eu.org/4gtv/4gtv-4gtv041/index.m3u8
