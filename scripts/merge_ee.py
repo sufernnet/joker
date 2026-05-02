@@ -355,20 +355,58 @@ def main():
     except Exception as e:
         print(f"⚠️ 无法读取 BB.m3u: {e}")
 
+    # 去掉多余的空行，确保各组之间只有一个空行
+    # 先清理out中连续的空行
+    lines_out = out.splitlines()
+    cleaned_lines = []
+    prev_empty = False
+    for line in lines_out:
+        is_empty = line.strip() == ""
+        if is_empty and prev_empty:
+            continue
+        cleaned_lines.append(line)
+        prev_empty = is_empty
+    out = "\n".join(cleaned_lines)
+
+    # 添加MV分组，确保前面没有多余空行
     if mv:
-        out += "\n# MV\n"
+        if out.rstrip().endswith("\n"):
+            out += "# MV\n"
+        else:
+            out += "\n# MV\n"
         for n, e, u in mv:
             out += normalize_group(e, "MV") + "\n" + u + "\n"
+        out = out.rstrip() + "\n"
 
     if hk:
-        out += "\n# HK\n"
+        if out.rstrip().endswith("\n"):
+            out += "# HK\n"
+        else:
+            out += "\n# HK\n"
         for n, e, u in hk:
             out += normalize_group(e, "HK") + "\n" + u + "\n"
+        out = out.rstrip() + "\n"
 
     if tw:
-        out += "\n# TW\n"
+        if out.rstrip().endswith("\n"):
+            out += "# TW\n"
+        else:
+            out += "\n# TW\n"
         for n, e, u in tw:
             out += normalize_group(e, "TW") + "\n" + u + "\n"
+        out = out.rstrip() + "\n"
+
+    # 最终再清理一次多余空行
+    final_lines = out.splitlines()
+    final_cleaned = []
+    prev_empty = False
+    for line in final_lines:
+        is_empty = line.strip() == ""
+        if is_empty and prev_empty:
+            continue
+        final_cleaned.append(line)
+        prev_empty = is_empty
+    out = "\n".join(final_cleaned)
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(out)
