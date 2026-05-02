@@ -206,11 +206,11 @@ https://epg.pw/stream/ca9c1cd4b97fb824cedd7fedfd0c7a950afdd7f00751cfbb7c2d89831d
 
 
 #Movies
-#EXTINF:-1 tvg-name="CHC动作电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png" group-title="MV",CHC动作电影
+#EXTINF:-1 tvg-name="CHC动作电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png" group-title="电影&剧集",CHC动作电影
 http://pplee.vicp.net:4022/udp/233.18.204.174:5140
-#EXTINF:-1 tvg-name="CHC家庭影院" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png" group-title="MV",CHC家庭影院
+#EXTINF:-1 tvg-name="CHC家庭影院" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png" group-title="电影&剧集",CHC家庭影院
 http://pplee.vicp.net:4022/udp/233.18.204.173:5140
-#EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" group-title="MV",CHC影迷电影
+#EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" group-title="电影&剧集",CHC影迷电影
 http://pplee.vicp.net:4022/udp/233.18.204.175:5140
 #EXTINF:-1 tvg-name="4K超清" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bj4kcq.png" group-title="电影&剧集",4K超清
 http://home.airengine.net:9003/rtp/228.1.1.123:8001
@@ -220,6 +220,14 @@ http://4px369674fn3.vicp.fun:7088/udp/225.1.8.36:8002
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.37:8002
 #EXTINF:-1 tvg-name="淘电影" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bjtdy.png" group-title="电影&剧集",淘电影
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.38:8002
+#EXTINF:-1 tvg-name="ROCK Action" tvg-logo="https://live.fanmingming.com/tv/ROCK Action.png" group-title="电影&剧集",ROCK Action
+http://116.241.240.176:5050/4gtv-live138/index.m3u8
+#EXTINF:-1 tvg-name="ROCK Xstream" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/ROCKExtreme.png" group-title="电影&剧集",ROCK Xstream
+https://cgcwsuulbdid.ap-northeast-1.clawcloudrun.com/4gtv-live124/index.m3u8?token=123
+#EXTINF:-1 tvg-name="ROCK Entertainment" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/ROCKEntertainment.png" group-title="电影&剧集",ROCK Entertainment
+http://116.241.240.176:5050/4gtv-live080/index.m3u8
+#EXTINF:-1 tvg-name="Cinemax精选" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Cinemax.png" group-title="电影&剧集",Cinemax精选
+http://23.237.104.106:8080/USA_MOREMAX/mono.m3u8
 #EXTINF:-1 tvg-name="淘娱乐" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bjtjc.png" group-title="电影&剧集",淘娱乐
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.61:8002
 #EXTINF:-1 tvg-name="萌宠TV" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bjmctv.png" group-title="电影&剧集",萌宠TV
@@ -228,7 +236,7 @@ http://4px369674fn3.vicp.fun:7088/udp/225.1.8.63:8002
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.39:8002
 #EXTINF:-1 tvg-id="美亞電影台" tvg-name="美亞電影台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/美亚电影.png" group-title="电影&剧集",美亞電影台
 https://iptv.707626.xyz/ch/a4b55ca9ac177e194e6df0d37b500a3c/master.m3u8
-#EXTINF:-1 tvg-id="LSTIME" tvg-name="LS TIME" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/LStime.png" group-title="电影&剧集",龍祥時代
+#EXTINF:-1 tvg-id="lstime" tvg-name="lstime" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/LStime.png" group-title="电影&剧集",龍祥時代
 http://192.168.100.1:19890/trams/2024/playlist.m3u8?token=w55SBUOjGL9wGK2onuDzoLm02lggdZsPBuNCBfnKS78=
 #EXTINF:-1 tvg-id="PopC" tvg-name="PopC" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/POPC.png" group-title="电影&剧集",PopC
 https://iptv.707626.xyz/ch/daeefde9dc8798b55bca340479357ebf/master.m3u8
