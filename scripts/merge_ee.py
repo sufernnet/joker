@@ -52,7 +52,7 @@ CCTV_TARGET = [
     "女性时尚", "风云足球", "风云音乐", "央视台球"
 ]
 
-# 👉 新目标（来自“综合”分组）
+# 👉 MV（替代原CHC）
 MV_TARGET_ORDER = [
     "CHC动作电影", "CHC家庭影院", "CHC影迷电影",
     "ROCK Action", "ROCK Xstream", "ROCK Entertainment",
@@ -129,7 +129,28 @@ def parse_m3u(content):
             ext = None
     return out
 
-# ===================== MV（原CHC） =====================
+# ===================== HK =====================
+
+def load_gat():
+    raw = download(GAT_SOURCE)
+    if not raw:
+        return []
+    data = parse_m3u(raw)
+    temp = [(clean_name(n), e, u) for n, e, u in data if parse_group(e) == GAT_GROUP_NAME]
+    temp = dedup(temp)
+
+    result = []
+    for target in GAT_TARGET_ORDER:
+        candidates = [x for x in temp if target in x[0]]
+        if candidates:
+            best = pick_best([u for _, _, u in candidates])
+            for n, e, u in candidates:
+                if u == best:
+                    result.append((n, e, u))
+                    break
+    return result
+
+# ===================== MV =====================
 
 def load_mv():
     raw = download("https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u")
@@ -137,15 +158,11 @@ def load_mv():
         return []
 
     data = parse_m3u(raw)
-
-    # 只取“综合”分组
     temp = [(n, e, u) for n, e, u in data if parse_group(e) == "综合"]
-
     temp = [(clean_name(n), e, u) for n, e, u in temp]
     temp = dedup(temp)
 
     result = []
-
     for target in MV_TARGET_ORDER:
         candidates = [x for x in temp if target in x[0]]
         if candidates:
@@ -153,17 +170,25 @@ def load_mv():
             best = pick_best(urls)
             for n, e, u in candidates:
                 if u == best:
-                    ext = e
-                    if n in LOGO_MAP:
-                        ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{LOGO_MAP[n]}"', ext)
-                    result.append((n, ext, u))
+                    result.append((n, e, u))
                     break
 
-    # 👉 龙华排最后（强制二次排序）
     non_lh = [x for x in result if not any(k in x[0] for k in LONGHUA_KEYWORDS)]
     lh = [x for x in result if any(k in x[0] for k in LONGHUA_KEYWORDS)]
 
     return non_lh + lh
+
+# ===================== TW =====================
+
+def fetch_tw(lines):
+    parsed = parse_m3u("\n".join(lines))
+    temp = []
+    for n, e, u in parsed:
+        if parse_group(e) == TW_SOURCE_GROUP:
+            temp.append((clean_name(n), e, u))
+
+    temp = dedup(temp)
+    return temp
 
 # ===================== 测速 =====================
 
@@ -176,6 +201,7 @@ def check(url):
     except:
         pass
     return url, 999
+
 
 def pick_best(urls):
     if not urls:
@@ -199,8 +225,11 @@ def main():
         print("❌ 无法下载源文件")
         return
 
+    lines = content.splitlines()
+
+    hk = load_gat()
+    tw = fetch_tw(lines)
     mv = load_mv()
-    print(f"✅ 加载 MV 频道: {len(mv)} 个")
 
     out = "#EXTM3U\n\n"
 
@@ -215,15 +244,23 @@ def main():
     if mv:
         out += "\n# MV\n"
         for n, e, u in mv:
-            if e and u:
-                out += normalize_group(e, "MV") + "\n" + u + "\n"
+            out += normalize_group(e, "MV") + "\n" + u + "\n"
 
-    try:
-        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-            f.write(out)
-        print(f"✅ 完成！文件已保存到: {OUTPUT_FILE}")
-    except Exception as e:
-        print(f"❌ 保存文件失败: {e}")
+    if hk:
+        out += "\n# HK\n"
+        for n, e, u in hk:
+            out += normalize_group(e, "HK") + "\n" + u + "\n"
+
+    if tw:
+        out += "\n# TW\n"
+        for n, e, u in tw:
+            out += normalize_group(e, "TW") + "\n" + u + "\n"
+
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(out)
+
+    print("✅ 完成")
+
 
 if __name__ == "__main__":
     main()
