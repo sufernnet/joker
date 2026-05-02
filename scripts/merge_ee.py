@@ -146,7 +146,10 @@ def load_gat():
             best = pick_best([u for _, _, u in candidates])
             for n, e, u in candidates:
                 if u == best:
-                    result.append((n, e, u))
+                    ext = e
+                    if n in LOGO_MAP:
+                        ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{LOGO_MAP[n]}"', ext)
+                    result.append((n, ext, u))
                     break
     return result
 
@@ -170,7 +173,10 @@ def load_mv():
             best = pick_best(urls)
             for n, e, u in candidates:
                 if u == best:
-                    result.append((n, e, u))
+                    ext = e
+                    if n in LOGO_MAP:
+                        ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{LOGO_MAP[n]}"', ext)
+                    result.append((n, ext, u))
                     break
 
     non_lh = [x for x in result if not any(k in x[0] for k in LONGHUA_KEYWORDS)]
