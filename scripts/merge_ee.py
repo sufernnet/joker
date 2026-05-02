@@ -67,7 +67,14 @@ MV_TARGET_ORDER = [
     ("龙华电影", ["龙华电影"]),
     ("龙华经典", ["龙华经典"]),
     ("龙华偶像", ["龙华偶像"]),
-    ("龙华日韩", ["龙华日韩"])
+    ("龙华日韩", ["龙华日韩"]),
+    # 新增从指定源提取的频道
+    ("北京IPTV淘电影", ["北京IPTV淘电影"]),
+    ("北京IPTV4K", ["北京IPTV4K"]),
+    ("天映频道", ["天映频道"]),
+    ("天映新加坡", ["天映新加坡"]),
+    ("爱奇艺", ["爱奇艺"]),
+    ("TVB星河", ["TVB星河"]),
 ]
 
 LONGHUA_KEYWORDS = ["龙华电影", "龙华经典", "龙华偶像", "龙华日韩"]
@@ -238,39 +245,47 @@ def load_gat():
 # ===================== MV =====================
 
 def load_mv():
-    # 尝试多个源来获取CHC频道
-    all_data = []
+    # 主要源：用于提取原有MV频道以及新增的北京/港澳台频道
+    main_source_url = "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u"
+    raw_main = download(main_source_url)
+    if not raw_main:
+        print("⚠️ 无法下载主要MV源，将跳过从该源提取频道")
+        all_data = []
+    else:
+        all_data = parse_m3u(raw_main)
     
-    # 源1：原来的源
-    raw1 = download("https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u")
-    if raw1:
-        data1 = parse_m3u(raw1)
-        all_data.extend(data1)
+    # 可选：保留其他备选源逻辑，但为了精确提取，先注释掉，如有需要可取消注释
+    # 备选源1
+    # raw2 = download("https://raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u")
+    # if raw2:
+    #     data2 = parse_m3u(raw2)
+    #     all_data.extend(data2)
     
-    # 源2：尝试从其他源获取
-    raw2 = download("https://raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u")
-    if raw2:
-        data2 = parse_m3u(raw2)
-        all_data.extend(data2)
-    
-    # 源3：IPTV源
-    raw3 = download("https://live.kilvn.com/iptv.m3u")
-    if raw3:
-        data3 = parse_m3u(raw3)
-        all_data.extend(data3)
+    # 备选源2
+    # raw3 = download("https://live.kilvn.com/iptv.m3u")
+    # if raw3:
+    #     data3 = parse_m3u(raw3)
+    #     all_data.extend(data3)
     
     if not all_data:
         return []
     
-    # 过滤出包含综合或电影等分类的频道
+    # 针对新增频道的精确提取：从“北京”分组提取北京IPTV淘电影、北京IPTV4K；从“港澳台”分组提取天映频道、天映新加坡、爱奇艺、TVB星河
+    # 同时保留原有MV频道的提取逻辑（放宽分组限制）
     temp = []
     for n, e, u in all_data:
         group = parse_group(e)
-        # 放宽分组限制，只要是电影相关的分组都可以
-        if any(keyword in group for keyword in ["综合", "电影", "影视", "MV", "娱乐"]):
-            temp.append((clean_name(n), e, u))
-        # 或者频道名包含CHC/龙华/ROCK等关键词也纳入
-        elif any(keyword in n for keyword in ["CHC", "龙华", "ROCK", "HBO", "Cinemax"]):
+        # 原有MV频道提取条件：分组包含综合/电影/影视/MV/娱乐，或频道名包含CHC/龙华/ROCK/HBO/Cinemax
+        original_condition = (any(keyword in group for keyword in ["综合", "电影", "影视", "MV", "娱乐"]) or
+                              any(keyword in n for keyword in ["CHC", "龙华", "ROCK", "HBO", "Cinemax"]))
+        
+        # 新增频道提取条件：精确匹配分组和频道名
+        beijing_condition = (group == "北京" and 
+                             any(target in n for target in ["北京IPTV淘电影", "北京IPTV4K"]))
+        hk_tw_condition = (group == "港澳台" and 
+                           any(target in n for target in ["天映频道", "天映新加坡", "爱奇艺", "TVB星河"]))
+        
+        if original_condition or beijing_condition or hk_tw_condition:
             temp.append((clean_name(n), e, u))
     
     temp = dedup(temp)
