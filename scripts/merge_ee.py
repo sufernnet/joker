@@ -191,7 +191,11 @@ def fetch_tw(lines):
     temp = []
     for n, e, u in parsed:
         if parse_group(e) == TW_SOURCE_GROUP:
-            temp.append((clean_name(n), e, u))
+            # 仅对TW分组去除「」内容
+            clean_n = re.sub(r'「.*?」', '', n).strip()
+            # 更新extinf中的频道名称
+            new_e = re.sub(f',{re.escape(n)}', f',{clean_n}', e)
+            temp.append((clean_n, new_e, u))
 
     temp = dedup(temp)
     return temp
