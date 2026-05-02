@@ -191,11 +191,26 @@ def fetch_tw(lines):
     temp = []
     for n, e, u in parsed:
         if parse_group(e) == TW_SOURCE_GROUP:
-            # 仅对TW分组去除「」内容
-            clean_n = re.sub(r'「.*?」', '', n).strip()
-            # 更新extinf中的频道名称
-            new_e = re.sub(f',{re.escape(n)}', f',{clean_n}', e)
-            temp.append((clean_n, new_e, u))
+            # 只修改TW分组里面的频道名称，去掉「」及其内部内容
+            # 例如：博斯運動「CatchPlay」 -> 博斯運動
+            # 注意：只去掉中文「」括号及其内容，其他括号不受影响
+            cleaned_name = re.sub(r'「[^」]*」', '', n)
+            cleaned_name = cleaned_name.strip()
+            # 如果清理后名称变空，保留原名称（防止意外）
+            if not cleaned_name:
+                cleaned_name = n
+            # 同时需要修改extinf行中的名称部分
+            ext_parts = e.split(",", 1)
+            if len(ext_parts) == 2:
+                # 清理extinf行中的名称部分
+                cleaned_ext_name = re.sub(r'「[^」]*」', '', ext_parts[1])
+                cleaned_ext_name = cleaned_ext_name.strip()
+                if not cleaned_ext_name:
+                    cleaned_ext_name = ext_parts[1]
+                cleaned_ext = ext_parts[0] + "," + cleaned_ext_name
+            else:
+                cleaned_ext = e
+            temp.append((cleaned_name, cleaned_ext, u))
 
     temp = dedup(temp)
     return temp
