@@ -68,6 +68,78 @@ LOGO_MAP = {
     "CHC动作电影": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png"
 }
 
+# ===================== TW 排序 =====================
+
+TW_TARGET_ORDER = [
+    "Love Nature",
+    "History 歷史頻道",
+    "亞洲旅遊",
+    "中天新聞台",
+    "民視第一台",
+    "民視台灣台",
+    "民視",
+    "華視",
+    "寰宇新聞",
+    "寰宇新聞台灣台",
+    "寰宇財經",
+    "三立綜合台",
+    "ELTA娛樂",
+    "靖天綜合",
+    "鏡電視新聞台",
+    "東森新聞",
+    "華視新聞",
+    "民視新聞",
+    "三立iNEWS",
+    "東森財經新聞",
+    "中視新聞",
+    "TVBS",
+    "民視綜藝",
+    "靖天育樂",
+    "靖天國際台",
+    "靖天歡樂台",
+    "靖天資訊",
+    "TVBS歡樂台",
+    "韓國娛樂台",
+    "ROCK Entertainment",
+    "Lifetime 娛樂頻道",
+    "電影原聲台CMusic",
+    "TRACE Urban",
+    "Mezzo Live HD",
+    "INULTRA",
+    "TRACE Sport Stars",
+    "智林體育",
+    "時尚運動X",
+    "車迷 TV",
+    "GINX Esports TV",
+    "民視旅遊",
+    "滾動力 Rollor",
+    "TVBS新聞台",
+    "un探索娛樂台",
+    "ELTATW",
+    "MagellanTV頻道",
+    "民視影劇",
+    "HITS頻道",
+    "八大精彩",
+    "FashionTV 時尚頻道",
+    "CI 罪案偵查頻道",
+    "視納華仁紀實頻道",
+    "影迷數位紀實台",
+    "采昌影劇",
+    "靖天映畫",
+    "靖天電影",
+    "影迷數位電影台",
+    "amc 電影台",
+    "Cinema World",
+    "My Cinema Europe HD 我的歐洲電影",
+    "CNBC Asia 財經台",
+    "經典電影台",
+    "中視",
+    "中視新聞",
+    "華視新聞",
+    "三立新聞iNEWS",
+    "DayStar"
+]
+
 # ===================== 下载 =====================
 
 def download(url, retry=2):
@@ -188,21 +260,20 @@ def load_mv():
 
 def fetch_tw(lines):
     parsed = parse_m3u("\n".join(lines))
-    temp = []
+    
+    # 收集所有TW分组的频道
+    temp_dict = {}  # key: 频道名, value: (name, ext, url)
     for n, e, u in parsed:
         if parse_group(e) == TW_SOURCE_GROUP:
-            # 只修改TW分组里面的频道名称，去掉「」及其内部内容
-            # 例如：博斯運動「CatchPlay」 -> 博斯運動
-            # 注意：只去掉中文「」括号及其内容，其他括号不受影响
+            # 去掉「」及其内部内容
             cleaned_name = re.sub(r'「[^」]*」', '', n)
             cleaned_name = cleaned_name.strip()
-            # 如果清理后名称变空，保留原名称（防止意外）
             if not cleaned_name:
                 cleaned_name = n
-            # 同时需要修改extinf行中的名称部分
+            
+            # 清理extinf行中的名称
             ext_parts = e.split(",", 1)
             if len(ext_parts) == 2:
-                # 清理extinf行中的名称部分
                 cleaned_ext_name = re.sub(r'「[^」]*」', '', ext_parts[1])
                 cleaned_ext_name = cleaned_ext_name.strip()
                 if not cleaned_ext_name:
@@ -210,10 +281,28 @@ def fetch_tw(lines):
                 cleaned_ext = ext_parts[0] + "," + cleaned_ext_name
             else:
                 cleaned_ext = e
-            temp.append((cleaned_name, cleaned_ext, u))
-
-    temp = dedup(temp)
-    return temp
+            
+            # 如果同一个频道有多个URL，保留第一个（或者可以根据需要选择）
+            if cleaned_name not in temp_dict:
+                temp_dict[cleaned_name] = (cleaned_name, cleaned_ext, u)
+    
+    # 按指定顺序排序
+    result = []
+    used_names = set()
+    
+    for target in TW_TARGET_ORDER:
+        # 精确匹配或包含匹配
+        matched = None
+        for name in temp_dict.keys():
+            if name == target or target in name or name in target:
+                matched = name
+                break
+        
+        if matched and matched not in used_names:
+            result.append(temp_dict[matched])
+            used_names.add(matched)
+    
+    return result
 
 # ===================== 测速 =====================
 
