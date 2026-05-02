@@ -234,7 +234,7 @@ http://4px369674fn3.vicp.fun:7088/udp/225.1.8.61:8002
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.63:8002
 #EXTINF:-1 tvg-id="华数星影" tvg-name="华数星影" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/华数星影.png" group-title="电影&剧集",华数星影
 http://192.144.185.155:6000/rtp/225.1.8.254:4120
-#EXTINF:-1 tvg-id="华数动作影院" tvg-name="华数动作影院" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/数动作影院.png" group-title="电影&剧集",华数动作影院
+#EXTINF:-1 tvg-id="华数动作影院" tvg-name="华数动作影院" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/%E5%8D%8E%E6%95%B0%E5%8A%A8%E4%BD%9C%E5%BD%B1%E9%99%A2.png" group-title="电影&剧集",华数动作影院
 http://192.144.185.155:6000/rtp/225.1.8.252:4120
 #EXTINF:-1 tvg-id="华数喜剧影院" tvg-name="华数喜剧影院" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/华数喜剧影院.png" group-title="电影&剧集",华数喜剧影院
 http://192.144.185.155:6000/rtp/225.1.8.251:4120
