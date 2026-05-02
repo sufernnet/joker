@@ -53,11 +53,21 @@ CCTV_TARGET = [
 ]
 
 # 👉 MV（替代原CHC）
+# 使用更灵活的关键词匹配，方便匹配不同的变体
 MV_TARGET_ORDER = [
-    "CHC动作电影", "CHC家庭影院", "CHC影迷电影",
-    "ROCK Action", "ROCK Xstream", "ROCK Entertainment",
-    "HBO王牌", "Cinemax", "Cinemax精选",
-    "龙华电影", "龙华经典", "龙华偶像", "龙华日韩"
+    ("CHC动作电影", ["CHC动作电影", "CHC动作电影台", "CHC动作", "动作电影"]),
+    ("CHC家庭影院", ["CHC家庭影院", "CHC家庭电影", "家庭影院"]),
+    ("CHC影迷电影", ["CHC影迷电影", "CHC影迷", "影迷电影"]),
+    ("ROCK Action", ["ROCK Action", "ROCK Action"]),
+    ("ROCK Xstream", ["ROCK Xstream", "ROCK Xstream"]),
+    ("ROCK Entertainment", ["ROCK Entertainment", "ROCK Entertainment"]),
+    ("HBO王牌", ["HBO王牌", "HBO"]),
+    ("Cinemax", ["Cinemax"]),
+    ("Cinemax精选", ["Cinemax精选", "Cinemax"]),
+    ("龙华电影", ["龙华电影"]),
+    ("龙华经典", ["龙华经典"]),
+    ("龙华偶像", ["龙华偶像"]),
+    ("龙华日韩", ["龙华日韩"])
 ]
 
 LONGHUA_KEYWORDS = ["龙华电影", "龙华经典", "龙华偶像", "龙华日韩"]
@@ -228,32 +238,80 @@ def load_gat():
 # ===================== MV =====================
 
 def load_mv():
-    raw = download("https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u")
-    if not raw:
+    # 尝试多个源来获取CHC频道
+    all_data = []
+    
+    # 源1：原来的源
+    raw1 = download("https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u")
+    if raw1:
+        data1 = parse_m3u(raw1)
+        all_data.extend(data1)
+    
+    # 源2：尝试从其他源获取
+    raw2 = download("https://raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u")
+    if raw2:
+        data2 = parse_m3u(raw2)
+        all_data.extend(data2)
+    
+    # 源3：IPTV源
+    raw3 = download("https://live.kilvn.com/iptv.m3u")
+    if raw3:
+        data3 = parse_m3u(raw3)
+        all_data.extend(data3)
+    
+    if not all_data:
         return []
-
-    data = parse_m3u(raw)
-    temp = [(n, e, u) for n, e, u in data if parse_group(e) == "综合"]
-    temp = [(clean_name(n), e, u) for n, e, u in temp]
+    
+    # 过滤出包含综合或电影等分类的频道
+    temp = []
+    for n, e, u in all_data:
+        group = parse_group(e)
+        # 放宽分组限制，只要是电影相关的分组都可以
+        if any(keyword in group for keyword in ["综合", "电影", "影视", "MV", "娱乐"]):
+            temp.append((clean_name(n), e, u))
+        # 或者频道名包含CHC/龙华/ROCK等关键词也纳入
+        elif any(keyword in n for keyword in ["CHC", "龙华", "ROCK", "HBO", "Cinemax"]):
+            temp.append((clean_name(n), e, u))
+    
     temp = dedup(temp)
-
+    
     result = []
-    for target in MV_TARGET_ORDER:
-        candidates = [x for x in temp if target in x[0]]
+    for target_name, keywords in MV_TARGET_ORDER:
+        candidates = []
+        for n, e, u in temp:
+            # 检查是否匹配任一关键词
+            for kw in keywords:
+                if kw in n:
+                    candidates.append((n, e, u))
+                    break
+        
         if candidates:
-            urls = [u for _, _, u in candidates]
-            best = pick_best(urls)
+            # 去重URL
+            unique_candidates = []
+            seen_urls = set()
             for n, e, u in candidates:
+                if u not in seen_urls:
+                    seen_urls.add(u)
+                    unique_candidates.append((n, e, u))
+            
+            # 测速选最优
+            urls = [u for _, _, u in unique_candidates]
+            best = pick_best(urls)
+            for n, e, u in unique_candidates:
                 if u == best:
                     ext = e
                     if n in LOGO_MAP:
                         ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{LOGO_MAP[n]}"', ext)
-                    result.append((n, ext, u))
+                    result.append((target_name, ext, u))
+                    print(f"✓ 找到MV频道: {target_name} -> {u[:80]}...")
                     break
-
+        else:
+            print(f"✗ 未找到MV频道: {target_name}")
+    
+    # 龙华频道排序
     non_lh = [x for x in result if not any(k in x[0] for k in LONGHUA_KEYWORDS)]
     lh = [x for x in result if any(k in x[0] for k in LONGHUA_KEYWORDS)]
-
+    
     return non_lh + lh
 
 # ===================== TW =====================
@@ -282,7 +340,7 @@ def fetch_tw(lines):
             else:
                 cleaned_ext = e
             
-            # 如果同一个频道有多个URL，保留第一个（或者可以根据需要选择）
+            # 如果同一个频道有多个URL，保留第一个
             if cleaned_name not in temp_dict:
                 temp_dict[cleaned_name] = (cleaned_name, cleaned_ext, u)
     
@@ -355,8 +413,7 @@ def main():
     except Exception as e:
         print(f"⚠️ 无法读取 BB.m3u: {e}")
 
-    # 去掉多余的空行，确保各组之间只有一个空行
-    # 先清理out中连续的空行
+    # 去掉多余的空行
     lines_out = out.splitlines()
     cleaned_lines = []
     prev_empty = False
@@ -368,7 +425,7 @@ def main():
         prev_empty = is_empty
     out = "\n".join(cleaned_lines)
 
-    # 添加MV分组，确保前面没有多余空行
+    # 添加MV分组
     if mv:
         if out.rstrip().endswith("\n"):
             out += "# MV\n"
@@ -396,7 +453,7 @@ def main():
             out += normalize_group(e, "TW") + "\n" + u + "\n"
         out = out.rstrip() + "\n"
 
-    # 最终再清理一次多余空行
+    # 最终清理多余空行
     final_lines = out.splitlines()
     final_cleaned = []
     prev_empty = False
