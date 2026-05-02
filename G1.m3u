@@ -206,12 +206,12 @@ https://epg.pw/stream/ca9c1cd4b97fb824cedd7fedfd0c7a950afdd7f00751cfbb7c2d89831d
 
 
 #Movies
-#EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" group-title="电影&剧集",CHC影迷电影
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001581/index.m3u8?streamid=af62547c4c8be0ef4a658f4b4853388f&streamkey=0AGMO6LiBIxyH55HrvMarEqxYYHHBsBI1AS8pWYcug6hIz6JcOuFRUYGPeeB6DUdYBhCZW4VbAvlr77F1jurxYfAy8mix71ZcG7gxzAeeVpjSNe4Slu1Xui5R21MiDUL&token=1775754555-63098edc022aecb0-0-61ebd04bf297352038785125878e0b8f
-#EXTINF:-1 tvg-name="CHC家庭影院" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png" group-title="电影&剧集",CHC家庭影院
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001570/index.m3u8?streamid=136f530a61d26dc0f670f39f05291586&streamkey=0gNYRWDeQgJcsQzJtwy5YfNuNXxp8JTqLQoubxJdaerqPImB5Zqld0YLrCikCEEBNzsaCMzgiZxPacL6jVLMJd0KpMDkxYV4BhGlwYU0ju7r1WxWgQER2jIf9CgZaG3mq&token=1775754529-ed2502f4a1a9b5b0-0-ab6ce23e1854b42f8e2b31cb58021423
-#EXTINF:-1 tvg-name="CHC动作电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png" group-title="电影&剧集",CHC动作电影
-https://shcm-stream-cf1.stream.264788.xyz/cms001/ch00000090990000001580/index.m3u8?streamid=87c13b6e841ed5039d4c2ce8f266f9ef&streamkey=0gNYRWDeQgJcsRRVxgX7CXzeeNfbK5b6jgfx2dUMMXpSOjJ6HaVTnXNZIvUs7ZjMVIipZGwSqsLBoB1csVGKjUersUPcVyHJvvzH9lv6u5pQ0BcM1SFtompQvPNMFD09b&token=1775754577-a16c17c5548559fa-0-23e1bb39b278d07d81f7441cf04c41ce
+#EXTINF:-1 tvg-name="CHC动作电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png" group-title="MV",CHC动作电影
+http://pplee.vicp.net:4022/udp/233.18.204.174:5140
+#EXTINF:-1 tvg-name="CHC家庭影院" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png" group-title="MV",CHC家庭影院
+http://pplee.vicp.net:4022/udp/233.18.204.173:5140
+#EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" group-title="MV",CHC影迷电影
+http://pplee.vicp.net:4022/udp/233.18.204.175:5140
 #EXTINF:-1 tvg-name="4K超清" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bj4kcq.png" group-title="电影&剧集",4K超清
 http://home.airengine.net:9003/rtp/228.1.1.123:8001
 #EXTINF:-1 tvg-name="淘BABY" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bjtbb.png" group-title="电影&剧集",淘BABY
