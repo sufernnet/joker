@@ -52,52 +52,20 @@ CCTV_TARGET = [
     "女性时尚", "风云足球", "风云音乐", "央视台球"
 ]
 
-CHC_TARGET = [
-    "CHC影迷电影", "CHC家庭影院", "CHC动作电影"
+# 👉 新目标（来自“综合”分组）
+MV_TARGET_ORDER = [
+    "CHC动作电影", "CHC家庭影院", "CHC影迷电影",
+    "ROCK Action", "ROCK Xstream", "ROCK Entertainment",
+    "HBO王牌", "Cinemax", "Cinemax精选",
+    "龙华电影", "龙华经典", "龙华偶像", "龙华日韩"
 ]
+
+LONGHUA_KEYWORDS = ["龙华电影", "龙华经典", "龙华偶像", "龙华日韩"]
 
 LOGO_MAP = {
     "CHC影迷电影": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png",
     "CHC家庭影院": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png",
     "CHC动作电影": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png"
-}
-
-# ===================== 频道台标替换（仅限HK分组） =====================
-
-HK_LOGO_MAP = {
-    "凤凰中文": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰中文.png",
-    "凤凰资讯": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰资讯.png",
-    "凤凰香港": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/凤凰香港.png",
-    "NOW新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/NOW新闻.png",
-    "翡翠台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",
-    "翡翠一台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png",
-    "TVB翡翠剧集台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB翡翠剧集台(TVBDRAMA).png",
-    "TVBJADE": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠.png",
-    "娱乐新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/娱乐新闻.png",
-    "无线新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/无线新闻.png",
-    "天映频道马来西亚": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/天映频道马来西亚.png",
-    "千禧经典": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/千禧经典.png",
-    "八度空间": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/八度空间.png",
-    "TVB星河": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB星河.png",
-    "TVBPLUS": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVBPLUS.png",
-    "TVBJ1": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVBJ1.png",
-    "TVB娱乐新闻": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/娱乐新闻.png",
-    "TVB黄金华剧": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/黄金华剧.png",
-    "TVB功夫台": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/TVB功夫.png",
-    "TVB1": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/翡翠一台(TVB1).png",
-    "HOY资讯": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/HOYTV资讯.png",
-    "HOYTV": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/HOYTV.png",
-    "HOY77": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/HOY77.png",
-    "RTHK31": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/RTHK31.png",
-    "RTHK32": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/RTHK32.png",
-    "ROCK_Action": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/ROCKACTION.png",
-    "MYTV黄金翡翠": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/黄金华剧.png",
-    "iQIYI": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/爱奇艺.png",
-    "Astro AEC": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/Astro_AEC.png",
-    "Astro AOD": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/Astro_AOD.png",
-    "Channel 5": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel 5.png",
-    "Channel 8": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel 8.png",
-    "Channel U": "https://raw.githubusercontent.com/xiasufern/AA/main/icon/Channel U.png"
 }
 
 # ===================== 下载 =====================
@@ -128,16 +96,12 @@ def parse_group(extinf):
     return m.group(1) if m else ""
 
 def normalize_group(extinf, group):
-    """确保返回字符串，如果处理失败则返回原始extinf"""
     if not extinf:
         return f'#EXTINF:-1 group-title="{group}",未知'
-    
     if 'group-title="' in extinf:
         result = re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf)
     else:
         result = extinf.replace("#EXTINF:-1", f'#EXTINF:-1 group-title="{group}"')
-    
-    # 确保返回字符串
     return result if result else extinf
 
 def dedup(data):
@@ -165,135 +129,41 @@ def parse_m3u(content):
             ext = None
     return out
 
-def parse_txt(content):
-    out = []
-    for l in content.splitlines():
-        if "," in l and "http" in l:
-            parts = l.split(",", 1)
-            if len(parts) == 2:
-                name, url = parts
-                name = clean_name(name)
-                ext = f'#EXTINF:-1 group-title="未知",{name}'
-                out.append((name, ext, url))
-    return out
+# ===================== MV（原CHC） =====================
 
-# ===================== ⭐ 港澳台精选 =====================
-
-def load_gat():
-    raw = download(GAT_SOURCE)
-    if not raw:
-        return []
-    
-    data = parse_m3u(raw)
-
-    temp = [(clean_name(n), e, u) for n, e, u in data if parse_group(e) == GAT_GROUP_NAME]
-    temp = dedup(temp)
-
-    result = []
-    for target in GAT_TARGET_ORDER:
-        candidates = [x for x in temp if target in x[0]]
-        if candidates:
-            best = pick_best([u for _, _, u in candidates])
-            for n, e, u in candidates:
-                if u == best:
-                    if n in HK_LOGO_MAP:
-                        new_ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{HK_LOGO_MAP[n]}"', e)
-                        result.append((n, new_ext, u))
-                    else:
-                        result.append((n, e, u))
-                    break
-    return result
-
-# ===================== CHC =====================
-
-def load_chc():
+def load_mv():
     raw = download("https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u")
     if not raw:
         return []
-    
+
     data = parse_m3u(raw)
 
-    temp = [(n, e, u) for n, e, u in data if parse_group(e) == "上海" and n in CHC_TARGET]
+    # 只取“综合”分组
+    temp = [(n, e, u) for n, e, u in data if parse_group(e) == "综合"]
 
-    chc = []
-    for name in CHC_TARGET:
-        items = [(n, e, u) for n, e, u in temp if n == name]
-        if items:
-            urls = [u for _, _, u in items]
-            best = pick_best(urls)
-            ext = items[0][1]
-            if name in LOGO_MAP:
-                ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{LOGO_MAP[name]}"', ext)
-            chc.append((name, ext, best))
-    return chc
-
-# ===================== CCTV =====================
-
-def load_cctv():
-    data = []
-    for url in EXTRA_URLS:
-        raw = download(url)
-        if raw:
-            if "#EXTINF" in raw:
-                data += parse_m3u(raw)
-            else:
-                data += parse_txt(raw)
-
-    result = []
-    for name in CCTV_TARGET:
-        items = [(n, e, u) for n, e, u in data if n == name]
-        if items:
-            urls = [u for _, _, u in items]
-            best = pick_best(urls)
-            ext = items[0][1]
-            result.append((name, ext, best))
-    return result
-
-# ===================== TW =====================
-
-def fetch_tw(lines):
-    if not lines:
-        return []
-    
-    parsed = parse_m3u("\n".join(lines))
-
-    temp = []
-    for n, e, u in parsed:
-        if parse_group(e) == TW_SOURCE_GROUP:
-            temp.append((clean_name(n), e, u))
-
+    temp = [(clean_name(n), e, u) for n, e, u in temp]
     temp = dedup(temp)
 
     result = []
-    used = set()
 
-    for target in TW_TARGET_ORDER:
-        for n, e, u in temp:
-            if target in n and n not in used:
-                new_e = e.rsplit(',', 1)[0] + ',' + n
-                result.append((n, new_e, u))
-                used.add(n)
-                break
-    return result
+    for target in MV_TARGET_ORDER:
+        candidates = [x for x in temp if target in x[0]]
+        if candidates:
+            urls = [u for _, _, u in candidates]
+            best = pick_best(urls)
+            for n, e, u in candidates:
+                if u == best:
+                    ext = e
+                    if n in LOGO_MAP:
+                        ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{LOGO_MAP[n]}"', ext)
+                    result.append((n, ext, u))
+                    break
 
-TW_TARGET_ORDER = [
-    "Love Nature", "亞洲旅遊", "民視第一台", "民視台灣台", "民視", "華視",
-    "寰宇新聞", "寰宇新聞台灣台", "寰宇財經", "三立綜合台",
-    "ELTA娛樂", "靖天綜合", "Global Trekker", "鏡電視新聞台", "東森新聞",
-    "華視新聞", "民視新聞", "TVBS新聞台", "三立iNEWS", "東森財經新聞",
-    "中視新聞", "TVBS", "民視綜藝", "豬哥亮歌廳秀", "靖天育樂",
-    "KLT-靖天國際台", "NICE TV 靖天歡樂台", "靖天資訊", "TVBS歡樂台",
-    "韓國娛樂台", "ROCK Entertainment", "Lifetime 娛樂頻道", "電影原聲台CMusic",
-    "TRACE Urban", "Mezzo Live HD", "INULTRA", "TRACE Sport Stars", "車迷 TV",
-    "GINX Esports TV", "民視旅遊", "滾動力 Rollor", "fun探索娛樂台",
-    "ELTATW", "MagellanTV頻道", "民視影劇", "HITS頻道", "八大精彩",
-    "FashionTV 時尚頻道", "CI 罪案偵查頻道", "視納華仁紀實頻道",
-    "影迷數位紀實台", "ROCK Action", "采昌影劇", "靖天映畫", "靖天電影",
-    "影迷數位電影台", "amc 電影台", "Cinema World",
-    "My Cinema Europe HD 我的歐洲電影", "CNBC Asia 財經台", "經典電影台",
-    "中視", "Smart知識台", "三立新聞iNEWS", "龍華洋片", "龍華卡通",
-    "龍華電影", "龍華日韓", "龍華偶像", "龍華戲劇", "龍華經典", "DayStar"
-]
+    # 👉 龙华排最后（强制二次排序）
+    non_lh = [x for x in result if not any(k in x[0] for k in LONGHUA_KEYWORDS)]
+    lh = [x for x in result if any(k in x[0] for k in LONGHUA_KEYWORDS)]
+
+    return non_lh + lh
 
 # ===================== 测速 =====================
 
@@ -310,7 +180,6 @@ def check(url):
 def pick_best(urls):
     if not urls:
         return None
-    
     best = None
     best_t = 999
     with ThreadPoolExecutor(max_workers=5) as ex:
@@ -324,40 +193,14 @@ def pick_best(urls):
 
 def main():
     print("开始生成EE.m3u...")
-    
+
     content = download(SOURCE_URL)
     if not content:
         print("❌ 无法下载源文件")
         return
-    
-    lines = content.splitlines()
 
-    hk = load_gat()
-    print(f"✅ 加载 HK 频道: {len(hk)} 个")
-    
-    tw = fetch_tw(lines)
-    print(f"✅ 加载 TW 频道: {len(tw)} 个")
-
-    # 中天新聞台插入
-    custom_extinf = '#EXTINF:-1 tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://epg.iill.top/logo/中天新聞台.png" http-user-agent="okhttp/1.9.89",中天新聞台'
-    custom_url = "https://v.iill.top/4gtv/4gtv-4gtv009/index.m3u8"
-    custom_item = ("中天新聞台", custom_extinf, custom_url)
-
-    insert_index = -1
-    for i, (name, _, _) in enumerate(tw):
-        if name == "民視":
-            insert_index = i + 1
-            break
-    if insert_index != -1:
-        tw.insert(insert_index, custom_item)
-    else:
-        tw.append(custom_item)
-
-    cctv = load_cctv()
-    print(f"✅ 加载 CCTV 频道: {len(cctv)} 个")
-    
-    chc = load_chc()
-    print(f"✅ 加载 CHC 频道: {len(chc)} 个")
+    mv = load_mv()
+    print(f"✅ 加载 MV 频道: {len(mv)} 个")
 
     out = "#EXTM3U\n\n"
 
@@ -369,29 +212,11 @@ def main():
     except Exception as e:
         print(f"⚠️ 无法读取 BB.m3u: {e}")
 
-    if cctv:
-        out += "\n# 数字\n"
-        for n, e, u in cctv:
+    if mv:
+        out += "\n# MV\n"
+        for n, e, u in mv:
             if e and u:
-                out += normalize_group(e, "数字") + "\n" + u + "\n"
-
-    if chc:
-        out += "\n# CHC\n"
-        for n, e, u in chc:
-            if e and u:
-                out += normalize_group(e, "CHC") + "\n" + u + "\n"
-
-    if hk:
-        out += "\n# HK\n"
-        for n, e, u in hk:
-            if e and u:
-                out += normalize_group(e, "HK") + "\n" + u + "\n"
-
-    if tw:
-        out += "\n# TW\n"
-        for n, e, u in tw:
-            if e and u:
-                out += normalize_group(e, "TW") + "\n" + u + "\n"
+                out += normalize_group(e, "MV") + "\n" + u + "\n"
 
     try:
         with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
