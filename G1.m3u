@@ -332,7 +332,7 @@ http://192.168.100.1:50009/4gtv-live215/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOf
 #EXTINF:-1 tvg-id="華視" tvg-name="華視" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/CTS.png" group-title="台湾",華視
 http://192.168.100.1:50009/4gtv-4gtv041/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3DHwLmFTAVAMGuZ7MEeR96ULAt0fyJFfe1dIjs
 #EXTINF:-1 tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/CTI2.png"" group-title="台湾",中天新聞台
-http://192.168.100.1:50009/4gtv-4gtv009/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3DHwLmFTAVAMGuZ7MEeR96ULAt0fyJFfe1dIjs
+https://cdi.ofiii.com/ocean/video/playlist/nMp_oVDtuwI/0.m3u8
 #EXTINF:-1 tvg-id="寰宇新聞台" tvg-name="寰宇新聞台" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Global2.png" group-title="台湾",寰宇新聞
 http://192.168.100.1:50009/4gtv-live408/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3DHwLmFTAVAMGuZ7MEeR96ULAt0fyJFfe1dIjs
 #EXTINF:-1 tvg-id="寰宇新聞台灣台" tvg-name="寰宇新聞台灣台" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Global3.png" group-title="台湾",寰宇新聞台灣台
@@ -488,7 +488,7 @@ http://23.237.104.106:8080/USA_ANIMAL_PLANET/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/BBC2.png" group-title="探索&记录",BBC Earth
 https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEarthA-hls/playlist.m3u8
 
-#EXTINF:-1 tvg-id="Red Bull TV" tvg-name="Red Bull TV" tvg-logo="https://epg.yang-1989.eu.org/logo/RedBull.png" group-title="探索&记录",Red Bull TV
+#EXTINF:-1 tvg-id="Red Bull" tvg-name="Red Bull" tvg-logo="https://epg.yang-1989.eu.org/logo/RedBull.png" group-title="探索&记录",Red Bull TV
 http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_6660.m3u8
 
 #EXTINF:-1 tvg-id="BBC Lifestyle" tvg-name="BBC Lifestyle" tvg-logo="https://epg.yang-1989.eu.org/logo/BBC-Lifestyle.png" group-title="探索&记录",BBC Lifestyle
