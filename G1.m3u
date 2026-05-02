@@ -242,6 +242,9 @@ http://192.144.185.155:6000/rtp/225.1.8.251:4120
 http://192.144.185.155:6000/rtp/225.1.8.253:4120
 #EXTINF:-1 tvg-id="华数经典电影" tvg-name="华数经典电影" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/华数经典电影.png" group-title="电影&剧集",华数经典电影
 http://192.144.185.155:6000/rtp/225.1.8.203:9024
+
+#EXTINF:-1 tvg-name="天映频道" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/重温经典.png" group-title="电影&剧集",天映频道
+http://o11.163189.xyz/stream/live/typd
 #EXTINF:-1 tvg-name="重温经典" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/重温经典.png" group-title="电影&剧集",重温经典
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.39:8002
 #EXTINF:-1 tvg-id="美亞電影台" tvg-name="美亞電影台" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/美亚电影.png" group-title="电影&剧集",美亞電影台
