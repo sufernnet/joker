@@ -530,62 +530,6 @@ http://czstream.com:826/LouCarey/KYsHfE1YLU/119666
 https://cdn-1.ttvb.eu.org/api/Eurosport-1/index.m3u8
 #EXTINF:-1 tvg-id="Eurosport 2" tvg-name="Eurosport 2" tvg-logo="https://epg.yang-1989.eu.org/logo/Eurosport-2.png"  group-title="体育", Eurosport 2
 https://cdn-1.ttvb.eu.org/api/Eurosport-2/index.m3u8
-#EXTINF:-1 tvg-id="TNT Sports 1 HD" tvg-name="TNT Sports 1 HD" tvg-logo="https://epg.yang-1989.eu.org/logo/TNT-Sports-1.png"  group-title="体育", TNT Sport 1
-https://cdn-1.ttvb.eu.org/api/TNT-Sports-1/index.m3u8
-#EXTINF:-1 tvg-id="TNT Sports 2 HD" tvg-name="TNT Sports 2 HD" tvg-logo="https://epg.yang-1989.eu.org/logo/TNT-Sports-2.png"  group-title="体育", TNT Sport 2
-https://cdn-1.ttvb.eu.org/api/TNT-Sports-2/index.m3u8
-#EXTINF:-1 tvg-id="TNT Sports 3 HD" tvg-name="TNT Sports 3 HD" tvg-logo="https://epg.yang-1989.eu.org/logo/TNT-Sports-3.png" group-title="体育", TNT Sport 3
-https://cdn-1.ttvb.eu.org/api/TNT-Sports-3/index.m3u8
-#EXTINF:-1 tvg-id="TNT Sports 4 HD" tvg-name="TNT Sports 4 HD" tvg-logo="https://epg.yang-1989.eu.org/logo/TNT-Sports-4.png" group-title="体育", TNT Sport 4
-https://cdn-1.ttvb.eu.org/api/TNT-Sports-4/index.m3u8
-#EXTINF:-1 tvg-id="beIN Sports HD" tvg-name="beIN Sports HD" tvg-logo="https://epg.yang-1989.eu.org/logo/beIN-Sports-1.png" group-title="体育",beIN Sports 1
-https://cdn-1.ttvb.eu.org/api/beIN-Sports-1/index.m3u8
-#EXTINF:-1 tvg-id="beIN Sports 2 HD" tvg-name="beIN Sports 2 HD" tvg-logo="https://epg.yang-1989.eu.org/logo/beIN-Sports-2.png" group-title="体育",beIN Sports 2
-https://cdn-1.ttvb.eu.org/api/beIN-Sports-2/index.m3u8
-#EXTINF:-1 tvg-id="beIN Sports 3" tvg-name="beIN Sports 3" tvg-logo="https://epg.yang-1989.eu.org/logo/beIN-Sports-3.png" group-title="体育",beIN Sports 3
-https://cdn-1.ttvb.eu.org/api/beIN-Sports-3/index.m3u8
-#EXTINF:-1 tvg-id="beIN Sports 4" tvg-name="beIN Sports 4" tvg-logo="https://epg.yang-1989.eu.org/logo/beIN-Sports-4.png" group-title="体育",beIN Sports 4
-https://cdn-1.ttvb.eu.org/api/beIN-Sports-4/index.m3u8
-#EXTINF:-1 tvg-id="beIN Sports 5" tvg-name="beIN Sports 5" tvg-logo="https://epg.yang-1989.eu.org/logo/beIN-Sports-5.png" group-title="体育",beIN Sports 5
-https://cdn-1.ttvb.eu.org/api/beIN-Sports-5/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 1" tvg-name="Hub Premier 1" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Premier-1.png" group-title="体育",Hub Premier 1
-https://cdn-1.ttvb.eu.org/api/Hub-Premier-1/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 2 (HD)" tvg-name="Hub Premier 2 (HD)" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Premier-2.png" group-title="体育",Hub Premier 2
-https://cdn-1.ttvb.eu.org/api/Hub-Premier-2/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 3" tvg-name="Hub Premier 3" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Premier-3.png" group-title="体育",Hub Premier 3
-https://cdn-1.ttvb.eu.org/api/Hub-Premier-3/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 4" tvg-name="Hub Premier 4" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Premier-4.png" group-title="体育",Hub Premier 4
-https://cdn-1.ttvb.eu.org/api/Hub-Premier-4/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 5" tvg-name="Hub Premier 5" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Premier-5.png" group-title="体育",Hub Premier 5
-https://cdn-1.ttvb.eu.org/api/Hub-Premier-5/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 6" tvg-name="Hub Premier 6" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Premier-6.png" group-title="体育",Hub Premier 6
-https://cdn-1.ttvb.eu.org/api/Hub-Premier-6/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 7" tvg-name="Hub Premier 7" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Premier-7.png" group-title="体育",Hub Premier 7
-https://cdn-1.ttvb.eu.org/api/Hub-Premier-7/index.m3u8
-#EXTINF:-1 tvg-id="Hub Premier 8" tvg-name="Hub Premier 8" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Premier-8.png" group-title="体育",Hub Premier 8
-https://cdn-1.ttvb.eu.org/api/Hub-Premier-8/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 1 HD" tvg-name="Hub Sports 1 HD" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Sports-1.png" group-title="体育",Hub Sports 1
-https://cdn-1.ttvb.eu.org/api/Hub-Sports-1/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 2 HD" tvg-name="Hub Sports 2 HD" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Sports-2.png" group-title="体育",Hub Sports 2
-https://cdn-1.ttvb.eu.org/api/Hub-Sports-2/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 3 HD" tvg-name="Hub Sports 3 HD" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Sports-3.png" group-title="体育",Hub Sports 3
-https://cdn-1.ttvb.eu.org/api/Hub-Sports-3/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 4 HD" tvg-name="Hub Sports 4 HD" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Sports-4.png" group-title="体育",Hub Sports 4
-https://cdn-1.ttvb.eu.org/api/Hub-Sports-4/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 5 HD" tvg-name="Hub Sports 5 HD" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Sports-5.png" group-title="体育",Hub Sports 5
-https://cdn-1.ttvb.eu.org/api/Hub-Sports-5/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 6" tvg-name="Hub Sports 6" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Sports-6.png" group-title="体育",Hub Sports 6
-https://cdn-1.ttvb.eu.org/api/Hub-Sports-6/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 7" tvg-name="Hub Sports 7" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Sports-7.png" group-title="体育",Hub Sports 7
-https://cdn-1.ttvb.eu.org/api/Hub-Sports-7/index.m3u8
-#EXTINF:-1 tvg-id="Hub Sports 8" tvg-name="Hub Sports 8" tvg-logo="https://epg.yang-1989.eu.org/logo/Hub-Sports-8.png" group-title="体育",Hub Sports 8
-https://cdn-1.ttvb.eu.org/api/Hub-Sports-8/index.m3u8
-#EXTINF:-1 tvg-id="SPOTV" tvg-name="SPOTV" tvg-logo="https://epg.yang-1989.eu.org/logo/Spotv-1.png" group-title="体育",Spotv 1
-https://cdn-1.ttvb.eu.org/api/Spotv-1/index.m3u8
-#EXTINF:-1 tvg-id="SPOTV2" tvg-name="SPOTV2" tvg-logo="https://epg.yang-1989.eu.org/logo/Spotv-2.png" group-title="体育",Spotv 2
-https://cdn-1.ttvb.eu.org/api/Spotv-2/index.m3u8
-#EXTINF:-1 tvg-id="FIGHT SPORTS HD" tvg-name="FIGHT SPORTS HD" tvg-logo="https://epg.yang-1989.eu.org/logo/Fight-Sports.png" group-title="体育",Fight Sports
-https://cdn-1.ttvb.eu.org/api/Fight-Sports/index.m3u8
 #EXTINF:-1 tvg-id="SkySp Cricket" tvg-name="SkySp Cricket" tvg-logo="https://epg.yang-1989.eu.org/logo/Sky-Sports-Cricket.png" group-title="体育",Sky Sports Cricket
 https://cdn-2.ttvb.eu.org/api/Sky-Sports-Cricket/index.m3u8
 #EXTINF:-1 tvg-id="SkySp PL HD" tvg-name="SkySp PL HD" tvg-logo="https://epg.yang-1989.eu.org/logo/Sky-Sports-Premier-League.png" group-title="体育",Sky Sports Premier League
