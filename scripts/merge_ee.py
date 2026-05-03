@@ -55,26 +55,25 @@ CCTV_TARGET = [
 # 👉 MV（替代原CHC）
 # 使用更灵活的关键词匹配，方便匹配不同的变体
 MV_TARGET_ORDER = [
-    ("CHC动作电影", ["CHC动作电影", "CHC动作电影台", "CHC动作", "动作电影"]),
-    ("CHC家庭影院", ["CHC家庭影院", "CHC家庭电影", "家庭影院"]),
-    ("CHC影迷电影", ["CHC影迷电影", "CHC影迷", "影迷电影"]),
-    ("ROCK Action", ["ROCK Action", "ROCK Action"]),
-    ("ROCK Xstream", ["ROCK Xstream", "ROCK Xstream"]),
-    ("ROCK Entertainment", ["ROCK Entertainment", "ROCK Entertainment"]),
-    ("HBO王牌", ["HBO王牌", "HBO"]),
-    ("Cinemax", ["Cinemax"]),
-    ("Cinemax精选", ["Cinemax精选", "Cinemax"]),
-    ("龙华电影", ["龙华电影"]),
-    ("龙华经典", ["龙华经典"]),
-    ("龙华偶像", ["龙华偶像"]),
-    ("龙华日韩", ["龙华日韩"]),
-    # 新增从指定源提取的频道
-    ("北京IPTV淘电影", ["北京IPTV淘电影"]),
-    ("北京IPTV4K", ["北京IPTV4K"]),
-    ("天映频道", ["天映频道"]),
-    ("天映新加坡", ["天映新加坡"]),
-    ("爱奇艺", ["爱奇艺"]),
-    ("TVB星河", ["TVB星河"]),
+    ("CHC动作电影", ["CHC动作电影", "CHC动作电影台", "CHC动作", "动作电影", "CHC动作电影HD"]),
+    ("CHC家庭影院", ["CHC家庭影院", "CHC家庭电影", "家庭影院", "CHC家庭影院HD"]),
+    ("CHC影迷电影", ["CHC影迷电影", "CHC影迷", "影迷电影", "CHC影迷电影HD"]),
+    ("ROCK Action", ["ROCK Action", "ROCK Action", "ROCK Action HD"]),
+    ("ROCK Xstream", ["ROCK Xstream", "ROCK Xstream", "ROCK Xstream HD"]),
+    ("ROCK Entertainment", ["ROCK Entertainment", "ROCK Entertainment", "ROCK Entertainment HD"]),
+    ("HBO王牌", ["HBO王牌", "HBO", "HBO HD"]),
+    ("Cinemax", ["Cinemax", "Cinemax HD"]),
+    ("Cinemax精选", ["Cinemax精选", "Cinemax精选HD"]),
+    ("龙华电影", ["龙华电影", "龙华电影HD"]),
+    ("龙华经典", ["龙华经典", "龙华经典HD"]),
+    ("龙华偶像", ["龙华偶像", "龙华偶像HD"]),
+    ("龙华日韩", ["龙华日韩", "龙华日韩HD"]),
+    ("北京IPTV淘电影", ["北京IPTV淘电影", "淘电影"]),
+    ("北京IPTV4K", ["北京IPTV4K", "北京IPTV 4K"]),
+    ("天映频道", ["天映频道", "天映"]),
+    ("天映新加坡", ["天映新加坡", "天映新加坡频道"]),
+    ("爱奇艺", ["爱奇艺", "iQIYI"]),
+    ("TVB星河", ["TVB星河", "星河频道"]),
 ]
 
 LONGHUA_KEYWORDS = ["龙华电影", "龙华经典", "龙华偶像", "龙华日韩"]
@@ -159,15 +158,16 @@ TW_TARGET_ORDER = [
 
 # ===================== 下载 =====================
 
-def download(url, retry=2):
-    headers = {"User-Agent": "Mozilla/5.0"}
-    for _ in range(retry):
+def download(url, retry=3):
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+    for i in range(retry):
         try:
             r = requests.get(url, headers=headers, timeout=15)
             if r.status_code == 200:
                 return r.text
-        except:
-            time.sleep(1)
+        except Exception as e:
+            if i < retry - 1:
+                time.sleep(2)
     return ""
 
 # ===================== 工具 =====================
@@ -223,6 +223,7 @@ def parse_m3u(content):
 def load_gat():
     raw = download(GAT_SOURCE)
     if not raw:
+        print("⚠️ 无法下载GAT源")
         return []
     data = parse_m3u(raw)
     temp = [(clean_name(n), e, u) for n, e, u in data if parse_group(e) == GAT_GROUP_NAME]
@@ -245,50 +246,66 @@ def load_gat():
 # ===================== MV =====================
 
 def load_mv():
+    print("开始加载MV频道...")
+    
     # 主要源：用于提取原有MV频道以及新增的北京/港澳台频道
     main_source_url = "https://github.chenc.dev/raw.githubusercontent.com/CKL1211/eric/refs/heads/master/MyIPTV.m3u"
     raw_main = download(main_source_url)
     if not raw_main:
-        print("⚠️ 无法下载主要MV源，将跳过从该源提取频道")
+        print("⚠️ 无法下载主要MV源，尝试其他备选源...")
         all_data = []
+        
+        # 尝试其他备选源
+        backup_sources = [
+            "https://raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u",
+            "https://live.kilvn.com/iptv.m3u",
+        ]
+        for src in backup_sources:
+            raw = download(src)
+            if raw:
+                all_data.extend(parse_m3u(raw))
+                print(f"✓ 从备选源获取到数据: {src}")
+                break
     else:
         all_data = parse_m3u(raw_main)
-    
-    # 可选：保留其他备选源逻辑，但为了精确提取，先注释掉，如有需要可取消注释
-    # 备选源1
-    # raw2 = download("https://raw.githubusercontent.com/vbskycn/iptv/refs/heads/master/tv/iptv4.m3u")
-    # if raw2:
-    #     data2 = parse_m3u(raw2)
-    #     all_data.extend(data2)
-    
-    # 备选源2
-    # raw3 = download("https://live.kilvn.com/iptv.m3u")
-    # if raw3:
-    #     data3 = parse_m3u(raw3)
-    #     all_data.extend(data3)
+        print(f"✓ 从主源获取到 {len(all_data)} 个频道")
     
     if not all_data:
+        print("❌ 所有源都无法获取数据")
         return []
+    
+    # 统计各分组频道数量
+    group_stats = {}
+    for n, e, u in all_data:
+        group = parse_group(e)
+        group_stats[group] = group_stats.get(group, 0) + 1
     
     # 针对新增频道的精确提取：从“北京”分组提取北京IPTV淘电影、北京IPTV4K；从“港澳台”分组提取天映频道、天映新加坡、爱奇艺、TVB星河
     # 同时保留原有MV频道的提取逻辑（放宽分组限制）
     temp = []
+    
+    print("正在筛选符合条件的频道...")
+    
     for n, e, u in all_data:
         group = parse_group(e)
         # 原有MV频道提取条件：分组包含综合/电影/影视/MV/娱乐，或频道名包含CHC/龙华/ROCK/HBO/Cinemax
-        original_condition = (any(keyword in group for keyword in ["综合", "电影", "影视", "MV", "娱乐"]) or
-                              any(keyword in n for keyword in ["CHC", "龙华", "ROCK", "HBO", "Cinemax"]))
+        original_condition = (any(keyword in group for keyword in ["综合", "电影", "影视", "MV", "娱乐", "影視"]) or
+                              any(keyword in n for keyword in ["CHC", "龙华", "ROCK", "HBO", "Cinemax", "动作电影", "家庭影院", "影迷电影"]))
         
         # 新增频道提取条件：精确匹配分组和频道名
         beijing_condition = (group == "北京" and 
-                             any(target in n for target in ["北京IPTV淘电影", "北京IPTV4K"]))
+                             any(target in n for target in ["北京IPTV淘电影", "北京IPTV4K", "淘电影", "4K"]))
         hk_tw_condition = (group == "港澳台" and 
-                           any(target in n for target in ["天映频道", "天映新加坡", "爱奇艺", "TVB星河"]))
+                           any(target in n for target in ["天映频道", "天映新加坡", "爱奇艺", "TVB星河", "天映", "iQIYI", "星河"]))
         
         if original_condition or beijing_condition or hk_tw_condition:
+            # 打印找到的候选频道（调试用）
+            if "CHC" in n or "动作" in n:
+                print(f"  【候选】频道: {n}, 分组: {group}")
             temp.append((clean_name(n), e, u))
     
     temp = dedup(temp)
+    print(f"筛选后剩余 {len(temp)} 个候选频道")
     
     result = []
     for target_name, keywords in MV_TARGET_ORDER:
@@ -296,7 +313,7 @@ def load_mv():
         for n, e, u in temp:
             # 检查是否匹配任一关键词
             for kw in keywords:
-                if kw in n:
+                if kw.lower() in n.lower():
                     candidates.append((n, e, u))
                     break
         
@@ -309,16 +326,19 @@ def load_mv():
                     seen_urls.add(u)
                     unique_candidates.append((n, e, u))
             
+            if len(unique_candidates) > 1:
+                print(f"  {target_name}: 找到 {len(unique_candidates)} 个候选URL，正在测速选择最优...")
+            
             # 测速选最优
             urls = [u for _, _, u in unique_candidates]
-            best = pick_best(urls)
+            best_url = pick_best(urls)
             for n, e, u in unique_candidates:
-                if u == best:
+                if u == best_url:
                     ext = e
                     if n in LOGO_MAP:
                         ext = re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{LOGO_MAP[n]}"', ext)
                     result.append((target_name, ext, u))
-                    print(f"✓ 找到MV频道: {target_name} -> {u[:80]}...")
+                    print(f"✓ 找到MV频道: {target_name}")
                     break
         else:
             print(f"✗ 未找到MV频道: {target_name}")
@@ -327,6 +347,7 @@ def load_mv():
     non_lh = [x for x in result if not any(k in x[0] for k in LONGHUA_KEYWORDS)]
     lh = [x for x in result if any(k in x[0] for k in LONGHUA_KEYWORDS)]
     
+    print(f"MV频道加载完成，共 {len(result)} 个频道")
     return non_lh + lh
 
 # ===================== TW =====================
@@ -405,7 +426,9 @@ def pick_best(urls):
 # ===================== 主程序 =====================
 
 def main():
+    print("=" * 50)
     print("开始生成EE.m3u...")
+    print("=" * 50)
 
     content = download(SOURCE_URL)
     if not content:
@@ -414,8 +437,15 @@ def main():
 
     lines = content.splitlines()
 
+    print("正在加载HK频道...")
     hk = load_gat()
+    print(f"HK频道加载完成，共 {len(hk)} 个")
+    
+    print("正在加载TW频道...")
     tw = fetch_tw(lines)
+    print(f"TW频道加载完成，共 {len(tw)} 个")
+    
+    print("正在加载MV频道...")
     mv = load_mv()
 
     out = "#EXTM3U\n\n"
@@ -483,7 +513,13 @@ def main():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(out)
 
-    print("✅ 完成")
+    print("=" * 50)
+    print("✅ 完成！")
+    print(f"输出文件: {OUTPUT_FILE}")
+    print(f"HK频道数: {len(hk)}")
+    print(f"TW频道数: {len(tw)}")
+    print(f"MV频道数: {len(mv)}")
+    print("=" * 50)
 
 
 if __name__ == "__main__":
