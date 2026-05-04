@@ -55,7 +55,7 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 http://39.164.138.145:8899/hls/17/index.m3u8
 
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
-https://porxy.opd.ccwu.cc/live2.rxip.sc96655.com/live/ys4Kcq_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1
+http://43.152.31.17:843/hlslive-tx-cdn.ysp.cctv.cn/ysp/2029810303_dlna.m3u8
 
 #EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/BJ4K.png" group-title="4K",北京卫视
 http://124.90.44.40:6060/010/2/01000010000000060000000000002865?virtualDomain=010.live_hls.zte.com
@@ -238,8 +238,6 @@ http://124.90.44.40:6060/010/2/00000001000000060000000000000490?virtualDomain=01
 http://124.90.44.40:6060/010/2/00000001000000060000000000000787?virtualDomain=010.live_hls.zte.com
 
 # MV
-#EXTINF:-1 tvg-name="CHC动作电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC动作电影.png" group-title="MV",CHC动作电影
-http://pplee.vicp.net:4022/udp/233.18.204.174:5140
 #EXTINF:-1 tvg-name="CHC家庭影院" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC家庭影院.png" group-title="MV",CHC家庭影院
 http://pplee.vicp.net:4022/udp/233.18.204.173:5140
 #EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" group-title="MV",CHC影迷电影
@@ -250,18 +248,18 @@ http://116.241.240.176:5050/4gtv-live138/index.m3u8
 https://cgcwsuulbdid.ap-northeast-1.clawcloudrun.com/4gtv-live124/index.m3u8?token=123
 #EXTINF:-1 tvg-name="ROCK Entertainment" tvg-logo="https://live.fanmingming.com/tv/ROCK Entertainment.png" group-title="MV",ROCK Entertainment
 http://116.241.240.176:5050/4gtv-live080/index.m3u8
-#EXTINF:-1 tvg-name="HBO" tvg-logo="https://live.fanmingming.com/tv/HBO.png" group-title="MV",HBO
-http://23.237.104.106:8080/USA_HBO/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-name="Cinemax经典" tvg-logo="https://live.fanmingming.com/tv/Cinemax经典.png" group-title="MV",Cinemax经典
-http://23.237.104.106:8080/USA_5STARMAX/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-name="HBO精选" tvg-logo="https://live.fanmingming.com/tv/HBO精选.png" group-title="MV",HBO精选
+http://23.237.104.106:8080/USA_HBO2/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-name="Cinemax" tvg-logo="https://live.fanmingming.com/tv/Cinemax.png" group-title="MV",Cinemax
+http://23.237.104.106:8080/USA_CINEMAX/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="Cinemax精选" tvg-logo="https://live.fanmingming.com/tv/Cinemax精选.png" group-title="MV",Cinemax精选
 http://23.237.104.106:8080/USA_MOREMAX/mono.m3u8
 #EXTINF:-1 tvg-name="北京IPTV淘电影" tvg-logo="https://live.fanmingming.com/tv/北京IPTV淘电影.png" group-title="MV",北京IPTV淘电影
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.38:8002
 #EXTINF:-1 tvg-name="北京IPTV4K" tvg-logo="https://live.fanmingming.com/tv/北京IPTV4K.png" group-title="MV",北京IPTV4K
 http://home.airengine.net:9003/rtp/228.1.1.123:8001
-#EXTINF:-1 tvg-name="天映新加坡" tvg-logo="https://live.fanmingming.com/tv/天映新加坡.png" group-title="MV",天映新加坡
-https://cdn10.163189.xyz/stream/163189/typd/
+#EXTINF:-1 tvg-name="天映频道" tvg-logo="https://live.fanmingming.com/tv/天映频道.png" group-title="MV",天映频道
+https://o11.163189.xyz/stream/live/typd/
 #EXTINF:-1 tvg-name="天映新加坡" tvg-logo="https://live.fanmingming.com/tv/天映新加坡.png" group-title="MV",天映新加坡
 https://cdn10.163189.xyz/stream/163189/typd/
 #EXTINF:-1 tvg-name="爱奇艺" tvg-logo="https://live.fanmingming.com/tv/爱奇艺.png" group-title="MV",爱奇艺
@@ -307,7 +305,7 @@ http://o11.163189.xyz/stream/live/tvbc/
 #EXTINF:-1 group-title="HK" tvg-name="八度空间" tvg-logo="https://epg.112114.xyz/logo/八度空间.png" epg-url="https://123.tv1288.xyz/2026.xml",八度空间
 http://cdn6.163189.xyz/163189/8tv
 #EXTINF:-1 group-title="HK" tvg-name="TVB星河" tvg-logo="https://epg.112114.xyz/logo/TVB星河.png" epg-url="https://123.tv1288.xyz/2026.xml",TVB星河
-http://r.jdshipin.com/Voac4
+http://cdn6.163189.xyz/163189/tvbxh
 #EXTINF:-1 group-title="HK" tvg-name="TVBPLUS" tvg-logo="https://epg.112114.xyz/logo/TVBPLUS.png" epg-url="https://123.tv1288.xyz/2026.xml",TVBPLUS
 http://o11.163189.xyz/stream/tvb/tvbp/
 #EXTINF:-1 group-title="HK" tvg-name="TVBJ1" tvg-logo="https://epg.112114.xyz/logo/TVBJ1.png" epg-url="https://123.tv1288.xyz/2026.xml",TVBJ1
