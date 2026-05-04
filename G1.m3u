@@ -54,7 +54,7 @@ http://124.90.44.40:6060/010/2/01000010000000060000000000002805?virtualDomain=01
 http://39.164.138.145:8899/hls/17/index.m3u8
 
 #EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV4K" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CCTV4K.png" group-title="4K",CCTV4K
-https://porxy.opd.ccwu.cc/live2.rxip.sc96655.com/live/ys4Kcq_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1
+http://43.152.31.17:843/hlslive-tx-cdn.ysp.cctv.cn/ysp/2029810303_dlna.m3u8
 
 #EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/BJ4K.png" group-title="4K",北京卫视
 http://124.90.44.40:6060/010/2/01000010000000060000000000002865?virtualDomain=010.live_hls.zte.com
@@ -232,7 +232,7 @@ http://23.237.104.106:8080/USA_MOREMAX/mono.m3u8
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.61:8002
 #EXTINF:-1 tvg-name="萌宠TV" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bjmctv.png" group-title="电影&剧集",萌宠TV
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.63:8002
-#EXTINF:-1 tvg-id="华数星影" tvg-name="华数星影" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/华数星影.png" group-title="电影&剧集",华数星影
+#EXTINF:-1 tvg-id="华数星影台" tvg-name="华数星影" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/华数星影.png" group-title="电影&剧集",华数星影
 http://192.144.185.155:6000/rtp/225.1.8.254:4120
 #EXTINF:-1 tvg-id="华数动作影院" tvg-name="华数动作影院" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/华数动作影院.png" group-title="电影&剧集",华数动作影院
 http://192.144.185.155:6000/rtp/225.1.8.252:4120
@@ -494,7 +494,7 @@ http://192.168.100.1:50009/daystar/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3D
 #EXTINF:-1 tvg-name="Love Nature 4K" tvg-logo="https://epg.iill.top/logo/LoveNature4K.png" group-title="探索&记录",Love Nature 4K
 https://pb-ehs1glsha1juy.akamaized.net/Love_Nature_4K.m3u8
 
-#EXTINF:-1 tvg-name="Love Nature" tvg-logo="https://epg.iill.top/logo/LoveNature.png" group-title="探索&记录",Love Nature
+#EXTINF:-1 tvg-name="Love Nature TaiWan" tvg-logo="https://epg.iill.top/logo/LoveNature.png" group-title="探索&记录",Love Nature TaiWan
 http://116.241.240.176:5050/4gtv-live208/index.m3u8
 
 #EXTINF:-1 tvg-name="Love Nature" tvg-logo="https://epg.iill.top/logo/LoveNature.png" group-title="探索&记录",Love Nature
@@ -509,7 +509,7 @@ http://23.237.104.106:8080/USA_ANIMAL_PLANET/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/BBC2.png" group-title="探索&记录",BBC Earth
 https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEarthA-hls/playlist.m3u8
 
-#EXTINF:-1 tvg-id="Red Bull" tvg-name="RedBull TV" tvg-logo="https://epg.yang-1989.eu.org/logo/RedBull.png" group-title="探索&记录",Red Bull TV
+#EXTINF:-1 tvg-id="RedBull" tvg-name="RedBull TV" tvg-logo="https://epg.yang-1989.eu.org/logo/RedBull.png" group-title="探索&记录",Red Bull TV
 http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_6660.m3u8
 
 #EXTINF:-1 tvg-id="BBC Lifestyle" tvg-name="BBC Lifestyle" tvg-logo="https://epg.yang-1989.eu.org/logo/BBC-Lifestyle.png" group-title="探索&记录",BBC Lifestyle
