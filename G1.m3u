@@ -353,7 +353,7 @@ http://192.168.100.1:50009/4gtv-live215/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOf
 #EXTINF:-1 tvg-id="華視" tvg-name="華視" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/CTS.png" group-title="台湾",華視
 http://192.168.100.1:50009/4gtv-4gtv041/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3DHwLmFTAVAMGuZ7MEeR96ULAt0fyJFfe1dIjs
 #EXTINF:-1 tvg-id="中天新聞台" tvg-name="中天新聞台" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/CTI2.png"" group-title="台湾",中天新聞台
-https://cdi.ofiii.com/ocean/video/playlist/nMp_oVDtuwI/0.m3u8
+http://192.168.100.1:50002/index.m3u8?pid=4gtv-4gtv009&sd=1080&proxy=false&token=sufern
 #EXTINF:-1 tvg-id="寰宇新聞台" tvg-name="寰宇新聞台" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Global2.png" group-title="台湾",寰宇新聞
 http://192.168.100.1:50009/4gtv-live408/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3DHwLmFTAVAMGuZ7MEeR96ULAt0fyJFfe1dIjs
 #EXTINF:-1 tvg-id="寰宇新聞台灣台" tvg-name="寰宇新聞台灣台" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/Global3.png" group-title="台湾",寰宇新聞台灣台
