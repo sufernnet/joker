@@ -509,7 +509,7 @@ http://23.237.104.106:8080/USA_ANIMAL_PLANET/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/BBC2.png" group-title="探索&记录",BBC Earth
 https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEarthA-hls/playlist.m3u8
 
-#EXTINF:-1 tvg-id="RedBull" tvg-name="RedBullTV" tvg-logo="https://epg.yang-1989.eu.org/logo/RedBull.png" group-title="探索&记录",Red Bull TV
+#EXTINF:-1 tvg-id="RedBull" tvg-name="Red Bull TV" tvg-logo="https://epg.yang-1989.eu.org/logo/RedBull.png" group-title="探索&记录",Red Bull TV
 http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_6660.m3u8
 
 #EXTINF:-1 tvg-id="BBC Lifestyle" tvg-name="BBC Lifestyle" tvg-logo="https://epg.yang-1989.eu.org/logo/BBC-Lifestyle.png" group-title="探索&记录",BBC Lifestyle
@@ -522,9 +522,10 @@ http://4px369674fn3.vicp.fun:7088/udp/225.1.8.23:8002
 http://119.32.12.131:2905/udp/225.1.101.102:7523
 #EXTINF:-1 tvg-name="五星体育" tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="体育",五星体育
 http://pplee.vicp.net:4022/udp/233.18.204.58:5140
-#EXTINF:-1 tvg-name="ESPN" tvg-logo="https://epg.iill.top/logo/ESPN.png" group-title="体育",ESPN
+
+#EXTINF:-1 tvg-id="ESPN" tvg-name="ESPN" tvg-logo="https://epg.iill.top/logo/ESPN.png" group-title="体育",ESPN
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119665
-#EXTINF:-1 tvg-name="ESPN2" tvg-logo="https://epg.112114.xyz/logo/ESPN2.png" group-title="体育",ESPN2
+#EXTINF:-1 tvg-id="ESPN2" tvg-name="ESPN2" tvg-logo="https://epg.112114.xyz/logo/ESPN2.png" group-title="体育",ESPN2
 http://czstream.com:826/LouCarey/KYsHfE1YLU/119666
 #EXTINF:-1 tvg-id="Eurosport 1" tvg-name="Eurosport 1" tvg-logo="https://epg.yang-1989.eu.org/logo/Eurosport-1.png"  group-title="体育", Eurosport 1
 https://cdn-1.ttvb.eu.org/api/Eurosport-1/index.m3u8
