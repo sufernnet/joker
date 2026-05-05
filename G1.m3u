@@ -498,7 +498,7 @@ http://192.168.100.1:50009/daystar/index.m3u8?token=jRmmtB889ejTiLJ1DI9cmOfZiL3D
 #EXTINF:-1 tvg-name="Love Nature 4K" tvg-logo="https://epg.iill.top/logo/LoveNature4K.png" group-title="探索&记录",Love Nature 4K
 https://pb-ehs1glsha1juy.akamaized.net/Love_Nature_4K.m3u8
 
-#EXTINF:-1 tvg-name="Love Nature TaiWan" tvg-logo="https://epg.iill.top/logo/LoveNature.png" group-title="探索&记录",Love Nature TaiWan
+#EXTINF:-1 tvg-name="Love Nature 愛自然頻道" tvg-logo="https://epg.iill.top/logo/LoveNature.png" group-title="探索&记录",Love Nature TaiWan
 http://116.241.240.176:5050/4gtv-live208/index.m3u8
 
 #EXTINF:-1 tvg-name="Love Nature" tvg-logo="https://epg.iill.top/logo/LoveNature.png" group-title="探索&记录",Love Nature
