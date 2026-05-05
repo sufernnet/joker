@@ -212,7 +212,11 @@ http://pplee.vicp.net:4022/udp/233.18.204.174:5140
 http://pplee.vicp.net:4022/udp/233.18.204.173:5140
 #EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://raw.githubusercontent.com/xiasufern/AA/main/icon/CHC影迷电影.png" group-title="电影&剧集",CHC影迷电影
 http://pplee.vicp.net:4022/udp/233.18.204.175:5140
-#EXTINF:-1 tvg-name="4K超清" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bj4kcq.png" group-title="电影&剧集",4K超清
+#EXTINF:-1 tvg-name="峨眉电影" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/峨眉电影.png" group-title="电影&剧集",峨眉电影
+http://183.220.20.17:4321/udp/239.11.0.11:5140$四川移动
+#EXTINF:-1 tvg-name="影迷数位电影台" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/影迷数位电影.png" group-title="电影&剧集",影迷数位电影台
+https://cdn12.178.indevs.in/163189/a643783ec587540e
+#EXTINF:-1 tvg-name="北京IPTV 4K超清" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bj4kcq.png" group-title="电影&剧集",4K超清
 http://home.airengine.net:9003/rtp/228.1.1.123:8001
 #EXTINF:-1 tvg-name="淘BABY" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bjtbb.png" group-title="电影&剧集",淘BABY
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.36:8002
