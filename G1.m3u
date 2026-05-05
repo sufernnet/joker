@@ -214,7 +214,7 @@ http://pplee.vicp.net:4022/udp/233.18.204.173:5140
 http://pplee.vicp.net:4022/udp/233.18.204.175:5140
 #EXTINF:-1 tvg-name="峨眉电影" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/峨眉电影.png" group-title="电影&剧集",峨眉电影
 http://183.220.20.17:4321/udp/239.11.0.11:5140$四川移动
-#EXTINF:-1 tvg-name="影迷數位電影台" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/影迷数位电影.png" group-title="电影&剧集",影迷数位电影台
+#EXTINF:-1 tvg-name="影迷數位電影台HD" tvg-logo="https://raw.githubusercontent.com/sufernnet/jokerone/main/icon/影迷数位电影.png" group-title="电影&剧集",影迷數位電影台
 https://cdn12.178.indevs.in/163189/a643783ec587540e
 #EXTINF:-1 tvg-name="北京IPTV 4K超清" tvg-logo="https://cdn.jsdelivr.net/gh/wanglindl/TVlogo@main/img/bj4kcq.png" group-title="电影&剧集",4K超清
 http://home.airengine.net:9003/rtp/228.1.1.123:8001
