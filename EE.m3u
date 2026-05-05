@@ -250,18 +250,18 @@ http://116.241.240.176:5050/4gtv-live138/index.m3u8
 https://cgcwsuulbdid.ap-northeast-1.clawcloudrun.com/4gtv-live124/index.m3u8?token=123
 #EXTINF:-1 tvg-name="ROCK Entertainment" tvg-logo="https://live.fanmingming.com/tv/ROCK Entertainment.png" group-title="MV",ROCK Entertainment
 http://116.241.240.176:5050/4gtv-live080/index.m3u8
-#EXTINF:-1 tvg-name="HBO" tvg-logo="https://live.fanmingming.com/tv/HBO.png" group-title="MV",HBO
-http://23.237.104.106:8080/USA_HBO/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-name="Cinemax精选" tvg-logo="https://live.fanmingming.com/tv/Cinemax精选.png" group-title="MV",Cinemax精选
-http://23.237.104.106:8080/USA_MOREMAX/mono.m3u8
+#EXTINF:-1 tvg-name="HBO王牌" tvg-logo="https://live.fanmingming.com/tv/HBO王牌.png" group-title="MV",HBO王牌
+http://23.237.104.106:8080/USA_HBO_ZONE/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-name="Cinemax" tvg-logo="https://live.fanmingming.com/tv/Cinemax.png" group-title="MV",Cinemax
+http://23.237.104.106:8080/USA_CINEMAX/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="Cinemax精选" tvg-logo="https://live.fanmingming.com/tv/Cinemax精选.png" group-title="MV",Cinemax精选
 http://23.237.104.106:8080/USA_MOREMAX/mono.m3u8
 #EXTINF:-1 tvg-name="北京IPTV淘电影" tvg-logo="https://live.fanmingming.com/tv/北京IPTV淘电影.png" group-title="MV",北京IPTV淘电影
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.38:8002
 #EXTINF:-1 tvg-name="北京IPTV4K" tvg-logo="https://live.fanmingming.com/tv/北京IPTV4K.png" group-title="MV",北京IPTV4K
-http://4px369674fn3.vicp.fun:7088/udp/225.1.8.211:8002
-#EXTINF:-1 tvg-name="天映新加坡" tvg-logo="https://live.fanmingming.com/tv/天映新加坡.png" group-title="MV",天映新加坡
-https://cdn10.163189.xyz/stream/163189/typd/
+http://home.airengine.net:9003/rtp/228.1.1.123:8001
+#EXTINF:-1 tvg-name="天映频道" tvg-logo="https://live.fanmingming.com/tv/天映频道.png" group-title="MV",天映频道
+https://o11.163189.xyz/stream/live/typd/
 #EXTINF:-1 tvg-name="天映新加坡" tvg-logo="https://live.fanmingming.com/tv/天映新加坡.png" group-title="MV",天映新加坡
 https://cdn10.163189.xyz/stream/163189/typd/
 #EXTINF:-1 tvg-name="爱奇艺" tvg-logo="https://live.fanmingming.com/tv/爱奇艺.png" group-title="MV",爱奇艺
@@ -307,15 +307,19 @@ http://o11.163189.xyz/stream/live/tvbc/
 #EXTINF:-1 group-title="HK" tvg-name="八度空间" tvg-logo="https://epg.112114.xyz/logo/八度空间.png" epg-url="https://123.tv1288.xyz/2026.xml",八度空间
 http://cdn6.163189.xyz/163189/8tv
 #EXTINF:-1 group-title="HK" tvg-name="TVB星河" tvg-logo="https://epg.112114.xyz/logo/TVB星河.png" epg-url="https://123.tv1288.xyz/2026.xml",TVB星河
-http://cdn6.163189.xyz/163189/tvbxh
+http://o11.163189.xyz/stream/live/tvbxh/
 #EXTINF:-1 group-title="HK" tvg-name="TVBPLUS" tvg-logo="https://epg.112114.xyz/logo/TVBPLUS.png" epg-url="https://123.tv1288.xyz/2026.xml",TVBPLUS
 http://o11.163189.xyz/stream/tvb/tvbp/
+#EXTINF:-1 group-title="HK" tvg-name="TVBJ1" tvg-logo="https://epg.112114.xyz/logo/TVBJ1.png" epg-url="https://123.tv1288.xyz/2026.xml",TVBJ1
+http://iptv.4666888.xyz/iptv2A.php?id=26
 #EXTINF:-1 group-title="HK" tvg-name="TVB娱乐新闻" tvg-logo="https://epg.112114.xyz/logo/TVB娱乐新闻.png" epg-url="https://123.tv1288.xyz/2026.xml",TVB娱乐新闻
 http://iptv.4666888.xyz/iptv2A.php?id=36
 #EXTINF:-1 group-title="HK" tvg-name="TVB黄金华剧" tvg-logo="https://epg.112114.xyz/logo/TVB黄金华剧.png" epg-url="https://123.tv1288.xyz/2026.xml",TVB黄金华剧
 http://iptv.4666888.xyz/iptv2A.php?id=34
 #EXTINF:-1 group-title="HK" tvg-name="TVB功夫台" tvg-logo="https://epg.112114.xyz/logo/TVB功夫台.png" epg-url="https://123.tv1288.xyz/2026.xml",TVB功夫台
 http://cdn6.163189.xyz/163189/yzwx
+#EXTINF:-1 group-title="HK" tvg-name="TVB1" tvg-logo="https://epg.112114.xyz/logo/TVB1.png" epg-url="https://123.tv1288.xyz/2026.xml",TVB1
+http://iptv.4666888.xyz/iptv2A.php?id=25
 #EXTINF:-1 group-title="HK" tvg-name="HOY资讯" tvg-logo="https://epg.112114.xyz/logo/HOY资讯.png" epg-url="https://123.tv1288.xyz/2026.xml",HOY资讯
 http://cdn.163189.xyz/163189/hoy78
 #EXTINF:-1 group-title="HK" tvg-name="HOYTV" tvg-logo="https://epg.112114.xyz/logo/HOYTV.png" epg-url="https://123.tv1288.xyz/2026.xml",HOYTV
