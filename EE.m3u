@@ -95,8 +95,8 @@ http://pplee.vicp.net:4022/udp/233.18.204.175:5140
 http://4px369674fn3.vicp.fun:7088/udp/225.1.8.211:8002
 #EXTINF:-1 tvg-id="爱上4K" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/爱上4K.png" group-title="MV",爱上4K
 http://1.203.174.137:8180/rtp/225.1.8.80:2000
-#EXTINF:-1 tvg-id="g-29c405" tvg-name="靖天映畫" tvg-logo="https://git.yylx.win/github.com/CKL1211/eric/blob/master/logo/%E6%B8%AF%E6%BE%B3%E5%8F%B0/靖天映画.png" group-title="MV",靖天映画台
-https://cdn.qd.je/163189/jtyh
+#EXTINF:-1 tvg-id="g-cb4cfc" tvg-name="天映马来西亚" tvg-logo="https://git.yylx.win/github.com/CKL1211/eric/blob/master/logo/%E6%B8%AF%E6%BE%B3%E5%8F%B0/天映频道.png" group-title="MV",天映頻道
+https://cdn.qd.je/163189/typd2
 #EXTINF:-1 tvg-id="g-32bd52" tvg-name="天映新加坡" tvg-logo="https://git.yylx.win/github.com/CKL1211/eric/blob/master/logo/%E6%B8%AF%E6%BE%B3%E5%8F%B0/天映频道.png" group-title="MV",天映新加坡
 https://cdn.qd.je/163189/typd
 #EXTINF:-1 tvg-id="g-67a67f" tvg-name="iQIYI" tvg-logo="https://git.yylx.win/github.com/CKL1211/eric/blob/master/logo/%E6%B8%AF%E6%BE%B3%E5%8F%B0/Astro_iQIYI.png" group-title="MV",爱奇艺
@@ -445,9 +445,9 @@ https://migu.yang-1989.xyz/sprt/pfbjf4?token=f74df1297e5cb7f5482de66200da0959a89
 https://migu.yang-1989.xyz/sprt/nadtfa?token=f74df1297e5cb7f5482de66200da0959a898b8e6473f47d0
 #EXTINF:-1 tvg-id="Hub Sports 8" tvg-name="Hub Sports 8" tvg-logo="https://iptv.yang-1989.xyz/logo/Hub%20Sports%208.webp" group-title="Sports",Hub Sports 8
 https://migu.yang-1989.xyz/sprt/yvfz94?token=f74df1297e5cb7f5482de66200da0959a898b8e6473f47d0
-#EXTINF:-1 tvg-id="SPOTV" tvg-name="SPOTV" tvg-logo="https://iptv.yang-1989.xyz/logo/Spotv%201.webp" group-title="Sports",SPOTV
+#EXTINF:-1 tvg-id="SPOTV" tvg-name="SPOTV" tvg-logo="https://iptv.yang-1989.xyz/logo/SPOTV.webp" group-title="Sports",SPOTV
 https://migu.yang-1989.xyz/sprt/wsstdv?token=f74df1297e5cb7f5482de66200da0959a898b8e6473f47d0
-#EXTINF:-1 tvg-id="SPOTV 2" tvg-name="SPOTV 2" tvg-logo="https://iptv.yang-1989.xyz/logo/Spotv%202.webp" group-title="Sports",SPOTV 2
+#EXTINF:-1 tvg-id="SPOTV 2" tvg-name="SPOTV 2" tvg-logo="https://iptv.yang-1989.xyz/logo/SPOTV%202.webp" group-title="Sports",SPOTV 2
 https://migu.yang-1989.xyz/sprt/smf73b?token=f74df1297e5cb7f5482de66200da0959a898b8e6473f47d0
 #EXTINF:-1 tvg-id="FIGHT SPORTS" tvg-name="FIGHT SPORTS" tvg-logo="https://iptv.yang-1989.xyz/logo/FIGHT%20SPORTS.webp" group-title="Sports",FIGHT SPORTS
 https://migu.yang-1989.xyz/sprt/g7nt8r?token=f74df1297e5cb7f5482de66200da0959a898b8e6473f47d0
